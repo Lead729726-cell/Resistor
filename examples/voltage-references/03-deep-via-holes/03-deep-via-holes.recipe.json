@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "model": "voltage-voxel-emulation-v1",
+  "domain": {
+    "bounds": [
+      -1.6,
+      -1.2,
+      1.6,
+      1.2
+    ],
+    "zMin": -1.05,
+    "zMax": 1.45,
+    "nx": 64,
+    "ny": 48,
+    "nz": 100
+  },
+  "initial": "gds-hole",
+  "initialHeight": 0.72,
+  "initialMask": "2/0",
+  "threshold": 45,
+  "steps": [
+    {
+      "id": "barrier",
+      "name": "등방 barrier 가정",
+      "kind": "deposit",
+      "model": "conformal",
+      "amount": 0.08,
+      "sidewall": 1,
+      "color": "#dfb963",
+      "mask": "all",
+      "inverse": false,
+      "target": 0,
+      "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+    },
+    {
+      "id": "fill-metal",
+      "name": "방향성 fill 가정",
+      "kind": "deposit",
+      "model": "directional",
+      "amount": 0.2,
+      "sidewall": 0.18,
+      "color": "#67b8a7",
+      "mask": "all",
+      "inverse": false,
+      "target": 0,
+      "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+    }
+  ],
+  "geometry_hash": "e6dc3e37f4208a1a6c923565eda84f4a1968656e1921f4dbb3619770adccd5f2"
+}

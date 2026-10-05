@@ -1,0 +1,497 @@
+{
+  "schema_version": 1,
+  "case_count": 45,
+  "passed": 45,
+  "cases": [
+    {
+      "name": "actual native LEF DEF geometry + pins + names",
+      "pass": true,
+      "seconds": 0.009082394069992006,
+      "details": {
+        "native_metadata_recorded": true
+      },
+      "result": "pass"
+    },
+    {
+      "name": "actual property bindings and mirrored placements",
+      "pass": true,
+      "seconds": 8.826598059386015e-05,
+      "details": {
+        "dbu_um": 0.001,
+        "pins": [
+          "A",
+          "IN",
+          "OUT",
+          "Y"
+        ],
+        "nets": [
+          "in",
+          "mid",
+          "out"
+        ],
+        "instances": [
+          "U1",
+          "U2"
+        ],
+        "shape_count": 14
+      },
+      "result": "pass"
+    },
+    {
+      "name": "native immutable receipt layout import",
+      "pass": true,
+      "seconds": 0.1704630460590124,
+      "details": {
+        "native_metadata_recorded": true
+      },
+      "result": "pass"
+    },
+    {
+      "name": "exact receipt replay no new revision",
+      "pass": true,
+      "seconds": 0.0014830889413133264,
+      "details": null,
+      "result": "pass"
+    },
+    {
+      "name": "stable source pin/net properties after OAS snapshot",
+      "pass": true,
+      "seconds": 0.012435514945536852,
+      "details": {
+        "dbu_um": 0.001,
+        "pins": [
+          "A",
+          "IN",
+          "OUT",
+          "Y"
+        ],
+        "nets": [
+          "in",
+          "mid",
+          "out"
+        ],
+        "instances": [
+          "U2",
+          "U1"
+        ],
+        "shape_count": 14
+      },
+      "result": "pass"
+    },
+    {
+      "name": "GDS export reread preserves DBU/hierarchy/geometry",
+      "pass": true,
+      "seconds": 0.05265249602962285,
+      "details": {
+        "sha256": "19b8c2bb64786c98c6a92442be8d2d3681ec6c19b18fb4bb1b4f3484c1c39317",
+        "dbu_um": 0.001
+      },
+      "result": "pass"
+    },
+    {
+      "name": "OAS export reread preserves semantic geometry + properties",
+      "pass": true,
+      "seconds": 0.055277792969718575,
+      "details": {
+        "sha256": "a6009083415a0aff605d89ea09d35e4d1ca67504b1aea6519146a308e9da9133",
+        "dbu_um": 0.001
+      },
+      "result": "pass"
+    },
+    {
+      "name": "slash colon cell names preserve native name with safe export basename",
+      "pass": true,
+      "seconds": 0.25662267801817507,
+      "details": {
+        "cell_name": "lib/core:top$",
+        "basename": "layout.oas"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "explicit manufacturing DBU conversion",
+      "pass": true,
+      "seconds": 0.002033381024375558,
+      "details": null,
+      "result": "pass"
+    },
+    {
+      "name": "unmapped layer fail closed",
+      "pass": true,
+      "seconds": 0.0010188509477302432,
+      "details": {
+        "code": "UNMAPPED_LAYERS"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "missing explicit layer map",
+      "pass": true,
+      "seconds": 0.0008241400355473161,
+      "details": {
+        "code": "MISSING_LAYER_MAP"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "DEF missing LEF closure",
+      "pass": true,
+      "seconds": 0.000541732064448297,
+      "details": {
+        "code": "MISSING_LEF"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "basename traversal rejection",
+      "pass": true,
+      "seconds": 7.780967280268669e-06,
+      "details": {
+        "code": "UNSAFE_FILENAME"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "case collision rejection",
+      "pass": true,
+      "seconds": 1.9860919564962387e-05,
+      "details": {
+        "code": "UNSAFE_FILENAME"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "Korean basenames and quoted closure safely supported",
+      "pass": true,
+      "seconds": 0.0030104609904810786,
+      "details": {
+        "utf8_filenames": true,
+        "quoted_include": true
+      },
+      "result": "pass"
+    },
+    {
+      "name": "Tcl and quoted path metacharacters rejected",
+      "pass": true,
+      "seconds": 1.1211028322577477e-05,
+      "details": {
+        "code": "UNSAFE_FILENAME"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "RPC rejects unbounded server file references",
+      "pass": true,
+      "seconds": 7.370021194219589e-06,
+      "details": {
+        "code": "INVALID_REQUEST"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "invalid binary layout rejected by native reader",
+      "pass": true,
+      "seconds": 0.0054310361156240106,
+      "details": {
+        "code": "LAYOUT_PARSE_FAILED"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "raw OA NDM truthful converter requirement",
+      "pass": true,
+      "seconds": 0.0009518170263618231,
+      "details": null,
+      "result": "pass"
+    },
+    {
+      "name": "public SKY130 actual tech/macro LEF and DEF",
+      "pass": true,
+      "seconds": 0.043904040940105915,
+      "details": {
+        "technology_sha256": "5de46c6f7c2cf82599b93d30a6459465f770f63c85b36182c672782219938519",
+        "macro_sha256": "3a3ea4e9d0973402702764d897659e52fe3d413eb48c306cd811de40a75264fa",
+        "stored_shapes": 22,
+        "pins": [
+          "A",
+          "VGND",
+          "VNB",
+          "VPB",
+          "VPWR",
+          "Y"
+        ],
+        "dbu_um": 0.001,
+        "vendor_execution": false
+      },
+      "result": "pass"
+    },
+    {
+      "name": "explicit purpose rows distinguish drawing and pin mapping",
+      "pass": true,
+      "seconds": 0.0023699119919911027,
+      "details": {
+        "pin_layer": [
+          68,
+          16
+        ]
+      },
+      "result": "pass"
+    },
+    {
+      "name": "actual uploaded GDS macro replaces FOREIGN geometry",
+      "pass": true,
+      "seconds": 0.006767756072804332,
+      "details": {
+        "macro_layer": [
+          77,
+          3
+        ],
+        "source_dbu_um": 0.002,
+        "destination_dbu_um": 0.001,
+        "pin_bindings": {
+          "U1": {
+            "A": "in",
+            "Y": "mid"
+          },
+          "U2": {
+            "A": "mid",
+            "Y": "out"
+          }
+        }
+      },
+      "result": "pass"
+    },
+    {
+      "name": "all eight DEF orientations retained through native OAS",
+      "pass": true,
+      "seconds": 0.006442776066251099,
+      "details": {
+        "orientation_count": 8,
+        "hierarchy_hash": "298cfec452490b029b1d538509f9c726313227f5fc74722bbafc67211327dac3"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "actual scene component pins receive instance-specific nets",
+      "pass": true,
+      "seconds": 0.03964839596301317,
+      "details": {
+        "A_instance_nets": [
+          "in",
+          "mid"
+        ]
+      },
+      "result": "pass"
+    },
+    {
+      "name": "unresolved DEF macro fails rather than empty placeholder",
+      "pass": true,
+      "seconds": 0.0016673599602654576,
+      "details": {
+        "code": "UNRESOLVED_MACRO"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "actual CDL SPICE closure ordered pins exact model names",
+      "pass": true,
+      "seconds": 0.0012436850229278207,
+      "details": {
+        "native_metadata_recorded": true
+      },
+      "result": "pass"
+    },
+    {
+      "name": "CDL scopes pin direction + model exact case preserved",
+      "pass": true,
+      "seconds": 1.7599668353796005e-06,
+      "details": null,
+      "result": "pass"
+    },
+    {
+      "name": "electrical document apply preserves actual original layout",
+      "pass": true,
+      "seconds": 0.21024711895734072,
+      "details": {
+        "revision": 3,
+        "cell": "CHIP",
+        "electrical_top": "TOP"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "CDL export preserves source bytes and closure",
+      "pass": true,
+      "seconds": 0.046524693025276065,
+      "details": null,
+      "result": "pass"
+    },
+    {
+      "name": "ordinary raw layout import clears obsolete compatibility reference",
+      "pass": true,
+      "seconds": 0.2701277470914647,
+      "details": {
+        "prior_electrical_document_cleared": true
+      },
+      "result": "pass"
+    },
+    {
+      "name": "library scopes remain distinct + explicit section selection",
+      "pass": true,
+      "seconds": 0.0012453850358724594,
+      "details": {
+        "scope": "ff",
+        "pins": [
+          "Y",
+          "A"
+        ]
+      },
+      "result": "pass"
+    },
+    {
+      "name": "outside include rejected",
+      "pass": true,
+      "seconds": 0.0008885230636224151,
+      "details": {
+        "code": "UNSAFE_INCLUDE"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "continued external lib rejected",
+      "pass": true,
+      "seconds": 0.0006538400193676353,
+      "details": {
+        "code": "UNSAFE_INCLUDE"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "control script rejected no execution",
+      "pass": true,
+      "seconds": 0.0011893350165337324,
+      "details": {
+        "code": "UNSUPPORTED_NETLIST"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "XSPICE process models rejected",
+      "pass": true,
+      "seconds": 0.0009733389597386122,
+      "details": {
+        "code": "UNSAFE_NETLIST"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "node ordering preserved across wrapped subckt",
+      "pass": true,
+      "seconds": 0.0006992119597271085,
+      "details": null,
+      "result": "pass"
+    },
+    {
+      "name": "known four-terminal BJT retains substrate before model",
+      "pass": true,
+      "seconds": 0.0008407799759879708,
+      "details": null,
+      "result": "pass"
+    },
+    {
+      "name": "ambiguous external BJT terminal count rejected",
+      "pass": true,
+      "seconds": 0.0006465190090239048,
+      "details": {
+        "code": "AMBIGUOUS_BJT"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "native-only bare layout cannot invent electrical export",
+      "pass": true,
+      "seconds": 0.2423709350405261,
+      "details": {
+        "code": "NO_ELECTRICAL_REFERENCE"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "imported signed external current samples actual parser no solver claim",
+      "pass": true,
+      "seconds": 0.15798851905856282,
+      "details": {
+        "run_id": "f169220cf7cd43d198e7af16e5e67763",
+        "native_execution": false,
+        "samples_A": [
+          -0.001,
+          0.0,
+          0.001
+        ]
+      },
+      "result": "pass"
+    },
+    {
+      "name": "imported result receipt + revision freshness",
+      "pass": true,
+      "seconds": 0.11366963107138872,
+      "details": {
+        "after_revision": 4,
+        "freshness": "stale"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "explicit uA and ns units converted to SI with immutable hashes",
+      "pass": true,
+      "seconds": 0.12198769091628492,
+      "details": {
+        "samples_A": [
+          -2e-06,
+          0,
+          2e-06
+        ],
+        "x_s": [
+          0,
+          1e-09,
+          2e-09
+        ]
+      },
+      "result": "pass"
+    },
+    {
+      "name": "imported artifact SHA boundary rejects changed bytes",
+      "pass": true,
+      "seconds": 0.05237986904103309,
+      "details": {
+        "sha256": "7f7458cf1f3cfa38a0f5e0dbfbc4825eae9814352ef26bf541d96405615c8e59"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "unsafe result context execution claims rejected",
+      "pass": true,
+      "seconds": 8.040503598749638e-05,
+      "details": {
+        "code": "INVALID_RESULTS"
+      },
+      "result": "pass"
+    },
+    {
+      "name": "stale import revision precondition rejects",
+      "pass": true,
+      "seconds": 0.05940146907232702,
+      "details": {
+        "code": "REVISION_CONFLICT"
+      },
+      "result": "pass"
+    }
+  ],
+  "raw_folder": "/workspace/.runtime/evidence/interchange-33e39d69999e4e1f8239e9cc611f1cbd",
+  "source_sha256": {
+    "workers/eda/interchange.py": "c310a3f0963bfe596c2a2c35474d6d6be8f5b463a338ec915efcd3ca892ce7e8",
+    "workers/eda/server.py": "9336902d55abcfe442ff5c7dbdb231e69749fb23088428c723555bbb6db8913a",
+    "workers/eda/test_interchange.py": "d739954b92058d063e3edd07b95f99015709a1b55b19f27f98e19b2cb55330fc"
+  },
+  "vendor_execution_verified": false
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "id": "custom_compiler-site-v1",
+  "name": "Custom Compiler — operator site validation required",
+  "tool_id": "custom_compiler",
+  "version": "Site-version batch candidate; official installed manual required",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/custom_compiler",
+    "env_names": [
+      "SNPSLMD_LICENSE_FILE"
+    ],
+    "resources": {
+      "site_script": "/workspace/site/custom_compiler.tcl"
+    },
+    "recipes": {
+      "layout_export": {
+        "argv": [
+          "-batch",
+          "-file",
+          "{input.site_tcl}"
+        ],
+        "outputs": {
+          "exchange": "export.gds"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {}
+        },
+        "requires_netlist": false
+      },
+      "netlist_export": {
+        "argv": [
+          "-batch",
+          "-file",
+          "{input.site_tcl}"
+        ],
+        "outputs": {
+          "netlist": "export.spice"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {}
+        },
+        "requires_netlist": false
+      }
+    }
+  }
+}

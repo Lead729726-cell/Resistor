@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "primesim-site-v1",
+  "name": "PrimeSim — operator site validation required",
+  "tool_id": "primesim",
+  "version": "PrimeSim family-specific entry; site wrapper/manual required",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/primesim",
+    "env_names": [
+      "SNPSLMD_LICENSE_FILE"
+    ],
+    "resources": {
+      "deck": "/workspace/site/primesim.runset"
+    },
+    "recipes": {
+      "simulation": {
+        "argv": [
+          "{resource.deck}"
+        ],
+        "outputs": {
+          "waves": "waves.csv",
+          "currents": "currents.csv"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "waves": "csv"
+          }
+        },
+        "requires_netlist": false
+      }
+    }
+  }
+}

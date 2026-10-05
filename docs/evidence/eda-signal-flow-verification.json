@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-05",
+  "status": "passed",
+  "scope": "Local development build; signed terminal current/node voltage inspection and stored waveform response tests",
+  "checks": {
+    "typescript_numeric_formula_validation_regressions": 40,
+    "python_probe_lifecycle_evidence_diagnostics": 22,
+    "native_ngspice_current_voltage_compatibility_cases": 16,
+    "browser_regressions": 5,
+    "final_signal_flow_browser_rerun": 2,
+    "typecheck": "passed (tsc --noEmit in npm run build)",
+    "production_build": "passed"
+  },
+  "native_tools": {
+    "ngspice": "45.2",
+    "KLayout": "0.30.5",
+    "Magic": "8.3.582",
+    "Netgen": "1.5.313"
+  },
+  "evidence": [
+    "eda-signal-flow-native.json",
+    "eda-signal-flow-digital.json",
+    "eda-signal-flow-analog.json",
+    "eda-signal-flow-recovery.json"
+  ],
+  "recordings": [
+    "eda-signal-flow-digital.webm",
+    "eda-signal-flow-analog.webm"
+  ],
+  "limits": [
+    "Terminal current references, not conductor 3D current-density fields",
+    "Piecewise-linear interpolation of saved native samples; unrecorded sub-step pulses cannot be detected",
+    "AC phasors do not use scalar flow arrows",
+    "Existing current-only results need a new run for node voltages",
+    "Public deployment and new installer distribution not performed"
+  ],
+  "known_build_warnings": [
+    "Existing non-module appearance-init script",
+    "Existing large main bundle"
+  ],
+  "source_sha256": {
+    "packages/analysis/src/signal-flow.ts": "7d98fec0c6240f27c7668d856cfe5ce1cc7109e6de34eaf56f48e942df9c668b",
+    "packages/ui/src/SignalFlowPanel.tsx": "2c177ff350fbcd10daee8705dfa7753250a2dbb6e1758a1cc1fcd8438daab855",
+    "packages/ui/src/signal-flow.css": "58d73c1e2fb607fe84801739ae17f16d698ab45fdee1d238054cdcbcb90f3e3f",
+    "workers/eda/current_flow.py": "ab7df3aa85fb958c6903255441426dd466c1207810efd6076cae1f8b30d20941",
+    "workers/eda/server.py": "b60d544a74399b394a214436c3138c3330281c1b6b1d813800084e0e2858296a",
+    "workers/eda/job_evidence.py": "fcbdfcee94bc4d7090f7b6fec438b85d0ccc6057613de9729d74203fd793047f",
+    "workers/eda/configured_analysis.py": "c5a2e0b4f96eb6d2eb3796b3bc5b84e09f6fee6978354e1229fdf82c98d49df0",
+    "packages/contracts/src/index.ts": "ec57a3ea7de0f5a1ec96b87b438419c33b87ee07ed1ff426d5271f603bcf4aa9"
+  }
+}

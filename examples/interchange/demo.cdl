@@ -1,0 +1,15 @@
+* Synthetic CDL/SPICE grammar fixture, not simulated.
+.GLOBAL VDD VSS
+.MODEL ndev NMOS (LEVEL=1 VTO=0.7)
+.MODEL pdev PMOS (LEVEL=1 VTO=-0.7)
+.SUBCKT inv OUT IN VDD
++ VSS PARAMS: scale=1
+*.PININFO OUT:O IN:I VDD:P VSS:G
+M1 OUT IN VSS VSS ndev W=1u L=0.1u
+M2 OUT IN VDD VDD pdev W=2u L=0.1u
+R1 OUT VSS 1k
+.ENDS inv
+.SUBCKT top IN OUT VDD VSS
+Xcore OUT IN VDD VSS inv scale=2
+.ENDS top
+.END

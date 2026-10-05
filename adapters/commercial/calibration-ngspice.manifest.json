@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "id": "ngspice-calibration-v1",
+  "name": "Actual ngspice resistor transport calibration (open source)",
+  "tool_id": "ngspice",
+  "version": "45.2 calibration / site installed version",
+  "runner": {
+    "kind": "local",
+    "executable": "/foss/tools/bin/ngspice",
+    "env_names": [],
+    "resources": {
+      "deck": "/workspace/adapters/commercial/examples/resistor-calibration.spice"
+    },
+    "recipes": {
+      "simulation": {
+        "argv": [
+          "-b",
+          "{resource.deck}"
+        ],
+        "outputs": {
+          "waves": "waveform.dat",
+          "currents": "currents.dat"
+        },
+        "timeout_s": 30,
+        "parameters": {},
+        "result_context": {
+          "analysis": "op",
+          "formats": {
+            "waves": "table",
+            "currents": "table"
+          },
+          "wave_schema": {
+            "x": {
+              "column": 0,
+              "unit": "point"
+            },
+            "signals": [
+              {
+                "column": 1,
+                "name": "V(out)",
+                "unit": "V"
+              }
+            ]
+          },
+          "current_schema": {
+            "x": {
+              "column": 0,
+              "unit": "point"
+            },
+            "branches": [
+              {
+                "column": 1,
+                "id": "V1",
+                "name": "V1 source current",
+                "from_net": "out",
+                "to_net": "0",
+                "unit": "A",
+                "source_vector": "i(V1)"
+              },
+              {
+                "column": 2,
+                "id": "R1",
+                "name": "R1 resistor current",
+                "from_net": "out",
+                "to_net": "0",
+                "unit": "A",
+                "source_vector": "v(out)/1000"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

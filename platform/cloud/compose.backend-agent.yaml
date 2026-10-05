@@ -1,0 +1,14 @@
+# Optional authenticated native-agent egress. The default EDA network is internal.
+# Set REGISTER_AGENT_TOKEN_FILE to a private file; values never appear in YAML.
+services:
+  eda:
+    networks:
+      - private
+      - native-egress
+    volumes:
+      - type: bind
+        source: ${REGISTER_AGENT_TOKEN_FILE:?Set the private agent token FILE path}
+        target: /run/secrets/commercial_agent
+        read_only: true
+networks:
+  native-egress: {}

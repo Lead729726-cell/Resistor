@@ -1,0 +1,105 @@
+{
+  "id": "367df97076d349e083c432c9854cbf03",
+  "project_id": "b91e8b9ee0b34bdeb1c2979974d9b7bb",
+  "kind": "simulation",
+  "workflow": "commercial-backend",
+  "backend_profile_id": "ngspice-calibration-v1",
+  "tool": "ngspice",
+  "revision": 4,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "freshness": "current",
+  "artifacts": {
+    "waves": "/workspace/.runtime/eda/runs/367df97076d349e083c432c9854cbf03/outputs/waveform.dat",
+    "currents": "/workspace/.runtime/eda/runs/367df97076d349e083c432c9854cbf03/outputs/currents.dat",
+    "stdout": "/workspace/.runtime/eda/runs/367df97076d349e083c432c9854cbf03/stdout.log"
+  },
+  "manifest_path": "/workspace/.runtime/eda/runs/367df97076d349e083c432c9854cbf03/manifest.json",
+  "input_signature": "489412d0da42b124568b292b72119efcc3d2a7000a7e2143370f35c90fcf9e45",
+  "started_at": "2026-10-01T04:56:09.592658+00:00",
+  "message": "Parsed explicit text result evidence; vendor execution/license verification is recorded separately. No physical current path inferred.",
+  "waveforms": [
+    {
+      "name": "V(out)",
+      "unit": "V",
+      "x": [
+        1
+      ],
+      "y": [
+        1
+      ],
+      "x_unit": "point"
+    }
+  ],
+  "measurements": {
+    "result_parser": "register-commercial-results-v1",
+    "current_path_mapping": "unmapped"
+  },
+  "current_flow": {
+    "schema_version": 1,
+    "source": "ngspice",
+    "analysis": "op",
+    "x": [
+      1
+    ],
+    "x_unit": "point",
+    "branches": [
+      {
+        "id": "V1",
+        "name": "V1 source current",
+        "from_net": "out",
+        "to_net": "0",
+        "values_A": [
+          -0.001
+        ],
+        "mapping": "unmapped",
+        "source_vector": "i(V1)"
+      },
+      {
+        "id": "R1",
+        "name": "R1 resistor current",
+        "from_net": "out",
+        "to_net": "0",
+        "values_A": [
+          0.001
+        ],
+        "mapping": "unmapped",
+        "source_vector": "v(out)/1000"
+      }
+    ],
+    "convention": "conventional",
+    "revision": 4,
+    "geometry_linkage": "unverified",
+    "notes": [
+      "Explicit operator column schema; no conductor path or current density inferred.",
+      "Electrical result has no verified correspondence to this GDS/OAS layout; numeric branch samples only.",
+      "Execution input origin: operator-recipe"
+    ],
+    "project_id": "b91e8b9ee0b34bdeb1c2979974d9b7bb",
+    "run_id": "367df97076d349e083c432c9854cbf03",
+    "backend_profile_id": "ngspice-calibration-v1",
+    "input_origin": "operator-recipe",
+    "tool": "ngspice"
+  },
+  "parser_provenance": {
+    "adapter": "register-commercial-results-v1",
+    "vendor_execution_verified": false,
+    "files": {
+      "waves": {
+        "path": "waveform.dat",
+        "sha256": "b04d404c70287e6931cf2d8cde9fe9571a81b9e916be1dabfae3ca28a06cb6e6",
+        "bytes": 33,
+        "format": "table"
+      },
+      "currents": {
+        "path": "currents.dat",
+        "sha256": "3c5299ef9c5f9862cbc7550699f06babefd1b21b8615bfe29fe6e9345e0b00a8",
+        "bytes": 49,
+        "format": "table"
+      }
+    },
+    "diagnostics": []
+  },
+  "ended_at": "2026-10-01T04:56:10.125081+00:00",
+  "elapsed_s": 0.5581271760165691
+}

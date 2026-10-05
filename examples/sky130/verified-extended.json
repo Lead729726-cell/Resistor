@@ -1,0 +1,2615 @@
+{
+  "schema_version": 2,
+  "recorded_at": "2026-09-30T10:25:49.744Z",
+  "product": "Register",
+  "toolchain": {
+    "protocol_version": 1,
+    "runner": "linux-docker",
+    "tools": [
+      {
+        "name": "ngspice",
+        "path": "/foss/tools/bin/ngspice",
+        "version": "** ngspice-45.2 : Circuit level simulation program",
+        "available": true
+      },
+      {
+        "name": "KLayout",
+        "path": "/usr/bin/python3",
+        "version": "0.30.5",
+        "available": true
+      },
+      {
+        "name": "Magic",
+        "path": "/foss/tools/bin/magic",
+        "version": "8.3.582",
+        "available": true
+      },
+      {
+        "name": "Netgen",
+        "path": "/foss/tools/bin/netgen",
+        "version": "Netgen 1.5.313 compiled on Sun Dec 21 07:48:15 PM CET 2025",
+        "available": true
+      },
+      {
+        "name": "Xschem",
+        "path": "/foss/tools/bin/xschem",
+        "version": "XSCHEM V3.4.8RC",
+        "available": true
+      }
+    ],
+    "pdk": {
+      "id": "sky130A",
+      "available": true,
+      "path": "/foss/pdks/sky130A",
+      "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb",
+      "capabilities": {
+        "simulation": true,
+        "drc": true,
+        "lvs": true,
+        "pex": true,
+        "mos_pcell": true
+      },
+      "supported_devices": [
+        "sky130_fd_pr__nfet_01v8",
+        "sky130_fd_pr__pfet_01v8_hvt"
+      ],
+      "supported_corners": [
+        "tt",
+        "ff",
+        "ss"
+      ],
+      "supported_analyses": [
+        "tran",
+        "dc",
+        "ac",
+        "op"
+      ],
+      "supported_vias": [
+        "via1",
+        "via2"
+      ],
+      "supported_templates": [
+        "inverter",
+        "mosfet",
+        "wire",
+        "current_mirror",
+        "differential_pair"
+      ],
+      "experiment_scope": {
+        "algorithms": [
+          "grid",
+          "random",
+          "tpe"
+        ],
+        "device": "single-MOS nf=m=1",
+        "max_trials": 16,
+        "max_concurrent": 2,
+        "wall_time_s": [
+          60,
+          1800
+        ],
+        "gates": [
+          "Magic DRC",
+          "Netgen LVS",
+          "ngspice DC"
+        ]
+      },
+      "xschem_bridge_scope": "flat public MOS/R/C/source symbols; native hierarchical SPICE separately verified",
+      "pex_scope": {
+        "connectivity": true,
+        "ground_capacitance": true,
+        "coupling_capacitance": true,
+        "distributed_resistance": true
+      },
+      "limits": [
+        "Public Magic drc(full) deck; no foundry signoff.",
+        "MOS PCell parameter regeneration is tested for nf=1, m=1.",
+        "Inverter uses fixed public inv_1 layout; schematic edits require explicit layout work and revalidation.",
+        "No TCAD or physically sourced process reconstruction stack."
+      ]
+    },
+    "geometry": {
+      "engine": "KLayout",
+      "coordinate_bits": 32,
+      "dbu_um": 0.001,
+      "grid_dbu": 5
+    },
+    "runtime_image": "hpretl/iic-osic-tools@sha256:92961478ad3c4f508efb42d9ccdba12ab262eb42a14926d2bd49862230ba8521"
+  },
+  "baseline_evidence": "verified-baseline.json",
+  "baseline_case_count": 17,
+  "baseline_advanced_count": 8,
+  "extended_case_count": 56,
+  "sections": {
+    "extensions": {
+      "source": ".runtime/evidence/extensions.json",
+      "sha256": "87f05e5301dbc9e2bad6808bc00469651e5559c57d4a29cf3297cc9a4cb28fb3",
+      "case_count": 4,
+      "cases": [
+        {
+          "case": "atomic revision, idempotence, monotonic undo/redo",
+          "result": "pass"
+        },
+        {
+          "case": "polygons holes path labels pins rotated mirrored arrays and exchange",
+          "result": "pass",
+          "shape_count": 19
+        },
+        {
+          "case": "self intersection hierarchy cycle coordinate overflow rejected",
+          "result": "pass"
+        },
+        {
+          "case": "immutable checksummed bundle clone replace dedup restore rewind rejection",
+          "result": "pass",
+          "bundle_sha256": "04110bd03a5dad127e4be2456eaba0460fc633050713aa42c50a31b540d586a5"
+        }
+      ]
+    },
+    "native-extended": {
+      "source": ".runtime/evidence/native-extended.json",
+      "sha256": "fa2f43797963d5d08763e11ac014e526b47359c298dd71ce7aff4ed92e944b16",
+      "case_count": 12,
+      "cases": [
+        {
+          "case": "exact pin contact and explicit crossing junctions; wire movement/copy",
+          "result": "pass"
+        },
+        {
+          "case": "hierarchical native emission actual ngspice and Netgen flatten-equivalence",
+          "result": "pass",
+          "run_id": "44be0c682e3f4a21a9645e37f71174fe",
+          "lvs_run_id": "c6871bb1846b4eda8611f38a552fb703"
+        },
+        {
+          "case": "actual MOS tt dc",
+          "result": "pass",
+          "run_id": "12535604321f4a489f72a2a946fe3a99",
+          "measurements": {
+            "analysis": "dc",
+            "x_unit": "V",
+            "x_label": "Vgs",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 181,
+            "Vgs_min": 0,
+            "Vgs_max": 1.8,
+            "Id_min": 1.92563831e-12,
+            "Id_max": 0.00033464188,
+            "gm_sampled_max": 0.00034674814999999964,
+            "derivative_method": "Finite difference of actual ngspice DC samples."
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/12535604321f4a489f72a2a946fe3a99/manifest.json"
+        },
+        {
+          "case": "actual MOS tt ac",
+          "result": "pass",
+          "run_id": "69e9bd62f40b4cd483e3331193a85d22",
+          "measurements": {
+            "analysis": "ac",
+            "x_unit": "Hz",
+            "x_label": "frequency",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 271,
+            "gain_magnitude_min": 0.000251645388,
+            "gain_magnitude_max": 0.000251653133,
+            "phase_min": -0.00784196143,
+            "phase_max": -7.84212242e-12
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/69e9bd62f40b4cd483e3331193a85d22/manifest.json"
+        },
+        {
+          "case": "actual MOS tt op",
+          "result": "pass",
+          "run_id": "d14c1d9e25d64e659d032641c1dadb65",
+          "measurements": {
+            "analysis": "op",
+            "x_unit": "point",
+            "x_label": "OP",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 1,
+            "Vgs_min": 0.9,
+            "Vgs_max": 0.9,
+            "Id_min": 0.0000362401346,
+            "Id_max": 0.0000362401346,
+            "gm_min": 0.000251572208,
+            "gm_max": 0.000251572208,
+            "gds_min": 0.0000119507726,
+            "gds_max": 0.0000119507726,
+            "vth_min": 0.757798431,
+            "vth_max": 0.757798431,
+            "vdsat_min": 0.132432197,
+            "vdsat_max": 0.132432197,
+            "Vgs": 0.9,
+            "Id": 0.0000362401346,
+            "gm": 0.000251572208,
+            "gds": 0.0000119507726,
+            "vth": 0.757798431,
+            "vdsat": 0.132432197,
+            "region_estimate": "saturation",
+            "region_method": "Inferred from native BSIM operating-point Vth/Vdsat and applied biases; not a TCAD region classification."
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/d14c1d9e25d64e659d032641c1dadb65/manifest.json"
+        },
+        {
+          "case": "actual MOS ff dc",
+          "result": "pass",
+          "run_id": "f1037405c3374354ace8ebfc30fd5d0a",
+          "measurements": {
+            "analysis": "dc",
+            "x_unit": "V",
+            "x_label": "Vgs",
+            "corner": "ff",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 181,
+            "Vgs_min": 0,
+            "Vgs_max": 1.8,
+            "Id_min": 4.9785691e-12,
+            "Id_max": 0.000413552843,
+            "gm_sampled_max": 0.0003777233249999994,
+            "derivative_method": "Finite difference of actual ngspice DC samples."
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/f1037405c3374354ace8ebfc30fd5d0a/manifest.json"
+        },
+        {
+          "case": "actual MOS ff ac",
+          "result": "pass",
+          "run_id": "6d5742421f5c438dad1749c6c704e011",
+          "measurements": {
+            "analysis": "ac",
+            "x_unit": "Hz",
+            "x_label": "frequency",
+            "corner": "ff",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 271,
+            "gain_magnitude_min": 0.000377521886,
+            "gain_magnitude_max": 0.000377527346,
+            "phase_min": -0.00537515759,
+            "phase_max": -5.37520945e-12
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/6d5742421f5c438dad1749c6c704e011/manifest.json"
+        },
+        {
+          "case": "actual MOS ff op",
+          "result": "pass",
+          "run_id": "c620747c61e04319befcbbe088788434",
+          "measurements": {
+            "analysis": "op",
+            "x_unit": "point",
+            "x_label": "OP",
+            "corner": "ff",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 1,
+            "Vgs_min": 0.9,
+            "Vgs_max": 0.9,
+            "Id_min": 0.0000905766653,
+            "Id_max": 0.0000905766653,
+            "gm_min": 0.000377409371,
+            "gm_max": 0.000377409371,
+            "gds_min": 0.0000300486473,
+            "gds_max": 0.0000300486473,
+            "vth_min": 0.675873233,
+            "vth_max": 0.675873233,
+            "vdsat_min": 0.137291788,
+            "vdsat_max": 0.137291788,
+            "Vgs": 0.9,
+            "Id": 0.0000905766653,
+            "gm": 0.000377409371,
+            "gds": 0.0000300486473,
+            "vth": 0.675873233,
+            "vdsat": 0.137291788,
+            "region_estimate": "saturation",
+            "region_method": "Inferred from native BSIM operating-point Vth/Vdsat and applied biases; not a TCAD region classification."
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/c620747c61e04319befcbbe088788434/manifest.json"
+        },
+        {
+          "case": "actual MOS ss dc",
+          "result": "pass",
+          "run_id": "854cde8cf00b43469ad0f6d9cca25f81",
+          "measurements": {
+            "analysis": "dc",
+            "x_unit": "V",
+            "x_label": "Vgs",
+            "corner": "ss",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 181,
+            "Vgs_min": 0,
+            "Vgs_max": 1.8,
+            "Id_min": 1.81452401e-12,
+            "Id_max": 0.000256352912,
+            "gm_sampled_max": 0.00034397560000000037,
+            "derivative_method": "Finite difference of actual ngspice DC samples."
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/854cde8cf00b43469ad0f6d9cca25f81/manifest.json"
+        },
+        {
+          "case": "actual MOS ss ac",
+          "result": "pass",
+          "run_id": "e200096f7a2f40c7b814e443fc40cf98",
+          "measurements": {
+            "analysis": "ac",
+            "x_unit": "Hz",
+            "x_label": "frequency",
+            "corner": "ss",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 271,
+            "gain_magnitude_min": 0.00010454436,
+            "gain_magnitude_max": 0.000104561509,
+            "phase_min": -0.018106578,
+            "phase_max": -1.81085585e-11
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/e200096f7a2f40c7b814e443fc40cf98/manifest.json"
+        },
+        {
+          "case": "actual MOS ss op",
+          "result": "pass",
+          "run_id": "6285006ade5b405ea0c12d2b6d0b0ccb",
+          "measurements": {
+            "analysis": "op",
+            "x_unit": "point",
+            "x_label": "OP",
+            "corner": "ss",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 1,
+            "Vgs_min": 0.9,
+            "Vgs_max": 0.9,
+            "Id_min": 0.00000987142801,
+            "Id_max": 0.00000987142801,
+            "gm_min": 0.000104506485,
+            "gm_max": 0.000104506485,
+            "gds_min": 0.00000339159244,
+            "gds_max": 0.00000339159244,
+            "vth_min": 0.835891826,
+            "vth_max": 0.835891826,
+            "vdsat_min": 0.107374765,
+            "vdsat_max": 0.107374765,
+            "Vgs": 0.9,
+            "Id": 0.00000987142801,
+            "gm": 0.000104506485,
+            "gds": 0.00000339159244,
+            "vth": 0.835891826,
+            "vdsat": 0.107374765,
+            "region_estimate": "saturation",
+            "region_method": "Inferred from native BSIM operating-point Vth/Vdsat and applied biases; not a TCAD region classification."
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/6285006ade5b405ea0c12d2b6d0b0ccb/manifest.json"
+        },
+        {
+          "case": "persisted testbench fallback and exactly-once native submission",
+          "result": "pass",
+          "run_id": "c55c3d0421864a9ca8d91708a7597b6d",
+          "measurements": {
+            "analysis": "dc",
+            "x_unit": "V",
+            "x_label": "Vgs",
+            "corner": "ss",
+            "temperature_C": 125,
+            "supply_V": 1.2,
+            "post_layout": "false",
+            "samples": 121,
+            "Vgs_min": 0,
+            "Vgs_max": 1.2,
+            "Id_min": 2.38067364e-12,
+            "Id_max": 0.0000570457203,
+            "gm_sampled_max": 0.0001945781899999995,
+            "derivative_method": "Finite difference of actual ngspice DC samples."
+          }
+        }
+      ]
+    },
+    "optimizer": {
+      "source": ".runtime/evidence/optimizer.json",
+      "sha256": "9d3f2499ff5d9cf3ca6bf99f73c9ae2ca47bb0c18a0d17a75d79e04836c96d45",
+      "case_count": 7,
+      "cases": [
+        {
+          "case": "grid",
+          "result": "pass",
+          "experiment": {
+            "id": "babdd17d29764a309dac4763924cfa2b",
+            "project_id": "5e51326a93234ca7896cce45c4d245d1",
+            "source_revision": 1,
+            "execution_status": "completed",
+            "algorithm": "grid",
+            "variables": [
+              {
+                "device_id": "mn1",
+                "parameter": "w_um",
+                "min": 0.65,
+                "max": 1.3,
+                "steps": 3
+              }
+            ],
+            "objective": {
+              "metric": "Id_max",
+              "goal": "maximize"
+            },
+            "constraints": [],
+            "trial_budget": 3,
+            "seed": 47,
+            "settings": {
+              "analysis": "dc",
+              "corner": "tt",
+              "temperature_C": 27,
+              "supply_V": 1.8,
+              "duration_s": 3e-8,
+              "step_s": 2e-11,
+              "load_F": 5e-15,
+              "vds_V": 1.8,
+              "vbs_V": 0
+            },
+            "trials": [
+              {
+                "id": "728b5a648e264cf3a1ef10f6da283e42",
+                "index": 0,
+                "values": [
+                  0.65
+                ],
+                "parameters": {
+                  "w_um": 0.65
+                },
+                "feasible": true,
+                "score": 0.00033464188,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "4275f97a72924100831e2acc3e6e60a7",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/4275f97a72924100831e2acc3e6e60a7/manifest.json"
+                  },
+                  {
+                    "id": "45c288c9c58d4b6d91d520463010e28f",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/45c288c9c58d4b6d91d520463010e28f/manifest.json"
+                  },
+                  {
+                    "id": "337d0bf9e8e64dd882d33db1962c6be6",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/337d0bf9e8e64dd882d33db1962c6be6/manifest.json"
+                  }
+                ],
+                "project_id": "d2679d391bd946449c2cdbc61834ef43",
+                "candidate_project_id": "d2679d391bd946449c2cdbc61834ef43",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.00033464188,
+                  "Id_min": 1.92563831e-12,
+                  "area_um2": 5.279999999999999,
+                  "power_W": 0.000602355384
+                },
+                "measurements": {
+                  "Id_max": 0.00033464188,
+                  "Id_min": 1.92563831e-12,
+                  "area_um2": 5.279999999999999,
+                  "power_W": 0.000602355384
+                },
+                "reason": "Actual gates and objective constraints passed."
+              },
+              {
+                "id": "1b12dbf9325e446582f067e3da08a66f",
+                "index": 1,
+                "values": [
+                  0.975
+                ],
+                "parameters": {
+                  "w_um": 0.975
+                },
+                "feasible": true,
+                "score": 0.000486421117,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "b1ec9e46255840f8a9831a92cad36f3e",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/b1ec9e46255840f8a9831a92cad36f3e/manifest.json"
+                  },
+                  {
+                    "id": "589b3cbe5ff74b6183a779db93476006",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/589b3cbe5ff74b6183a779db93476006/manifest.json"
+                  },
+                  {
+                    "id": "11bb8d30afd84e999d5ee47709e1a3df",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/11bb8d30afd84e999d5ee47709e1a3df/manifest.json"
+                  }
+                ],
+                "project_id": "cf044a8f1a9240d982cddf54e7920516",
+                "candidate_project_id": "cf044a8f1a9240d982cddf54e7920516",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000486421117,
+                  "Id_min": 2.01723504e-12,
+                  "area_um2": 5.9399999999999995,
+                  "power_W": 0.0008755580106
+                },
+                "measurements": {
+                  "Id_max": 0.000486421117,
+                  "Id_min": 2.01723504e-12,
+                  "area_um2": 5.9399999999999995,
+                  "power_W": 0.0008755580106
+                },
+                "reason": "Actual gates and objective constraints passed."
+              },
+              {
+                "id": "dfe06fd3608f46df8796949fa28a602f",
+                "index": 2,
+                "values": [
+                  1.3
+                ],
+                "parameters": {
+                  "w_um": 1.3
+                },
+                "feasible": true,
+                "score": 0.000645134729,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "6ce62ae891d94049bd9271c198253f12",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/6ce62ae891d94049bd9271c198253f12/manifest.json"
+                  },
+                  {
+                    "id": "2bedc7394cf44c21958c7e294369f6fc",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/2bedc7394cf44c21958c7e294369f6fc/manifest.json"
+                  },
+                  {
+                    "id": "cb5d26b415d74d9a9aade21b9aac0319",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/cb5d26b415d74d9a9aade21b9aac0319/manifest.json"
+                  }
+                ],
+                "project_id": "da6ef14de9b3493e9f4c7f0192e535a7",
+                "candidate_project_id": "da6ef14de9b3493e9f4c7f0192e535a7",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000645134729,
+                  "Id_min": 1.97241491e-12,
+                  "area_um2": 6.58,
+                  "power_W": 0.0011612425122000001
+                },
+                "measurements": {
+                  "Id_max": 0.000645134729,
+                  "Id_min": 1.97241491e-12,
+                  "area_um2": 6.58,
+                  "power_W": 0.0011612425122000001
+                },
+                "reason": "Actual gates and objective constraints passed."
+              }
+            ],
+            "created_at": "2026-09-30T09:13:04.083914+00:00",
+            "active_run_ids": [],
+            "limits": [
+              "MOS nf=m=1; actual PCell regeneration, Magic DRC, Netgen LVS and ngspice DC required for every feasible candidate.",
+              "area_um2 is the actual layout bounding-box footprint; power_W is Vds times maximum sampled drain current.",
+              "TPE is a local seeded univariate Parzen density search; no cloud/AI service or fabricated evaluation."
+            ],
+            "started_at": "2026-09-30T09:13:04.100250+00:00",
+            "ended_at": "2026-09-30T09:13:21.362149+00:00",
+            "best_trial_id": "dfe06fd3608f46df8796949fa28a602f"
+          },
+          "comparison": {
+            "experiment_id": "babdd17d29764a309dac4763924cfa2b",
+            "objective": {
+              "metric": "Id_max",
+              "goal": "maximize"
+            },
+            "trials": [
+              {
+                "id": "dfe06fd3608f46df8796949fa28a602f",
+                "index": 2,
+                "values": [
+                  1.3
+                ],
+                "parameters": {
+                  "w_um": 1.3
+                },
+                "feasible": true,
+                "score": 0.000645134729,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "6ce62ae891d94049bd9271c198253f12",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/6ce62ae891d94049bd9271c198253f12/manifest.json"
+                  },
+                  {
+                    "id": "2bedc7394cf44c21958c7e294369f6fc",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/2bedc7394cf44c21958c7e294369f6fc/manifest.json"
+                  },
+                  {
+                    "id": "cb5d26b415d74d9a9aade21b9aac0319",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/cb5d26b415d74d9a9aade21b9aac0319/manifest.json"
+                  }
+                ],
+                "project_id": "da6ef14de9b3493e9f4c7f0192e535a7",
+                "candidate_project_id": "da6ef14de9b3493e9f4c7f0192e535a7",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000645134729,
+                  "Id_min": 1.97241491e-12,
+                  "area_um2": 6.58,
+                  "power_W": 0.0011612425122000001
+                },
+                "measurements": {
+                  "Id_max": 0.000645134729,
+                  "Id_min": 1.97241491e-12,
+                  "area_um2": 6.58,
+                  "power_W": 0.0011612425122000001
+                },
+                "reason": "Actual gates and objective constraints passed."
+              },
+              {
+                "id": "1b12dbf9325e446582f067e3da08a66f",
+                "index": 1,
+                "values": [
+                  0.975
+                ],
+                "parameters": {
+                  "w_um": 0.975
+                },
+                "feasible": true,
+                "score": 0.000486421117,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "b1ec9e46255840f8a9831a92cad36f3e",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/b1ec9e46255840f8a9831a92cad36f3e/manifest.json"
+                  },
+                  {
+                    "id": "589b3cbe5ff74b6183a779db93476006",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/589b3cbe5ff74b6183a779db93476006/manifest.json"
+                  },
+                  {
+                    "id": "11bb8d30afd84e999d5ee47709e1a3df",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/11bb8d30afd84e999d5ee47709e1a3df/manifest.json"
+                  }
+                ],
+                "project_id": "cf044a8f1a9240d982cddf54e7920516",
+                "candidate_project_id": "cf044a8f1a9240d982cddf54e7920516",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000486421117,
+                  "Id_min": 2.01723504e-12,
+                  "area_um2": 5.9399999999999995,
+                  "power_W": 0.0008755580106
+                },
+                "measurements": {
+                  "Id_max": 0.000486421117,
+                  "Id_min": 2.01723504e-12,
+                  "area_um2": 5.9399999999999995,
+                  "power_W": 0.0008755580106
+                },
+                "reason": "Actual gates and objective constraints passed."
+              },
+              {
+                "id": "728b5a648e264cf3a1ef10f6da283e42",
+                "index": 0,
+                "values": [
+                  0.65
+                ],
+                "parameters": {
+                  "w_um": 0.65
+                },
+                "feasible": true,
+                "score": 0.00033464188,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "4275f97a72924100831e2acc3e6e60a7",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/4275f97a72924100831e2acc3e6e60a7/manifest.json"
+                  },
+                  {
+                    "id": "45c288c9c58d4b6d91d520463010e28f",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/45c288c9c58d4b6d91d520463010e28f/manifest.json"
+                  },
+                  {
+                    "id": "337d0bf9e8e64dd882d33db1962c6be6",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/337d0bf9e8e64dd882d33db1962c6be6/manifest.json"
+                  }
+                ],
+                "project_id": "d2679d391bd946449c2cdbc61834ef43",
+                "candidate_project_id": "d2679d391bd946449c2cdbc61834ef43",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.00033464188,
+                  "Id_min": 1.92563831e-12,
+                  "area_um2": 5.279999999999999,
+                  "power_W": 0.000602355384
+                },
+                "measurements": {
+                  "Id_max": 0.00033464188,
+                  "Id_min": 1.92563831e-12,
+                  "area_um2": 5.279999999999999,
+                  "power_W": 0.000602355384
+                },
+                "reason": "Actual gates and objective constraints passed."
+              }
+            ],
+            "best_trial_id": "dfe06fd3608f46df8796949fa28a602f",
+            "source": "actual-native-gated-evaluations"
+          }
+        },
+        {
+          "case": "random",
+          "result": "pass",
+          "experiment": {
+            "id": "220dce42b5174fd2a4e656be5abf148f",
+            "project_id": "5e51326a93234ca7896cce45c4d245d1",
+            "source_revision": 1,
+            "execution_status": "completed",
+            "algorithm": "random",
+            "variables": [
+              {
+                "device_id": "mn1",
+                "parameter": "w_um",
+                "min": 0.65,
+                "max": 1.3,
+                "steps": 3
+              }
+            ],
+            "objective": {
+              "metric": "Id_max",
+              "goal": "maximize"
+            },
+            "constraints": [],
+            "trial_budget": 2,
+            "seed": 47,
+            "settings": {
+              "analysis": "dc",
+              "corner": "tt",
+              "temperature_C": 27,
+              "supply_V": 1.8,
+              "duration_s": 3e-8,
+              "step_s": 2e-11,
+              "load_F": 5e-15,
+              "vds_V": 1.8,
+              "vbs_V": 0
+            },
+            "trials": [
+              {
+                "id": "e141ab66bb9542108f2c119617663548",
+                "index": 0,
+                "values": [
+                  0.88
+                ],
+                "parameters": {
+                  "w_um": 0.88
+                },
+                "feasible": true,
+                "score": 0.000430707924,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "88668a799566427e99d9909f40557da7",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/88668a799566427e99d9909f40557da7/manifest.json"
+                  },
+                  {
+                    "id": "cca3b9f6f39d427fbe778492f41330f3",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/cca3b9f6f39d427fbe778492f41330f3/manifest.json"
+                  },
+                  {
+                    "id": "02b8f141d18841eeaf6ae02fb54b7b2e",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/02b8f141d18841eeaf6ae02fb54b7b2e/manifest.json"
+                  }
+                ],
+                "project_id": "262ca7218e544c319eec41395e423835",
+                "candidate_project_id": "262ca7218e544c319eec41395e423835",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000430707924,
+                  "Id_min": 1.92533867e-12,
+                  "area_um2": 5.739999999999999,
+                  "power_W": 0.0007752742632
+                },
+                "measurements": {
+                  "Id_max": 0.000430707924,
+                  "Id_min": 1.92533867e-12,
+                  "area_um2": 5.739999999999999,
+                  "power_W": 0.0007752742632
+                },
+                "reason": "Actual gates and objective constraints passed."
+              },
+              {
+                "id": "a41806913bc44e83b99f963f94e2184d",
+                "index": 1,
+                "values": [
+                  0.93
+                ],
+                "parameters": {
+                  "w_um": 0.93
+                },
+                "feasible": true,
+                "score": 0.000460061383,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "646ce59369e54d388cf15ad1b4415f04",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/646ce59369e54d388cf15ad1b4415f04/manifest.json"
+                  },
+                  {
+                    "id": "cf0eb7e95d7e45d78db4f61eeb9a60dc",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/cf0eb7e95d7e45d78db4f61eeb9a60dc/manifest.json"
+                  },
+                  {
+                    "id": "8349d70c035f42be9b9c63b100b57750",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/8349d70c035f42be9b9c63b100b57750/manifest.json"
+                  }
+                ],
+                "project_id": "4fdfa2bda20142d0be16f8731fe552b9",
+                "candidate_project_id": "4fdfa2bda20142d0be16f8731fe552b9",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000460061383,
+                  "Id_min": 1.97007843e-12,
+                  "area_um2": 5.84,
+                  "power_W": 0.0008281104894
+                },
+                "measurements": {
+                  "Id_max": 0.000460061383,
+                  "Id_min": 1.97007843e-12,
+                  "area_um2": 5.84,
+                  "power_W": 0.0008281104894
+                },
+                "reason": "Actual gates and objective constraints passed."
+              }
+            ],
+            "created_at": "2026-09-30T09:13:21.752396+00:00",
+            "active_run_ids": [],
+            "limits": [
+              "MOS nf=m=1; actual PCell regeneration, Magic DRC, Netgen LVS and ngspice DC required for every feasible candidate.",
+              "area_um2 is the actual layout bounding-box footprint; power_W is Vds times maximum sampled drain current.",
+              "TPE is a local seeded univariate Parzen density search; no cloud/AI service or fabricated evaluation."
+            ],
+            "started_at": "2026-09-30T09:13:21.767094+00:00",
+            "ended_at": "2026-09-30T09:13:33.045247+00:00",
+            "best_trial_id": "a41806913bc44e83b99f963f94e2184d"
+          },
+          "comparison": {
+            "experiment_id": "220dce42b5174fd2a4e656be5abf148f",
+            "objective": {
+              "metric": "Id_max",
+              "goal": "maximize"
+            },
+            "trials": [
+              {
+                "id": "a41806913bc44e83b99f963f94e2184d",
+                "index": 1,
+                "values": [
+                  0.93
+                ],
+                "parameters": {
+                  "w_um": 0.93
+                },
+                "feasible": true,
+                "score": 0.000460061383,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "646ce59369e54d388cf15ad1b4415f04",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/646ce59369e54d388cf15ad1b4415f04/manifest.json"
+                  },
+                  {
+                    "id": "cf0eb7e95d7e45d78db4f61eeb9a60dc",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/cf0eb7e95d7e45d78db4f61eeb9a60dc/manifest.json"
+                  },
+                  {
+                    "id": "8349d70c035f42be9b9c63b100b57750",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/8349d70c035f42be9b9c63b100b57750/manifest.json"
+                  }
+                ],
+                "project_id": "4fdfa2bda20142d0be16f8731fe552b9",
+                "candidate_project_id": "4fdfa2bda20142d0be16f8731fe552b9",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000460061383,
+                  "Id_min": 1.97007843e-12,
+                  "area_um2": 5.84,
+                  "power_W": 0.0008281104894
+                },
+                "measurements": {
+                  "Id_max": 0.000460061383,
+                  "Id_min": 1.97007843e-12,
+                  "area_um2": 5.84,
+                  "power_W": 0.0008281104894
+                },
+                "reason": "Actual gates and objective constraints passed."
+              },
+              {
+                "id": "e141ab66bb9542108f2c119617663548",
+                "index": 0,
+                "values": [
+                  0.88
+                ],
+                "parameters": {
+                  "w_um": 0.88
+                },
+                "feasible": true,
+                "score": 0.000430707924,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "88668a799566427e99d9909f40557da7",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/88668a799566427e99d9909f40557da7/manifest.json"
+                  },
+                  {
+                    "id": "cca3b9f6f39d427fbe778492f41330f3",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/cca3b9f6f39d427fbe778492f41330f3/manifest.json"
+                  },
+                  {
+                    "id": "02b8f141d18841eeaf6ae02fb54b7b2e",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/02b8f141d18841eeaf6ae02fb54b7b2e/manifest.json"
+                  }
+                ],
+                "project_id": "262ca7218e544c319eec41395e423835",
+                "candidate_project_id": "262ca7218e544c319eec41395e423835",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000430707924,
+                  "Id_min": 1.92533867e-12,
+                  "area_um2": 5.739999999999999,
+                  "power_W": 0.0007752742632
+                },
+                "measurements": {
+                  "Id_max": 0.000430707924,
+                  "Id_min": 1.92533867e-12,
+                  "area_um2": 5.739999999999999,
+                  "power_W": 0.0007752742632
+                },
+                "reason": "Actual gates and objective constraints passed."
+              }
+            ],
+            "best_trial_id": "a41806913bc44e83b99f963f94e2184d",
+            "source": "actual-native-gated-evaluations"
+          }
+        },
+        {
+          "case": "tpe",
+          "result": "pass",
+          "experiment": {
+            "id": "f27bc13031694fb6a30d6b2ec0237146",
+            "project_id": "5e51326a93234ca7896cce45c4d245d1",
+            "source_revision": 1,
+            "execution_status": "completed",
+            "algorithm": "tpe",
+            "variables": [
+              {
+                "device_id": "mn1",
+                "parameter": "w_um",
+                "min": 0.65,
+                "max": 1.3,
+                "steps": 3
+              }
+            ],
+            "objective": {
+              "metric": "Id_max",
+              "goal": "maximize"
+            },
+            "constraints": [],
+            "trial_budget": 4,
+            "seed": 47,
+            "settings": {
+              "analysis": "dc",
+              "corner": "tt",
+              "temperature_C": 27,
+              "supply_V": 1.8,
+              "duration_s": 3e-8,
+              "step_s": 2e-11,
+              "load_F": 5e-15,
+              "vds_V": 1.8,
+              "vbs_V": 0
+            },
+            "trials": [
+              {
+                "id": "ecd6a666f2af47738adf0ceb478aeb18",
+                "index": 0,
+                "values": [
+                  0.88
+                ],
+                "parameters": {
+                  "w_um": 0.88
+                },
+                "feasible": true,
+                "score": 0.000430707924,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "412ef05982ab428297febbe6c8862544",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/412ef05982ab428297febbe6c8862544/manifest.json"
+                  },
+                  {
+                    "id": "244a33050a3a46aab434ea6d035fc88c",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/244a33050a3a46aab434ea6d035fc88c/manifest.json"
+                  },
+                  {
+                    "id": "53e348522a1246c59a33262ef1172dcd",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/53e348522a1246c59a33262ef1172dcd/manifest.json"
+                  }
+                ],
+                "project_id": "664274e950c64f9eb6d557b26f48dd59",
+                "candidate_project_id": "664274e950c64f9eb6d557b26f48dd59",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000430707924,
+                  "Id_min": 1.92533867e-12,
+                  "area_um2": 5.739999999999999,
+                  "power_W": 0.0007752742632
+                },
+                "measurements": {
+                  "Id_max": 0.000430707924,
+                  "Id_min": 1.92533867e-12,
+                  "area_um2": 5.739999999999999,
+                  "power_W": 0.0007752742632
+                },
+                "reason": "Actual gates and objective constraints passed."
+              },
+              {
+                "id": "e2fd22ecaaf0442792b2274bca0bafbc",
+                "index": 1,
+                "values": [
+                  0.93
+                ],
+                "parameters": {
+                  "w_um": 0.93
+                },
+                "feasible": true,
+                "score": 0.000460061383,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "2fd24fa857a94bbd95556e820e5fa669",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/2fd24fa857a94bbd95556e820e5fa669/manifest.json"
+                  },
+                  {
+                    "id": "e9c2ef86443c46b6bc07dabf67d714ba",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/e9c2ef86443c46b6bc07dabf67d714ba/manifest.json"
+                  },
+                  {
+                    "id": "97a8995b779e46e3940f64fa07273545",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/97a8995b779e46e3940f64fa07273545/manifest.json"
+                  }
+                ],
+                "project_id": "02ef4b6e7ff647a78a5af23613f2ebee",
+                "candidate_project_id": "02ef4b6e7ff647a78a5af23613f2ebee",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000460061383,
+                  "Id_min": 1.97007843e-12,
+                  "area_um2": 5.84,
+                  "power_W": 0.0008281104894
+                },
+                "measurements": {
+                  "Id_max": 0.000460061383,
+                  "Id_min": 1.97007843e-12,
+                  "area_um2": 5.84,
+                  "power_W": 0.0008281104894
+                },
+                "reason": "Actual gates and objective constraints passed."
+              },
+              {
+                "id": "1ef78a9bd1d24965b3249550c8ab58a7",
+                "index": 2,
+                "values": [
+                  0.945
+                ],
+                "parameters": {
+                  "w_um": 0.945
+                },
+                "feasible": true,
+                "score": 0.000468853408,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "59bb9d7669e549f4881b223cc877203a",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/59bb9d7669e549f4881b223cc877203a/manifest.json"
+                  },
+                  {
+                    "id": "36174cdfe16745c0828389fb8bd7bd26",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/36174cdfe16745c0828389fb8bd7bd26/manifest.json"
+                  },
+                  {
+                    "id": "d1943120e49144868152c17d7a5f7a68",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/d1943120e49144868152c17d7a5f7a68/manifest.json"
+                  }
+                ],
+                "project_id": "947a5dbfda0e49abb8492ce3219c8c22",
+                "candidate_project_id": "947a5dbfda0e49abb8492ce3219c8c22",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000468853408,
+                  "Id_min": 1.98507642e-12,
+                  "area_um2": 5.88,
+                  "power_W": 0.0008439361344
+                },
+                "measurements": {
+                  "Id_max": 0.000468853408,
+                  "Id_min": 1.98507642e-12,
+                  "area_um2": 5.88,
+                  "power_W": 0.0008439361344
+                },
+                "reason": "Actual gates and objective constraints passed."
+              },
+              {
+                "id": "cae19999a1c84a4f898efd33cf9dc462",
+                "index": 3,
+                "values": [
+                  1.04
+                ],
+                "parameters": {
+                  "w_um": 1.04
+                },
+                "feasible": true,
+                "score": 0.000519525134,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "a2614a2939b546c984072b92af0e9cba",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/a2614a2939b546c984072b92af0e9cba/manifest.json"
+                  },
+                  {
+                    "id": "dad0bf6f98984758959651ebd0a6710b",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/dad0bf6f98984758959651ebd0a6710b/manifest.json"
+                  },
+                  {
+                    "id": "c6253ec2b6574146973786cf26a3c4ba",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/c6253ec2b6574146973786cf26a3c4ba/manifest.json"
+                  }
+                ],
+                "project_id": "6e17e424285b48929ed16890e29b8cd2",
+                "candidate_project_id": "6e17e424285b48929ed16890e29b8cd2",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000519525134,
+                  "Id_min": 2.02869187e-12,
+                  "area_um2": 6.06,
+                  "power_W": 0.0009351452411999999
+                },
+                "measurements": {
+                  "Id_max": 0.000519525134,
+                  "Id_min": 2.02869187e-12,
+                  "area_um2": 6.06,
+                  "power_W": 0.0009351452411999999
+                },
+                "reason": "Actual gates and objective constraints passed."
+              }
+            ],
+            "created_at": "2026-09-30T09:13:33.447557+00:00",
+            "active_run_ids": [],
+            "limits": [
+              "MOS nf=m=1; actual PCell regeneration, Magic DRC, Netgen LVS and ngspice DC required for every feasible candidate.",
+              "area_um2 is the actual layout bounding-box footprint; power_W is Vds times maximum sampled drain current.",
+              "TPE is a local seeded univariate Parzen density search; no cloud/AI service or fabricated evaluation."
+            ],
+            "started_at": "2026-09-30T09:13:33.464657+00:00",
+            "ended_at": "2026-09-30T09:13:54.442366+00:00",
+            "best_trial_id": "cae19999a1c84a4f898efd33cf9dc462"
+          },
+          "comparison": {
+            "experiment_id": "f27bc13031694fb6a30d6b2ec0237146",
+            "objective": {
+              "metric": "Id_max",
+              "goal": "maximize"
+            },
+            "trials": [
+              {
+                "id": "cae19999a1c84a4f898efd33cf9dc462",
+                "index": 3,
+                "values": [
+                  1.04
+                ],
+                "parameters": {
+                  "w_um": 1.04
+                },
+                "feasible": true,
+                "score": 0.000519525134,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "a2614a2939b546c984072b92af0e9cba",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/a2614a2939b546c984072b92af0e9cba/manifest.json"
+                  },
+                  {
+                    "id": "dad0bf6f98984758959651ebd0a6710b",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/dad0bf6f98984758959651ebd0a6710b/manifest.json"
+                  },
+                  {
+                    "id": "c6253ec2b6574146973786cf26a3c4ba",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/c6253ec2b6574146973786cf26a3c4ba/manifest.json"
+                  }
+                ],
+                "project_id": "6e17e424285b48929ed16890e29b8cd2",
+                "candidate_project_id": "6e17e424285b48929ed16890e29b8cd2",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000519525134,
+                  "Id_min": 2.02869187e-12,
+                  "area_um2": 6.06,
+                  "power_W": 0.0009351452411999999
+                },
+                "measurements": {
+                  "Id_max": 0.000519525134,
+                  "Id_min": 2.02869187e-12,
+                  "area_um2": 6.06,
+                  "power_W": 0.0009351452411999999
+                },
+                "reason": "Actual gates and objective constraints passed."
+              },
+              {
+                "id": "1ef78a9bd1d24965b3249550c8ab58a7",
+                "index": 2,
+                "values": [
+                  0.945
+                ],
+                "parameters": {
+                  "w_um": 0.945
+                },
+                "feasible": true,
+                "score": 0.000468853408,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "59bb9d7669e549f4881b223cc877203a",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/59bb9d7669e549f4881b223cc877203a/manifest.json"
+                  },
+                  {
+                    "id": "36174cdfe16745c0828389fb8bd7bd26",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/36174cdfe16745c0828389fb8bd7bd26/manifest.json"
+                  },
+                  {
+                    "id": "d1943120e49144868152c17d7a5f7a68",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/d1943120e49144868152c17d7a5f7a68/manifest.json"
+                  }
+                ],
+                "project_id": "947a5dbfda0e49abb8492ce3219c8c22",
+                "candidate_project_id": "947a5dbfda0e49abb8492ce3219c8c22",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000468853408,
+                  "Id_min": 1.98507642e-12,
+                  "area_um2": 5.88,
+                  "power_W": 0.0008439361344
+                },
+                "measurements": {
+                  "Id_max": 0.000468853408,
+                  "Id_min": 1.98507642e-12,
+                  "area_um2": 5.88,
+                  "power_W": 0.0008439361344
+                },
+                "reason": "Actual gates and objective constraints passed."
+              },
+              {
+                "id": "e2fd22ecaaf0442792b2274bca0bafbc",
+                "index": 1,
+                "values": [
+                  0.93
+                ],
+                "parameters": {
+                  "w_um": 0.93
+                },
+                "feasible": true,
+                "score": 0.000460061383,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "2fd24fa857a94bbd95556e820e5fa669",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/2fd24fa857a94bbd95556e820e5fa669/manifest.json"
+                  },
+                  {
+                    "id": "e9c2ef86443c46b6bc07dabf67d714ba",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/e9c2ef86443c46b6bc07dabf67d714ba/manifest.json"
+                  },
+                  {
+                    "id": "97a8995b779e46e3940f64fa07273545",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/97a8995b779e46e3940f64fa07273545/manifest.json"
+                  }
+                ],
+                "project_id": "02ef4b6e7ff647a78a5af23613f2ebee",
+                "candidate_project_id": "02ef4b6e7ff647a78a5af23613f2ebee",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000460061383,
+                  "Id_min": 1.97007843e-12,
+                  "area_um2": 5.84,
+                  "power_W": 0.0008281104894
+                },
+                "measurements": {
+                  "Id_max": 0.000460061383,
+                  "Id_min": 1.97007843e-12,
+                  "area_um2": 5.84,
+                  "power_W": 0.0008281104894
+                },
+                "reason": "Actual gates and objective constraints passed."
+              },
+              {
+                "id": "ecd6a666f2af47738adf0ceb478aeb18",
+                "index": 0,
+                "values": [
+                  0.88
+                ],
+                "parameters": {
+                  "w_um": 0.88
+                },
+                "feasible": true,
+                "score": 0.000430707924,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "412ef05982ab428297febbe6c8862544",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/412ef05982ab428297febbe6c8862544/manifest.json"
+                  },
+                  {
+                    "id": "244a33050a3a46aab434ea6d035fc88c",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/244a33050a3a46aab434ea6d035fc88c/manifest.json"
+                  },
+                  {
+                    "id": "53e348522a1246c59a33262ef1172dcd",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/53e348522a1246c59a33262ef1172dcd/manifest.json"
+                  }
+                ],
+                "project_id": "664274e950c64f9eb6d557b26f48dd59",
+                "candidate_project_id": "664274e950c64f9eb6d557b26f48dd59",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.000430707924,
+                  "Id_min": 1.92533867e-12,
+                  "area_um2": 5.739999999999999,
+                  "power_W": 0.0007752742632
+                },
+                "measurements": {
+                  "Id_max": 0.000430707924,
+                  "Id_min": 1.92533867e-12,
+                  "area_um2": 5.739999999999999,
+                  "power_W": 0.0007752742632
+                },
+                "reason": "Actual gates and objective constraints passed."
+              }
+            ],
+            "best_trial_id": "cae19999a1c84a4f898efd33cf9dc462",
+            "source": "actual-native-gated-evaluations"
+          }
+        },
+        {
+          "case": "failed actual objective constraint is infeasible",
+          "result": "pass",
+          "experiment": {
+            "id": "5a4eb74249bd4a1c9b2124b926ef440d",
+            "project_id": "5e51326a93234ca7896cce45c4d245d1",
+            "source_revision": 1,
+            "execution_status": "completed",
+            "algorithm": "grid",
+            "variables": [
+              {
+                "device_id": "mn1",
+                "parameter": "w_um",
+                "min": 0.65,
+                "max": 1.3,
+                "steps": 2
+              }
+            ],
+            "objective": {
+              "metric": "Id_max",
+              "goal": "maximize"
+            },
+            "constraints": [
+              {
+                "metric": "Id_max",
+                "op": "<=",
+                "value": 0
+              }
+            ],
+            "trial_budget": 1,
+            "seed": 0,
+            "settings": {
+              "analysis": "dc",
+              "corner": "tt",
+              "temperature_C": 27,
+              "supply_V": 1.8,
+              "duration_s": 3e-8,
+              "step_s": 2e-11,
+              "load_F": 5e-15,
+              "vds_V": 1.8,
+              "vbs_V": 0
+            },
+            "trials": [
+              {
+                "id": "8bc5307e988548708f39785cab794951",
+                "index": 0,
+                "values": [
+                  0.65
+                ],
+                "parameters": {
+                  "w_um": 0.65
+                },
+                "feasible": false,
+                "score": null,
+                "execution_status": "completed",
+                "runs": [
+                  {
+                    "id": "adf510a65d4144d4b21ae20a70f59a02",
+                    "kind": "drc",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/adf510a65d4144d4b21ae20a70f59a02/manifest.json"
+                  },
+                  {
+                    "id": "c69d3470001c46e6aec716ac0ad3840e",
+                    "kind": "lvs",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/c69d3470001c46e6aec716ac0ad3840e/manifest.json"
+                  },
+                  {
+                    "id": "c73a8aa1e9f54d69bcff7fbca27dd72a",
+                    "kind": "simulation",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "manifest_path": "/workspace/.runtime/eda/runs/c73a8aa1e9f54d69bcff7fbca27dd72a/manifest.json"
+                  }
+                ],
+                "project_id": "76381863a47044e697bc482d0ec141c5",
+                "candidate_project_id": "76381863a47044e697bc482d0ec141c5",
+                "revision": 2,
+                "metrics": {
+                  "Id_max": 0.00033464188,
+                  "Id_min": 1.92563831e-12,
+                  "area_um2": 5.279999999999999,
+                  "power_W": 0.000602355384
+                },
+                "measurements": {
+                  "Id_max": 0.00033464188,
+                  "Id_min": 1.92563831e-12,
+                  "area_um2": 5.279999999999999,
+                  "power_W": 0.000602355384
+                },
+                "reason": "Actual objective constraint failed."
+              }
+            ],
+            "created_at": "2026-09-30T09:13:54.820743+00:00",
+            "active_run_ids": [],
+            "limits": [
+              "MOS nf=m=1; actual PCell regeneration, Magic DRC, Netgen LVS and ngspice DC required for every feasible candidate.",
+              "area_um2 is the actual layout bounding-box footprint; power_W is Vds times maximum sampled drain current.",
+              "TPE is a local seeded univariate Parzen density search; no cloud/AI service or fabricated evaluation."
+            ],
+            "started_at": "2026-09-30T09:13:54.836201+00:00",
+            "ended_at": "2026-09-30T09:13:59.918076+00:00",
+            "best_trial_id": null
+          }
+        },
+        {
+          "case": "queued experiment cancel runs no engines",
+          "result": "pass"
+        },
+        {
+          "case": "actual Xschem output simulated in ngspice",
+          "result": "pass",
+          "run_id": "66d07cf127ea480eb8bbfb258d2313f6",
+          "manifest_path": "/workspace/.runtime/eda/runs/66d07cf127ea480eb8bbfb258d2313f6/manifest.json",
+          "xschem_manifest": "/workspace/.runtime/eda/projects/ede78cc68241466593d1972c10cb9dc6/exports/xschem-r1/manifest.json"
+        },
+        {
+          "case": "actual native RC table counts and SI units",
+          "result": "pass",
+          "run_id": "db9e03e1ede34fe68237a643dce98ec8",
+          "elements": 51
+        }
+      ]
+    },
+    "analog": {
+      "source": ".runtime/evidence/analog.json",
+      "sha256": "92f8aa3fd331c707009dab481fa04583685986b30ccf35b6590e2b9de05f3f54",
+      "case_count": 20,
+      "cases": [
+        {
+          "example": "current_mirror",
+          "project_id": "f078d944ee6a42e9b7d524976e6c4cdd",
+          "method": "verification.run_drc",
+          "settings": {},
+          "run_id": "340c1054532740af9ab94c34981c6830",
+          "manifest_path": "/workspace/.runtime/eda/runs/340c1054532740af9ab94c34981c6830/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "current_mirror",
+          "project_id": "f078d944ee6a42e9b7d524976e6c4cdd",
+          "method": "verification.run_lvs",
+          "settings": {},
+          "run_id": "372060a13f8247a7956c056978c7a970",
+          "manifest_path": "/workspace/.runtime/eda/runs/372060a13f8247a7956c056978c7a970/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "current_mirror",
+          "project_id": "f078d944ee6a42e9b7d524976e6c4cdd",
+          "method": "extraction.run_pex",
+          "settings": {},
+          "run_id": "9b97a0a653954c6f92880979d0b52586",
+          "parasitics": {
+            "resistors": 146,
+            "capacitors": 3
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/9b97a0a653954c6f92880979d0b52586/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "current_mirror",
+          "project_id": "f078d944ee6a42e9b7d524976e6c4cdd",
+          "method": "simulation.run",
+          "settings": {
+            "analysis": "dc"
+          },
+          "run_id": "b42d776fee0041e4b59a4898900f5a3f",
+          "measurements": {
+            "analysis": "dc",
+            "x_unit": "V",
+            "x_label": "Vout",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 181,
+            "Vref_min": 1.16117951,
+            "Vref_max": 1.16117951,
+            "Iout_min": 5.67718455e-42,
+            "Iout_max": 0.000115240071
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/b42d776fee0041e4b59a4898900f5a3f/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "current_mirror",
+          "project_id": "f078d944ee6a42e9b7d524976e6c4cdd",
+          "method": "simulation.run",
+          "settings": {
+            "analysis": "dc",
+            "post_layout": true
+          },
+          "run_id": "652196e22aa0492f814ac82b61c7c079",
+          "measurements": {
+            "analysis": "dc",
+            "x_unit": "V",
+            "x_label": "Vout",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "true",
+            "samples": 181,
+            "Vref_min": 1.17751651,
+            "Vref_max": 1.1775196,
+            "Iout_min": -9.9540788e-10,
+            "Iout_max": 0.000114126446
+          },
+          "parasitics": {
+            "resistors": 146,
+            "capacitors": 3
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/652196e22aa0492f814ac82b61c7c079/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "current_mirror",
+          "project_id": "f078d944ee6a42e9b7d524976e6c4cdd",
+          "method": "simulation.run",
+          "settings": {
+            "analysis": "op"
+          },
+          "run_id": "0305d22f0d01417fb6b8780436fb4e42",
+          "measurements": {
+            "analysis": "op",
+            "x_unit": "point",
+            "x_label": "OP",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 1,
+            "Vref_min": 1.16117951,
+            "Vref_max": 1.16117951,
+            "Iout_min": 0.000115240071,
+            "Iout_max": 0.000115240071
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/0305d22f0d01417fb6b8780436fb4e42/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "current_mirror",
+          "project_id": "f078d944ee6a42e9b7d524976e6c4cdd",
+          "method": "simulation.run",
+          "settings": {
+            "analysis": "ac"
+          },
+          "run_id": "12c98539c7b84885aab4edc40c413821",
+          "measurements": {
+            "analysis": "ac",
+            "x_unit": "Hz",
+            "x_label": "frequency",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 271,
+            "gain_magnitude_min": 0.990719318,
+            "gain_magnitude_max": 0.991080022,
+            "phase_min": -0.033979518,
+            "phase_max": -3.39866898e-11
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/12c98539c7b84885aab4edc40c413821/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "differential_pair",
+          "project_id": "5c82df35e65844bda50ede5985f61e84",
+          "method": "verification.run_drc",
+          "settings": {},
+          "run_id": "1d599db72ccb428a9d83f4a4a4172597",
+          "manifest_path": "/workspace/.runtime/eda/runs/1d599db72ccb428a9d83f4a4a4172597/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "differential_pair",
+          "project_id": "5c82df35e65844bda50ede5985f61e84",
+          "method": "verification.run_lvs",
+          "settings": {},
+          "run_id": "1ff4426e11964f898d96f0e0d0f5fad4",
+          "manifest_path": "/workspace/.runtime/eda/runs/1ff4426e11964f898d96f0e0d0f5fad4/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "differential_pair",
+          "project_id": "5c82df35e65844bda50ede5985f61e84",
+          "method": "extraction.run_pex",
+          "settings": {},
+          "run_id": "dbfe332a2e444ce19a51b539191af9cb",
+          "parasitics": {
+            "resistors": 212,
+            "capacitors": 21
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/dbfe332a2e444ce19a51b539191af9cb/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "differential_pair",
+          "project_id": "5c82df35e65844bda50ede5985f61e84",
+          "method": "simulation.run",
+          "settings": {
+            "analysis": "dc"
+          },
+          "run_id": "5b4a52b8913e4a6a8bdbe19d75787f83",
+          "measurements": {
+            "analysis": "dc",
+            "x_unit": "V",
+            "x_label": "VinP",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 201,
+            "IoutP_min": 1.00849378e-7,
+            "IoutP_max": 0.00000112408021,
+            "IoutN_min": 1.1692419e-7,
+            "IoutN_max": 9.90965345e-7
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/5b4a52b8913e4a6a8bdbe19d75787f83/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "differential_pair",
+          "project_id": "5c82df35e65844bda50ede5985f61e84",
+          "method": "simulation.run",
+          "settings": {
+            "analysis": "dc",
+            "post_layout": true
+          },
+          "run_id": "c29d70661c104eb295d3b52d96d64ecb",
+          "measurements": {
+            "analysis": "dc",
+            "x_unit": "V",
+            "x_label": "VinP",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "true",
+            "samples": 201,
+            "IoutP_min": 1.00731108e-7,
+            "IoutP_max": 0.00000111930443,
+            "IoutN_min": 1.16773011e-7,
+            "IoutN_max": 9.87143184e-7
+          },
+          "parasitics": {
+            "resistors": 212,
+            "capacitors": 21
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/c29d70661c104eb295d3b52d96d64ecb/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "differential_pair",
+          "project_id": "5c82df35e65844bda50ede5985f61e84",
+          "method": "simulation.run",
+          "settings": {
+            "analysis": "op"
+          },
+          "run_id": "e374bdadacf54d059299bc677ed96fe6",
+          "measurements": {
+            "analysis": "op",
+            "x_unit": "point",
+            "x_label": "OP",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 1,
+            "IoutP_min": 5.67008118e-7,
+            "IoutP_max": 5.67008118e-7,
+            "IoutN_min": 5.67008118e-7,
+            "IoutN_max": 5.67008118e-7
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/e374bdadacf54d059299bc677ed96fe6/manifest.json",
+          "result": "pass"
+        },
+        {
+          "example": "differential_pair",
+          "project_id": "5c82df35e65844bda50ede5985f61e84",
+          "method": "simulation.run",
+          "settings": {
+            "analysis": "ac"
+          },
+          "run_id": "57f10b988be5447aa78ead38f99e9949",
+          "measurements": {
+            "analysis": "ac",
+            "x_unit": "Hz",
+            "x_label": "frequency",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 271,
+            "gain_magnitude_min": 0.0000124007356,
+            "gain_magnitude_max": 0.0000124936062,
+            "phase_min": -0.122001358,
+            "phase_max": -1.2261035e-10
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/57f10b988be5447aa78ead38f99e9949/manifest.json",
+          "result": "pass"
+        },
+        {
+          "case": "via1",
+          "project_id": "5f32514c01794a67a2ef4870b7d42a4c",
+          "run_id": "a79c623f58b54e79966a618ae33f6a9a",
+          "result": "pass",
+          "manifest_path": "/workspace/.runtime/eda/runs/a79c623f58b54e79966a618ae33f6a9a/manifest.json"
+        },
+        {
+          "case": "via2",
+          "project_id": "5f32514c01794a67a2ef4870b7d42a4c",
+          "run_id": "27eb64adb0b44c0db721f0c2606d0ab5",
+          "result": "pass",
+          "manifest_path": "/workspace/.runtime/eda/runs/27eb64adb0b44c0db721f0c2606d0ab5/manifest.json"
+        },
+        {
+          "case": "native BSIM OP false",
+          "result": "pass",
+          "run_id": "ebb0f67585394970a82e36968bc3140b",
+          "measurements": {
+            "analysis": "op",
+            "x_unit": "point",
+            "x_label": "OP",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 1,
+            "Vgs_min": 0.9,
+            "Vgs_max": 0.9,
+            "Id_min": 0.0000362401346,
+            "Id_max": 0.0000362401346,
+            "gm_min": 0.000251572208,
+            "gm_max": 0.000251572208,
+            "gds_min": 0.0000119507726,
+            "gds_max": 0.0000119507726,
+            "vth_min": 0.757798431,
+            "vth_max": 0.757798431,
+            "vdsat_min": 0.132432197,
+            "vdsat_max": 0.132432197,
+            "Vgs": 0.9,
+            "Id": 0.0000362401346,
+            "gm": 0.000251572208,
+            "gds": 0.0000119507726,
+            "vth": 0.757798431,
+            "vdsat": 0.132432197,
+            "region_estimate": "saturation",
+            "region_method": "Inferred from native BSIM operating-point Vth/Vdsat and applied biases; not a TCAD region classification."
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/ebb0f67585394970a82e36968bc3140b/manifest.json"
+        },
+        {
+          "case": "actual Id-Vds output sweep false",
+          "result": "pass",
+          "run_id": "517081f17d2246e78df197db716853dd",
+          "measurements": {
+            "analysis": "dc",
+            "x_unit": "V",
+            "x_label": "Vds",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 181,
+            "Vgs_min": 1.2,
+            "Vgs_max": 1.2,
+            "Id_min": 1.8691588e-42,
+            "Id_max": 0.000128143365,
+            "gds_sampled_max": 0.000490363837,
+            "derivative_method": "Finite difference of actual ngspice DC samples."
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/517081f17d2246e78df197db716853dd/manifest.json"
+        },
+        {
+          "case": "native BSIM OP true",
+          "result": "pass",
+          "run_id": "829f59828a0f4a0084dfc9987b7d8eb9",
+          "measurements": {
+            "analysis": "op",
+            "x_unit": "point",
+            "x_label": "OP",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "true",
+            "samples": 1,
+            "Vgs_min": 0.9,
+            "Vgs_max": 0.9,
+            "Id_min": 0.0000346678878,
+            "Id_max": 0.0000346678878,
+            "gm_min": 0.000247069205,
+            "gm_max": 0.000247069205,
+            "gds_min": 0.0000116302565,
+            "gds_max": 0.0000116302565,
+            "vth_min": 0.758776377,
+            "vth_max": 0.758776377,
+            "vdsat_min": 0.129894493,
+            "vdsat_max": 0.129894493,
+            "Vgs": 0.9,
+            "Id": 0.0000346678878,
+            "gm": 0.000247069205,
+            "gds": 0.0000116302565,
+            "vth": 0.758776377,
+            "vdsat": 0.129894493,
+            "region_estimate": "saturation",
+            "region_method": "Inferred from native BSIM operating-point Vth/Vdsat and applied biases; not a TCAD region classification."
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/829f59828a0f4a0084dfc9987b7d8eb9/manifest.json"
+        },
+        {
+          "case": "actual Id-Vds output sweep true",
+          "result": "pass",
+          "run_id": "3545954b36f44f6cbcc1d1000dbecbd8",
+          "measurements": {
+            "analysis": "dc",
+            "x_unit": "V",
+            "x_label": "Vds",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "true",
+            "samples": 181,
+            "Vgs_min": 1.2,
+            "Vgs_max": 1.2,
+            "Id_min": -7.08544163e-33,
+            "Id_max": 0.000120611562,
+            "gds_sampled_max": 0.00043020476899999997,
+            "derivative_method": "Finite difference of actual ngspice DC samples."
+          },
+          "manifest_path": "/workspace/.runtime/eda/runs/3545954b36f44f6cbcc1d1000dbecbd8/manifest.json"
+        }
+      ]
+    },
+    "faults": {
+      "source": ".runtime/evidence/faults.json",
+      "sha256": "ecae8a650f861d1db2e79d168672fb514cbc1c56ee3eb2ac9bafbc4b6be5078a",
+      "case_count": 7,
+      "cases": [
+        {
+          "case": "gate short",
+          "expected": "fail",
+          "result": "fail",
+          "run_id": "14830ae7d436413f8fd7596a43512468",
+          "revision": 2,
+          "manifest_path": "/workspace/.runtime/eda/runs/14830ae7d436413f8fd7596a43512468/manifest.json"
+        },
+        {
+          "case": "gate short repaired",
+          "expected": "pass",
+          "result": "pass",
+          "run_id": "c35387a2ecbf4f308a3e670f09f37862",
+          "revision": 3,
+          "manifest_path": "/workspace/.runtime/eda/runs/c35387a2ecbf4f308a3e670f09f37862/manifest.json"
+        },
+        {
+          "case": "open drain",
+          "expected": "fail",
+          "result": "fail",
+          "run_id": "2117a292ea374d76acd946449631bb93",
+          "revision": 4,
+          "manifest_path": "/workspace/.runtime/eda/runs/2117a292ea374d76acd946449631bb93/manifest.json"
+        },
+        {
+          "case": "open drain repaired",
+          "expected": "pass",
+          "result": "pass",
+          "run_id": "86e094102b5c447d88709d2dc35673d6",
+          "revision": 5,
+          "manifest_path": "/workspace/.runtime/eda/runs/86e094102b5c447d88709d2dc35673d6/manifest.json"
+        },
+        {
+          "case": "incorrect bulk connection",
+          "expected": "fail",
+          "result": "fail",
+          "run_id": "54a93837321f41a19d89134a5df2b6fe",
+          "revision": 6,
+          "manifest_path": "/workspace/.runtime/eda/runs/54a93837321f41a19d89134a5df2b6fe/manifest.json"
+        },
+        {
+          "case": "incorrect bulk connection repaired",
+          "expected": "pass",
+          "result": "pass",
+          "run_id": "d7b6b414e32741c78e0bf540b147aaa9",
+          "revision": 7,
+          "manifest_path": "/workspace/.runtime/eda/runs/d7b6b414e32741c78e0bf540b147aaa9/manifest.json"
+        },
+        {
+          "case": "fixture without verified physical profile never returns native success",
+          "result": "pass",
+          "project_id": "ab6d3821d5f24ebaa8122b904773e6c2"
+        }
+      ]
+    },
+    "budgets": {
+      "source": ".runtime/evidence/budgets.json",
+      "sha256": "cf266105852898ded160de930e74b04717253c770ceff87d7fb9729b0f5ce6b0",
+      "case_count": 2,
+      "cases": [
+        {
+          "case": "aggregate wall-time bounds 60..1800 enforced",
+          "result": "pass"
+        },
+        {
+          "case": "exactly-once create/evaluate max2running and active native cancellation",
+          "result": "pass",
+          "experiment_ids": [
+            "11d939653811403a9c0ed1571e8ec017",
+            "9115e784aa9b46d1a7a04b82bb2deeab",
+            "5ef876425bb4485f9483630e797973a9"
+          ],
+          "states": [
+            {
+              "id": "11d939653811403a9c0ed1571e8ec017",
+              "project_id": "8508bd92af5a4d89b90c32757ccbf88e",
+              "source_revision": 1,
+              "execution_status": "canceled",
+              "algorithm": "grid",
+              "variables": [
+                {
+                  "device_id": "mn1",
+                  "parameter": "w_um",
+                  "min": 0.65,
+                  "max": 1.3,
+                  "steps": 16
+                }
+              ],
+              "objective": {
+                "metric": "Id_max",
+                "goal": "maximize"
+              },
+              "constraints": [],
+              "trial_budget": 16,
+              "wall_time_s": 60,
+              "seed": 0,
+              "settings": {
+                "analysis": "dc",
+                "corner": "tt",
+                "temperature_C": 27,
+                "supply_V": 1.8,
+                "duration_s": 3e-8,
+                "step_s": 2e-11,
+                "load_F": 5e-15,
+                "vds_V": 1.8,
+                "vbs_V": 0
+              },
+              "trials": [
+                {
+                  "id": "822bbd2521d9473e8f8026332c27e96c",
+                  "index": 0,
+                  "values": [
+                    0.65
+                  ],
+                  "parameters": {
+                    "w_um": 0.65
+                  },
+                  "feasible": false,
+                  "score": null,
+                  "execution_status": "canceled",
+                  "runs": [],
+                  "project_id": "d97739544c1e4254a6baf4870f1738b9",
+                  "candidate_project_id": "d97739544c1e4254a6baf4870f1738b9",
+                  "revision": 2,
+                  "reason": "Experiment canceled.",
+                  "error_code": "CANCELED"
+                }
+              ],
+              "created_at": "2026-09-30T10:01:56.345562+00:00",
+              "active_run_ids": [],
+              "limits": [
+                "MOS nf=m=1; actual PCell regeneration, Magic DRC, Netgen LVS and ngspice DC required for every feasible candidate.",
+                "area_um2 is the actual layout bounding-box footprint; power_W is Vds times maximum sampled drain current.",
+                "TPE is a local seeded univariate Parzen density search; no cloud/AI service or fabricated evaluation."
+              ],
+              "started_at": "2026-09-30T10:01:56.458837+00:00",
+              "deadline_epoch_s": 1790762576.4588528,
+              "ended_at": "2026-09-30T10:01:57.312861+00:00"
+            },
+            {
+              "id": "9115e784aa9b46d1a7a04b82bb2deeab",
+              "project_id": "8508bd92af5a4d89b90c32757ccbf88e",
+              "source_revision": 1,
+              "execution_status": "canceled",
+              "algorithm": "grid",
+              "variables": [
+                {
+                  "device_id": "mn1",
+                  "parameter": "w_um",
+                  "min": 0.65,
+                  "max": 1.3,
+                  "steps": 16
+                }
+              ],
+              "objective": {
+                "metric": "Id_max",
+                "goal": "maximize"
+              },
+              "constraints": [],
+              "trial_budget": 16,
+              "wall_time_s": 60,
+              "seed": 0,
+              "settings": {
+                "analysis": "dc",
+                "corner": "tt",
+                "temperature_C": 27,
+                "supply_V": 1.8,
+                "duration_s": 3e-8,
+                "step_s": 2e-11,
+                "load_F": 5e-15,
+                "vds_V": 1.8,
+                "vbs_V": 0
+              },
+              "trials": [
+                {
+                  "id": "b8b9340baea143cdb692594864f854e9",
+                  "index": 0,
+                  "values": [
+                    0.65
+                  ],
+                  "parameters": {
+                    "w_um": 0.65
+                  },
+                  "feasible": false,
+                  "score": null,
+                  "execution_status": "canceled",
+                  "runs": [],
+                  "project_id": "aa0fc7a66b1044c4bbdf5ffb482debe7",
+                  "candidate_project_id": "aa0fc7a66b1044c4bbdf5ffb482debe7",
+                  "revision": 2,
+                  "reason": "Experiment canceled.",
+                  "error_code": "CANCELED"
+                }
+              ],
+              "created_at": "2026-09-30T10:01:56.399947+00:00",
+              "active_run_ids": [],
+              "limits": [
+                "MOS nf=m=1; actual PCell regeneration, Magic DRC, Netgen LVS and ngspice DC required for every feasible candidate.",
+                "area_um2 is the actual layout bounding-box footprint; power_W is Vds times maximum sampled drain current.",
+                "TPE is a local seeded univariate Parzen density search; no cloud/AI service or fabricated evaluation."
+              ],
+              "started_at": "2026-09-30T10:01:56.604839+00:00",
+              "deadline_epoch_s": 1790762576.6048586,
+              "ended_at": "2026-09-30T10:01:58.387873+00:00"
+            },
+            {
+              "id": "5ef876425bb4485f9483630e797973a9",
+              "project_id": "8508bd92af5a4d89b90c32757ccbf88e",
+              "source_revision": 1,
+              "execution_status": "canceled",
+              "algorithm": "grid",
+              "variables": [
+                {
+                  "device_id": "mn1",
+                  "parameter": "w_um",
+                  "min": 0.65,
+                  "max": 1.3,
+                  "steps": 16
+                }
+              ],
+              "objective": {
+                "metric": "Id_max",
+                "goal": "maximize"
+              },
+              "constraints": [],
+              "trial_budget": 16,
+              "wall_time_s": 60,
+              "seed": 0,
+              "settings": {
+                "analysis": "dc",
+                "corner": "tt",
+                "temperature_C": 27,
+                "supply_V": 1.8,
+                "duration_s": 3e-8,
+                "step_s": 2e-11,
+                "load_F": 5e-15,
+                "vds_V": 1.8,
+                "vbs_V": 0
+              },
+              "trials": [],
+              "created_at": "2026-09-30T10:01:56.439222+00:00",
+              "active_run_ids": [],
+              "limits": [
+                "MOS nf=m=1; actual PCell regeneration, Magic DRC, Netgen LVS and ngspice DC required for every feasible candidate.",
+                "area_um2 is the actual layout bounding-box footprint; power_W is Vds times maximum sampled drain current.",
+                "TPE is a local seeded univariate Parzen density search; no cloud/AI service or fabricated evaluation."
+              ],
+              "ended_at": "2026-09-30T10:01:58.650054+00:00"
+            }
+          ]
+        }
+      ]
+    },
+    "deadline": {
+      "source": ".runtime/evidence/deadline.json",
+      "sha256": "545ece8080fd88dbfd911cadac05055504fb110bf0b284c15729dd533a6d76c9",
+      "case_count": 1,
+      "cases": [
+        {
+          "case": "actual aggregate 60-second experiment deadline includes native queue wait",
+          "result": "pass",
+          "elapsed_s": 60.512,
+          "experiment": {
+            "id": "a633d15297524b569dfa947948fb5b9f",
+            "project_id": "95962ac5b0724968b7fa09c98427ee7d",
+            "source_revision": 1,
+            "execution_status": "canceled",
+            "algorithm": "grid",
+            "variables": [
+              {
+                "device_id": "mn1",
+                "parameter": "w_um",
+                "min": 0.65,
+                "max": 1.3,
+                "steps": 2
+              }
+            ],
+            "objective": {
+              "metric": "Id_max",
+              "goal": "maximize"
+            },
+            "constraints": [],
+            "trial_budget": 1,
+            "wall_time_s": 60,
+            "seed": 0,
+            "settings": {
+              "analysis": "dc",
+              "corner": "tt",
+              "temperature_C": 27,
+              "supply_V": 1.8,
+              "duration_s": 3e-8,
+              "step_s": 2e-11,
+              "load_F": 5e-15,
+              "vds_V": 1.8,
+              "vbs_V": 0
+            },
+            "trials": [
+              {
+                "id": "161174304c174fb88e37027324e26e40",
+                "index": 0,
+                "values": [
+                  0.65
+                ],
+                "parameters": {
+                  "w_um": 0.65
+                },
+                "feasible": false,
+                "score": null,
+                "execution_status": "failed",
+                "runs": [],
+                "project_id": "bbed9cd58d524a63a983b408a317e4db",
+                "candidate_project_id": "bbed9cd58d524a63a983b408a317e4db",
+                "revision": 2,
+                "reason": "Aggregate experiment wall time exceeded; active native run canceled.",
+                "error_code": "EXPERIMENT_TIMEOUT"
+              }
+            ],
+            "created_at": "2026-09-30T10:14:20.734114+00:00",
+            "active_run_ids": [],
+            "limits": [
+              "MOS nf=m=1; actual PCell regeneration, Magic DRC, Netgen LVS and ngspice DC required for every feasible candidate.",
+              "area_um2 is the actual layout bounding-box footprint; power_W is Vds times maximum sampled drain current.",
+              "TPE is a local seeded univariate Parzen density search; no cloud/AI service or fabricated evaluation."
+            ],
+            "started_at": "2026-09-30T10:14:20.794552+00:00",
+            "deadline_epoch_s": 1790763320.7945724,
+            "ended_at": "2026-09-30T10:15:20.968342+00:00",
+            "stop_reason": "aggregate_wall_time_exceeded"
+          },
+          "canceled_run": {
+            "id": "0be3ccdbe89c4efbbc1151e3a8dd12c5",
+            "execution_status": "canceled",
+            "analysis_result": "unknown",
+            "manifest_path": "/workspace/.runtime/eda/runs/0be3ccdbe89c4efbbc1151e3a8dd12c5/manifest.json"
+          },
+          "workloads": [
+            {
+              "id": "92213dcc75864cbeb9852f75a5b19a45",
+              "settings": {
+                "analysis": "tran",
+                "post_layout": true,
+                "duration_s": 0.001,
+                "step_s": 5e-9
+              }
+            },
+            {
+              "id": "8b7f78ccfe944d5391a68d766c17ac30",
+              "settings": {
+                "analysis": "tran",
+                "post_layout": true,
+                "duration_s": 0.001,
+                "step_s": 5e-9
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "bundle-history": {
+      "source": ".runtime/evidence/bundle-history.json",
+      "sha256": "97ddc68803790a2409eea76727cc830dbd6bbf99a28e3d52b4e4a0c8be8e1f1f",
+      "case_count": 2,
+      "cases": [
+        {
+          "case": "stable shape ID changed",
+          "result": "pass",
+          "error_code": "HISTORY_DIVERGENCE",
+          "project_id": "3f6aa8a455cc47bb92f5c3071f525294",
+          "revision": 1
+        },
+        {
+          "case": "electrical shape net changed",
+          "result": "pass",
+          "error_code": "HISTORY_DIVERGENCE",
+          "project_id": "3f6aa8a455cc47bb92f5c3071f525294",
+          "revision": 1
+        }
+      ]
+    },
+    "interruption": {
+      "source": ".runtime/evidence/interruption.json",
+      "sha256": "5ff8b4a942086f28fb33536f663fcbe74a98931ae1fbfbc8234834f084bf41fe",
+      "case_count": 1,
+      "cases": [
+        {
+          "case": "actual isolated worker interruption preserves failed/unknown native jobs and failed experiment",
+          "result": "pass",
+          "state_path": "/workspace/.runtime/evidence/interruption-02532ebc89664365ab23f62138a55cac/state",
+          "jobs": [
+            {
+              "id": "20a80b582ef24714b371dd708535107e",
+              "execution_status": "failed",
+              "analysis_result": "unknown",
+              "manifest_path": "/workspace/.runtime/evidence/interruption-02532ebc89664365ab23f62138a55cac/state/runs/20a80b582ef24714b371dd708535107e/manifest.json"
+            },
+            {
+              "id": "cfc2db1f08cf420da181b49fe046e3c9",
+              "execution_status": "failed",
+              "analysis_result": "unknown",
+              "manifest_path": "/workspace/.runtime/evidence/interruption-02532ebc89664365ab23f62138a55cac/state/runs/cfc2db1f08cf420da181b49fe046e3c9/manifest.json"
+            },
+            {
+              "id": "2a05c564964d4181aaa9291ccfa51d03",
+              "execution_status": "failed",
+              "analysis_result": "unknown",
+              "manifest_path": "/workspace/.runtime/evidence/interruption-02532ebc89664365ab23f62138a55cac/state/runs/2a05c564964d4181aaa9291ccfa51d03/manifest.json"
+            }
+          ],
+          "experiment": {
+            "id": "ff2ca0a269634436acd443cafa3bf87a",
+            "project_id": "3b6f79dbdb274ddab8b1162b8c38089c",
+            "source_revision": 1,
+            "execution_status": "failed",
+            "algorithm": "grid",
+            "variables": [
+              {
+                "device_id": "mn1",
+                "parameter": "w_um",
+                "min": 0.65,
+                "max": 1.3,
+                "steps": 2
+              }
+            ],
+            "objective": {
+              "metric": "Id_max",
+              "goal": "maximize"
+            },
+            "constraints": [],
+            "trial_budget": 1,
+            "wall_time_s": 300,
+            "seed": 0,
+            "settings": {
+              "analysis": "dc",
+              "corner": "tt",
+              "temperature_C": 27,
+              "supply_V": 1.8,
+              "duration_s": 3e-8,
+              "step_s": 2e-11,
+              "load_F": 5e-15,
+              "vds_V": 1.8,
+              "vbs_V": 0
+            },
+            "trials": [
+              {
+                "id": "f3f1283d42624c37bcaec2d57bb34578",
+                "index": 0,
+                "values": [
+                  0.65
+                ],
+                "parameters": {
+                  "w_um": 0.65
+                },
+                "feasible": false,
+                "score": null,
+                "execution_status": "failed",
+                "runs": [],
+                "project_id": "3fc3ff5eed7b4fc88ffd970d2ba961e8",
+                "candidate_project_id": "3fc3ff5eed7b4fc88ffd970d2ba961e8",
+                "revision": 2,
+                "error_code": "WORKER_RESTARTED",
+                "reason": "Worker restarted before this trial completed; native runs are failed/unknown."
+              }
+            ],
+            "created_at": "2026-09-30T10:22:43.916718+00:00",
+            "active_run_ids": [],
+            "limits": [
+              "MOS nf=m=1; actual PCell regeneration, Magic DRC, Netgen LVS and ngspice DC required for every feasible candidate.",
+              "area_um2 is the actual layout bounding-box footprint; power_W is Vds times maximum sampled drain current.",
+              "TPE is a local seeded univariate Parzen density search; no cloud/AI service or fabricated evaluation."
+            ],
+            "started_at": "2026-09-30T10:22:44.815774+00:00",
+            "deadline_epoch_s": 1790764064.8157918,
+            "message": "Worker restarted during experiment; completed native trial artifacts remain available.",
+            "ended_at": "2026-09-30T10:23:55.752854+00:00"
+          },
+          "worker_log": "/workspace/.runtime/evidence/interruption-02532ebc89664365ab23f62138a55cac/worker.log"
+        }
+      ]
+    }
+  },
+  "exports": [
+    {
+      "example": "current_mirror",
+      "project_id": "f078d944ee6a42e9b7d524976e6c4cdd",
+      "revision": 1,
+      "gds": "current_mirror.gds",
+      "sha256": "f84e773cfd1229bcc564a7d28b08c14e4c59c8b9ea6807f5669117294b8ba0c7",
+      "sidecar": "current_mirror.gds.mos.json",
+      "roundtrip": {
+        "geometry_equal": true,
+        "before_hash": "996436a2e10ceb4e53d503caca1508baf4e9ec356d5faa35087946ccdc5121e3",
+        "after_hash": "996436a2e10ceb4e53d503caca1508baf4e9ec356d5faa35087946ccdc5121e3",
+        "hierarchy_preserved": true,
+        "stable_ids_preserved": true
+      },
+      "parasitics": {
+        "resistors": 146,
+        "capacitors": 3
+      }
+    },
+    {
+      "example": "differential_pair",
+      "project_id": "5c82df35e65844bda50ede5985f61e84",
+      "revision": 1,
+      "gds": "differential_pair.gds",
+      "sha256": "2ec7552f2b08959901caab1773aafc3e14b2ea11d1da337521cfebdc66952cc5",
+      "sidecar": "differential_pair.gds.mos.json",
+      "roundtrip": {
+        "geometry_equal": true,
+        "before_hash": "e20635d76d6dac76cbd4cfbe62a828d3e102902654e67048d1b19ed845c8d91b",
+        "after_hash": "e20635d76d6dac76cbd4cfbe62a828d3e102902654e67048d1b19ed845c8d91b",
+        "hierarchy_preserved": true,
+        "stable_ids_preserved": true
+      },
+      "parasitics": {
+        "resistors": 212,
+        "capacitors": 21
+      }
+    }
+  ],
+  "limits": [
+    "Public full Magic DRC and Netgen LVS are actual deck results, not foundry signoff.",
+    "Physical process heights remain unknown; viewer heights are illustrative.",
+    "MOS nf=m=1 mapping only; two analog cores use fixed verified physical routing.",
+    "Xschem bridge generates flat native cells; native hierarchical SPICE is separately verified.",
+    "Optimizer scores require actual PCell, DRC, LVS and ngspice; power_W is Vds times peak sampled DC drain current.",
+    "Exact extracted RC element-to-polygon spatial mapping remains unknown.",
+    "Arbitrary PDK registration/decks, Monte Carlo and TCAD are unsupported."
+  ]
+}

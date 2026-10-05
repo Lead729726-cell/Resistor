@@ -1,0 +1,164 @@
+{
+  "title": "오픈소스 PDK 모음집",
+  "checked_on": "2026-10-04",
+  "description": "대표 공개 PDK, 교육·연구용 예측 PDK와 관련 설치·설계 도구의 공식 자료 모음입니다.",
+  "categories": [
+    {"id":"foundry","title":"제조 공정 기반 공개 PDK","description":"실제 제조 공정을 바탕으로 공개된 설계 자료입니다. 공개판의 개발 단계와 제조 검증 범위는 각 프로젝트 문서를 확인하세요."},
+    {"id":"predictive","title":"교육·연구용 예측 PDK","description":"공정 연구와 설계 흐름 학습을 위한 예측 모델입니다. 실제 제조 공정의 수율·성능을 보증하는 자료와 구분됩니다."},
+    {"id":"photonics","title":"실리콘 포토닉스","description":"광 도파로와 광 회로를 위한 PDK·라이브러리입니다."},
+    {"id":"setup","title":"설치·버전 관리 도구","description":"공개 PDK를 내려받고 구성하거나 개발 환경에 묶어 사용하는 도구입니다."},
+    {"id":"flow","title":"RTL → GDS 설계 흐름","description":"지원 플랫폼과 예제를 통해 디지털 설계 흐름을 실행하는 프로젝트입니다."}
+  ],
+  "resources": [
+    {
+      "id":"sky130","category":"foundry","name":"SKY130","label":"130 nm · CMOS",
+      "description":"SkyWater의 130 nm 공개 PDK. 소자 모델, 배선·소자 규칙과 표준셀 자료를 제공합니다.",
+      "status":"공개판: Experimental Preview / alpha",
+      "register":"SKY130A 기본 프로파일에서 회로 해석·DRC·LVS 실행 확인. 제조 signoff 인증과는 별도입니다.",
+      "verified_in_register":true,
+      "links":[
+        {"label":"공식 문서","url":"https://skywater-pdk.readthedocs.io/en/main/"},
+        {"label":"PDK 구성","url":"https://skywater-pdk.readthedocs.io/en/main/contents.html"},
+        {"label":"소스 저장소","url":"https://github.com/google/skywater-pdk"},
+        {"label":"SkyWater 안내","url":"https://www.skywatertechnology.com/sky130-open-source-pdk/"}
+      ]
+    },
+    {
+      "id":"gf180mcu","category":"foundry","name":"GF180MCU","label":"180 nm · 3.3 V / 6 V MCU",
+      "description":"GlobalFoundries의 공개 MCU 공정 자료. MOS·수동 소자 모델과 표준셀·물리 검증 자료를 살펴볼 수 있습니다.",
+      "status":"공개판: Experimental Preview / alpha. Google 원본 저장소는 보관 상태입니다.",
+      "register":"참고 자료 · 레지스터에서 전체 공정 실행 검증은 아직 하지 않았습니다.",
+      "verified_in_register":false,
+      "links":[
+        {"label":"공식 문서","url":"https://gf180mcu-pdk.readthedocs.io/en/latest/"},
+        {"label":"Google 원본 · 보관됨","url":"https://github.com/google/gf180mcu-pdk"},
+        {"label":"FOSSi 소자 모델","url":"https://github.com/fossi-foundation/globalfoundries-pdk-libs-gf180mcu_fd_pr"},
+        {"label":"FOSSi 물리 검증","url":"https://github.com/fossi-foundation/globalfoundries-pdk-libs-gf180mcu_fd_pv"},
+        {"label":"Open PDKs 설정 안내","url":"https://github.com/fossi-foundation/open-pdks/blob/main/gf180mcu/README"}
+      ]
+    },
+    {
+      "id":"ihp-sg13g2","category":"foundry","name":"IHP SG13G2","label":"130 nm · SiGe BiCMOS",
+      "description":"IHP의 아날로그·혼합 신호·RF 설계를 위한 공개 PDK. MOS, HBT와 수동 소자 및 오픈소스 도구용 자료를 제공합니다.",
+      "status":"공개판: preview · 각 도구별 지원 범위는 공식 문서 참조",
+      "register":"참고 자료 · 레지스터에서 전체 공정 실행 검증은 아직 하지 않았습니다.",
+      "verified_in_register":false,
+      "links":[
+        {"label":"공식 문서","url":"https://ihp-open-pdk-docs.readthedocs.io/en/latest/"},
+        {"label":"소스·설치 안내","url":"https://github.com/IHP-GmbH/IHP-Open-PDK"}
+      ]
+    },
+    {
+      "id":"asap7","category":"predictive","name":"ASAP7","label":"7 nm · 예측 FinFET",
+      "description":"Arizona State University의 연구·교육용 예측 PDK와 표준셀 자료. OpenROAD용 플랫폼도 제공됩니다.",
+      "status":"실제 제조 공정용 PDK와 구분 · Calibre 관련 자료는 ASU 안내의 별도 취득 절차 참조",
+      "register":"참고 자료 · 레지스터 실행 검증 전",
+      "verified_in_register":false,
+      "links":[
+        {"label":"ASU 공식 사이트","url":"https://asap.asu.edu/"},
+        {"label":"OpenROAD PDK·표준셀","url":"https://github.com/The-OpenROAD-Project/asap7"}
+      ]
+    },
+    {
+      "id":"freepdk45","category":"predictive","name":"FreePDK45 / Nangate45","label":"45 nm · 예측 CMOS",
+      "description":"NC State의 FreePDK45와 이를 사용하는 Nangate45 디지털 설계 플랫폼. PDK와 표준셀 라이브러리는 별도 자료입니다.",
+      "status":"교육·연구용 예측 모델 · Nangate 셀은 별도 비상업적 사용 조건을 확인하세요.",
+      "register":"참고 자료 · 레지스터 실행 검증 전",
+      "verified_in_register":false,
+      "links":[
+        {"label":"NC State 원본 안내","url":"https://eda.ncsu.edu/freepdk/freepdk45/"},
+        {"label":"Lambdapdk 패키지","url":"https://github.com/siliconcompiler/lambdapdk/tree/main/lambdapdk/freepdk45"},
+        {"label":"OpenROAD Nangate45 플랫폼","url":"https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/tree/master/flow/platforms/nangate45"}
+      ]
+    },
+    {
+      "id":"siepic-ebeam","category":"photonics","name":"SiEPIC EBeam PDK","label":"실리콘 포토닉스 · KLayout",
+      "description":"KLayout에서 광 도파로와 광 회로를 설계하는 PDK·소자 라이브러리입니다. 전기 CMOS PDK와 별도 분야입니다.",
+      "status":"플랫폼·소자별 적용 조건은 프로젝트 문서 참조",
+      "register":"참고 자료 · 레지스터의 광 소자 해석·제조 제출 검증 전",
+      "verified_in_register":false,
+      "links":[
+        {"label":"소스·설치 안내","url":"https://github.com/SiEPIC/SiEPIC_EBeam_PDK"},
+        {"label":"배포 버전","url":"https://github.com/SiEPIC/SiEPIC_EBeam_PDK/releases"},
+        {"label":"문서","url":"https://github.com/SiEPIC/SiEPIC_EBeam_PDK/tree/master/docs"}
+      ]
+    },
+    {
+      "id":"open-pdks","category":"setup","name":"Open PDKs","label":"PDK 빌드·도구별 구성",
+      "description":"SKY130·GF180MCU 원본 자료를 오픈소스 EDA 도구에서 사용할 수 있도록 구성하는 빌더입니다. 현재 FOSSi 저장소를 안내합니다.",
+      "status":"설치 도구 · 자체 제조 공정 PDK가 아닙니다.",
+      "register":"외부 설정 참고 · 현재 엔진의 고정 버전을 임의로 변경하지 않습니다.",
+      "verified_in_register":false,
+      "links":[
+        {"label":"현재 소스·사용법","url":"https://github.com/fossi-foundation/open-pdks"},
+        {"label":"GF180 구성 안내","url":"https://github.com/fossi-foundation/open-pdks/blob/main/gf180mcu/README"}
+      ]
+    },
+    {
+      "id":"ciel","category":"setup","name":"Ciel","label":"PDK 설치·버전 관리",
+      "description":"공개 PDK의 사전 빌드와 버전을 관리하는 FOSSi 도구. SKY130, GF180MCU, IHP SG13G2 설정은 README에서 확인할 수 있습니다.",
+      "status":"프로젝트 명칭: formerly Volare",
+      "register":"외부 설치 참고 · 레지스터에 자동 설치되지 않습니다.",
+      "verified_in_register":false,
+      "links":[
+        {"label":"소스·사용법","url":"https://github.com/fossi-foundation/ciel"},
+        {"label":"배포 버전","url":"https://github.com/fossi-foundation/ciel/releases"}
+      ]
+    },
+    {
+      "id":"volare","category":"setup","name":"Volare","label":"기존 PDK 버전 관리 환경",
+      "description":"SKY130·GF180MCU를 사용하는 기존 Volare 환경의 설정 자료. 이전 efabless 주소 대신 현재 chipfoundry 저장소를 연결합니다.",
+      "status":"기존 Volare 환경용 · Ciel 자료도 함께 참고",
+      "register":"외부 설치 참고 · 레지스터에 자동 설치되지 않습니다.",
+      "verified_in_register":false,
+      "links":[
+        {"label":"현재 소스·사용법","url":"https://github.com/chipfoundry/volare"},
+        {"label":"배포 버전","url":"https://github.com/chipfoundry/volare/releases"}
+      ]
+    },
+    {
+      "id":"lambdapdk","category":"setup","name":"Lambdapdk","label":"SiliconCompiler용 PDK 패키지",
+      "description":"SKY130, GF180MCU, IHP, ASAP7와 FreePDK45 등 여러 공개 설계 자료를 SiliconCompiler 흐름에서 구성하는 패키지입니다.",
+      "status":"각 PDK·표준셀의 개별 라이선스와 사용 조건 적용",
+      "register":"외부 설정 참고 · 패키지 지원 목록은 레지스터의 지원 목록과 별도입니다.",
+      "verified_in_register":false,
+      "links":[
+        {"label":"소스·지원 PDK·사용 조건","url":"https://github.com/siliconcompiler/lambdapdk"},
+        {"label":"배포 버전","url":"https://github.com/siliconcompiler/lambdapdk/releases"}
+      ]
+    },
+    {
+      "id":"iic-osic-tools","category":"setup","name":"IIC-OSIC-TOOLS","label":"Docker · AMD64 / ARM64",
+      "description":"공개 PDK와 회로·레이아웃·검증 도구를 묶은 개발 환경. SKY130, GF180MCU와 IHP 공정 자료를 다룹니다.",
+      "status":"개발 환경 묶음 · 도구와 PDK별 버전·사용 조건 확인",
+      "register":"외부 개발 환경 참고 · 현재 레지스터 엔진과 별도로 구성할 수 있습니다.",
+      "verified_in_register":false,
+      "links":[
+        {"label":"소스·설치 안내","url":"https://github.com/iic-jku/IIC-OSIC-TOOLS"},
+        {"label":"배포 버전","url":"https://github.com/iic-jku/IIC-OSIC-TOOLS/releases"}
+      ]
+    },
+    {
+      "id":"openroad-flow","category":"flow","name":"OpenROAD-flow-scripts","label":"디지털 RTL → GDS",
+      "description":"OpenROAD 기반 디지털 설계 흐름과 PDK별 플랫폼 예제. 지원 공정별 기술 파일과 설정을 살펴볼 수 있습니다.",
+      "status":"설계 도구 · 공정 자체와 지원 도구의 검증 범위는 별도",
+      "register":"외부 흐름 참고 · 레지스터의 자동 연동 검증 전",
+      "verified_in_register":false,
+      "links":[
+        {"label":"공식 문서","url":"https://openroad-flow-scripts.readthedocs.io/en/latest/"},
+        {"label":"소스·플랫폼 목록","url":"https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts"}
+      ]
+    },
+    {
+      "id":"librelane","category":"flow","name":"LibreLane","label":"디지털 RTL → GDS",
+      "description":"OpenLane에서 이어진 공개 디지털 설계 흐름. 공정 설정, 실행 환경과 예제를 공식 문서에서 확인할 수 있습니다.",
+      "status":"설계 도구 · PDK 설치와 흐름별 설정 절차 필요",
+      "register":"외부 흐름 참고 · 레지스터의 자동 연동 검증 전",
+      "verified_in_register":false,
+      "links":[
+        {"label":"공식 문서","url":"https://librelane.readthedocs.io/en/latest/"},
+        {"label":"소스 저장소","url":"https://github.com/librelane/librelane"}
+      ]
+    }
+  ]
+}

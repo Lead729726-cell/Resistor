@@ -1,0 +1,600 @@
+{
+  "id": "08a83d4f8ffc41dd801f716d72357964",
+  "project_id": "98a3c0ddf6934002b8b3c99ffe126d9e",
+  "source_revision": 1,
+  "source_signature": "7b6268ea85c37d470e56533580e95b88325ea99ae935756a35060638803d6634",
+  "layout_sha256": "1ebe0c4750b584f6a41290a8be1d31924dc10f2dcd3b07b67b3b18e0eddf59ae",
+  "snapshot_hashes": {
+    "source-layout.oas": "1ebe0c4750b584f6a41290a8be1d31924dc10f2dcd3b07b67b3b18e0eddf59ae",
+    "source-project.json": "c928e806baa96396bd66d7becbaab7bfa4e4b3b5c7d4f08cafd297cf053d8d98"
+  },
+  "mode": "template",
+  "config": {
+    "analysis": "tran",
+    "corners": [
+      "tt",
+      "ss",
+      "ff"
+    ],
+    "temperatures_C": [
+      -40,
+      27,
+      125
+    ],
+    "supplies_V": [
+      1.62,
+      1.8
+    ],
+    "supply": {
+      "kind": "testbench",
+      "source_names": [
+        "VDD"
+      ]
+    },
+    "metrics": [
+      {
+        "name": "truth_passed",
+        "source": "measurement",
+        "key": "truth_passed",
+        "reduction": "max",
+        "absolute": false
+      }
+    ],
+    "constraints": [
+      {
+        "metric": "truth_passed",
+        "op": ">=",
+        "value": 64
+      }
+    ],
+    "settings": {
+      "duration_s": 3.2e-7,
+      "step_s": 1e-10
+    },
+    "wall_time_s": 300,
+    "point_timeout_s": 120,
+    "max_parallel": 1
+  },
+  "execution_status": "completed",
+  "created_at": "2026-10-02T06:39:07.685948+00:00",
+  "points": [
+    {
+      "id": "2e5cfe33fd884c1dac3aef4847627921",
+      "index": 0,
+      "condition": {
+        "corner": "tt",
+        "temperature_C": -40,
+        "supply_V": 1.62
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "07a0a8e9b31b492780de50f37625e105",
+      "run_id": "285705edd74245d3a7489dd6fa7c22d8",
+      "submitted_epoch_s": 1790923175.2711172,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.4563122970284894,
+      "manifest_path": "/workspace/.runtime/eda/runs/285705edd74245d3a7489dd6fa7c22d8/manifest.json",
+      "message": "Actual ngspice tran: 3663 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "2ad357764a364267839ffeaeb99d799e",
+      "index": 1,
+      "condition": {
+        "corner": "tt",
+        "temperature_C": -40,
+        "supply_V": 1.8
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "34d814847b6f4d238cb26329c97d0ff5",
+      "run_id": "b428bbb6cc174350bc4c0bd27026cb50",
+      "submitted_epoch_s": 1790923177.8156178,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 2.0107118119485676,
+      "manifest_path": "/workspace/.runtime/eda/runs/b428bbb6cc174350bc4c0bd27026cb50/manifest.json",
+      "message": "Actual ngspice tran: 3673 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "eed9a0f2ae174f1ebf3f5f2c4ae04e4f",
+      "index": 2,
+      "condition": {
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.62
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "6b22285cb5564c29937e7c267deba3f3",
+      "run_id": "e539ec1b0a2b4550a7f8b1f265823b7d",
+      "submitted_epoch_s": 1790923181.4669898,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.4676880959887058,
+      "manifest_path": "/workspace/.runtime/eda/runs/e539ec1b0a2b4550a7f8b1f265823b7d/manifest.json",
+      "message": "Actual ngspice tran: 3666 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "d5d7fae5f9fc437f9fda71cc45ac8f5f",
+      "index": 3,
+      "condition": {
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "e55c9a81fa4742efb739fbc185faa911",
+      "run_id": "fa1ba10716f74501a59cb316944e0743",
+      "submitted_epoch_s": 1790923184.0248075,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.86442283494398,
+      "manifest_path": "/workspace/.runtime/eda/runs/fa1ba10716f74501a59cb316944e0743/manifest.json",
+      "message": "Actual ngspice tran: 3684 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "1c8c1bbc8a724ad69f141900861f08ea",
+      "index": 4,
+      "condition": {
+        "corner": "tt",
+        "temperature_C": 125,
+        "supply_V": 1.62
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "ac6d2d763ce847f9909f9f2aad8c45c6",
+      "run_id": "6873e3828fd8468798d68327a2b1fba2",
+      "submitted_epoch_s": 1790923186.864562,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.8852189839817584,
+      "manifest_path": "/workspace/.runtime/eda/runs/6873e3828fd8468798d68327a2b1fba2/manifest.json",
+      "message": "Actual ngspice tran: 3652 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "ce3af348dfb64f75a31465816519f448",
+      "index": 5,
+      "condition": {
+        "corner": "tt",
+        "temperature_C": 125,
+        "supply_V": 1.8
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "ad895c9d3205495bb76a7605da934e5e",
+      "run_id": "5ad7e94b4a514dd0bdedbec791a053fa",
+      "submitted_epoch_s": 1790923189.875214,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.8284627529792488,
+      "manifest_path": "/workspace/.runtime/eda/runs/5ad7e94b4a514dd0bdedbec791a053fa/manifest.json",
+      "message": "Actual ngspice tran: 3675 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "fb54de41ea46438a940e0c9002781236",
+      "index": 6,
+      "condition": {
+        "corner": "ss",
+        "temperature_C": -40,
+        "supply_V": 1.62
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "df1e620aefe14bbe9ec03785b205f4e1",
+      "run_id": "2a1b6a682f6947fd8c046c79543bad2b",
+      "submitted_epoch_s": 1790923192.575756,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.1943029389949515,
+      "manifest_path": "/workspace/.runtime/eda/runs/2a1b6a682f6947fd8c046c79543bad2b/manifest.json",
+      "message": "Actual ngspice tran: 3639 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "3f669bc4f3f74700abe65f6ddfa43cea",
+      "index": 7,
+      "condition": {
+        "corner": "ss",
+        "temperature_C": -40,
+        "supply_V": 1.8
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "0936e7c85cdc4c06bcc418639be12b62",
+      "run_id": "ff06b9e3b14047e19fa3680b5e4cd26a",
+      "submitted_epoch_s": 1790923194.8053324,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.4158735809614882,
+      "manifest_path": "/workspace/.runtime/eda/runs/ff06b9e3b14047e19fa3680b5e4cd26a/manifest.json",
+      "message": "Actual ngspice tran: 3664 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "f7144f7b56224708b14876dae687061e",
+      "index": 8,
+      "condition": {
+        "corner": "ss",
+        "temperature_C": 27,
+        "supply_V": 1.62
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "e6d327a55c7b4476845fc743b77b766c",
+      "run_id": "8c47e18f93c742ee9091e88637516495",
+      "submitted_epoch_s": 1790923197.1044908,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.7223635941045359,
+      "manifest_path": "/workspace/.runtime/eda/runs/8c47e18f93c742ee9091e88637516495/manifest.json",
+      "message": "Actual ngspice tran: 3639 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "85867dff7a7c4c67ac2aecf45ca4220f",
+      "index": 9,
+      "condition": {
+        "corner": "ss",
+        "temperature_C": 27,
+        "supply_V": 1.8
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "e5610228b0c9416a892bb99ad725b351",
+      "run_id": "cd4db2f3204342de9784bd2282778dc7",
+      "submitted_epoch_s": 1790923200.04249,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.2816613340983167,
+      "manifest_path": "/workspace/.runtime/eda/runs/cd4db2f3204342de9784bd2282778dc7/manifest.json",
+      "message": "Actual ngspice tran: 3659 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "49ab4fde0ed0471c8e451b7899cdf355",
+      "index": 10,
+      "condition": {
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "a24aef6cd58b4748854315058193e134",
+      "run_id": "e521cacbd8014b759f1ceb62935eb08f",
+      "submitted_epoch_s": 1790923202.4203634,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.2398443459533155,
+      "manifest_path": "/workspace/.runtime/eda/runs/e521cacbd8014b759f1ceb62935eb08f/manifest.json",
+      "message": "Actual ngspice tran: 3638 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "8a60b1e3dcd048bd842158a6e331163f",
+      "index": 11,
+      "condition": {
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.8
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "5588a4ff9be646b8b6877094943c8192",
+      "run_id": "222482adfe1c46be947cf68585cb69e0",
+      "submitted_epoch_s": 1790923204.5800862,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.2015715410234407,
+      "manifest_path": "/workspace/.runtime/eda/runs/222482adfe1c46be947cf68585cb69e0/manifest.json",
+      "message": "Actual ngspice tran: 3646 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "11c12499ae7c4d719a658319470393cb",
+      "index": 12,
+      "condition": {
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.62
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "c2eeddf527684b3680429626dd8dda20",
+      "run_id": "fb55ed57170945d3836cba89eb0a4fca",
+      "submitted_epoch_s": 1790923206.9203024,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.404128139023669,
+      "manifest_path": "/workspace/.runtime/eda/runs/fb55ed57170945d3836cba89eb0a4fca/manifest.json",
+      "message": "Actual ngspice tran: 3671 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "59665981a523458f972a433ea873eff9",
+      "index": 13,
+      "condition": {
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "7b0cd6050b7f4485960ff687d3d1f442",
+      "run_id": "0b2fe6aa2e6c4464ba37ab38de1c7429",
+      "submitted_epoch_s": 1790923209.3001137,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 2.0050429250113666,
+      "manifest_path": "/workspace/.runtime/eda/runs/0b2fe6aa2e6c4464ba37ab38de1c7429/manifest.json",
+      "message": "Actual ngspice tran: 3658 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "128bf59d88064109aa7a5c6754a409e5",
+      "index": 14,
+      "condition": {
+        "corner": "ff",
+        "temperature_C": 27,
+        "supply_V": 1.62
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "6e2f32f04e2c40ea98204f99f96fefe0",
+      "run_id": "88ea56312433476fab7e11f7722b1f1a",
+      "submitted_epoch_s": 1790923212.3399248,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.9114632580894977,
+      "manifest_path": "/workspace/.runtime/eda/runs/88ea56312433476fab7e11f7722b1f1a/manifest.json",
+      "message": "Actual ngspice tran: 3650 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "812bee6c2f0c4a8dbda5b5913dac6093",
+      "index": 15,
+      "condition": {
+        "corner": "ff",
+        "temperature_C": 27,
+        "supply_V": 1.8
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "33ed835851fc4314a364b9d4522b9220",
+      "run_id": "f78e12e8d9d045af808e2c2f9ab50017",
+      "submitted_epoch_s": 1790923215.1109805,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.4834599050227553,
+      "manifest_path": "/workspace/.runtime/eda/runs/f78e12e8d9d045af808e2c2f9ab50017/manifest.json",
+      "message": "Actual ngspice tran: 3658 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "359d9ecc97d34bd2a464fb5e07bd6dd9",
+      "index": 16,
+      "condition": {
+        "corner": "ff",
+        "temperature_C": 125,
+        "supply_V": 1.62
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "64bb2312e9b04ebf848b1e334da6c1ce",
+      "run_id": "b26f7c8221e94d0c8b18b8125307207c",
+      "submitted_epoch_s": 1790923217.7496789,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 1.2310448180651292,
+      "manifest_path": "/workspace/.runtime/eda/runs/b26f7c8221e94d0c8b18b8125307207c/manifest.json",
+      "message": "Actual ngspice tran: 3652 samples.; MUX truth 64/64"
+    },
+    {
+      "id": "2a7f83c735df4e7f8dcc0c26e64dffb7",
+      "index": 17,
+      "condition": {
+        "corner": "ff",
+        "temperature_C": 125,
+        "supply_V": 1.8
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "truth_passed": 64
+      },
+      "constraints_pass": true,
+      "project_id": "bf36232ff97c4a67ac74bbe050e13140",
+      "run_id": "8578f754ced248c9bcc71cdfc9abb16f",
+      "submitted_epoch_s": 1790923220.0336475,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VDD"
+        ]
+      },
+      "elapsed_s": 2.736685053096153,
+      "manifest_path": "/workspace/.runtime/eda/runs/8578f754ced248c9bcc71cdfc9abb16f/manifest.json",
+      "message": "Actual ngspice tran: 3659 samples.; MUX truth 64/64"
+    }
+  ],
+  "active_run_ids": [],
+  "summary": {
+    "truth_passed": {
+      "min": 64,
+      "max": 64,
+      "min_point_id": "2e5cfe33fd884c1dac3aef4847627921",
+      "max_point_id": "2e5cfe33fd884c1dac3aef4847627921",
+      "min_condition": {
+        "corner": "tt",
+        "temperature_C": -40,
+        "supply_V": 1.62
+      },
+      "max_condition": {
+        "corner": "tt",
+        "temperature_C": -40,
+        "supply_V": 1.62
+      },
+      "valid_points": 18
+    }
+  },
+  "notes": [
+    "Actual native runs only. Supply binding is explicit and recorded for every point.",
+    "Process corner may have no effect on ideal primitives without process-dependent models.",
+    "No statistical yield, foundry signoff or commercial execution is claimed."
+  ],
+  "started_at": "2026-10-02T06:39:34.410519+00:00",
+  "deadline_epoch_s": 1790923474.410541,
+  "counts": {
+    "queued": 0,
+    "running": 0,
+    "completed": 18,
+    "failed": 0,
+    "canceled": 0
+  },
+  "all_constraints_pass": true,
+  "worst_constraints": [
+    {
+      "metric": "truth_passed",
+      "op": ">=",
+      "value": 64,
+      "worst_value": 64,
+      "point_id": "2e5cfe33fd884c1dac3aef4847627921",
+      "condition": {
+        "corner": "tt",
+        "temperature_C": -40,
+        "supply_V": 1.62
+      },
+      "pass": true
+    }
+  ],
+  "ended_at": "2026-10-02T06:40:23.814534+00:00",
+  "freshness": "current"
+}

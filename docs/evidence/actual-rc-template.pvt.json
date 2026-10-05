@@ -1,0 +1,144 @@
+{
+  "id": "0b4f9238208b4b54a7aca50996e91518",
+  "project_id": "18b530d339844fe6a03988a71e3559ba",
+  "source_revision": 1,
+  "source_signature": "7b6268ea85c37d470e56533580e95b88325ea99ae935756a35060638803d6634",
+  "layout_sha256": "3b99706d31c5bf5a25ad9246b8d2d0dabd05bfa4aecf4827c08267c208cf3085",
+  "snapshot_hashes": {
+    "source-layout.oas": "3b99706d31c5bf5a25ad9246b8d2d0dabd05bfa4aecf4827c08267c208cf3085",
+    "source-project.json": "886cb4971095b16bf397c9e62795e5c9136499da532b063c519c20dab0a76be2"
+  },
+  "mode": "template",
+  "config": {
+    "analysis": "tran",
+    "corners": [
+      "tt"
+    ],
+    "temperatures_C": [
+      27
+    ],
+    "supplies_V": [
+      1.2,
+      1.8
+    ],
+    "supply": {
+      "kind": "testbench",
+      "source_names": [
+        "VIN"
+      ]
+    },
+    "metrics": [
+      {
+        "name": "tau_s",
+        "source": "measurement",
+        "key": "measured_tau_s",
+        "reduction": "max",
+        "absolute": false
+      }
+    ],
+    "constraints": [],
+    "settings": {
+      "duration_s": 2e-7,
+      "step_s": 1e-10
+    },
+    "wall_time_s": 300,
+    "point_timeout_s": 120,
+    "max_parallel": 1
+  },
+  "execution_status": "completed",
+  "created_at": "2026-10-01T09:37:04.530128+00:00",
+  "points": [
+    {
+      "id": "4b5887e7781e4ddfb6af8f1638c3dfca",
+      "index": 0,
+      "condition": {
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.2
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "tau_s": 1.0000527282294728e-8
+      },
+      "constraints_pass": true,
+      "project_id": "fcbde45077434f2b9857593aed467014",
+      "run_id": "3bb66db1b7f94b19b8b03c40a94e06a5",
+      "submitted_epoch_s": 1790847425.4593706,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VIN"
+        ]
+      },
+      "elapsed_s": 0.3792537599802017,
+      "manifest_path": "/workspace/.runtime/eda/runs/3bb66db1b7f94b19b8b03c40a94e06a5/manifest.json",
+      "message": "Actual ngspice tran: 2022 samples."
+    },
+    {
+      "id": "042856c6487b451c9bb2033e597dc002",
+      "index": 1,
+      "condition": {
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "tau_s": 1.0000527327111767e-8
+      },
+      "constraints_pass": true,
+      "project_id": "7252005026e64307b7b9f2e0dd77a288",
+      "run_id": "78272094564844fbae0d25cab056e9e9",
+      "submitted_epoch_s": 1790847426.3497913,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VIN"
+        ]
+      },
+      "elapsed_s": 0.3200046169804409,
+      "manifest_path": "/workspace/.runtime/eda/runs/78272094564844fbae0d25cab056e9e9/manifest.json",
+      "message": "Actual ngspice tran: 2022 samples."
+    }
+  ],
+  "active_run_ids": [],
+  "summary": {
+    "tau_s": {
+      "min": 1.0000527282294728e-8,
+      "max": 1.0000527327111767e-8,
+      "min_point_id": "4b5887e7781e4ddfb6af8f1638c3dfca",
+      "max_point_id": "042856c6487b451c9bb2033e597dc002",
+      "min_condition": {
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.2
+      },
+      "max_condition": {
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8
+      },
+      "valid_points": 2
+    }
+  },
+  "notes": [
+    "Actual native runs only. Supply binding is explicit and recorded for every point.",
+    "Process corner may have no effect on ideal primitives without process-dependent models.",
+    "No statistical yield, foundry signoff or commercial execution is claimed."
+  ],
+  "started_at": "2026-10-01T09:37:04.948562+00:00",
+  "deadline_epoch_s": 1790847724.9485953,
+  "counts": {
+    "queued": 0,
+    "running": 0,
+    "completed": 2,
+    "failed": 0,
+    "canceled": 0
+  },
+  "all_constraints_pass": true,
+  "worst_constraints": [],
+  "ended_at": "2026-10-01T09:37:06.852206+00:00",
+  "freshness": "current"
+}

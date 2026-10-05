@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "id": "pegasus-site-v1",
+  "name": "Pegasus — operator site validation required",
+  "tool_id": "pegasus",
+  "version": "Pegasus site-version candidate; consult installed CLI help",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/pegasus",
+    "env_names": [
+      "CDS_LIC_FILE"
+    ],
+    "resources": {
+      "deck": "/workspace/site/pegasus.runset"
+    },
+    "recipes": {
+      "drc": {
+        "argv": [
+          "-drc",
+          "{resource.deck}"
+        ],
+        "outputs": {
+          "summary": "drc-summary.txt"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "summary": "unsupported-site-format"
+          }
+        },
+        "requires_netlist": false
+      },
+      "lvs": {
+        "argv": [
+          "-drc",
+          "{resource.deck}"
+        ],
+        "outputs": {
+          "summary": "lvs-summary.txt"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "summary": "unsupported-site-format"
+          }
+        },
+        "requires_netlist": true
+      }
+    }
+  }
+}

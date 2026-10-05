@@ -1,0 +1,282 @@
+{
+  "id": "bd851b6087dc4755bd3b21ac3d608c30",
+  "project_id": "60c0c84f912e499e876e4f4a91168e6a",
+  "kind": "simulation",
+  "workflow": "configured-layout",
+  "profile_id": "sky130A",
+  "revision": 6,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "freshness": "current",
+  "artifacts": {
+    "layout_netlist": "/workspace/.runtime/eda/runs/bd851b6087dc4755bd3b21ac3d608c30/layout.spice",
+    "testbench": "/workspace/.runtime/eda/runs/bd851b6087dc4755bd3b21ac3d608c30/testbench.spice",
+    "waveform_data": "/workspace/.runtime/eda/runs/bd851b6087dc4755bd3b21ac3d608c30/waveform.dat",
+    "waveform_raw": "/workspace/.runtime/eda/runs/bd851b6087dc4755bd3b21ac3d608c30/waveform.raw",
+    "current_flow_data": "/workspace/.runtime/eda/runs/bd851b6087dc4755bd3b21ac3d608c30/current-flow.dat",
+    "current_probe_netlist": "/workspace/.runtime/eda/runs/bd851b6087dc4755bd3b21ac3d608c30/current-probe.spice",
+    "stdout": "/workspace/.runtime/eda/runs/bd851b6087dc4755bd3b21ac3d608c30/stdout.log"
+  },
+  "manifest_path": "/workspace/.runtime/eda/runs/bd851b6087dc4755bd3b21ac3d608c30/manifest.json",
+  "input_signature": "6d06eb8dbc85f5d4b4260a6b8f243306f97860fd8fe8b6b62b27f0a5e28c2098",
+  "started_at": "2026-10-01T04:58:11.879933+00:00",
+  "tool": "Magic + ngspice",
+  "waveforms": [
+    {
+      "name": "D",
+      "unit": "V",
+      "x": [
+        0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1,
+        1.2,
+        1.4,
+        1.6,
+        1.8
+      ],
+      "y": [
+        1.2,
+        1.2,
+        1.2,
+        1.2,
+        1.2,
+        1.2,
+        1.2,
+        1.2,
+        1.2,
+        1.2
+      ]
+    },
+    {
+      "name": "S",
+      "unit": "V",
+      "x": [
+        0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1,
+        1.2,
+        1.4,
+        1.6,
+        1.8
+      ],
+      "y": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "B",
+      "unit": "V",
+      "x": [
+        0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1,
+        1.2,
+        1.4,
+        1.6,
+        1.8
+      ],
+      "y": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "G",
+      "unit": "V",
+      "x": [
+        0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1,
+        1.2,
+        1.4,
+        1.6,
+        1.8
+      ],
+      "y": [
+        0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1,
+        1.2,
+        1.4,
+        1.6,
+        1.8
+      ]
+    }
+  ],
+  "current_flow": {
+    "schema_version": 1,
+    "source": "ngspice",
+    "analysis": "dc",
+    "x": [
+      0,
+      0.2,
+      0.4,
+      0.6,
+      0.8,
+      1,
+      1.2,
+      1.4,
+      1.6,
+      1.8
+    ],
+    "x_unit": "V",
+    "branches": [
+      {
+        "id": "XU/X0",
+        "name": "X0 native drain→source",
+        "from_net": "S",
+        "to_net": "D",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_9f02ef64bbe5e59f)",
+        "values_A": [
+          -6.35433672e-14,
+          -1.38600954e-11,
+          -2.92589565e-9,
+          -4.19552362e-7,
+          -0.0000114688158,
+          -0.000053666687,
+          -0.000113100256,
+          -0.000178000603,
+          -0.000244648439,
+          -0.00031141846
+        ]
+      },
+      {
+        "id": "testbench/VREGISTER_PORT_0",
+        "name": "VREGISTER_PORT_0 source (+→−)",
+        "from_net": "G",
+        "to_net": "0",
+        "mapping": "unmapped",
+        "source_vector": "i(VREGISTER_PORT_0)",
+        "values_A": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "testbench/VREGISTER_PORT_1",
+        "name": "VREGISTER_PORT_1 source (+→−)",
+        "from_net": "B",
+        "to_net": "0",
+        "mapping": "unmapped",
+        "source_vector": "i(VREGISTER_PORT_1)",
+        "values_A": [
+          1.20086898e-12,
+          1.20097817e-12,
+          1.22402051e-12,
+          4.44326835e-12,
+          5.4783453e-11,
+          8.54185057e-11,
+          7.31146142e-11,
+          5.44731278e-11,
+          3.7083895e-11,
+          2.30791857e-11
+        ]
+      },
+      {
+        "id": "testbench/VREGISTER_PORT_2",
+        "name": "VREGISTER_PORT_2 source (+→−)",
+        "from_net": "S",
+        "to_net": "0",
+        "mapping": "unmapped",
+        "source_vector": "i(VREGISTER_PORT_2)",
+        "values_A": [
+          6.35433672e-14,
+          1.38600954e-11,
+          2.92589565e-9,
+          4.19552362e-7,
+          0.0000114688158,
+          0.000053666687,
+          0.000113100256,
+          0.000178000603,
+          0.000244648439,
+          0.00031141846
+        ]
+      },
+      {
+        "id": "testbench/VREGISTER_PORT_3",
+        "name": "VREGISTER_PORT_3 source (+→−)",
+        "from_net": "D",
+        "to_net": "0",
+        "mapping": "unmapped",
+        "source_vector": "i(VREGISTER_PORT_3)",
+        "values_A": [
+          -1.26441235e-12,
+          -1.50610736e-11,
+          -2.92711967e-9,
+          -4.19556805e-7,
+          -0.0000114688705,
+          -0.0000536667724,
+          -0.000113100329,
+          -0.000178000658,
+          -0.000244648476,
+          -0.000311418483
+        ]
+      }
+    ],
+    "convention": "conventional",
+    "revision": 6,
+    "project_id": "60c0c84f912e499e876e4f4a91168e6a",
+    "run_id": "bd851b6087dc4755bd3b21ac3d608c30",
+    "layout_sha256": "dc813403e2a27bb535b141e02be50fc8ad0b40fe77b98deb32c74dc87c8cf42d",
+    "notes": [
+      "Actual zero-volt series sense-source current into each component first terminal; MOS arrows use D→S as drain-terminal reference, including transient displacement current. For extracted symmetric MOS D/S exchanges, the native resistor graph must prove correspondence before selecting the sense source at the logical D terminal; source terminal current is never approximated by negating a different terminal current. Testbench i(V) is positive +→− without negation. Negative samples reverse the reference direction. Paths connect verified named contact anchors and are not reconstructed conductor streamlines.",
+      "All imported-GDS current branches are spatially unmapped; no current streamline is reconstructed.",
+      "Eligible native M MOS and verified SKY130 wrapper terminal currents are measured. Other custom subcircuit/device terminal mappings are unsupported; explicit testbench bias-source currents are still measured by ngspice."
+    ]
+  },
+  "message": "Actual configured ngspice dc: 10 samples; no inferred physical current path.",
+  "measurements": {
+    "analysis": "dc",
+    "x_unit": "V",
+    "x_label": "G",
+    "samples": 10,
+    "corner": "tt",
+    "temperature_C": 27,
+    "profile_id": "sky130A",
+    "current_flow_status": "available_partial",
+    "post_layout": "false"
+  },
+  "ended_at": "2026-10-01T04:58:14.801102+00:00",
+  "elapsed_s": 2.933736269013025
+}

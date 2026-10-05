@@ -1,0 +1,387 @@
+{
+  "schema_version": 1,
+  "case_count": 41,
+  "passed": 41,
+  "cases": [
+    {
+      "name": "public installed SKY130 inverter actual KLayout native DB read",
+      "result": "pass",
+      "seconds": 0.1937328560743481,
+      "details": {
+        "source_id": "public_sky130",
+        "read_id": "a10bdaf5028f4578a9eab9cece77c31c",
+        "original_gds_sha256": "1b118450ce1cacb3bd34de60e95d3abc1e98b4e52b02938dda843dd41a045644",
+        "subset_sha256": "6085a1aa69578b00edaf3e43353210f449c76dc41e85f62a0a7395dc3793c1f1",
+        "dbu_um": 0.001,
+        "shape_count": 50,
+        "vendor_execution_verified": false
+      }
+    },
+    {
+      "name": "actual KLayout synthetic grammar read DBU hierarchy holes paths labels pins arrays",
+      "result": "pass",
+      "seconds": 0.26248799299355596,
+      "details": {
+        "read_id": "d5992b3465ff4d91abd2748acf54cbf6",
+        "dbu_um": 0.002,
+        "shape_count": 4,
+        "array": [
+          2,
+          3
+        ],
+        "pin_net": "D",
+        "geometry_source": "explicit synthetic grammar fixture read with actual KLayout"
+      }
+    },
+    {
+      "name": "actual graph import creates immutable revision and clears old electrical setup",
+      "result": "pass",
+      "seconds": 0.20758479204960167,
+      "details": {
+        "project_id": "6a8a47cc64154e8986bfd293cd6d97a2",
+        "revision": 2,
+        "snapshot_sha256": "eebb827059480710e4a96104d855f514d65120de52bf6d1a53d6b0793fccacea"
+      }
+    },
+    {
+      "name": "exact import replay and graph artifact SHA receipt",
+      "result": "pass",
+      "seconds": 0.02774288202635944,
+      "details": {
+        "immutable_import_revision": 2,
+        "graph_sha256": "e6bf47baad3799c684f3823a94cb871b85b40cd4360eb00281c1fb8b0296f2e0"
+      }
+    },
+    {
+      "name": "real GDS OAS roundtrip preserves DBU hierarchy exact geometry",
+      "result": "pass",
+      "seconds": 0.020778240985237062,
+      "details": {
+        "formats": [
+          "gds",
+          "oas"
+        ],
+        "dbu_um": 0.002
+      }
+    },
+    {
+      "name": "native import undo redo preserves original snapshot",
+      "result": "pass",
+      "seconds": 0.22211972798686475,
+      "details": {
+        "restored_revision": 4
+      }
+    },
+    {
+      "name": "shared binding local default import and cross-room read receipts",
+      "result": "pass",
+      "seconds": 0.48404794407542795,
+      "details": {
+        "bound_project_id": "d58c3c05397747c8be8f7e4270e576ac",
+        "read_id": "4a92e5706f4a435982b0907fb4bae027",
+        "cross_room_denied": true
+      }
+    },
+    {
+      "name": "real missing Virtuoso ICC2 Fusion probes never vendor PASS",
+      "result": "pass",
+      "seconds": 0.7742936090799049,
+      "details": {
+        "actual_missing_binaries": [
+          {
+            "tool": "virtuoso",
+            "status": "unavailable",
+            "backend_profile_id": "database_missing_cadence"
+          },
+          {
+            "tool": "icc2",
+            "status": "unavailable",
+            "backend_profile_id": "database_missing_icc2"
+          },
+          {
+            "tool": "fusion_compiler",
+            "status": "unavailable",
+            "backend_profile_id": "database_missing_fusion"
+          }
+        ],
+        "vendor_execution_verified": false
+      }
+    },
+    {
+      "name": "resource path outside operator roots rejected",
+      "result": "pass",
+      "seconds": 0.0006355190416797996,
+      "details": {
+        "error_code": "UNSAFE_RESOURCE_PATH"
+      }
+    },
+    {
+      "name": "source registration accepts no arbitrary argv",
+      "result": "pass",
+      "seconds": 1.3760989531874657e-05,
+      "details": {
+        "error_code": "INVALID_DATABASE_MANIFEST"
+      }
+    },
+    {
+      "name": "source registration accepts env names no secret values",
+      "result": "pass",
+      "seconds": 6.509944796562195e-06,
+      "details": {
+        "error_code": "INVALID_DATABASE_MANIFEST"
+      }
+    },
+    {
+      "name": "source registration sharing is local-only immutable",
+      "result": "pass",
+      "seconds": 0.004244701005518436,
+      "details": {
+        "error_code": "SOURCE_EXISTS"
+      }
+    },
+    {
+      "name": "read command accepts digit-prefixed UUID and replays exactly",
+      "result": "pass",
+      "seconds": 0.07811340701300651,
+      "details": null
+    },
+    {
+      "name": "read receipt payload mismatch rejected",
+      "result": "pass",
+      "seconds": 0.0032670589862391353,
+      "details": {
+        "error_code": "IDEMPOTENCY_CONFLICT"
+      }
+    },
+    {
+      "name": "read native view cannot drift from registered source",
+      "result": "pass",
+      "seconds": 0.0010676560923457146,
+      "details": {
+        "error_code": "INVALID_DATABASE_VIEW"
+      }
+    },
+    {
+      "name": "read RPC rejects client script fields",
+      "result": "pass",
+      "seconds": 7.109949365258217e-06,
+      "details": {
+        "error_code": "INVALID_REQUEST"
+      }
+    },
+    {
+      "name": "busy read creates no pending receipt and retry completes",
+      "result": "pass",
+      "seconds": 0.07093184196855873,
+      "details": {
+        "busy_created_no_pending_receipt": true,
+        "retry_completed": true
+      }
+    },
+    {
+      "name": "concurrent actual KLayout read exact-once receipt",
+      "result": "pass",
+      "seconds": 0.07600832893513143,
+      "details": {
+        "actual_klayout_queries": 1,
+        "exact_once_read_id": "e46856f127dc476a9ba2428066a42c92"
+      }
+    },
+    {
+      "name": "restart pending receipt remains unverified no automatic vendor replay",
+      "result": "pass",
+      "seconds": 0.027684336062520742,
+      "details": {
+        "restarted_pending_status": "unverified",
+        "automatic_replay": false
+      }
+    },
+    {
+      "name": "native resource mutation rejects old receipt artifact and import",
+      "result": "pass",
+      "seconds": 0.08062242600135505,
+      "details": {
+        "changed_source_rejected": true,
+        "completed_receipt_still_replayed": true
+      }
+    },
+    {
+      "name": "immutable graph tampering rejected",
+      "result": "pass",
+      "seconds": 0.035344145027920604,
+      "details": {
+        "immutable_graph_sha_guard": true
+      }
+    },
+    {
+      "name": "source eligibility checked again in short commit",
+      "result": "pass",
+      "seconds": 0.10147046006750315,
+      "details": {
+        "prepare_to_commit_cached_signature_change_rejected": true
+      }
+    },
+    {
+      "name": "actual Tcl JSON escapes every control character",
+      "result": "pass",
+      "seconds": 0.01187110599130392,
+      "details": {
+        "actual_tcl_json_escape_verified": true,
+        "licensed_execution": false
+      }
+    },
+    {
+      "name": "graph unknown shape cannot be replaced by bbox",
+      "result": "pass",
+      "seconds": 0.001311110914684832,
+      "details": {
+        "error_code": "UNSUPPORTED_NATIVE_OBJECT"
+      }
+    },
+    {
+      "name": "graph incomplete native objects cannot import",
+      "result": "pass",
+      "seconds": 0.0011016580974683166,
+      "details": {
+        "error_code": "INCOMPLETE_NATIVE_GRAPH"
+      }
+    },
+    {
+      "name": "graph explicit native diagnostics cannot import",
+      "result": "pass",
+      "seconds": 0.0011227590730413795,
+      "details": {
+        "error_code": "INCOMPLETE_NATIVE_GRAPH"
+      }
+    },
+    {
+      "name": "graph absent actual DBU rejected",
+      "result": "pass",
+      "seconds": 0.0012779779499396682,
+      "details": {
+        "error_code": "INVALID_NATIVE_GRAPH"
+      }
+    },
+    {
+      "name": "rotated text OASIS limitation blocks silent orientation loss",
+      "result": "pass",
+      "seconds": 0.0014546089805662632,
+      "details": {
+        "error_code": "UNSUPPORTED_NATIVE_LABEL_TRANSFORM"
+      }
+    },
+    {
+      "name": "graph noninteger coordinate rejected",
+      "result": "pass",
+      "seconds": 0.0016149790026247501,
+      "details": {
+        "error_code": "INVALID_COORDINATE"
+      }
+    },
+    {
+      "name": "graph missing master rejected",
+      "result": "pass",
+      "seconds": 0.0013231909833848476,
+      "details": {
+        "error_code": "INVALID_NATIVE_GRAPH"
+      }
+    },
+    {
+      "name": "graph recursive master rejected",
+      "result": "pass",
+      "seconds": 0.001123458961956203,
+      "details": {
+        "error_code": "INVALID_NATIVE_GRAPH"
+      }
+    },
+    {
+      "name": "graph duplicate native source IDs rejected",
+      "result": "pass",
+      "seconds": 0.0011811720905825496,
+      "details": {
+        "error_code": "INVALID_NATIVE_GRAPH"
+      }
+    },
+    {
+      "name": "graph unknown native layer purpose rejected",
+      "result": "pass",
+      "seconds": 0.0012300160015001893,
+      "details": {
+        "error_code": "UNMAPPED_NATIVE_LAYER"
+      }
+    },
+    {
+      "name": "graph actual named LPP mapped with explicit operator stream map",
+      "result": "pass",
+      "seconds": 0.0018908260390162468,
+      "details": {
+        "explicit_lpp": "M1 pin ->68/16"
+      }
+    },
+    {
+      "name": "graph excessive expanded array rejected",
+      "result": "pass",
+      "seconds": 0.0012931500095874071,
+      "details": {
+        "error_code": "INVALID_NATIVE_GRAPH"
+      }
+    },
+    {
+      "name": "graph control characters in identity rejected",
+      "result": "pass",
+      "seconds": 0.001206154003739357,
+      "details": {
+        "error_code": "INVALID_NATIVE_GRAPH"
+      }
+    },
+    {
+      "name": "native wrong selected top cannot be silently read",
+      "result": "pass",
+      "seconds": 0.046789685962721705,
+      "details": {
+        "error_code": "NATIVE_CELL_MISMATCH"
+      }
+    },
+    {
+      "name": "native malformed reader header cannot be accepted",
+      "result": "pass",
+      "seconds": 0.049035856034606695,
+      "details": {
+        "error_code": "INVALID_NATIVE_QUERY"
+      }
+    },
+    {
+      "name": "byte-changed shipped query blocks direct DB adapter",
+      "result": "pass",
+      "seconds": 0.06479227007366717,
+      "details": {
+        "modified_query_unavailable": true
+      }
+    },
+    {
+      "name": "native source symlink rejected",
+      "result": "pass",
+      "seconds": 0.0024072680389508605,
+      "details": {
+        "error_code": "UNSAFE_RESOURCE_PATH"
+      }
+    },
+    {
+      "name": "unsupported real KLayout path ends stay nonimportable",
+      "result": "pass",
+      "seconds": 0.09601585404016078,
+      "details": {
+        "unsupported_exact_path_semantics_retained": true
+      }
+    }
+  ],
+  "raw_folder": "/workspace/.runtime/evidence/native-database-d8cfc28dfa2d4087848b7cf09949fb6e",
+  "vendor_execution_verified": false,
+  "source_sha256": {
+    "workers/eda/native_database.py": "267705c19667526ff2557a4d9f13f19320b8f18c9d5c52cde83355181f8fdb81",
+    "workers/eda/test_native_database.py": "ce76017c85a412040998ad18b1279d9569fa7ad29c49a4e817cd7088d9e701fc",
+    "workers/eda/server.py": "9336902d55abcfe442ff5c7dbdb231e69749fb23088428c723555bbb6db8913a",
+    "adapters/commercial/native-db/cadence-read.il": "de2ca65722516198ebd3145627965498ef65f6822b11d79a372663f4b154ce52",
+    "adapters/commercial/native-db/synopsys-read.tcl": "ffda4eede357e9183f46065a69125aeebe937baedd873fe020fb25ecbbc489c8"
+  }
+}

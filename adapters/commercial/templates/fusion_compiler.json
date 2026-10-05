@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "fusion_compiler-site-v1",
+  "name": "Fusion Compiler — operator site validation required",
+  "tool_id": "fusion_compiler",
+  "version": "Fusion Compiler site Tcl entry; installed manual required",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/fc_shell",
+    "env_names": [
+      "SNPSLMD_LICENSE_FILE"
+    ],
+    "resources": {
+      "site_script": "/workspace/site/fusion_compiler.tcl"
+    },
+    "recipes": {
+      "implementation": {
+        "argv": [
+          "-f",
+          "{input.site_tcl}"
+        ],
+        "outputs": {
+          "exchange": "export.gds",
+          "summary": "implementation-summary.txt"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "summary": "unsupported-site-format"
+          }
+        },
+        "requires_netlist": false
+      },
+      "layout_export": {
+        "argv": [
+          "-f",
+          "{input.site_tcl}"
+        ],
+        "outputs": {
+          "exchange": "export.gds"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {}
+        },
+        "requires_netlist": false
+      },
+      "netlist_export": {
+        "argv": [
+          "-f",
+          "{input.site_tcl}"
+        ],
+        "outputs": {
+          "netlist": "export.spice"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {}
+        },
+        "requires_netlist": false
+      }
+    }
+  }
+}

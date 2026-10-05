@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "version": "0.14.0",
+  "checked_at": "2026-10-02T17:07:48.573Z",
+  "actual_host": "win32",
+  "artifacts": [
+    {
+      "file": "D:\\Coldbrew\\Resistor\\release\\installers\\Register-0.14.0-mac-arm64.zip",
+      "bytes": 132042184,
+      "sha256": "fb0a173b418048b8b5dacee2ae843d39d0dfdaf29c5670c8dc1ce6053ce13969",
+      "arch": "arm64",
+      "minimum_macos": "13.0",
+      "native_execution_verified": false,
+      "developer_id_signed": false,
+      "notarized": false
+    },
+    {
+      "file": "D:\\Coldbrew\\Resistor\\release\\installers\\Register-0.14.0-mac-x64.zip",
+      "bytes": 136717175,
+      "sha256": "7d5725af43a2d5b786357989f2532c0167e9eaa2c3faa4dccb7589f7945ab287",
+      "arch": "x64",
+      "minimum_macos": "13.0",
+      "native_execution_verified": false,
+      "developer_id_signed": false,
+      "notarized": false
+    },
+    {
+      "file": "D:\\Coldbrew\\Resistor\\release\\installers\\Register-0.14.0-win-x64.exe",
+      "bytes": 113541525,
+      "sha256": "d9b26541a075974ac4b5682b1d6192dc3e215be102075502d110f491238d8188",
+      "arch": "x64",
+      "windows_authenticode": "NotSigned",
+      "installation_verified": true
+    }
+  ],
+  "mac_archive_evidence": "docs/evidence/macos-archive-0.14.0.json",
+  "platform_tests": 15,
+  "windows_packaged_tests": 3,
+  "windows_installation": {
+    "version": "0.14.0",
+    "checked_at": "2026-10-02T17:01:23.0711530Z",
+    "installer": "D:\\Coldbrew\\Resistor\\release\\installers\\Register-0.14.0-win-x64.exe",
+    "installer_sha256": "d9b26541a075974ac4b5682b1d6192dc3e215be102075502d110f491238d8188",
+    "windows_authenticode": "NotSigned",
+    "install_target": "D:\\Coldbrew\\Resistor\\.runtime\\install-test\\0.14.0\\app",
+    "installer_exit_code": 0,
+    "installed_viewer_evidence": "docs/evidence/installed-viewer-0.14.json",
+    "uninstaller_exit_code": 0,
+    "installed_executable_removed": true,
+    "test_user_data_marker_preserved": true
+  },
+  "keyboard_logic": {
+    "actual_host": "win32",
+    "steps": 5,
+    "native_macos_execution": false,
+    "recording": "docs/evidence/mac-keyboard-recording/keyboard-workflow.webm"
+  },
+  "retained_native_eda": [
+    {
+      "file": "docs/evidence/cpu-physical-native.json",
+      "source_hashes_match": true,
+      "scope": "Previously executed Linux amd64 EDA evidence; not executed on a Mac in this release."
+    },
+    {
+      "file": "docs/evidence/cpu-physical-pre-400.json",
+      "source_hashes_match": true,
+      "scope": "Previously executed Linux amd64 EDA evidence; not executed on a Mac in this release."
+    },
+    {
+      "file": "docs/evidence/digital-hierarchy-native.json",
+      "source_hashes_match": true,
+      "scope": "Previously executed Linux amd64 EDA evidence; not executed on a Mac in this release."
+    }
+  ],
+  "mac_native_smoke": "prepared, not executed; Mac-only test skipped on Windows",
+  "mac_native_eda": "prepared, not executed",
+  "mac_dmg": "prepared for native Mac build, not generated here",
+  "internet_deployment": "deferred by user",
+  "commercial_vendor_execution": "unverified; no installed vendor executable/SDK/license evidence"
+}

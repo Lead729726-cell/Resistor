@@ -1,0 +1,655 @@
+{
+  "schema_version": 1,
+  "adapter": "register-design-tools-1",
+  "passed": 27,
+  "case_count": 27,
+  "cases": [
+    {
+      "case": "actual confined public model subset and corner injection rejection",
+      "result": "pass",
+      "elapsed_s": 0.05149114201776683,
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__tt.pm3.spice",
+          "sha256": "459eca963a134574cf7c842ad6d3814e7e0752bfb5de8e581c2f483534b5ad06"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__tt.pm3.spice",
+          "sha256": "3a1be2e1c50d710bdb951d414ecca711113a8c3fe8bcc1be65fb16c6fe004e83"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        }
+      ],
+      "deck_sha256": "c3fe88fcf32801f21652af3ed69f275418c3e73fc5eec8b31edfc9d24409d0f7"
+    },
+    {
+      "case": "actual hashed tech width spacing area grid and wrong rule adapter rejection",
+      "result": "pass",
+      "elapsed_s": 1.0122436289675534,
+      "rules": {
+        "schema_version": 1,
+        "adapter": "register-design-tools-1",
+        "profile_id": "sky130A",
+        "dbu_um": "0.001",
+        "resources": [
+          {
+            "path": "/foss/pdks/sky130A/libs.tech/magic/sky130A.tech",
+            "sha256": "1cf76ba493b87ed300534cf900c05092e9aa62a7b7811fd1a0bb33fde7efea3b"
+          },
+          {
+            "path": "/foss/pdks/sky130A/libs.tech/magic/sky130A.magicrc",
+            "sha256": "ebf4e2de837977caf66b700c83cf10f44409cba5a9570800a0468b0cd7ecf9a0"
+          },
+          {
+            "path": "/foss/pdks/sky130A/libs.tech/magic/sky130A.tcl",
+            "sha256": "7b513ba9b03ead4ad59723f1fb98b053922a4d3efff565fe00fc7e761d6d6bb3"
+          }
+        ],
+        "layers": [
+          {
+            "layer_id": "68/20",
+            "name": "metal1",
+            "min_width_dbu": "140",
+            "min_spacing_dbu": "140",
+            "min_area_dbu2": "83000",
+            "grid_dbu": "5",
+            "conservative_spacing_dbu": "280",
+            "max_supported_width_exclusive_dbu": "3000",
+            "source_rules": [
+              "met1.1",
+              "met1.2",
+              "met1.6",
+              "met1.3a",
+              "met1.3b"
+            ]
+          }
+        ],
+        "supported_scope": "single-layer Manhattan; no via creation",
+        "via_resources": [
+          {
+            "path": "/foss/pdks/sky130A/libs.tech/magic/sky130A.tcl",
+            "sha256": "7b513ba9b03ead4ad59723f1fb98b053922a4d3efff565fe00fc7e761d6d6bb3",
+            "helper": "sky130::via1_draw",
+            "execution": "not used by routing"
+          }
+        ],
+        "limits": [
+          "Single metal1 (68/20) Manhattan path; no new vias or contacts.",
+          "Conservative 0.28um spacing applies to all other or unknown-net metal, including wide-metal halos.",
+          "New path width must be below 3um; metal area is checked using actual integer polygon geometry.",
+          "Contacts/vias intersecting the new path are rejected; no inferred electrical connection is certified.",
+          "Density, antenna, slots, metal-hole, contact enclosure and full-chip checks require separate actual DRC.",
+          "A valid preview is not a DRC/LVS/signoff pass. Net properties are explicit annotations, not extraction proof."
+        ],
+        "fingerprint": "ea8bcd06aee82de079686bd082486a3d1721825c73bb3720126d242a4032a907"
+      }
+    },
+    {
+      "case": "actual mux4 explicit graph; empty physical layout gates",
+      "result": "pass",
+      "elapsed_s": 0.8354674440342933,
+      "project_id": "85262f0427a9445797db1f05fc99aa46",
+      "device_count": 29,
+      "ports": [
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "S0",
+        "S1",
+        "Y",
+        "VPWR",
+        "VGND"
+      ],
+      "netlist_sha256": "d9e1a7f71ebff3267ec0c71422cdbe2ad5f7c3397296ad6ec9178e412f0797b8"
+    },
+    {
+      "case": "actual rc_lowpass explicit graph; empty physical layout gates",
+      "result": "pass",
+      "elapsed_s": 0.8160312119871378,
+      "project_id": "1acef105c1b94c689ef8b1a4004b7780",
+      "device_count": 5,
+      "ports": [
+        "IN",
+        "OUT",
+        "VGND"
+      ],
+      "netlist_sha256": "a8d6a027238654eafbf6d3c2f41e8d7d24dbef80f5538a29d97e175879cb64ec"
+    },
+    {
+      "case": "actual common_source explicit graph; empty physical layout gates",
+      "result": "pass",
+      "elapsed_s": 0.3295857129851356,
+      "project_id": "14322f818d5a4fc0be6f4e50b86f4126",
+      "device_count": 6,
+      "ports": [
+        "IN",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "netlist_sha256": "66217752640720ca07da19680350372736aece9699796b770413199b30eabca4"
+    },
+    {
+      "case": "actual common_source_bias explicit graph; empty physical layout gates",
+      "result": "pass",
+      "elapsed_s": 0.33406403404660523,
+      "project_id": "3dae4c764c64430692e9063d7fdd0414",
+      "device_count": 9,
+      "ports": [
+        "IN",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "netlist_sha256": "8d0c222742c4e6b6386c6e53eab95553a40d5981ff19cea0909a7b4add271496"
+    },
+    {
+      "case": "actual current_mirror explicit graph; empty physical layout gates",
+      "result": "pass",
+      "elapsed_s": 0.2646546349860728,
+      "project_id": "d699afece6714a5db6ed78af8ebd17bc",
+      "device_count": 5,
+      "ports": [
+        "REF",
+        "OUT",
+        "VGND"
+      ],
+      "netlist_sha256": "21cc6c0da28b6ab19a4f8f76ef5aefa246f8d3a1d86c9b0c526fa2d36d16acd3"
+    },
+    {
+      "case": "actual differential_pair explicit graph; empty physical layout gates",
+      "result": "pass",
+      "elapsed_s": 0.44050700799562037,
+      "project_id": "e00f3b00f94d46b3988b86775a910193",
+      "device_count": 9,
+      "ports": [
+        "INP",
+        "INN",
+        "OUTP",
+        "OUTN",
+        "BIAS",
+        "VGND"
+      ],
+      "netlist_sha256": "5ea4e67abb2df8d09019364ca89e97cb88fd6ca4f11d8859259a456523ac831f"
+    },
+    {
+      "case": "new-project CID replay conflict and physical parameter binding rejection",
+      "result": "pass",
+      "elapsed_s": 0.3833916540024802
+    },
+    {
+      "case": "bare GDS into RC target removes inherited template circuit PDK and stimuli",
+      "result": "pass",
+      "elapsed_s": 0.6403220209758729,
+      "project_id": "ea9e260604d541c6ae37e61c7b99931b",
+      "revision": 2,
+      "import_sha256": "09d9bb15aac26a71333cb005101f7e04b69bf6e874ed97c97418dfea65361a00",
+      "prior_template_removed": true,
+      "inherited_models_stimuli": "none"
+    },
+    {
+      "case": "matching GDS sidecar restores only origin RC parameters ports and testbench; wrong hash rejects",
+      "result": "pass",
+      "elapsed_s": 1.2346191810211167,
+      "origin_project_id": "69fdd595971e406798403ab636c53220",
+      "imported_project_id": "13caf9ef85584349963d43058c2aaa19",
+      "revision": 2,
+      "source_sha256": "a444436ce05532aa541ccb16c4a16031812716700a72250cb353d6dd0a89c82d",
+      "explicit_matching_template_restored": true,
+      "wrong_geometry_hash_template_rejected": true
+    },
+    {
+      "case": "exact integer Manhattan route and negative width area grid wrong process checks",
+      "result": "pass",
+      "elapsed_s": 0.8224563100375235,
+      "preview": {
+        "project_id": "4a058311354f47039390f510c2be1de3",
+        "revision": 1,
+        "rule_fingerprint": "ea8bcd06aee82de079686bd082486a3d1721825c73bb3720126d242a4032a907",
+        "layer_id": "68/20",
+        "points": [
+          [
+            "0",
+            "0"
+          ],
+          [
+            "1000",
+            "0"
+          ],
+          [
+            "1000",
+            "1000"
+          ]
+        ],
+        "width": "140",
+        "net": null,
+        "order": "x-first",
+        "geometry_hash": "5c1ae284fc08b856f21b2b150e67f5471f258d739f07ca1193add2970d383938",
+        "preview_hash": "a9e9c32eeaddbe6f503334df47288b062495073bb9af997aba275aff9a034bf0",
+        "valid": true,
+        "length_dbu": "2000",
+        "area_dbu2": "280000",
+        "collisions": [],
+        "checked_shape_count": 0,
+        "scope": "whole native hierarchy",
+        "collision_list_bounded": false,
+        "limits": [
+          "Single metal1 (68/20) Manhattan path; no new vias or contacts.",
+          "Conservative 0.28um spacing applies to all other or unknown-net metal, including wide-metal halos.",
+          "New path width must be below 3um; metal area is checked using actual integer polygon geometry.",
+          "Contacts/vias intersecting the new path are rejected; no inferred electrical connection is certified.",
+          "Density, antenna, slots, metal-hole, contact enclosure and full-chip checks require separate actual DRC.",
+          "A valid preview is not a DRC/LVS/signoff pass. Net properties are explicit annotations, not extraction proof."
+        ]
+      }
+    },
+    {
+      "case": "atomic route applies once with room CID and stale revision/hash rejection",
+      "result": "pass",
+      "elapsed_s": 0.4485518679721281,
+      "project_id": "4a058311354f47039390f510c2be1de3",
+      "revision": 2,
+      "preview_hash": "a9e9c32eeaddbe6f503334df47288b062495073bb9af997aba275aff9a034bf0",
+      "shape_property_id": "58f85df3a087427b90c00221dc200727"
+    },
+    {
+      "case": "actual obstacle spacing, same-net disjoint rejection, preserved IDs labels pins and contact rejection",
+      "result": "pass",
+      "elapsed_s": 1.3566717560170218,
+      "project_id": "806b28ec985f4d3a9c6eacdc91653e05",
+      "preserved_shape_ids": [
+        "rc_lowpass/31ec1972aebf4396bdf1fa1985fa2e38",
+        "rc_lowpass/eea71987660a46cfb4eb85693a98354b"
+      ],
+      "preserved_label_count": 2,
+      "preserved_pin_count": 1,
+      "separate_same_annotation_valid": false
+    },
+    {
+      "case": "actual declared pin connectivity, no fake geometry link and floating-net advisory",
+      "result": "pass",
+      "elapsed_s": 0.5782095700269565,
+      "project_id": "3dae4c764c64430692e9063d7fdd0414",
+      "net_count": 5,
+      "source": "native-explicit-schematic-pins",
+      "issues": [
+        {
+          "code": "ADVISORY_SINGLE_TERMINAL_NET",
+          "severity": "advisory",
+          "net": "FLOAT",
+          "message": "One native device terminal and no declared top port; inspect intentionally floating nodes."
+        }
+      ]
+    },
+    {
+      "case": "actual restored RC sidecar simulation uses origin parameters and no physical arrows",
+      "result": "pass",
+      "elapsed_s": 1.7433609949657694,
+      "project_id": "0d42c039f2ab44c3856be5ecb1baad9e",
+      "run_id": "40e3ed1e3139464388e9567bc06535bc",
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/40e3ed1e3139464388e9567bc06535bc/manifest.json",
+      "measured_tau_s": 2.0000510884568886e-08,
+      "geometry_mapping": "unmapped",
+      "explicit_original_resistance_Ohm": 20000.0
+    },
+    {
+      "case": "actual Magic full DRC of applied route metal geometry",
+      "result": "pass",
+      "elapsed_s": 1.777615338913165,
+      "project_id": "4a058311354f47039390f510c2be1de3",
+      "run_id": "2376c05cccda4086b4ec7293d4a1ab52",
+      "revision": 2,
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/2376c05cccda4086b4ec7293d4a1ab52/manifest.json",
+      "tool": "Magic",
+      "analysis_result": "pass",
+      "scope": "only actual routed metal fixture, not RC layout completion",
+      "measurements": {}
+    },
+    {
+      "case": "actual ngspice mux4 supported analysis signed currents no invented physical arrows",
+      "result": "pass",
+      "elapsed_s": 2.201599993975833,
+      "project_id": "d68fb2d73703477682be38695d7b30b9",
+      "run_id": "7de3b8fa1b7c4904b5179bd1598b0758",
+      "revision": 1,
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/7de3b8fa1b7c4904b5179bd1598b0758/manifest.json",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27.0,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 3684,
+        "D0_min": 0.0,
+        "D0_max": 1.8,
+        "D1_min": 0.0,
+        "D1_max": 1.8,
+        "D2_min": 0.0,
+        "D2_max": 1.8,
+        "D3_min": 0.0,
+        "D3_max": 1.8,
+        "S0_min": 0.0,
+        "S0_max": 1.8,
+        "S1_min": 0.0,
+        "S1_max": 1.8,
+        "Y_min": -0.0374768649,
+        "Y_max": 1.8587643,
+        "supply_current_min": -4.90032313e-05,
+        "supply_current_max": 0.00011080317,
+        "current_flow_status": "available",
+        "template_id": "mux4",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "truth_cases": 64,
+        "truth_passed": 64,
+        "truth_status": "pass",
+        "tpLH_max_s": 1.5893758569631502e-10,
+        "tpHL_max_s": 1.1096130455728479e-10,
+        "stimulus_energy_J": 2.0475655815550105e-13,
+        "stimulus_mean_power_W": 6.398642442359407e-07,
+        "protocol": "mux4-gray64-v1"
+      },
+      "signed_current_branch_count": 28,
+      "geometry_mapping": "unmapped (physical layout not generated)"
+    },
+    {
+      "case": "actual ngspice rc_lowpass supported analysis signed currents no invented physical arrows",
+      "result": "pass",
+      "elapsed_s": 1.0654106680303812,
+      "project_id": "5a7360a7fde544b2a83690afde66fad4",
+      "run_id": "ae814711e72746f28059252fdb5788cd",
+      "revision": 1,
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/ae814711e72746f28059252fdb5788cd/manifest.json",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "op",
+        "x_unit": "point",
+        "x_label": "operating point",
+        "corner": "tt",
+        "temperature_C": 27.0,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 1,
+        "IN_min": 0.0,
+        "IN_max": 0.0,
+        "OUT_min": 0.0,
+        "OUT_max": 0.0,
+        "current_flow_status": "available",
+        "template_id": "rc_lowpass",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples"
+      },
+      "signed_current_branch_count": 4,
+      "geometry_mapping": "unmapped (physical layout not generated)"
+    },
+    {
+      "case": "actual ngspice common_source supported analysis signed currents no invented physical arrows",
+      "result": "pass",
+      "elapsed_s": 1.2267643070081249,
+      "project_id": "dfb557e1e06b4cc2bdf339dfa2dd2bf3",
+      "run_id": "4ed8817af50246d0a24e94c16052d1c6",
+      "revision": 1,
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/4ed8817af50246d0a24e94c16052d1c6/manifest.json",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "op",
+        "x_unit": "point",
+        "x_label": "operating point",
+        "corner": "tt",
+        "temperature_C": 27.0,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 1,
+        "IN_min": 0.7,
+        "IN_max": 0.7,
+        "OUT_min": 1.76081041,
+        "OUT_max": 1.76081041,
+        "supply_current_min": 3.9189591e-06,
+        "supply_current_max": 3.9189591e-06,
+        "current_flow_status": "available",
+        "template_id": "common_source",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples"
+      },
+      "signed_current_branch_count": 5,
+      "geometry_mapping": "unmapped (physical layout not generated)"
+    },
+    {
+      "case": "actual ngspice common_source_bias supported analysis signed currents no invented physical arrows",
+      "result": "pass",
+      "elapsed_s": 0.9149215440265834,
+      "project_id": "a3673565821646f1bf67b4700ee7fc9c",
+      "run_id": "f9e1d5237a2348dbb0148581a3ccfb0d",
+      "revision": 1,
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/f9e1d5237a2348dbb0148581a3ccfb0d/manifest.json",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "op",
+        "x_unit": "point",
+        "x_label": "operating point",
+        "corner": "tt",
+        "temperature_C": 27.0,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 1,
+        "IN_min": 0.0,
+        "IN_max": 0.0,
+        "OUT_min": 1.77411637,
+        "OUT_max": 1.77411637,
+        "supply_current_min": 1.38383633e-05,
+        "supply_current_max": 1.38383633e-05,
+        "GATE_min": 0.675,
+        "GATE_max": 0.675,
+        "current_flow_status": "available",
+        "template_id": "common_source_bias",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples"
+      },
+      "signed_current_branch_count": 8,
+      "geometry_mapping": "unmapped (physical layout not generated)"
+    },
+    {
+      "case": "actual ngspice current_mirror supported analysis signed currents no invented physical arrows",
+      "result": "pass",
+      "elapsed_s": 0.9274311430053785,
+      "project_id": "f2db32030df54020a070d8117d7c05c5",
+      "run_id": "827843e3fd3641bc999e178d67b8ce6b",
+      "revision": 1,
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/827843e3fd3641bc999e178d67b8ce6b/manifest.json",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "op",
+        "x_unit": "point",
+        "x_label": "operating point",
+        "corner": "tt",
+        "temperature_C": 27.0,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 1,
+        "REF_min": 1.16117951,
+        "REF_max": 1.16117951,
+        "OUT_min": 1.8,
+        "OUT_max": 1.8,
+        "reference_current_min": 0.0001,
+        "reference_current_max": 0.0001,
+        "output_current_min": 0.000115240071,
+        "output_current_max": 0.000115240071,
+        "current_flow_status": "available",
+        "template_id": "current_mirror",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "measured_output_current_A": 0.000115240071,
+        "mirror_ratio": 1.15240071
+      },
+      "signed_current_branch_count": 4,
+      "geometry_mapping": "unmapped (physical layout not generated)"
+    },
+    {
+      "case": "actual ngspice differential_pair supported analysis signed currents no invented physical arrows",
+      "result": "pass",
+      "elapsed_s": 1.200934689026326,
+      "project_id": "577d52224daf445a940d12884352c2cf",
+      "run_id": "f45bed1e38c942f0994f9ffbcd4aa024",
+      "revision": 1,
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/f45bed1e38c942f0994f9ffbcd4aa024/manifest.json",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "op",
+        "x_unit": "point",
+        "x_label": "operating point",
+        "corner": "tt",
+        "temperature_C": 27.0,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 1,
+        "INP_min": 0.905,
+        "INP_max": 0.905,
+        "INN_min": 0.895,
+        "INN_max": 0.895,
+        "output_current_P_min": 6.28998417e-07,
+        "output_current_P_max": 6.28998417e-07,
+        "output_current_N_min": 5.05384049e-07,
+        "output_current_N_max": 5.05384049e-07,
+        "TAIL_min": 0.254183138,
+        "TAIL_max": 0.254183138,
+        "current_flow_status": "available",
+        "template_id": "differential_pair",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "measured_differential_current_A": 1.23614368e-07,
+        "measured_tail_current_A": 1.134382466e-06
+      },
+      "signed_current_branch_count": 9,
+      "geometry_mapping": "unmapped (physical layout not generated)"
+    },
+    {
+      "case": "actual RC transient time constant and AC cutoff from parsed samples",
+      "result": "pass",
+      "elapsed_s": 2.1143751610070467,
+      "project_id": "3aa3e1f25feb4c61a227b8728336daca",
+      "tran_run_id": "d4736dc99b1e4e899386309817d259f8",
+      "ac_run_id": "0e1ea942fa024a13833abc3380778dd8",
+      "tran_manifest": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/d4736dc99b1e4e899386309817d259f8/manifest.json",
+      "ac_manifest": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/0e1ea942fa024a13833abc3380778dd8/manifest.json",
+      "measured_tau_s": 1.0000527327111767e-08,
+      "measured_3db_frequency_Hz": 15914651.432474554,
+      "comparison_from_explicit_R_C": {
+        "tau_s": 1e-08,
+        "3db_frequency_Hz": 15915494.309189534
+      },
+      "complex_ac_current_arrows": "unsupported"
+    },
+    {
+      "case": "actual public-MOS common-source AC magnitude and inverting phase",
+      "result": "pass",
+      "elapsed_s": 1.6581667859572917,
+      "project_id": "09940220f90247adad1280e3792f1465",
+      "run_id": "3a561c66e9124d13ba43d862af16cdb4",
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/3a561c66e9124d13ba43d862af16cdb4/manifest.json",
+      "actual_low_frequency_magnitude": 0.620424229,
+      "actual_low_frequency_phase_deg": 180.0,
+      "measurements": {
+        "analysis": "ac",
+        "x_unit": "Hz",
+        "x_label": "frequency",
+        "corner": "tt",
+        "temperature_C": 27.0,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 361,
+        "OUT_gain_min": 0.620424229,
+        "OUT_gain_max": 0.63671441,
+        "OUT_phase_min": 156.832695,
+        "OUT_phase_max": 180.0,
+        "current_flow_status": "unsupported_complex_ac",
+        "template_id": "common_source",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "measured_low_frequency_gain": 0.620424229
+      }
+    },
+    {
+      "case": "actual independent declared DC sweeps for mirror diffpair and biased common-source",
+      "result": "pass",
+      "elapsed_s": 7.208635907038115,
+      "runs": [
+        {
+          "template": "current_mirror",
+          "project_id": "82e9b019b64d45df98c40faf7c9c349f",
+          "run_id": "978a4806cca6431d98e47f6a8093380f",
+          "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/978a4806cca6431d98e47f6a8093380f/manifest.json",
+          "samples": 181
+        },
+        {
+          "template": "differential_pair",
+          "project_id": "315831fdb91840cbbf6fbe990ec51fe6",
+          "run_id": "ec7b14b615d94718848addf0fd7e2e6a",
+          "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/ec7b14b615d94718848addf0fd7e2e6a/manifest.json",
+          "samples": 101
+        },
+        {
+          "template": "common_source_bias",
+          "project_id": "82a18c79540d4f498a12787a3db724a1",
+          "run_id": "11d0e6cfdece4788847aca19968f83c8",
+          "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/11d0e6cfdece4788847aca19968f83c8/manifest.json",
+          "samples": 181
+        }
+      ]
+    },
+    {
+      "case": "actual fixed public mirror physical core DRC and pre/post extracted current",
+      "result": "pass",
+      "elapsed_s": 9.26782336900942,
+      "project_id": "65901a18703e4978b645d54d1cb729ac",
+      "physical_status": "generated-public-core",
+      "drc_run_id": "ddb675c8ff7d440d932be3a259b364ea",
+      "pre_run_id": "c81a5ce3c26e4641ae909a816fc819de",
+      "post_run_id": "9f12fe8c71c144dc85d8ef8b90bf3e99",
+      "drc_manifest": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/ddb675c8ff7d440d932be3a259b364ea/manifest.json",
+      "pre_manifest": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/c81a5ce3c26e4641ae909a816fc819de/manifest.json",
+      "post_manifest": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/9f12fe8c71c144dc85d8ef8b90bf3e99/manifest.json",
+      "actual_output_current_pre_A": 0.000115240071,
+      "actual_output_current_post_A": 0.000114126446,
+      "layout_annotation_binding_count": 96,
+      "electrical_signoff": "not claimed; separate actual LVS required"
+    }
+  ],
+  "source_sha256": {
+    "workers/eda/design_tools.py": "266814bb72e88fe9c214fa4f520b76573ec2e191e883003267409ea32b8c0459",
+    "workers/eda/server.py": "08195ff0fac5a2ccebc063418165f3323802116115fd25bad08ddd767c6070ed",
+    "workers/eda/test_design_tools.py": "f19e5879857c5400c87ca7755c079b9d20717da9115859ce5c2e5f033f989f15"
+  },
+  "actual_tools": [
+    "KLayout",
+    "Magic",
+    "ngspice"
+  ],
+  "commercial_execution_verified": false,
+  "physical_scope": [
+    "Single metal1 (68/20) Manhattan path; no new vias or contacts.",
+    "Conservative 0.28um spacing applies to all other or unknown-net metal, including wide-metal halos.",
+    "New path width must be below 3um; metal area is checked using actual integer polygon geometry.",
+    "Contacts/vias intersecting the new path are rejected; no inferred electrical connection is certified.",
+    "Density, antenna, slots, metal-hole, contact enclosure and full-chip checks require separate actual DRC.",
+    "A valid preview is not a DRC/LVS/signoff pass. Net properties are explicit annotations, not extraction proof."
+  ],
+  "state_root": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state"
+}

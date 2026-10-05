@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "cause": "Pinned ngspice spinit sets 8 OpenMP model-evaluation threads; concurrent small jobs oversubscribe CPU.",
+  "remedy": "Explicit set num_threads=1 in generated control section and ngspice_num_threads=1 in manifest.",
+  "models_tolerances_timesteps_changed": false,
+  "old_run": {
+    "execution_status": "completed",
+    "id": "869d67ab7ccb42b48e58078bad6311a3",
+    "raw_manifest": "/workspace/.runtime/eda/runs/869d67ab7ccb42b48e58078bad6311a3/manifest.json",
+    "analysis_result": "pass",
+    "elapsed_s": 96.15722616307903,
+    "ngspice_log_sha256": "b8238798db6a29242916da185fb0689834d62edcfdf703de7e88934a4b0759c6"
+  },
+  "controlled_replays": [
+    {
+      "variant": "baseline",
+      "folder": "/workspace/.runtime/evidence/current-timing-a33fb35c7f1b41bebc60246b44e34dbf/baseline",
+      "exit_code": 0,
+      "wall_seconds": 0.21919756301213056,
+      "user_seconds": 0.5648639999999999,
+      "system_seconds": 0.027268999999999998,
+      "waveform_rows": 1544,
+      "log_bytes": 800
+    },
+    {
+      "variant": "both-sense",
+      "folder": "/workspace/.runtime/evidence/current-timing-a33fb35c7f1b41bebc60246b44e34dbf/both-sense",
+      "exit_code": 0,
+      "wall_seconds": 0.21808613406028599,
+      "user_seconds": 0.4420870000000001,
+      "system_seconds": 0.023897,
+      "waveform_rows": 1544,
+      "log_bytes": 1240
+    },
+    {
+      "variant": "drain-only",
+      "folder": "/workspace/.runtime/evidence/current-timing-a33fb35c7f1b41bebc60246b44e34dbf/drain-only",
+      "exit_code": 0,
+      "wall_seconds": 0.21802243299316615,
+      "user_seconds": 0.5171189999999999,
+      "system_seconds": 0.04979599999999999,
+      "waveform_rows": 1544,
+      "log_bytes": 1022
+    },
+    {
+      "variant": "concurrent-default-0",
+      "folder": "/workspace/.runtime/evidence/current-timing-a33fb35c7f1b41bebc60246b44e34dbf/concurrent-default-0",
+      "exit_code": 0,
+      "wall_seconds": 9.89148174598813,
+      "waveform_rows": 1544,
+      "log_bytes": 5560
+    },
+    {
+      "variant": "concurrent-default-1",
+      "folder": "/workspace/.runtime/evidence/current-timing-a33fb35c7f1b41bebc60246b44e34dbf/concurrent-default-1",
+      "exit_code": 0,
+      "wall_seconds": 15.643574118963443,
+      "waveform_rows": 1544,
+      "log_bytes": 8984
+    },
+    {
+      "variant": "concurrent-1-0",
+      "folder": "/workspace/.runtime/evidence/current-timing-a33fb35c7f1b41bebc60246b44e34dbf/concurrent-1-0",
+      "exit_code": 0,
+      "wall_seconds": 0.16722114803269506,
+      "waveform_rows": 1544,
+      "log_bytes": 1208
+    },
+    {
+      "variant": "concurrent-1-1",
+      "folder": "/workspace/.runtime/evidence/current-timing-a33fb35c7f1b41bebc60246b44e34dbf/concurrent-1-1",
+      "exit_code": 0,
+      "wall_seconds": 0.21803175599779934,
+      "waveform_rows": 1544,
+      "log_bytes": 1208
+    }
+  ],
+  "regression": {
+    "schema_version": 1,
+    "cases": [
+      {
+        "case": "Concurrent native edited inverter W=1.3: genuine transient and signed currents",
+        "result": "pass",
+        "run_id": "acbc30e28b034d53af5df75b14ae79ee",
+        "manifest_path": "/workspace/.runtime/evidence/thread-budget-ed36a324e6af4acc9b67f4b069ff09c6/state/runs/acbc30e28b034d53af5df75b14ae79ee/manifest.json",
+        "elapsed_s": 0.8641595330554992,
+        "samples": 1544,
+        "nmos_max_A": 0.000304201253,
+        "pmos_min_A": -0.000133122639,
+        "num_threads": 1
+      },
+      {
+        "case": "Concurrent native edited inverter W=1.3: genuine transient and signed currents",
+        "result": "pass",
+        "run_id": "6ddbdfdeebd2482088c71520ecf3e61a",
+        "manifest_path": "/workspace/.runtime/evidence/thread-budget-ed36a324e6af4acc9b67f4b069ff09c6/state/runs/6ddbdfdeebd2482088c71520ecf3e61a/manifest.json",
+        "elapsed_s": 0.6111331549473107,
+        "samples": 1544,
+        "nmos_max_A": 0.000304201253,
+        "pmos_min_A": -0.000133122639,
+        "num_threads": 1
+      },
+      {
+        "case": "Single-thread and eight-thread real output compatibility",
+        "result": "pass",
+        "run_id": "acbc30e28b034d53af5df75b14ae79ee",
+        "reference_path": "/workspace/.runtime/evidence/thread-budget-ed36a324e6af4acc9b67f4b069ff09c6/eight-thread-reference",
+        "maximum_absolute_errors": {
+          "waveform.dat": 0.0,
+          "current-flow.dat": 0.0
+        }
+      }
+    ],
+    "source_state": "/workspace/.runtime/evidence/thread-budget-ed36a324e6af4acc9b67f4b069ff09c6",
+    "parallel_wall_seconds": 1.166341647040099,
+    "original_completion_bound_s": 90,
+    "model_and_tolerance_changes": false,
+    "reference": "https://ngspice.sourceforge.io/docs/ngspice-manual.pdf (Ngspice on multi-core processors using OpenMP)"
+  },
+  "live_main_worker": {
+    "elapsed_s": 1.4941586540080607,
+    "revision": 2,
+    "run": {
+      "run_id": "1027b868045d45b19356ff1e1d095e10",
+      "project_id": "7e383b110b4f48b3a8cd06b2a042d46c",
+      "wall_seconds": 2.825522635015659,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "observations": [
+        {
+          "VmRSS": "24188 kB",
+          "Threads": "1",
+          "Cpus_allowed_list": "0-11",
+          "pid": "57",
+          "elapsed": 1.8431802350096405,
+          "stat": "57 (ngspice) R 1 57 57 0 -1 4194560 3406 0 0 0 12 2 0 0 20 0 1 0 81948376 38903808 6047 18446744073709551615 110220226220032 110220232366641 140734262597968 0 0 0 0 0 1073741896 0 0 0 17 6 0 0 0 0 0 110220233166224 110220233555992 110221299961856 140734262605651 140734262605740 140734262605740 140734262607840 0\n"
+        }
+      ],
+      "manifest_path": "/workspace/.runtime/eda/runs/1027b868045d45b19356ff1e1d095e10/manifest.json"
+    },
+    "manifest_thread_setting": 1,
+    "nmos_width_um": 1.3
+  },
+  "other_current_cases": {
+    "isolated": 16,
+    "live_api": 4,
+    "result": "pass",
+    "evidence": "docs/evidence/current-flow.json"
+  },
+  "primary_reference": "https://ngspice.sourceforge.io/docs/ngspice-manual.pdf"
+}

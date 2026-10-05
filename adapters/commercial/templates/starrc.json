@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "starrc-site-v1",
+  "name": "StarRC — operator site validation required",
+  "tool_id": "starrc",
+  "version": "Site-version command-file candidate; installed manual required",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/StarXtract",
+    "env_names": [
+      "SNPSLMD_LICENSE_FILE"
+    ],
+    "resources": {
+      "deck": "/workspace/site/starrc.runset"
+    },
+    "recipes": {
+      "pex": {
+        "argv": [
+          "{resource.deck}"
+        ],
+        "outputs": {
+          "rc": "parasitics.spef"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "rc": "spef"
+          }
+        },
+        "requires_netlist": false
+      }
+    }
+  }
+}

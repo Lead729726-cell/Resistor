@@ -1,0 +1,53 @@
+name: register-cloud
+services:
+  eda:
+    build:
+      context: ../..
+      dockerfile: platform/cloud/worker.Dockerfile
+    restart: unless-stopped
+    volumes:
+      - eda-data:/workspace/.runtime/eda
+    secrets:
+      - worker_session
+    networks:
+      - private
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8765/health', timeout=2)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+  hub:
+    build:
+      context: ../..
+      dockerfile: platform/cloud/Dockerfile
+    restart: unless-stopped
+    environment:
+      REGISTER_WORKER_URL: http://eda:8765
+      REGISTER_WORKER_TOKEN_FILE: /run/secrets/worker_session
+      REGISTER_PUBLIC_URL: ${REGISTER_PUBLIC_URL:-http://127.0.0.1:18766}
+      REGISTER_ALLOWED_ORIGINS: ${REGISTER_ALLOWED_ORIGINS:-}
+    volumes:
+      - eda-data:/workspace/.runtime/eda
+      - cloud-data:/workspace/.runtime/cloud
+      - backup-data:/workspace/.runtime/backups
+    secrets:
+      - worker_session
+    ports:
+      - "127.0.0.1:${REGISTER_HOST_PORT:-18766}:18766"
+    networks:
+      - private
+      - public
+    depends_on:
+      eda:
+        condition: service_healthy
+secrets:
+  worker_session:
+    file: .secrets/worker_session
+volumes:
+  eda-data:
+  cloud-data:
+  backup-data:
+networks:
+  private:
+    internal: true
+  public:

@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "passed": 16,
+  "case_count": 16,
+  "cases": [
+    {
+      "case": "full adder: actual 8 input combinations + native physical generation",
+      "result": "pass",
+      "elapsed_s": 2.3216432919998624,
+      "project_id": "a5b40f61c898490482715f396199d8c4",
+      "run_id": "296db58cb2c149669ff6b82e75c9c462",
+      "passed_cases": 8,
+      "physical_shapes": 3090
+    },
+    {
+      "case": "full adder: Magic DRC",
+      "result": "pass",
+      "elapsed_s": 1.3271497969999473,
+      "run_id": "41e261592c414d5c959e093cd5565fee"
+    },
+    {
+      "case": "full adder: Netgen LVS",
+      "result": "pass",
+      "elapsed_s": 1.1464682370005903,
+      "run_id": "024ba83d123844a69734c328beedf189"
+    },
+    {
+      "case": "full adder: actual RC extraction and post-layout 8 combinations at 100ns",
+      "result": "pass",
+      "elapsed_s": 4.141131853000843,
+      "project_id": "989fc93e5a5c4bbd9e0f89749ebbb19b",
+      "pex_run_id": "d1deb73c404d48ef8be7740fe93a49f4",
+      "run_id": "81e0cb2aab204393808e42679641bf6c",
+      "passed_cases": 8
+    },
+    {
+      "case": "4-bit adder: actual 512 combinations + native physical generation",
+      "result": "pass",
+      "elapsed_s": 61.93076647899943,
+      "project_id": "a4a28d48cb894b30bb60fa253c72580f",
+      "run_id": "4329afa8aca14a0aae611f1d67b41159",
+      "passed_cases": 512,
+      "physical_shapes": 12339
+    },
+    {
+      "case": "4-bit CPU: actual clocked ROM/ACC/PC/flags",
+      "result": "pass",
+      "elapsed_s": 32.65120176799974,
+      "project_id": "ac10610868094fe9ab1345a1daf54097",
+      "run_id": "8439afa5bab44ca68e65c039ee903597",
+      "passed_cases": 16,
+      "physical_shapes": 0
+    },
+    {
+      "case": "slow hot adder: actual 512 combinations",
+      "result": "pass",
+      "elapsed_s": 55.924932023999645,
+      "project_id": "57d1fd0e5f724509b3642b328ec6fb96",
+      "run_id": "10825a9054cc4f48ab6747cf2bd96c6a",
+      "passed_cases": 512,
+      "physical_shapes": 0
+    },
+    {
+      "case": "fast cold CPU: actual 16 instructions",
+      "result": "pass",
+      "elapsed_s": 88.90147969899954,
+      "project_id": "f0cf5412eff841a2b741e8c71b87106a",
+      "run_id": "b79cbc6ba2e947c7b5d21f765bdbdf19",
+      "passed_cases": 16,
+      "physical_shapes": 0
+    },
+    {
+      "case": "creation rejects unsupported/unsafe/incomplete inputs",
+      "result": "pass",
+      "elapsed_s": 0.00017590100105735473
+    },
+    {
+      "case": "actual-wave verifier rejects unknown logic levels",
+      "result": "pass",
+      "elapsed_s": 0.8190735249991121
+    },
+    {
+      "case": "read-only complete parent preview; approval; idempotent commit; actual simulation",
+      "result": "pass",
+      "elapsed_s": 7.349025035000523,
+      "revision": 2,
+      "mask_changed": false
+    },
+    {
+      "case": "wrapped physical adder: Netgen LVS",
+      "result": "pass",
+      "elapsed_s": 4.1934749400006694,
+      "run_id": "7b87c19e13a343819f5f8c44a966cb99"
+    },
+    {
+      "case": "CPU wrapper preserves real internal opcode/immediate probes",
+      "result": "pass",
+      "elapsed_s": 69.48306673000116,
+      "run_id": "b90a7ec916d64fe783a3928590331c09",
+      "probe_prefix": "xu.xMAIN."
+    },
+    {
+      "case": "copy native tree + pin mapping; source/mapping stale guards; undo/redo",
+      "result": "pass",
+      "elapsed_s": 6.9988541820002865,
+      "added_shapes": 3090,
+      "whole_before": 3097,
+      "whole_after": 6187,
+      "undo_redo": true
+    },
+    {
+      "case": "actual same-layer overlap hotspots visible before approval",
+      "result": "pass",
+      "elapsed_s": 2.839156918000299,
+      "overlap_regions": 1967
+    },
+    {
+      "case": "missing physical child requires explicit schematic-only selection",
+      "result": "pass",
+      "elapsed_s": 1.7237355279994517
+    }
+  ],
+  "state_root": "/workspace/.runtime/evidence/digital-hierarchy-7090b4addd72427685dc6067ee581b2f/state",
+  "actual_tools": [
+    "ngspice",
+    "Magic",
+    "Netgen",
+    "KLayout"
+  ],
+  "resumed_from": null,
+  "source_sha256": {
+    "workers/eda/digital_units.py": "c1ae1f0a568e7509f115819a5da297dc1069b76da9b49694068047a4f961560e",
+    "workers/eda/digital_mux.py": "ed6d729e43bb260190f15563da9691e1efa517fe6a88181e06d1c158a557a377",
+    "workers/eda/hierarchy_transfer.py": "0376bc609f3c2150687d5073955e04e009d4a113bf4acaee739d05a43a649f70",
+    "workers/eda/server.py": "d54633490166971d2a66228ed936964e1b43f60d6a05be51f4e731ce2026503f",
+    "workers/eda/current_flow.py": "681d63cb0a5bc6976f89c4779b6f6f2a8d04713f9f5dd2e32baf2eacb6d3b5a2",
+    "workers/eda/test_digital_hierarchy.py": "9f0c1fe0a219e26e424b4a6ed62d60e2756e011e187fbeb0401de5f67ee6e18b"
+  }
+}

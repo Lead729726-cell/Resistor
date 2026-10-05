@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-01T02:41:11.116861+00:00",
+  "test_category": "isolated_bridge_validator_receipt_and_http_transport_audit",
+  "vendor_execution_verified": false,
+  "audit_suite": {
+    "suite": "tests/commercial/test_bridge_audit.py",
+    "test_count": 9,
+    "status": "pass",
+    "exit_code": 0,
+    "source_sha256": "da90994b683677c4e20d9d709f6133127051745ed706f48dde9f3b16b553b448",
+    "output": "test_agent_url_redirect_does_not_forward_private_token (__main__.BridgeAudit.test_agent_url_redirect_does_not_forward_private_token) ... ok\ntest_opaque_library_lock_is_hash_evidence_not_vendor_decoding (__main__.BridgeAudit.test_opaque_library_lock_is_hash_evidence_not_vendor_decoding) ... ok\ntest_operator_roots_and_executable_family_are_enforced (__main__.BridgeAudit.test_operator_roots_and_executable_family_are_enforced) ... ok\ntest_receipt_replay_and_restart_never_duplicate_native_submission (__main__.BridgeAudit.test_receipt_replay_and_restart_never_duplicate_native_submission) ... ok\ntest_reference_cannot_enable_runtime_scripts_models_or_external_files (__main__.BridgeAudit.test_reference_cannot_enable_runtime_scripts_models_or_external_files) ... ok\ntest_stdout_redaction_preserves_no_split_value_or_overlong_fragment (__main__.BridgeAudit.test_stdout_redaction_preserves_no_split_value_or_overlong_fragment) ... ok\ntest_typed_parameters_cannot_insert_script_or_argv_fragments (__main__.BridgeAudit.test_typed_parameters_cannot_insert_script_or_argv_fragments) ... ok\ntest_unknown_placeholders_and_escape_output_paths_reject (__main__.BridgeAudit.test_unknown_placeholders_and_escape_output_paths_reject) ... ok\ntest_zip_traversal_duplicate_symlink_and_unknown_inputs_reject (__main__.BridgeAudit.test_zip_traversal_duplicate_symlink_and_unknown_inputs_reject) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 2.297s\n\nOK\n"
+  },
+  "source_hashes": {
+    "platform/commercial/runner.py": "5560ea8342fb568a5922ea95963f03e9570cdc9d753fb9842ac5c42a9d727be2",
+    "platform/commercial/agent.py": "4107ed500be00ac9b77a5651b545ba013170051bfaa066125fec070dd8c09185",
+    "workers/eda/commercial_backend.py": "272bc4d04e3cf04a4e1fe749db61f66ee918b47fe401bc2d1355e6857532a467"
+  },
+  "uses_synthetic_credential": true,
+  "credential_printed_or_included": false,
+  "placeholder_executable_launched": false,
+  "resolved_findings": [
+    "Redirect forwarding of private agent header is blocked.",
+    "Client external file= reference syntax rejected.",
+    "First job creates state/jobs directory.",
+    "Receipt replay remains stable after agent restart."
+  ],
+  "source_reviewed_fixes": [
+    "Bounded directory traversal rejects more than4096 entries before materializing a whole tree.",
+    "Unsafe operator state paths rejected before Tcl/SKILL generation.",
+    "Exact executable/resource-copy output hashes rejected.",
+    "Opaque sensitive environment output rejected.",
+    "Failed/canceled terminal runs remove current_flow before persistence."
+  ],
+  "owner_native_regressions": {
+    "source": "docs/evidence/commercial-backend.json",
+    "case_count": 34,
+    "completed": true,
+    "vendor_execution_verified": false,
+    "source_sha256": "9a589f4b2c9882a4c409f79b2970b0614dd44f8bae4ea3e35622ec05924be69f"
+  },
+  "pending_owner_regressions": []
+}

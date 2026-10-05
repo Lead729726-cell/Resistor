@@ -1,0 +1,566 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-30T07:45:19.089Z",
+  "toolchain": {
+    "protocol_version": 1,
+    "runner": "linux-docker",
+    "tools": [
+      {
+        "name": "ngspice",
+        "path": "/foss/tools/bin/ngspice",
+        "version": "** ngspice-45.2 : Circuit level simulation program",
+        "available": true
+      },
+      {
+        "name": "KLayout",
+        "path": "/usr/bin/python3",
+        "version": "0.30.5",
+        "available": true
+      },
+      {
+        "name": "Magic",
+        "path": "/foss/tools/bin/magic",
+        "version": "8.3.582",
+        "available": true
+      },
+      {
+        "name": "Netgen",
+        "path": "/foss/tools/bin/netgen",
+        "version": "Netgen 1.5.313 compiled on Sun Dec 21 07:48:15 PM CET 2025",
+        "available": true
+      },
+      {
+        "name": "Xschem",
+        "path": "/foss/tools/bin/xschem",
+        "version": "XSCHEM V3.4.8RC",
+        "available": true
+      }
+    ],
+    "pdk": {
+      "id": "sky130A",
+      "available": true,
+      "path": "/foss/pdks/sky130A",
+      "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb",
+      "capabilities": {
+        "simulation": true,
+        "drc": true,
+        "lvs": true,
+        "pex": true,
+        "mos_pcell": true
+      },
+      "supported_devices": [
+        "sky130_fd_pr__nfet_01v8",
+        "sky130_fd_pr__pfet_01v8_hvt"
+      ],
+      "pex_scope": {
+        "connectivity": true,
+        "ground_capacitance": true,
+        "coupling_capacitance": true,
+        "distributed_resistance": true
+      },
+      "limits": [
+        "Public Magic drc(full) deck; no foundry signoff.",
+        "MOS PCell parameter regeneration is tested for nf=1, m=1.",
+        "Inverter uses fixed public inv_1 layout; schematic edits require explicit layout work and revalidation.",
+        "No TCAD or physically sourced process reconstruction stack."
+      ]
+    },
+    "geometry": {
+      "engine": "KLayout",
+      "coordinate_bits": 32,
+      "dbu_um": 0.001,
+      "grid_dbu": 5
+    },
+    "runtime_image": "hpretl/iic-osic-tools@sha256:92961478ad3c4f508efb42d9ccdba12ab262eb42a14926d2bd49862230ba8521"
+  },
+  "pdk_commit": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb",
+  "cases": [
+    {
+      "name": "Regression SKY130 inverter",
+      "project_id": "7c4d0ca3709e4549953c8ced01eb8b6c",
+      "revision": 1,
+      "method": "simulation.run",
+      "settings": {
+        "analysis": "tran",
+        "corner": "tt"
+      },
+      "run_id": "e012ca232eba4885b13e7a6f13dc7c7d",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Actual ngspice tran: 1544 samples.",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 1544,
+        "A_min": 0,
+        "A_max": 1.8,
+        "Y_min": -0.0300815104,
+        "Y_max": 1.85480301,
+        "tpHL_s": 3.9987602440562043e-11,
+        "delay_method": "Mean linearly interpolated 0.9V rising-input to subsequent falling-output crossing."
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/e012ca232eba4885b13e7a6f13dc7c7d/manifest.json"
+    },
+    {
+      "name": "Regression SKY130 inverter",
+      "project_id": "7c4d0ca3709e4549953c8ced01eb8b6c",
+      "revision": 1,
+      "method": "verification.run_drc",
+      "settings": {},
+      "run_id": "efef6abf4c604954b03b92a6e6ef922f",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Magic drc(full): 0 native violation rectangles. Public deck; no signoff.",
+      "marker_count": 0,
+      "manifest_path": "/workspace/.runtime/eda/runs/efef6abf4c604954b03b92a6e6ef922f/manifest.json"
+    },
+    {
+      "name": "Regression SKY130 inverter",
+      "project_id": "7c4d0ca3709e4549953c8ced01eb8b6c",
+      "revision": 1,
+      "method": "verification.run_lvs",
+      "settings": {},
+      "run_id": "01483fffad3144a2a3e9192b56f273b3",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Actual Netgen comparison: circuits match uniquely.",
+      "manifest_path": "/workspace/.runtime/eda/runs/01483fffad3144a2a3e9192b56f273b3/manifest.json"
+    },
+    {
+      "name": "Regression SKY130 inverter",
+      "project_id": "7c4d0ca3709e4549953c8ced01eb8b6c",
+      "revision": 1,
+      "method": "extraction.run_pex",
+      "settings": {},
+      "run_id": "e558a734296b41ef8d58695ac5d76b34",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Actual Magic RC extraction: 45 resistors, 6 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+      "parasitics": {
+        "resistors": 45,
+        "capacitors": 6
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/e558a734296b41ef8d58695ac5d76b34/manifest.json"
+    },
+    {
+      "name": "Regression SKY130 inverter",
+      "project_id": "7c4d0ca3709e4549953c8ced01eb8b6c",
+      "revision": 1,
+      "method": "simulation.run",
+      "settings": {
+        "analysis": "tran",
+        "post_layout": true
+      },
+      "run_id": "667995d0bcdd4eed8d8112c235b97a9c",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Actual ngspice tran: 1544 samples.",
+      "parasitics": {
+        "resistors": 45,
+        "capacitors": 6
+      },
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "true",
+        "samples": 1544,
+        "A_min": 0,
+        "A_max": 1.8,
+        "Y_min": -0.0332252467,
+        "Y_max": 1.85253187,
+        "tpHL_s": 4.576941900598172e-11,
+        "delay_method": "Mean linearly interpolated 0.9V rising-input to subsequent falling-output crossing."
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/667995d0bcdd4eed8d8112c235b97a9c/manifest.json"
+    },
+    {
+      "name": "Regression public SKY130 MOS PCell",
+      "project_id": "3fa134115e284a93abfe504d9e83ec5b",
+      "revision": 1,
+      "method": "simulation.run",
+      "settings": {
+        "analysis": "dc"
+      },
+      "run_id": "a219d56ab11a44acbd4983f3bf492f26",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Actual ngspice dc: 181 samples.",
+      "measurements": {
+        "analysis": "dc",
+        "x_unit": "V",
+        "x_label": "Vgs",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 181,
+        "Vgs_min": 0,
+        "Vgs_max": 1.8,
+        "Id_min": 1.92563831e-12,
+        "Id_max": 0.00033464188
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/a219d56ab11a44acbd4983f3bf492f26/manifest.json"
+    },
+    {
+      "name": "Regression public SKY130 MOS PCell",
+      "project_id": "3fa134115e284a93abfe504d9e83ec5b",
+      "revision": 1,
+      "method": "verification.run_drc",
+      "settings": {},
+      "run_id": "3a0459704685467287c54329c01a6a51",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Magic drc(full): 0 native violation rectangles. Public deck; no signoff.",
+      "marker_count": 0,
+      "manifest_path": "/workspace/.runtime/eda/runs/3a0459704685467287c54329c01a6a51/manifest.json"
+    },
+    {
+      "name": "Regression public SKY130 MOS PCell",
+      "project_id": "3fa134115e284a93abfe504d9e83ec5b",
+      "revision": 1,
+      "method": "verification.run_lvs",
+      "settings": {},
+      "run_id": "962b48c7dc134dc89e90c55152b69167",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Actual Netgen comparison: circuits match uniquely.",
+      "manifest_path": "/workspace/.runtime/eda/runs/962b48c7dc134dc89e90c55152b69167/manifest.json"
+    },
+    {
+      "name": "Regression public SKY130 MOS PCell",
+      "project_id": "3fa134115e284a93abfe504d9e83ec5b",
+      "revision": 1,
+      "method": "extraction.run_pex",
+      "settings": {},
+      "run_id": "3c358a41ce844d9197349c9cdb167ebe",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Actual Magic RC extraction: 57 resistors, 6 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+      "parasitics": {
+        "resistors": 57,
+        "capacitors": 6
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/3c358a41ce844d9197349c9cdb167ebe/manifest.json"
+    },
+    {
+      "name": "Regression public SKY130 MOS PCell",
+      "project_id": "3fa134115e284a93abfe504d9e83ec5b",
+      "revision": 1,
+      "method": "simulation.run",
+      "settings": {
+        "analysis": "dc",
+        "post_layout": true
+      },
+      "run_id": "0c62421f8c124587a974d16de91c3fe9",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Actual ngspice dc: 181 samples.",
+      "parasitics": {
+        "resistors": 57,
+        "capacitors": 6
+      },
+      "measurements": {
+        "analysis": "dc",
+        "x_unit": "V",
+        "x_label": "Vgs",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "true",
+        "samples": 181,
+        "Vgs_min": 0,
+        "Vgs_max": 1.8,
+        "Id_min": 1.91650515e-12,
+        "Id_max": 0.000313434506
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/0c62421f8c124587a974d16de91c3fe9/manifest.json"
+    },
+    {
+      "name": "Regression 200um RC wire",
+      "project_id": "ce80be126f2b49faa671aeff563f2d5d",
+      "revision": 1,
+      "method": "verification.run_drc",
+      "settings": {},
+      "run_id": "a0eb5a765a084d53835c5e96942c5c0a",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Magic drc(full): 0 native violation rectangles. Public deck; no signoff.",
+      "marker_count": 0,
+      "manifest_path": "/workspace/.runtime/eda/runs/a0eb5a765a084d53835c5e96942c5c0a/manifest.json"
+    },
+    {
+      "name": "Regression 200um RC wire",
+      "project_id": "ce80be126f2b49faa671aeff563f2d5d",
+      "revision": 1,
+      "method": "extraction.run_pex",
+      "settings": {},
+      "run_id": "809cc8b94e7b4cc28762b448e4d79531",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Actual Magic RC extraction: 1 resistors, 1 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+      "parasitics": {
+        "resistors": 1,
+        "capacitors": 1
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/809cc8b94e7b4cc28762b448e4d79531/manifest.json"
+    },
+    {
+      "name": "Regression 200um RC wire",
+      "project_id": "ce80be126f2b49faa671aeff563f2d5d",
+      "revision": 1,
+      "method": "simulation.run",
+      "settings": {
+        "analysis": "tran",
+        "post_layout": true
+      },
+      "run_id": "f73b3690318d48ef8ee01a7c397f645d",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Actual ngspice tran: 1553 samples.",
+      "parasitics": {
+        "resistors": 1,
+        "capacitors": 1
+      },
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "true",
+        "samples": 1553,
+        "IN_min": 0,
+        "IN_max": 1.8,
+        "OUT_min": -0.00000321003727,
+        "OUT_max": 1.80058388
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/f73b3690318d48ef8ee01a7c397f645d/manifest.json"
+    },
+    {
+      "name": "Regression SKY130 inverter",
+      "project_id": "7c4d0ca3709e4549953c8ced01eb8b6c",
+      "revision": 2,
+      "method": "verification.run_drc",
+      "settings": {},
+      "run_id": "972d0ca13ed14e5f9157db023b544100",
+      "execution_status": "completed",
+      "analysis_result": "fail",
+      "expected": "fail",
+      "message": "Magic drc(full): 1 native violation rectangles. Public deck; no signoff.",
+      "marker_count": 1,
+      "manifest_path": "/workspace/.runtime/eda/runs/972d0ca13ed14e5f9157db023b544100/manifest.json"
+    },
+    {
+      "name": "Regression SKY130 inverter",
+      "project_id": "7c4d0ca3709e4549953c8ced01eb8b6c",
+      "revision": 1,
+      "method": "verification.run_drc",
+      "settings": {},
+      "run_id": "83c747af705949c9824f177fe16386f9",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Magic drc(full): 0 native violation rectangles. Public deck; no signoff.",
+      "marker_count": 0,
+      "manifest_path": "/workspace/.runtime/eda/runs/83c747af705949c9824f177fe16386f9/manifest.json"
+    },
+    {
+      "name": "Regression SKY130 inverter",
+      "project_id": "7c4d0ca3709e4549953c8ced01eb8b6c",
+      "revision": 3,
+      "method": "verification.run_lvs",
+      "settings": {},
+      "run_id": "ceb5b034695b4f36814160bdd1432f7b",
+      "execution_status": "completed",
+      "analysis_result": "fail",
+      "expected": "fail",
+      "message": "Actual Netgen comparison: connectivity or property mismatch; inspect native report.",
+      "manifest_path": "/workspace/.runtime/eda/runs/ceb5b034695b4f36814160bdd1432f7b/manifest.json"
+    },
+    {
+      "name": "Regression SKY130 inverter",
+      "project_id": "7c4d0ca3709e4549953c8ced01eb8b6c",
+      "revision": 1,
+      "method": "verification.run_lvs",
+      "settings": {},
+      "run_id": "f66d3d674fcc47558e53ae8a835cbf80",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "expected": "pass",
+      "message": "Actual Netgen comparison: circuits match uniquely.",
+      "manifest_path": "/workspace/.runtime/eda/runs/f66d3d674fcc47558e53ae8a835cbf80/manifest.json"
+    }
+  ],
+  "advanced": [
+    {
+      "case": "inverter dc",
+      "run_id": "4fa0d04103704fa09e118d3261c6692f",
+      "revision": 1,
+      "result": "pass",
+      "measurements": {
+        "analysis": "dc",
+        "x_unit": "V",
+        "x_label": "Vin",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 181,
+        "A_min": 0,
+        "A_max": 1.8,
+        "Y_min": 2.70011058e-9,
+        "Y_max": 1.80000001
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/4fa0d04103704fa09e118d3261c6692f/manifest.json"
+    },
+    {
+      "case": "inverter ac",
+      "run_id": "f1d5739c913c4c8ea3f02629862ba5ff",
+      "revision": 1,
+      "result": "pass",
+      "measurements": {
+        "analysis": "ac",
+        "x_unit": "Hz",
+        "x_label": "frequency",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 271,
+        "gain_magnitude_min": 0.488509219,
+        "gain_magnitude_max": 0.502792238,
+        "phase_min": 2.82308178,
+        "phase_max": 3.14159265
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/f1d5739c913c4c8ea3f02629862ba5ff/manifest.json"
+    },
+    {
+      "case": "inverter op",
+      "run_id": "e359f5dd8d1942b3b4f3cf8bf1afc1dd",
+      "revision": 1,
+      "result": "pass",
+      "measurements": {
+        "analysis": "op",
+        "x_unit": "point",
+        "x_label": "OP",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 1,
+        "A_min": 0.9,
+        "A_max": 0.9,
+        "Y_min": 0.0267246779,
+        "Y_max": 0.0267246779
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/e359f5dd8d1942b3b4f3cf8bf1afc1dd/manifest.json"
+    },
+    {
+      "case": "MOS W 1.3 verification.run_drc",
+      "run_id": "2f3f4337360042b8912330530581f8d4",
+      "revision": 2,
+      "result": "pass",
+      "manifest_path": "/workspace/.runtime/eda/runs/2f3f4337360042b8912330530581f8d4/manifest.json"
+    },
+    {
+      "case": "MOS W 1.3 verification.run_lvs",
+      "run_id": "c6b0b5d1be074b8399d0a4a7ee785e83",
+      "revision": 2,
+      "result": "pass",
+      "manifest_path": "/workspace/.runtime/eda/runs/c6b0b5d1be074b8399d0a4a7ee785e83/manifest.json"
+    },
+    {
+      "case": "MOS regenerated width changes actual current",
+      "result": "pass",
+      "before_A": 0.00033464188,
+      "after_A": 0.000645134729
+    },
+    {
+      "case": "queued cancel survives thread-pool drain",
+      "result": "pass",
+      "busy_run_ids": [
+        "8db934be58af4989990c541886cbc6b1",
+        "b1a9aa0db2554353a589edb37f3ae368"
+      ],
+      "canceled_run_id": "970dc90413f04206884e6e161e903ea3",
+      "commands": 0
+    },
+    {
+      "case": "model dependency modification marks results stale",
+      "result": "pass",
+      "run_id": "3dcd164965d24b52b23b6f54cb4ab65d",
+      "file": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice"
+    }
+  ],
+  "comparisons": [
+    {
+      "example": "inverter",
+      "revision": 1,
+      "pre_run_id": "e012ca232eba4885b13e7a6f13dc7c7d",
+      "post_run_id": "667995d0bcdd4eed8d8112c235b97a9c",
+      "settings": {
+        "analysis": "tran",
+        "corner": "tt"
+      },
+      "metrics": {
+        "tpHL_s": {
+          "pre": 3.9987602440562043e-11,
+          "post": 4.576941900598172e-11,
+          "delta": 5.781816565419676e-12
+        }
+      },
+      "method": "Same native testbench, corner, temperature and supply; each waveform comes from actual ngspice. Extracted netlist retains actual junction geometry and additional native R/C."
+    },
+    {
+      "example": "MOS PCell",
+      "revision": 1,
+      "pre_run_id": "a219d56ab11a44acbd4983f3bf492f26",
+      "post_run_id": "0c62421f8c124587a974d16de91c3fe9",
+      "settings": {
+        "analysis": "dc"
+      },
+      "metrics": {
+        "Id_min": {
+          "pre": 1.92563831e-12,
+          "post": 1.91650515e-12,
+          "delta": -9.133160000000272e-15
+        },
+        "Id_max": {
+          "pre": 0.00033464188,
+          "post": 0.000313434506,
+          "delta": -0.000021207374
+        }
+      },
+      "method": "Same native testbench, corner, temperature and supply; each waveform comes from actual ngspice. Extracted netlist retains actual junction geometry and additional native R/C."
+    }
+  ],
+  "limits": [
+    "Public Magic deck pass is not foundry signoff.",
+    "Display stack heights are illustrative; physical thicknesses unknown.",
+    "Fixed public inverter template plus actual welltap cells; no arbitrary inverter PCell.",
+    "MOS nf=m=1 only; explicit native schematic pin-net connectivity subset."
+  ]
+}

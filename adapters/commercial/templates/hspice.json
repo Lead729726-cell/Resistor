@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "id": "hspice-site-v1",
+  "name": "PrimeSim HSPICE — operator site validation required",
+  "tool_id": "hspice",
+  "version": "K-2015.06 documented CLI; site version required",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/hspice",
+    "env_names": [
+      "SNPSLMD_LICENSE_FILE"
+    ],
+    "resources": {
+      "deck": "/workspace/site/hspice.runset"
+    },
+    "recipes": {
+      "simulation": {
+        "argv": [
+          "-i",
+          "{resource.deck}",
+          "-o",
+          "{output_dir}/result"
+        ],
+        "outputs": {
+          "summary": "result.lis",
+          "waves": "waves.csv",
+          "currents": "currents.csv"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "summary": "hspice-lis",
+            "waves": "csv"
+          }
+        },
+        "requires_netlist": false
+      }
+    }
+  }
+}

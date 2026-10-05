@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-02",
+  "method": "Direct interaction with the live local application through Codex in-app browser; saved worker artifacts read separately",
+  "scope": "Semiconductor starter workflow; not the full UI regression suite",
+  "url": "http://127.0.0.1:5173/",
+  "project_id": "67f6658d2cd64f5c870147647f3080e6",
+  "revision": 1,
+  "run_id": "eb3e3de8ca09457097ab7451a4ad794c",
+  "observed_checks": [
+    "Selected GF180 process card and verified the unsupported starter adapter reason and disabled creation button",
+    "Returned to SKY130, selected MUX4 and slow_hot, entered a project name and selected actual analysis after creation",
+    "Created a new project using the visible start button; observed the saved initial/current condition banner and revision 1",
+    "Opened Simulation and observed actual ngspice completion, PASS and all 64 truth-table cases",
+    "Clicked Save, searched Workspace, and reopened the created project",
+    "Opened Testbench settings and verified SS, 125C, 1.62V, 1280ns, 50ps and 50fF persisted",
+    "Selected ideal RC and observed only nominal available; returned to first CMOS and left the starter screen open"
+  ],
+  "screenshots": [
+    "../../examples/semiconductor-starters/gallery.png",
+    "../../examples/semiconductor-starters/setup.png",
+    "../../examples/semiconductor-starters/mux4-simulation.png",
+    "../../examples/semiconductor-starters/mux4-truth-table.png",
+    "../../examples/semiconductor-starters/reopened-conditions.png"
+  ],
+  "saved_worker_artifacts": "../../examples/semiconductor-starters/artifact-receipt.json",
+  "physical_checks_on_this_ui_project": "DRC, LVS and PEX not run in this UI workflow",
+  "separate_native_evidence": "semiconductor-starters-native.json"
+}

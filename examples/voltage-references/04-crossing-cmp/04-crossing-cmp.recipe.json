@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "model": "voltage-voxel-emulation-v1",
+  "domain": {
+    "bounds": [
+      -1.6,
+      -1.2,
+      1.6,
+      1.2
+    ],
+    "zMin": -1.05,
+    "zMax": 1.45,
+    "nx": 64,
+    "ny": 48,
+    "nz": 100
+  },
+  "initial": "gds-mesa",
+  "initialHeight": 0.35,
+  "initialMask": "2/0",
+  "threshold": 45,
+  "steps": [
+    {
+      "id": "metal1",
+      "name": "하부 금속 가정",
+      "kind": "deposit",
+      "model": "directional",
+      "amount": 0.16,
+      "sidewall": 0.35,
+      "color": "#88aef0",
+      "mask": "3/0",
+      "inverse": false,
+      "target": 0,
+      "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+    },
+    {
+      "id": "imd",
+      "name": "층간 절연막 가정",
+      "kind": "deposit",
+      "model": "conformal",
+      "amount": 0.3,
+      "sidewall": 1,
+      "color": "#a29ae8",
+      "mask": "all",
+      "inverse": false,
+      "target": 0,
+      "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+    },
+    {
+      "id": "cmp",
+      "name": "CMP 기준면 가정",
+      "kind": "cmp",
+      "model": "conformal",
+      "amount": 0.64,
+      "sidewall": 1,
+      "color": "#a29ae8",
+      "mask": "all",
+      "inverse": false,
+      "target": 0,
+      "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+    },
+    {
+      "id": "via-etch",
+      "name": "via 수직 식각 가정",
+      "kind": "etch",
+      "model": "vertical",
+      "amount": 0.32,
+      "sidewall": 1,
+      "color": "#88aef0",
+      "mask": "4/0",
+      "inverse": false,
+      "target": 3,
+      "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+    },
+    {
+      "id": "metal2",
+      "name": "상부 금속 가정",
+      "kind": "deposit",
+      "model": "directional",
+      "amount": 0.18,
+      "sidewall": 0.35,
+      "color": "#88aef0",
+      "mask": "5/0",
+      "inverse": false,
+      "target": 0,
+      "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+    }
+  ],
+  "geometry_hash": "59db3b7b60493f263c73948b41bfd328edd3e1f2a4f10b740898a62884cff745"
+}

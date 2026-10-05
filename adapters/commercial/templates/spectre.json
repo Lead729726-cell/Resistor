@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "spectre-site-v1",
+  "name": "Spectre — operator site validation required",
+  "tool_id": "spectre",
+  "version": "Spectre12.1 documented entry / site version required",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/spectre",
+    "env_names": [
+      "CDS_LIC_FILE"
+    ],
+    "resources": {
+      "deck": "/workspace/site/spectre.runset"
+    },
+    "recipes": {
+      "simulation": {
+        "argv": [
+          "{resource.deck}",
+          "-format",
+          "psfascii",
+          "-raw",
+          "{output_dir}/psf"
+        ],
+        "outputs": {
+          "waves": "psf/tran.tran"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "waves": "psf-ascii"
+          }
+        },
+        "requires_netlist": false
+      }
+    }
+  }
+}

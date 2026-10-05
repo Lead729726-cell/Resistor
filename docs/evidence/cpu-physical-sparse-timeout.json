@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "project_id": "35940d4909364f7cacfeb473821dcb73",
+  "revision": 1,
+  "state_root": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state",
+  "physical_shapes": 73005,
+  "whole_scene": true,
+  "period_ns": 50,
+  "cases": [
+    {
+      "stage": "drc",
+      "run_id": "c5ecfb4792aa43c2a885297f0f4ef9db",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 21.350351185999898,
+      "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+      "markers": 0,
+      "parasitics": null,
+      "artifacts": {
+        "markers": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/c5ecfb4792aa43c2a885297f0f4ef9db/markers.tsv",
+        "stdout": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/c5ecfb4792aa43c2a885297f0f4ef9db/stdout.log"
+      },
+      "unit_verification": null
+    },
+    {
+      "stage": "lvs",
+      "run_id": "8e6ff1ecd16a4fed9937bdc3b65b93e1",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 21.610149836000346,
+      "message": "Actual Netgen comparison: circuits match uniquely.",
+      "markers": 0,
+      "parasitics": null,
+      "artifacts": {
+        "layout_netlist": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/8e6ff1ecd16a4fed9937bdc3b65b93e1/layout.spice",
+        "reference_netlist": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/8e6ff1ecd16a4fed9937bdc3b65b93e1/reference.spice",
+        "lvs_report": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/8e6ff1ecd16a4fed9937bdc3b65b93e1/lvs.log",
+        "stdout": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/8e6ff1ecd16a4fed9937bdc3b65b93e1/stdout.log"
+      },
+      "unit_verification": null
+    },
+    {
+      "stage": "pex",
+      "run_id": "2ef74cbf586a44778206f9d8c348f7a0",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 46.439558484999,
+      "message": "Actual Magic RC extraction: 64142 resistors, 97032 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+      "markers": 0,
+      "parasitics": {
+        "resistors": 64142,
+        "capacitors": 97032
+      },
+      "artifacts": {
+        "pex_netlist": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/2ef74cbf586a44778206f9d8c348f7a0/pex.spice",
+        "pex_quality": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/2ef74cbf586a44778206f9d8c348f7a0/pex-quality.json",
+        "stdout": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/2ef74cbf586a44778206f9d8c348f7a0/stdout.log"
+      },
+      "unit_verification": null
+    },
+    {
+      "stage": "post-layout-50ns",
+      "run_id": "a97f3f6e394a4a6bab883011a4511f5c",
+      "execution_status": "failed",
+      "analysis_result": "unknown",
+      "elapsed_s": 341.37379582500034,
+      "message": "ngspice exceeded 300 seconds.",
+      "markers": 0,
+      "parasitics": {
+        "resistors": 64142,
+        "capacitors": 97032
+      },
+      "artifacts": {
+        "pex_netlist": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/a97f3f6e394a4a6bab883011a4511f5c/pex.spice",
+        "pex_quality": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/a97f3f6e394a4a6bab883011a4511f5c/pex-quality.json",
+        "testbench": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/a97f3f6e394a4a6bab883011a4511f5c/testbench.spice",
+        "stdout": "/workspace/.runtime/evidence/cpu-physical-4c6917468f81497ca9171edb9b4679cf/state/runs/a97f3f6e394a4a6bab883011a4511f5c/stdout.log"
+      },
+      "unit_verification": null
+    }
+  ],
+  "foundry_signoff": false,
+  "source_sha256": {
+    "workers/eda/digital_units.py": "43a39da3740ee066f48648bef988c5911e19633abd958737df0f8ffbf7095b2b",
+    "workers/eda/digital_mux.py": "24cf13b8aefa18fcd4b375e2c0bc1b7092b8d1b9cf8c574cb5e554d0fbda749a",
+    "workers/eda/server.py": "c98ecc9fb32215ba75910f052abef6df7280a06e242868b960ccfde2aa0c4238",
+    "workers/eda/test_cpu_physical.py": "a6fbe10a786b2a013ab448dfe03a39dcc948ab2213e0ca92cc05002f77615969"
+  }
+}

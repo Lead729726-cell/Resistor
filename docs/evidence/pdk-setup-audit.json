@@ -1,0 +1,366 @@
+{
+  "schema_version": 1,
+  "scope": "Independent pure PDK/setup validators; optional actual synthetic generic-M ngspice calibration; no RPC jobs",
+  "cases": [
+    {
+      "case": "Confined nested model resources are all hashed and changed bytes alter the lock",
+      "result": "pass"
+    },
+    {
+      "case": "Continued .lib dependency is rejected or included in the resource hash closure",
+      "result": "pass"
+    },
+    {
+      "case": "Continuation .lib cannot read another profile outside its declared root",
+      "result": "pass"
+    },
+    {
+      "case": "Executable/non-model directive rejected: .control",
+      "result": "pass"
+    },
+    {
+      "case": "Executable/non-model directive rejected: .pre_osdi \"anything.so\"",
+      "result": "pass"
+    },
+    {
+      "case": "Executable/non-model directive rejected: .csparam malicious=1",
+      "result": "pass"
+    },
+    {
+      "case": "Primary model resource cannot escape the declared profile root",
+      "result": "pass"
+    },
+    {
+      "case": "Orphan SPICE continuation rejected",
+      "result": "pass"
+    },
+    {
+      "case": "Ambiguous quoted one-argument library import rejected",
+      "result": "pass"
+    },
+    {
+      "case": "Tcl/SPICE metacharacter resource path rejected: a} ; exec forbidden ; {.tech",
+      "result": "pass"
+    },
+    {
+      "case": "Tcl/SPICE metacharacter resource path rejected: [exec forbidden].tech",
+      "result": "pass"
+    },
+    {
+      "case": "Tcl/SPICE metacharacter resource path rejected: $env(HOME).tech",
+      "result": "pass"
+    },
+    {
+      "case": "Tcl/SPICE metacharacter resource path rejected: a\"quoted.spice",
+      "result": "pass"
+    },
+    {
+      "case": "Tcl/SPICE metacharacter resource path rejected: a'quoted.spice",
+      "result": "pass"
+    },
+    {
+      "case": "Tcl/SPICE metacharacter resource path rejected: a;exec.tech",
+      "result": "pass"
+    },
+    {
+      "case": "Tcl/SPICE metacharacter resource path rejected: a`exec.tech",
+      "result": "pass"
+    },
+    {
+      "case": "Static technology fragments are hashed and cannot escape their profile root",
+      "result": "pass"
+    },
+    {
+      "case": "Executable/interpolated technology rejected: source",
+      "result": "pass"
+    },
+    {
+      "case": "Executable/interpolated technology rejected: exec",
+      "result": "pass"
+    },
+    {
+      "case": "Executable/interpolated technology rejected: types",
+      "result": "pass"
+    },
+    {
+      "case": "Uploaded matching startup deck resolves execution to canonical installed Tcl, not uploaded siblings",
+      "result": "pass"
+    },
+    {
+      "case": "Extracted subcircuit port order is preserved rather than reordered by bias input",
+      "result": "pass"
+    },
+    {
+      "case": "SPICE continuation preserves every extracted top-level port in its actual order",
+      "result": "pass"
+    },
+    {
+      "case": "Reference external execution/file directives rejected: .control",
+      "result": "pass"
+    },
+    {
+      "case": "Reference external execution/file directives rejected: .include \"outside.spice\"",
+      "result": "pass"
+    },
+    {
+      "case": "Explicit settings retain profile hash and biased rows; stale profile, guessed ports and absent/nonzero ground reject",
+      "result": "pass"
+    },
+    {
+      "case": "Short configuration commit binds selected top cell and rejects intervening revision/profile changes without native inspection",
+      "result": "pass"
+    },
+    {
+      "case": "ZIP path rejected: ../escape.spice",
+      "result": "pass"
+    },
+    {
+      "case": "ZIP path rejected: /absolute.spice",
+      "result": "pass"
+    },
+    {
+      "case": "ZIP path rejected: dir\\escape.spice",
+      "result": "pass"
+    },
+    {
+      "case": "ZIP path rejected: C:drive.spice",
+      "result": "pass"
+    },
+    {
+      "case": "ZIP path rejected: a} ;exec forbidden; {.tech",
+      "result": "pass"
+    },
+    {
+      "case": "ZIP path rejected: a[exec forbidden].tech",
+      "result": "pass"
+    },
+    {
+      "case": "ZIP path rejected: a$env(HOME).tech",
+      "result": "pass"
+    },
+    {
+      "case": "ZIP path rejected: a\"quoted.spice",
+      "result": "pass"
+    },
+    {
+      "case": "ZIP path rejected: a'quoted.spice",
+      "result": "pass"
+    },
+    {
+      "case": "ZIP symlink rejected before extraction",
+      "result": "pass"
+    },
+    {
+      "case": "Case-colliding ZIP entries rejected",
+      "result": "pass"
+    },
+    {
+      "case": "Actual ngspice generic-M forward/reverse series-sense signs preserve multiline W/L and baseline voltages/currents",
+      "result": "pass"
+    }
+  ],
+  "case_count": 39,
+  "passed": 39,
+  "failed": 0,
+  "isolated_state": "/workspace/.runtime/pdk-setup-audit/8457e4e8cd1b4bfaae03d30166e7bd7e",
+  "native_calibration": [
+    {
+      "direction": "forward",
+      "actual_port_order": [
+        "S",
+        "B",
+        "G",
+        "D"
+      ],
+      "drain_current_A": 0.0000165760018,
+      "supply_source_current_A": -0.0000165760018,
+      "baseline": [
+        1.8,
+        1.8,
+        0.9,
+        0,
+        0,
+        -0.0000165760018,
+        0.000016576
+      ],
+      "instrumented": [
+        1.8,
+        1.8,
+        0.9,
+        0,
+        0,
+        -0.0000165760018,
+        0.000016576
+      ],
+      "probe_netlist": "/workspace/.runtime/pdk-setup-audit/8457e4e8cd1b4bfaae03d30166e7bd7e/native-forward/current-probe.spice",
+      "testbench": "/workspace/.runtime/pdk-setup-audit/8457e4e8cd1b4bfaae03d30166e7bd7e/native-forward/testbench.spice",
+      "flow": {
+        "schema_version": 1,
+        "source": "ngspice",
+        "analysis": "op",
+        "x": [
+          1.8
+        ],
+        "x_unit": "point",
+        "branches": [
+          {
+            "id": "XU/MNM",
+            "name": "MNM native drain→source",
+            "from_net": "D",
+            "to_net": "S",
+            "mapping": "unmapped",
+            "source_vector": "i(v.xu.vregister_cf_2cc24e1295258b73)",
+            "values_A": [
+              0.0000165760018
+            ]
+          },
+          {
+            "id": "testbench/VD",
+            "name": "VD source (+→−)",
+            "from_net": "D",
+            "to_net": "0",
+            "mapping": "unmapped",
+            "source_vector": "i(VD)",
+            "values_A": [
+              -0.0000165760018
+            ]
+          },
+          {
+            "id": "testbench/VS",
+            "name": "VS source (+→−)",
+            "from_net": "S",
+            "to_net": "0",
+            "mapping": "unmapped",
+            "source_vector": "i(VS)",
+            "values_A": [
+              0.000016576
+            ]
+          },
+          {
+            "id": "testbench/VG",
+            "name": "VG source (+→−)",
+            "from_net": "G",
+            "to_net": "0",
+            "mapping": "unmapped",
+            "source_vector": "i(VG)",
+            "values_A": [
+              0
+            ]
+          },
+          {
+            "id": "testbench/VB",
+            "name": "VB source (+→−)",
+            "from_net": "B",
+            "to_net": "0",
+            "mapping": "unmapped",
+            "source_vector": "i(VB)",
+            "values_A": [
+              1.81e-12
+            ]
+          }
+        ],
+        "convention": "conventional",
+        "revision": 7
+      }
+    },
+    {
+      "direction": "reverse",
+      "actual_port_order": [
+        "S",
+        "B",
+        "G",
+        "D"
+      ],
+      "drain_current_A": -0.000016576,
+      "supply_source_current_A": 0.000016576,
+      "baseline": [
+        0,
+        0,
+        0.9,
+        1.8,
+        0,
+        0.000016576,
+        -0.0000165760018
+      ],
+      "instrumented": [
+        0,
+        0,
+        0.9,
+        1.8,
+        0,
+        0.000016576,
+        -0.0000165760018
+      ],
+      "probe_netlist": "/workspace/.runtime/pdk-setup-audit/8457e4e8cd1b4bfaae03d30166e7bd7e/native-reverse/current-probe.spice",
+      "testbench": "/workspace/.runtime/pdk-setup-audit/8457e4e8cd1b4bfaae03d30166e7bd7e/native-reverse/testbench.spice",
+      "flow": {
+        "schema_version": 1,
+        "source": "ngspice",
+        "analysis": "op",
+        "x": [
+          0
+        ],
+        "x_unit": "point",
+        "branches": [
+          {
+            "id": "XU/MNM",
+            "name": "MNM native drain→source",
+            "from_net": "D",
+            "to_net": "S",
+            "mapping": "unmapped",
+            "source_vector": "i(v.xu.vregister_cf_2cc24e1295258b73)",
+            "values_A": [
+              -0.000016576
+            ]
+          },
+          {
+            "id": "testbench/VD",
+            "name": "VD source (+→−)",
+            "from_net": "D",
+            "to_net": "0",
+            "mapping": "unmapped",
+            "source_vector": "i(VD)",
+            "values_A": [
+              0.000016576
+            ]
+          },
+          {
+            "id": "testbench/VS",
+            "name": "VS source (+→−)",
+            "from_net": "S",
+            "to_net": "0",
+            "mapping": "unmapped",
+            "source_vector": "i(VS)",
+            "values_A": [
+              -0.0000165760018
+            ]
+          },
+          {
+            "id": "testbench/VG",
+            "name": "VG source (+→−)",
+            "from_net": "G",
+            "to_net": "0",
+            "mapping": "unmapped",
+            "source_vector": "i(VG)",
+            "values_A": [
+              0
+            ]
+          },
+          {
+            "id": "testbench/VB",
+            "name": "VB source (+→−)",
+            "from_net": "B",
+            "to_net": "0",
+            "mapping": "unmapped",
+            "source_vector": "i(VB)",
+            "values_A": [
+              1.81e-12
+            ]
+          }
+        ],
+        "convention": "conventional",
+        "revision": 7
+      }
+    }
+  ]
+}

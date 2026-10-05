@@ -1,0 +1,311 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "D:\\Coldbrew\\Resistor\\node_modules\\@playwright\\test\\cli.js",
+      "test"
+    ],
+    "configFile": "D:\\Coldbrew\\Resistor\\playwright.config.ts",
+    "rootDir": "D:/Coldbrew/Resistor/tests/ui",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Coldbrew/Resistor/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "D:/Coldbrew/Resistor/tests/ui",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "docs/evidence/ui-tests.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "desktop.spec.ts",
+      "file": "desktop.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Packaged Windows executable loads real worker through sandbox IPC",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 33932,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-30T10:38:16.035Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "12cc77c408bab7a1d6ba-e7562c2ebeec6dcf1d2d",
+          "file": "desktop.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "waveform.spec.ts",
+      "file": "waveform.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Actual MOS current curve remains readable beside a voltage trace",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 38778,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog')\nExpected: not visible\nReceived: visible\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"not toBeVisible\" getByRole('dialog') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog')\u001b[22m\n\u001b[2m    26 × locator resolved to <div role=\"dialog\" class=\"modal \" aria-modal=\"true\" aria-labelledby=\"modal-title\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"visible\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog')\nExpected: not visible\nReceived: visible\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"not toBeVisible\" getByRole('dialog') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog')\u001b[22m\n\u001b[2m    26 × locator resolved to <div role=\"dialog\" class=\"modal \" aria-modal=\"true\" aria-labelledby=\"modal-title\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"visible\"\u001b[22m\n\n    at D:\\Coldbrew\\Resistor\\tests\\ui\\waveform.spec.ts:11:28",
+                    "location": {
+                      "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\waveform.spec.ts",
+                      "column": 28,
+                      "line": 11
+                    },
+                    "snippet": "   9 |   await dialog.getByRole('button',{name:/MOSFET characterization/}).click();\n  10 |   await page.getByTestId('project-create').click();\n> 11 |   await expect(dialog).not.toBeVisible();\n     |                            ^\n  12 |   await page.getByTestId('tab-simulation').click();\n  13 |   await page.locator('.analysis-toolbar select').selectOption('dc');\n  14 |   await page.getByRole('button',{name:'Run analysis',exact:true}).click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\waveform.spec.ts",
+                        "column": 28,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog')\nExpected: not visible\nReceived: visible\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"not toBeVisible\" getByRole('dialog') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog')\u001b[22m\n\u001b[2m    26 × locator resolved to <div role=\"dialog\" class=\"modal \" aria-modal=\"true\" aria-labelledby=\"modal-title\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"visible\"\u001b[22m\n\n\n   9 |   await dialog.getByRole('button',{name:/MOSFET characterization/}).click();\n  10 |   await page.getByTestId('project-create').click();\n> 11 |   await expect(dialog).not.toBeVisible();\n     |                            ^\n  12 |   await page.getByTestId('tab-simulation').click();\n  13 |   await page.locator('.analysis-toolbar select').selectOption('dc');\n  14 |   await page.getByRole('button',{name:'Run analysis',exact:true}).click();\n    at D:\\Coldbrew\\Resistor\\tests\\ui\\waveform.spec.ts:11:28"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-30T10:38:50.143Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\waveform-Actual-MOS-curren-3d0d8-able-beside-a-voltage-trace\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\waveform-Actual-MOS-curren-3d0d8-able-beside-a-voltage-trace\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\waveform-Actual-MOS-curren-3d0d8-able-beside-a-voltage-trace\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\waveform.spec.ts",
+                    "column": 28,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ac4d0f0121a2678e4520-ad78df29af10b261afd7",
+          "file": "waveform.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "workflow.spec.ts",
+      "file": "workflow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Actual inverter: simulation, independent DRC/LVS/PEX, post-layout waveform, save/reopen and stale edits",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 360000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 54076,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-30T10:39:36.807Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c601ceb5ecfc8efa4a14-223e6e19a2da8619ec09",
+          "file": "workflow.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "Browser transport rejects cross-site access",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-30T10:40:31.220Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c601ceb5ecfc8efa4a14-dda0aa800738f536d928",
+          "file": "workflow.spec.ts",
+          "line": 43,
+          "column": 1
+        },
+        {
+          "title": "Development server cannot serve worker session files",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-30T10:40:31.248Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c601ceb5ecfc8efa4a14-8c536b7e4e222c46bb67",
+          "file": "workflow.spec.ts",
+          "line": 46,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-30T10:38:13.720Z",
+    "duration": 137783.89,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

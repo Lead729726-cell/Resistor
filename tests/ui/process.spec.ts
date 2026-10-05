@@ -1,0 +1,46 @@
+import { test, expect, type Page } from '@playwright/test';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+const dir='packages/ui/qa/process';
+const ready=async(page:Page)=>{await expect(page.getByTestId('process-inspected')).toHaveText('1296 / 1296',{timeout:30000});await expect(page.getByTestId('process-canvas')).toBeVisible();};
+const downloaded=async(page:Page,id:string,name:string)=>{const next=page.waitForEvent('download');await page.getByTestId(id).click();const result=await next;await result.saveAs(`${dir}/${name}`);return await readFile(`${dir}/${name}`,'utf8');};
+const evidence=async(values:Record<string,unknown>)=>{await mkdir(dir,{recursive:true});let old={};try{old=JSON.parse(await readFile(`${dir}/process-ui.json`,'utf8'));}catch{}await writeFile(`${dir}/process-ui.json`,JSON.stringify({...old,...values,checked_at:new Date().toISOString()},null,2));};
+test('process full-volume inspection reads stepped film and internal keyhole, cuts XYZ and preserves GDS bundle without RPC',async({page})=>{
+  test.setTimeout(120000);await mkdir(dir,{recursive:true});const errors:string[]=[],rpc:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/\/rpc|\/events/.test(new URL(r.url()).pathname))rpc.push(r.url());});
+  await page.goto('/?mode=viewer');await page.getByTestId('viewer-empty-gds-input').setInputFiles('examples/sky130/mosfet.gds');await page.getByTestId('viewer-process').click();await page.getByTestId('process-demo').click();await ready(page);
+  await expect(page.getByTestId('process-provenance')).toContainText('교육용');await expect(page.getByTestId('process-min-thickness')).toHaveText('20 nm');await expect(page.getByTestId('process-voids')).toContainText('폐쇄 공극');
+  await page.getByTestId('process-section-axis').selectOption('x');await page.getByTestId('process-section-position').fill('1.01');await expect(page.getByTestId('process-canvas')).not.toHaveAttribute('data-section-cells','0');
+  await page.getByTestId('process-heat').check();await page.getByTestId('process-material-3').uncheck();await expect(page.getByTestId('process-inspected')).toHaveText('1296 / 1296');await page.screenshot({path:`${dir}/register-process-step-x.png`});
+  await page.getByTestId('process-issue').first().click();await expect(page.getByTestId('process-selected')).toBeVisible();await expect(page.getByTestId('process-canvas')).toHaveAttribute('data-selected-cell',/cell-/);
+  await page.getByTestId('process-voids').getByRole('button',{name:/폐쇄 공극/}).click();await expect(page.getByTestId('process-selected')).toContainText('sealed hole');await expect(page.getByTestId('process-section-axis')).toHaveValue('z');await page.screenshot({path:`${dir}/register-process-keyhole-z.png`});
+  const report=JSON.parse(await downloaded(page,'process-export-report','inspection.json'));expect(report.inspected_cells).toBe(1296);expect(report.physical_prediction).toBe(false);expect(report.content_sha256).toMatch(/^[a-f0-9]{64}$/);expect(report.voids.filter((v:{closed:boolean})=>v.closed)).toHaveLength(1);expect(report.provenance.kind).toBe('demo');
+  const csv=await downloaded(page,'process-export-csv','cells.csv');expect(csv.split('\n')).toHaveLength(1297);expect(csv).toContain('step sidewall');
+  const png=page.waitForEvent('download');await page.getByTestId('process-png').click();await (await png).saveAs(`${dir}/actual-process.png`);expect((await readFile(`${dir}/actual-process.png`)).length).toBeGreaterThan(5000);
+  await page.getByRole('dialog').getByRole('button',{name:'닫기',exact:true}).click();const saved=JSON.parse(await downloaded(page,'viewer-export','portable-view.json'));expect(saved.processDocument.volume.cells).toHaveLength(1296);
+  expect(createHash('sha256').update(Buffer.from(saved.sourceGdsBase64,'base64')).digest('hex')).toBe(createHash('sha256').update(await readFile('examples/sky130/mosfet.gds')).digest('hex'));
+  await page.getByTestId('viewer-bundle-input').setInputFiles(`${dir}/portable-view.json`);await page.getByTestId('viewer-process').click();await ready(page);expect(rpc).toEqual([]);expect(errors).toEqual([]);
+  await evidence({actual_cells:1296,whole_input_inspected_when_material_hidden:true,actual_XYZ_section_and_png:true,closed_void_detected:true,portable_GDS_bytes_and_process_preserved:true,no_native_auth_requests:true,browser_errors:errors});
+});
+test('VTU uses explicit nm fields and rejects unsupported/unsafe data while retaining the imported geometry',async({page})=>{
+  await mkdir(dir,{recursive:true});await page.goto('/?mode=viewer');await page.getByTestId('viewer-process').click();await page.getByText('해석·실측 mesh 가져오기 · VTU 설정',{exact:true}).click();
+  await page.getByTestId('process-vtu-input').setInputFiles('examples/process/step-keyhole.vtu');await page.getByTestId('process-vtu-options').setInputFiles('examples/process/step-keyhole.vtu-setup.json');await page.getByTestId('process-vtu-import').click();await ready(page);await expect(page.getByTestId('process-min-thickness')).toHaveText('20 nm');
+  const good=await readFile('examples/process/step-keyhole.vtu','utf8');
+  await page.getByTestId('process-vtu-input').setInputFiles({name:'higher-order.vtu',mimeType:'application/xml',buffer:Buffer.from(good.replace('>10 10','>24 10'))});await page.getByTestId('process-vtu-import').click();await expect(page.getByTestId('process-error')).toContainText('type=10');await expect(page.getByTestId('process-inspected')).toHaveText('1296 / 1296');
+  await page.getByTestId('process-vtu-input').setInputFiles({name:'entity.vtu',mimeType:'application/xml',buffer:Buffer.from('<!DOCTYPE VTKFile [<!ENTITY bad SYSTEM "file:///private">]>'+good)});await page.getByTestId('process-vtu-import').click();await expect(page.getByTestId('process-error')).toContainText('entity');
+  await page.getByTestId('process-vtu-input').setInputFiles({name:'binary.vtu',mimeType:'application/xml',buffer:Buffer.from(good.replace('format="ascii"','format="binary"'))});await page.getByTestId('process-vtu-import').click();await expect(page.getByTestId('process-error')).toContainText('ascii');
+  const options=JSON.parse(await readFile('examples/process/step-keyhole.vtu-setup.json','utf8'));delete options.coordinate_unit;
+  await page.getByTestId('process-vtu-input').setInputFiles('examples/process/step-keyhole.vtu');await page.getByTestId('process-vtu-options').setInputFiles({name:'missing-unit.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(options))});await page.getByTestId('process-vtu-import').click();await expect(page.getByTestId('process-error')).toContainText('단위');
+  await evidence({actual_ascii_VTU_nm_conversion:true,unsafe_entity_binary_higher_order_and_missing_units_rejected:true,failed_import_preserves_previous_volume:true});
+});
+test('workspace process panel keeps device and dielectric criteria separate and marks a different revision stale',async({page})=>{
+  test.setTimeout(120000);await mkdir(dir,{recursive:true});await page.goto('/');await expect(page.getByTestId('app-ready')).toBeVisible();const revision=await page.getByTestId('current-revision').innerText();
+  await page.getByTestId('open-process').click();await page.getByTestId('process-demo').click();await ready(page);
+  await expect(page.getByRole('dialog').locator('.artifact-json')).toHaveCount(0);
+  await page.getByRole('spinbutton',{name:'Metal film 최소 두께 nm',exact:true}).fill('10');await ready(page);await page.getByRole('spinbutton',{name:'Dielectric film 최소 두께 nm',exact:true}).fill('400');await ready(page);
+  await page.getByRole('checkbox',{name:'현재 설계에 수동 표시 연결'}).check();await page.getByTestId('process-bind').click();await ready(page);await expect(page.getByTestId('process-freshness')).toContainText('입력 revision과 동일');
+  const saved=JSON.parse(await downloaded(page,'process-export-volume','workspace-process.json'));expect(saved.criteria.by_material['2'].min_thickness_um).toBe(.01);expect(saved.criteria.by_material['3'].min_thickness_um).toBe(.4);
+  saved.volume.association.revision+=1;await page.getByTestId('process-json-input').setInputFiles({name:'next-revision.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(saved))});await ready(page);await expect(page.getByTestId('process-freshness')).toContainText('STALE');
+  await page.getByTestId('process-panel').evaluate(panel=>{panel.scrollTop=0;});await page.screenshot({path:`${dir}/register-process-workspace.png`});await page.getByRole('dialog').getByRole('button',{name:'닫기',exact:true}).click();await expect(page.getByTestId('current-revision')).toHaveText(revision);await page.getByTestId('open-process').click();await ready(page);await expect(page.getByTestId('process-freshness')).toContainText('STALE');
+  await page.setViewportSize({width:800,height:600});await page.getByTestId('process-panel').evaluate(panel=>{panel.scrollTop=panel.scrollHeight;});await expect(page.getByTestId('process-export-report')).toBeInViewport();await page.screenshot({path:`${dir}/register-process-narrow.png`});
+  await evidence({workspace_revision_preserved:true,material_specific_criteria_saved:true,explicit_association_and_stale_guard:true,reopen_preserves_process_document:true,narrow_footer_reachable:true});
+});

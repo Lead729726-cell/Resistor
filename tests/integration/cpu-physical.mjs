@@ -1,0 +1,10 @@
+import {spawn} from 'node:child_process';
+import {readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+const child=spawn('docker',['exec','mos-studio-eda','python3','/workspace/workers/eda/test_cpu_physical.py'],{stdio:'inherit',windowsHide:true});
+const code=await new Promise((resolve,reject)=>{child.once('error',reject);child.once('exit',resolve);});
+if(code!==0)process.exit(code??1);
+const receipt=JSON.parse(await readFile('docs/evidence/cpu-physical-native.json','utf8'));
+for(const [file,hash] of Object.entries(receipt.source_sha256))if(createHash('sha256').update(await readFile(file)).digest('hex')!==hash)throw Error('Evidence source mismatch: '+file);
+if(!receipt.whole_scene||receipt.cases.length!==4||receipt.cases.some(r=>r.execution_status!=='completed'||r.analysis_result!=='pass'))throw Error('CPU physical validation did not pass all stages; native failures remain in the receipt.');
+console.log('Whole CPU DRC/LVS/PEX/post-layout passed with matching source hashes. No foundry signoff.');

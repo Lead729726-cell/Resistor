@@ -1,0 +1,55 @@
+import { chromium } from 'playwright';
+import { mkdir, writeFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+
+await mkdir('packages/ui/qa', { recursive: true });
+const browser = await chromium.launch({ headless: true, args: ['--use-angle=swiftshader', '--enable-webgl'] });
+const page = await browser.newPage({ viewport: { width: 1600, height: 1050 } });
+const errors = []; page.on('pageerror', error => errors.push(error.message));
+// Freeze the loaded UI while other agents build unrelated modules; actual worker RPC stays live.
+await page.routeWebSocket(/ws:\/\/127\.0\.0\.1:5173/, socket => socket.close());
+const snapshot = () => page.evaluate(async () => { const { rpc } = await import('/packages/contracts/src/index.ts'); return rpc('project.snapshot', { project_id: localStorage.getItem('mos.last_project') }); });
+const graph = () => page.evaluate(async () => { const { rpc } = await import('/packages/contracts/src/index.ts'); return rpc('schematic.validate', { project_id: localStorage.getItem('mos.last_project') }); });
+const until = async (condition, message) => { for (let attempt = 0; attempt < 100; attempt++) { try { if (await condition()) return; } catch { /* A snapshot may be momentarily unavailable during project activation. */ } await page.waitForTimeout(100); } throw new Error(message); };
+const clickPoint = async (x, y) => { const point = await page.locator('.schematic-svg').evaluate((element, point) => { const p = element.createSVGPoint(); p.x = point[0]; p.y = point[1]; const result = p.matrixTransform(element.getScreenCTM()); return { x: result.x, y: result.y }; }, [x, y]); await page.mouse.click(point.x, point.y); };
+try {
+  await page.goto('http://127.0.0.1:5173'); await page.getByTestId('app-ready').waitFor({ timeout: 90000 });
+  await page.getByRole('button', { name: '새 프로젝트', exact: true }).first().click();
+  await page.getByTestId('project-example-select').selectOption('fixture'); await page.getByTestId('project-name').fill(`UI connectivity ${Date.now()}`); await page.getByTestId('project-create').click();
+  await until(async () => (await snapshot()).source === 'fixture', 'fixture create'); await page.getByTestId('tab-schematic').click();
+  await page.getByTestId('connectivity-mode').selectOption('geometric'); await until(async () => (await snapshot()).schematic.connectivity_mode === 'geometric', 'geometric mode');
+  await page.getByTestId('schematic-tool-wire').click(); await clickPoint(100, 180); await clickPoint(400, 180); await page.getByRole('button', { name: '배선 완료 ↵' }).click();
+  await until(async () => (await snapshot()).schematic.wires.length === 1, 'wire 1');
+  await clickPoint(250, 70); await clickPoint(250, 180); await clickPoint(250, 300); await page.getByRole('button', { name: '배선 완료 ↵' }).click();
+  await until(async () => (await snapshot()).schematic.wires.length === 2, 'wire 2');
+  const crossing = await graph(); assert.equal(crossing.connectivity.nets.length, 2, 'crossing alone must preserve separate nets');
+  await page.getByTestId('schematic-tool-junction').click(); await clickPoint(250, 180); await until(async () => (await snapshot()).schematic.junctions?.length === 1, 'junction');
+  const joined = await graph(); assert.equal(joined.connectivity.nets.length, 1, 'explicit junction must connect crossing wires');
+  await page.getByRole('button', { name: 'Undo', exact: true }).click(); await until(async () => ((await snapshot()).schematic.junctions?.length || 0) === 0, 'junction undo');
+  assert.equal((await graph()).connectivity.nets.length, 2);
+  await page.getByRole('button', { name: '▾ Hierarchy' }).click();
+  const child = `ui_block_${Date.now()}`; await page.getByLabel('새 cell 이름').fill(child); await page.getByLabel('Cell ports').fill('IN, OUT'); await page.getByRole('button', { name: '새 cell 만들기' }).click();
+  await until(async () => Boolean((await snapshot()).schematic.cells?.[child]), 'child cell');
+  await page.locator('.schematic-hierarchy-popover > div').filter({ hasText: child }).locator('button').first().click();
+  await page.locator('.device-palette button').filter({ hasText: '저항 / Resistor' }).click(); await until(async () => (await snapshot()).schematic.cells[child].devices.length === 1, 'child resistor');
+  await page.getByLabel('R1 pin +').fill('IN'); await page.getByLabel('R1 pin -').fill('OUT'); await page.getByRole('button', { name: '변경 적용 / Apply' }).click();
+  await until(async () => (await snapshot()).schematic.cells[child].devices[0].pins['+'] === 'IN', 'child pin apply');
+  await page.locator('.schematic-breadcrumb > button').first().click(); await page.getByTestId('connectivity-mode').selectOption('explicit');
+  await until(async () => (await snapshot()).schematic.connectivity_mode === 'explicit', 'explicit mode');
+  await page.getByRole('button', { name: '▾ Hierarchy' }).click(); await page.locator('.schematic-hierarchy-popover > div').filter({ hasText: child }).locator('button').last().click();
+  await until(async () => (await snapshot()).schematic.devices.some(device => device.kind === 'block'), 'block placement');
+  const project = await snapshot(), block = project.schematic.devices.find(device => device.kind === 'block');
+  await page.getByTestId('schematic-tool-select').click();
+  await page.locator(`.schematic-device[aria-label="${block.name} block"]`).click();
+  await page.getByLabel(`${block.name} pin IN`).fill('IN'); await page.getByLabel(`${block.name} pin OUT`).fill('OUT'); await page.getByRole('button', { name: '변경 적용 / Apply' }).click();
+  await until(async () => (await snapshot()).schematic.devices[0].pins.OUT === 'OUT', 'block ports');
+  await page.getByRole('button', { name: 'SPICE', exact: true }).click(); await page.locator('.artifact-json').waitFor(); const netlist = await page.locator('.artifact-json').innerText(); assert.ok(netlist.includes(child)); assert.ok(netlist.includes('RR1 IN OUT 1000'));
+  await page.getByRole('dialog').getByRole('button', { name: '닫기', exact: true }).click();
+  await page.locator('.device-palette button').filter({ hasText: 'NMOS' }).click(); await until(async () => (await snapshot()).schematic.devices.some(device => device.kind === 'nmos'), 'validated model-backed MOS addition');
+  assert.equal((await snapshot()).schematic.devices.find(device => device.kind === 'nmos').model, 'sky130_fd_pr__nfet_01v8');
+  await page.screenshot({ path: 'packages/ui/qa/register-schematic.png' });
+  await page.getByTestId('project-save').click(); const saved = await snapshot(); assert.equal(saved.schematic.cells[child].devices.length, 1); assert.equal(saved.schematic.wires.length, 2);
+  assert.deepEqual(errors, []);
+  const evidence = { project_id: saved.id, revision: saved.revision, crossing_nets: crossing.connectivity.nets.length, interior_vertex_crossing_does_not_connect: true, explicit_junction_nets: joined.connectivity.nets.length, undo_preserved_separate_nets: true, hierarchy_cell: child, hierarchical_netlist_generated: true, model_backed_mos_symbol_added: true, fixture_physical_jobs_still_disabled: await page.getByTestId('run-drc').isDisabled(), wire_and_child_persistence: true, browser_errors: errors };
+  await writeFile('packages/ui/qa/editor-evidence.json', JSON.stringify(evidence, null, 2)); process.stdout.write(JSON.stringify(evidence));
+} catch (cause) { await page.screenshot({ path: 'packages/ui/qa/editor-failure.png' }); process.stderr.write(JSON.stringify({ inspector: await page.locator('.inspector-sidebar').innerText(), errors: await page.locator('.error-banner').allTextContents() })); throw cause; } finally { await browser.close(); }

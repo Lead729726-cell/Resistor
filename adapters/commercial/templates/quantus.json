@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "quantus-site-v1",
+  "name": "Quantus QRC — operator site validation required",
+  "tool_id": "quantus",
+  "version": "QRC14.2 / EXT17.1 historical entry; site validation",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/qrc",
+    "env_names": [
+      "CDS_LIC_FILE"
+    ],
+    "resources": {
+      "deck": "/workspace/site/quantus.runset"
+    },
+    "recipes": {
+      "pex": {
+        "argv": [
+          "-cmd",
+          "{resource.deck}"
+        ],
+        "outputs": {
+          "rc": "parasitics.spef"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "rc": "spef"
+          }
+        },
+        "requires_netlist": false
+      }
+    }
+  }
+}

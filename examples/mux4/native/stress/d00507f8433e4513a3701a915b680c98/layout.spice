@@ -1,0 +1,25 @@
+* NGSPICE file created from mux4.ext - technology: sky130A
+
+.subckt mux4 VPWR VGND Y S0 D3 D2 S1 D1 D0
+X0 VPWR S1 S1B VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X1 D3 S0 N23 VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X2 N01 S1 MUX_RAW VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X3 VGND MUX_RAW BUF_N VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X4 VPWR BUF_N Y VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X5 VGND S1 S1B VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X6 D0 S0 N01 VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X7 N01 S1B MUX_RAW VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X8 D1 S0B N01 VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X9 N23 S1B MUX_RAW VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X10 VGND BUF_N Y VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X11 VPWR MUX_RAW BUF_N VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X12 VPWR S0 S0B VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X13 D0 S0B N01 VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X14 N23 S1 MUX_RAW VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X15 D1 S0 N01 VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X16 D2 S0 N23 VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X17 VGND S0 S0B VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X18 D2 S0B N23 VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X19 D3 S0B N23 VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+.ends
+

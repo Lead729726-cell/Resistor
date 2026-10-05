@@ -1,0 +1,10 @@
+import {spawn} from 'node:child_process';
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+const child=spawn('docker',['exec','mos-studio-eda','python3','/workspace/workers/eda/test_digital_hierarchy.py'],{stdio:'inherit',windowsHide:true});
+const code=await new Promise((resolve,reject)=>{child.once('error',reject);child.once('exit',resolve);});
+if(code!==0)process.exit(code??1);
+const result=JSON.parse(readFileSync('docs/evidence/digital-hierarchy-native.json','utf8'));
+if(result.passed!==result.case_count||result.case_count<16)throw Error('Incomplete native digital/hierarchy evidence');
+for(const [path,hash] of Object.entries(result.source_sha256))if(createHash('sha256').update(readFileSync(path)).digest('hex')!==hash)throw Error('Evidence source mismatch: '+path);
+console.log(`Native digital/hierarchy evidence ${result.passed}/${result.case_count}; source hashes match.`);

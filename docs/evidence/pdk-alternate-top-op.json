@@ -1,0 +1,156 @@
+{
+  "id": "10fa41993ce44e45b404e17e2915742e",
+  "project_id": "5fbf58f9089140f1814b41b79ebae2bd",
+  "kind": "simulation",
+  "workflow": "configured-layout",
+  "profile_id": "sky130A",
+  "revision": 3,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "freshness": "current",
+  "artifacts": {
+    "layout_netlist": "/workspace/.runtime/eda/runs/10fa41993ce44e45b404e17e2915742e/layout.spice",
+    "testbench": "/workspace/.runtime/eda/runs/10fa41993ce44e45b404e17e2915742e/testbench.spice",
+    "waveform_data": "/workspace/.runtime/eda/runs/10fa41993ce44e45b404e17e2915742e/waveform.dat",
+    "waveform_raw": "/workspace/.runtime/eda/runs/10fa41993ce44e45b404e17e2915742e/waveform.raw",
+    "current_flow_data": "/workspace/.runtime/eda/runs/10fa41993ce44e45b404e17e2915742e/current-flow.dat",
+    "current_probe_netlist": "/workspace/.runtime/eda/runs/10fa41993ce44e45b404e17e2915742e/current-probe.spice",
+    "stdout": "/workspace/.runtime/eda/runs/10fa41993ce44e45b404e17e2915742e/stdout.log"
+  },
+  "manifest_path": "/workspace/.runtime/eda/runs/10fa41993ce44e45b404e17e2915742e/manifest.json",
+  "input_signature": "6d06eb8dbc85f5d4b4260a6b8f243306f97860fd8fe8b6b62b27f0a5e28c2098",
+  "started_at": "2026-10-01T04:58:46.118737+00:00",
+  "tool": "Magic + ngspice",
+  "waveforms": [
+    {
+      "name": "G",
+      "unit": "V",
+      "x": [
+        1.8
+      ],
+      "y": [
+        0.9
+      ]
+    },
+    {
+      "name": "B",
+      "unit": "V",
+      "x": [
+        1.8
+      ],
+      "y": [
+        0
+      ]
+    },
+    {
+      "name": "S",
+      "unit": "V",
+      "x": [
+        1.8
+      ],
+      "y": [
+        0
+      ]
+    },
+    {
+      "name": "D",
+      "unit": "V",
+      "x": [
+        1.8
+      ],
+      "y": [
+        1.8
+      ]
+    }
+  ],
+  "current_flow": {
+    "schema_version": 1,
+    "source": "ngspice",
+    "analysis": "op",
+    "x": [
+      1.8
+    ],
+    "x_unit": "point",
+    "branches": [
+      {
+        "id": "XU/X0",
+        "name": "X0 native drain→source",
+        "from_net": "S",
+        "to_net": "D",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_c46fdce310caa684)",
+        "values_A": [
+          -0.0000362239482
+        ]
+      },
+      {
+        "id": "testbench/VREGISTER_PORT_0",
+        "name": "VREGISTER_PORT_0 source (+→−)",
+        "from_net": "D",
+        "to_net": "0",
+        "mapping": "unmapped",
+        "source_vector": "i(VREGISTER_PORT_0)",
+        "values_A": [
+          -0.0000362401345
+        ]
+      },
+      {
+        "id": "testbench/VREGISTER_PORT_1",
+        "name": "VREGISTER_PORT_1 source (+→−)",
+        "from_net": "S",
+        "to_net": "0",
+        "mapping": "unmapped",
+        "source_vector": "i(VREGISTER_PORT_1)",
+        "values_A": [
+          0.0000362239482
+        ]
+      },
+      {
+        "id": "testbench/VREGISTER_PORT_2",
+        "name": "VREGISTER_PORT_2 source (+→−)",
+        "from_net": "B",
+        "to_net": "0",
+        "mapping": "unmapped",
+        "source_vector": "i(VREGISTER_PORT_2)",
+        "values_A": [
+          1.6186303e-8
+        ]
+      },
+      {
+        "id": "testbench/VREGISTER_PORT_3",
+        "name": "VREGISTER_PORT_3 source (+→−)",
+        "from_net": "G",
+        "to_net": "0",
+        "mapping": "unmapped",
+        "source_vector": "i(VREGISTER_PORT_3)",
+        "values_A": [
+          0
+        ]
+      }
+    ],
+    "convention": "conventional",
+    "revision": 3,
+    "project_id": "5fbf58f9089140f1814b41b79ebae2bd",
+    "run_id": "10fa41993ce44e45b404e17e2915742e",
+    "layout_sha256": "dc8aaead57cb19687d3c46b19a3f7665e838e66b4fd256a6d8de18f07ac33da1",
+    "notes": [
+      "Actual zero-volt series sense-source current into each component first terminal; MOS arrows use D→S as drain-terminal reference, including transient displacement current. For extracted symmetric MOS D/S exchanges, the native resistor graph must prove correspondence before selecting the sense source at the logical D terminal; source terminal current is never approximated by negating a different terminal current. Testbench i(V) is positive +→− without negation. Negative samples reverse the reference direction. Paths connect verified named contact anchors and are not reconstructed conductor streamlines.",
+      "All imported-GDS current branches are spatially unmapped; no current streamline is reconstructed.",
+      "Eligible native M MOS and verified SKY130 wrapper terminal currents are measured. Other custom subcircuit/device terminal mappings are unsupported; explicit testbench bias-source currents are still measured by ngspice."
+    ]
+  },
+  "message": "Actual configured ngspice op: 1 samples; no inferred physical current path.",
+  "measurements": {
+    "analysis": "op",
+    "x_unit": "point",
+    "x_label": "G",
+    "samples": 1,
+    "corner": "tt",
+    "temperature_C": 27,
+    "profile_id": "sky130A",
+    "current_flow_status": "available_partial",
+    "post_layout": "false"
+  },
+  "ended_at": "2026-10-01T04:58:52.225959+00:00",
+  "elapsed_s": 6.1185679259942845
+}

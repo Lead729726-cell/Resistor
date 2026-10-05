@@ -1,0 +1,173 @@
+{
+  "version": "0.13.0",
+  "checked_at": "2026-10-02T13:47:59.084Z",
+  "artifacts": {
+    "release/installers/Register-0.13.0-win-x64.exe": {
+      "bytes": 113536896,
+      "sha256": "f282a1ac94ce7eb94232e56f230fe33b5e74ab6c404999ab880f8fba3fc2fb11"
+    },
+    "release/0.13.0/Register-win32-x64/Register.exe": {
+      "bytes": 245625856,
+      "sha256": "98f188a213e6ee288efc6e89feee7ac77948b34900022c628a9da00222350c9d"
+    },
+    "examples/cpu4/full_adder.register-project.zip": {
+      "bytes": 94256,
+      "sha256": "3d6b335bbc06206b99ab95575a60392dcebd232f4e1b54fd39ed2e2c7165ce65"
+    },
+    "examples/cpu4/adder4.register-project.zip": {
+      "bytes": 364839,
+      "sha256": "33550bdedd316a69bd5a53c7dc04f4f1537b020ba4b27a246e7b17de7c3b4ec0"
+    },
+    "examples/cpu4/cpu4.register-project.zip": {
+      "bytes": 2176409,
+      "sha256": "1fb36e193ab2f94e277411cc57b447da7b47277f05afd727aebf195faa713649"
+    },
+    "examples/cpu4/hierarchy-demo.register-project.zip": {
+      "bytes": 188665,
+      "sha256": "72cf886e4ce15bcdea2dc1b972f7badbba23f4a24b998fee0747832b0c166415"
+    },
+    "examples/cpu4/recording/design-workflow.webm": {
+      "bytes": 22999173,
+      "sha256": "da3198ee4961271110b5e5e4b994cba2f4cc715a2089cd379ac63191fe15fa77"
+    },
+    "examples/cpu4/recording/cpu-full-preview.webm": {
+      "bytes": 5461538,
+      "sha256": "8a7c76bcd958f11fa9adc0669a33e771e323ca598ff0beba5b4bee2990dc4414"
+    },
+    "examples/cpu4/replay.html": {
+      "bytes": 4337,
+      "sha256": "dab7808f3e774b4b2523c0d14ac6c4bc5ed0431076065ff3c0703fa3b497dc90"
+    },
+    "examples/cpu4/preview-verification.json": {
+      "bytes": 2112,
+      "sha256": "5dbe04cced15fd098a8308ee345038a114211388c4308d67e8cc38f92565128a"
+    },
+    "docs/evidence/windows-installation-0.13.json": {
+      "bytes": 637,
+      "sha256": "85a6252fb5eb91a5f0ca1843657ae13bf70c6551c0d0c50bc44e50993a37043c"
+    },
+    "docs/evidence/installed-viewer-0.13.json": {
+      "bytes": 991,
+      "sha256": "4a0844bace32e76b1f8034890b116c9c9208d24371b4fbd55d8aecab9c1f252f"
+    },
+    "docs/evidence/windows-desktop-tests-0.13.json": {
+      "bytes": 5136,
+      "sha256": "f03b4d8b1f5ad4b8522e0688e3ee443b78d2eac46c37d7050dcaf902a8188409"
+    },
+    "examples/validation/full-adder-validation.json": {
+      "bytes": 4933,
+      "sha256": "8d4c232fbed0d66bd6c5767e8324c3f41bb9a82269ddcbde0c008b845284e48a"
+    },
+    "examples/validation/validation-flow.webm": {
+      "bytes": 1890639,
+      "sha256": "1a04f9a8542828e56ef91527983f398826e3420fec9e482ff0572faef0700710"
+    },
+    "examples/mux4/current-viewer-workflow.webm": {
+      "bytes": 2259073,
+      "sha256": "d362e64c85562c6edb38ab145aee6790b5675c7e4a7b7a3487af7351cff7078c"
+    },
+    "docs/evidence/cpu-physical-native.json": {
+      "bytes": 16351,
+      "sha256": "c8dd89efae69059f02199117be02b3fb84c24d58b4be4b2239595eda8c0da377"
+    },
+    "examples/cpu4/cpu4-rc-400ns.register-project.zip": {
+      "bytes": 2176215,
+      "sha256": "43b10cc40bd4b97fa606a61f69bb916638ddb9d2e7afa73ecaa255e0f218a24b"
+    },
+    "docs/evidence/cpu-physical-pre-400.json": {
+      "bytes": 12759,
+      "sha256": "6d4ca1f89b514b1786cfbf6c8042b7cf7cc704ed8549d5f1828a0a6b37deab0b"
+    }
+  },
+  "native_tests": 16,
+  "ui_steps": 11,
+  "actual_unit_cases": [
+    {
+      "kind": "full_adder",
+      "passed": 8,
+      "total": 8
+    },
+    {
+      "kind": "adder4",
+      "passed": 512,
+      "total": 512
+    },
+    {
+      "kind": "cpu4",
+      "passed": 16,
+      "total": 16
+    }
+  ],
+  "whole_cpu_preview": {
+    "shapes": 73005,
+    "default_whole_scene_verified": true,
+    "geometry_build_ms": 26713.800000000745,
+    "page_errors": [],
+    "optional_cloud_connected": false
+  },
+  "cpu_physical": {
+    "period_ns": 400,
+    "actual_native_cases": 16,
+    "parasitics": {
+      "resistors": 64143,
+      "capacitors": 28285
+    },
+    "stages": [
+      {
+        "stage": "drc",
+        "run_id": "db1a6e1cd18345248d97a8f7f137af44",
+        "result": "pass"
+      },
+      {
+        "stage": "lvs",
+        "run_id": "43568f3e958d4c2da39d822bbdde4a97",
+        "result": "pass"
+      },
+      {
+        "stage": "pex",
+        "run_id": "fa891072822944289452c5aa4d7b8ce3",
+        "result": "pass"
+      },
+      {
+        "stage": "post-layout-400ns",
+        "run_id": "40f1fef30a2f4ccebd9ec3258125e182",
+        "result": "pass"
+      }
+    ],
+    "faster_conditions": "50ns and 200ns actual failures retained separately"
+  },
+  "mux_pre_post_cases": 64,
+  "validation_stages": 5,
+  "installed_source_match": [
+    "workers/eda/digital_units.py",
+    "workers/eda/digital_mux.py",
+    "workers/eda/current_flow.py",
+    "workers/eda/hierarchy_transfer.py",
+    "workers/eda/server.py",
+    "workers/eda/pvt.py",
+    "workers/eda/configured_analysis.py",
+    "apps/desktop/main.cjs",
+    "scripts/desktop-diagnostics.mjs",
+    "docs/digital-hierarchy.md",
+    "dist/index.html",
+    "dist/assets/index-BnXVysMx.js",
+    "dist/assets/index-uVJXs_4L.css",
+    "dist/assets/process-run-worker-C94DPE8W.js",
+    "dist/assets/process-worker-lh5s54pi.js"
+  ],
+  "installed_viewer_gds_shapes": 52,
+  "installer_exit_code": 0,
+  "uninstaller_exit_code": 0,
+  "test_user_data_marker_preserved": true,
+  "windows_desktop_tests": 3,
+  "windows_authenticode": "NotSigned",
+  "mac": {
+    "native_arch_app_and_dmg_workflow_prepared": true,
+    "actual_viewer_startup_smoke_required": true,
+    "native_mac_execution_verified": false,
+    "signed_or_notarized": false
+  },
+  "commercial_vendor_execution_verified": false,
+  "cpu_manufacturing_signoff_complete": false,
+  "internet_deployed": false
+}

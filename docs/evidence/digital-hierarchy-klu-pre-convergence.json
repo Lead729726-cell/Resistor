@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "passed": 5,
+  "case_count": 6,
+  "cases": [
+    {
+      "case": "full adder: actual 8 input combinations + native physical generation",
+      "result": "pass",
+      "elapsed_s": 2.5299252000004344,
+      "project_id": "57eafaab14ef4e08a72f6e58b0f293a6",
+      "run_id": "82978b5fa77045d594bba9879f885cc5",
+      "passed_cases": 8,
+      "physical_shapes": 3090
+    },
+    {
+      "case": "full adder: Magic DRC",
+      "result": "pass",
+      "elapsed_s": 1.5727330190002249,
+      "run_id": "6f3e19d0163c407aa1edab30bfc0e4f5"
+    },
+    {
+      "case": "full adder: Netgen LVS",
+      "result": "pass",
+      "elapsed_s": 1.369166739999855,
+      "run_id": "4ddc9d3ded7d44518add1dfc908643a5"
+    },
+    {
+      "case": "full adder: actual RC extraction and post-layout 8 combinations at 100ns",
+      "result": "pass",
+      "elapsed_s": 4.694662090998463,
+      "project_id": "60e87eeee57d4a9aa0a479c3f79137f4",
+      "pex_run_id": "82ebf238d6b949b09258b89779ed938c",
+      "run_id": "7392f43e7a684f4190b04d4042296c3f",
+      "passed_cases": 8
+    },
+    {
+      "case": "4-bit adder: actual 512 combinations + native physical generation",
+      "result": "pass",
+      "elapsed_s": 49.59661989000051,
+      "project_id": "6fd52548e8de4d96944199abe7e9794b",
+      "run_id": "e2583d8f91e043749e3a582aafba23f0",
+      "passed_cases": 512,
+      "physical_shapes": 12339
+    },
+    {
+      "case": "4-bit CPU: actual clocked ROM/ACC/PC/flags",
+      "result": "fail",
+      "error": "('1cc62e9e5c9e43d689198d15f6295aa4', 'ngspice failed/convergence or no waveform output. Raw log retained.')"
+    }
+  ],
+  "state_root": "/workspace/.runtime/evidence/digital-hierarchy-e7549ab15c034f679d4d11f47a7dd4f5/state",
+  "actual_tools": [
+    "ngspice",
+    "Magic",
+    "Netgen",
+    "KLayout"
+  ],
+  "resumed_from": null,
+  "source_sha256": {
+    "workers/eda/digital_units.py": "b2ae244304901415214a9dc19841609e10af3211c6c634fe2393d3cf4589239b",
+    "workers/eda/digital_mux.py": "ed6d729e43bb260190f15563da9691e1efa517fe6a88181e06d1c158a557a377",
+    "workers/eda/hierarchy_transfer.py": "0376bc609f3c2150687d5073955e04e009d4a113bf4acaee739d05a43a649f70",
+    "workers/eda/server.py": "d54633490166971d2a66228ed936964e1b43f60d6a05be51f4e731ce2026503f",
+    "workers/eda/current_flow.py": "681d63cb0a5bc6976f89c4779b6f6f2a8d04713f9f5dd2e32baf2eacb6d3b5a2",
+    "workers/eda/test_digital_hierarchy.py": "9f0c1fe0a219e26e424b4a6ed62d60e2756e011e187fbeb0401de5f67ee6e18b"
+  }
+}

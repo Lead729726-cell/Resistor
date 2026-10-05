@@ -1,0 +1,296 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "D:\\Coldbrew\\Resistor\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "tests/ui/mux4-viewer.spec.ts",
+      "tests/ui/digital-hierarchy.spec.ts"
+    ],
+    "configFile": "D:\\Coldbrew\\Resistor\\playwright.config.ts",
+    "rootDir": "D:/Coldbrew/Resistor/tests/ui",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Coldbrew/Resistor/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "D:/Coldbrew/Resistor/tests/ui",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "docs/evidence/ui-tests.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "digital-hierarchy.spec.ts",
+      "file": "digital-hierarchy.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "recorded real UI: adder, hierarchy clipboard/whole preview/approval/undo, programmable CPU, save/reopen",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 1080000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 252431,
+                  "error": {
+                    "message": "Error: ngspice failed/convergence or no waveform output. Raw log retained.\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mcomplet\u001b[27med\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mfail\u001b[27med\"\u001b[39m",
+                    "stack": "Error: ngspice failed/convergence or no waveform output. Raw log retained.\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mcomplet\u001b[27med\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mfail\u001b[27med\"\u001b[39m\n    at waitRun (D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:11:284)\n    at create (D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:12:592)\n    at D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:23:113\n    at step (D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:8:108)\n    at D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:23:5",
+                    "location": {
+                      "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts",
+                      "column": 284,
+                      "line": 11
+                    },
+                    "snippet": "   9 |   const call=async<T,>(method:string,params={}):Promise<T>=>{const r=await request.post('/api/rpc',{data:{method,params},timeout:65000});const v=await r.json();expect(v.ok,v.error?.message).toBe(true);return v.result;};\n  10 |   const response=(method:string)=>page.waitForResponse(r=>new URL(r.url()).pathname==='/api/rpc'&&r.request().postDataJSON()?.method===method,{timeout:65000});\n> 11 |   const waitRun=async(id:string)=>{let r:Run;const deadline=Date.now()+360000;do{r=await call<Run>('job.status',{run_id:id});if(!['queued','running'].includes(r.execution_status))break;await page.waitForTimeout(800);}while(Date.now()<deadline);expect(r!.execution_status,r!.message).toBe('completed');expect(r!.analysis_result,r!.message).toBe('pass');runs.push(r!);};\n     |                                                                                                                                                                                                                                                                                            ^\n  12 |   const create=async(kind:string,name:string)=>{await page.getByTestId('open-digital-workbench').click();await page.getByTestId(`digital-${kind}`).click();await page.getByLabel('디지털 설계 이름').fill(name);const p=response('digital.create'),r=response('simulation.run');await page.getByTestId('digital-create').click();const result=await(await p).json();expect(result.ok,result.error?.message).toBe(true);projects.push(result.result);const run=await(await r).json();expect(run.ok,run.error?.message).toBe(true);await expect(page.getByTestId('digital-workbench')).not.toBeVisible({timeout:65000});await waitRun(run.result.id);};\n  13 |   try{\n  14 |     await page.goto('/');await expect(page.getByTestId('app-ready')).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts",
+                        "column": 284,
+                        "line": 11
+                      },
+                      "message": "Error: ngspice failed/convergence or no waveform output. Raw log retained.\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mcomplet\u001b[27med\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mfail\u001b[27med\"\u001b[39m\n\n   9 |   const call=async<T,>(method:string,params={}):Promise<T>=>{const r=await request.post('/api/rpc',{data:{method,params},timeout:65000});const v=await r.json();expect(v.ok,v.error?.message).toBe(true);return v.result;};\n  10 |   const response=(method:string)=>page.waitForResponse(r=>new URL(r.url()).pathname==='/api/rpc'&&r.request().postDataJSON()?.method===method,{timeout:65000});\n> 11 |   const waitRun=async(id:string)=>{let r:Run;const deadline=Date.now()+360000;do{r=await call<Run>('job.status',{run_id:id});if(!['queued','running'].includes(r.execution_status))break;await page.waitForTimeout(800);}while(Date.now()<deadline);expect(r!.execution_status,r!.message).toBe('completed');expect(r!.analysis_result,r!.message).toBe('pass');runs.push(r!);};\n     |                                                                                                                                                                                                                                                                                            ^\n  12 |   const create=async(kind:string,name:string)=>{await page.getByTestId('open-digital-workbench').click();await page.getByTestId(`digital-${kind}`).click();await page.getByLabel('디지털 설계 이름').fill(name);const p=response('digital.create'),r=response('simulation.run');await page.getByTestId('digital-create').click();const result=await(await p).json();expect(result.ok,result.error?.message).toBe(true);projects.push(result.result);const run=await(await r).json();expect(run.ok,run.error?.message).toBe(true);await expect(page.getByTestId('digital-workbench')).not.toBeVisible({timeout:65000});await waitRun(run.result.id);};\n  13 |   try{\n  14 |     await page.goto('/');await expect(page.getByTestId('app-ready')).toBeVisible();\n    at waitRun (D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:11:284)\n    at create (D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:12:592)\n    at D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:23:113\n    at step (D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:8:108)\n    at D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:23:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1-bit full adder: create native transistor schematic + physical layout and simulate all 8 inputs",
+                      "duration": 5448
+                    },
+                    {
+                      "title": "Copy the actual hierarchy to the app clipboard",
+                      "duration": 265
+                    },
+                    {
+                      "title": "Parent wrapper: complete before/after preview; mask unchanged; approval required",
+                      "duration": 1561
+                    },
+                    {
+                      "title": "Changing a parent name invalidates the old preview and approval",
+                      "duration": 1191
+                    },
+                    {
+                      "title": "Approve the displayed parent and commit one revision",
+                      "duration": 4346
+                    },
+                    {
+                      "title": "Undo and redo the approved hierarchy; original circuit and mask preserved",
+                      "duration": 10986
+                    },
+                    {
+                      "title": "Paste copied root as a separated child with explicit pin mapping and show whole native impact",
+                      "duration": 6358
+                    },
+                    {
+                      "title": "Four-bit ripple adder: real 512 combinations and reusable FA child cells",
+                      "duration": 81413
+                    },
+                    {
+                      "title": "Programmable four-bit CPU: native physical reference and all 16 clocked instructions",
+                      "duration": 107102,
+                      "error": {
+                        "message": "Error: ngspice failed/convergence or no waveform output. Raw log retained.\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mcomplet\u001b[27med\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mfail\u001b[27med\"\u001b[39m",
+                        "stack": "Error: ngspice failed/convergence or no waveform output. Raw log retained.\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mcomplet\u001b[27med\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mfail\u001b[27med\"\u001b[39m\n    at waitRun (D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:11:284)\n    at create (D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:12:592)\n    at D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:23:113\n    at step (D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:8:108)\n    at D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts:23:5",
+                        "location": {
+                          "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts",
+                          "column": 284,
+                          "line": 11
+                        },
+                        "snippet": "   9 |   const call=async<T,>(method:string,params={}):Promise<T>=>{const r=await request.post('/api/rpc',{data:{method,params},timeout:65000});const v=await r.json();expect(v.ok,v.error?.message).toBe(true);return v.result;};\n  10 |   const response=(method:string)=>page.waitForResponse(r=>new URL(r.url()).pathname==='/api/rpc'&&r.request().postDataJSON()?.method===method,{timeout:65000});\n> 11 |   const waitRun=async(id:string)=>{let r:Run;const deadline=Date.now()+360000;do{r=await call<Run>('job.status',{run_id:id});if(!['queued','running'].includes(r.execution_status))break;await page.waitForTimeout(800);}while(Date.now()<deadline);expect(r!.execution_status,r!.message).toBe('completed');expect(r!.analysis_result,r!.message).toBe('pass');runs.push(r!);};\n     |                                                                                                                                                                                                                                                                                            ^\n  12 |   const create=async(kind:string,name:string)=>{await page.getByTestId('open-digital-workbench').click();await page.getByTestId(`digital-${kind}`).click();await page.getByLabel('디지털 설계 이름').fill(name);const p=response('digital.create'),r=response('simulation.run');await page.getByTestId('digital-create').click();const result=await(await p).json();expect(result.ok,result.error?.message).toBe(true);projects.push(result.result);const run=await(await r).json();expect(run.ok,run.error?.message).toBe(true);await expect(page.getByTestId('digital-workbench')).not.toBeVisible({timeout:65000});await waitRun(run.result.id);};\n  13 |   try{\n  14 |     await page.goto('/');await expect(page.getByTestId('app-ready')).toBeVisible();"
+                      }
+                    }
+                  ],
+                  "startTime": "2026-10-02T13:08:25.346Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\digital-hierarchy-recorded-02416-rogrammable-CPU-save-reopen\\video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\digital-hierarchy-recorded-02416-rogrammable-CPU-save-reopen\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\digital-hierarchy-recorded-02416-rogrammable-CPU-save-reopen\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\digital-hierarchy.spec.ts",
+                    "column": 284,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "18440fc58f0e9450075e-f0331c9837b921f312fe",
+          "file": "digital-hierarchy.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "mux4-viewer.spec.ts",
+      "file": "mux4-viewer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "updated physical MUX: real signed current, vector slider, export and offline reopen",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 35214,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('viewer-shape-count')\nExpected: \u001b[32m\"1724 / 1724\"\u001b[39m\nReceived: \u001b[31m\"1\u001b[7m,\u001b[27m724 / 1\u001b[7m,\u001b[27m724\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('viewer-shape-count') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('viewer-shape-count')\u001b[22m\n\u001b[2m    24 × locator resolved to <dd data-testid=\"viewer-shape-count\">1,724 / 1,724</dd>\u001b[22m\n\u001b[2m       - unexpected value \"1,724 / 1,724\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('viewer-shape-count')\nExpected: \u001b[32m\"1724 / 1724\"\u001b[39m\nReceived: \u001b[31m\"1\u001b[7m,\u001b[27m724 / 1\u001b[7m,\u001b[27m724\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('viewer-shape-count') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('viewer-shape-count')\u001b[22m\n\u001b[2m    24 × locator resolved to <dd data-testid=\"viewer-shape-count\">1,724 / 1,724</dd>\u001b[22m\n\u001b[2m       - unexpected value \"1,724 / 1,724\"\u001b[22m\n\n    at D:\\Coldbrew\\Resistor\\tests\\ui\\mux4-viewer.spec.ts:21:64",
+                    "location": {
+                      "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\mux4-viewer.spec.ts",
+                      "column": 64,
+                      "line": 21
+                    },
+                    "snippet": "  19 |     try{\n  20 |       await portable.goto('/?mode=viewer');await portable.getByTestId('viewer-bundle-input').setInputFiles({name:'mux4.register-view.json',mimeType:'application/json',buffer:bytes});\n> 21 |       await expect(portable.getByTestId('viewer-shape-count')).toHaveText(`${bundle.scene.shapes.length} / ${bundle.scene.total_shape_count}`);\n     |                                                                ^\n  22 |       await expect(portable.locator('canvas').first()).toHaveAttribute('data-current-arrow-count',/^[1-9]\\d*$/);expect(nativeRequests).toEqual([]);\n  23 |       await portable.screenshot({path:'examples/mux4/current-viewer-offline.png'});\n  24 |     }finally{await portable.close();}"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\mux4-viewer.spec.ts",
+                        "column": 64,
+                        "line": 21
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('viewer-shape-count')\nExpected: \u001b[32m\"1724 / 1724\"\u001b[39m\nReceived: \u001b[31m\"1\u001b[7m,\u001b[27m724 / 1\u001b[7m,\u001b[27m724\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('viewer-shape-count') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('viewer-shape-count')\u001b[22m\n\u001b[2m    24 × locator resolved to <dd data-testid=\"viewer-shape-count\">1,724 / 1,724</dd>\u001b[22m\n\u001b[2m       - unexpected value \"1,724 / 1,724\"\u001b[22m\n\n\n  19 |     try{\n  20 |       await portable.goto('/?mode=viewer');await portable.getByTestId('viewer-bundle-input').setInputFiles({name:'mux4.register-view.json',mimeType:'application/json',buffer:bytes});\n> 21 |       await expect(portable.getByTestId('viewer-shape-count')).toHaveText(`${bundle.scene.shapes.length} / ${bundle.scene.total_shape_count}`);\n     |                                                                ^\n  22 |       await expect(portable.locator('canvas').first()).toHaveAttribute('data-current-arrow-count',/^[1-9]\\d*$/);expect(nativeRequests).toEqual([]);\n  23 |       await portable.screenshot({path:'examples/mux4/current-viewer-offline.png'});\n  24 |     }finally{await portable.close();}\n    at D:\\Coldbrew\\Resistor\\tests\\ui\\mux4-viewer.spec.ts:21:64"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T13:13:06.652Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\mux4-viewer-updated-physic-d648b-r-export-and-offline-reopen\\video.webm"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\mux4-viewer-updated-physic-d648b-r-export-and-offline-reopen\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\mux4-viewer-updated-physic-d648b-r-export-and-offline-reopen\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\mux4-viewer-updated-physic-d648b-r-export-and-offline-reopen\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\mux4-viewer.spec.ts",
+                    "column": 64,
+                    "line": 21
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4b179a19fb0dabe1dcb1-79f9fd7d688c89f0d142",
+          "file": "mux4-viewer.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-02T13:08:24.757Z",
+    "duration": 318511.1,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,12 @@
+import {spawnSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {measurePoints} from '../src/review';
+const root=new URL('../../../',import.meta.url),files=['packages/viewer/src/review.ts','packages/viewer/src/DesignReviewPanel.tsx','packages/viewer/src/review.css','packages/viewer/src/index.ts','packages/viewer/src/current.ts','packages/viewer/src/geometry.ts','packages/viewer/src/collaboration.ts','packages/viewer/tests/review.test.ts'];
+const result=spawnSync(process.execPath,['--import','tsx','--test','--test-isolation=none','--test-reporter=tap','packages/viewer/tests/review.test.ts'],{cwd:decodeURIComponent(root.pathname).replace(/^\/(\w:)/,'$1'),encoding:'utf8',timeout:30000,maxBuffer:1024*1024});
+if(result.error||result.status!==0)throw new Error(result.error?.message??result.stdout+result.stderr);
+const count=Number(/# tests (\d+)/.exec(result.stdout)?.[1]),passed=Number(/# pass (\d+)/.exec(result.stdout)?.[1]);if(!count||count!==passed)throw new Error('Test count/proof missing');
+const hashes=Object.fromEntries(files.map(name=>[name,createHash('sha256').update(readFileSync(new URL(name,root))).digest('hex')]));
+const origin=900719925474099300000000n;
+const evidence={schema_version:1,verified_at:new Date().toISOString(),suite:'packages/viewer/tests/review.test.ts',cases:count,passed,source_sha256:hashes,ruler_evidence:measurePoints([String(origin),'0'],[String(origin+300n),'400'],.001),scope:{local_review_only:true,worker_rpc:false,cloud_io:false,native_execution:false,vendor_execution_verified:false,geometry_inference:false,comparison:'Loaded integer shape contours and net/cell metadata only; full/ROI/partial scope disclosed, unknown completeness never full',current_samples:'Supplied fixture numbers only; exporter verifies signed numeric preservation and provenance, not simulation',ruler:'Explicit typed points or actual selected shape vertices; not minimum polygon clearance'},limits:{snapshot_bytes:33554432,bookmarks_bytes:1048576,bookmarks:128,shape_count:100000,vertices:2000000,json_depth:64,csv_rows:250000},tap_sha256:createHash('sha256').update(result.stdout).digest('hex')};
+const target=new URL('docs/evidence/',root);mkdirSync(target,{recursive:true});writeFileSync(new URL('viewer-review.json',target),JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify({cases:count,passed,source_sha256:hashes,local_review_only:true},null,2));

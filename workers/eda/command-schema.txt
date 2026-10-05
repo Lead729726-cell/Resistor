@@ -1,0 +1,59 @@
+All mutations accept params.expected_revision?: number and params.command_id?: string.
+Layout command union additions (all DBU coordinates signed decimal strings):
+{type:'add_cell',name:string}
+{type:'add_polygon',layer_id:string,polygon:[string,string][],holes?:[string,string][][],net?:string,cell_name?:string}
+{type:'add_path',layer_id:string,points:[string,string][],width:string,net?:string,cell_name?:string}
+{type:'add_label',layer_id:string,text:string,position:[string,string],net?:string,cell_name?:string}
+{type:'add_pin',layer_id:string,name:string,box:[string,string,string,string],net?:string,cell_name?:string}
+{type:'add_instance',cell_name:string,position:[string,string],rotation:0|90|180|270,mirror:boolean,array?:{columns:number,rows:number,dx:string,dy:string},target_cell_name?:string}
+{type:'transform_instance',id:string,rotation?:0|90|180|270,mirror?:boolean,dx?:string,dy?:string,cell_name?:string}
+{type:'copy_instance',id:string,dx:string,dy:string,cell_name?:string}
+{type:'delete_instance',id:string,cell_name?:string}
+Existing add_box/add_route/move_shape/delete_shape accept optional cell_name.
+Scene.cells?:{name:string,bbox:[string,string,string,string],shape_count:number,instance_count:number}[]
+Scene.instances?:{id:string,cell_name:string,cell_path:string,parent_cell:string,position:[string,string],rotation:number,mirror:boolean,bbox?:[string,string,string,string],array?:{columns:number,rows:number,dx:string,dy:string}}[]
+Scene.labels?:{id:string,layer_id:string,cell_path:string,text:string,position:[string,string],net?:string}[]
+Scene.pins?:{id:string,name:string,layer_id:string,cell_path:string,box:[string,string,string,string],net?:string}[]
+SceneShape.instance_id?:string
+Project.user_cells?:string[]
+
+Schematic additions:
+{type:'add_wire',wire:{id:string,points:[number,number][],net?:string}}
+{type:'delete_wire',id:string}
+{type:'move_wire'|'copy_wire',id:string,dx:number,dy:number}
+{type:'add_junction',junction:{id:string,x:number,y:number,net?:string}}
+{type:'delete_junction',id:string}
+{type:'move_junction',id:string,dx:number,dy:number}
+{type:'copy_device',id:string,dx:number,dy:number,name?:string}
+{type:'set_connectivity_mode',mode:'explicit'|'geometric'}
+{type:'add_cell',name:string,ports:string[]}
+{type:'update_testbench',settings:Partial<Testbench>}
+schematic.apply_command params.cell_name?:string; schematic.validate params.cell_name?:string
+Device.kind adds 'block'; Device.cell_name?:string; Device.pins retains Record<string,string>.
+Schematic.cells?:Record<string,{ports:string[],devices:Device[],wires?:Wire[],junctions?:Junction[],connectivity_mode?:'explicit'|'geometric'}>
+Schematic.connectivity_mode?:'explicit'|'geometric'; Schematic.junctions?:Junction[]
+Project.testbench?:{analysis:'tran'|'dc'|'ac'|'op',corner:'tt'|'ff'|'ss',temperature_C:number,supply_V:number,duration_s:number,step_s:number,load_F:number,vds_V:number,vbs_V:number}
+Validation.connectivity?:{nets:{name:string,pins:{device_id:string,pin:string}[],wire_ids:string[],junction_ids:string[]}[],conflicts:unknown[],unconnected_pins:{device_id:string,pin:string}[]}
+Geometric wires: pins touch segment exactly. Wire endpoints on another segment join. Interior crossings join only if explicit junction exists there.
+Block pins left side, ports key order: offset [-55,-(n-1)*12+i*24].
+
+RPC additions:
+project.rename {project_id,name,expected_revision?,command_id?}->Project
+project.clone {project_id,name?,command_id?}->Project
+project.export_bundle {project_id,revision?,inline?}->{format:'register-project-v1',path,sha256,project_id,revision,geometry_hash,size_bytes,bundle_base64?}
+project.import_bundle {project_id?,path?|bundle_base64?,mode:'new'|'replace'|'restore',expected_revision?,command_id?}->Project
+project.command_receipt {project_id,command_id}->{payload_hash,result,revision}|null
+Job submission methods accept expected_revision? and command_id? too.
+simulation.run adds netlister?:'native'|'xschem',dc_sweep?:'vgs'|'vds',vgs_V?:number.
+view.get_scene accepts max_shapes?:number,bounds?:[string,string,string,string]; Scene adds total_shape_count:number,returned_shape_count:number,truncated:boolean,bounds_filter?:[string,string,string,string]|null.
+layout.generate_pcell {project_id,kind:'via',via:'via1'|'via2',position:[string,string],width?:string,height?:string,net?,expected_revision?,command_id?}->Project
+Via widths/heights describe cut/paint box: via1 default260DBU,min260;via2 default280,min280;max10000;5DBUgrid,requiredDBU.001um. Actual enclosures are larger. Isolatedvia2 has >=0.5um square met3 landing for native met3.6 area.
+project.create example adds 'performance' count1..100000, 'current_mirror', 'differential_pair'.
+extraction.get_net_mapping {project_id,run_id?}->{project_id,run_id,revision,freshness,source:'actual-magic-pex-spice',elements:{id,kind:'R'|'C',nodes:string[],value:number,unit:'ohm'|'F'}[],mapping_status,netlist_path}
+schematic.netlist_xschem {project_id}->{text,path,schematic_path,log_path,manifest_path,source:'Xschem'} (flat native cells only)
+experiment.create {project_id,algorithm:'grid'|'random'|'tpe',variables:{device_id:'mn1',parameter:'w_um'|'l_um',min:number,max:number,steps?:number}[],objective:{metric:'Id_max'|'Id_min'|'area_um2'|'power_W',goal:'minimize'|'maximize'},constraints?:{metric,op:'<='|'>=',value:number}[],trial_budget:1..16,wall_time_s?:60..1800,seed?,settings?:Partial<Testbench>,command_id?}->Experiment
+experiment.evaluate/status/cancel/compare {experiment_id,command_id?};experiment.list {project_id}->Experiment[]
+Experiment {id,project_id,source_revision,execution_status:'queued'|'running'|'completed'|'failed'|'canceled',algorithm,variables,objective,constraints,trial_budget,wall_time_s,seed,settings,trials:Trial[],best_trial_id?:string|null,stop_reason?:string,active_run_ids:string[]}
+Trial {id,index,values:number[],parameters:Record<string,number>,project_id,candidate_project_id,revision?,execution_status:'running'|'completed'|'failed'|'canceled',feasible:boolean,score:number|null,metrics?:Record<string,number>,measurements?:Record<string,number>,runs:{id,kind,execution_status,analysis_result,manifest_path}[],reason?,error_code?}
+experiment.compare ->{experiment_id,objective,trials:Trial[],best_trial_id:string|null,source:'actual-native-gated-evaluations'} ranks feasibleactualtrials only.
+Bundle ZIP exact entries project.json,layout.oas,pdk-lock.json,manifest.json; SHA checked. No scripts/PDK embedded. New assigns fresh ID/revision1; replace creates new revision; restore preserves incoming authority ID/revision and rejects immutable history divergence or rewind.

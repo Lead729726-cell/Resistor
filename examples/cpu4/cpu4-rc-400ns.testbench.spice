@@ -1,0 +1,114 @@
+Register actual transistor digital cpu4
+.options klu noinit method=gear maxord=2
+.include "/workspace/.runtime/evidence/cpu-physical-51eab94466734514879174aacf6bb8db/state/runs/40f1fef30a2f4ccebd9ec3258125e182/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/evidence/cpu-physical-51eab94466734514879174aacf6bb8db/state/runs/40f1fef30a2f4ccebd9ec3258125e182/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VCLK CLK VGND PULSE(0 1.8 1e-07 1e-10 1e-10 1.96e-07 4e-07)
+VRST RESET VGND PWL(0 1.8 7.2e-07 1.8 7.201e-07 0)
+CLOAD_ACC0 ACC0 VGND 5e-15
+CLOAD_ACC1 ACC1 VGND 5e-15
+CLOAD_ACC2 ACC2 VGND 5e-15
+CLOAD_ACC3 ACC3 VGND 5e-15
+CLOAD_PC0 PC0 VGND 5e-15
+CLOAD_PC1 PC1 VGND 5e-15
+CLOAD_PC2 PC2 VGND 5e-15
+CLOAD_PC3 PC3 VGND 5e-15
+CLOAD_CARRY CARRY VGND 5e-15
+CLOAD_ZERO ZERO VGND 5e-15
+XU VPWR RESET PC3 ACC1 PC0 PC1 PC2 ACC0 ZERO CLK ACC2 ACC3 CARRY VGND cpu4
+.control
+save v(CLK) v(RESET) v(ACC0) v(ACC1) v(ACC2) v(ACC3) v(PC0) v(PC1) v(PC2) v(PC3) v(CARRY) v(ZERO) v(xu.OP0) v(xu.OP1) v(xu.IMM0) v(xu.IMM1) v(xu.IMM2) v(xu.IMM3) i(VDD) i(v.xu.vregister_cf_bb0b013e818ac6c6) i(v.xu.vregister_cf_81ef89f81f410c19) i(v.xu.vregister_cf_d24fd5b8ae921d3d) i(v.xu.vregister_cf_cc536781e8e68382) i(v.xu.vregister_cf_e9b8398b4aeaa567) i(v.xu.vregister_cf_f8745a5f3ec2967f) i(v.xu.vregister_cf_eb799c97e8b8ca06) i(v.xu.vregister_cf_7825fcab7300026d) i(v.xu.vregister_cf_ea78e98a310e6a10) i(v.xu.vregister_cf_a31abe386c61371d) i(v.xu.vregister_cf_add00c29a76b2a1c) i(v.xu.vregister_cf_7c255370c4e76510) i(v.xu.vregister_cf_f962952240190a0b) i(v.xu.vregister_cf_3cb4afcecb72ec9b) i(v.xu.vregister_cf_cb397c1a45ed0e8a) i(v.xu.vregister_cf_2f07e538ae19506d) i(v.xu.vregister_cf_8c08e34dd46e74e0) i(v.xu.vregister_cf_a3b695cf98750785) i(v.xu.vregister_cf_07d180620f664717) i(v.xu.vregister_cf_67a770756b710dab) i(v.xu.vregister_cf_45a868fc9a0e5855) i(v.xu.vregister_cf_c8a221e700203758) i(v.xu.vregister_cf_3145a9d0c05f175d) i(v.xu.vregister_cf_d99d0c2f58e83ba8) i(v.xu.vregister_cf_9a4facd14270927b) i(v.xu.vregister_cf_fdbfdf7671ef4f0f) i(v.xu.vregister_cf_395d502873fe7af3) i(v.xu.vregister_cf_3f93c99d56d02eb2) i(v.xu.vregister_cf_67ed0b5cb2aa9854) i(v.xu.vregister_cf_1207ba02b242c395) i(v.xu.vregister_cf_0a9410c42d46bd2b) i(v.xu.vregister_cf_2f259b135910e35c) i(v.xu.vregister_cf_37bbfa1f1e45932d) i(v.xu.vregister_cf_8ca0e5c5c80e00af) i(v.xu.vregister_cf_a09302f662d755a6) i(v.xu.vregister_cf_8dfb103887da9c72) i(v.xu.vregister_cf_eaef0f94d72bfa6c) i(v.xu.vregister_cf_1404005b10e2d7a8) i(v.xu.vregister_cf_2cbc2b9aabc72b17) i(v.xu.vregister_cf_023a163db5bb219b) i(v.xu.vregister_cf_92d2ad23fafa8a86) i(v.xu.vregister_cf_df57e47637bfe75d) i(v.xu.vregister_cf_20f26893fa9216ea) i(v.xu.vregister_cf_6fd852c1621ee7cc) i(v.xu.vregister_cf_cb29dbb71e959307) i(v.xu.vregister_cf_85e0ab12b058fc00) i(v.xu.vregister_cf_cc24494b5a7e9301) i(v.xu.vregister_cf_43460c8ce761ba4e) i(v.xu.vregister_cf_1c01ce350f2ea716) i(v.xu.vregister_cf_8fc850ad064f7c29) i(v.xu.vregister_cf_2e7e9c60c2665666) i(v.xu.vregister_cf_f98b73206289eba4) i(v.xu.vregister_cf_c00cd3659baff07b) i(v.xu.vregister_cf_3138aaa660e55055) i(v.xu.vregister_cf_2d3c528fcd9ddc49) i(v.xu.vregister_cf_88ce57d98040ebd2) i(VGND) i(VCLK) i(VRST)
+set num_threads=1
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+optran 0 0 0 40p 2n 0
+tran 4e-09 7.6e-06
+let mos_wave_0 = v(CLK)
+let mos_wave_1 = v(RESET)
+let mos_wave_2 = v(ACC0)
+let mos_wave_3 = v(ACC1)
+let mos_wave_4 = v(ACC2)
+let mos_wave_5 = v(ACC3)
+let mos_wave_6 = v(PC0)
+let mos_wave_7 = v(PC1)
+let mos_wave_8 = v(PC2)
+let mos_wave_9 = v(PC3)
+let mos_wave_10 = v(CARRY)
+let mos_wave_11 = v(ZERO)
+let mos_wave_12 = v(xu.OP0)
+let mos_wave_13 = v(xu.OP1)
+let mos_wave_14 = v(xu.IMM0)
+let mos_wave_15 = v(xu.IMM1)
+let mos_wave_16 = v(xu.IMM2)
+let mos_wave_17 = v(xu.IMM3)
+let mos_wave_18 = -i(VDD)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3 mos_wave_4 mos_wave_5 mos_wave_6 mos_wave_7 mos_wave_8 mos_wave_9 mos_wave_10 mos_wave_11 mos_wave_12 mos_wave_13 mos_wave_14 mos_wave_15 mos_wave_16 mos_wave_17 mos_wave_18
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_bb0b013e818ac6c6)
+let register_flow_1 = i(v.xu.vregister_cf_81ef89f81f410c19)
+let register_flow_2 = i(v.xu.vregister_cf_d24fd5b8ae921d3d)
+let register_flow_3 = i(v.xu.vregister_cf_cc536781e8e68382)
+let register_flow_4 = i(v.xu.vregister_cf_e9b8398b4aeaa567)
+let register_flow_5 = i(v.xu.vregister_cf_f8745a5f3ec2967f)
+let register_flow_6 = i(v.xu.vregister_cf_eb799c97e8b8ca06)
+let register_flow_7 = i(v.xu.vregister_cf_7825fcab7300026d)
+let register_flow_8 = i(v.xu.vregister_cf_ea78e98a310e6a10)
+let register_flow_9 = i(v.xu.vregister_cf_a31abe386c61371d)
+let register_flow_10 = i(v.xu.vregister_cf_add00c29a76b2a1c)
+let register_flow_11 = i(v.xu.vregister_cf_7c255370c4e76510)
+let register_flow_12 = i(v.xu.vregister_cf_f962952240190a0b)
+let register_flow_13 = i(v.xu.vregister_cf_3cb4afcecb72ec9b)
+let register_flow_14 = i(v.xu.vregister_cf_cb397c1a45ed0e8a)
+let register_flow_15 = i(v.xu.vregister_cf_2f07e538ae19506d)
+let register_flow_16 = i(v.xu.vregister_cf_8c08e34dd46e74e0)
+let register_flow_17 = i(v.xu.vregister_cf_a3b695cf98750785)
+let register_flow_18 = i(v.xu.vregister_cf_07d180620f664717)
+let register_flow_19 = i(v.xu.vregister_cf_67a770756b710dab)
+let register_flow_20 = i(v.xu.vregister_cf_45a868fc9a0e5855)
+let register_flow_21 = i(v.xu.vregister_cf_c8a221e700203758)
+let register_flow_22 = i(v.xu.vregister_cf_3145a9d0c05f175d)
+let register_flow_23 = i(v.xu.vregister_cf_d99d0c2f58e83ba8)
+let register_flow_24 = i(v.xu.vregister_cf_9a4facd14270927b)
+let register_flow_25 = i(v.xu.vregister_cf_fdbfdf7671ef4f0f)
+let register_flow_26 = i(v.xu.vregister_cf_395d502873fe7af3)
+let register_flow_27 = i(v.xu.vregister_cf_3f93c99d56d02eb2)
+let register_flow_28 = i(v.xu.vregister_cf_67ed0b5cb2aa9854)
+let register_flow_29 = i(v.xu.vregister_cf_1207ba02b242c395)
+let register_flow_30 = i(v.xu.vregister_cf_0a9410c42d46bd2b)
+let register_flow_31 = i(v.xu.vregister_cf_2f259b135910e35c)
+let register_flow_32 = i(v.xu.vregister_cf_37bbfa1f1e45932d)
+let register_flow_33 = i(v.xu.vregister_cf_8ca0e5c5c80e00af)
+let register_flow_34 = i(v.xu.vregister_cf_a09302f662d755a6)
+let register_flow_35 = i(v.xu.vregister_cf_8dfb103887da9c72)
+let register_flow_36 = i(v.xu.vregister_cf_eaef0f94d72bfa6c)
+let register_flow_37 = i(v.xu.vregister_cf_1404005b10e2d7a8)
+let register_flow_38 = i(v.xu.vregister_cf_2cbc2b9aabc72b17)
+let register_flow_39 = i(v.xu.vregister_cf_023a163db5bb219b)
+let register_flow_40 = i(v.xu.vregister_cf_92d2ad23fafa8a86)
+let register_flow_41 = i(v.xu.vregister_cf_df57e47637bfe75d)
+let register_flow_42 = i(v.xu.vregister_cf_20f26893fa9216ea)
+let register_flow_43 = i(v.xu.vregister_cf_6fd852c1621ee7cc)
+let register_flow_44 = i(v.xu.vregister_cf_cb29dbb71e959307)
+let register_flow_45 = i(v.xu.vregister_cf_85e0ab12b058fc00)
+let register_flow_46 = i(v.xu.vregister_cf_cc24494b5a7e9301)
+let register_flow_47 = i(v.xu.vregister_cf_43460c8ce761ba4e)
+let register_flow_48 = i(v.xu.vregister_cf_1c01ce350f2ea716)
+let register_flow_49 = i(v.xu.vregister_cf_8fc850ad064f7c29)
+let register_flow_50 = i(v.xu.vregister_cf_2e7e9c60c2665666)
+let register_flow_51 = i(v.xu.vregister_cf_f98b73206289eba4)
+let register_flow_52 = i(v.xu.vregister_cf_c00cd3659baff07b)
+let register_flow_53 = i(v.xu.vregister_cf_3138aaa660e55055)
+let register_flow_54 = i(v.xu.vregister_cf_2d3c528fcd9ddc49)
+let register_flow_55 = i(v.xu.vregister_cf_88ce57d98040ebd2)
+let register_flow_56 = i(VGND)
+let register_flow_57 = i(VDD)
+let register_flow_58 = i(VCLK)
+let register_flow_59 = i(VRST)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13 register_flow_14 register_flow_15 register_flow_16 register_flow_17 register_flow_18 register_flow_19 register_flow_20 register_flow_21 register_flow_22 register_flow_23 register_flow_24 register_flow_25 register_flow_26 register_flow_27 register_flow_28 register_flow_29 register_flow_30 register_flow_31 register_flow_32 register_flow_33 register_flow_34 register_flow_35 register_flow_36 register_flow_37 register_flow_38 register_flow_39 register_flow_40 register_flow_41 register_flow_42 register_flow_43 register_flow_44 register_flow_45 register_flow_46 register_flow_47 register_flow_48 register_flow_49 register_flow_50 register_flow_51 register_flow_52 register_flow_53 register_flow_54 register_flow_55 register_flow_56 register_flow_57 register_flow_58 register_flow_59
+quit
+.endc
+.end

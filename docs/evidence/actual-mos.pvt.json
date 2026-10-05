@@ -1,0 +1,161 @@
+{
+  "id": "da00f6b73bd642ad848e362be151ec3a",
+  "project_id": "e0b5041e22bc418f9f529a343b07516d",
+  "source_revision": 1,
+  "source_signature": "7b6268ea85c37d470e56533580e95b88325ea99ae935756a35060638803d6634",
+  "layout_sha256": "b3893894090ef39e955448f75d6e862d472e881cb17e4b183ac19aa622014cf4",
+  "snapshot_hashes": {
+    "source-layout.oas": "b3893894090ef39e955448f75d6e862d472e881cb17e4b183ac19aa622014cf4",
+    "source-project.json": "98fc95749c6b55939c3b5cd851f5d71ea005427eaf46d39175b54779fa1672ba"
+  },
+  "mode": "builtin",
+  "config": {
+    "analysis": "dc",
+    "corners": [
+      "tt",
+      "ff"
+    ],
+    "temperatures_C": [
+      27
+    ],
+    "supplies_V": [
+      1.8
+    ],
+    "supply": {
+      "kind": "testbench",
+      "source_names": [
+        "VD"
+      ]
+    },
+    "metrics": [
+      {
+        "name": "Id_max",
+        "source": "measurement",
+        "key": "Id_max",
+        "reduction": "max",
+        "absolute": false
+      }
+    ],
+    "constraints": [
+      {
+        "metric": "Id_max",
+        "op": ">=",
+        "value": 0
+      }
+    ],
+    "settings": {},
+    "wall_time_s": 300,
+    "point_timeout_s": 120,
+    "max_parallel": 1
+  },
+  "execution_status": "completed",
+  "created_at": "2026-10-01T09:36:47.667182+00:00",
+  "points": [
+    {
+      "id": "a94f854f58c14835aae418a74b4b4fc3",
+      "index": 0,
+      "condition": {
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "Id_max": 0.00033464188
+      },
+      "constraints_pass": true,
+      "project_id": "9675351edf124dd48d576daf0b3ae627",
+      "run_id": "09f39290b9fd4e99a08b7275bce21774",
+      "submitted_epoch_s": 1790847408.9550772,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VD"
+        ]
+      },
+      "elapsed_s": 0.3350915160262957,
+      "manifest_path": "/workspace/.runtime/eda/runs/09f39290b9fd4e99a08b7275bce21774/manifest.json",
+      "message": "Actual ngspice dc: 181 samples."
+    },
+    {
+      "id": "215d76903cf3412e9d8002bbc22d4fe6",
+      "index": 1,
+      "condition": {
+        "corner": "ff",
+        "temperature_C": 27,
+        "supply_V": 1.8
+      },
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "metrics": {
+        "Id_max": 0.000413552843
+      },
+      "constraints_pass": true,
+      "project_id": "0e69f7dfaef74618850f1514e32b1dcb",
+      "run_id": "2c16c8588b8142288149e471deeb7540",
+      "submitted_epoch_s": 1790847409.8253045,
+      "supply_binding": {
+        "kind": "testbench",
+        "source_names": [
+          "VD"
+        ]
+      },
+      "elapsed_s": 0.45049843203742057,
+      "manifest_path": "/workspace/.runtime/eda/runs/2c16c8588b8142288149e471deeb7540/manifest.json",
+      "message": "Actual ngspice dc: 181 samples."
+    }
+  ],
+  "active_run_ids": [],
+  "summary": {
+    "Id_max": {
+      "min": 0.00033464188,
+      "max": 0.000413552843,
+      "min_point_id": "a94f854f58c14835aae418a74b4b4fc3",
+      "max_point_id": "215d76903cf3412e9d8002bbc22d4fe6",
+      "min_condition": {
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8
+      },
+      "max_condition": {
+        "corner": "ff",
+        "temperature_C": 27,
+        "supply_V": 1.8
+      },
+      "valid_points": 2
+    }
+  },
+  "notes": [
+    "Actual native runs only. Supply binding is explicit and recorded for every point.",
+    "Process corner may have no effect on ideal primitives without process-dependent models.",
+    "No statistical yield, foundry signoff or commercial execution is claimed."
+  ],
+  "started_at": "2026-10-01T09:36:48.387728+00:00",
+  "deadline_epoch_s": 1790847708.387746,
+  "counts": {
+    "queued": 0,
+    "running": 0,
+    "completed": 2,
+    "failed": 0,
+    "canceled": 0
+  },
+  "all_constraints_pass": true,
+  "worst_constraints": [
+    {
+      "metric": "Id_max",
+      "op": ">=",
+      "value": 0,
+      "worst_value": 0.00033464188,
+      "point_id": "a94f854f58c14835aae418a74b4b4fc3",
+      "condition": {
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8
+      },
+      "pass": true
+    }
+  ],
+  "ended_at": "2026-10-01T09:36:50.546625+00:00",
+  "freshness": "current"
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "calibre_xact-site-v1",
+  "name": "Calibre xACT — operator site validation required",
+  "tool_id": "calibre_xact",
+  "version": "Calibre xACT foundry-specific runset candidate; installed manual required",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/calibre",
+    "env_names": [
+      "MGLS_LICENSE_FILE"
+    ],
+    "resources": {
+      "deck": "/workspace/site/calibre_xact.runset"
+    },
+    "recipes": {
+      "pex": {
+        "argv": [
+          "-xact",
+          "{resource.deck}"
+        ],
+        "outputs": {
+          "rc": "parasitics.spef"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "rc": "spef"
+          }
+        },
+        "requires_netlist": false
+      }
+    }
+  }
+}

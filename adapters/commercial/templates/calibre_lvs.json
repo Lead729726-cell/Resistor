@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "calibre_lvs-site-v1",
+  "name": "Calibre nmLVS — operator site validation required",
+  "tool_id": "calibre_lvs",
+  "version": "Calibre site-version mode candidate; installed manual required",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/calibre",
+    "env_names": [
+      "MGLS_LICENSE_FILE"
+    ],
+    "resources": {
+      "deck": "/workspace/site/calibre_lvs.runset"
+    },
+    "recipes": {
+      "lvs": {
+        "argv": [
+          "-lvs",
+          "-hier",
+          "{input.calibre_svrf}"
+        ],
+        "outputs": {
+          "summary": "lvs-summary.txt"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "summary": "calibre-lvs-summary"
+          }
+        },
+        "requires_netlist": true
+      }
+    }
+  }
+}

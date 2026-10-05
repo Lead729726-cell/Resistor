@@ -1,0 +1,146 @@
+{
+  "client_date": "2026-09-30",
+  "tests": [
+    {
+      "name": "Authentication rejects missing and invalid session tokens",
+      "result": "pass",
+      "elapsed_ms": 8.496899999999997
+    },
+    {
+      "name": "All authoritative scene coordinates remain decimal strings",
+      "result": "pass",
+      "elapsed_ms": 0.33320000000003347
+    },
+    {
+      "name": "Backend rejects signed-int64 values beyond its coordinate build",
+      "result": "pass",
+      "elapsed_ms": 118.20389999999998
+    },
+    {
+      "name": "Save/reopen retains exact geometry and stable occurrence IDs",
+      "result": "pass",
+      "elapsed_ms": 376.92830000000004
+    },
+    {
+      "name": "Transaction undo/redo restores stable IDs and exact DBU geometry",
+      "result": "pass",
+      "elapsed_ms": 1038.7232999999999
+    },
+    {
+      "name": "GDSII and OASIS can be exported through actual KLayout",
+      "result": "pass",
+      "elapsed_ms": 328.44169999999986
+    },
+    {
+      "name": "Unsupported method cannot access arbitrary host process APIs",
+      "result": "pass",
+      "elapsed_ms": 4.717999999999847
+    }
+  ],
+  "doctor": {
+    "protocol_version": 1,
+    "runner": "linux-docker",
+    "tools": [
+      {
+        "name": "ngspice",
+        "path": "/foss/tools/bin/ngspice",
+        "version": "** ngspice-45.2 : Circuit level simulation program",
+        "available": true
+      },
+      {
+        "name": "KLayout",
+        "path": "/usr/bin/python3",
+        "version": "0.30.5",
+        "available": true
+      },
+      {
+        "name": "Magic",
+        "path": "/foss/tools/bin/magic",
+        "version": "8.3.582",
+        "available": true
+      },
+      {
+        "name": "Netgen",
+        "path": "/foss/tools/bin/netgen",
+        "version": "Netgen 1.5.313 compiled on Sun Dec 21 07:48:15 PM CET 2025",
+        "available": true
+      },
+      {
+        "name": "Xschem",
+        "path": "/foss/tools/bin/xschem",
+        "version": "XSCHEM V3.4.8RC",
+        "available": true
+      }
+    ],
+    "pdk": {
+      "id": "sky130A",
+      "available": true,
+      "path": "/foss/pdks/sky130A",
+      "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb",
+      "capabilities": {
+        "simulation": true,
+        "drc": true,
+        "lvs": true,
+        "pex": true,
+        "mos_pcell": true
+      },
+      "supported_devices": [
+        "sky130_fd_pr__nfet_01v8",
+        "sky130_fd_pr__pfet_01v8_hvt"
+      ],
+      "pex_scope": {
+        "connectivity": true,
+        "ground_capacitance": true,
+        "coupling_capacitance": true,
+        "distributed_resistance": true
+      },
+      "limits": [
+        "Public Magic drc(full) deck; no foundry signoff.",
+        "MOS PCell parameter regeneration is tested for nf=1, m=1.",
+        "Inverter uses fixed public inv_1 layout; schematic edits require explicit layout work and revalidation.",
+        "No TCAD or physically sourced process reconstruction stack."
+      ]
+    },
+    "geometry": {
+      "engine": "KLayout",
+      "coordinate_bits": 32,
+      "dbu_um": 0.001,
+      "grid_dbu": 5
+    },
+    "runtime_image": "hpretl/iic-osic-tools@sha256:92961478ad3c4f508efb42d9ccdba12ab262eb42a14926d2bd49862230ba8521"
+  },
+  "gds_export": {
+    "path": "/workspace/.runtime/eda/projects/bdab81a226fa47c180291ebde4086ced/exports/fixture-r2.gds",
+    "sidecar_path": "/workspace/.runtime/eda/projects/bdab81a226fa47c180291ebde4086ced/exports/fixture-r2.gds.mos.json",
+    "roundtrip": {
+      "geometry_equal": true,
+      "before_hash": "b63e45df89a9695170b7041da1d45317ef96116e7403aa8f250b32eb0283dfce",
+      "after_hash": "b63e45df89a9695170b7041da1d45317ef96116e7403aa8f250b32eb0283dfce",
+      "hierarchy_preserved": true,
+      "stable_ids_preserved": true
+    },
+    "metadata": {
+      "ids": "layout properties + app sidecar",
+      "schematic": "sidecar",
+      "physical_stack": "unknown",
+      "flattened": false
+    }
+  },
+  "oas_export": {
+    "path": "/workspace/.runtime/eda/projects/bdab81a226fa47c180291ebde4086ced/exports/fixture-r2.oas",
+    "sidecar_path": "/workspace/.runtime/eda/projects/bdab81a226fa47c180291ebde4086ced/exports/fixture-r2.oas.mos.json",
+    "roundtrip": {
+      "geometry_equal": true,
+      "before_hash": "b63e45df89a9695170b7041da1d45317ef96116e7403aa8f250b32eb0283dfce",
+      "after_hash": "b63e45df89a9695170b7041da1d45317ef96116e7403aa8f250b32eb0283dfce",
+      "hierarchy_preserved": true,
+      "stable_ids_preserved": true
+    },
+    "metadata": {
+      "ids": "layout properties + app sidecar",
+      "schematic": "sidecar",
+      "physical_stack": "unknown",
+      "flattened": false
+    }
+  }
+}

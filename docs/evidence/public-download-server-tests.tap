@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: actual GET/HEAD deliver exact bytes and attachment metadata without executing an installer
+ok 1 - actual GET/HEAD deliver exact bytes and attachment metadata without executing an installer
+  ---
+  duration_ms: 38.9181
+  type: 'test'
+  ...
+# Subtest: resume/suffix ranges return exactly the requested bytes; stale If-Range falls back to full download
+ok 2 - resume/suffix ranges return exactly the requested bytes; stale If-Range falls back to full download
+  ---
+  duration_ms: 21.5538
+  type: 'test'
+  ...
+# Subtest: invalid/multiple/overflow ranges fail without returning arbitrary file contents
+ok 3 - invalid/multiple/overflow ranges fail without returning arbitrary file contents
+  ---
+  duration_ms: 13.0129
+  type: 'test'
+  ...
+# Subtest: public service denies private files, RPC, source/configuration, traversal and writes
+ok 4 - public service denies private files, RPC, source/configuration, traversal and writes
+  ---
+  duration_ms: 20.4149
+  type: 'test'
+  ...
+# Subtest: release hash ETag supports conditional requests; health is minimal and contains no filesystem paths
+ok 5 - release hash ETag supports conditional requests; health is minimal and contains no filesystem paths
+  ---
+  duration_ms: 10.2774
+  type: 'test'
+  ...
+# Subtest: unsafe manifest names cannot be used to publish files outside the download snapshot
+ok 6 - unsafe manifest names cannot be used to publish files outside the download snapshot
+  ---
+  duration_ms: 2.9797
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 129.929

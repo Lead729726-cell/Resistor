@@ -1,0 +1,40 @@
+name: macOS Apple Silicon and Intel preview
+on: workflow_dispatch
+jobs:
+  mac-preview:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15
+            arch: arm64
+          - runner: macos-15-intel
+            arch: x64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: node --test --test-isolation=none tests/mac-platform.test.mjs tests/desktop-diagnostics.test.mjs
+      - run: node --import tsx --test --test-isolation=none tests/shortcuts.test.ts
+      - run: npm run build
+      - run: node scripts/mac-preview.mjs
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Register-macOS-${{ matrix.arch }}-adhoc-preview
+          path: |
+            release/installers/*.dmg
+            release/installers/*.zip
+            docs/evidence/macos-*.json
+            docs/evidence/macos-*.png
+            docs/evidence/macos-recording/*.webm
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: Register-macOS-${{ matrix.arch }}-failed-QA
+          path: test-results/

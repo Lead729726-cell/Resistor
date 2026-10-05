@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "id": "icv-site-v1",
+  "name": "IC Validator — operator site validation required",
+  "tool_id": "icv",
+  "version": "Site-version runset candidate; installed manual required",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/icv",
+    "env_names": [
+      "SNPSLMD_LICENSE_FILE"
+    ],
+    "resources": {
+      "deck": "/workspace/site/icv.runset"
+    },
+    "recipes": {
+      "drc": {
+        "argv": [
+          "{resource.deck}"
+        ],
+        "outputs": {
+          "summary": "drc-summary.txt"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "summary": "unsupported-site-format"
+          }
+        },
+        "requires_netlist": false
+      },
+      "lvs": {
+        "argv": [
+          "{resource.deck}"
+        ],
+        "outputs": {
+          "summary": "lvs-summary.txt"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "summary": "unsupported-site-format"
+          }
+        },
+        "requires_netlist": true
+      }
+    }
+  }
+}

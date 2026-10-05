@@ -1,0 +1,151 @@
+import { useEffect, useMemo, useState } from 'react';
+import { Calculator, ChevronRight, Cpu, ExternalLink, Search, Zap } from 'lucide-react';
+import { calculateSafe, calculators, defaultInputs, displayNumber, getCalculator, type CalculatorDefinition } from '../../calculators/src';
+import './calculator-hub.css';
+
+function titleFor(calculator: CalculatorDefinition) {
+  return `${calculator.title} | Resistor engineering calculators`;
+}
+
+function updateSeo(calculator: CalculatorDefinition) {
+  document.title = titleFor(calculator);
+  const description = document.querySelector('meta[name="description"]') || document.head.appendChild(document.createElement('meta'));
+  description.setAttribute('name', 'description');
+  description.setAttribute('content', calculator.description);
+  const canonical = document.querySelector('link[rel="canonical"]') || document.head.appendChild(document.createElement('link'));
+  canonical.setAttribute('rel', 'canonical');
+  canonical.setAttribute('href', `${location.origin}${calculator.path}`);
+}
+
+function pickInitialCalculator() {
+  return getCalculator(location.pathname) || calculators[0];
+}
+
+export default function CalculatorHub() {
+  const [activeId, setActiveId] = useState(() => pickInitialCalculator().id);
+  const [query, setQuery] = useState('');
+  const active = calculators.find(calculator => calculator.id === activeId) || calculators[0];
+  const [inputs, setInputs] = useState<Record<string, number | string>>(() => defaultInputs(active));
+  const evaluated = useMemo(() => calculateSafe(active, inputs), [active, inputs]);
+  const filtered = calculators.filter(calculator => `${calculator.title} ${calculator.description} ${calculator.category}`.toLowerCase().includes(query.toLowerCase()));
+  const categories = [...new Set(calculators.map(calculator => calculator.category))];
+
+  useEffect(() => {
+    updateSeo(active);
+    if (location.pathname !== active.path) history.replaceState(null, '', active.path);
+    setInputs(defaultInputs(active));
+  }, [active.id]);
+
+  const select = (calculator: CalculatorDefinition) => {
+    setActiveId(calculator.id);
+    setQuery('');
+  };
+
+  return <main className="calculator-app">
+    <aside className="calculator-nav" aria-label="Calculators">
+      <div className="calculator-brand">
+        <span className="calculator-logo"><Zap size={19}/></span>
+        <div><strong>Resistor</strong><small>electronics calculator hub</small></div>
+      </div>
+      <label className="calculator-search">
+        <Search size={15}/>
+        <input value={query} onChange={event => setQuery(event.target.value)} placeholder="Search calculators"/>
+      </label>
+      <div className="calculator-list">
+        {categories.map(category => <section key={category}>
+          <h2>{category}</h2>
+          {filtered.filter(calculator => calculator.category === category).map(calculator => <button key={calculator.id} className={calculator.id === active.id ? 'active' : ''} onClick={() => select(calculator)}>
+            <Calculator size={15}/>
+            <span>{calculator.title}</span>
+            <ChevronRight size={14}/>
+          </button>)}
+        </section>)}
+      </div>
+    </aside>
+    <section className="calculator-workspace">
+      <header className="calculator-header">
+        <div>
+          <span className="calculator-kicker"><Cpu size={14}/> Deterministic formulas</span>
+          <h1>{active.title}</h1>
+          <p>{active.description}</p>
+        </div>
+        <a href="/eda" className="eda-link" title="Open the existing EDA workspace"><ExternalLink size={15}/> EDA workspace</a>
+      </header>
+
+      <div className="calculator-main-grid">
+        <form className="calculator-panel" onSubmit={event => event.preventDefault()}>
+          <h2>Inputs</h2>
+          <div className="calculator-fields">
+            {active.inputs.map(input => <label key={input.id}>
+              <span>{input.label}{input.unit ? <small>{input.unit}</small> : null}</span>
+              {input.kind === 'select'
+                ? <select value={String(inputs[input.id] ?? input.defaultValue)} onChange={event => setInputs(current => ({ ...current, [input.id]: event.target.value }))}>
+                  {input.options?.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+                </select>
+                : <input type="number" value={String(inputs[input.id] ?? input.defaultValue)} min={input.min} max={input.max} step={input.step || 'any'} onChange={event => setInputs(current => ({ ...current, [input.id]: event.target.value }))}/>}
+            </label>)}
+          </div>
+          <h2>Formula</h2>
+          <code className="formula-block">{active.formula}</code>
+          <p className="reference-line">{active.referenceEquation}</p>
+        </form>
+
+        <section className={`result-panel ${evaluated.error ? 'error' : ''}`} aria-live="polite">
+          <span>Result</span>
+          {evaluated.error ? <>
+            <strong>Invalid input</strong>
+            <p>{evaluated.error}</p>
+          </> : evaluated.result && <>
+            <strong>{displayNumber(evaluated.result.primaryValue)}{evaluated.result.primaryUnit ? <small>{evaluated.result.primaryUnit}</small> : null}</strong>
+            <p>{evaluated.result.primaryLabel}</p>
+            <div className="secondary-results">
+              {evaluated.result.secondary?.map(item => <div key={item.label}>
+                <span>{item.label}</span>
+                <code>{displayNumber(item.value)}{item.unit ? ` ${item.unit}` : ''}</code>
+              </div>)}
+            </div>
+            <p className="result-explanation">{evaluated.result.explanation}</p>
+          </>}
+        </section>
+      </div>
+
+      <section className="calculator-support">
+        <div>
+          <h2>Examples</h2>
+          {active.examples.map(example => <button key={example.title} onClick={() => setInputs(example.inputs)}>
+            <span>{example.title}</span>
+            <code>{displayNumber(example.expected.primaryValue)} {example.expected.primaryUnit || ''}</code>
+          </button>)}
+        </div>
+        <div>
+          <h2>QA Fixtures</h2>
+          {[...active.examples, ...active.unitTests].map(fixture => <div key={fixture.title}>
+            <span>{fixture.title}</span>
+            <code>{fixture.expected.primaryLabel}: {displayNumber(fixture.expected.primaryValue)} {fixture.expected.primaryUnit || ''}</code>
+          </div>)}
+          {active.edgeCases.map(edge => <div key={edge.title}>
+            <span>{edge.title}</span>
+            <code>{edge.error || 'expected output'}</code>
+          </div>)}
+        </div>
+      </section>
+
+      <section className="calculator-support">
+        <div>
+          <h2>FAQ</h2>
+          {active.faq.map(item => <details key={item.question}>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>)}
+        </div>
+        <div>
+          <h2>Related Calculators</h2>
+          {active.related.map(id => calculators.find(calculator => calculator.id === id)).filter(Boolean).map(calculator => <button key={calculator!.id} onClick={() => select(calculator!)}>
+            <span>{calculator!.title}</span>
+            <code>{calculator!.path}</code>
+          </button>)}
+        </div>
+      </section>
+    </section>
+  </main>;
+}

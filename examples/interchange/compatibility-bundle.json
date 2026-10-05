@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "format": "register-compatibility-bundle",
+  "inspection": {
+    "schema_version": 1,
+    "kind": "pdk",
+    "format": "cadence-ascii-techfile",
+    "support": "partial",
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "code": "unsupported-part",
+        "message": "constraintGroups: 표시/LPP/스트림 맵 외 기술 데이터·규칙·함수는 보존하며 실행하지 않습니다.",
+        "line": 16,
+        "source_file": "fixture.tf"
+      },
+      {
+        "severity": "warning",
+        "code": "unsupported-part",
+        "message": "include: 표시/LPP/스트림 맵 외 기술 데이터·규칙·함수는 보존하며 실행하지 않습니다.",
+        "line": 17,
+        "source_file": "fixture.tf"
+      },
+      {
+        "severity": "warning",
+        "code": "unsupported-part",
+        "message": "drDefineStipple: 표시 색상/packet 외 데이터는 보존하며 실행하지 않습니다.",
+        "line": 8,
+        "source_file": "display.drf"
+      },
+      {
+        "severity": "info",
+        "code": "display-only",
+        "message": "DRF는 색상/packet 데이터입니다. LPP와 명시적 GDS 맵이 있어야 도형에 적용할 수 있습니다.",
+        "source_file": "display.drf"
+      },
+      {
+        "severity": "warning",
+        "code": "unsupported-part",
+        "message": "stream-map-record: 단일 LPP 및 layer/datatype 네 열만 지원합니다. 범위·NAME 레코드는 원문을 보존합니다.",
+        "line": 5,
+        "source_file": "stream.layermap"
+      },
+      {
+        "severity": "warning",
+        "code": "unsupported-part",
+        "message": "stream-map-record: Error: GDS layer/datatype 범위는 0–65535 정수입니다.",
+        "line": 6,
+        "source_file": "stream.layermap"
+      },
+      {
+        "severity": "warning",
+        "code": "external-stream-map",
+        "message": "별도 stream map이 기술 파일의 5.x streamLayers보다 우선합니다. 원래 맵은 기술 파일 원문에 보존됩니다.",
+        "source_file": "fixture.tf"
+      },
+      {
+        "severity": "info",
+        "code": "internal-layer-number",
+        "message": "techLayers의 내부 번호는 GDS 번호가 아닙니다. 명시적 stream map만 표시 변환에 사용합니다.",
+        "source_file": "fixture.tf"
+      }
+    ],
+    "unsupported": [
+      {
+        "name": "constraintGroups",
+        "line": 16,
+        "raw": "constraintGroups((foundry spacings(minWidth(\"metal1\" 0.05))))",
+        "reason": "표시/LPP/스트림 맵 외 기술 데이터·규칙·함수는 보존하며 실행하지 않습니다.",
+        "source_file": "fixture.tf"
+      },
+      {
+        "name": "include",
+        "line": 17,
+        "raw": "include(\"$PDK_ROOT/unknown.il\")",
+        "reason": "표시/LPP/스트림 맵 외 기술 데이터·규칙·함수는 보존하며 실행하지 않습니다.",
+        "source_file": "fixture.tf"
+      },
+      {
+        "name": "drDefineStipple",
+        "line": 8,
+        "raw": "drDefineStipple((display custom ((1 0)(0 1))))",
+        "reason": "표시 색상/packet 외 데이터는 보존하며 실행하지 않습니다.",
+        "source_file": "display.drf"
+      },
+      {
+        "name": "stream-map-record",
+        "line": 5,
+        "raw": "NAME metal1/NET 40 0",
+        "reason": "단일 LPP 및 layer/datatype 네 열만 지원합니다. 범위·NAME 레코드는 원문을 보존합니다.",
+        "source_file": "stream.layermap"
+      },
+      {
+        "name": "stream-map-record",
+        "line": 6,
+        "raw": "metal2 drawing 20-21 0",
+        "reason": "Error: GDS layer/datatype 범위는 0–65535 정수입니다.",
+        "source_file": "stream.layermap"
+      }
+    ],
+    "source": {
+      "filename": "fixture.tf",
+      "text": "; Synthetic parser grammar fixture. Internal numbers deliberately differ from GDS.\nlayerDefinitions(\n  techLayers(\n    (metal1 100 M1)\n    (poly 200 PO)\n  )\n  techPurposes((drawing 252 drw)(pin 251 pin))\n  techLayerPurposePriorities((metal1 drawing)(metal1 pin)(poly drawing))\n  techDisplays(\n    (metal1 drawing metalRed t t t t t)\n    (metal1 pin metalRed t nil t t t)\n    (poly drawing polyGreen t t t t t)\n  )\n)\nlayerRules(streamLayers((metal1 17 0 t)(poly 8 0 t)))\nconstraintGroups((foundry spacings(minWidth(\"metal1\" 0.05))))\ninclude(\"$PDK_ROOT/unknown.il\")\n"
+    },
+    "technology": {
+      "layers": [
+        {
+          "name": "metal1",
+          "number": 100,
+          "abbreviation": "M1"
+        },
+        {
+          "name": "poly",
+          "number": 200,
+          "abbreviation": "PO"
+        }
+      ],
+      "purposes": [
+        {
+          "name": "drawing",
+          "number": 252,
+          "abbreviation": "drw"
+        },
+        {
+          "name": "pin",
+          "number": 251,
+          "abbreviation": "pin"
+        }
+      ],
+      "displays": [
+        {
+          "layer": "metal1",
+          "purpose": "drawing",
+          "packet": "metalRed",
+          "visible": true,
+          "selectable": true,
+          "valid": true
+        },
+        {
+          "layer": "metal1",
+          "purpose": "pin",
+          "packet": "metalRed",
+          "visible": true,
+          "selectable": false,
+          "valid": true
+        },
+        {
+          "layer": "poly",
+          "purpose": "drawing",
+          "packet": "polyGreen",
+          "visible": true,
+          "selectable": true,
+          "valid": true
+        }
+      ],
+      "colors": [
+        {
+          "display": "display",
+          "name": "red",
+          "rgb": [
+            255,
+            0,
+            0
+          ]
+        },
+        {
+          "display": "display",
+          "name": "green",
+          "rgb": [
+            0,
+            200,
+            40
+          ]
+        }
+      ],
+      "packets": [
+        {
+          "display": "display",
+          "name": "metalRed",
+          "stipple": "blank",
+          "lineStyle": "solid",
+          "fill": "red",
+          "outline": "red"
+        },
+        {
+          "display": "display",
+          "name": "polyGreen",
+          "stipple": "blank",
+          "lineStyle": "solid",
+          "fill": "green",
+          "outline": "green",
+          "fillStyle": "outline"
+        }
+      ],
+      "priorities": [
+        {
+          "layer": "metal1",
+          "purpose": "drawing"
+        },
+        {
+          "layer": "metal1",
+          "purpose": "pin"
+        },
+        {
+          "layer": "poly",
+          "purpose": "drawing"
+        }
+      ]
+    },
+    "layerMap": [
+      {
+        "layer": "metal1",
+        "purpose": "drawing",
+        "gds": [
+          17,
+          0
+        ],
+        "line": 2,
+        "enabled": true
+      },
+      {
+        "layer": "metal1",
+        "purpose": "pin",
+        "gds": [
+          17,
+          16
+        ],
+        "line": 3,
+        "enabled": true
+      },
+      {
+        "layer": "poly",
+        "purpose": "drawing",
+        "gds": [
+          8,
+          0
+        ],
+        "line": 4,
+        "enabled": true
+      }
+    ],
+    "companion_sources": [
+      {
+        "filename": "display.drf",
+        "text": "; Synthetic grammar only. No commercial sample copied.\ndrDefineDisplay((display))\ndrDefineColor((display red 255 0 0)(display green 0 200 40))\ndrDefinePacket(\n (display metalRed blank solid red red)\n (display polyGreen blank solid green green outline)\n)\ndrDefineStipple((display custom ((1 0)(0 1))))\n"
+      },
+      {
+        "filename": "stream.layermap",
+        "text": "# Synthetic parser fixture. No vendor execution or foundry verification.\nmetal1 drawing 17 0\nmetal1 pin 17 16\npoly drawing 8 0\nNAME metal1/NET 40 0\nmetal2 drawing 20-21 0\n"
+      }
+    ],
+    "pdk": {
+      "id": "fixture",
+      "name": "fixture.tf",
+      "layers": [
+        {
+          "id": "17/0",
+          "name": "metal1/drawing",
+          "gds": [
+            17,
+            0
+          ],
+          "color": "#ff0000",
+          "opacity": 0.65,
+          "z_display_um": 0,
+          "thickness_display_um": 0.12,
+          "source": "user",
+          "physical_z_um": null,
+          "physical_thickness_um": null,
+          "material": "mask"
+        },
+        {
+          "id": "17/16",
+          "name": "metal1/pin",
+          "gds": [
+            17,
+            16
+          ],
+          "color": "#ff0000",
+          "opacity": 0.65,
+          "z_display_um": 0.3,
+          "thickness_display_um": 0.12,
+          "source": "user",
+          "physical_z_um": null,
+          "physical_thickness_um": null,
+          "material": "mask"
+        },
+        {
+          "id": "8/0",
+          "name": "poly/drawing",
+          "gds": [
+            8,
+            0
+          ],
+          "color": "#00c828",
+          "opacity": 0.65,
+          "z_display_um": 0.6,
+          "thickness_display_um": 0.12,
+          "source": "user",
+          "physical_z_um": null,
+          "physical_thickness_um": null,
+          "material": "mask"
+        }
+      ],
+      "compact_default_stack": true,
+      "notes": [
+        "명시적 LPP → GDS 맵과 DRF 색상 데이터만 적용합니다.",
+        "3D 높이/두께는 표시용입니다. 기술 파일의 DRC·모델·공정 물리 stack은 실행하거나 추정하지 않습니다."
+      ]
+    }
+  },
+  "pdk": {
+    "id": "fixture",
+    "name": "fixture.tf",
+    "layers": [
+      {
+        "id": "17/0",
+        "name": "metal1/drawing",
+        "gds": [
+          17,
+          0
+        ],
+        "color": "#ff0000",
+        "opacity": 0.65,
+        "z_display_um": 0,
+        "thickness_display_um": 0.12,
+        "source": "user",
+        "physical_z_um": null,
+        "physical_thickness_um": null,
+        "material": "mask"
+      },
+      {
+        "id": "17/16",
+        "name": "metal1/pin",
+        "gds": [
+          17,
+          16
+        ],
+        "color": "#ff0000",
+        "opacity": 0.65,
+        "z_display_um": 0.3,
+        "thickness_display_um": 0.12,
+        "source": "user",
+        "physical_z_um": null,
+        "physical_thickness_um": null,
+        "material": "mask"
+      },
+      {
+        "id": "8/0",
+        "name": "poly/drawing",
+        "gds": [
+          8,
+          0
+        ],
+        "color": "#00c828",
+        "opacity": 0.65,
+        "z_display_um": 0.6,
+        "thickness_display_um": 0.12,
+        "source": "user",
+        "physical_z_um": null,
+        "physical_thickness_um": null,
+        "material": "mask"
+      }
+    ],
+    "compact_default_stack": true,
+    "notes": [
+      "명시적 LPP → GDS 맵과 DRF 색상 데이터만 적용합니다.",
+      "3D 높이/두께는 표시용입니다. 기술 파일의 DRC·모델·공정 물리 stack은 실행하거나 추정하지 않습니다."
+    ]
+  },
+  "losses": [
+    {
+      "name": "constraintGroups",
+      "line": 16,
+      "raw": "constraintGroups((foundry spacings(minWidth(\"metal1\" 0.05))))",
+      "reason": "표시/LPP/스트림 맵 외 기술 데이터·규칙·함수는 보존하며 실행하지 않습니다.",
+      "source_file": "fixture.tf"
+    },
+    {
+      "name": "include",
+      "line": 17,
+      "raw": "include(\"$PDK_ROOT/unknown.il\")",
+      "reason": "표시/LPP/스트림 맵 외 기술 데이터·규칙·함수는 보존하며 실행하지 않습니다.",
+      "source_file": "fixture.tf"
+    },
+    {
+      "name": "drDefineStipple",
+      "line": 8,
+      "raw": "drDefineStipple((display custom ((1 0)(0 1))))",
+      "reason": "표시 색상/packet 외 데이터는 보존하며 실행하지 않습니다.",
+      "source_file": "display.drf"
+    },
+    {
+      "name": "stream-map-record",
+      "line": 5,
+      "raw": "NAME metal1/NET 40 0",
+      "reason": "단일 LPP 및 layer/datatype 네 열만 지원합니다. 범위·NAME 레코드는 원문을 보존합니다.",
+      "source_file": "stream.layermap"
+    },
+    {
+      "name": "stream-map-record",
+      "line": 6,
+      "raw": "metal2 drawing 20-21 0",
+      "reason": "Error: GDS layer/datatype 범위는 0–65535 정수입니다.",
+      "source_file": "stream.layermap"
+    }
+  ],
+  "execution": {
+    "native": false,
+    "vendor_verified": false
+  }
+}

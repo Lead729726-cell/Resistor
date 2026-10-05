@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "project_id": "e3a3e288a32946609041129f7a78d5d2",
+  "revision": 1,
+  "state_root": "/workspace/.runtime/evidence/cpu-physical-b195553e3b2b4bb3a224978e9747d07e/state",
+  "physical_shapes": 72151,
+  "whole_scene": true,
+  "period_ns": 50,
+  "cases": [
+    {
+      "stage": "drc",
+      "run_id": "8bc55fffc9974eab8a5b4b45a2eb2df4",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 20.46646912899996,
+      "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+      "markers": 0,
+      "parasitics": null,
+      "artifacts": {
+        "markers": "/workspace/.runtime/evidence/cpu-physical-b195553e3b2b4bb3a224978e9747d07e/state/runs/8bc55fffc9974eab8a5b4b45a2eb2df4/markers.tsv",
+        "stdout": "/workspace/.runtime/evidence/cpu-physical-b195553e3b2b4bb3a224978e9747d07e/state/runs/8bc55fffc9974eab8a5b4b45a2eb2df4/stdout.log"
+      },
+      "unit_verification": null
+    },
+    {
+      "stage": "lvs",
+      "run_id": "3e22f866c5b54aeda756fdff60cfef5d",
+      "execution_status": "completed",
+      "analysis_result": "fail",
+      "elapsed_s": 21.836470580999958,
+      "message": "Actual Netgen comparison: connectivity or property mismatch; inspect native report.",
+      "markers": 0,
+      "parasitics": null,
+      "artifacts": {
+        "layout_netlist": "/workspace/.runtime/evidence/cpu-physical-b195553e3b2b4bb3a224978e9747d07e/state/runs/3e22f866c5b54aeda756fdff60cfef5d/layout.spice",
+        "reference_netlist": "/workspace/.runtime/evidence/cpu-physical-b195553e3b2b4bb3a224978e9747d07e/state/runs/3e22f866c5b54aeda756fdff60cfef5d/reference.spice",
+        "lvs_report": "/workspace/.runtime/evidence/cpu-physical-b195553e3b2b4bb3a224978e9747d07e/state/runs/3e22f866c5b54aeda756fdff60cfef5d/lvs.log",
+        "stdout": "/workspace/.runtime/evidence/cpu-physical-b195553e3b2b4bb3a224978e9747d07e/state/runs/3e22f866c5b54aeda756fdff60cfef5d/stdout.log"
+      },
+      "unit_verification": null
+    }
+  ],
+  "foundry_signoff": false,
+  "source_sha256": {
+    "workers/eda/digital_units.py": "43a39da3740ee066f48648bef988c5911e19633abd958737df0f8ffbf7095b2b",
+    "workers/eda/digital_mux.py": "f6d00f44d090437ef25bc123e4ca0d787faaa7ff481eca55c9a5ccd353da2cee",
+    "workers/eda/server.py": "c98ecc9fb32215ba75910f052abef6df7280a06e242868b960ccfde2aa0c4238",
+    "workers/eda/test_cpu_physical.py": "a6fbe10a786b2a013ab448dfe03a39dcc948ab2213e0ca92cc05002f77615969"
+  }
+}

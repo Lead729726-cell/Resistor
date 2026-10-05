@@ -1,0 +1,1037 @@
+{
+  "verified_at": "2026-10-04T06:59:41.260Z",
+  "consumer": "Voltage local app",
+  "references": [
+    {
+      "id": "01-serpentine-resistor",
+      "name": "지그재그 저항 배선",
+      "gds_sha256": "a6e603a28a8b40f12b1812291d2ce57b541bc8fe630d430ff044d7852bf80034",
+      "layout": {
+        "polygons": 5,
+        "top": "01_SERPENTINE_RESISTOR",
+        "dbu_um": 0.001,
+        "unmapped": [],
+        "geometry_omitted": false,
+        "chunks": 4,
+        "layers": [
+          {
+            "name": "substrate-outline",
+            "key": "1/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": -0.1,
+            "thickness": 0.1
+          },
+          {
+            "name": "mesa-or-hole-mask",
+            "key": "2/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 0,
+            "thickness": 0.55
+          },
+          {
+            "name": "metal1",
+            "key": "3/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 0.55,
+            "thickness": 0.12
+          },
+          {
+            "name": "metal2",
+            "key": "5/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 1.05,
+            "thickness": 0.16
+          }
+        ]
+      },
+      "process": {
+        "recipe": {
+          "schema_version": 1,
+          "model": "voltage-voxel-emulation-v1",
+          "domain": {
+            "bounds": [
+              -1.6,
+              -1.2,
+              1.6,
+              1.2
+            ],
+            "zMin": -1.05,
+            "zMax": 1.45,
+            "nx": 64,
+            "ny": 48,
+            "nz": 100
+          },
+          "initial": "heightmap",
+          "initialHeight": 0.55,
+          "initialMask": "2/0",
+          "threshold": 45,
+          "steps": [
+            {
+              "id": "oxide",
+              "name": "절연막 가정",
+              "kind": "deposit",
+              "model": "conformal",
+              "amount": 0.1,
+              "sidewall": 1,
+              "color": "#67b8a7",
+              "mask": "all",
+              "inverse": false,
+              "target": 0,
+              "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+            },
+            {
+              "id": "resistor-film",
+              "name": "저항막 가정",
+              "kind": "deposit",
+              "model": "directional",
+              "amount": 0.14,
+              "sidewall": 0.4,
+              "color": "#a29ae8",
+              "mask": "3/0",
+              "inverse": false,
+              "target": 0,
+              "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+            }
+          ],
+          "heightmap": {
+            "schema_version": 1,
+            "units": "um",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data; authored shallow dish and raised shoulders",
+            "x_um": [
+              -1.6,
+              -0.9,
+              0,
+              0.9,
+              1.6
+            ],
+            "y_um": [
+              -1.2,
+              -0.5,
+              0,
+              0.5,
+              1.2
+            ],
+            "height_um": [
+              [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0.18,
+                0.08,
+                0.18,
+                0
+              ],
+              [
+                0,
+                0.18,
+                -0.12,
+                0.18,
+                0
+              ],
+              [
+                0,
+                0.18,
+                0.08,
+                0.18,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "geometry_hash": "a6e603a28a8b40f12b1812291d2ce57b541bc8fe630d430ff044d7852bf80034"
+        },
+        "completed": 2,
+        "scope": "제공 표면 데이터 범위",
+        "maskShapes": 1,
+        "materials": [
+          {
+            "id": 1,
+            "name": "초기 기판",
+            "cells": 137288,
+            "zMin": -1.05,
+            "zMax": 0.17500000000000013,
+            "nominal": 0,
+            "minThickness": null,
+            "topMedian": null,
+            "sideMedian": null,
+            "stepCoverage": null,
+            "thinFaces": 0,
+            "unresolvedFaces": 0,
+            "faces": 0
+          },
+          {
+            "id": 2,
+            "name": "절연막 가정",
+            "cells": 14008,
+            "zMin": -0.09999999999999998,
+            "zMax": 0.275,
+            "nominal": 0.1,
+            "minThickness": 0.049999999999999996,
+            "topMedian": 0.125,
+            "sideMedian": 0.4,
+            "stepCoverage": 3.2,
+            "thinFaces": 0,
+            "unresolvedFaces": 0,
+            "faces": 4776
+          },
+          {
+            "id": 3,
+            "name": "저항막 가정",
+            "cells": 4376,
+            "zMin": 0.02499999999999991,
+            "zMax": 0.42500000000000016,
+            "nominal": 0.14,
+            "minThickness": 0.049999999999999996,
+            "topMedian": 0.15000000000000002,
+            "sideMedian": 0.15000000000000002,
+            "stepCoverage": 1,
+            "thinFaces": 0,
+            "unresolvedFaces": 428,
+            "faces": 1156
+          }
+        ],
+        "scannedCells": 307200,
+        "spacing": [
+          0.05,
+          0.049999999999999996,
+          0.025
+        ],
+        "voids": [],
+        "risks": 428,
+        "warnings": [
+          "가정 기반 기하 공정 모형: 반응 속도·확산·응력·재증착을 계산하지 않으며 제조 불량 판정을 대신하지 않습니다.",
+          "박막 두께는 축 방향 복셀 샘플입니다. 모서리 법선·단차·빈 공간은 격자 해상도에 의존합니다.",
+          "막 두께보다 격자가 거친 면은 미해상으로 표시합니다. 미해상을 박막 결함으로 확정하지 않습니다.",
+          "상단과 XY 경계는 외부 기체에 열려 있고 하단은 기판 경계입니다. 영역 밖 형상은 계산하지 않습니다.",
+          "GDS 마스크는 현재 영역에 교차하는 전체 도형을 보수적으로 격자화합니다. 격자보다 좁은 형상은 폭이 확대되거나 합쳐질 수 있습니다."
+        ]
+      },
+      "browser_errors": []
+    },
+    {
+      "id": "02-step-coverage",
+      "name": "단차 위 금속 피복",
+      "gds_sha256": "532ae83a0215f1f9fc81070dda94bd572ea9255e4ec617758a007cc22b65c247",
+      "layout": {
+        "polygons": 4,
+        "top": "02_STEP_COVERAGE",
+        "dbu_um": 0.001,
+        "unmapped": [],
+        "geometry_omitted": false,
+        "chunks": 3,
+        "layers": [
+          {
+            "name": "substrate-outline",
+            "key": "1/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": -0.1,
+            "thickness": 0.1
+          },
+          {
+            "name": "mesa-or-hole-mask",
+            "key": "2/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 0,
+            "thickness": 0.55
+          },
+          {
+            "name": "metal1",
+            "key": "3/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 0.55,
+            "thickness": 0.12
+          }
+        ]
+      },
+      "process": {
+        "recipe": {
+          "schema_version": 1,
+          "model": "voltage-voxel-emulation-v1",
+          "domain": {
+            "bounds": [
+              -1.6,
+              -1.2,
+              1.6,
+              1.2
+            ],
+            "zMin": -1.05,
+            "zMax": 1.45,
+            "nx": 64,
+            "ny": 48,
+            "nz": 100
+          },
+          "initial": "gds-mesa",
+          "initialHeight": 0.55,
+          "initialMask": "2/0",
+          "threshold": 45,
+          "steps": [
+            {
+              "id": "liner",
+              "name": "절연 liner 가정",
+              "kind": "deposit",
+              "model": "conformal",
+              "amount": 0.1,
+              "sidewall": 1,
+              "color": "#67b8a7",
+              "mask": "all",
+              "inverse": false,
+              "target": 0,
+              "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+            },
+            {
+              "id": "pvd-metal",
+              "name": "방향성 금속 가정",
+              "kind": "deposit",
+              "model": "directional",
+              "amount": 0.18,
+              "sidewall": 0.2,
+              "color": "#df879d",
+              "mask": "all",
+              "inverse": false,
+              "target": 0,
+              "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+            }
+          ],
+          "geometry_hash": "532ae83a0215f1f9fc81070dda94bd572ea9255e4ec617758a007cc22b65c247"
+        },
+        "completed": 2,
+        "scope": "현재 GDS 검사 영역",
+        "maskShapes": 2,
+        "materials": [
+          {
+            "id": 1,
+            "name": "초기 기판",
+            "cells": 153664,
+            "zMin": -1.05,
+            "zMax": 0.5500000000000002,
+            "nominal": 0,
+            "minThickness": null,
+            "topMedian": null,
+            "sideMedian": null,
+            "stepCoverage": null,
+            "thinFaces": 0,
+            "unresolvedFaces": 0,
+            "faces": 0
+          },
+          {
+            "id": 2,
+            "name": "절연 liner 가정",
+            "cells": 21572,
+            "zMin": 0,
+            "zMax": 0.65,
+            "nominal": 0.1,
+            "minThickness": 0.09999999999999999,
+            "topMedian": 0.1,
+            "sideMedian": 0.1,
+            "stepCoverage": 1,
+            "thinFaces": 0,
+            "unresolvedFaces": 0,
+            "faces": 7560
+          },
+          {
+            "id": 3,
+            "name": "방향성 금속 가정",
+            "cells": 26572,
+            "zMin": 0.10000000000000009,
+            "zMax": 0.8250000000000001,
+            "nominal": 0.18,
+            "minThickness": 0.049999999999999996,
+            "topMedian": 0.17500000000000002,
+            "sideMedian": 0.05,
+            "stepCoverage": 0.2857142857142857,
+            "thinFaces": 0,
+            "unresolvedFaces": 5176,
+            "faces": 8248
+          }
+        ],
+        "scannedCells": 307200,
+        "spacing": [
+          0.05,
+          0.049999999999999996,
+          0.025
+        ],
+        "voids": [],
+        "risks": 5176,
+        "warnings": [
+          "가정 기반 기하 공정 모형: 반응 속도·확산·응력·재증착을 계산하지 않으며 제조 불량 판정을 대신하지 않습니다.",
+          "박막 두께는 축 방향 복셀 샘플입니다. 모서리 법선·단차·빈 공간은 격자 해상도에 의존합니다.",
+          "막 두께보다 격자가 거친 면은 미해상으로 표시합니다. 미해상을 박막 결함으로 확정하지 않습니다.",
+          "상단과 XY 경계는 외부 기체에 열려 있고 하단은 기판 경계입니다. 영역 밖 형상은 계산하지 않습니다.",
+          "GDS 마스크는 현재 영역에 교차하는 전체 도형을 보수적으로 격자화합니다. 격자보다 좁은 형상은 폭이 확대되거나 합쳐질 수 있습니다."
+        ]
+      },
+      "browser_errors": []
+    },
+    {
+      "id": "03-deep-via-holes",
+      "name": "깊은 홀과 via 입구",
+      "gds_sha256": "e6dc3e37f4208a1a6c923565eda84f4a1968656e1921f4dbb3619770adccd5f2",
+      "layout": {
+        "polygons": 9,
+        "top": "03_DEEP_VIA_HOLES",
+        "dbu_um": 0.001,
+        "unmapped": [],
+        "geometry_omitted": false,
+        "chunks": 5,
+        "layers": [
+          {
+            "name": "substrate-outline",
+            "key": "1/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": -0.1,
+            "thickness": 0.1
+          },
+          {
+            "name": "mesa-or-hole-mask",
+            "key": "2/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 0,
+            "thickness": 0.55
+          },
+          {
+            "name": "metal1",
+            "key": "3/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 0.55,
+            "thickness": 0.12
+          },
+          {
+            "name": "dielectric-opening",
+            "key": "4/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 0.85,
+            "thickness": 0.12
+          },
+          {
+            "name": "metal2",
+            "key": "5/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 1.05,
+            "thickness": 0.16
+          }
+        ]
+      },
+      "process": {
+        "recipe": {
+          "schema_version": 1,
+          "model": "voltage-voxel-emulation-v1",
+          "domain": {
+            "bounds": [
+              -1.6,
+              -1.2,
+              1.6,
+              1.2
+            ],
+            "zMin": -1.05,
+            "zMax": 1.45,
+            "nx": 64,
+            "ny": 48,
+            "nz": 100
+          },
+          "initial": "gds-hole",
+          "initialHeight": 0.72,
+          "initialMask": "2/0",
+          "threshold": 45,
+          "steps": [
+            {
+              "id": "barrier",
+              "name": "등방 barrier 가정",
+              "kind": "deposit",
+              "model": "conformal",
+              "amount": 0.08,
+              "sidewall": 1,
+              "color": "#dfb963",
+              "mask": "all",
+              "inverse": false,
+              "target": 0,
+              "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+            },
+            {
+              "id": "fill-metal",
+              "name": "방향성 fill 가정",
+              "kind": "deposit",
+              "model": "directional",
+              "amount": 0.2,
+              "sidewall": 0.18,
+              "color": "#67b8a7",
+              "mask": "all",
+              "inverse": false,
+              "target": 0,
+              "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+            }
+          ],
+          "geometry_hash": "e6dc3e37f4208a1a6c923565eda84f4a1968656e1921f4dbb3619770adccd5f2"
+        },
+        "completed": 2,
+        "scope": "현재 GDS 검사 영역",
+        "maskShapes": 3,
+        "materials": [
+          {
+            "id": 1,
+            "name": "초기 기판",
+            "cells": 120672,
+            "zMin": -1.05,
+            "zMax": 9.020562075079397e-17,
+            "nominal": 0,
+            "minThickness": null,
+            "topMedian": null,
+            "sideMedian": null,
+            "stepCoverage": null,
+            "thinFaces": 0,
+            "unresolvedFaces": 0,
+            "faces": 0
+          },
+          {
+            "id": 2,
+            "name": "등방 barrier 가정",
+            "cells": 14532,
+            "zMin": -0.7250000000000001,
+            "zMax": 0.07500000000000004,
+            "nominal": 0.08,
+            "minThickness": 0.049999999999999996,
+            "topMedian": 0.07500000000000001,
+            "sideMedian": 0.1,
+            "stepCoverage": 1.3333333333333333,
+            "thinFaces": 0,
+            "unresolvedFaces": 0,
+            "faces": 6552
+          },
+          {
+            "id": 3,
+            "name": "방향성 fill 가정",
+            "cells": 26424,
+            "zMin": -0.65,
+            "zMax": 0.275,
+            "nominal": 0.2,
+            "minThickness": 0,
+            "topMedian": 0.2,
+            "sideMedian": 0.05,
+            "stepCoverage": 0.25,
+            "thinFaces": 84,
+            "unresolvedFaces": 2244,
+            "faces": 5400
+          }
+        ],
+        "scannedCells": 307200,
+        "spacing": [
+          0.05,
+          0.049999999999999996,
+          0.025
+        ],
+        "voids": [
+          {
+            "cells": 28,
+            "volume": 0.0017500000000000003,
+            "bounds": [
+              -1.0499999999999998,
+              -0.2500000000000001,
+              -0.6499999999999999,
+              -0.75,
+              0.24999999999999986,
+              -0.625
+            ]
+          },
+          {
+            "cells": 28,
+            "volume": 0.0017500000000000003,
+            "bounds": [
+              -0.15,
+              -0.2500000000000001,
+              -0.6499999999999999,
+              0.15,
+              0.24999999999999986,
+              -0.625
+            ]
+          },
+          {
+            "cells": 28,
+            "volume": 0.0017500000000000003,
+            "bounds": [
+              0.7499999999999999,
+              -0.2500000000000001,
+              -0.6499999999999999,
+              1.0499999999999998,
+              0.24999999999999986,
+              -0.625
+            ]
+          },
+          {
+            "cells": 300,
+            "volume": 0.01875,
+            "bounds": [
+              -0.9500000000000001,
+              -0.15,
+              -0.5499999999999999,
+              -0.85,
+              0.15,
+              0.075
+            ]
+          },
+          {
+            "cells": 300,
+            "volume": 0.01875,
+            "bounds": [
+              -0.04999999999999991,
+              -0.15,
+              -0.5499999999999999,
+              0.04999999999999991,
+              0.15,
+              0.075
+            ]
+          },
+          {
+            "cells": 300,
+            "volume": 0.01875,
+            "bounds": [
+              0.85,
+              -0.15,
+              -0.5499999999999999,
+              0.9500000000000003,
+              0.15,
+              0.075
+            ]
+          }
+        ],
+        "risks": 2328,
+        "warnings": [
+          "가정 기반 기하 공정 모형: 반응 속도·확산·응력·재증착을 계산하지 않으며 제조 불량 판정을 대신하지 않습니다.",
+          "박막 두께는 축 방향 복셀 샘플입니다. 모서리 법선·단차·빈 공간은 격자 해상도에 의존합니다.",
+          "막 두께보다 격자가 거친 면은 미해상으로 표시합니다. 미해상을 박막 결함으로 확정하지 않습니다.",
+          "상단과 XY 경계는 외부 기체에 열려 있고 하단은 기판 경계입니다. 영역 밖 형상은 계산하지 않습니다.",
+          "GDS 마스크는 현재 영역에 교차하는 전체 도형을 보수적으로 격자화합니다. 격자보다 좁은 형상은 폭이 확대되거나 합쳐질 수 있습니다."
+        ]
+      },
+      "browser_errors": []
+    },
+    {
+      "id": "04-crossing-cmp",
+      "name": "다층 배선과 CMP",
+      "gds_sha256": "59db3b7b60493f263c73948b41bfd328edd3e1f2a4f10b740898a62884cff745",
+      "layout": {
+        "polygons": 5,
+        "top": "04_CROSSING_CMP",
+        "dbu_um": 0.001,
+        "unmapped": [],
+        "geometry_omitted": false,
+        "chunks": 5,
+        "layers": [
+          {
+            "name": "substrate-outline",
+            "key": "1/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": -0.1,
+            "thickness": 0.1
+          },
+          {
+            "name": "mesa-or-hole-mask",
+            "key": "2/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 0,
+            "thickness": 0.55
+          },
+          {
+            "name": "metal1",
+            "key": "3/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 0.55,
+            "thickness": 0.12
+          },
+          {
+            "name": "dielectric-opening",
+            "key": "4/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 0.85,
+            "thickness": 0.12
+          },
+          {
+            "name": "metal2",
+            "key": "5/0",
+            "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data",
+            "z_start": 1.05,
+            "thickness": 0.16
+          }
+        ]
+      },
+      "process": {
+        "recipe": {
+          "schema_version": 1,
+          "model": "voltage-voxel-emulation-v1",
+          "domain": {
+            "bounds": [
+              -1.6,
+              -1.2,
+              1.6,
+              1.2
+            ],
+            "zMin": -1.05,
+            "zMax": 1.45,
+            "nx": 64,
+            "ny": 48,
+            "nz": 100
+          },
+          "initial": "gds-mesa",
+          "initialHeight": 0.35,
+          "initialMask": "2/0",
+          "threshold": 45,
+          "steps": [
+            {
+              "id": "metal1",
+              "name": "하부 금속 가정",
+              "kind": "deposit",
+              "model": "directional",
+              "amount": 0.16,
+              "sidewall": 0.35,
+              "color": "#88aef0",
+              "mask": "3/0",
+              "inverse": false,
+              "target": 0,
+              "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+            },
+            {
+              "id": "imd",
+              "name": "층간 절연막 가정",
+              "kind": "deposit",
+              "model": "conformal",
+              "amount": 0.3,
+              "sidewall": 1,
+              "color": "#a29ae8",
+              "mask": "all",
+              "inverse": false,
+              "target": 0,
+              "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+            },
+            {
+              "id": "cmp",
+              "name": "CMP 기준면 가정",
+              "kind": "cmp",
+              "model": "conformal",
+              "amount": 0.64,
+              "sidewall": 1,
+              "color": "#a29ae8",
+              "mask": "all",
+              "inverse": false,
+              "target": 0,
+              "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+            },
+            {
+              "id": "via-etch",
+              "name": "via 수직 식각 가정",
+              "kind": "etch",
+              "model": "vertical",
+              "amount": 0.32,
+              "sidewall": 1,
+              "color": "#88aef0",
+              "mask": "4/0",
+              "inverse": false,
+              "target": 3,
+              "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+            },
+            {
+              "id": "metal2",
+              "name": "상부 금속 가정",
+              "kind": "deposit",
+              "model": "directional",
+              "amount": 0.18,
+              "sidewall": 0.35,
+              "color": "#88aef0",
+              "mask": "5/0",
+              "inverse": false,
+              "target": 0,
+              "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+            }
+          ],
+          "geometry_hash": "59db3b7b60493f263c73948b41bfd328edd3e1f2a4f10b740898a62884cff745"
+        },
+        "completed": 5,
+        "scope": "현재 GDS 검사 영역",
+        "maskShapes": 4,
+        "materials": [
+          {
+            "id": 1,
+            "name": "초기 기판",
+            "cells": 140784,
+            "zMin": -1.05,
+            "zMax": 0.35,
+            "nominal": 0,
+            "minThickness": null,
+            "topMedian": null,
+            "sideMedian": null,
+            "stepCoverage": null,
+            "thinFaces": 0,
+            "unresolvedFaces": 0,
+            "faces": 0
+          },
+          {
+            "id": 2,
+            "name": "하부 금속 가정",
+            "cells": 2280,
+            "zMin": 0,
+            "zMax": 0.5000000000000001,
+            "nominal": 0.16,
+            "minThickness": 0.05,
+            "topMedian": 0.15000000000000002,
+            "sideMedian": 0.05,
+            "stepCoverage": 0.3333333333333333,
+            "thinFaces": 0,
+            "unresolvedFaces": 168,
+            "faces": 516
+          },
+          {
+            "id": 3,
+            "name": "층간 절연막 가정",
+            "cells": 46052,
+            "zMin": 0,
+            "zMax": 0.65,
+            "nominal": 0.3,
+            "minThickness": 0,
+            "topMedian": 0.30000000000000004,
+            "sideMedian": 0.7,
+            "stepCoverage": 2.333333333333333,
+            "thinFaces": 208,
+            "unresolvedFaces": 0,
+            "faces": 5600
+          },
+          {
+            "id": 4,
+            "name": "상부 금속 가정",
+            "cells": 2212,
+            "zMin": 0.30000000000000004,
+            "zMax": 0.8250000000000001,
+            "nominal": 0.18,
+            "minThickness": 0.049999999999999996,
+            "topMedian": 0.17500000000000002,
+            "sideMedian": 0.049999999999999996,
+            "stepCoverage": 0.28571428571428564,
+            "thinFaces": 0,
+            "unresolvedFaces": 384,
+            "faces": 648
+          }
+        ],
+        "scannedCells": 307200,
+        "spacing": [
+          0.05,
+          0.049999999999999996,
+          0.025
+        ],
+        "voids": [],
+        "risks": 760,
+        "warnings": [
+          "가정 기반 기하 공정 모형: 반응 속도·확산·응력·재증착을 계산하지 않으며 제조 불량 판정을 대신하지 않습니다.",
+          "박막 두께는 축 방향 복셀 샘플입니다. 모서리 법선·단차·빈 공간은 격자 해상도에 의존합니다.",
+          "막 두께보다 격자가 거친 면은 미해상으로 표시합니다. 미해상을 박막 결함으로 확정하지 않습니다.",
+          "상단과 XY 경계는 외부 기체에 열려 있고 하단은 기판 경계입니다. 영역 밖 형상은 계산하지 않습니다.",
+          "GDS 마스크는 현재 영역에 교차하는 전체 도형을 보수적으로 격자화합니다. 격자보다 좁은 형상은 폭이 확대되거나 합쳐질 수 있습니다."
+        ]
+      },
+      "browser_errors": []
+    },
+    {
+      "id": "05-sky130-mux4",
+      "name": "실제 SKY130A 4:1 MUX",
+      "gds_sha256": "b60470a31e137e0439ec9ec1c08a2d942527c780b77b9eeec041fc65b6543375",
+      "layout": {
+        "polygons": 1724,
+        "top": "mux4",
+        "dbu_um": 0.001,
+        "unmapped": [],
+        "geometry_omitted": false,
+        "chunks": 18,
+        "layers": [
+          {
+            "name": "met3.label",
+            "key": "70/5",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "met3.pin",
+            "key": "70/16",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "prBoundary.boundary",
+            "key": "235/4",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "nwell.drawing",
+            "key": "64/20",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "diff.drawing",
+            "key": "65/20",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "tap.drawing",
+            "key": "65/44",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "psdm.drawing",
+            "key": "94/20",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "nsdm.drawing",
+            "key": "93/44",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "hvtp.drawing",
+            "key": "78/44",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "poly.drawing",
+            "key": "66/20",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "licon1.drawing",
+            "key": "66/44",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "npc.drawing",
+            "key": "95/20",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "li1.drawing",
+            "key": "67/20",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "mcon.drawing",
+            "key": "67/44",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "met1.drawing",
+            "key": "68/20",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "li1.label",
+            "key": "67/5",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "via.drawing",
+            "key": "68/44",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "met2.drawing",
+            "key": "69/20",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "via2.drawing",
+            "key": "69/44",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          },
+          {
+            "name": "met3.drawing",
+            "key": "70/20",
+            "source": "Register SKY130A layout; physical Z is not provided",
+            "z_start": null,
+            "thickness": null
+          }
+        ]
+      },
+      "process": null,
+      "browser_errors": []
+    }
+  ],
+  "archive": {
+    "file": "examples/register-voltage-references.zip",
+    "bytes": 96478,
+    "sha256": "81913e8efc6b897df9739e34b260dc8f2d733f6f5df910208054d3782dea6f57"
+  },
+  "limitations": [
+    "GDS contains XY only. Stack Z, heightmap and process recipes are explicitly authored assumptions.",
+    "Process emulation is not measured, calibrated TCAD or foundry signoff.",
+    "No electrical current, resistance or reliability result is asserted by these reference files."
+  ],
+  "register_view_verification": [
+    {
+      "id": "01-serpentine-resistor",
+      "shapes": 5,
+      "reopen_and_export_verified": true
+    },
+    {
+      "id": "02-step-coverage",
+      "shapes": 4,
+      "reopen_and_export_verified": true
+    },
+    {
+      "id": "03-deep-via-holes",
+      "shapes": 9,
+      "reopen_and_export_verified": true
+    },
+    {
+      "id": "04-crossing-cmp",
+      "shapes": 5,
+      "reopen_and_export_verified": true
+    }
+  ],
+  "public_download": {
+    "url": "https://month-barn-convention-traveling.trycloudflare.com/register-voltage-references.zip",
+    "verified_at": "2026-10-04T07:02:37.296Z",
+    "bytes": 96478,
+    "sha256": "81913e8efc6b897df9739e34b260dc8f2d733f6f5df910208054d3782dea6f57",
+    "status": 200,
+    "sha256_matches_archive": true
+  }
+}

@@ -1,0 +1,10 @@
+# Replace with the operator-owned DNS name. Native agent binds loopback.
+eda-agent.example.com {
+    @agent path /health /rpc
+    handle @agent {
+        reverse_proxy 127.0.0.1:8878
+    }
+    handle {
+        respond 404
+    }
+}

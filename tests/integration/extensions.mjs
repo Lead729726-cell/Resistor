@@ -1,0 +1,44 @@
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const config=JSON.parse(await fs.readFile('.runtime/worker.json','utf8'));
+async function raw(method,params={}) {return (await fetch(config.url+'/rpc',{method:'POST',headers:{'content-type':'application/json','X-MOS-Token':config.token},body:JSON.stringify({method,params})})).json();}
+async function rpc(method,params={}) {const b=await raw(method,params);assert.equal(b.ok,true,JSON.stringify(b.error));return b.result;}
+const evidence=[]; let p=await rpc('project.create',{example:'fixture',name:'Native extended geometry regression'});
+const apply=async command=>{p=await rpc('layout.apply_command',{project_id:p.id,expected_revision:p.revision,command_id:crypto.randomUUID(),command});return p;};
+const original=await rpc('view.get_scene',{project_id:p.id});
+const params={project_id:p.id,expected_revision:1,command_id:'same-edit',command:{type:'add_box',layer_id:'68/20',box:['10000','0','11000','1000']}};
+p=await rpc('layout.apply_command',params); const duplicate=await rpc('layout.apply_command',params);assert.equal(duplicate.revision,p.revision);
+assert.equal((await raw('layout.apply_command',{...params,command:{...params.command,box:['12000','0','13000','1000']}})).error.code,'IDEMPOTENCY_CONFLICT');
+assert.equal((await raw('layout.apply_command',{...params,command_id:'different-edit'})).error.code,'REVISION_CONFLICT');
+assert.ok((await rpc('project.command_receipt',{project_id:p.id,command_id:'same-edit'})).result.revision===2);
+await apply({type:'undo'});assert.equal(p.revision,3);assert.deepEqual((await rpc('view.get_scene',{project_id:p.id})).shapes,original.shapes);
+await apply({type:'redo'});assert.equal(p.revision,4);
+evidence.push({case:'atomic revision, idempotence, monotonic undo/redo',result:'pass'});
+await apply({type:'add_polygon',layer_id:'68/20',polygon:[['20000','0'],['23000','0'],['23000','3000'],['20000','3000']],holes:[[['21000','1000'],['22000','1000'],['22000','2000'],['21000','2000']]],net:'ring'});
+await apply({type:'add_path',layer_id:'68/20',points:[['30000','0'],['31000','0'],['31000','1000']],width:'200'});
+await apply({type:'add_label',layer_id:'68/5',text:'safe_label',position:['20000','0'],net:'ring'});
+await apply({type:'add_pin',layer_id:'68/20',name:'P1',box:['30000','0','30100','100'],net:'pin_net'});
+await apply({type:'add_cell',name:'child'});
+await apply({type:'add_box',cell_name:'child',layer_id:'68/20',box:['0','0','1000','500']});
+await apply({type:'add_instance',cell_name:'child',position:['40000','0'],rotation:90,mirror:true,array:{columns:3,rows:2,dx:'2000',dy:'2000'}});
+let scene=await rpc('view.get_scene',{project_id:p.id});const inst=scene.instances.find(i=>i.cell_name==='child');assert.equal(inst.rotation,90);assert.equal(inst.mirror,true);
+assert.equal(scene.shapes.filter(s=>s.cell_path.includes('/child:')).length,6);
+await apply({type:'transform_instance',id:inst.id,rotation:180,mirror:false,dx:'1000',dy:'1000'});
+await apply({type:'copy_instance',id:inst.id,dx:'10000',dy:'0'});scene=await rpc('view.get_scene',{project_id:p.id});assert.equal(scene.instances.length,2);
+assert.ok(scene.labels.some(l=>l.text==='safe_label'));assert.ok(scene.pins.some(pin=>pin.name==='P1'));
+assert.ok(scene.shapes.some(s=>s.holes?.length===1));
+for(const format of ['gds','oas']) {const exp=await rpc('layout.export',{project_id:p.id,format});assert.equal(exp.roundtrip.geometry_equal,true);assert.equal(exp.roundtrip.hierarchy_preserved,true);assert.equal(exp.roundtrip.stable_ids_preserved,true);}
+evidence.push({case:'polygons holes path labels pins rotated mirrored arrays and exchange',result:'pass',shape_count:scene.shapes.length});
+assert.equal((await raw('layout.apply_command',{project_id:p.id,command:{type:'add_polygon',layer_id:'68/20',polygon:[['0','0'],['1000','1000'],['0','1000'],['1000','0']]}})).error.code,'INVALID_GEOMETRY');
+assert.equal((await raw('layout.apply_command',{project_id:p.id,command:{type:'add_instance',cell_name:'fixture',position:['0','0'],rotation:0,mirror:false}})).error.code,'HIERARCHY_CYCLE');
+assert.equal((await raw('layout.apply_command',{project_id:p.id,command:{type:'transform_instance',id:inst.id,dx:'2147483645',dy:'0'}})).error.code,'COORDINATE_OVERFLOW');
+evidence.push({case:'self intersection hierarchy cycle coordinate overflow rejected',result:'pass'});
+const bundle=await rpc('project.export_bundle',{project_id:p.id,inline:true});const cloned=await rpc('project.import_bundle',{bundle_base64:bundle.bundle_base64,mode:'new'});
+const cloneScene=await rpc('view.get_scene',{project_id:cloned.id});const ordered=shapes=>shapes.toSorted((a,b)=>a.id.localeCompare(b.id));assert.deepEqual(ordered(cloneScene.shapes),ordered(scene.shapes));
+assert.notEqual(cloned.id,p.id);assert.equal(cloned.revision,1);
+const again=await rpc('project.export_bundle',{project_id:p.id,inline:true});assert.equal(again.sha256,bundle.sha256);
+const replacement=await rpc('project.import_bundle',{project_id:p.id,expected_revision:p.revision,mode:'replace',bundle_base64:bundle.bundle_base64,command_id:'replace-snapshot'});assert.equal(replacement.revision,p.revision+1);
+assert.equal((await rpc('project.import_bundle',{project_id:p.id,expected_revision:p.revision,mode:'replace',bundle_base64:bundle.bundle_base64,command_id:'replace-snapshot'})).revision,replacement.revision);
+assert.equal((await raw('project.import_bundle',{project_id:p.id,expected_revision:replacement.revision,mode:'restore',bundle_base64:bundle.bundle_base64})).error.code,'REVISION_CONFLICT');
+evidence.push({case:'immutable checksummed bundle clone replace dedup restore rewind rejection',result:'pass',bundle_sha256:bundle.sha256});
+await fs.mkdir('.runtime/evidence',{recursive:true});await fs.writeFile('.runtime/evidence/extensions.json',JSON.stringify(evidence,null,2));console.log(JSON.stringify(evidence,null,2));

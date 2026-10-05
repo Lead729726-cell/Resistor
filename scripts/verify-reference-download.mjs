@@ -1,0 +1,11 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+const link=JSON.parse(await readFile('.runtime/download-link.json','utf8')),proof=JSON.parse(await readFile('docs/evidence/voltage-references.json','utf8'));
+const url=link.url+'/register-voltage-references.zip';
+const response=await fetch(url,{signal:AbortSignal.timeout(30000)});assert.equal(response.status,200);
+const bytes=Buffer.from(await response.arrayBuffer()),sha256=createHash('sha256').update(bytes).digest('hex');
+assert.equal(bytes.length,proof.archive.bytes);assert.equal(sha256,proof.archive.sha256);
+const page=await fetch(link.url,{signal:AbortSignal.timeout(15000)});assert.equal(page.status,200);assert.ok((await page.text()).includes('볼테지에서 볼 레퍼런스'));
+proof.public_download={url,verified_at:new Date().toISOString(),bytes:bytes.length,sha256,status:200,sha256_matches_archive:true};
+await writeFile('docs/evidence/voltage-references.json',JSON.stringify(proof,null,2));console.log('Verified public reference ZIP: '+url);

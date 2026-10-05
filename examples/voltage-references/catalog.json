@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "producer": "Register",
+  "consumer": "Voltage",
+  "license": "CC0 for the four authored examples; SKY130 MUX uses the existing Register/public PDK layout provenance",
+  "references": [
+    {
+      "id": "01-serpentine-resistor",
+      "name": "지그재그 저항 배선",
+      "objective": "좁은 저항 배선과 접점, 평탄하지 않은 초기 표면 위 피복",
+      "kind": "authored-geometry-and-process-assumptions",
+      "gds": "01-serpentine-resistor/01-serpentine-resistor.gds",
+      "stack": "01-serpentine-resistor/01-serpentine-resistor.stack.json",
+      "recipe": "01-serpentine-resistor/01-serpentine-resistor.recipe.json",
+      "register_view": "01-serpentine-resistor/01-serpentine-resistor.register-view.json",
+      "sha256": "a6e603a28a8b40f12b1812291d2ce57b541bc8fe630d430ff044d7852bf80034",
+      "shapes": 5,
+      "process_initial": "heightmap"
+    },
+    {
+      "id": "02-step-coverage",
+      "name": "단차 위 금속 피복",
+      "objective": "높은 terrace와 낮은 field를 연결하는 금속의 측벽 피복 비교",
+      "kind": "authored-geometry-and-process-assumptions",
+      "gds": "02-step-coverage/02-step-coverage.gds",
+      "stack": "02-step-coverage/02-step-coverage.stack.json",
+      "recipe": "02-step-coverage/02-step-coverage.recipe.json",
+      "register_view": "02-step-coverage/02-step-coverage.register-view.json",
+      "sha256": "532ae83a0215f1f9fc81070dda94bd572ea9255e4ec617758a007cc22b65c247",
+      "shapes": 4,
+      "process_initial": "gds-mesa"
+    },
+    {
+      "id": "03-deep-via-holes",
+      "name": "깊은 홀과 via 입구",
+      "objective": "3개 hole의 측벽, 바닥과 상부 입구를 3축 단면으로 확인",
+      "kind": "authored-geometry-and-process-assumptions",
+      "gds": "03-deep-via-holes/03-deep-via-holes.gds",
+      "stack": "03-deep-via-holes/03-deep-via-holes.stack.json",
+      "recipe": "03-deep-via-holes/03-deep-via-holes.recipe.json",
+      "register_view": "03-deep-via-holes/03-deep-via-holes.register-view.json",
+      "sha256": "e6dc3e37f4208a1a6c923565eda84f4a1968656e1921f4dbb3619770adccd5f2",
+      "shapes": 9,
+      "process_initial": "gds-hole"
+    },
+    {
+      "id": "04-crossing-cmp",
+      "name": "다층 배선과 CMP",
+      "objective": "직교 배선, via 마스크와 CMP 전후 매립 구조 비교",
+      "kind": "authored-geometry-and-process-assumptions",
+      "gds": "04-crossing-cmp/04-crossing-cmp.gds",
+      "stack": "04-crossing-cmp/04-crossing-cmp.stack.json",
+      "recipe": "04-crossing-cmp/04-crossing-cmp.recipe.json",
+      "register_view": "04-crossing-cmp/04-crossing-cmp.register-view.json",
+      "sha256": "59db3b7b60493f263c73948b41bfd328edd3e1f2a4f10b740898a62884cff745",
+      "shapes": 5,
+      "process_initial": "gds-mesa"
+    },
+    {
+      "id": "05-sky130-mux4",
+      "name": "실제 SKY130A 4:1 MUX",
+      "objective": "레지스터의 기존 실제 PDK 설계로 hierarchy와 다층 배선을 확인; Z 정보는 별도 공정 자료 필요",
+      "kind": "existing-register-sky130-layout",
+      "gds": "05-sky130-mux4/sky130-mux4.gds",
+      "stack": "05-sky130-mux4/sky130-mux4.stack.json",
+      "sha256": "b60470a31e137e0439ec9ec1c08a2d942527c780b77b9eeec041fc65b6543375"
+    }
+  ],
+  "limitations": [
+    "GDS contains XY only. Stack Z, heightmap and process recipes are explicitly authored assumptions.",
+    "Process emulation is not measured, calibrated TCAD or foundry signoff.",
+    "No electrical current, resistance or reliability result is asserted by these reference files."
+  ]
+}

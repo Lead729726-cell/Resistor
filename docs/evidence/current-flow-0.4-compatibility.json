@@ -1,0 +1,935 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "case": "mosfet op post_layout=False: actual signed drain/source branches",
+      "result": "pass",
+      "run_id": "381765558d9d432ca172fac1a26a8066",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/381765558d9d432ca172fac1a26a8066/manifest.json",
+      "revision": 1,
+      "analysis": "op",
+      "samples": 1,
+      "branches": [
+        {
+          "id": "XU/XMN1",
+          "name": "MN1 drain terminal (D\u2192S reference)",
+          "from_net": "D",
+          "to_net": "S",
+          "mapping": "device_terminals",
+          "source_vector": "i(v.xu.vregister_cf_4edeb494005ded88)",
+          "device_id": "mn1",
+          "path_dbu": [
+            [
+              "-220",
+              "0"
+            ],
+            [
+              "220",
+              "0"
+            ]
+          ],
+          "layer_id": "67/20",
+          "min_A": 3.62401346e-05,
+          "max_A": 3.62401346e-05
+        },
+        {
+          "id": "testbench/VD",
+          "name": "VD source (+\u2192\u2212)",
+          "from_net": "D",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VD)",
+          "min_A": -3.62401346e-05,
+          "max_A": -3.62401346e-05
+        },
+        {
+          "id": "testbench/VG",
+          "name": "VG source (+\u2192\u2212)",
+          "from_net": "G",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VG)",
+          "min_A": 0.0,
+          "max_A": 0.0
+        },
+        {
+          "id": "testbench/VS",
+          "name": "VS source (+\u2192\u2212)",
+          "from_net": "S",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VS)",
+          "min_A": 3.62239482e-05,
+          "max_A": 3.62239482e-05
+        },
+        {
+          "id": "testbench/VB",
+          "name": "VB source (+\u2192\u2212)",
+          "from_net": "B",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VB)",
+          "min_A": 1.61863121e-08,
+          "max_A": 1.61863121e-08
+        }
+      ]
+    },
+    {
+      "case": "zero-volt probes preserve existing dc voltage/current waveform columns",
+      "result": "pass",
+      "run_id": "79a880a02bea4f24a30f5024839a49ed",
+      "max_absolute_column_errors": [
+        0,
+        0
+      ],
+      "baseline_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/baseline-79a880a02bea4f24a30f5024839a49ed"
+    },
+    {
+      "case": "mosfet dc post_layout=False: actual signed drain/source branches",
+      "result": "pass",
+      "run_id": "79a880a02bea4f24a30f5024839a49ed",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/79a880a02bea4f24a30f5024839a49ed/manifest.json",
+      "revision": 1,
+      "analysis": "dc",
+      "samples": 181,
+      "branches": [
+        {
+          "id": "XU/XMN1",
+          "name": "MN1 drain terminal (D\u2192S reference)",
+          "from_net": "D",
+          "to_net": "S",
+          "mapping": "device_terminals",
+          "source_vector": "i(v.xu.vregister_cf_4edeb494005ded88)",
+          "device_id": "mn1",
+          "path_dbu": [
+            [
+              "-220",
+              "0"
+            ],
+            [
+              "220",
+              "0"
+            ]
+          ],
+          "layer_id": "67/20",
+          "min_A": 1.92563831e-12,
+          "max_A": 0.00033464188
+        },
+        {
+          "id": "testbench/VD",
+          "name": "VD source (+\u2192\u2212)",
+          "from_net": "D",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VD)",
+          "min_A": -0.00033464188,
+          "max_A": -1.92563831e-12
+        },
+        {
+          "id": "testbench/VG",
+          "name": "VG source (+\u2192\u2212)",
+          "from_net": "G",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VG)",
+          "min_A": 0.0,
+          "max_A": 0.0
+        },
+        {
+          "id": "testbench/VS",
+          "name": "VS source (+\u2192\u2212)",
+          "from_net": "S",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VS)",
+          "min_A": 1.15555484e-13,
+          "max_A": 0.000334606243
+        },
+        {
+          "id": "testbench/VB",
+          "name": "VB source (+\u2192\u2212)",
+          "from_net": "B",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VB)",
+          "min_A": 1.81008283e-12,
+          "max_A": 3.70298378e-08
+        }
+      ]
+    },
+    {
+      "case": "mosfet tran post_layout=False: actual signed drain/source branches",
+      "result": "pass",
+      "run_id": "8249bc6271cb4b64b4e5196e8e0b63cc",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/8249bc6271cb4b64b4e5196e8e0b63cc/manifest.json",
+      "revision": 1,
+      "analysis": "tran",
+      "samples": 1508,
+      "branches": [
+        {
+          "id": "XU/XMN1",
+          "name": "MN1 drain terminal (D\u2192S reference)",
+          "from_net": "D",
+          "to_net": "S",
+          "mapping": "device_terminals",
+          "source_vector": "i(v.xu.vregister_cf_4edeb494005ded88)",
+          "device_id": "mn1",
+          "path_dbu": [
+            [
+              "-220",
+              "0"
+            ],
+            [
+              "220",
+              "0"
+            ]
+          ],
+          "layer_id": "67/20",
+          "min_A": 3.62401346e-05,
+          "max_A": 3.62401346e-05
+        },
+        {
+          "id": "testbench/VD",
+          "name": "VD source (+\u2192\u2212)",
+          "from_net": "D",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VD)",
+          "min_A": -3.62401346e-05,
+          "max_A": -3.62401346e-05
+        },
+        {
+          "id": "testbench/VG",
+          "name": "VG source (+\u2192\u2212)",
+          "from_net": "G",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VG)",
+          "min_A": -6.18868181e-21,
+          "max_A": 5.67471233e-20
+        },
+        {
+          "id": "testbench/VS",
+          "name": "VS source (+\u2192\u2212)",
+          "from_net": "S",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VS)",
+          "min_A": 3.62239482e-05,
+          "max_A": 3.62239482e-05
+        },
+        {
+          "id": "testbench/VB",
+          "name": "VB source (+\u2192\u2212)",
+          "from_net": "B",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VB)",
+          "min_A": 1.61863121e-08,
+          "max_A": 1.61863121e-08
+        }
+      ]
+    },
+    {
+      "case": "mosfet op post_layout=True: actual signed drain/source branches",
+      "result": "pass",
+      "run_id": "fea5f65c09694471938c9c6bc0cabdf8",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/fea5f65c09694471938c9c6bc0cabdf8/manifest.json",
+      "revision": 1,
+      "analysis": "op",
+      "samples": 1,
+      "branches": [
+        {
+          "id": "XU/X0",
+          "name": "MN1 drain terminal (D\u2192S reference)",
+          "from_net": "XU.D.t0",
+          "to_net": "XU.S.t0",
+          "mapping": "device_terminals",
+          "source_vector": "i(v.xu.vregister_cf_9f02ef64bbe5e59f_source)",
+          "device_id": "mn1",
+          "path_dbu": [
+            [
+              "-220",
+              "0"
+            ],
+            [
+              "220",
+              "0"
+            ]
+          ],
+          "layer_id": "67/20",
+          "min_A": 3.46678878e-05,
+          "max_A": 3.46678878e-05
+        },
+        {
+          "id": "testbench/VD",
+          "name": "VD source (+\u2192\u2212)",
+          "from_net": "D",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VD)",
+          "min_A": -3.46678878e-05,
+          "max_A": -3.46678878e-05
+        },
+        {
+          "id": "testbench/VG",
+          "name": "VG source (+\u2192\u2212)",
+          "from_net": "G",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VG)",
+          "min_A": 0.0,
+          "max_A": 0.0
+        },
+        {
+          "id": "testbench/VS",
+          "name": "VS source (+\u2192\u2212)",
+          "from_net": "S",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VS)",
+          "min_A": 3.46530322e-05,
+          "max_A": 3.46530322e-05
+        },
+        {
+          "id": "testbench/VB",
+          "name": "VB source (+\u2192\u2212)",
+          "from_net": "B",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VB)",
+          "min_A": 1.48555175e-08,
+          "max_A": 1.48555175e-08
+        }
+      ]
+    },
+    {
+      "case": "mosfet dc post_layout=True: actual signed drain/source branches",
+      "result": "pass",
+      "run_id": "128ee812414240bc883279212f960b8e",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/128ee812414240bc883279212f960b8e/manifest.json",
+      "revision": 1,
+      "analysis": "dc",
+      "samples": 181,
+      "branches": [
+        {
+          "id": "XU/X0",
+          "name": "MN1 drain terminal (D\u2192S reference)",
+          "from_net": "XU.D.t0",
+          "to_net": "XU.S.t0",
+          "mapping": "device_terminals",
+          "source_vector": "i(v.xu.vregister_cf_9f02ef64bbe5e59f_source)",
+          "device_id": "mn1",
+          "path_dbu": [
+            [
+              "-220",
+              "0"
+            ],
+            [
+              "220",
+              "0"
+            ]
+          ],
+          "layer_id": "67/20",
+          "min_A": 1.91650679e-12,
+          "max_A": 0.000313434506
+        },
+        {
+          "id": "testbench/VD",
+          "name": "VD source (+\u2192\u2212)",
+          "from_net": "D",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VD)",
+          "min_A": -0.000313434506,
+          "max_A": -1.91650688e-12
+        },
+        {
+          "id": "testbench/VG",
+          "name": "VG source (+\u2192\u2212)",
+          "from_net": "G",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VG)",
+          "min_A": 0.0,
+          "max_A": 8.67361738e-19
+        },
+        {
+          "id": "testbench/VS",
+          "name": "VS source (+\u2192\u2212)",
+          "from_net": "S",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VS)",
+          "min_A": 1.15555485e-13,
+          "max_A": 0.000313416669
+        },
+        {
+          "id": "testbench/VB",
+          "name": "VB source (+\u2192\u2212)",
+          "from_net": "B",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VB)",
+          "min_A": 1.8009513e-12,
+          "max_A": 2.49158898e-08
+        }
+      ]
+    },
+    {
+      "case": "mosfet tran post_layout=True: actual signed drain/source branches",
+      "result": "pass",
+      "run_id": "9ec0bda170e349979bee44413a7fac56",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/9ec0bda170e349979bee44413a7fac56/manifest.json",
+      "revision": 1,
+      "analysis": "tran",
+      "samples": 1508,
+      "branches": [
+        {
+          "id": "XU/X0",
+          "name": "MN1 drain terminal (D\u2192S reference)",
+          "from_net": "XU.D.t0",
+          "to_net": "XU.S.t0",
+          "mapping": "device_terminals",
+          "source_vector": "i(v.xu.vregister_cf_9f02ef64bbe5e59f_source)",
+          "device_id": "mn1",
+          "path_dbu": [
+            [
+              "-220",
+              "0"
+            ],
+            [
+              "220",
+              "0"
+            ]
+          ],
+          "layer_id": "67/20",
+          "min_A": 3.46678878e-05,
+          "max_A": 3.46678878e-05
+        },
+        {
+          "id": "testbench/VD",
+          "name": "VD source (+\u2192\u2212)",
+          "from_net": "D",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VD)",
+          "min_A": -3.46678878e-05,
+          "max_A": -3.46678878e-05
+        },
+        {
+          "id": "testbench/VG",
+          "name": "VG source (+\u2192\u2212)",
+          "from_net": "G",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VG)",
+          "min_A": -1.30104261e-18,
+          "max_A": 1.30104261e-18
+        },
+        {
+          "id": "testbench/VS",
+          "name": "VS source (+\u2192\u2212)",
+          "from_net": "S",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VS)",
+          "min_A": 3.46530322e-05,
+          "max_A": 3.46530322e-05
+        },
+        {
+          "id": "testbench/VB",
+          "name": "VB source (+\u2192\u2212)",
+          "from_net": "B",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VB)",
+          "min_A": 1.48555175e-08,
+          "max_A": 1.48555175e-08
+        }
+      ]
+    },
+    {
+      "case": "inverter op post_layout=False: actual signed drain/source branches",
+      "result": "pass",
+      "run_id": "96930009094c442499e1e9cef36ef6a0",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/96930009094c442499e1e9cef36ef6a0/manifest.json",
+      "revision": 1,
+      "analysis": "op",
+      "samples": 1,
+      "branches": [
+        {
+          "id": "XU/XMN1",
+          "name": "MN1 drain terminal (D\u2192S reference)",
+          "from_net": "Y",
+          "to_net": "VGND",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_73bd17356b5526f9)",
+          "device_id": "mn1",
+          "min_A": 4.24163417e-06,
+          "max_A": 4.24163417e-06
+        },
+        {
+          "id": "XU/XMP1",
+          "name": "MP1 drain terminal (D\u2192S reference)",
+          "from_net": "Y",
+          "to_net": "VPWR",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_a17d48741693b113)",
+          "device_id": "mp1",
+          "min_A": -4.24163417e-06,
+          "max_A": -4.24163417e-06
+        },
+        {
+          "id": "testbench/VVDD",
+          "name": "VVDD source (+\u2192\u2212)",
+          "from_net": "VPWR",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VVDD)",
+          "min_A": -4.24163417e-06,
+          "max_A": -4.24163417e-06
+        },
+        {
+          "id": "testbench/VGND",
+          "name": "VGND source (+\u2192\u2212)",
+          "from_net": "VGND",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VGND)",
+          "min_A": 4.24163417e-06,
+          "max_A": 4.24163417e-06
+        },
+        {
+          "id": "testbench/VIN",
+          "name": "VIN source (+\u2192\u2212)",
+          "from_net": "A",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VIN)",
+          "min_A": 0.0,
+          "max_A": 0.0
+        }
+      ]
+    },
+    {
+      "case": "inverter dc post_layout=False: actual signed drain/source branches",
+      "result": "pass",
+      "run_id": "21a61014c8334e0b9c3715dae24be654",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/21a61014c8334e0b9c3715dae24be654/manifest.json",
+      "revision": 1,
+      "analysis": "dc",
+      "samples": 181,
+      "branches": [
+        {
+          "id": "XU/XMN1",
+          "name": "MN1 drain terminal (D\u2192S reference)",
+          "from_net": "Y",
+          "to_net": "VGND",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_73bd17356b5526f9)",
+          "device_id": "mn1",
+          "min_A": 1.92563832e-12,
+          "max_A": 8.00898429e-06
+        },
+        {
+          "id": "XU/XMP1",
+          "name": "MP1 drain terminal (D\u2192S reference)",
+          "from_net": "Y",
+          "to_net": "VPWR",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_a17d48741693b113)",
+          "device_id": "mp1",
+          "min_A": -8.00898429e-06,
+          "max_A": -1.92563835e-12
+        },
+        {
+          "id": "testbench/VVDD",
+          "name": "VVDD source (+\u2192\u2212)",
+          "from_net": "VPWR",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VVDD)",
+          "min_A": -8.00898429e-06,
+          "max_A": -1.92564714e-12
+        },
+        {
+          "id": "testbench/VGND",
+          "name": "VGND source (+\u2192\u2212)",
+          "from_net": "VGND",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VGND)",
+          "min_A": 1.92563832e-12,
+          "max_A": 8.00898429e-06
+        },
+        {
+          "id": "testbench/VIN",
+          "name": "VIN source (+\u2192\u2212)",
+          "from_net": "A",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VIN)",
+          "min_A": 0.0,
+          "max_A": 0.0
+        }
+      ]
+    },
+    {
+      "case": "zero-volt probes preserve existing tran voltage/current waveform columns",
+      "result": "pass",
+      "run_id": "6123f0f5ba6a4a44ba3f955eac872afd",
+      "max_absolute_column_errors": [
+        1.3877787807814457e-17,
+        1.488000000016143e-05
+      ],
+      "baseline_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/baseline-6123f0f5ba6a4a44ba3f955eac872afd"
+    },
+    {
+      "case": "inverter tran post_layout=False: actual signed drain/source branches",
+      "result": "pass",
+      "run_id": "6123f0f5ba6a4a44ba3f955eac872afd",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/6123f0f5ba6a4a44ba3f955eac872afd/manifest.json",
+      "revision": 1,
+      "analysis": "tran",
+      "samples": 1544,
+      "branches": [
+        {
+          "id": "XU/XMN1",
+          "name": "MN1 drain terminal (D\u2192S reference)",
+          "from_net": "Y",
+          "to_net": "VGND",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_73bd17356b5526f9)",
+          "device_id": "mn1",
+          "min_A": -7.43333129e-06,
+          "max_A": 0.000239583314
+        },
+        {
+          "id": "XU/XMP1",
+          "name": "MP1 drain terminal (D\u2192S reference)",
+          "from_net": "Y",
+          "to_net": "VPWR",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_a17d48741693b113)",
+          "device_id": "mp1",
+          "min_A": -0.000131389018,
+          "max_A": 2.84119301e-06
+        },
+        {
+          "id": "testbench/VVDD",
+          "name": "VVDD source (+\u2192\u2212)",
+          "from_net": "VPWR",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VVDD)",
+          "min_A": -0.000149037522,
+          "max_A": 2.08647167e-05
+        },
+        {
+          "id": "testbench/VGND",
+          "name": "VGND source (+\u2192\u2212)",
+          "from_net": "VGND",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VGND)",
+          "min_A": -1.80955017e-05,
+          "max_A": 0.000264564346
+        },
+        {
+          "id": "testbench/VIN",
+          "name": "VIN source (+\u2192\u2212)",
+          "from_net": "A",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VIN)",
+          "min_A": -4.20739809e-05,
+          "max_A": 3.9562632e-05
+        }
+      ]
+    },
+    {
+      "case": "inverter op post_layout=True: actual signed drain/source branches",
+      "result": "pass",
+      "run_id": "478cac87a02b4ca5832dbec47f379511",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/478cac87a02b4ca5832dbec47f379511/manifest.json",
+      "revision": 1,
+      "analysis": "op",
+      "samples": 1,
+      "branches": [
+        {
+          "id": "XU/X0",
+          "name": "MN1 drain terminal (D\u2192S reference)",
+          "from_net": "XU.Y.t1",
+          "to_net": "XU.VGND.t1",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_56d79108a8a8b3a4)",
+          "device_id": "mn1",
+          "min_A": 4.17362065e-06,
+          "max_A": 4.17362065e-06
+        },
+        {
+          "id": "XU/X1",
+          "name": "MP1 drain terminal (D\u2192S reference)",
+          "from_net": "XU.Y.t0",
+          "to_net": "XU.VPWR.t1",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_0442f3d1db113908)",
+          "device_id": "mp1",
+          "min_A": -4.17362065e-06,
+          "max_A": -4.17362065e-06
+        },
+        {
+          "id": "testbench/VVDD",
+          "name": "VVDD source (+\u2192\u2212)",
+          "from_net": "VPWR",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VVDD)",
+          "min_A": -4.17362063e-06,
+          "max_A": -4.17362063e-06
+        },
+        {
+          "id": "testbench/VGND",
+          "name": "VGND source (+\u2192\u2212)",
+          "from_net": "VGND",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VGND)",
+          "min_A": 4.17362065e-06,
+          "max_A": 4.17362065e-06
+        },
+        {
+          "id": "testbench/VIN",
+          "name": "VIN source (+\u2192\u2212)",
+          "from_net": "A",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VIN)",
+          "min_A": 8.67361738e-19,
+          "max_A": 8.67361738e-19
+        }
+      ]
+    },
+    {
+      "case": "inverter dc post_layout=True: actual signed drain/source branches",
+      "result": "pass",
+      "run_id": "27382c7f03e946b28eb3dbf5bc653abc",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/27382c7f03e946b28eb3dbf5bc653abc/manifest.json",
+      "revision": 1,
+      "analysis": "dc",
+      "samples": 181,
+      "branches": [
+        {
+          "id": "XU/X0",
+          "name": "MN1 drain terminal (D\u2192S reference)",
+          "from_net": "XU.Y.t1",
+          "to_net": "XU.VGND.t1",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_56d79108a8a8b3a4)",
+          "device_id": "mn1",
+          "min_A": 1.91644484e-12,
+          "max_A": 7.83372187e-06
+        },
+        {
+          "id": "XU/X1",
+          "name": "MP1 drain terminal (D\u2192S reference)",
+          "from_net": "XU.Y.t0",
+          "to_net": "XU.VPWR.t1",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_0442f3d1db113908)",
+          "device_id": "mp1",
+          "min_A": -7.83372187e-06,
+          "max_A": -1.91631834e-12
+        },
+        {
+          "id": "testbench/VVDD",
+          "name": "VVDD source (+\u2192\u2212)",
+          "from_net": "VPWR",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VVDD)",
+          "min_A": -7.83372185e-06,
+          "max_A": -1.90780725e-12
+        },
+        {
+          "id": "testbench/VGND",
+          "name": "VGND source (+\u2192\u2212)",
+          "from_net": "VGND",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VGND)",
+          "min_A": 1.91644484e-12,
+          "max_A": 7.83372187e-06
+        },
+        {
+          "id": "testbench/VIN",
+          "name": "VIN source (+\u2192\u2212)",
+          "from_net": "A",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VIN)",
+          "min_A": -1.73472348e-18,
+          "max_A": 1.73472348e-18
+        }
+      ]
+    },
+    {
+      "case": "inverter tran post_layout=True: actual signed drain/source branches",
+      "result": "pass",
+      "run_id": "a129f97870ae44fea98ced8209bd9ae3",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/a129f97870ae44fea98ced8209bd9ae3/manifest.json",
+      "revision": 1,
+      "analysis": "tran",
+      "samples": 1544,
+      "branches": [
+        {
+          "id": "XU/X0",
+          "name": "MN1 drain terminal (D\u2192S reference)",
+          "from_net": "XU.Y.t1",
+          "to_net": "XU.VGND.t1",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_56d79108a8a8b3a4)",
+          "device_id": "mn1",
+          "min_A": -3.18385448e-06,
+          "max_A": 0.000237920331
+        },
+        {
+          "id": "XU/X1",
+          "name": "MP1 drain terminal (D\u2192S reference)",
+          "from_net": "XU.Y.t0",
+          "to_net": "XU.VPWR.t1",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_0442f3d1db113908)",
+          "device_id": "mp1",
+          "min_A": -0.000119634827,
+          "max_A": 2.78994873e-06
+        },
+        {
+          "id": "testbench/VVDD",
+          "name": "VVDD source (+\u2192\u2212)",
+          "from_net": "VPWR",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VVDD)",
+          "min_A": -0.000133139004,
+          "max_A": 2.39630433e-05
+        },
+        {
+          "id": "testbench/VGND",
+          "name": "VGND source (+\u2192\u2212)",
+          "from_net": "VGND",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VGND)",
+          "min_A": -2.30774188e-05,
+          "max_A": 0.000254693474
+        },
+        {
+          "id": "testbench/VIN",
+          "name": "VIN source (+\u2192\u2212)",
+          "from_net": "A",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VIN)",
+          "min_A": -4.80748198e-05,
+          "max_A": 4.59369987e-05
+        }
+      ]
+    },
+    {
+      "case": "actual resistor/current-source signed current including negative source direction",
+      "result": "pass",
+      "run_id": "adfa6d6f217b4b7b992604356ec0731a",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/adfa6d6f217b4b7b992604356ec0731a/manifest.json",
+      "revision": 3,
+      "analysis": "op",
+      "samples": 1,
+      "branches": [
+        {
+          "id": "XU/IITEST",
+          "name": "ITEST terminal 1\u21922",
+          "from_net": "D",
+          "to_net": "S",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_7dbf00f16a05247c)",
+          "device_id": "itest",
+          "min_A": -1e-05,
+          "max_A": -1e-05
+        },
+        {
+          "id": "XU/XMN1",
+          "name": "MN1 native drain\u2192source",
+          "from_net": "D",
+          "to_net": "S",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_4edeb494005ded88)",
+          "device_id": "mn1",
+          "min_A": 3.62401346e-05,
+          "max_A": 3.62401346e-05
+        },
+        {
+          "id": "XU/RRTEST",
+          "name": "RTEST terminal 1\u21922",
+          "from_net": "D",
+          "to_net": "S",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_339ba84fd3c68428)",
+          "device_id": "rtest",
+          "min_A": 0.0018,
+          "max_A": 0.0018
+        },
+        {
+          "id": "testbench/VD",
+          "name": "VD source (+\u2192\u2212)",
+          "from_net": "D",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VD)",
+          "min_A": -0.00182624013,
+          "max_A": -0.00182624013
+        },
+        {
+          "id": "testbench/VG",
+          "name": "VG source (+\u2192\u2212)",
+          "from_net": "G",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VG)",
+          "min_A": 0.0,
+          "max_A": 0.0
+        },
+        {
+          "id": "testbench/VS",
+          "name": "VS source (+\u2192\u2212)",
+          "from_net": "S",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VS)",
+          "min_A": 0.00182622395,
+          "max_A": 0.00182622395
+        },
+        {
+          "id": "testbench/VB",
+          "name": "VB source (+\u2192\u2212)",
+          "from_net": "B",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(VB)",
+          "min_A": 1.61863121e-08,
+          "max_A": 1.61863121e-08
+        }
+      ]
+    },
+    {
+      "case": "complex AC phasors never emitted as scalar current directions",
+      "result": "pass",
+      "run_id": "fbdab66f55564d1b96a244d8f3282751",
+      "manifest_path": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6/state/runs/fbdab66f55564d1b96a244d8f3282751/manifest.json"
+    }
+  ],
+  "source_state": "/workspace/.runtime/evidence/current-flow-a2e9946c294744c9a9ea0b57a68f95d6",
+  "references": [
+    "https://ngspice.sourceforge.io/docs/ngspice-manual.pdf (independent source convention and Save commands)"
+  ]
+}

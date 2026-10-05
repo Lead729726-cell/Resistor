@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mos-studio://experiment/v1", "title": "Bounded EDA experiment proposal",
+  "description": "Proposal schema only. Evaluator must populate results from stored actual engine artifacts; no LLM numerical truth source.",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "id", "project_id", "parent_revision", "seed", "parameters", "objectives", "constraints", "budget"],
+  "properties": {
+    "schema_version": {"const":1}, "id":{"type":"string"}, "project_id":{"type":"string"}, "parent_revision":{"type":"integer","minimum":0}, "seed":{"type":"integer"},
+    "parameters":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["device_id","name","type","min","max","grid","unit"],"properties":{"device_id":{"type":"string"},"name":{"enum":["w_um","l_um","nf","m","bias_v"]},"type":{"enum":["integer","real"]},"min":{"type":"number"},"max":{"type":"number"},"grid":{"type":"number","exclusiveMinimum":0},"unit":{"type":"string"}}}},
+    "objectives":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["measurement","direction","unit"],"properties":{"measurement":{"type":"string"},"direction":{"enum":["minimize","maximize"]},"unit":{"type":"string"}}}},
+    "constraints":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["measurement","operator","value"],"properties":{"measurement":{"type":"string"},"operator":{"enum":["le","ge","eq"]},"value":{"type":["number","boolean","string"]}}}},
+    "budget":{"type":"object","additionalProperties":false,"required":["trials","wall_seconds","concurrency"],"properties":{"trials":{"type":"integer","minimum":1,"maximum":100},"wall_seconds":{"type":"integer","minimum":1,"maximum":3600},"concurrency":{"type":"integer","minimum":1,"maximum":2}}}
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "kind": "register-analysis-setup",
+  "settings": {
+    "profile_id": "sky130A",
+    "top_cell": "mosfet",
+    "corner": "tt",
+    "temperature_C": 27,
+    "ports": [
+      {
+        "name": "G",
+        "mode": "voltage",
+        "dc_V": 0.9
+      },
+      {
+        "name": "S",
+        "mode": "ground",
+        "dc_V": 0
+      },
+      {
+        "name": "D",
+        "mode": "voltage",
+        "dc_V": 1.8
+      },
+      {
+        "name": "B",
+        "mode": "ground",
+        "dc_V": 0
+      }
+    ],
+    "analysis": "op",
+    "sweep_port": "G",
+    "start_V": 0,
+    "end_V": 1.8,
+    "step_V": 0.05,
+    "duration_s": 1e-8,
+    "step_s": 1e-11,
+    "pex": false
+  },
+  "manifest": {
+    "schema_version": 1,
+    "id": "sky130A",
+    "name": "Installed public SKY130A",
+    "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb",
+    "root": "/foss/pdks/sky130A",
+    "magic_rc": "/foss/pdks/sky130A/libs.tech/magic/sky130A.magicrc",
+    "magic_tech": "/foss/pdks/sky130A/libs.tech/magic/sky130A.tech",
+    "netgen_setup": "/foss/pdks/sky130A/libs.tech/netgen/sky130A_setup.tcl",
+    "model_file": "/foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice",
+    "model_mode": "sky130-subset",
+    "corners": [
+      "tt",
+      "ff",
+      "ss"
+    ],
+    "spice_scale": 0.000001,
+    "layer_file": "/foss/pdks/sky130A/libs.tech/klayout/tech/sky130A.lyp"
+  },
+  "profile_fingerprint": "b9b091e9ab51e3442db83f5d666da6dcb4a430d8237799b0cb4c18e38d6d067e",
+  "source_name": "mosfet.gds",
+  "saved_project_revision": 3
+}

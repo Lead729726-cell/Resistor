@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "model": "voltage-voxel-emulation-v1",
+  "domain": {
+    "bounds": [
+      -1.6,
+      -1.2,
+      1.6,
+      1.2
+    ],
+    "zMin": -1.05,
+    "zMax": 1.45,
+    "nx": 64,
+    "ny": 48,
+    "nz": 100
+  },
+  "initial": "heightmap",
+  "initialHeight": 0.55,
+  "initialMask": "2/0",
+  "threshold": 45,
+  "steps": [
+    {
+      "id": "oxide",
+      "name": "절연막 가정",
+      "kind": "deposit",
+      "model": "conformal",
+      "amount": 0.1,
+      "sidewall": 1,
+      "color": "#67b8a7",
+      "mask": "all",
+      "inverse": false,
+      "target": 0,
+      "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+    },
+    {
+      "id": "resistor-film",
+      "name": "저항막 가정",
+      "kind": "deposit",
+      "model": "directional",
+      "amount": 0.14,
+      "sidewall": 0.4,
+      "color": "#a29ae8",
+      "mask": "3/0",
+      "inverse": false,
+      "target": 0,
+      "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+    }
+  ],
+  "heightmap": {
+    "schema_version": 1,
+    "units": "um",
+    "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data; authored shallow dish and raised shoulders",
+    "x_um": [
+      -1.6,
+      -0.9,
+      0,
+      0.9,
+      1.6
+    ],
+    "y_um": [
+      -1.2,
+      -0.5,
+      0,
+      0.5,
+      1.2
+    ],
+    "height_um": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0.18,
+        0.08,
+        0.18,
+        0
+      ],
+      [
+        0,
+        0.18,
+        -0.12,
+        0.18,
+        0
+      ],
+      [
+        0,
+        0.18,
+        0.08,
+        0.18,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "geometry_hash": "a6e603a28a8b40f12b1812291d2ce57b541bc8fe630d430ff044d7852bf80034"
+}

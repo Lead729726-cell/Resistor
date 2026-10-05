@@ -1,0 +1,4777 @@
+{
+  "id": "1042cceed4f74fc7b415dbc89aaba75e",
+  "name": "MUX4 · SKY130 · 20ns",
+  "cell": "mux4",
+  "revision": 1,
+  "pdk_id": "sky130A",
+  "design_template": {
+    "schema_version": 1,
+    "id": "mux4",
+    "parameters": {
+      "w_um": 0.65,
+      "l_um": 0.15,
+      "slot_ns": 20,
+      "rise_ns": 0.1
+    },
+    "layout_status": "generated-public-core",
+    "physical_verification": "not-run",
+    "stimulus_source": "owned-template",
+    "ground_port": "VGND",
+    "generated_by": "register-design-tools-1"
+  },
+  "testbench": {
+    "analysis": "tran",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "duration_s": 1.28e-06,
+    "step_s": 1e-10,
+    "load_F": 5e-15,
+    "vds_V": 1.8,
+    "vbs_V": 0
+  },
+  "schematic": {
+    "schema_version": 1,
+    "connectivity_mode": "explicit",
+    "devices": [
+      {
+        "id": "mp_sel0",
+        "name": "MP_SEL0",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "S0B",
+          "G": "S0",
+          "S": "VPWR",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 210,
+        "y": 130
+      },
+      {
+        "id": "mn_sel0",
+        "name": "MN_SEL0",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "S0B",
+          "G": "S0",
+          "S": "VGND",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 210,
+        "y": 270
+      },
+      {
+        "id": "mp_sel1",
+        "name": "MP_SEL1",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "S1B",
+          "G": "S1",
+          "S": "VPWR",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 210,
+        "y": 500
+      },
+      {
+        "id": "mn_sel1",
+        "name": "MN_SEL1",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "S1B",
+          "G": "S1",
+          "S": "VGND",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 210,
+        "y": 640
+      },
+      {
+        "id": "mp_d0",
+        "name": "MP_D0",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "N01",
+          "G": "S0",
+          "S": "D0",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 530,
+        "y": 130
+      },
+      {
+        "id": "mn_d0",
+        "name": "MN_D0",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "N01",
+          "G": "S0B",
+          "S": "D0",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 530,
+        "y": 270
+      },
+      {
+        "id": "mp_d1",
+        "name": "MP_D1",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "N01",
+          "G": "S0B",
+          "S": "D1",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 530,
+        "y": 500
+      },
+      {
+        "id": "mn_d1",
+        "name": "MN_D1",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "N01",
+          "G": "S0",
+          "S": "D1",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 530,
+        "y": 640
+      },
+      {
+        "id": "mp_d2",
+        "name": "MP_D2",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "N23",
+          "G": "S0",
+          "S": "D2",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 850,
+        "y": 130
+      },
+      {
+        "id": "mn_d2",
+        "name": "MN_D2",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "N23",
+          "G": "S0B",
+          "S": "D2",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 850,
+        "y": 270
+      },
+      {
+        "id": "mp_d3",
+        "name": "MP_D3",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "N23",
+          "G": "S0B",
+          "S": "D3",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 850,
+        "y": 500
+      },
+      {
+        "id": "mn_d3",
+        "name": "MN_D3",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "N23",
+          "G": "S0",
+          "S": "D3",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 850,
+        "y": 640
+      },
+      {
+        "id": "mp_low",
+        "name": "MP_LOW",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "MUX_RAW",
+          "G": "S1",
+          "S": "N01",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 1170,
+        "y": 130
+      },
+      {
+        "id": "mn_low",
+        "name": "MN_LOW",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "MUX_RAW",
+          "G": "S1B",
+          "S": "N01",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 1170,
+        "y": 270
+      },
+      {
+        "id": "mp_high",
+        "name": "MP_HIGH",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "MUX_RAW",
+          "G": "S1B",
+          "S": "N23",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 1170,
+        "y": 500
+      },
+      {
+        "id": "mn_high",
+        "name": "MN_HIGH",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "MUX_RAW",
+          "G": "S1",
+          "S": "N23",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 1170,
+        "y": 640
+      },
+      {
+        "id": "mp_buf1",
+        "name": "MP_BUF1",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "BUF_N",
+          "G": "MUX_RAW",
+          "S": "VPWR",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 1490,
+        "y": 130
+      },
+      {
+        "id": "mn_buf1",
+        "name": "MN_BUF1",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "BUF_N",
+          "G": "MUX_RAW",
+          "S": "VGND",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 1490,
+        "y": 270
+      },
+      {
+        "id": "mp_buf2",
+        "name": "MP_BUF2",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "Y",
+          "G": "BUF_N",
+          "S": "VPWR",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 1810,
+        "y": 130
+      },
+      {
+        "id": "mn_buf2",
+        "name": "MN_BUF2",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "Y",
+          "G": "BUF_N",
+          "S": "VGND",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 1810,
+        "y": 270
+      },
+      {
+        "id": "port_D0",
+        "name": "PORT_D0",
+        "kind": "port",
+        "pins": {
+          "P": "D0"
+        },
+        "parameters": {},
+        "x": 210,
+        "y": 900
+      },
+      {
+        "id": "port_D1",
+        "name": "PORT_D1",
+        "kind": "port",
+        "pins": {
+          "P": "D1"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 900
+      },
+      {
+        "id": "port_D2",
+        "name": "PORT_D2",
+        "kind": "port",
+        "pins": {
+          "P": "D2"
+        },
+        "parameters": {},
+        "x": 590,
+        "y": 900
+      },
+      {
+        "id": "port_D3",
+        "name": "PORT_D3",
+        "kind": "port",
+        "pins": {
+          "P": "D3"
+        },
+        "parameters": {},
+        "x": 780,
+        "y": 900
+      },
+      {
+        "id": "port_S0",
+        "name": "PORT_S0",
+        "kind": "port",
+        "pins": {
+          "P": "S0"
+        },
+        "parameters": {},
+        "x": 970,
+        "y": 900
+      },
+      {
+        "id": "port_S1",
+        "name": "PORT_S1",
+        "kind": "port",
+        "pins": {
+          "P": "S1"
+        },
+        "parameters": {},
+        "x": 1160,
+        "y": 900
+      },
+      {
+        "id": "port_Y",
+        "name": "PORT_Y",
+        "kind": "port",
+        "pins": {
+          "P": "Y"
+        },
+        "parameters": {},
+        "x": 1350,
+        "y": 900
+      },
+      {
+        "id": "port_VPWR",
+        "name": "PORT_VPWR",
+        "kind": "port",
+        "pins": {
+          "P": "VPWR"
+        },
+        "parameters": {},
+        "x": 1540,
+        "y": 900
+      },
+      {
+        "id": "port_VGND",
+        "name": "PORT_VGND",
+        "kind": "port",
+        "pins": {
+          "P": "VGND"
+        },
+        "parameters": {},
+        "x": 1730,
+        "y": 900
+      }
+    ],
+    "wires": [],
+    "junctions": [],
+    "cells": {}
+  },
+  "ports": [
+    "D0",
+    "D1",
+    "D2",
+    "D3",
+    "S0",
+    "S1",
+    "Y",
+    "VPWR",
+    "VGND"
+  ],
+  "runs": [
+    {
+      "id": "e28df3cd6ff646bf9b36cb475779650b",
+      "project_id": "1042cceed4f74fc7b415dbc89aaba75e",
+      "kind": "drc",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "artifacts": {
+        "markers": "/workspace/.runtime/eda/runs/e28df3cd6ff646bf9b36cb475779650b/markers.tsv",
+        "stdout": "/workspace/.runtime/eda/runs/e28df3cd6ff646bf9b36cb475779650b/stdout.log"
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/e28df3cd6ff646bf9b36cb475779650b/manifest.json",
+      "input_signature": "7b6268ea85c37d470e56533580e95b88325ea99ae935756a35060638803d6634",
+      "started_at": "2026-10-02T06:51:55.865514+00:00",
+      "tool": "Magic",
+      "markers": [],
+      "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+      "ended_at": "2026-10-02T06:51:57.779604+00:00",
+      "elapsed_s": 1.9750967309810221
+    },
+    {
+      "id": "0139fd5d90af40aba0e97be671b19ba9",
+      "project_id": "1042cceed4f74fc7b415dbc89aaba75e",
+      "kind": "lvs",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "artifacts": {
+        "layout_netlist": "/workspace/.runtime/eda/runs/0139fd5d90af40aba0e97be671b19ba9/layout.spice",
+        "reference_netlist": "/workspace/.runtime/eda/runs/0139fd5d90af40aba0e97be671b19ba9/reference.spice",
+        "lvs_report": "/workspace/.runtime/eda/runs/0139fd5d90af40aba0e97be671b19ba9/lvs.log",
+        "stdout": "/workspace/.runtime/eda/runs/0139fd5d90af40aba0e97be671b19ba9/stdout.log"
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/0139fd5d90af40aba0e97be671b19ba9/manifest.json",
+      "input_signature": "7b6268ea85c37d470e56533580e95b88325ea99ae935756a35060638803d6634",
+      "started_at": "2026-10-02T06:51:57.856590+00:00",
+      "tool": "Magic + Netgen",
+      "message": "Actual Netgen comparison: circuits match uniquely.",
+      "ended_at": "2026-10-02T06:51:58.919368+00:00",
+      "elapsed_s": 1.064141200040467
+    },
+    {
+      "id": "db5f93086c4540b9b032b268e130ca08",
+      "project_id": "1042cceed4f74fc7b415dbc89aaba75e",
+      "kind": "simulation",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "artifacts": {
+        "testbench": "/workspace/.runtime/eda/runs/db5f93086c4540b9b032b268e130ca08/testbench.spice",
+        "current_flow_data": "/workspace/.runtime/eda/runs/db5f93086c4540b9b032b268e130ca08/current-flow.dat",
+        "current_probe_netlist": "/workspace/.runtime/eda/runs/db5f93086c4540b9b032b268e130ca08/current-probe.spice",
+        "waveform_data": "/workspace/.runtime/eda/runs/db5f93086c4540b9b032b268e130ca08/waveform.dat",
+        "waveform_raw": "/workspace/.runtime/eda/runs/db5f93086c4540b9b032b268e130ca08/waveform.raw",
+        "reference_netlist": "/workspace/.runtime/eda/runs/db5f93086c4540b9b032b268e130ca08/reference.spice",
+        "stdout": "/workspace/.runtime/eda/runs/db5f93086c4540b9b032b268e130ca08/stdout.log"
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/db5f93086c4540b9b032b268e130ca08/manifest.json",
+      "input_signature": "7b6268ea85c37d470e56533580e95b88325ea99ae935756a35060638803d6634",
+      "started_at": "2026-10-02T06:51:55.462602+00:00",
+      "tool": "ngspice",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 13284,
+        "D0_min": 0,
+        "D0_max": 1.8,
+        "D1_min": 0,
+        "D1_max": 1.8,
+        "D2_min": 0,
+        "D2_max": 1.8,
+        "D3_min": 0,
+        "D3_max": 1.8,
+        "S0_min": 0,
+        "S0_max": 1.8,
+        "S1_min": 0,
+        "S1_max": 1.8,
+        "Y_min": -0.0374768649,
+        "Y_max": 1.8587643,
+        "supply_current_min": -4.90032319e-05,
+        "supply_current_max": 0.00011080317,
+        "current_flow_status": "available",
+        "template_id": "mux4",
+        "layout_status": "generated-public-core",
+        "metric_source": "actual-ngspice-samples",
+        "truth_cases": 64,
+        "truth_passed": 64,
+        "truth_status": "pass",
+        "tpLH_max_s": 1.5893381600784112e-10,
+        "tpHL_max_s": 1.1096127415807964e-10,
+        "stimulus_energy_J": 2.0479517167289597e-13,
+        "stimulus_mean_power_W": 1.5999622786944997e-07,
+        "protocol": "mux4-gray64-v1"
+      },
+      "digital_verification": {
+        "schema_version": 1,
+        "protocol": "mux4-gray64-v1",
+        "source": "actual-ngspice-input-and-output-samples",
+        "expected_cases": 64,
+        "passed_cases": 64,
+        "complete": true,
+        "pass": true,
+        "logic_low_max_V": 0.54,
+        "logic_high_min_V": 1.26,
+        "settled_window_fraction": [
+          0.7,
+          0.95
+        ],
+        "rows": [
+          {
+            "index": 0,
+            "select": 0,
+            "pattern": 0,
+            "expected": 0,
+            "sample_time_s": 1.7e-08,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.7233064028e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330642e-09,
+            "pass": true
+          },
+          {
+            "index": 1,
+            "select": 0,
+            "pattern": 1,
+            "expected": 1,
+            "sample_time_s": 3.7e-08,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 2,
+            "select": 0,
+            "pattern": 3,
+            "expected": 1,
+            "sample_time_s": 5.7e-08,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 3,
+            "select": 0,
+            "pattern": 2,
+            "expected": 0,
+            "sample_time_s": 7.7e-08,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 4,
+            "select": 0,
+            "pattern": 6,
+            "expected": 0,
+            "sample_time_s": 9.7e-08,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 5,
+            "select": 0,
+            "pattern": 7,
+            "expected": 1,
+            "sample_time_s": 1.1699999999999999e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 6,
+            "select": 0,
+            "pattern": 5,
+            "expected": 1,
+            "sample_time_s": 1.37e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 7,
+            "select": 0,
+            "pattern": 4,
+            "expected": 0,
+            "sample_time_s": 1.57e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 8,
+            "select": 0,
+            "pattern": 12,
+            "expected": 0,
+            "sample_time_s": 1.7699999999999998e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.7233064080000002e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 9,
+            "select": 0,
+            "pattern": 13,
+            "expected": 1,
+            "sample_time_s": 1.97e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 10,
+            "select": 0,
+            "pattern": 15,
+            "expected": 1,
+            "sample_time_s": 2.17e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 11,
+            "select": 0,
+            "pattern": 14,
+            "expected": 0,
+            "sample_time_s": 2.37e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 12,
+            "select": 0,
+            "pattern": 10,
+            "expected": 0,
+            "sample_time_s": 2.57e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 13,
+            "select": 0,
+            "pattern": 11,
+            "expected": 1,
+            "sample_time_s": 2.77e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 14,
+            "select": 0,
+            "pattern": 9,
+            "expected": 1,
+            "sample_time_s": 2.9699999999999997e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 15,
+            "select": 0,
+            "pattern": 8,
+            "expected": 0,
+            "sample_time_s": 3.17e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330642e-09,
+            "pass": true
+          },
+          {
+            "index": 16,
+            "select": 1,
+            "pattern": 0,
+            "expected": 0,
+            "sample_time_s": 3.37e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 17,
+            "select": 1,
+            "pattern": 1,
+            "expected": 0,
+            "sample_time_s": 3.5700000000000003e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 18,
+            "select": 1,
+            "pattern": 3,
+            "expected": 1,
+            "sample_time_s": 3.7700000000000005e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 19,
+            "select": 1,
+            "pattern": 2,
+            "expected": 1,
+            "sample_time_s": 3.97e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 20,
+            "select": 1,
+            "pattern": 6,
+            "expected": 1,
+            "sample_time_s": 4.1700000000000004e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 21,
+            "select": 1,
+            "pattern": 7,
+            "expected": 1,
+            "sample_time_s": 4.3700000000000006e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 22,
+            "select": 1,
+            "pattern": 5,
+            "expected": 0,
+            "sample_time_s": 4.5700000000000003e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 23,
+            "select": 1,
+            "pattern": 4,
+            "expected": 0,
+            "sample_time_s": 4.77e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.7233064080000002e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 24,
+            "select": 1,
+            "pattern": 12,
+            "expected": 0,
+            "sample_time_s": 4.970000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 25,
+            "select": 1,
+            "pattern": 13,
+            "expected": 0,
+            "sample_time_s": 5.170000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 26,
+            "select": 1,
+            "pattern": 15,
+            "expected": 1,
+            "sample_time_s": 5.37e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 27,
+            "select": 1,
+            "pattern": 14,
+            "expected": 1,
+            "sample_time_s": 5.57e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 28,
+            "select": 1,
+            "pattern": 10,
+            "expected": 1,
+            "sample_time_s": 5.77e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 29,
+            "select": 1,
+            "pattern": 11,
+            "expected": 1,
+            "sample_time_s": 5.970000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 30,
+            "select": 1,
+            "pattern": 9,
+            "expected": 0,
+            "sample_time_s": 6.170000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 31,
+            "select": 1,
+            "pattern": 8,
+            "expected": 0,
+            "sample_time_s": 6.37e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 32,
+            "select": 2,
+            "pattern": 0,
+            "expected": 0,
+            "sample_time_s": 6.57e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 33,
+            "select": 2,
+            "pattern": 1,
+            "expected": 0,
+            "sample_time_s": 6.77e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 34,
+            "select": 2,
+            "pattern": 3,
+            "expected": 0,
+            "sample_time_s": 6.970000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 35,
+            "select": 2,
+            "pattern": 2,
+            "expected": 0,
+            "sample_time_s": 7.170000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 36,
+            "select": 2,
+            "pattern": 6,
+            "expected": 1,
+            "sample_time_s": 7.37e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 37,
+            "select": 2,
+            "pattern": 7,
+            "expected": 1,
+            "sample_time_s": 7.57e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 38,
+            "select": 2,
+            "pattern": 5,
+            "expected": 1,
+            "sample_time_s": 7.77e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 39,
+            "select": 2,
+            "pattern": 4,
+            "expected": 1,
+            "sample_time_s": 7.970000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 40,
+            "select": 2,
+            "pattern": 12,
+            "expected": 1,
+            "sample_time_s": 8.170000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 41,
+            "select": 2,
+            "pattern": 13,
+            "expected": 1,
+            "sample_time_s": 8.370000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 42,
+            "select": 2,
+            "pattern": 15,
+            "expected": 1,
+            "sample_time_s": 8.57e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 43,
+            "select": 2,
+            "pattern": 14,
+            "expected": 1,
+            "sample_time_s": 8.77e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 44,
+            "select": 2,
+            "pattern": 10,
+            "expected": 0,
+            "sample_time_s": 8.97e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 45,
+            "select": 2,
+            "pattern": 11,
+            "expected": 0,
+            "sample_time_s": 9.170000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 46,
+            "select": 2,
+            "pattern": 9,
+            "expected": 0,
+            "sample_time_s": 9.370000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330635e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330635e-09,
+            "output_max_V": 2.72330635e-09,
+            "pass": true
+          },
+          {
+            "index": 47,
+            "select": 2,
+            "pattern": 8,
+            "expected": 0,
+            "sample_time_s": 9.570000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 48,
+            "select": 3,
+            "pattern": 0,
+            "expected": 0,
+            "sample_time_s": 9.770000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.7233064087003e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 49,
+            "select": 3,
+            "pattern": 1,
+            "expected": 0,
+            "sample_time_s": 9.970000000000002e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.7233064080000002e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 50,
+            "select": 3,
+            "pattern": 3,
+            "expected": 0,
+            "sample_time_s": 1.017e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 51,
+            "select": 3,
+            "pattern": 2,
+            "expected": 0,
+            "sample_time_s": 1.037e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 52,
+            "select": 3,
+            "pattern": 6,
+            "expected": 0,
+            "sample_time_s": 1.057e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 53,
+            "select": 3,
+            "pattern": 7,
+            "expected": 0,
+            "sample_time_s": 1.077e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 54,
+            "select": 3,
+            "pattern": 5,
+            "expected": 0,
+            "sample_time_s": 1.097e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 55,
+            "select": 3,
+            "pattern": 4,
+            "expected": 0,
+            "sample_time_s": 1.117e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 56,
+            "select": 3,
+            "pattern": 12,
+            "expected": 1,
+            "sample_time_s": 1.137e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 57,
+            "select": 3,
+            "pattern": 13,
+            "expected": 1,
+            "sample_time_s": 1.157e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 58,
+            "select": 3,
+            "pattern": 15,
+            "expected": 1,
+            "sample_time_s": 1.1770000000000001e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 59,
+            "select": 3,
+            "pattern": 14,
+            "expected": 1,
+            "sample_time_s": 1.1970000000000001e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 60,
+            "select": 3,
+            "pattern": 10,
+            "expected": 1,
+            "sample_time_s": 1.217e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 61,
+            "select": 3,
+            "pattern": 11,
+            "expected": 1,
+            "sample_time_s": 1.237e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 62,
+            "select": 3,
+            "pattern": 9,
+            "expected": 1,
+            "sample_time_s": 1.257e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 63,
+            "select": 3,
+            "pattern": 8,
+            "expected": 1,
+            "sample_time_s": 1.277e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          }
+        ],
+        "data_delays_s": {
+          "rise": [
+            1.5252055890576063e-10,
+            1.442913662411658e-10,
+            1.525173110520807e-10,
+            1.5252191691453947e-10,
+            1.567108502162025e-10,
+            1.5670274146529575e-10,
+            1.534067293862964e-10,
+            1.5893381600784112e-10
+          ],
+          "fall": [
+            1.108673111309915e-10,
+            1.1096127415807964e-10,
+            1.1095590782724383e-10,
+            1.108702258186645e-10,
+            1.0873388850439713e-10,
+            1.087274607170028e-10,
+            1.0974287772982771e-10
+          ]
+        },
+        "stimulus_energy_J": 2.0479517167289597e-13,
+        "delay_scope": "Only same-selection, single Gray data transitions; half-VDD interpolation. Not STA or hazard-free certification."
+      },
+      "message": "Actual ngspice tran: 13284 samples.; MUX truth 64/64",
+      "ended_at": "2026-10-02T06:51:59.511781+00:00",
+      "elapsed_s": 4.063872326980345
+    },
+    {
+      "id": "d33484b33bc54fc7a08334d2f0fa3bb6",
+      "project_id": "1042cceed4f74fc7b415dbc89aaba75e",
+      "kind": "pex",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "artifacts": {
+        "pex_netlist": "/workspace/.runtime/eda/runs/d33484b33bc54fc7a08334d2f0fa3bb6/pex.spice",
+        "pex_quality": "/workspace/.runtime/eda/runs/d33484b33bc54fc7a08334d2f0fa3bb6/pex-quality.json",
+        "stdout": "/workspace/.runtime/eda/runs/d33484b33bc54fc7a08334d2f0fa3bb6/stdout.log"
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/d33484b33bc54fc7a08334d2f0fa3bb6/manifest.json",
+      "input_signature": "7b6268ea85c37d470e56533580e95b88325ea99ae935756a35060638803d6634",
+      "started_at": "2026-10-02T06:51:59.127676+00:00",
+      "tool": "Magic",
+      "parasitics": {
+        "resistors": 1509,
+        "capacitors": 231
+      },
+      "message": "Actual Magic RC extraction: 1509 resistors, 231 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+      "ended_at": "2026-10-02T06:52:00.965629+00:00",
+      "elapsed_s": 1.8578850839985535
+    },
+    {
+      "id": "d8ab86a59f434fcc800f14f98a25dfae",
+      "project_id": "1042cceed4f74fc7b415dbc89aaba75e",
+      "kind": "simulation",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "artifacts": {
+        "pex_netlist": "/workspace/.runtime/eda/runs/d8ab86a59f434fcc800f14f98a25dfae/pex.spice",
+        "pex_quality": "/workspace/.runtime/eda/runs/d8ab86a59f434fcc800f14f98a25dfae/pex-quality.json",
+        "testbench": "/workspace/.runtime/eda/runs/d8ab86a59f434fcc800f14f98a25dfae/testbench.spice",
+        "current_flow_data": "/workspace/.runtime/eda/runs/d8ab86a59f434fcc800f14f98a25dfae/current-flow.dat",
+        "current_probe_netlist": "/workspace/.runtime/eda/runs/d8ab86a59f434fcc800f14f98a25dfae/current-probe.spice",
+        "waveform_data": "/workspace/.runtime/eda/runs/d8ab86a59f434fcc800f14f98a25dfae/waveform.dat",
+        "waveform_raw": "/workspace/.runtime/eda/runs/d8ab86a59f434fcc800f14f98a25dfae/waveform.raw",
+        "reference_netlist": "/workspace/.runtime/eda/runs/d8ab86a59f434fcc800f14f98a25dfae/pex.spice",
+        "stdout": "/workspace/.runtime/eda/runs/d8ab86a59f434fcc800f14f98a25dfae/stdout.log"
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/d8ab86a59f434fcc800f14f98a25dfae/manifest.json",
+      "input_signature": "7b6268ea85c37d470e56533580e95b88325ea99ae935756a35060638803d6634",
+      "started_at": "2026-10-02T06:53:04.436390+00:00",
+      "tool": "ngspice",
+      "parasitics": {
+        "resistors": 1509,
+        "capacitors": 231
+      },
+      "message": "Actual ngspice tran: 13444 samples.; MUX truth 64/64",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "true",
+        "samples": 13444,
+        "D0_min": 0,
+        "D0_max": 1.8,
+        "D1_min": 0,
+        "D1_max": 1.8,
+        "D2_min": 0,
+        "D2_max": 1.8,
+        "D3_min": 0,
+        "D3_max": 1.8,
+        "S0_min": 0,
+        "S0_max": 1.8,
+        "S1_min": 0,
+        "S1_max": 1.8,
+        "Y_min": -0.0692448338,
+        "Y_max": 1.81618264,
+        "supply_current_min": -9.73731846e-05,
+        "supply_current_max": 0.000127291132,
+        "current_flow_status": "available_partial",
+        "template_id": "mux4",
+        "layout_status": "generated-public-core",
+        "metric_source": "actual-ngspice-samples",
+        "truth_cases": 64,
+        "truth_passed": 64,
+        "truth_status": "pass",
+        "tpLH_max_s": 4.833581336420196e-09,
+        "tpHL_max_s": 3.2842178509523386e-09,
+        "stimulus_energy_J": 1.8477185649253874e-12,
+        "stimulus_mean_power_W": 1.4435301288479588e-06,
+        "protocol": "mux4-gray64-v1"
+      },
+      "digital_verification": {
+        "schema_version": 1,
+        "protocol": "mux4-gray64-v1",
+        "source": "actual-ngspice-input-and-output-samples",
+        "expected_cases": 64,
+        "passed_cases": 64,
+        "complete": true,
+        "pass": true,
+        "logic_low_max_V": 0.54,
+        "logic_high_min_V": 1.26,
+        "settled_window_fraction": [
+          0.7,
+          0.95
+        ],
+        "rows": [
+          {
+            "index": 0,
+            "select": 0,
+            "pattern": 0,
+            "expected": 0,
+            "sample_time_s": 1.7e-08,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 3.41631531e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41631531e-09,
+            "output_max_V": 3.41631542e-09,
+            "pass": true
+          },
+          {
+            "index": 1,
+            "select": 0,
+            "pattern": 1,
+            "expected": 1,
+            "sample_time_s": 3.7e-08,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.800017831655
+            },
+            "actual": 1,
+            "output_min_V": 1.8000107,
+            "output_max_V": 1.80003793,
+            "pass": true
+          },
+          {
+            "index": 2,
+            "select": 0,
+            "pattern": 3,
+            "expected": 1,
+            "sample_time_s": 5.7e-08,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.80000005
+            },
+            "actual": 1,
+            "output_min_V": 1.80000002,
+            "output_max_V": 1.80000012,
+            "pass": true
+          },
+          {
+            "index": 3,
+            "select": 0,
+            "pattern": 2,
+            "expected": 0,
+            "sample_time_s": 7.7e-08,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 3.41658670524042e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41633579e-09,
+            "output_max_V": 3.42947558e-09,
+            "pass": true
+          },
+          {
+            "index": 4,
+            "select": 0,
+            "pattern": 6,
+            "expected": 0,
+            "sample_time_s": 9.7e-08,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 3.41631681904742e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41631534e-09,
+            "output_max_V": 3.41641012e-09,
+            "pass": true
+          },
+          {
+            "index": 5,
+            "select": 0,
+            "pattern": 7,
+            "expected": 1,
+            "sample_time_s": 1.1699999999999999e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.8000177711955998
+            },
+            "actual": 1,
+            "output_min_V": 1.8000105,
+            "output_max_V": 1.80003726,
+            "pass": true
+          },
+          {
+            "index": 6,
+            "select": 0,
+            "pattern": 5,
+            "expected": 1,
+            "sample_time_s": 1.37e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.80000009
+            },
+            "actual": 1,
+            "output_min_V": 1.80000005,
+            "output_max_V": 1.80000021,
+            "pass": true
+          },
+          {
+            "index": 7,
+            "select": 0,
+            "pattern": 4,
+            "expected": 0,
+            "sample_time_s": 1.57e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 3.4165918063281e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41633757e-09,
+            "output_max_V": 3.43031103e-09,
+            "pass": true
+          },
+          {
+            "index": 8,
+            "select": 0,
+            "pattern": 12,
+            "expected": 0,
+            "sample_time_s": 1.7699999999999998e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 3.4163156336912e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41631514e-09,
+            "output_max_V": 3.41636758e-09,
+            "pass": true
+          },
+          {
+            "index": 9,
+            "select": 0,
+            "pattern": 13,
+            "expected": 1,
+            "sample_time_s": 1.97e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.8000177749761999
+            },
+            "actual": 1,
+            "output_min_V": 1.80001069,
+            "output_max_V": 1.80003789,
+            "pass": true
+          },
+          {
+            "index": 10,
+            "select": 0,
+            "pattern": 15,
+            "expected": 1,
+            "sample_time_s": 2.17e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.80000005
+            },
+            "actual": 1,
+            "output_min_V": 1.80000002,
+            "output_max_V": 1.80000012,
+            "pass": true
+          },
+          {
+            "index": 11,
+            "select": 0,
+            "pattern": 14,
+            "expected": 0,
+            "sample_time_s": 2.37e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 3.4165914272995e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41633691e-09,
+            "output_max_V": 3.42937693e-09,
+            "pass": true
+          },
+          {
+            "index": 12,
+            "select": 0,
+            "pattern": 10,
+            "expected": 0,
+            "sample_time_s": 2.57e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 3.4163146949265e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41626869e-09,
+            "output_max_V": 3.41631575e-09,
+            "pass": true
+          },
+          {
+            "index": 13,
+            "select": 0,
+            "pattern": 11,
+            "expected": 1,
+            "sample_time_s": 2.77e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.8000178283585
+            },
+            "actual": 1,
+            "output_min_V": 1.80001075,
+            "output_max_V": 1.80003807,
+            "pass": true
+          },
+          {
+            "index": 14,
+            "select": 0,
+            "pattern": 9,
+            "expected": 1,
+            "sample_time_s": 2.9699999999999997e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.80000009
+            },
+            "actual": 1,
+            "output_min_V": 1.80000005,
+            "output_max_V": 1.80000022,
+            "pass": true
+          },
+          {
+            "index": 15,
+            "select": 0,
+            "pattern": 8,
+            "expected": 0,
+            "sample_time_s": 3.17e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 3.4165865160944e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.4163362e-09,
+            "output_max_V": 3.42954951e-09,
+            "pass": true
+          },
+          {
+            "index": 16,
+            "select": 1,
+            "pattern": 0,
+            "expected": 0,
+            "sample_time_s": 3.37e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 3.416332623583e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41628503e-09,
+            "output_max_V": 3.41633427e-09,
+            "pass": true
+          },
+          {
+            "index": 17,
+            "select": 1,
+            "pattern": 1,
+            "expected": 0,
+            "sample_time_s": 3.5700000000000003e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 3.416334205216e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41633346e-09,
+            "output_max_V": 3.41633708e-09,
+            "pass": true
+          },
+          {
+            "index": 18,
+            "select": 1,
+            "pattern": 3,
+            "expected": 1,
+            "sample_time_s": 3.7700000000000005e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.8000179281358
+            },
+            "actual": 1,
+            "output_min_V": 1.80001085,
+            "output_max_V": 1.80003842,
+            "pass": true
+          },
+          {
+            "index": 19,
+            "select": 1,
+            "pattern": 2,
+            "expected": 1,
+            "sample_time_s": 3.97e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.80000009
+            },
+            "actual": 1,
+            "output_min_V": 1.80000005,
+            "output_max_V": 1.80000022,
+            "pass": true
+          },
+          {
+            "index": 20,
+            "select": 1,
+            "pattern": 6,
+            "expected": 1,
+            "sample_time_s": 4.1700000000000004e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999997
+            },
+            "actual": 1,
+            "output_min_V": 1.79999995,
+            "output_max_V": 1.79999998,
+            "pass": true
+          },
+          {
+            "index": 21,
+            "select": 1,
+            "pattern": 7,
+            "expected": 1,
+            "sample_time_s": 4.3700000000000006e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999997
+            },
+            "actual": 1,
+            "output_min_V": 1.79999994,
+            "output_max_V": 1.79999998,
+            "pass": true
+          },
+          {
+            "index": 22,
+            "select": 1,
+            "pattern": 5,
+            "expected": 0,
+            "sample_time_s": 4.5700000000000003e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 3.416586470452e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.4163536e-09,
+            "output_max_V": 3.42886559e-09,
+            "pass": true
+          },
+          {
+            "index": 23,
+            "select": 1,
+            "pattern": 4,
+            "expected": 0,
+            "sample_time_s": 4.77e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 3.4163338707008e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41633104e-09,
+            "output_max_V": 3.41633419e-09,
+            "pass": true
+          },
+          {
+            "index": 24,
+            "select": 1,
+            "pattern": 12,
+            "expected": 0,
+            "sample_time_s": 4.970000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 3.4163369699048e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41633374e-09,
+            "output_max_V": 3.41646986e-09,
+            "pass": true
+          },
+          {
+            "index": 25,
+            "select": 1,
+            "pattern": 13,
+            "expected": 0,
+            "sample_time_s": 5.170000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 3.416333830876e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41633329e-09,
+            "output_max_V": 3.41633762e-09,
+            "pass": true
+          },
+          {
+            "index": 26,
+            "select": 1,
+            "pattern": 15,
+            "expected": 1,
+            "sample_time_s": 5.37e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.8000178720056002
+            },
+            "actual": 1,
+            "output_min_V": 1.80001079,
+            "output_max_V": 1.80003822,
+            "pass": true
+          },
+          {
+            "index": 27,
+            "select": 1,
+            "pattern": 14,
+            "expected": 1,
+            "sample_time_s": 5.57e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.80000009
+            },
+            "actual": 1,
+            "output_min_V": 1.80000005,
+            "output_max_V": 1.80000022,
+            "pass": true
+          },
+          {
+            "index": 28,
+            "select": 1,
+            "pattern": 10,
+            "expected": 1,
+            "sample_time_s": 5.77e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.8
+            },
+            "actual": 1,
+            "output_min_V": 1.8,
+            "output_max_V": 1.80000002,
+            "pass": true
+          },
+          {
+            "index": 29,
+            "select": 1,
+            "pattern": 11,
+            "expected": 1,
+            "sample_time_s": 5.970000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999997
+            },
+            "actual": 1,
+            "output_min_V": 1.79999994,
+            "output_max_V": 1.79999998,
+            "pass": true
+          },
+          {
+            "index": 30,
+            "select": 1,
+            "pattern": 9,
+            "expected": 0,
+            "sample_time_s": 6.170000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 3.4165925476132e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41635442e-09,
+            "output_max_V": 3.42944375e-09,
+            "pass": true
+          },
+          {
+            "index": 31,
+            "select": 1,
+            "pattern": 8,
+            "expected": 0,
+            "sample_time_s": 6.37e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 3.416333751364e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41633054e-09,
+            "output_max_V": 3.41633493e-09,
+            "pass": true
+          },
+          {
+            "index": 32,
+            "select": 2,
+            "pattern": 0,
+            "expected": 0,
+            "sample_time_s": 6.57e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 3.416173582752e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.40854673e-09,
+            "output_max_V": 3.4163459e-09,
+            "pass": true
+          },
+          {
+            "index": 33,
+            "select": 2,
+            "pattern": 1,
+            "expected": 0,
+            "sample_time_s": 6.77e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 3.4163259753152e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.4148523e-09,
+            "output_max_V": 3.41635902e-09,
+            "pass": true
+          },
+          {
+            "index": 34,
+            "select": 2,
+            "pattern": 3,
+            "expected": 0,
+            "sample_time_s": 6.970000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 3.4163614644872e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41634039e-09,
+            "output_max_V": 3.41636211e-09,
+            "pass": true
+          },
+          {
+            "index": 35,
+            "select": 2,
+            "pattern": 2,
+            "expected": 0,
+            "sample_time_s": 7.170000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 3.4163839069549e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41636401e-09,
+            "output_max_V": 3.41732944e-09,
+            "pass": true
+          },
+          {
+            "index": 36,
+            "select": 2,
+            "pattern": 6,
+            "expected": 1,
+            "sample_time_s": 7.37e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.800023368562
+            },
+            "actual": 1,
+            "output_min_V": 1.80001434,
+            "output_max_V": 1.800047,
+            "pass": true
+          },
+          {
+            "index": 37,
+            "select": 2,
+            "pattern": 7,
+            "expected": 1,
+            "sample_time_s": 7.57e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.7999995646852
+            },
+            "actual": 1,
+            "output_min_V": 1.79999909,
+            "output_max_V": 1.79999974,
+            "pass": true
+          },
+          {
+            "index": 38,
+            "select": 2,
+            "pattern": 5,
+            "expected": 1,
+            "sample_time_s": 7.77e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.80000001
+            },
+            "actual": 1,
+            "output_min_V": 1.8,
+            "output_max_V": 1.80000003,
+            "pass": true
+          },
+          {
+            "index": 39,
+            "select": 2,
+            "pattern": 4,
+            "expected": 1,
+            "sample_time_s": 7.970000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.8000005531064
+            },
+            "actual": 1,
+            "output_min_V": 1.80000033,
+            "output_max_V": 1.80000119,
+            "pass": true
+          },
+          {
+            "index": 40,
+            "select": 2,
+            "pattern": 12,
+            "expected": 1,
+            "sample_time_s": 8.170000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.7999996735809
+            },
+            "actual": 1,
+            "output_min_V": 1.79999931,
+            "output_max_V": 1.7999998,
+            "pass": true
+          },
+          {
+            "index": 41,
+            "select": 2,
+            "pattern": 13,
+            "expected": 1,
+            "sample_time_s": 8.370000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999944146
+            },
+            "actual": 1,
+            "output_min_V": 1.79999882,
+            "output_max_V": 1.79999966,
+            "pass": true
+          },
+          {
+            "index": 42,
+            "select": 2,
+            "pattern": 15,
+            "expected": 1,
+            "sample_time_s": 8.57e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999996
+            },
+            "actual": 1,
+            "output_min_V": 1.79999994,
+            "output_max_V": 1.79999997,
+            "pass": true
+          },
+          {
+            "index": 43,
+            "select": 2,
+            "pattern": 14,
+            "expected": 1,
+            "sample_time_s": 8.77e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.8000005481971
+            },
+            "actual": 1,
+            "output_min_V": 1.80000032,
+            "output_max_V": 1.80000119,
+            "pass": true
+          },
+          {
+            "index": 44,
+            "select": 2,
+            "pattern": 10,
+            "expected": 0,
+            "sample_time_s": 8.97e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 3.413503984964e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.30072641e-09,
+            "output_max_V": 3.41612451e-09,
+            "pass": true
+          },
+          {
+            "index": 45,
+            "select": 2,
+            "pattern": 11,
+            "expected": 0,
+            "sample_time_s": 9.170000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 3.4163260433333e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41484588e-09,
+            "output_max_V": 3.41635894e-09,
+            "pass": true
+          },
+          {
+            "index": 46,
+            "select": 2,
+            "pattern": 9,
+            "expected": 0,
+            "sample_time_s": 9.370000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 3.4163627151616e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.4163619e-09,
+            "output_max_V": 3.4163835e-09,
+            "pass": true
+          },
+          {
+            "index": 47,
+            "select": 2,
+            "pattern": 8,
+            "expected": 0,
+            "sample_time_s": 9.570000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 3.41638391112e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41636393e-09,
+            "output_max_V": 3.41728963e-09,
+            "pass": true
+          },
+          {
+            "index": 48,
+            "select": 3,
+            "pattern": 0,
+            "expected": 0,
+            "sample_time_s": 9.770000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 3.4163873317474e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41638118e-09,
+            "output_max_V": 3.41667371e-09,
+            "pass": true
+          },
+          {
+            "index": 49,
+            "select": 3,
+            "pattern": 1,
+            "expected": 0,
+            "sample_time_s": 9.970000000000002e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 3.416380042474e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41635932e-09,
+            "output_max_V": 3.41638052e-09,
+            "pass": true
+          },
+          {
+            "index": 50,
+            "select": 3,
+            "pattern": 3,
+            "expected": 0,
+            "sample_time_s": 1.017e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 3.416343436438e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41482795e-09,
+            "output_max_V": 3.41637753e-09,
+            "pass": true
+          },
+          {
+            "index": 51,
+            "select": 3,
+            "pattern": 2,
+            "expected": 0,
+            "sample_time_s": 1.037e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 3.416380787592e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.4163805e-09,
+            "output_max_V": 3.41639324e-09,
+            "pass": true
+          },
+          {
+            "index": 52,
+            "select": 3,
+            "pattern": 6,
+            "expected": 0,
+            "sample_time_s": 1.057e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 3.416379571973e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41634507e-09,
+            "output_max_V": 3.41638066e-09,
+            "pass": true
+          },
+          {
+            "index": 53,
+            "select": 3,
+            "pattern": 7,
+            "expected": 0,
+            "sample_time_s": 1.077e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 3.416380200008e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41636469e-09,
+            "output_max_V": 3.41638075e-09,
+            "pass": true
+          },
+          {
+            "index": 54,
+            "select": 3,
+            "pattern": 5,
+            "expected": 0,
+            "sample_time_s": 1.097e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 3.416402589504e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41638246e-09,
+            "output_max_V": 3.41727605e-09,
+            "pass": true
+          },
+          {
+            "index": 55,
+            "select": 3,
+            "pattern": 4,
+            "expected": 0,
+            "sample_time_s": 1.117e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 3.4163810195619997e-09
+            },
+            "actual": 0,
+            "output_min_V": 3.41638056e-09,
+            "output_max_V": 3.41639877e-09,
+            "pass": true
+          },
+          {
+            "index": 56,
+            "select": 3,
+            "pattern": 12,
+            "expected": 1,
+            "sample_time_s": 1.137e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.800023138546
+            },
+            "actual": 1,
+            "output_min_V": 1.80001438,
+            "output_max_V": 1.80004711,
+            "pass": true
+          },
+          {
+            "index": 57,
+            "select": 3,
+            "pattern": 13,
+            "expected": 1,
+            "sample_time_s": 1.157e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.8000001
+            },
+            "actual": 1,
+            "output_min_V": 1.80000006,
+            "output_max_V": 1.80000024,
+            "pass": true
+          },
+          {
+            "index": 58,
+            "select": 3,
+            "pattern": 15,
+            "expected": 1,
+            "sample_time_s": 1.1770000000000001e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.799999439146
+            },
+            "actual": 1,
+            "output_min_V": 1.7999988,
+            "output_max_V": 1.79999966,
+            "pass": true
+          },
+          {
+            "index": 59,
+            "select": 3,
+            "pattern": 14,
+            "expected": 1,
+            "sample_time_s": 1.1970000000000001e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.8
+            },
+            "actual": 1,
+            "output_min_V": 1.8,
+            "output_max_V": 1.80000002,
+            "pass": true
+          },
+          {
+            "index": 60,
+            "select": 3,
+            "pattern": 10,
+            "expected": 1,
+            "sample_time_s": 1.217e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.80000002
+            },
+            "actual": 1,
+            "output_min_V": 1.8,
+            "output_max_V": 1.80000005,
+            "pass": true
+          },
+          {
+            "index": 61,
+            "select": 3,
+            "pattern": 11,
+            "expected": 1,
+            "sample_time_s": 1.237e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999997
+            },
+            "actual": 1,
+            "output_min_V": 1.79999995,
+            "output_max_V": 1.79999998,
+            "pass": true
+          },
+          {
+            "index": 62,
+            "select": 3,
+            "pattern": 9,
+            "expected": 1,
+            "sample_time_s": 1.257e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.8000005482380002
+            },
+            "actual": 1,
+            "output_min_V": 1.80000032,
+            "output_max_V": 1.80000119,
+            "pass": true
+          },
+          {
+            "index": 63,
+            "select": 3,
+            "pattern": 8,
+            "expected": 1,
+            "sample_time_s": 1.277e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.80000001
+            },
+            "actual": 1,
+            "output_min_V": 1.8,
+            "output_max_V": 1.80000004,
+            "pass": true
+          }
+        ],
+        "data_delays_s": {
+          "rise": [
+            4.512086336228546e-09,
+            4.5124950306155194e-09,
+            4.512794539473063e-09,
+            4.512017776906021e-09,
+            4.5287502083574195e-09,
+            4.5298182229923055e-09,
+            4.833581336420196e-09,
+            4.789798933910563e-09
+          ],
+          "fall": [
+            3.138287461289544e-09,
+            3.1378277255305104e-09,
+            3.1389140802087707e-09,
+            3.1375899419168396e-09,
+            3.11803835327634e-09,
+            3.1171245413110036e-09,
+            3.2842178509523386e-09
+          ]
+        },
+        "stimulus_energy_J": 1.8477185649253874e-12,
+        "delay_scope": "Only same-selection, single Gray data transitions; half-VDD interpolation. Not STA or hazard-free certification."
+      },
+      "ended_at": "2026-10-02T06:53:18.058006+00:00",
+      "elapsed_s": 13.632338225026615
+    },
+    {
+      "id": "51625af4a077477b8e2bcc5c3cc3673c",
+      "project_id": "1042cceed4f74fc7b415dbc89aaba75e",
+      "kind": "simulation",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "artifacts": {
+        "testbench": "/workspace/.runtime/eda/runs/51625af4a077477b8e2bcc5c3cc3673c/testbench.spice",
+        "current_flow_data": "/workspace/.runtime/eda/runs/51625af4a077477b8e2bcc5c3cc3673c/current-flow.dat",
+        "current_probe_netlist": "/workspace/.runtime/eda/runs/51625af4a077477b8e2bcc5c3cc3673c/current-probe.spice",
+        "waveform_data": "/workspace/.runtime/eda/runs/51625af4a077477b8e2bcc5c3cc3673c/waveform.dat",
+        "waveform_raw": "/workspace/.runtime/eda/runs/51625af4a077477b8e2bcc5c3cc3673c/waveform.raw",
+        "reference_netlist": "/workspace/.runtime/eda/runs/51625af4a077477b8e2bcc5c3cc3673c/reference.spice",
+        "stdout": "/workspace/.runtime/eda/runs/51625af4a077477b8e2bcc5c3cc3673c/stdout.log"
+      },
+      "manifest_path": "/workspace/.runtime/eda/runs/51625af4a077477b8e2bcc5c3cc3673c/manifest.json",
+      "input_signature": "7b6268ea85c37d470e56533580e95b88325ea99ae935756a35060638803d6634",
+      "started_at": "2026-10-02T07:01:49.079829+00:00",
+      "tool": "ngspice",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 13284,
+        "D0_min": 0,
+        "D0_max": 1.8,
+        "D1_min": 0,
+        "D1_max": 1.8,
+        "D2_min": 0,
+        "D2_max": 1.8,
+        "D3_min": 0,
+        "D3_max": 1.8,
+        "S0_min": 0,
+        "S0_max": 1.8,
+        "S1_min": 0,
+        "S1_max": 1.8,
+        "Y_min": -0.0374768649,
+        "Y_max": 1.8587643,
+        "supply_current_min": -4.90032319e-05,
+        "supply_current_max": 0.00011080317,
+        "current_flow_status": "available",
+        "template_id": "mux4",
+        "layout_status": "generated-public-core",
+        "metric_source": "actual-ngspice-samples",
+        "truth_cases": 64,
+        "truth_passed": 64,
+        "truth_status": "pass",
+        "tpLH_max_s": 1.5893381600784112e-10,
+        "tpHL_max_s": 1.1096127415807964e-10,
+        "stimulus_energy_J": 2.0479517167289597e-13,
+        "stimulus_mean_power_W": 1.5999622786944997e-07,
+        "protocol": "mux4-gray64-v1"
+      },
+      "digital_verification": {
+        "schema_version": 1,
+        "protocol": "mux4-gray64-v1",
+        "source": "actual-ngspice-input-and-output-samples",
+        "expected_cases": 64,
+        "passed_cases": 64,
+        "complete": true,
+        "pass": true,
+        "logic_low_max_V": 0.54,
+        "logic_high_min_V": 1.26,
+        "settled_window_fraction": [
+          0.7,
+          0.95
+        ],
+        "rows": [
+          {
+            "index": 0,
+            "select": 0,
+            "pattern": 0,
+            "expected": 0,
+            "sample_time_s": 1.7e-08,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.7233064028e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330642e-09,
+            "pass": true
+          },
+          {
+            "index": 1,
+            "select": 0,
+            "pattern": 1,
+            "expected": 1,
+            "sample_time_s": 3.7e-08,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 2,
+            "select": 0,
+            "pattern": 3,
+            "expected": 1,
+            "sample_time_s": 5.7e-08,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 3,
+            "select": 0,
+            "pattern": 2,
+            "expected": 0,
+            "sample_time_s": 7.7e-08,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 4,
+            "select": 0,
+            "pattern": 6,
+            "expected": 0,
+            "sample_time_s": 9.7e-08,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 5,
+            "select": 0,
+            "pattern": 7,
+            "expected": 1,
+            "sample_time_s": 1.1699999999999999e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 6,
+            "select": 0,
+            "pattern": 5,
+            "expected": 1,
+            "sample_time_s": 1.37e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 7,
+            "select": 0,
+            "pattern": 4,
+            "expected": 0,
+            "sample_time_s": 1.57e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 8,
+            "select": 0,
+            "pattern": 12,
+            "expected": 0,
+            "sample_time_s": 1.7699999999999998e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.7233064080000002e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 9,
+            "select": 0,
+            "pattern": 13,
+            "expected": 1,
+            "sample_time_s": 1.97e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 10,
+            "select": 0,
+            "pattern": 15,
+            "expected": 1,
+            "sample_time_s": 2.17e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 11,
+            "select": 0,
+            "pattern": 14,
+            "expected": 0,
+            "sample_time_s": 2.37e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 12,
+            "select": 0,
+            "pattern": 10,
+            "expected": 0,
+            "sample_time_s": 2.57e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 13,
+            "select": 0,
+            "pattern": 11,
+            "expected": 1,
+            "sample_time_s": 2.77e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 14,
+            "select": 0,
+            "pattern": 9,
+            "expected": 1,
+            "sample_time_s": 2.9699999999999997e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 15,
+            "select": 0,
+            "pattern": 8,
+            "expected": 0,
+            "sample_time_s": 3.17e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330642e-09,
+            "pass": true
+          },
+          {
+            "index": 16,
+            "select": 1,
+            "pattern": 0,
+            "expected": 0,
+            "sample_time_s": 3.37e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 17,
+            "select": 1,
+            "pattern": 1,
+            "expected": 0,
+            "sample_time_s": 3.5700000000000003e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 18,
+            "select": 1,
+            "pattern": 3,
+            "expected": 1,
+            "sample_time_s": 3.7700000000000005e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 19,
+            "select": 1,
+            "pattern": 2,
+            "expected": 1,
+            "sample_time_s": 3.97e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 20,
+            "select": 1,
+            "pattern": 6,
+            "expected": 1,
+            "sample_time_s": 4.1700000000000004e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 21,
+            "select": 1,
+            "pattern": 7,
+            "expected": 1,
+            "sample_time_s": 4.3700000000000006e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 22,
+            "select": 1,
+            "pattern": 5,
+            "expected": 0,
+            "sample_time_s": 4.5700000000000003e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 23,
+            "select": 1,
+            "pattern": 4,
+            "expected": 0,
+            "sample_time_s": 4.77e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.7233064080000002e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 24,
+            "select": 1,
+            "pattern": 12,
+            "expected": 0,
+            "sample_time_s": 4.970000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 25,
+            "select": 1,
+            "pattern": 13,
+            "expected": 0,
+            "sample_time_s": 5.170000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 26,
+            "select": 1,
+            "pattern": 15,
+            "expected": 1,
+            "sample_time_s": 5.37e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 27,
+            "select": 1,
+            "pattern": 14,
+            "expected": 1,
+            "sample_time_s": 5.57e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 28,
+            "select": 1,
+            "pattern": 10,
+            "expected": 1,
+            "sample_time_s": 5.77e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 29,
+            "select": 1,
+            "pattern": 11,
+            "expected": 1,
+            "sample_time_s": 5.970000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 30,
+            "select": 1,
+            "pattern": 9,
+            "expected": 0,
+            "sample_time_s": 6.170000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 31,
+            "select": 1,
+            "pattern": 8,
+            "expected": 0,
+            "sample_time_s": 6.37e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 0,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 32,
+            "select": 2,
+            "pattern": 0,
+            "expected": 0,
+            "sample_time_s": 6.57e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 33,
+            "select": 2,
+            "pattern": 1,
+            "expected": 0,
+            "sample_time_s": 6.77e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 34,
+            "select": 2,
+            "pattern": 3,
+            "expected": 0,
+            "sample_time_s": 6.970000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 35,
+            "select": 2,
+            "pattern": 2,
+            "expected": 0,
+            "sample_time_s": 7.170000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 36,
+            "select": 2,
+            "pattern": 6,
+            "expected": 1,
+            "sample_time_s": 7.37e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 37,
+            "select": 2,
+            "pattern": 7,
+            "expected": 1,
+            "sample_time_s": 7.57e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 38,
+            "select": 2,
+            "pattern": 5,
+            "expected": 1,
+            "sample_time_s": 7.77e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 39,
+            "select": 2,
+            "pattern": 4,
+            "expected": 1,
+            "sample_time_s": 7.970000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 40,
+            "select": 2,
+            "pattern": 12,
+            "expected": 1,
+            "sample_time_s": 8.170000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 41,
+            "select": 2,
+            "pattern": 13,
+            "expected": 1,
+            "sample_time_s": 8.370000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 42,
+            "select": 2,
+            "pattern": 15,
+            "expected": 1,
+            "sample_time_s": 8.57e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 43,
+            "select": 2,
+            "pattern": 14,
+            "expected": 1,
+            "sample_time_s": 8.77e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 44,
+            "select": 2,
+            "pattern": 10,
+            "expected": 0,
+            "sample_time_s": 8.97e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 45,
+            "select": 2,
+            "pattern": 11,
+            "expected": 0,
+            "sample_time_s": 9.170000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 46,
+            "select": 2,
+            "pattern": 9,
+            "expected": 0,
+            "sample_time_s": 9.370000000000001e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330635e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330635e-09,
+            "output_max_V": 2.72330635e-09,
+            "pass": true
+          },
+          {
+            "index": 47,
+            "select": 2,
+            "pattern": 8,
+            "expected": 0,
+            "sample_time_s": 9.570000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 0,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 48,
+            "select": 3,
+            "pattern": 0,
+            "expected": 0,
+            "sample_time_s": 9.770000000000001e-07,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.7233064087003e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 49,
+            "select": 3,
+            "pattern": 1,
+            "expected": 0,
+            "sample_time_s": 9.970000000000002e-07,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.7233064080000002e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.7233064e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 50,
+            "select": 3,
+            "pattern": 3,
+            "expected": 0,
+            "sample_time_s": 1.017e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 51,
+            "select": 3,
+            "pattern": 2,
+            "expected": 0,
+            "sample_time_s": 1.037e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 52,
+            "select": 3,
+            "pattern": 6,
+            "expected": 0,
+            "sample_time_s": 1.057e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 53,
+            "select": 3,
+            "pattern": 7,
+            "expected": 0,
+            "sample_time_s": 1.077e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 54,
+            "select": 3,
+            "pattern": 5,
+            "expected": 0,
+            "sample_time_s": 1.097e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 55,
+            "select": 3,
+            "pattern": 4,
+            "expected": 0,
+            "sample_time_s": 1.117e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 0,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 2.72330641e-09
+            },
+            "actual": 0,
+            "output_min_V": 2.72330641e-09,
+            "output_max_V": 2.72330641e-09,
+            "pass": true
+          },
+          {
+            "index": 56,
+            "select": 3,
+            "pattern": 12,
+            "expected": 1,
+            "sample_time_s": 1.137e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 57,
+            "select": 3,
+            "pattern": 13,
+            "expected": 1,
+            "sample_time_s": 1.157e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 58,
+            "select": 3,
+            "pattern": 15,
+            "expected": 1,
+            "sample_time_s": 1.1770000000000001e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 59,
+            "select": 3,
+            "pattern": 14,
+            "expected": 1,
+            "sample_time_s": 1.1970000000000001e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 1.8,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 60,
+            "select": 3,
+            "pattern": 10,
+            "expected": 1,
+            "sample_time_s": 1.217e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 61,
+            "select": 3,
+            "pattern": 11,
+            "expected": 1,
+            "sample_time_s": 1.237e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 1.8,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 62,
+            "select": 3,
+            "pattern": 9,
+            "expected": 1,
+            "sample_time_s": 1.257e-06,
+            "inputs_V": {
+              "D0": 1.8,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          },
+          {
+            "index": 63,
+            "select": 3,
+            "pattern": 8,
+            "expected": 1,
+            "sample_time_s": 1.277e-06,
+            "inputs_V": {
+              "D0": 0,
+              "D1": 0,
+              "D2": 0,
+              "D3": 1.8,
+              "S0": 1.8,
+              "S1": 1.8,
+              "Y": 1.79999999
+            },
+            "actual": 1,
+            "output_min_V": 1.79999999,
+            "output_max_V": 1.79999999,
+            "pass": true
+          }
+        ],
+        "data_delays_s": {
+          "rise": [
+            1.5252055890576063e-10,
+            1.442913662411658e-10,
+            1.525173110520807e-10,
+            1.5252191691453947e-10,
+            1.567108502162025e-10,
+            1.5670274146529575e-10,
+            1.534067293862964e-10,
+            1.5893381600784112e-10
+          ],
+          "fall": [
+            1.108673111309915e-10,
+            1.1096127415807964e-10,
+            1.1095590782724383e-10,
+            1.108702258186645e-10,
+            1.0873388850439713e-10,
+            1.087274607170028e-10,
+            1.0974287772982771e-10
+          ]
+        },
+        "stimulus_energy_J": 2.0479517167289597e-13,
+        "delay_scope": "Only same-selection, single Gray data transitions; half-VDD interpolation. Not STA or hazard-free certification."
+      },
+      "message": "Actual ngspice tran: 13284 samples.; MUX truth 64/64",
+      "ended_at": "2026-10-02T07:01:52.132800+00:00",
+      "elapsed_s": 3.0622905479976907
+    }
+  ]
+}

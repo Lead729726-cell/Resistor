@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-02T13:06:48.354Z",
+  "project_id": "8ecf6fa71671431a8870b8c3b3251c0e",
+  "revision": 1,
+  "pdk_id": "sky130A",
+  "testbench": {
+    "analysis": "tran",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "duration_s": 8.000000000000001e-7,
+    "step_s": 1e-9,
+    "load_F": 5e-15,
+    "vds_V": 1.8,
+    "vbs_V": 0
+  },
+  "foundry_signoff": false,
+  "stages": [
+    {
+      "stage": "pre",
+      "passed": true,
+      "stale": false,
+      "run": {
+        "id": "bff64fb3608747b4a678ad645d8ebf85",
+        "revision": 1,
+        "execution_status": "completed",
+        "analysis_result": "pass",
+        "freshness": "current",
+        "analysis_stage": "pre-layout",
+        "measurements": {
+          "analysis": "tran",
+          "x_unit": "s",
+          "x_label": "time",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "post_layout": "false",
+          "samples": 929,
+          "solver": "KLU",
+          "A_min": 0,
+          "A_max": 1.8,
+          "B_min": 0,
+          "B_max": 1.8,
+          "CIN_min": 0,
+          "CIN_max": 1.8,
+          "SUM_min": -0.0291926507,
+          "SUM_max": 1.86156842,
+          "COUT_min": -0.0338832659,
+          "COUT_max": 1.84178011,
+          "supply_current_min": -0.0000325215077,
+          "supply_current_max": 0.000188433796,
+          "current_flow_status": "available",
+          "unit_kind": "full_adder",
+          "truth_cases": 8,
+          "truth_passed": 8,
+          "truth_status": "pass",
+          "metric_source": "actual-ngspice-input-and-output-samples"
+        },
+        "manifest": "/workspace/.runtime/eda/runs/bff64fb3608747b4a678ad645d8ebf85/manifest.json",
+        "message": "Actual ngspice tran: 929 samples.; full_adder truth 8/8"
+      }
+    },
+    {
+      "stage": "drc",
+      "passed": true,
+      "stale": false,
+      "run": {
+        "id": "edaa360e8a96489ab1d0e18c45294c3e",
+        "revision": 1,
+        "execution_status": "completed",
+        "analysis_result": "pass",
+        "freshness": "current",
+        "marker_count": 0,
+        "manifest": "/workspace/.runtime/eda/runs/edaa360e8a96489ab1d0e18c45294c3e/manifest.json",
+        "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff."
+      }
+    },
+    {
+      "stage": "lvs",
+      "passed": true,
+      "stale": false,
+      "run": {
+        "id": "eed84d5faa784abeaf5a948915cd14b2",
+        "revision": 1,
+        "execution_status": "completed",
+        "analysis_result": "pass",
+        "freshness": "current",
+        "manifest": "/workspace/.runtime/eda/runs/eed84d5faa784abeaf5a948915cd14b2/manifest.json",
+        "message": "Actual Netgen comparison: circuits match uniquely."
+      }
+    },
+    {
+      "stage": "pex",
+      "passed": true,
+      "stale": false,
+      "run": {
+        "id": "4e23738ae92548e09f001bcb1d7702fb",
+        "revision": 1,
+        "execution_status": "completed",
+        "analysis_result": "pass",
+        "freshness": "current",
+        "parasitics": {
+          "resistors": 2626,
+          "capacitors": 327
+        },
+        "manifest": "/workspace/.runtime/eda/runs/4e23738ae92548e09f001bcb1d7702fb/manifest.json",
+        "message": "Actual Magic RC extraction: 2626 resistors, 327 capacitors. Zero counts reflect native thresholds, not inserted elements."
+      }
+    },
+    {
+      "stage": "post",
+      "passed": true,
+      "stale": false,
+      "run": {
+        "id": "f4f88577b1754b7cb518f8e7c234db9c",
+        "revision": 1,
+        "execution_status": "completed",
+        "analysis_result": "pass",
+        "freshness": "current",
+        "analysis_stage": "post-layout",
+        "measurements": {
+          "analysis": "tran",
+          "x_unit": "s",
+          "x_label": "time",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "post_layout": "true",
+          "samples": 951,
+          "solver": "KLU",
+          "A_min": 0,
+          "A_max": 1.8,
+          "B_min": 0,
+          "B_max": 1.8,
+          "CIN_min": 0,
+          "CIN_max": 1.8,
+          "SUM_min": -0.251340455,
+          "SUM_max": 2.08010678,
+          "COUT_min": -0.0586153062,
+          "COUT_max": 1.88352528,
+          "supply_current_min": -0.000105259956,
+          "supply_current_max": 0.000335939,
+          "current_flow_status": "available_partial",
+          "unit_kind": "full_adder",
+          "truth_cases": 8,
+          "truth_passed": 8,
+          "truth_status": "pass",
+          "metric_source": "actual-ngspice-input-and-output-samples"
+        },
+        "parasitics": {
+          "resistors": 2626,
+          "capacitors": 327
+        },
+        "manifest": "/workspace/.runtime/eda/runs/f4f88577b1754b7cb518f8e7c234db9c/manifest.json",
+        "message": "Actual ngspice tran: 951 samples.; full_adder truth 8/8"
+      }
+    }
+  ]
+}

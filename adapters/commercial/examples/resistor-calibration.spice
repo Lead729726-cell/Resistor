@@ -1,0 +1,14 @@
+* Actual open-source resistor calibration; no vendor or foundry claim
+V1 out 0 1
+R1 out 0 1000
+.control
+set num_threads=1
+set noaskquit
+set wr_singlescale
+op
+let resistor_current = v(out)/1000
+wrdata waveform.dat v(out)
+wrdata currents.dat i(V1) resistor_current
+quit
+.endc
+.end

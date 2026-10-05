@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "innovus-site-v1",
+  "name": "Innovus — operator site validation required",
+  "tool_id": "innovus",
+  "version": "Innovus site Tcl candidate; installed manual required",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/innovus",
+    "env_names": [
+      "CDS_LIC_FILE"
+    ],
+    "resources": {
+      "site_script": "/workspace/site/innovus.tcl"
+    },
+    "recipes": {
+      "implementation": {
+        "argv": [
+          "-no_gui",
+          "-files",
+          "{input.site_tcl}"
+        ],
+        "outputs": {
+          "exchange": "export.gds",
+          "summary": "implementation-summary.txt"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "summary": "unsupported-site-format"
+          }
+        },
+        "requires_netlist": false
+      },
+      "layout_export": {
+        "argv": [
+          "-no_gui",
+          "-files",
+          "{input.site_tcl}"
+        ],
+        "outputs": {
+          "exchange": "export.gds"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {}
+        },
+        "requires_netlist": false
+      },
+      "netlist_export": {
+        "argv": [
+          "-no_gui",
+          "-files",
+          "{input.site_tcl}"
+        ],
+        "outputs": {
+          "netlist": "export.spice"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {}
+        },
+        "requires_netlist": false
+      }
+    }
+  }
+}

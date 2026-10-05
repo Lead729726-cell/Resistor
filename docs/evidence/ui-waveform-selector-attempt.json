@@ -1,0 +1,152 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "D:\\Coldbrew\\Resistor\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "tests/ui/waveform.spec.ts"
+    ],
+    "configFile": "D:\\Coldbrew\\Resistor\\playwright.config.ts",
+    "rootDir": "D:/Coldbrew/Resistor/tests/ui",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Coldbrew/Resistor/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "D:/Coldbrew/Resistor/tests/ui",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "docs/evidence/ui-tests.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "waveform.spec.ts",
+      "file": "waveform.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Actual MOS current curve remains readable beside a voltage trace",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 180419,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\waveform.spec.ts",
+                        "column": 50,
+                        "line": 14
+                      },
+                      "message": "Error: locator.selectOption: Test timeout of 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Analysis', { exact: true })\u001b[22m\n\n\n  12 |   await expect(dialog).not.toBeVisible({timeout:65000});\n  13 |   await page.getByTestId('tab-simulation').click();\n> 14 |   await page.getByLabel('Analysis',{exact:true}).selectOption('dc');\n     |                                                  ^\n  15 |   await page.getByRole('button',{name:'Run analysis',exact:true}).click();\n  16 |   await expect(page.getByTestId('job-row')).toHaveCount(1,{timeout:90000});\n  17 |   await expect(page.getByTestId('job-row').first()).toContainText('PASS',{timeout:90000});\n    at D:\\Coldbrew\\Resistor\\tests\\ui\\waveform.spec.ts:14:50"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-30T10:41:54.716Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\waveform-Actual-MOS-curren-3d0d8-able-beside-a-voltage-trace\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\waveform-Actual-MOS-curren-3d0d8-able-beside-a-voltage-trace\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\waveform-Actual-MOS-curren-3d0d8-able-beside-a-voltage-trace\\trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ac4d0f0121a2678e4520-ad78df29af10b261afd7",
+          "file": "waveform.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-30T10:41:54.287Z",
+    "duration": 181349.896,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

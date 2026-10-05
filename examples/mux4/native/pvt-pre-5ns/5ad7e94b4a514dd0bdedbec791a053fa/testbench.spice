@@ -1,0 +1,65 @@
+Register actual native mux4
+.options method=gear maxord=2
+.include "/workspace/.runtime/eda/runs/5ad7e94b4a514dd0bdedbec791a053fa/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/eda/runs/5ad7e94b4a514dd0bdedbec791a053fa/current-probe.spice"
+.temp 125.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VD0 D0 VGND PWL(0 0 5e-09 0 5.1e-09 1.8 1.5e-08 1.8 1.51e-08 0 2.5e-08 0 2.51e-08 1.8 3.5e-08 1.8 3.51e-08 0 4.5e-08 0 4.51e-08 1.8 5.5e-08 1.8 5.51e-08 0 6.5e-08 0 6.51e-08 1.8 7.5e-08 1.8 7.51e-08 0 8.5e-08 0 8.51e-08 1.8 9.5e-08 1.8 9.51e-08 0 1.05e-07 0 1.051e-07 1.8 1.15e-07 1.8 1.151e-07 0 1.25e-07 0 1.251e-07 1.8 1.35e-07 1.8 1.351e-07 0 1.45e-07 0 1.451e-07 1.8 1.55e-07 1.8 1.551e-07 0 1.65e-07 0 1.651e-07 1.8 1.75e-07 1.8 1.751e-07 0 1.85e-07 0 1.851e-07 1.8 1.95e-07 1.8 1.951e-07 0 2.05e-07 0 2.051e-07 1.8 2.15e-07 1.8 2.151e-07 0 2.25e-07 0 2.251e-07 1.8 2.35e-07 1.8 2.351e-07 0 2.45e-07 0 2.451e-07 1.8 2.55e-07 1.8 2.551e-07 0 2.65e-07 0 2.651e-07 1.8 2.75e-07 1.8 2.751e-07 0 2.85e-07 0 2.851e-07 1.8 2.95e-07 1.8 2.951e-07 0 3.05e-07 0 3.051e-07 1.8 3.15e-07 1.8 3.151e-07 0 3.2e-07 0)
+VD1 D1 VGND PWL(0 0 1e-08 0 1.01e-08 1.8 3e-08 1.8 3.01e-08 0 5e-08 0 5.01e-08 1.8 7e-08 1.8 7.01e-08 0 9e-08 0 9.01e-08 1.8 1.1e-07 1.8 1.101e-07 0 1.3e-07 0 1.301e-07 1.8 1.5e-07 1.8 1.501e-07 0 1.7e-07 0 1.701e-07 1.8 1.9e-07 1.8 1.901e-07 0 2.1e-07 0 2.101e-07 1.8 2.3e-07 1.8 2.301e-07 0 2.5e-07 0 2.501e-07 1.8 2.7e-07 1.8 2.701e-07 0 2.9e-07 0 2.901e-07 1.8 3.1e-07 1.8 3.101e-07 0 3.2e-07 0)
+VD2 D2 VGND PWL(0 0 2e-08 0 2.01e-08 1.8 6e-08 1.8 6.01e-08 0 1e-07 0 1.001e-07 1.8 1.4e-07 1.8 1.401e-07 0 1.8e-07 0 1.801e-07 1.8 2.2e-07 1.8 2.201e-07 0 2.6e-07 0 2.601e-07 1.8 3e-07 1.8 3.001e-07 0 3.2e-07 0)
+VD3 D3 VGND PWL(0 0 4e-08 0 4.01e-08 1.8 8e-08 1.8 8.01e-08 0 1.2e-07 0 1.201e-07 1.8 1.6e-07 1.8 1.601e-07 0 2e-07 0 2.001e-07 1.8 2.4e-07 1.8 2.401e-07 0 2.8e-07 0 2.801e-07 1.8 3.2e-07 1.8)
+VS0 S0 VGND PWL(0 0 8e-08 0 8.01e-08 1.8 1.6e-07 1.8 1.601e-07 0 2.4e-07 0 2.401e-07 1.8 3.2e-07 1.8)
+VS1 S1 VGND PWL(0 0 1.6e-07 0 1.601e-07 1.8 3.2e-07 1.8)
+CLOAD Y VGND 5e-15
+XU D0 D1 D2 D3 S0 S1 Y VPWR VGND mux4
+.control
+save all i(v.xu.vregister_cf_a2951e1166e489f2) i(v.xu.vregister_cf_31c54237ba73ade6) i(v.xu.vregister_cf_61f397c5f25f8303) i(v.xu.vregister_cf_a580d7e313f389b0) i(v.xu.vregister_cf_bbe435fffc616a7e) i(v.xu.vregister_cf_db9da729a7529eb5) i(v.xu.vregister_cf_966a02a40af77492) i(v.xu.vregister_cf_1e7095ce7b8b3c8d) i(v.xu.vregister_cf_08fe9758ec08b584) i(v.xu.vregister_cf_c376c5e0b6449ebc) i(v.xu.vregister_cf_87b92f1d813ed277) i(v.xu.vregister_cf_3a045d2e145fed3a) i(v.xu.vregister_cf_260a3e95bf06e15a) i(v.xu.vregister_cf_c61da402cc828ef1) i(v.xu.vregister_cf_ddfbd7c48e1aec83) i(v.xu.vregister_cf_704e6d351313fc95) i(v.xu.vregister_cf_17ec022deafaca12) i(v.xu.vregister_cf_a3525c4273e3ebad) i(v.xu.vregister_cf_fbc1dfdee2dce7b5) i(v.xu.vregister_cf_4ae46e669b515b57) i(VGND) i(VDD) i(VD0) i(VD1) i(VD2) i(VD3) i(VS0) i(VS1)
+set num_threads=1
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 1e-10 3.2e-07
+let mos_wave_0 = v(D0)
+let mos_wave_1 = v(D1)
+let mos_wave_2 = v(D2)
+let mos_wave_3 = v(D3)
+let mos_wave_4 = v(S0)
+let mos_wave_5 = v(S1)
+let mos_wave_6 = v(Y)
+let mos_wave_7 = -i(VDD)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3 mos_wave_4 mos_wave_5 mos_wave_6 mos_wave_7
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_a2951e1166e489f2)
+let register_flow_1 = i(v.xu.vregister_cf_31c54237ba73ade6)
+let register_flow_2 = i(v.xu.vregister_cf_61f397c5f25f8303)
+let register_flow_3 = i(v.xu.vregister_cf_a580d7e313f389b0)
+let register_flow_4 = i(v.xu.vregister_cf_bbe435fffc616a7e)
+let register_flow_5 = i(v.xu.vregister_cf_db9da729a7529eb5)
+let register_flow_6 = i(v.xu.vregister_cf_966a02a40af77492)
+let register_flow_7 = i(v.xu.vregister_cf_1e7095ce7b8b3c8d)
+let register_flow_8 = i(v.xu.vregister_cf_08fe9758ec08b584)
+let register_flow_9 = i(v.xu.vregister_cf_c376c5e0b6449ebc)
+let register_flow_10 = i(v.xu.vregister_cf_87b92f1d813ed277)
+let register_flow_11 = i(v.xu.vregister_cf_3a045d2e145fed3a)
+let register_flow_12 = i(v.xu.vregister_cf_260a3e95bf06e15a)
+let register_flow_13 = i(v.xu.vregister_cf_c61da402cc828ef1)
+let register_flow_14 = i(v.xu.vregister_cf_ddfbd7c48e1aec83)
+let register_flow_15 = i(v.xu.vregister_cf_704e6d351313fc95)
+let register_flow_16 = i(v.xu.vregister_cf_17ec022deafaca12)
+let register_flow_17 = i(v.xu.vregister_cf_a3525c4273e3ebad)
+let register_flow_18 = i(v.xu.vregister_cf_fbc1dfdee2dce7b5)
+let register_flow_19 = i(v.xu.vregister_cf_4ae46e669b515b57)
+let register_flow_20 = i(VGND)
+let register_flow_21 = i(VDD)
+let register_flow_22 = i(VD0)
+let register_flow_23 = i(VD1)
+let register_flow_24 = i(VD2)
+let register_flow_25 = i(VD3)
+let register_flow_26 = i(VS0)
+let register_flow_27 = i(VS1)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13 register_flow_14 register_flow_15 register_flow_16 register_flow_17 register_flow_18 register_flow_19 register_flow_20 register_flow_21 register_flow_22 register_flow_23 register_flow_24 register_flow_25 register_flow_26 register_flow_27
+quit
+.endc
+.end

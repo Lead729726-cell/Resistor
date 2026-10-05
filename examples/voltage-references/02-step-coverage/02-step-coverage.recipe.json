@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "model": "voltage-voxel-emulation-v1",
+  "domain": {
+    "bounds": [
+      -1.6,
+      -1.2,
+      1.6,
+      1.2
+    ],
+    "zMin": -1.05,
+    "zMax": 1.45,
+    "nx": 64,
+    "ny": 48,
+    "nz": 100
+  },
+  "initial": "gds-mesa",
+  "initialHeight": 0.55,
+  "initialMask": "2/0",
+  "threshold": 45,
+  "steps": [
+    {
+      "id": "liner",
+      "name": "절연 liner 가정",
+      "kind": "deposit",
+      "model": "conformal",
+      "amount": 0.1,
+      "sidewall": 1,
+      "color": "#67b8a7",
+      "mask": "all",
+      "inverse": false,
+      "target": 0,
+      "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+    },
+    {
+      "id": "pvd-metal",
+      "name": "방향성 금속 가정",
+      "kind": "deposit",
+      "model": "directional",
+      "amount": 0.18,
+      "sidewall": 0.2,
+      "color": "#df879d",
+      "mask": "all",
+      "inverse": false,
+      "target": 0,
+      "source": "Register authored CC0 reference; assumed dimensions, not measured or foundry process data"
+    }
+  ],
+  "geometry_hash": "532ae83a0215f1f9fc81070dda94bd572ea9255e4ec617758a007cc22b65c247"
+}

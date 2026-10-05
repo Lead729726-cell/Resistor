@@ -1,0 +1,5 @@
+import { useEffect, useState } from 'react';
+export default function InterchangeTextEditor({ id, name, text, modified, onApply }: { id: string; name: string; text: string; modified: boolean; onApply: (text: string) => void }) {
+  const [draft, setDraft] = useState(text); useEffect(() => setDraft(text), [id, text]);
+  return <details className="ix-source-editor" open><summary>Netlist / circuit 데이터 수정 · {name}{modified ? ' · working copy' : ''}</summary><p className="ix-note">원본은 별도로 보존합니다. 수정한 데이터는 다시 구조를 검사하며, 프로젝트 적용 버튼을 누르기 전에는 서버에 전송하거나 실행하지 않습니다.</p><textarea data-testid="interchange-edit-text" aria-label="EDA netlist 원문 수정" value={draft} onChange={event => setDraft(event.target.value)} spellCheck={false}/><div className="ix-actions"><button className="button primary small" data-testid="interchange-reinspect-text" disabled={draft === text} onClick={() => onApply(draft)}>수정본 로컬 구조 검사</button><button className="button small" disabled={draft === text} onClick={() => setDraft(text)}>초안 되돌리기</button></div></details>;
+}

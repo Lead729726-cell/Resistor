@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "id": "virtuoso-site-v1",
+  "name": "Virtuoso — operator site validation required",
+  "tool_id": "virtuoso",
+  "version": "IC6.1.8 / ICADVM20.x site validation",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/virtuoso",
+    "env_names": [
+      "CDS_LIC_FILE"
+    ],
+    "resources": {
+      "site_script": "/workspace/site/virtuoso.il"
+    },
+    "recipes": {
+      "layout_export": {
+        "argv": [
+          "-nograph",
+          "-restore",
+          "{input.site_il}"
+        ],
+        "outputs": {
+          "exchange": "export.gds"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {}
+        },
+        "requires_netlist": false
+      },
+      "netlist_export": {
+        "argv": [
+          "-nograph",
+          "-restore",
+          "{input.site_il}"
+        ],
+        "outputs": {
+          "netlist": "export.spice"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {}
+        },
+        "requires_netlist": false
+      }
+    }
+  }
+}

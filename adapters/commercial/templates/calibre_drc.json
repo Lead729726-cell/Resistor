@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "calibre_drc-site-v1",
+  "name": "Calibre nmDRC — operator site validation required",
+  "tool_id": "calibre_drc",
+  "version": "Calibre site-version mode candidate; installed manual required",
+  "runner": {
+    "kind": "local",
+    "executable": "/opt/vendor/bin/calibre",
+    "env_names": [
+      "MGLS_LICENSE_FILE"
+    ],
+    "resources": {
+      "deck": "/workspace/site/calibre_drc.runset"
+    },
+    "recipes": {
+      "drc": {
+        "argv": [
+          "-drc",
+          "-hier",
+          "{input.calibre_svrf}"
+        ],
+        "outputs": {
+          "summary": "drc-summary.txt"
+        },
+        "timeout_s": 600,
+        "parameters": {},
+        "result_context": {
+          "formats": {
+            "summary": "calibre-drc-summary"
+          }
+        },
+        "requires_netlist": false
+      }
+    }
+  }
+}
