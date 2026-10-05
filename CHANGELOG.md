@@ -6,6 +6,18 @@ history that did not previously exist. Existing detailed verification remains in
 
 ## Unreleased — open-source baseline (2026-10-05)
 
+- Precision Workbench presentation: neutral charcoal Graphite, compact tool
+  navigation, persistent pane visibility and readable tabular numbers. Preserve
+  light/system modes, other skins, formulas, native geometry and file/engine APIs.
+- Selected job evidence exposes engine, revision, logs, artifact paths and actual
+  failure causes. Pending, failed and canceled jobs cannot display a verification
+  PASS; imported numerical results display import completion instead.
+- Calculator styling/navigation shares appearance controls, supports internally
+  scrolling mobile results and keeps engineering inputs/results ahead of QA details.
+- Workspace metadata-only listing avoids full schematic payloads while preserving
+  the legacy detailed response. File import/creation stays available while reading
+  the index; file validation and hierarchy opening expose separate progress states.
+
 - Deterministic electronics calculator hub with shared formula, unit, example,
   validation, FAQ and related-calculator structure.
 - Integrated schematic and integer-DBU layout editing, GDS/OASIS import, 2D/3D

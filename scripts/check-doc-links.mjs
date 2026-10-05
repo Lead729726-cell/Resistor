@@ -5,7 +5,7 @@ import path from 'node:path';
 // Historical engine logs may refer to machine-local artifacts. This checks the
 // public entry documents against Git candidates, not files left on one machine.
 const tracked = new Set(execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard', '-z'], { encoding: 'utf8' }).split('\0').filter(Boolean));
-const documents = ['README.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'SECURITY.md', 'docs/open-source.md'];
+const documents = ['README.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'SECURITY.md', 'docs/open-source.md', 'docs/precision-workbench.md'];
 const missing = [];
 let checked = 0;
 for (const document of documents) {

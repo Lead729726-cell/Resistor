@@ -9,6 +9,10 @@ integrated schematic, layout, waveform and 3D inspection workspace.
 [구조](docs/architecture.md) · [공개 소스 범위](docs/open-source.md) ·
 [MIT 라이선스](LICENSE) · [외부 구성요소 고지](docs/THIRD-PARTY-NOTICES.md)
 
+**Precision Workbench**: 차콜 기본 화면, 목적별 도구 메뉴, 접을 수 있는 기존 작업
+영역, 실제 job의 상태·오류·로그·결과 파일 위치를 정돈했습니다.
+[화면 사용법과 검증 범위](docs/precision-workbench.md).
+
 ## 소스에서 시작하기
 
 Node.js 24와 Git이 필요합니다. 계산기 화면은 Docker 없이 실행할 수 있습니다.
@@ -28,7 +32,8 @@ npm run dev:calculators
 
 고정된 공개 데모 주소는 아직 없습니다. 임시 다운로드 주소는 영구 링크로 사용하지 않습니다.
 
-![전압 분배 계산기](docs/evidence/calculator-hub-voltage-divider.png)
+![Precision Workbench · EDA](docs/evidence/precision-workbench/eda-dark.png)
+![전압 분배 계산기](docs/evidence/precision-workbench/calculator-dark.png)
 ![EDA 전압·전류 및 신호 시험](docs/evidence/eda-signal-flow-digital.png)
 
 ## 구조와 검증

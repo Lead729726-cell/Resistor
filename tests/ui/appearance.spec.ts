@@ -1,3 +1,4 @@
+import { clickWorkbenchAction } from './helpers/workbench';
 import { test, expect, type Page } from '@playwright/test';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -85,13 +86,13 @@ test('saved appearance restores across viewer/design startup, keyboard selection
 
 test('workspace branding and all EDA setting panels use the shared light skin without mutating the project', async ({ page }) => {
   test.setTimeout(180000); const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/'); await expect(page.getByTestId('app-ready')).toBeVisible();
+  await page.goto('/eda'); await expect(page.getByTestId('app-ready')).toBeVisible();
   const revision = await page.getByTestId('current-revision').innerText(), shapes = await page.getByTestId('scene-loaded-count').getAttribute('data-count');
   await choose(page, 'light', 'jade'); await close(page);
   await expect(page.locator('.register-brand').getByTestId('register-logo')).toBeVisible();
   const panels = [];
   for (const id of ['open-integrated-tools', 'open-interchange', 'open-native-database', 'open-design-review', 'open-commercial-backend', 'open-pdk-setup']) {
-    await page.getByTestId(id).click(); const modal = page.getByRole('dialog'); await expect(modal).toBeVisible();
+    await clickWorkbenchAction(page, id); const modal = page.getByRole('dialog'); await expect(modal).toBeVisible();
     const styles = await modal.evaluate(element => ({ background: getComputedStyle(element).backgroundColor, foreground: getComputedStyle(element).color }));
     expect(styles.background).toBe('rgb(248, 252, 249)'); expect(styles.foreground).toBe('rgb(38, 54, 73)');
     const primaryActions = await modal.locator('button.primary').evaluateAll(buttons => buttons.map(button => {

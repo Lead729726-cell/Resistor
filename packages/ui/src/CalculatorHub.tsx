@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Calculator, ChevronRight, Cpu, ExternalLink, Search, Zap } from 'lucide-react';
+import { Calculator, ChevronRight, Cpu, ExternalLink, Search } from 'lucide-react';
 import { calculateSafe, calculators, defaultInputs, displayNumber, getCalculator, type CalculatorDefinition } from '../../calculators/src';
 import './calculator-hub.css';
+import { RegisterMark } from './Brand';
+import AppearanceControl from './AppearanceControl';
 
 function titleFor(calculator: CalculatorDefinition) {
   return `${calculator.title} | Resistor engineering calculators`;
@@ -24,6 +26,7 @@ function pickInitialCalculator() {
 export default function CalculatorHub() {
   const [activeId, setActiveId] = useState(() => pickInitialCalculator().id);
   const [query, setQuery] = useState('');
+  const [navOpen, setNavOpen] = useState(() => window.innerWidth > 760);
   const active = calculators.find(calculator => calculator.id === activeId) || calculators[0];
   const [inputs, setInputs] = useState<Record<string, number | string>>(() => defaultInputs(active));
   const evaluated = useMemo(() => calculateSafe(active, inputs), [active, inputs]);
@@ -39,19 +42,21 @@ export default function CalculatorHub() {
   const select = (calculator: CalculatorDefinition) => {
     setActiveId(calculator.id);
     setQuery('');
+    if (window.innerWidth <= 760) setNavOpen(false);
   };
 
-  return <main className="calculator-app">
+  return <main className="calculator-app" data-nav-expanded={navOpen}>
     <aside className="calculator-nav" aria-label="Calculators">
       <div className="calculator-brand">
-        <span className="calculator-logo"><Zap size={19}/></span>
+        <span className="calculator-logo"><RegisterMark size={28}/></span>
         <div><strong>Resistor</strong><small>electronics calculator hub</small></div>
       </div>
       <label className="calculator-search">
         <Search size={15}/>
-        <input value={query} onChange={event => setQuery(event.target.value)} placeholder="Search calculators"/>
+        <input aria-label="계산기 검색" value={query} onChange={event => { setQuery(event.target.value); setNavOpen(true); }} placeholder="Search calculators"/>
       </label>
-      <div className="calculator-list">
+      <button type="button" className="calculator-nav-toggle" aria-expanded={navOpen} aria-controls="calculator-list" onClick={() => setNavOpen(value => !value)}>계산기 목록 <span>{filtered.length}<ChevronRight size={14}/></span></button>
+      <div className="calculator-list" id="calculator-list">{!filtered.length && <p className="calculator-no-results" role="status">검색 결과가 없습니다.</p>}
         {categories.map(category => <section key={category}>
           <h2>{category}</h2>
           {filtered.filter(calculator => calculator.category === category).map(calculator => <button key={calculator.id} className={calculator.id === active.id ? 'active' : ''} onClick={() => select(calculator)}>
@@ -69,7 +74,7 @@ export default function CalculatorHub() {
           <h1>{active.title}</h1>
           <p>{active.description}</p>
         </div>
-        <a href="/eda" className="eda-link" title="Open the existing EDA workspace"><ExternalLink size={15}/> EDA workspace</a>
+        <div className="calculator-header-actions"><AppearanceControl/><a href="/eda" className="eda-link" title="Open the existing EDA workspace"><ExternalLink size={15}/> EDA workspace</a></div>
       </header>
 
       <div className="calculator-main-grid">
@@ -79,10 +84,10 @@ export default function CalculatorHub() {
             {active.inputs.map(input => <label key={input.id}>
               <span>{input.label}{input.unit ? <small>{input.unit}</small> : null}</span>
               {input.kind === 'select'
-                ? <select value={String(inputs[input.id] ?? input.defaultValue)} onChange={event => setInputs(current => ({ ...current, [input.id]: event.target.value }))}>
+                ? <select aria-label={input.label} value={String(inputs[input.id] ?? input.defaultValue)} onChange={event => setInputs(current => ({ ...current, [input.id]: event.target.value }))}>
                   {input.options?.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
                 </select>
-                : <input type="number" value={String(inputs[input.id] ?? input.defaultValue)} min={input.min} max={input.max} step={input.step || 'any'} onChange={event => setInputs(current => ({ ...current, [input.id]: event.target.value }))}/>}
+                : <input aria-label={input.label} type="number" value={String(inputs[input.id] ?? input.defaultValue)} min={input.min} max={input.max} step={input.step || 'any'} onChange={event => setInputs(current => ({ ...current, [input.id]: event.target.value }))}/>}
             </label>)}
           </div>
           <h2>Formula</h2>
@@ -117,8 +122,8 @@ export default function CalculatorHub() {
             <code>{displayNumber(example.expected.primaryValue)} {example.expected.primaryUnit || ''}</code>
           </button>)}
         </div>
-        <div>
-          <h2>QA Fixtures</h2>
+        <div className="calculator-qa"><details>
+          <summary>QA Fixtures · 공식 검증 예제</summary><div>
           {[...active.examples, ...active.unitTests].map(fixture => <div key={fixture.title}>
             <span>{fixture.title}</span>
             <code>{fixture.expected.primaryLabel}: {displayNumber(fixture.expected.primaryValue)} {fixture.expected.primaryUnit || ''}</code>
@@ -127,7 +132,7 @@ export default function CalculatorHub() {
             <span>{edge.title}</span>
             <code>{edge.error || 'expected output'}</code>
           </div>)}
-        </div>
+        </div></details></div>
       </section>
 
       <section className="calculator-support">

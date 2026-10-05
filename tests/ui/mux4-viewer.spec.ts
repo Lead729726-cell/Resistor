@@ -1,3 +1,4 @@
+import { clickWorkbenchAction } from './helpers/workbench';
 import {test,expect} from '@playwright/test';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 test.use({video:{mode:'on',size:{width:1600,height:1000}},trace:'on'});
@@ -8,12 +9,12 @@ test('updated physical MUX: real signed current, vector slider, export and offli
     const response=await request.post('/api/rpc',{data:{method:'job.status',params:{run_id:runId}}});const actual=await response.json();expect(actual.ok).toBe(true);const flow=actual.result.current_flow;
     const branch=flow.branches.find((b:any)=>b.mapping==='device_terminals'&&b.values_A.some((v:number)=>Math.abs(v)>1e-6));expect(branch).toBeTruthy();
     const sample=branch.values_A.reduce((best:number,v:number,i:number)=>Math.abs(v)>Math.abs(branch.values_A[best])?i:best,0);
-    await page.addInitScript(id=>localStorage.setItem('mos.last_project',id),receipt.project_id);await page.goto('/');await expect(page.getByTestId('app-ready')).toBeVisible();
+    await page.addInitScript(id=>localStorage.setItem('mos.last_project',id),receipt.project_id);await page.goto('/eda');await expect(page.getByTestId('app-ready')).toBeVisible();
     await page.getByTestId('tab-layout3d').click();await page.getByLabel('뷰어 전류 결과').selectOption(runId);await page.getByLabel('전류 가지 선택').selectOption(branch.id);
     await page.getByLabel('전류 샘플',{exact:true}).fill(String(sample));await expect(page.getByTestId(`current-value-${branch.id}`)).not.toHaveText('자료 없음');
     await expect(page.getByTestId('layout-viewer-3d').locator('canvas')).toHaveAttribute('data-current-arrow-count',/^[1-9]\d*$/);
     await page.screenshot({path:'examples/mux4/current-viewer-3d.png'});
-    const saved=page.waitForEvent('download');await page.getByTestId('export-viewer-bundle').click();await (await saved).saveAs('examples/mux4/mux4.register-view.json');
+    const saved=page.waitForEvent('download');await clickWorkbenchAction(page, "export-viewer-bundle");await (await saved).saveAs('examples/mux4/mux4.register-view.json');
     const bytes=await readFile('examples/mux4/mux4.register-view.json'),bundle=JSON.parse(bytes.toString());expect(bundle.currentFlow.run_id).toBe(runId);expect(bundle.scene.project_id).toBe(receipt.project_id);expect(bundle.scene.truncated).toBe(false);
     const portable=await browser.newPage(),nativeRequests:string[]=[];portable.on('request',r=>{if(/\/api\/rpc|\/rpc|\/events/.test(r.url()))nativeRequests.push(r.url());});
     try{

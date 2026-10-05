@@ -1,0 +1,127 @@
+/* Precision Workbench: presentation only; source geometry and result values stay authoritative. */
+:root{--mono:'IBM Plex Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace;font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif}
+code,pre,.mono,input[type=number],.status,.revision-pill,.view-context,.jobs-table td small{font-variant-numeric:tabular-nums lining-nums;font-feature-settings:'tnum' 1,'zero' 1}
+.app-shell{font-size:12px;--explorer-width:220px;--inspector-width:280px}
+.app-header{height:52px;padding:0 16px;gap:12px}
+.app-header .register-brand-symbol{width:32px;height:32px;background:transparent;border:0;border-radius:0}
+.app-header .register-brand-symbol svg{width:32px;height:32px}
+.app-header .register-brand-wordmark strong{font-size:15px}
+.app-header .register-brand-wordmark small{font-size:8px;letter-spacing:1px}
+.header-divider{height:24px;margin:0 2px}
+.project-breadcrumb{min-width:0;gap:8px;font-size:12px}
+.project-breadcrumb strong{max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.header-right{gap:7px;flex-shrink:0}
+.toolchain-chip{font-size:11px;background:transparent;min-height:30px}
+.main-toolbar{position:relative;z-index:25;height:auto;min-height:46px;padding:7px 12px;gap:10px;flex-wrap:wrap}
+.project-actions,.run-actions{gap:5px}
+.button,.button.small{font-size:12px;height:32px;border-radius:4px;padding:0 10px}
+.button:not(.primary):not(.danger){background:var(--panel)}
+.button:hover:not(:disabled){border-color:var(--muted)}
+.button.primary{font-weight:600}
+.icon-button{height:30px;width:30px}
+.workbench-panel-controls{display:flex;gap:2px;padding-left:8px;border-left:1px solid var(--line)}
+.workbench-panel-controls button[aria-expanded=true]{color:var(--text-strong);background:var(--panel-raised)}
+.workbench-menu{position:relative;flex-shrink:0}
+.workbench-menu>summary{height:32px;display:flex;align-items:center;gap:10px;padding:0 10px;list-style:none;cursor:pointer;border:1px solid var(--line);border-radius:4px;font-size:12px;background:var(--panel)}
+.workbench-menu>summary::-webkit-details-marker{display:none}
+.workbench-menu[open]>summary{background:var(--panel-raised);border-color:var(--accent)}
+.workbench-menu>summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.workbench-menu-body{position:absolute;top:calc(100% + 8px);left:0;width:250px;max-width:calc(100vw - 24px);padding:6px;display:grid;gap:3px;background:var(--panel-raised);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);z-index:90}
+.run-actions .workbench-menu-body{left:auto;right:0}
+.workbench-menu-body>.button{width:100%;justify-content:flex-start;background:transparent;border-color:transparent;height:36px;font-size:12px}
+.workbench-menu-body>.button:hover:not(:disabled){background:var(--panel-hover);border-color:var(--line)}
+.workbench-menu-body .pdk-file-button{justify-content:flex-start}
+.next-run-label{display:flex;flex-direction:column;gap:2px;padding:0 8px;border-left:1px solid var(--line);line-height:1.1}
+.next-run-label small{font-size:10px;color:var(--muted)}
+.next-run-label strong{font:500 11px var(--mono);color:var(--text)}
+.workspace-body{grid-template-columns:var(--explorer-width) minmax(0,1fr) var(--inspector-width)}
+.project-sidebar{grid-column:1;grid-row:1}
+.center-workspace{grid-column:2;grid-row:1}
+.inspector-sidebar{grid-column:3;grid-row:1}
+.app-shell[data-explorer-open=false]{--explorer-width:0px}
+.app-shell[data-inspector-open=false]{--inspector-width:0px}
+.app-shell[data-explorer-open=false] .project-sidebar,.app-shell[data-inspector-open=false] .inspector-sidebar{display:none}
+.app-shell[data-explorer-open=true] .project-sidebar,.app-shell[data-inspector-open=true] .inspector-sidebar{display:flex}
+.app-shell[data-inspector-open=true] .inspector-sidebar{display:block}
+.sidebar-heading{height:37px;font-size:10px;letter-spacing:.8px}
+.tree-project,.tree-cell,.tree-view{font-size:12px}
+.tree-view{height:32px}
+.tree-view.active{background:var(--panel-raised);color:var(--text-strong);box-shadow:inset 2px 0 var(--accent)}
+.sidebar-subtitle,.library-count{font-size:10px}
+.device-palette button{font-size:11px;min-height:32px;padding:4px 6px}
+.palette-symbol{font-size:12px;color:var(--muted);background:transparent}
+.instance-item{font-size:12px;padding:8px 12px}
+.instance-item>span:last-child,.sidebar-footer strong,.sidebar-footer span:last-child{font-size:10px}
+.sidebar-footer{padding:10px;gap:8px}
+.tag,.tag.tiny{font-size:9px;letter-spacing:.25px}
+.workspace-tabs{height:38px;padding:0 4px}
+.workspace-tabs>button{font-size:12px;padding:0 11px}
+.workspace-tabs .split-button{font-size:11px}
+.view-context{min-height:30px;height:auto;padding:5px 12px;font-size:11px;gap:8px;flex-wrap:wrap}
+.pdk-label,.view-context-right{font-size:10px;background:transparent;color:var(--muted)}
+.view-context .text-button{font-size:11px;padding:0}
+.primary-viewport{min-height:120px}
+.results-panel{height:210px;min-height:100px}
+.app-shell[data-results-open=false] .results-panel{display:none}
+.panel-tabs{height:35px;overflow-x:auto}
+.panel-tabs>button{font-size:11px;padding:0 10px}
+.count-badge{font-size:10px}
+.panel-runner{font-size:9px}
+.run-evidence{padding:6px 12px;border-bottom:1px solid var(--line);flex-shrink:0;background:var(--bg);max-height:96px;overflow:auto}
+.run-evidence-heading{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:11px}
+.run-evidence-heading strong{font-size:11px}
+.run-evidence-heading code{font-size:10px;color:var(--muted);overflow-wrap:anywhere}
+.run-evidence-heading .text-button{font-size:11px;padding:2px 0;margin-left:auto}
+.run-evidence-heading .text-button+.text-button{margin-left:5px}
+.run-evidence p{display:flex;align-items:baseline;gap:8px;font-size:11px;line-height:1.5;margin:5px 0 0;overflow-wrap:anywhere;white-space:pre-wrap}
+.run-evidence p>span{flex-shrink:0;color:var(--muted)}
+.run-evidence .run-cause{color:var(--red)}
+.jobs-table{font-size:11px}
+.jobs-table th{font-size:10px;height:29px;padding:0 10px}
+.jobs-table th:first-child{width:22%}.jobs-table th:nth-child(2){width:15%}.jobs-table th:nth-child(3){width:23%}.jobs-table th:nth-child(4){width:10%}
+.jobs-table td{padding:7px 10px;overflow-wrap:anywhere}
+.jobs-table small{font-size:10px}
+.status{font-size:10px;line-height:14px;padding:2px 5px;letter-spacing:0;background:transparent}
+.status.neutral{color:var(--muted)}
+.status.running{color:var(--accent)}
+.status.pass{background:transparent}.status.fail,.status.failed{background:var(--danger-soft)}
+.verification-list{gap:12px}
+.verification-list strong,.parameter-list label,.parameter-list input,.model-name,.shape-inspector dl{font-size:12px}
+.verification-list small,.signoff-note,.inspector-note,.stack-note p,.selection-placeholder p{font-size:11px;line-height:1.6}
+.inspector-subhead,.field-label,.shape-inspector dt{font-size:10px;letter-spacing:.5px}
+.parameter-list input{height:30px;text-align:right;font-family:var(--mono)}
+.pin-list input{text-align:left}
+.model-name,.shape-inspector dd{overflow-wrap:anywhere}
+.selection-placeholder{padding:20px 5px}
+.selection-placeholder strong{font-size:12px}
+.selection-placeholder>span{font-size:10px}
+.selection-icon{height:42px;width:42px;border-radius:6px;margin-bottom:12px}
+.inspector-divider{margin-top:15px}
+.empty-panel,.analysis-empty,.analysis-detail p,.analysis-detail strong,.measurements-table,.log-toolbar,.job-log{font-size:12px;line-height:1.6}
+.log-toolbar{padding:7px 12px;gap:12px;flex-wrap:wrap}
+.log-toolbar select{font:11px var(--mono)}
+.job-log{font-family:var(--mono);padding:10px 14px;tab-size:2}
+.measurements-table code,.artifact-paths code,.extracted-elements td{font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:11px}
+.status-bar{height:26px;font-size:10px;gap:14px;padding:0 12px}
+.analysis-toolbar{font-size:11px;gap:8px;flex-wrap:wrap}
+.analysis-toolbar select,.analysis-toolbar input,.analysis-toolbar label{font-size:11px}
+.schematic-editor-toolbar,.schematic-drawing-toolbar{font-size:11px;min-height:36px}
+.schematic-editor-toolbar button,.schematic-drawing-toolbar>button,.schematic-editor-toolbar select,.schematic-breadcrumb{font-size:11px}
+.schematic-editor-toolbar label,.schematic-drawing-toolbar>span:last-child{font-size:10px}
+.validation-panel li{border-color:var(--line-soft)}
+.standalone-header{min-height:52px}
+.primary-viewport .mos-viewer{min-height:0;height:100%;overflow:hidden}
+.primary-viewport .mos-viewer-stage{min-height:0}
+.mos-viewer-toolbar,.mos-viewer-controls,.mos-viewer-status{flex-shrink:0}
+.mos-viewer-toolbar button,.mos-viewer-controls button,.mos-viewer-controls select{font-size:11px}
+.mos-layer-name strong{font-size:11px}.mos-layer-name small{font-size:10px}
+.mos-viewer-scale,.mos-viewer-renderinfo,.mos-viewer-slider span{font-variant-numeric:tabular-nums;font-size:10px}
+.mos-viewer-controls{max-height:96px;overflow:auto}
+.mos-viewer-palette{max-height:calc(100% - 72px)}
+.primary-viewport .mos-current-panel{max-height:30%;overflow:auto;flex-shrink:0}
+.mos-current-table-wrap td,.mos-current-controls output{font-variant-numeric:tabular-nums;font-family:var(--mono)}
+.jobs-table tr[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.workspace-operation{padding:10px 12px;border:1px solid var(--line);border-left:2px solid var(--accent);background:var(--bg);color:var(--text);font-size:12px;line-height:1.5}
+@media(max-width:1250px){.next-run-label{display:none}.app-header{gap:8px}.header-right{gap:4px}.header-right>a{display:none}.project-breadcrumb strong{max-width:170px}.app-shell{--explorer-width:195px;--inspector-width:255px}}
+@media(max-width:980px){.app-shell{--explorer-width:180px;--inspector-width:255px}.project-breadcrumb{font-size:11px}.project-breadcrumb>span{display:none}.header-right .collaboration-chip{max-width:92px}.toolchain-chip{font-size:10px;padding:0 6px}.main-toolbar{gap:7px}.run-actions{margin-left:auto}.workspace-tabs>button{font-size:11px;padding:0 8px}.view-context-right{display:none}.status-bar>span:nth-child(2),.status-bar>span:last-child{display:none}}
+@media(max-width:760px){.app-header .register-brand-wordmark small,.header-divider,.header-right .collaboration-chip,.header-right .toolchain-chip{display:none}.app-header .register-brand-wordmark strong{font-size:13px}.app-header .register-brand-wordmark strong span{display:none}.app-header{height:46px;padding:0 8px;gap:8px}.project-breadcrumb strong{max-width:160px}.header-right .button{padding:0 7px;font-size:11px}.main-toolbar{padding:5px 8px;gap:6px}.project-actions,.run-actions{flex-wrap:wrap}.run-actions{margin-left:0;flex:1}.workbench-panel-controls{margin-left:auto}.button,.button.small,.workbench-menu>summary{font-size:11px;height:30px;padding:0 8px}.results-panel{height:190px}.app-shell[data-inspector-open=true] .inspector-sidebar,.app-shell[data-explorer-open=true] .project-sidebar{position:absolute;top:0;bottom:0;z-index:22;width:260px;box-shadow:var(--shadow)}.app-shell[data-inspector-open=true] .inspector-sidebar{right:0}.app-shell[data-explorer-open=true] .project-sidebar{left:0}.workspace-body{position:relative;grid-template-columns:0 minmax(0,1fr) 0}.workspace-tabs{height:36px}.workspace-tabs>button{font-size:10px;padding:0 7px;gap:4px}.workspace-tabs>button svg{width:12px}.view-context{padding:5px 8px;font-size:10px}.panel-runner{display:none}.jobs-table th,.jobs-table td{padding:6px;font-size:10px}.jobs-table th:first-child{width:22%}.jobs-table small{font-size:9px}.status{font-size:9px}.run-evidence-heading code{flex-basis:100%}.run-evidence-heading .text-button{margin-left:0}.run-evidence{max-height:100px}.status-bar{font-size:9px;gap:8px}}

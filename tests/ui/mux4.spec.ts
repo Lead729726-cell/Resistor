@@ -1,3 +1,4 @@
+import { clickWorkbenchAction } from './helpers/workbench';
 import { test, expect } from '@playwright/test';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -8,8 +9,8 @@ test('real UI creates a 20-MOS MUX4 physical core, verifies 64 cases and indepen
   test.setTimeout(480000);
   const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
   const call = async <T,>(method: string, params = {}): Promise<T> => { const r = await request.post('/api/rpc', { data: { method, params } }); const v = await r.json(); expect(v.ok, `${method}: ${v.error?.message}`).toBe(true); return v.result; };
-  await page.goto('/'); await expect(page.getByTestId('app-ready')).toBeVisible();
-  await page.getByTestId('open-integrated-tools').click(); await page.getByTestId('integrated-tab-design').click();
+  await page.goto('/eda'); await expect(page.getByTestId('app-ready')).toBeVisible();
+  await clickWorkbenchAction(page, "open-integrated-tools"); await page.getByTestId('integrated-tab-design').click();
   await page.getByTestId('design-load-catalog').click(); await page.getByTestId('design-template').selectOption('mux4');
   await page.getByLabel('Template 프로젝트 이름').fill('Register MUX4 · 4:1 CMOS · 20ns');
   // The 5ns stress case settles too late after native RC extraction. Preserve

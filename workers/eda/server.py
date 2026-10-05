@@ -42,6 +42,7 @@ import design_tools
 import semiconductor_starters
 import digital_units
 import hierarchy_transfer
+import project_index
 from toolchain_diagnostics import ToolchainDiagnostics
 from job_evidence import write_job_evidence
 
@@ -860,7 +861,7 @@ def rpc(method,params):
             return {'payload_hash':row[0],'result':json.loads(row[1]),'revision':row[2]} if row else None
     if method in ('project.open','project.save','project.snapshot'): return get_project(params['project_id'])
     if method=='project.list':
-        with LOCK: return [value for r in DB.execute('SELECT data FROM projects ORDER BY rowid DESC') if not (value:=json.loads(r[0])).get('pvt_point')]
+        with LOCK: return project_index.list_projects(DB,params.get('metadata_only') is True)
     if method=='view.get_scene':
         p=get_project(params['project_id']); layout=load_layout(p); return interchange.decorate_scene(layout,p,geo.scene(layout,p,p['layers'],params))
     if method=='extraction.get_net_mapping':

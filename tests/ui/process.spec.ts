@@ -1,3 +1,4 @@
+import { clickWorkbenchAction } from './helpers/workbench';
 import { test, expect, type Page } from '@playwright/test';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -33,14 +34,14 @@ test('VTU uses explicit nm fields and rejects unsupported/unsafe data while reta
   await evidence({actual_ascii_VTU_nm_conversion:true,unsafe_entity_binary_higher_order_and_missing_units_rejected:true,failed_import_preserves_previous_volume:true});
 });
 test('workspace process panel keeps device and dielectric criteria separate and marks a different revision stale',async({page})=>{
-  test.setTimeout(120000);await mkdir(dir,{recursive:true});await page.goto('/');await expect(page.getByTestId('app-ready')).toBeVisible();const revision=await page.getByTestId('current-revision').innerText();
-  await page.getByTestId('open-process').click();await page.getByTestId('process-demo').click();await ready(page);
+  test.setTimeout(120000);await mkdir(dir,{recursive:true});await page.goto('/eda');await expect(page.getByTestId('app-ready')).toBeVisible();const revision=await page.getByTestId('current-revision').innerText();
+  await clickWorkbenchAction(page, "open-process");await page.getByTestId('process-demo').click();await ready(page);
   await expect(page.getByRole('dialog').locator('.artifact-json')).toHaveCount(0);
   await page.getByRole('spinbutton',{name:'Metal film 최소 두께 nm',exact:true}).fill('10');await ready(page);await page.getByRole('spinbutton',{name:'Dielectric film 최소 두께 nm',exact:true}).fill('400');await ready(page);
   await page.getByRole('checkbox',{name:'현재 설계에 수동 표시 연결'}).check();await page.getByTestId('process-bind').click();await ready(page);await expect(page.getByTestId('process-freshness')).toContainText('입력 revision과 동일');
   const saved=JSON.parse(await downloaded(page,'process-export-volume','workspace-process.json'));expect(saved.criteria.by_material['2'].min_thickness_um).toBe(.01);expect(saved.criteria.by_material['3'].min_thickness_um).toBe(.4);
   saved.volume.association.revision+=1;await page.getByTestId('process-json-input').setInputFiles({name:'next-revision.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(saved))});await ready(page);await expect(page.getByTestId('process-freshness')).toContainText('STALE');
-  await page.getByTestId('process-panel').evaluate(panel=>{panel.scrollTop=0;});await page.screenshot({path:`${dir}/register-process-workspace.png`});await page.getByRole('dialog').getByRole('button',{name:'닫기',exact:true}).click();await expect(page.getByTestId('current-revision')).toHaveText(revision);await page.getByTestId('open-process').click();await ready(page);await expect(page.getByTestId('process-freshness')).toContainText('STALE');
+  await page.getByTestId('process-panel').evaluate(panel=>{panel.scrollTop=0;});await page.screenshot({path:`${dir}/register-process-workspace.png`});await page.getByRole('dialog').getByRole('button',{name:'닫기',exact:true}).click();await expect(page.getByTestId('current-revision')).toHaveText(revision);await clickWorkbenchAction(page, "open-process");await ready(page);await expect(page.getByTestId('process-freshness')).toContainText('STALE');
   await page.setViewportSize({width:800,height:600});await page.getByTestId('process-panel').evaluate(panel=>{panel.scrollTop=panel.scrollHeight;});await expect(page.getByTestId('process-export-report')).toBeInViewport();await page.screenshot({path:`${dir}/register-process-narrow.png`});
   await evidence({workspace_revision_preserved:true,material_specific_criteria_saved:true,explicit_association_and_stale_guard:true,reopen_preserves_process_document:true,narrow_footer_reachable:true});
 });
