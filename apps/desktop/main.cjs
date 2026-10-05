@@ -15,7 +15,7 @@ async function boot(){
   // Design transport starts the native runtime once, on the first design request.
   const ensureRuntime=()=>runtimePromise??=(async()=>{
     const config=await runtimeConfig(workspace);
-    const {startWorker}=await import(pathToFileURL(path.join(root,'scripts/worker.mjs')));await startWorker(workspace);
+    const {startWorker}=await import(pathToFileURL(path.join(root,'scripts/worker.mjs')));await startWorker(workspace,{resourcesRoot:root});
     let present=false;try{const r=await fetch('http://127.0.0.1:18766/health',{signal:AbortSignal.timeout(1500)});if(r.ok){const body=await r.json();if(body.service!=='register-cloud')throw new Error('다른 서비스가 공동 작업 포트18766을 사용 중입니다.');present=true;}}catch(e){if(e.message.includes('다른 서비스'))throw e;}
     if(!present){const {startHub}=await import(pathToFileURL(path.join(root,'platform/cloud/hub.mjs')));ownedHub=await startHub({workspace,workerConfig:config,staticDirectory:path.join(root,'dist')});}
     return config;
@@ -35,7 +35,7 @@ async function boot(){
       if(payload.method==='desktop.diagnostics'){
         if(Object.keys(payload.params??{}).length)return {ok:false,error:{code:'INVALID_PARAMETER',message:'환경 진단은 사용자 경로나 명령을 받지 않습니다.'}};
         const {desktopDiagnostics}=await import(pathToFileURL(path.join(root,'scripts/desktop-diagnostics.mjs')));
-        return {ok:true,result:await desktopDiagnostics({workspace})};
+        return {ok:true,result:await desktopDiagnostics({workspace,resourcesRoot:root})};
       }
       return await workerRpc(await ensureRuntime(),payload.method,payload.params??{});
     }catch(e){return {ok:false,error:{code:'WORKER_UNAVAILABLE',message:e.message}};}

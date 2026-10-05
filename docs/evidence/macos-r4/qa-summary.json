@@ -1,0 +1,46 @@
+{
+  "version": "0.14.0",
+  "build_revision": 4,
+  "source_host": "win32",
+  "package_host": "linux",
+  "build": "passed",
+  "typecheck": "passed",
+  "core_tests": {"passed": 124, "failed": 0},
+  "worker_startup": {
+    "platform": "linux/amd64 Docker on Windows",
+    "cases_passed": 10,
+    "voltage_probe_tests_passed": 9,
+    "legacy_error_reproduced": true,
+    "stopped_legacy_container_preserved": true,
+    "workspace_has_engine_source": false,
+    "actual_engines_executed": ["KLayout", "ngspice"],
+    "design_preserved_after_restart": true,
+    "evidence": "../worker-startup-native.json"
+  },
+  "installer_simulation": {
+    "passed": 13,
+    "platform": "linux",
+    "macos_utilities": "stubs in a disposable Docker container",
+    "diagnostic_read_only_checked": true
+  },
+  "archive_checks": {
+    "architectures": ["arm64", "x64"],
+    "mach_o_per_arch": 13,
+    "symlinks_per_arch": 14,
+    "resource_seals_per_arch": 9,
+    "crc": "passed",
+    "required_source_hashes": "matched",
+    "signature_corruption_cases_rejected": 3
+  },
+  "public_downloads": {
+    "url": "https://month-barn-convention-traveling.trycloudflare.com",
+    "full_transfers_verified": 2,
+    "sha256": "matched",
+    "range_status": 206,
+    "private_routes_exposed": false
+  },
+  "native_mac_execution": "not executed; native desktop workflow prepared",
+  "apple_developer_id": "not configured",
+  "apple_notarization": "not performed",
+  "github_cli_authentication": "not logged in; source push remains pending"
+}

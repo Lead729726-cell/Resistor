@@ -34,16 +34,16 @@ test('Windows uses its normal CLI lookup and supplied environment',async()=>{
 });
 test('read-only app resources seed user data; later app replacement preserves edits and adds new samples',async()=>{
   const temp=await mkdtemp(path.join(os.tmpdir(),'register-mac-workspace-')),root=path.join(temp,'Applications/Register.app/Contents/Resources/app'),userData=path.join(temp,'User Data');
-  for(const folder of ['workers','adapters','examples']){await mkdir(path.join(root,folder),{recursive:true});await writeFile(path.join(root,folder,'seed.txt'),'original');}
+  for(const folder of ['workers','adapters','examples','platform/commercial']){await mkdir(path.join(root,folder),{recursive:true});await writeFile(path.join(root,folder,'seed.txt'),'original');}
   await writeFile(path.join(root,'.dockerignore'),'.runtime\n.secrets\n');
   const options={root,userData,executable:path.join(root,'Register'),packaged:true};
   const workspace=await prepareWorkspace(options);assert.equal(workspace,path.join(userData,'workspace'));
-  for(const folder of ['workers','adapters','examples'])await writeFile(path.join(workspace,folder,'seed.txt'),'user content');
+  for(const folder of ['workers','adapters','examples','platform/commercial'])await writeFile(path.join(workspace,folder,'seed.txt'),'user content');
   await mkdir(path.join(workspace,'.runtime/eda'),{recursive:true});await writeFile(path.join(workspace,'.runtime/eda/project.json'),'saved circuit');
   await writeFile(path.join(root,'examples/new.gds'),'new sample');
   await writeFile(path.join(workspace,'.dockerignore'),'.runtime\ncustom exclusion\n');
   assert.equal(await prepareWorkspace(options),workspace);
-  for(const folder of ['workers','adapters','examples'])assert.equal(await readFile(path.join(workspace,folder,'seed.txt'),'utf8'),'user content');
+  for(const folder of ['workers','adapters','examples','platform/commercial'])assert.equal(await readFile(path.join(workspace,folder,'seed.txt'),'utf8'),'user content');
   assert.equal(await readFile(path.join(workspace,'.runtime/eda/project.json'),'utf8'),'saved circuit');assert.equal(await readFile(path.join(workspace,'examples/new.gds'),'utf8'),'new sample');
   assert.equal(await readFile(path.join(workspace,'.dockerignore'),'utf8'),'.runtime\ncustom exclusion\n');
 });
@@ -57,7 +57,7 @@ test('Mac menus have native quit/edit/window roles and circuit commands reach th
 
 test('only release development packages reuse a checkout; an installed app under that checkout seeds its own user data',async()=>{
   const temp=await mkdtemp(path.join(os.tmpdir(),'register-installed-workspace-')),checkout=path.join(temp,'checkout'),root=path.join(temp,'bundle'),userData=path.join(temp,'user-data');
-  for(const folder of ['workers','adapters','examples']){await mkdir(path.join(root,folder),{recursive:true});await writeFile(path.join(root,folder,'seed.txt'),'packaged');}
+  for(const folder of ['workers','adapters','examples','platform/commercial']){await mkdir(path.join(root,folder),{recursive:true});await writeFile(path.join(root,folder,'seed.txt'),'packaged');}
   await writeFile(path.join(root,'.dockerignore'),'.runtime\n');
   await mkdir(path.join(checkout,'.runtime'),{recursive:true});await mkdir(path.join(checkout,'workers/eda'),{recursive:true});
   await writeFile(path.join(checkout,'.runtime/worker.json'),'test session, never loaded');await writeFile(path.join(checkout,'workers/eda/server.py'),'checkout source');
@@ -65,4 +65,13 @@ test('only release development packages reuse a checkout; an installed app under
   assert.equal(await prepareWorkspace({...options,executable:path.join(checkout,'release/0.14/Register.exe')}),checkout);
   assert.equal(await prepareWorkspace({...options,executable:path.join(checkout,'.runtime/installed/Register.exe')}),path.join(userData,'workspace'));
   assert.equal(await readFile(path.join(checkout,'workers/eda/server.py'),'utf8'),'checkout source');
+});
+
+test('r4 reopening an r3 design folder restores missing server and backend files without changing designs',async()=>{
+  const temp=await mkdtemp(path.join(os.tmpdir(),'register-r3-workspace-upgrade-')),userData=path.join(temp,'User Data'),workspace=path.join(userData,'workspace');
+  await mkdir(path.join(workspace,'.runtime/eda'),{recursive:true});await mkdir(path.join(workspace,'workers/eda'),{recursive:true});
+  await writeFile(path.join(workspace,'.runtime/eda/user-design'),'keep circuit');await writeFile(path.join(workspace,'workers/eda/Dockerfile'),'user engine customization');
+  await prepareWorkspace({root:process.cwd(),userData,executable:path.join(temp,'Applications/Register.app/Contents/MacOS/Register'),packaged:true});
+  for(const file of ['workers/eda/server.py','workers/eda/bootstrap.py','platform/commercial/runner.py','platform/commercial/agent.py'])assert((await readFile(path.join(workspace,file))).length>0);
+  assert.equal(await readFile(path.join(workspace,'.runtime/eda/user-design'),'utf8'),'keep circuit');assert.equal(await readFile(path.join(workspace,'workers/eda/Dockerfile'),'utf8'),'user engine customization');
 });

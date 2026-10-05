@@ -11,3 +11,17 @@ test('authenticated current workspace is ready; token is used only in the reques
 test('an authentication mismatch is reported without leaking session data',async()=>{const r=runner();const v=await desktopDiagnostics({...base,...r,fetchImpl:async()=>({ok:false,status:401})});assert.equal(v.engine_ready,false);assert.equal(v.items.find(i=>i.id==='session').status,'blocked');assert(!JSON.stringify(v).includes(token));});
 test('unsafe or malformed persisted URLs are never fetched',async()=>{for(const url of ['https://example.com','http://127.0.0.1/secret','http://name:password@127.0.0.1','http://127.0.0.1/?token=secret']){const r=runner();const v=await desktopDiagnostics({...base,...r,read:async()=>JSON.stringify({url,token}),fetchImpl:async()=>{throw Error('must not call');}});assert.equal(v.engine_ready,false);assert.equal(v.items.find(i=>i.id==='session').status,'pending');}});
 test('mount matching respects Unix case and Docker Desktop Windows drive paths',()=>{assert.equal(normalizeMount('D:\\Design\\'),normalizeMount('/run/desktop/mnt/host/d/Design'));assert.notEqual(normalizeMount('/home/design'),normalizeMount('/home/Design'));});
+
+test('a missing server blocks readiness even when Dockerfile exists; no engine request is made',async()=>{
+  const r=runner();let fetches=0;
+  const v=await desktopDiagnostics({...base,...r,check:async file=>{if(file.endsWith('server.py'))throw Error('missing');},fetchImpl:async()=>{fetches++;throw Error('must not call');}});
+  assert.equal(v.engine_ready,false);assert.equal(fetches,0);assert.match(v.items.find(i=>i.id==='resources').message,/server.py/);
+});
+test('installed app diagnostics inspect bundled resources, not mutable engine copies in the design folder',async()=>{
+  const visited=[],r=runner();await desktopDiagnostics({...base,...r,resourcesRoot:'D:\\Register App',check:async file=>visited.push(file),fetchImpl:async()=>({ok:true,status:200,json:async()=>({ok:true})})});
+  assert(visited.slice(1).every(file=>file.startsWith('D:\\Register App')));
+});
+test('an absent workspace mount has a distinct actionable cause and is never contacted',async()=>{
+  const r=runner({mount:''});const v=await desktopDiagnostics({...base,...r,fetchImpl:async()=>{throw Error('must not call');}});
+  assert.equal(v.engine_ready,false);assert.match(v.items.find(i=>i.id==='container').message,/\/workspace/);
+});

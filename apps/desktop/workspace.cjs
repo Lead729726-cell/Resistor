@@ -16,7 +16,7 @@ async function prepareWorkspace({root,userData,executable,override,packaged}) {
   await fs.mkdir(workspace,{recursive:true});
   // Seed a writable workspace outside the .app. Reopening/replacing the app
   // must not overwrite user adapters, samples, engine customizations or designs.
-  for(const folder of ['workers','adapters','examples'])await fs.cp(path.join(root,folder),path.join(workspace,folder),{recursive:true,force:false,errorOnExist:false});
+  for(const folder of ['workers','adapters','examples','platform/commercial'])await fs.cp(path.join(root,folder),path.join(workspace,folder),{recursive:true,force:false,errorOnExist:false});
   await fs.cp(path.join(root,'.dockerignore'),path.join(workspace,'.dockerignore'),{force:false,errorOnExist:false});
   return workspace;
 }

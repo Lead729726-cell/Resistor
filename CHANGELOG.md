@@ -6,6 +6,13 @@ history that did not previously exist. Existing detailed verification remains in
 
 ## Unreleased — open-source baseline (2026-10-05)
 
+- macOS r4 fixes missing `/workspace/workers/eda/server.py` on engine reconnect.
+  Docker images contain engine/backend code; installed apps build from bundled
+  resources and verify the actual workspace mount before launch. Stopped owned
+  legacy containers are backed up, while saved designs and user adapters remain.
+  Actual Linux Docker startup, KLayout, ngspice and restart checks are recorded in
+  [worker startup evidence](docs/evidence/worker-startup-native.json). M1 and Intel
+  ZIPs remain previews pending native Mac execution and Apple notarization.
 - Precision Workbench presentation: neutral charcoal Graphite, compact tool
   navigation, persistent pane visibility and readable tabular numbers. Preserve
   light/system modes, other skins, formulas, native geometry and file/engine APIs.

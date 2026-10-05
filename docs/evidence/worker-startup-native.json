@@ -1,0 +1,59 @@
+{
+  "checked_at": "2026-10-05T06:01:56.718Z",
+  "host": "win32",
+  "container_platform": "linux/amd64",
+  "native_mac_verified": false,
+  "cases": [
+    {
+      "name": "previous image reproduces missing /workspace/workers/eda/server.py",
+      "passed": true
+    },
+    {
+      "name": "stopped app-owned legacy container reproduces the reconnect failure",
+      "passed": true
+    },
+    {
+      "name": "reconnect preserves stopped legacy container as a backup",
+      "passed": true
+    },
+    {
+      "name": "fresh mounted design folder with no engine source starts from image-owned code",
+      "passed": true
+    },
+    {
+      "name": "authenticated PDK and commercial backend catalog RPC works",
+      "passed": true
+    },
+    {
+      "name": "real KLayout creates and reads geometry",
+      "passed": true,
+      "shape_count": 52
+    },
+    {
+      "name": "actual ngspice operating point produces node voltages and current",
+      "passed": true,
+      "run_id": "eb509a84f2b64bb9838442d7adf08277",
+      "branch_count": 5
+    },
+    {
+      "name": "engine restart reopens persisted project and preserves pre-existing design",
+      "passed": true
+    },
+    {
+      "name": "direct Docker Run gives session setup guidance instead of a missing Python file",
+      "passed": true
+    },
+    {
+      "name": "9 voltage parser and actual nested ngspice calibration tests pass",
+      "passed": true
+    }
+  ],
+  "source_sha256": {
+    "workers/eda/Dockerfile": "e78162f227cfe454391685c262a790a515b82bbc169e0600c2f622d436aabbb2",
+    "workers/eda/bootstrap.py": "88e9e525d4868e34b18f9dd6b953ac2b745d8ff739716a24079018c99b8b3c17",
+    "workers/eda/commercial_backend.py": "34e4c2eafdc90ade1dacc9957d369553c76e6d1f41bb3ae594c947cda2805e09",
+    "scripts/worker.mjs": "1d53e75842609e7bb8fd5f1b99e7ea7c6932665aceb0d21dd6f2cc668ca076cb",
+    "apps/desktop/workspace.cjs": "fec0a1b2ae1bb5f11a2001bffd05682f6823536219846adde9f0459bf37a7081",
+    "tests/integration/worker-startup.mjs": "b7b6b65637bd12bdf6d906783242912d4831f74d08d27fe1afe0c5d68d3c1cda"
+  }
+}

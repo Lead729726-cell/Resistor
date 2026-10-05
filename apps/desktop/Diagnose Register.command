@@ -32,6 +32,11 @@ else
   print '다운로드 차단 표시: 없음'
 fi
 [[ -d /Applications/Docker.app ]] && print 'Docker Desktop: 설치됨' || print 'Docker Desktop: 미발견 · 독립 뷰어는 사용할 수 있습니다.'
+for resource in workers/eda/server.py workers/eda/bootstrap.py workers/eda/Dockerfile platform/commercial/runner.py platform/commercial/agent.py; do
+  [[ -f "$register_app/Contents/Resources/app/$resource" ]] && print -- "앱 실행 파일: 있음 · $resource" || print -- "앱 실행 파일: 누락 · $resource · ZIP 전체를 풀고 새 앱을 설치하세요."
+done
+print '엔진 코드 위치: Docker 이미지 내부 /opt/register-engine · 설계 보관 폴더와 별도'
+print 'Docker 실행 파일/폴더 공유 오류는 앱의 환경 진단에서 확인하고 설계 엔진 다시 연결을 누르세요.'
 print -- "설계 보관 위치: $HOME/Library/Application Support/레지스터/workspace"
 print -- "설치·진단 로그 폴더: $log_folder"
 print -- "진단 완료: $log"

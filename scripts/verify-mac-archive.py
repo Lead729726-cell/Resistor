@@ -139,6 +139,8 @@ def verify(archive,require_bundle_signature=False):
             assert link_manifest=={l['path']:l['target'] for l in links},'Installer symlink manifest mismatch'
         assert any('/Versions/Current' in l['path'] for l in links),'Framework symlinks lost'
         required=['dist/index.html','.dockerignore','scripts/docker-cli.mjs','scripts/worker.mjs','scripts/desktop-diagnostics.mjs','apps/desktop/main.cjs','apps/desktop/preload.cjs','apps/desktop/menu.cjs','apps/desktop/workspace.cjs','workers/eda/server.py','workers/eda/Dockerfile','examples/sky130/mosfet.gds','licenses/THIRD-PARTY-NOTICES.md','docs/desktop-installation.md']
+        if b'/opt/register-engine/' in z.read(root+'Resources/app/workers/eda/Dockerfile'):
+            required.extend(['workers/eda/bootstrap.py','workers/eda/commercial_backend.py','platform/commercial/runner.py','platform/commercial/agent.py','adapters/commercial/catalog.json'])
         if 'Diagnose Register.command' in entries:
             required.extend(['apps/desktop/Diagnose Register.command','apps/desktop/Install Register.command','workers/eda/project_index.py'])
             assert b'\r' not in z.read('Install Register.command'),'Mac shell helper must use LF line endings'

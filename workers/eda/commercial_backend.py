@@ -10,7 +10,8 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self,*args,**kwargs):raise EDAError('UNSAFE_AGENT_REDIRECT','Agent redirects are forbidden; private credentials stay on the configured origin.')
 def configure(server):
     global S,runner,reference_check
-    S=server;sys.path.insert(0,str(S.WORKSPACE/'platform/commercial'))
+    # Code belongs to the image/app, not to the mutable mounted design folder.
+    S=server;sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'platform/commercial'))
     import runner as module
     from agent import safe_reference
     runner=module;reference_check=safe_reference

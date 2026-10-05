@@ -15,8 +15,8 @@ export async function prepareDownloads(workspace=process.cwd()){
   let macLatest;
   try{
     macLatest=JSON.parse(await readFile(path.join(workspace,'docs/evidence/mac-preview-release.json'),'utf8'));
-    if(macLatest.version!==version||macLatest.build_revision!==3||macLatest.artifacts?.length!==2||new Set(macLatest.artifacts.map(a=>a.arch)).size!==2||macLatest.installer_cases_passed!==13)throw Error('Latest Mac installer QA is incomplete.');
-    for(const a of macLatest.artifacts)if(!['arm64','x64'].includes(a.arch)||a.file!==`Register-${version}-mac-${a.arch}-r3.zip`||a.build_revision!==3||!a.ad_hoc_signed||!a.crc_checked||!a.installer_manifest_checked||a.bundle_resource_seals<5)throw Error('Latest Mac archive evidence is incomplete.');
+    if(macLatest.version!==version||!Number.isSafeInteger(macLatest.build_revision)||macLatest.build_revision<3||macLatest.build_revision>999||macLatest.artifacts?.length!==2||new Set(macLatest.artifacts.map(a=>a.arch)).size!==2||macLatest.installer_cases_passed!==13)throw Error('Latest Mac installer QA is incomplete.');
+    for(const a of macLatest.artifacts)if(!['arm64','x64'].includes(a.arch)||a.file!==`Register-${version}-mac-${a.arch}-r${macLatest.build_revision}.zip`||a.build_revision!==macLatest.build_revision||!a.ad_hoc_signed||!a.crc_checked||!a.installer_manifest_checked||a.bundle_resource_seals<5)throw Error('Latest Mac archive evidence is incomplete.');
   }catch(e){if(e.code!=='ENOENT')throw e;}
   const artifacts=proof.artifacts.map(a=>path.basename(a.file).includes('-mac-')&&macLatest?macLatest.artifacts.find(m=>m.arch===a.arch):a.arch==='arm64'&&path.basename(a.file).includes('-mac-')&&macRepair?macRepair.artifact:a);
   const root=path.resolve(workspace,'.runtime/public-download',version);
@@ -25,7 +25,7 @@ export async function prepareDownloads(workspace=process.cwd()){
   const files=[],digest=data=>createHash('sha256').update(data).digest('hex');
   for(const artifact of artifacts){
     const name=path.basename(artifact.file);
-    if(!new RegExp(`^Register-${version.replaceAll('.','\\.')}-((mac-(arm64|x64)(-r[23])?\\.zip)|(win-x64\\.exe))$`).test(name))throw Error('Only this release installer/ZIP may be shared.');
+    if(!new RegExp(`^Register-${version.replaceAll('.','\\.')}-((mac-(arm64|x64)(-r[1-9][0-9]{0,2})?\\.zip)|(win-x64\\.exe))$`).test(name))throw Error('Only this release installer/ZIP may be shared.');
     const source=path.join(workspace,'release/installers',name),bytes=await readFile(source);
     if(bytes.length!==artifact.bytes||digest(bytes)!==artifact.sha256)throw Error('Installer differs from verified release: '+name);
     await copyFile(source,path.join(root,name));
@@ -40,9 +40,9 @@ export async function prepareDownloads(workspace=process.cwd()){
     extras[3][1]=Buffer.concat([extras[3][1],Buffer.from('\nM1 수정본 r2: ZIP을 풀고 Install Register.command 실행 → 파일 검증 후 설치 승인\n도우미 자체가 차단되면: 터미널에 /bin/zsh 뒤 공백 입력 → Install Register.command 파일 끌어 넣기 → Enter\n사용자 ~/Applications/Register.app에 설치, 기존 사용자 앱 백업, 설계 보존\n이 앱의 다운로드 차단 표시만 처리하며 시스템 Gatekeeper 설정은 변경하지 않음\n자체 서명 완료, Developer ID 서명·Apple 공증·M1 실기기 실행 미검증\n')]);
   }
   if(macLatest){
-    const section='<section id="mac-install"><h2>Mac 최신 작업대 · M1 / Intel r3</h2><ol><li>CPU에 맞는 ZIP 전체를 Mac에서 압축 해제합니다.</li><li><strong>Install Register.command</strong>를 실행하고 파일 검증 후 설치를 선택합니다.</li><li>Docker 없이 시작하려면 <strong>뷰어로 설치</strong>를 선택합니다.</li></ol><p>기존 앱과 설계는 보존합니다. 복사·서명 검사·실행 요청이 실패하면 기존 앱을 복원합니다. 오류는 <strong>Diagnose Register.command</strong>로 확인하세요.</p><details><summary>설치 도우미가 차단될 때</summary><p>터미널에 <strong>/bin/zsh </strong>를 입력한 뒤 Install Register.command 파일을 끌어 넣고 Enter를 누릅니다. 출처와 아래 SHA-256을 먼저 확인하세요.</p></details><p>macOS 13 이상 · 자체 서명 완료 · Developer ID/Apple 공증과 실제 Mac 실행 인증은 별도입니다. 이 패키지는 Windows/Linux에서 구조·서명을 검사했으며 실제 Mac 실행은 아직 확인하지 않았습니다.</p></section>';
+    const section=`<section id="mac-install"><h2>Mac 최신 작업대 · M1 / Intel r${macLatest.build_revision}</h2><ol><li>CPU에 맞는 ZIP 전체를 Mac에서 압축 해제합니다.</li><li><strong>Install Register.command</strong>를 실행하고 파일 검증 후 설치를 선택합니다.</li><li>Docker 없이 시작하려면 <strong>뷰어로 설치</strong>를 선택합니다.</li></ol><p>엔진 실행 파일을 Docker 이미지 안에 포함하여 설계 폴더 연결에 따른 server.py 누락 오류를 수정했습니다. 앱 설치 후 Docker Desktop을 켜고 설계 엔진 다시 연결을 누르세요. 기존 앱과 설계는 보존합니다. 복사·서명 검사·실행 요청이 실패하면 기존 앱을 복원합니다. 오류는 <strong>Diagnose Register.command</strong>로 확인하세요.</p><details><summary>설치 도우미가 차단될 때</summary><p>터미널에 <strong>/bin/zsh </strong>를 입력한 뒤 Install Register.command 파일을 끌어 넣고 Enter를 누릅니다. 출처와 아래 SHA-256을 먼저 확인하세요.</p></details><p>macOS 13 이상 · 자체 서명 완료 · Developer ID/Apple 공증과 실제 Mac 실행 인증은 별도입니다. 이 패키지는 Windows/Linux에서 구조·서명을 검사했으며 실제 Mac 실행은 아직 확인하지 않았습니다.</p></section>`;
     extras[0][1]=Buffer.from(extras[0][1].toString('utf8').replace('</div><section><h2>설치와 실행</h2>','</div>'+section+'<section><h2>설치와 실행</h2>').replace('Mac은 ZIP을 풀고 Register.app을 Applications 폴더로 옮깁니다.','Mac은 ZIP 전체를 풀고 Install Register.command로 설치합니다.'));
-    extras[3][1]=Buffer.concat([extras[3][1],Buffer.from('\nM1/Intel 최신 작업대 r3: ZIP 전체 해제 → Install Register.command → 설치 또는 뷰어로 설치\n사용자 ~/Applications/Register.app 설치, 기존 앱 백업 및 설치 실패 시 복원\n오류 진단: Diagnose Register.command, 기록: ~/Library/Logs/Register\n자체 서명 검증 완료, 실제 Mac 실행/Apple 공증은 미확인\n')]);
+    extras[3][1]=Buffer.concat([extras[3][1],Buffer.from(`\nM1/Intel 최신 작업대 r${macLatest.build_revision}: ZIP 전체 해제 → Install Register.command → 설치 또는 뷰어로 설치\n사용자 ~/Applications/Register.app 설치, 기존 앱 백업 및 설치 실패 시 복원\n오류 진단: Diagnose Register.command, 기록: ~/Library/Logs/Register\n자체 서명 검증 완료, 실제 Mac 실행/Apple 공증은 미확인\n`)]);
   }
   try{
     const referenceProof=JSON.parse(await readFile(path.join(workspace,'docs/evidence/voltage-references.json'),'utf8'));
