@@ -30,9 +30,17 @@ for (const file of files) {
   if (file.endsWith('.zip')) {
     archives++;
     try {
-      const entries = unzipSync(data, { filter: entry => entry.originalSize <= 50 * 1024 * 1024 });
+      let expandedBytes = 0;
+      const entries = unzipSync(data, { filter: entry => {
+        expandedBytes += entry.originalSize;
+        if (entry.originalSize > 50 * 1024 * 1024 || expandedBytes > 200 * 1024 * 1024) {
+          issues.push({ file: `${file}!${entry.name}`, rule: 'archive-expansion-limit' });
+          return false;
+        }
+        return true;
+      } });
       for (const [name, content] of Object.entries(entries)) {
-        if (/(?:^|\/)(?:\.env|worker\.json|credentials\.json|\.secrets)(?:\/|$)/.test(name)) issues.push({ file: `${file}!${name}`, rule: 'private-archive-path' });
+        if (/(?:^|\/)(?:\.env(?:\.[^/]+)?|worker\.json|credentials\.json|\.secrets)(?:\/|$)/.test(name) && !/\.example$/.test(name)) issues.push({ file: `${file}!${name}`, rule: 'private-archive-path' });
         scan(`${file}!${name}`, content);
       }
     } catch { issues.push({ file, rule: 'unreadable-archive' }); }
