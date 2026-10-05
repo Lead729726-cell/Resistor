@@ -1,0 +1,38 @@
+#!/bin/zsh
+set -u
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin
+[[ "$(/usr/bin/uname -s)" == Darwin ]] || { print 'macOS 전용 진단입니다.'; exit 1; }
+register_folder="${0:A:h}"
+register_app="$HOME/Applications/Register.app"
+[[ -d "$register_app" ]] || register_app="$register_folder/Register.app"
+log_folder="$HOME/Library/Logs/Register"
+/bin/mkdir -p "$log_folder"
+log="$log_folder/diagnose-$(/bin/date +%Y%m%d-%H%M%S).log"
+exec > >(/usr/bin/tee -a "$log") 2>&1
+print '레지스터 Mac 진단 · 앱이나 보안 설정을 변경하지 않습니다.'
+print -- "macOS: $(/usr/bin/sw_vers -productVersion)"
+print -- "실행 환경 CPU: $(/usr/bin/uname -m)"
+print -- "Apple Silicon: $(/usr/sbin/sysctl -n hw.optional.arm64 2>/dev/null || print 0)"
+if [[ ! -d "$register_app" ]]; then
+  print 'Register.app이 없습니다. ZIP 전체를 풀고 Install Register.command를 실행하세요.'
+  exit 1
+fi
+print -- "앱: $register_app"
+/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$register_app/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c 'Print :LSMinimumSystemVersion' "$register_app/Contents/Info.plist"
+/usr/bin/file "$register_app/Contents/MacOS/Register"
+if /usr/bin/codesign --verify --deep --strict --verbose=2 "$register_app"; then
+  print '앱 자체 서명: 유효 · Developer ID/Apple 공증을 의미하지 않습니다.'
+else
+  print '앱 자체 서명: 오류 · 새 ZIP을 받아 전체를 Mac에서 압축 해제하세요.'
+fi
+if /usr/bin/xattr -r "$register_app" 2>/dev/null | /usr/bin/grep -q com.apple.quarantine; then
+  print '다운로드 차단 표시가 있습니다. 검증된 ZIP의 Install Register.command를 이용하세요.'
+else
+  print '다운로드 차단 표시: 없음'
+fi
+[[ -d /Applications/Docker.app ]] && print 'Docker Desktop: 설치됨' || print 'Docker Desktop: 미발견 · 독립 뷰어는 사용할 수 있습니다.'
+print -- "설계 보관 위치: $HOME/Library/Application Support/레지스터/workspace"
+print -- "설치·진단 로그 폴더: $log_folder"
+print -- "진단 완료: $log"
+print '지원 요청에는 필요한 오류 부분만 보내세요. 로그에 사용자 폴더 경로가 포함됩니다.'

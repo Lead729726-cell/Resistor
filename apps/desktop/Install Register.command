@@ -9,7 +9,27 @@ log_folder="$HOME/Library/Logs/Register"
 /bin/mkdir -p "$log_folder"
 log="$log_folder/install-$(/bin/date +%Y%m%d-%H%M%S).log"
 exec > >(/usr/bin/tee -a "$log") 2>&1
-trap 'result=$?; if (( result != 0 )); then print "설치를 완료하지 못했습니다. 로그: $log"; fi' EXIT
+staging=''
+backup=''
+replaced=0
+finish(){
+  result=$?
+  if (( result != 0 )); then
+    if [[ -n "$backup" && -d "$backup" ]]; then
+      if (( replaced )) && [[ -d "$target" ]]; then
+        failed="$applications/Register.failed-$(/usr/bin/uuidgen).app"
+        /bin/mv "$target" "$failed" || return
+        print -- "실패한 새 앱 보관: $failed"
+      fi
+      if [[ ! -e "$target" ]]; then
+        /bin/mv "$backup" "$target" && print '기존 앱을 복원했습니다.'
+      fi
+    fi
+    print -- "설치를 완료하지 못했습니다. 로그: $log"
+    [[ -z "$staging" || ! -d "$staging" ]] || print -- "미완료 복사본: $staging"
+  fi
+}
+trap finish EXIT
 fail(){ print -u2 -- "$1"; exit 1; }
 [[ "$(/usr/bin/uname -s)" == Darwin ]] || fail '이 설치 도우미는 macOS 전용입니다.'
 mac_version="$(/usr/bin/sw_vers -productVersion)"
@@ -39,7 +59,7 @@ while IFS= read -r manifest_line; do
   checksum="${manifest_line%% *}"
   manifest_path="${manifest_line#*  }"
   [[ ${#checksum} == 64 && "$checksum" != *[^0-9a-f]* ]] || fail '잘못된 SHA-256 목록입니다.'
-  [[ "$manifest_path" == Register.app/* || "$manifest_path" == 'Install Register.command' || "$manifest_path" == 'Open Viewer.command' || "$manifest_path" == 'Mac 설치 안내.txt' || "$manifest_path" == BUNDLE-SYMLINKS.tsv ]] || fail '목록의 파일 경로가 허용 범위를 벗어났습니다.'
+  [[ "$manifest_path" == Register.app/* || "$manifest_path" == 'Install Register.command' || "$manifest_path" == 'Open Viewer.command' || "$manifest_path" == 'Diagnose Register.command' || "$manifest_path" == 'Mac 설치 안내.txt' || "$manifest_path" == BUNDLE-SYMLINKS.tsv ]] || fail '목록의 파일 경로가 허용 범위를 벗어났습니다.'
   [[ "/$manifest_path/" != */../* && -f "$register_folder/$manifest_path" ]] || fail '앱 파일이 누락되었거나 경로가 잘못되었습니다.'
 done < "$register_folder/BUNDLE-SHA256SUMS.txt"
 (cd "$register_folder" && /usr/bin/shasum -a 256 -c BUNDLE-SHA256SUMS.txt)
@@ -48,8 +68,8 @@ done < "$register_folder/BUNDLE-SHA256SUMS.txt"
 print '2/4 앱과 하위 구성요소의 자체 서명 확인'
 /usr/bin/codesign --verify --deep --strict --verbose=2 "$source_app"
 print 'Developer ID 서명·Apple 공증은 완료되지 않은 개발 배포본입니다.'
-answer="$(/usr/bin/osascript -e 'try' -e 'return button returned of (display dialog "레지스터 수정본을 사용자 Applications 폴더에 설치합니다.\n\n파일 해시와 자체 서명을 확인했습니다. Apple 공증은 완료되지 않았습니다. 이 앱의 다운로드 차단 표시만 해제합니다.\n\n기존 사용자 설치 앱은 백업하고 설계 데이터는 보존합니다. 계속하려면 설치를 선택하세요." with title "레지스터 Mac 설치" buttons {"취소", "설치"} default button "설치" cancel button "취소")' -e 'on error number -128' -e 'return "취소"' -e 'end try')"
-[[ "$answer" == 설치 ]] || exit 0
+answer="$(/usr/bin/osascript -e 'try' -e 'return button returned of (display dialog "레지스터를 사용자 Applications 폴더에 설치합니다.\n\n파일 해시와 자체 서명을 확인했습니다. Apple 공증은 완료되지 않았습니다. 이 앱의 다운로드 차단 표시만 해제합니다.\n\n기존 레지스터를 먼저 종료해 주세요. 기존 앱은 백업하고 설계 데이터는 보존합니다.\n\nDocker 없이 시작하려면 뷰어로 설치를 선택하세요." with title "레지스터 Mac 설치" buttons {"취소", "뷰어로 설치", "설치"} default button "설치" cancel button "취소")' -e 'on error number -128' -e 'return "취소"' -e 'end try')"
+[[ "$answer" == 설치 || "$answer" == '뷰어로 설치' ]] || exit 0
 [[ ! -L "$applications" && ! -L "$target" ]] || fail '사용자 Applications 또는 기존 앱이 심볼릭 링크입니다. 일반 폴더에 설치해주세요.'
 /bin/mkdir -p "$applications"
 staging="$applications/.register-install-$(/usr/bin/uuidgen)"
@@ -66,9 +86,14 @@ if [[ -e "$target" ]]; then
   print -- "기존 사용자 앱 백업: $backup"
 fi
 /bin/mv "$staging/Register.app" "$target"
+replaced=1
 /bin/rmdir "$staging"
 print '4/4 레지스터 실행'
-/usr/bin/open "$target"
+if [[ "$answer" == '뷰어로 설치' ]]; then
+  /usr/bin/open "$target" --args --viewer
+else
+  /usr/bin/open "$target"
+fi
 print -- "설치 완료: $target"
 print -- "설치 로그: $log"
 print '뷰어는 Docker 없이 사용할 수 있습니다. 설계·해석에는 Docker Linux 엔진이 필요합니다.'

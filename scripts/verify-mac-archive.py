@@ -139,6 +139,14 @@ def verify(archive,require_bundle_signature=False):
             assert link_manifest=={l['path']:l['target'] for l in links},'Installer symlink manifest mismatch'
         assert any('/Versions/Current' in l['path'] for l in links),'Framework symlinks lost'
         required=['dist/index.html','.dockerignore','scripts/docker-cli.mjs','scripts/worker.mjs','scripts/desktop-diagnostics.mjs','apps/desktop/main.cjs','apps/desktop/preload.cjs','apps/desktop/menu.cjs','apps/desktop/workspace.cjs','workers/eda/server.py','workers/eda/Dockerfile','examples/sky130/mosfet.gds','licenses/THIRD-PARTY-NOTICES.md','docs/desktop-installation.md']
+        if 'Diagnose Register.command' in entries:
+            required.extend(['apps/desktop/Diagnose Register.command','apps/desktop/Install Register.command','workers/eda/project_index.py'])
+            assert b'\r' not in z.read('Install Register.command'),'Mac shell helper must use LF line endings'
+            assert b'\r' not in z.read('Diagnose Register.command'),'Mac diagnostic helper must use LF line endings'
+            assert entries['Diagnose Register.command'].external_attr>>16&0o111
+            assert z.read('Diagnose Register.command')==z.read(root+'Resources/app/apps/desktop/Diagnose Register.command')
+            template=z.read(root+'Resources/app/apps/desktop/Install Register.command').decode().replace('@VERSION@',version).replace('@ARCH@',expected_arch)
+            assert z.read('Install Register.command').decode()==template,'Installer template differs from bundled source'
         for relative in required:assert root+'Resources/app/'+relative in entries,relative
         assert not any('/.runtime/' in name or '/.secrets/' in name or name.endswith('worker.json') for name in entries),'Private runtime data in archive'
         bad=z.testzip();assert bad is None,('ZIP CRC failure',bad)

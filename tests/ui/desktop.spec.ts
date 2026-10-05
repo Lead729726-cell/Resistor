@@ -1,6 +1,8 @@
 import {test,expect,_electron as electron} from '@playwright/test';
 import path from 'node:path';
-import {mkdir,mkdtemp,access,writeFile} from 'node:fs/promises';
+import {mkdir,mkdtemp,access,writeFile,readFile} from 'node:fs/promises';
+import {execFile} from 'node:child_process';
+import {promisify} from 'node:util';
 import os from 'node:os';
 const version=JSON.parse(await (await import('node:fs/promises')).readFile('package.json','utf8')).version;
 const release=path.resolve(process.platform==='darwin'?`release/${version}/Register-darwin-${process.arch}/Register.app/Contents/MacOS/Register`:`release/${version}/Register-win32-x64/Register.exe`);
@@ -57,4 +59,32 @@ test('Mac native menu delivers sandbox commands and Dock activation reopens the 
     await next.getByTestId('viewer-empty-gds-input').setInputFiles(path.resolve('examples/sky130/mosfet.gds'));await expect(next.getByTestId('viewer-shape-count')).toHaveText('52 / 52');
     await writeFile('docs/evidence/macos-native-menu.json',JSON.stringify({platform:process.platform,arch:process.arch,version,menu,sandbox_commands_delivered:true,dock_window_reopened:true,offline_gds_shapes_after_reopen:52},null,2));
   }finally{await app.close();}
+});
+
+test('Mac installed application outside the checkout seeds writable data and preserves it across replacement',async()=>{
+  test.skip(process.platform!=='darwin','Requires actual macOS and its ditto/codesign utilities.');
+  const execute=promisify(execFile),temporary=await mkdtemp(path.join(os.tmpdir(),'Register installed QA '));
+  const installed=path.join(temporary,'Applications with spaces/Register.app'),userData=path.join(temporary,'User data with spaces');
+  const source=path.resolve(release,'../../..'),workspace=path.join(userData,'workspace');
+  const marker=path.join(workspace,'.runtime/eda/preserved-design.json');
+  const env={...process.env,REGISTER_USER_DATA:userData};delete env.MOS_WORKSPACE;delete env.MOS_DEV_URL;
+  for(const replacement of [false,true]){
+    await execute('/usr/bin/ditto',['--noqtn',source,installed]);
+    await execute('/usr/bin/codesign',['--verify','--deep','--strict',installed]);
+    const app=await electron.launch({executablePath:path.join(installed,'Contents/MacOS/Register'),args:['--viewer'],env,timeout:60000});
+    try{
+      const window=await app.firstWindow();await expect(window.getByTestId('viewer-empty-gds-input')).toBeAttached();
+      expect(await app.evaluate(({app})=>app.getPath('userData'))).toBe(userData);
+      await access(path.join(workspace,'workers/eda/Dockerfile'));
+      await window.getByTestId('viewer-empty-gds-input').setInputFiles(path.resolve('examples/sky130/mosfet.gds'));
+      await expect(window.getByTestId('viewer-shape-count')).toHaveText('52 / 52');
+      if(replacement)expect(await readFile(marker,'utf8')).toBe('saved design survives app replacement');
+      else {await mkdir(path.dirname(marker),{recursive:true});await writeFile(marker,'saved design survives app replacement');}
+      await expect(window.locator('canvas').first()).toBeVisible();
+      await window.screenshot({path:`docs/evidence/macos-installed-${process.arch}.png`});
+      let sessionCreated=false;try{await access(path.join(workspace,'.runtime/worker.json'));sessionCreated=true;}catch{}
+      expect(sessionCreated).toBe(false);
+    }finally{await app.close();}
+  }
+  await writeFile(`docs/evidence/macos-installed-${process.arch}.json`,JSON.stringify({platform:process.platform,arch:process.arch,version,actual_native_execution:true,installed_outside_checkout:true,path_with_spaces:true,codesign_verified:true,no_workspace_override:true,writable_workspace_seeded:true,design_preserved_after_replacement:true,offline_gds_shapes:52,native_worker_started:false},null,2));
 });

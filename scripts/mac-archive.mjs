@@ -29,7 +29,7 @@ export async function archiveMacApp({app,destination,readme,version,arch,install
     if(!/^\d+\.\d+\.\d+$/.test(version)||!['arm64','x64'].includes(arch))throw Error('Mac installer requires a version and architecture.');
     const script=(await readFile('apps/desktop/Install Register.command','utf8')).replaceAll('@VERSION@',version).replaceAll('@ARCH@',arch);
     extra[1][1]='#!/bin/zsh\nset -e\nregister_app="$HOME/Applications/Register.app"\nif [[ ! -d "$register_app" ]]; then\n  print "먼저 같은 ZIP의 Install Register.command로 레지스터를 설치하세요."\n  exit 1\nfi\n/usr/bin/open -n "$register_app" --args --viewer\n';
-    extra.push(['Install Register.command',script,0o100755],['BUNDLE-SYMLINKS.tsv',links.map(([name,target])=>`${name}\t${target}`).join('\n')+'\n',0o100644]);
+    extra.push(['Install Register.command',script,0o100755],['Diagnose Register.command',await readFile('apps/desktop/Diagnose Register.command','utf8'),0o100755],['BUNDLE-SYMLINKS.tsv',links.map(([name,target])=>`${name}\t${target}`).join('\n')+'\n',0o100644]);
     for(const [name,text] of extra)hashes.push([name,createHash('sha256').update(text).digest('hex')]);
     extra.push(['BUNDLE-SHA256SUMS.txt',hashes.map(([name,hash])=>`${hash}  ${name}`).join('\n')+'\n',0o100644]);
   }

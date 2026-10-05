@@ -99,6 +99,13 @@ npm run build
 
 ## v0.14 · Apple Silicon과 Intel Mac 지원
 
+최신 r3 ZIP에는 Precision Workbench, 두 CPU 공통 설치 도우미, Docker 없는
+뷰어 설치, 설치 실패 시 기존 앱 복원 및 읽기 전용 오류 진단을 포함합니다.
+`npm run package:mac:release`로 두 CPU용 ZIP을 생성합니다.
+[r3 검증 기록](docs/evidence/mac-preview-release.json)은 구조·자체 서명·설치 절차
+검증이며 실제 Mac 실행 인증은 별도입니다. main에 관련 소스를 푸시하면
+macOS workflow가 두 CPU에서 실제 설치 위치 실행·데이터 보존까지 검사합니다.
+
 두 Mac CPU용 앱/ZIP 생성 경로, Finder에서 Docker 탐색, Mac 메뉴와 ⌘ 단축키,
 앱 외부 저장 폴더 및 기존 파일 보존을 추가했습니다. 실제 Mac의 offline viewer
 검증과 선택 가능한 5단계 native EDA 검증을 준비했습니다.

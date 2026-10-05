@@ -1,5 +1,23 @@
 name: macOS Apple Silicon and Intel preview
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/**'
+      - 'packages/**'
+      - 'workers/**'
+      - 'adapters/**'
+      - 'platform/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'package*.json'
+      - '.github/workflows/macos-preview.yml'
+permissions:
+  contents: read
+concurrency:
+  group: mac-preview-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   mac-preview:
     strategy:
@@ -11,19 +29,25 @@ jobs:
           - runner: macos-15-intel
             arch: x64
     runs-on: ${{ matrix.runner }}
+    timeout-minutes: 35
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
+      - name: Require the intended native architecture
+        run: node -e "if(process.platform!=='darwin'||process.arch!=='${{ matrix.arch }}')process.exit(1)"
       - run: npm ci
       - run: node --test --test-isolation=none tests/mac-platform.test.mjs tests/desktop-diagnostics.test.mjs
       - run: node --import tsx --test --test-isolation=none tests/shortcuts.test.ts
       - run: npm run build
+      - run: npm run test:core
       - run: node scripts/mac-preview.mjs
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: Verify final signed installer ZIP and its checksum
+        run: python3 scripts/verify-mac-archive.py release/installers/Register-*-mac-${{ matrix.arch }}-r3.zip --require-bundle-signature --output docs/evidence/macos-archive-${{ matrix.arch }}.json
       - uses: actions/upload-artifact@v4
         with:
           name: Register-macOS-${{ matrix.arch }}-adhoc-preview
@@ -33,6 +57,7 @@ jobs:
             docs/evidence/macos-*.json
             docs/evidence/macos-*.png
             docs/evidence/macos-recording/*.webm
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

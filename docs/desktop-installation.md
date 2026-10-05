@@ -2,10 +2,12 @@
 
 ## Mac 설치
 
-- Apple Silicon(M1 이후) 실행 차단 수정본: `release/installers/Register-0.14.0-mac-arm64-r2.zip`
-- Intel: `release/installers/Register-0.14.0-mac-x64.zip`
+- Apple Silicon(M1 이후) 최신 작업대: `release/installers/Register-0.14.0-mac-arm64-r3.zip`
+- Intel 최신 작업대: `release/installers/Register-0.14.0-mac-x64-r3.zip`
 
-M1 이후 Mac에서는 **r2 수정본** ZIP 전체를 Mac에서 압축 해제한 뒤 `Install Register.command`를 실행합니다. 도우미가 SHA-256, 앱 식별자, 하위 구성요소와 앱 리소스 서명을 확인하고 설치 내용을 보여줍니다. **설치**를 선택하면 `~/Applications/Register.app`에 복사하고 이 앱의 다운로드 차단 표시만 처리한 뒤 실행합니다. 관리자 암호는 필요하지 않습니다. 기존 사용자 설치 앱은 같은 폴더에 백업하고 설계 데이터는 보존합니다. 기존 `/Applications/Register.app`을 직접 실행하는 대신 도우미가 설치한 사용자 앱을 사용하세요.
+두 CPU 모두 **r3 ZIP 전체를 Mac에서 압축 해제**한 뒤 `Install Register.command`를 실행합니다. 도우미가 SHA-256, 앱 식별자, 하위 구성요소와 앱 리소스 서명을 확인하고 설치 내용을 보여줍니다. **설치**를 선택하면 `~/Applications/Register.app`에 복사하고 이 앱의 다운로드 차단 표시만 처리한 뒤 실행합니다. **뷰어로 설치**는 Docker 없이 GDS/OASIS 뷰어부터 엽니다. 관리자 암호는 필요하지 않습니다. 기존 레지스터를 먼저 종료하세요. 기존 사용자 설치 앱은 같은 폴더에 백업하고 설계 데이터는 보존합니다. 복사·복사본 서명 검사·실행 요청이 실패하면 기존 앱을 유지하거나 복원하고 실패한 새 앱도 진단용으로 보관합니다. 실행 요청 성공은 앱 내부 실행 완료를 보장하지 않습니다. 기존 `/Applications/Register.app` 대신 도우미가 설치한 사용자 앱을 사용하세요.
+
+r3에는 Precision Workbench의 최신 디자인·상태 표시·프로젝트 목록 개선이 들어 있습니다. `Diagnose Register.command`는 macOS 버전, CPU, 실제 앱 버전·최소 OS, 자체 서명, 다운로드 차단 표시와 Docker 설치 여부를 확인하고 `~/Library/Logs/Register`에 기록합니다. 앱이나 보안 설정을 변경하거나 로그를 외부로 보내지 않습니다. 지원 요청에는 필요한 오류 부분만 보내세요.
 
 도우미 자체가 차단되면 터미널을 열고 `/bin/zsh ` 뒤에 `Install Register.command` 파일을 끌어 넣은 뒤 Enter를 누릅니다. 직접 앱을 실행할 때의 “개발자를 확인할 수 없음” 경고는 Apple 공증을 완료하기 전까지 나타날 수 있습니다. 출처와 다운로드 SHA-256을 확인한 이 배포본에만 설치 도우미를 사용하세요. 설치 과정 기록은 `~/Library/Logs/Register/install-날짜.log`에 남습니다. 시스템 전체 Gatekeeper 설정은 변경하지 않습니다.
 
@@ -27,13 +29,15 @@ Mac 설치본의 설계 폴더는 `~/Library/Application Support/레지스터/wo
 
 ## Mac 빌드와 실제 실행 검증
 
-Mac 소스 체크아웃에서 `npm ci` 후 `npm run package:mac:preview`를 실행하면 현재 Mac CPU용 `.app`를 만들고 실제 Electron으로 Docker 없는 GDS 52개 shape, 연결 진단/재시도/독립 뷰어를 검사한 뒤 DMG와 ZIP을 만듭니다. 서명되지 않은 미리보기이며 자동 업로드하지 않습니다.
+Mac 소스 체크아웃에서 `npm ci` 후 `npm run package:mac:preview`를 실행하면 현재 Mac CPU용 자체 서명 `.app`를 만들고 실제 Electron으로 Docker 없는 GDS 52개 shape, 연결 진단/재시도, Mac 메뉴·Dock 재열기, 공백이 있는 설치 위치에서의 첫 실행·앱 교체·설계 보존을 검사한 뒤 DMG와 설치 도우미를 포함한 r3 ZIP을 만듭니다. 네 테스트가 모두 성공해야 결과 패키지 검증 기록을 생성합니다. Developer ID/공증은 별도이며 자동 업로드하지 않습니다.
 
-다른 CPU의 앱만 만들려면 `npm run package:mac:arm64` 또는 `npm run package:mac:x64`를 사용합니다. CPU가 다른 바이너리는 해당 CPU의 Mac에서 따로 검사해야 합니다. 수동 `.github/workflows/macos-preview.yml`은 Apple Silicon `macos-15`와 Intel `macos-15-intel`에서 각각 같은 smoke 검사를 하도록 준비되어 있습니다. 현재 Git remote가 없어 workflow는 실행되지 않았습니다.
+다른 CPU의 앱만 만들려면 `npm run package:mac:arm64` 또는 `npm run package:mac:x64`를 사용합니다. CPU가 다른 바이너리는 해당 CPU의 Mac에서 따로 검사해야 합니다. `.github/workflows/macos-preview.yml`은 관련 소스의 main push 또는 수동 실행 시 Apple Silicon `macos-15`와 Intel `macos-15-intel`에서 각각 네이티브 검사와 최종 ZIP 검증을 수행합니다. 실제 CPU를 먼저 확인하고 실패·스킵은 성공으로 기록하지 않습니다. GitHub 인증·푸시가 완료되지 않아 이 변경의 workflow는 아직 실행되지 않았습니다.
 
 Docker가 준비된 실제 Mac에서는 `REGISTER_NATIVE_QA=1 npm run package:mac:preview`로 실제 패키지의 엔진 연결과 full adder의 pre → DRC → LVS → PEX → 실제 RC post, 각 8개 입력 조합을 추가 검사합니다. 별도로 `npm run test:mac:native`도 가능합니다. 실패한 단계/실제 run ID를 `docs/evidence/macos-native-<arch>.json`에 저장하고 합성 PASS로 대체하지 않습니다. 새 검증 프로젝트는 기존 프로젝트와 별도로 생성합니다.
 
 `npm run package:mac:zip`은 두 CPU용 ZIP을 생성합니다. Windows에서는 별도의 Linux Docker 빌드 컨테이너를 쓰며 기존 EDA 컨테이너를 변경하지 않습니다.
+
+최신 r3 두 CPU ZIP은 `npm run package:mac:release`, M1만 만들려면 `npm run package:mac:m1-repair`를 사용합니다. 기존 r2 및 이전 파일은 보존합니다. Windows/Linux 교차 빌드에는 네이티브 실행 성공 표시를 붙이지 않습니다.
 
 이 Windows PC에서는 Linux 컨테이너의 파일 시스템에서 두 CPU용 `.app`를 만들고 Unix 실행 권한·Framework 심볼릭 링크를 보존한 ZIP을 생성합니다. `scripts/verify-mac-archive.py`가 실제 Mach-O CPU, 앱 버전, 필수 리소스, ZIP CRC, 민감 runtime 제외를 검사합니다. **이 검사는 Mac에서 앱을 실행한 증거가 아닙니다.** DMG는 실제 Mac에서 electron-builder가 만듭니다.
 

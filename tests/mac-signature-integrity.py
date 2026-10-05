@@ -18,5 +18,5 @@ for name,data,plist,seal,expected in cases:
         assert expected in str(error),(name,str(error));results.append({'case':name,'rejected':True})
     else:raise AssertionError('Accepted changed signature data: '+name)
 report={'checked_at':datetime.now(timezone.utc).isoformat(),'archive':str(archive),'sha256':hashlib.sha256(archive.read_bytes()).hexdigest(),'scope':'Actual Mach-O page and bundle special-slot digest corruption checks; no macOS trust or execution claim','native_execution_verified':False,'cases':results}
-Path('docs/evidence/mac-signature-integrity.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
+Path(sys.argv[2] if len(sys.argv)>2 else 'docs/evidence/mac-signature-integrity.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
 print('Rejected executable, Info.plist and resource seal corruption in actual M1 archive signatures.')
