@@ -47,7 +47,7 @@ jobs:
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
       - name: Verify final signed installer ZIP and its checksum
-        run: python3 scripts/verify-mac-archive.py release/installers/Register-*-mac-${{ matrix.arch }}-r4.zip --require-bundle-signature --output docs/evidence/macos-archive-${{ matrix.arch }}.json
+        run: python3 scripts/verify-mac-archive.py release/installers/Register-*-mac-${{ matrix.arch }}-r5.zip --require-bundle-signature --output docs/evidence/macos-archive-${{ matrix.arch }}.json
       - uses: actions/upload-artifact@v4
         with:
           name: Register-macOS-${{ matrix.arch }}-adhoc-preview

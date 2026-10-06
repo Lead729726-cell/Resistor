@@ -44,14 +44,23 @@ def validate_device(d):
     for axis in ('x','y'):
         n=num(d.get(axis,0))
         if abs(n)>1e6: raise EDAError('PARAMETER_RANGE','Schematic position is outside the supported canvas.')
+    if isinstance(d.get('rotation',0),bool) or d.get('rotation',0) not in (0,90,180,270) or not isinstance(d.get('mirror',False),bool):
+        raise EDAError('INVALID_ORIENTATION','Schematic rotation must be 0/90/180/270 degrees and mirror must be boolean.')
 
-def pin_offsets(d):
+def base_pin_offsets(d):
     kind=d['kind']
     if kind in ('nmos','pmos'): return {'D':(30,42 if kind=='pmos' else -42),'G':(-46,0),'S':(30,-42 if kind=='pmos' else 42),'B':(49,0)}
     if kind in ('resistor','capacitor','voltage','current'): return {'+':(0,-44),'-':(0,44),'1':(0,-44),'2':(0,44)}
     if kind=='ground': return {'G':(0,-30)}
     if kind=='port': return {'P':(-30,0)}
     keys=list(d.get('pins',{})); return {key:(-55,-(len(keys)-1)*12+i*24) for i,key in enumerate(keys)}
+
+def pin_offsets(d):
+    result={}; rotation=d.get('rotation',0)
+    for pin,(x,y) in base_pin_offsets(d).items():
+        if d.get('mirror',False):x=-x
+        result[pin]=(-y,x) if rotation==90 else (-x,-y) if rotation==180 else (y,-x) if rotation==270 else (x,y)
+    return result
 
 def cell_ir(schematic,cell_name=None):
     if not isinstance(schematic,dict) or not isinstance(schematic.get('devices'),list) or not isinstance(schematic.get('cells',{}),dict):raise EDAError('INVALID_SCHEMATIC','Schematic requires a device list and a child-cell dictionary.')
@@ -159,6 +168,12 @@ def apply(schematic,c,cell_name=None):
     elif ty=='move_device':
         if not d: raise EDAError('NOT_FOUND','No such schematic device.')
         d['x']=num(c.get('x')); d['y']=num(c.get('y')); validate_device(d)
+    elif ty=='transform_device':
+        if not d: raise EDAError('NOT_FOUND','No such schematic device.')
+        new=copy.deepcopy(d)
+        for key in ('rotation','mirror'):
+            if key in c:new[key]=c[key]
+        validate_device(new);d.update(new)
     elif ty=='set_pin':
         if not d or c.get('pin') not in d['pins']: raise EDAError('NOT_FOUND','No such device pin.')
         d['pins'][c['pin']]=c.get('net',''); validate_device(d)

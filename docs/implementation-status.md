@@ -1,5 +1,10 @@
 # 레지스터 구현 상태
 
+2026-10-06: [레이아웃·회로도 직접 그리기](drawing-tools.md), 네이티브 핀 방향 처리,
+반복 소자 배치, DBU 격자·폭 검사와 밝은/어두운 화면 검증을 추가했습니다.
+[실제 엔진 및 화면 검증](evidence/editor-drawing/native.json).
+
+
 2026-10-02 개발 추가: 20-MOS 4:1 MUX의 실제 물리 템플릿·ngspice 64개 입력 검사·
 진리표 UI·pre-layout 20개 단자 전류 경로를 추가했습니다. 직접 UI 조작으로 기본
 20ns pre/post 64/64, SS/125°C/1.62V/50fF post 64/64, 5ns pre-layout PVT 18점,

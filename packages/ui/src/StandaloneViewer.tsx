@@ -1,3 +1,4 @@
+import {isLocalWorkbench} from '@mos/contracts';
 import { useEffect, useRef, useState } from 'react';
 import { localRpc, type BackendSetup, type AnalysisSetup, type CurrentFlow, type Layer, type Project, type Run, type Scene } from '@mos/contracts';
 import { LayoutViewer, DesignReviewPanel, type ViewerFocus, type ViewerDisplay } from '@mos/viewer';
@@ -154,7 +155,7 @@ export default function StandaloneViewer({ onExit }: { onExit: () => void }) {
   const [portableSetup, setPortableSetup] = useState<AnalysisSetup | undefined>();
   const [portableBackend, setPortableBackend] = useState<BackendSetup | undefined>();
   const originalInput = useRef<{ buffer: ArrayBuffer; name: string } | null>(null);
-  const remoteOnly = !window.mos && location.protocol !== 'file:' && !(location.hostname === '127.0.0.1' && location.port === '5173') && !(location.hostname === 'localhost' && location.port === '5173');
+  const remoteOnly = !window.mos && !isLocalWorkbench();
   useEffect(() => { document.title = '레지스터 · Local GDS Viewer'; }, []);
   useEffect(() => () => { sequence.current++; }, []);
 

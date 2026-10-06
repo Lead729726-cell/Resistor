@@ -13,6 +13,9 @@ integrated schematic, layout, waveform and 3D inspection workspace.
 영역, 실제 job의 상태·오류·로그·결과 파일 위치를 정돈했습니다.
 [화면 사용법과 검증 범위](docs/precision-workbench.md).
 
+레이아웃 화면에서 사각형·다각형·배선을 직접 그리고, 회로도에서 소자를
+미리보기·반복 배치·회전·반전할 수 있습니다. [그리기 도구 사용법](docs/drawing-tools.md).
+
 ## 소스에서 시작하기
 
 Node.js 24와 Git이 필요합니다. 계산기 화면은 Docker 없이 실행할 수 있습니다.

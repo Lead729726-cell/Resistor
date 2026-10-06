@@ -138,7 +138,7 @@ def verify(archive,require_bundle_signature=False):
             link_manifest=dict(line.split('\t',1) for line in z.read('BUNDLE-SYMLINKS.tsv').decode().splitlines())
             assert link_manifest=={l['path']:l['target'] for l in links},'Installer symlink manifest mismatch'
         assert any('/Versions/Current' in l['path'] for l in links),'Framework symlinks lost'
-        required=['dist/index.html','.dockerignore','scripts/docker-cli.mjs','scripts/worker.mjs','scripts/desktop-diagnostics.mjs','apps/desktop/main.cjs','apps/desktop/preload.cjs','apps/desktop/menu.cjs','apps/desktop/workspace.cjs','workers/eda/server.py','workers/eda/Dockerfile','examples/sky130/mosfet.gds','licenses/THIRD-PARTY-NOTICES.md','docs/desktop-installation.md']
+        required=['dist/index.html','.dockerignore','scripts/docker-cli.mjs','scripts/worker.mjs','scripts/desktop-diagnostics.mjs','apps/desktop/main.cjs','apps/desktop/preload.cjs','apps/desktop/menu.cjs','apps/desktop/workspace.cjs','workers/eda/server.py','workers/eda/native.py','workers/eda/Dockerfile','examples/sky130/mosfet.gds','licenses/THIRD-PARTY-NOTICES.md','docs/desktop-installation.md']
         if b'/opt/register-engine/' in z.read(root+'Resources/app/workers/eda/Dockerfile'):
             required.extend(['workers/eda/bootstrap.py','workers/eda/commercial_backend.py','platform/commercial/runner.py','platform/commercial/agent.py','adapters/commercial/catalog.json'])
         if 'Diagnose Register.command' in entries:
@@ -149,6 +149,7 @@ def verify(archive,require_bundle_signature=False):
             assert z.read('Diagnose Register.command')==z.read(root+'Resources/app/apps/desktop/Diagnose Register.command')
             template=z.read(root+'Resources/app/apps/desktop/Install Register.command').decode().replace('@VERSION@',version).replace('@ARCH@',expected_arch)
             assert z.read('Install Register.command').decode()==template,'Installer template differs from bundled source'
+        required.extend(p.as_posix() for p in Path('dist').rglob('*') if p.is_file())
         for relative in required:assert root+'Resources/app/'+relative in entries,relative
         assert not any('/.runtime/' in name or '/.secrets/' in name or name.endswith('worker.json') for name in entries),'Private runtime data in archive'
         bad=z.testzip();assert bad is None,('ZIP CRC failure',bad)

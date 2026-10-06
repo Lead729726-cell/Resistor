@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { rpc, type CurrentFlow, type Device, type Doctor, type LayoutCommand, type Marker, type Project, type Run, type Scene, type SchematicCommand } from '@mos/contracts';
 import { LayoutViewer, DesignReviewPanel, type ViewerFocus, type ViewerDisplay, type ExtractedMapping } from '@mos/viewer';
 import Schematic from './SchematicEditor';
+import {makePlacedDevice} from './schematic-drawing';
 import TestbenchEditor from './TestbenchEditor';
 import Experiments from './Experiments';
 import WorkspaceBrowser from './WorkspaceBrowser';
@@ -197,8 +198,8 @@ function DesignWorkspace({onViewer}:{onViewer:()=>void}) {
     void read(); const timer = activeRun(selectedRun) ? window.setInterval(() => void read(), 1500) : null;
     return () => { canceled = true; if (timer) clearInterval(timer); };
   }, [panel, selectedRun?.id, selectedRun?.execution_status]);
-  const schematicCommand = useCallback(async (command: SchematicCommand) => { const current = projectRef.current; if (!current) return; if (readOnly) throw new Error('공유 프로젝트 Viewer 권한은 편집할 수 없습니다.'); await action('edit', async () => { await rpc('schematic.apply_command', { project_id: current.id, command, ...(schematicCell ? { cell_name: schematicCell } : {}) }); await refresh(); }, true); }, [action, refresh, schematicCell, readOnly]);
-  const layoutCommand = useCallback(async (command: LayoutCommand) => { const current = projectRef.current; if (!current) return; if (readOnly) throw new Error('공유 프로젝트 Viewer 권한은 편집할 수 없습니다.'); await action('edit', async () => { await rpc('layout.apply_command', { project_id: current.id, command }); await refresh(); }, true); }, [action, refresh, readOnly]);
+  const schematicCommand = useCallback(async (command: SchematicCommand) => { const current = projectRef.current; if (!current) return; if (readOnly) throw new Error('공유 프로젝트 Viewer 권한은 편집할 수 없습니다.'); await action('edit', async () => { await rpc('schematic.apply_command', { project_id: current.id, expected_revision:current.revision, command, ...(schematicCell ? { cell_name: schematicCell } : {}) }); await refresh(); }, true); }, [action, refresh, schematicCell, readOnly]);
+  const layoutCommand = useCallback(async (command: LayoutCommand) => { const current = projectRef.current; if (!current) return; if (readOnly) throw new Error('공유 프로젝트 Viewer 권한은 편집할 수 없습니다.'); await action('edit', async () => { await rpc('layout.apply_command', { project_id: current.id, expected_revision:current.revision, command }); await refresh(); }, true); }, [action, refresh, readOnly]);
   const save = useCallback(async () => { const current = projectRef.current; if (!current) return; await action('save', async () => { await rpc('project.save', { project_id: current.id }); setNotice(`저장됨 / Saved · ${current.name} · revision ${current.revision}`); }); }, [action]);
   const undo = useCallback((redo = false) => { void (tab === 'schematic' ? schematicCommand({ type: redo ? 'redo' : 'undo' }) : layoutCommand({ type: redo ? 'redo' : 'undo' })).catch(() => {}); }, [tab, schematicCommand, layoutCommand]);
   useEffect(()=>window.mos?.onMenuCommand?.(command=>{
@@ -298,12 +299,8 @@ function DesignWorkspace({onViewer}:{onViewer:()=>void}) {
     selectShape(matching?.id || null); setTab('layout2d');
   };
   const addDevice = async (kind: Device['kind']) => {
-    if (!project || readOnly) return; if (kind === 'block') { setTab('schematic'); setNotice('Hierarchy 메뉴에서 cell을 만들고 block을 배치하세요.'); return; } const currentDevices = schematicDocument?.devices || project.schematic.devices; const sample = currentDevices.find(item => item.kind === kind);
-    const number = currentDevices.filter(item => item.kind === kind).length + 1;
-    const prefix: Record<Device['kind'], string> = { nmos: 'MN', pmos: 'MP', resistor: 'R', capacitor: 'C', voltage: 'V', current: 'I', ground: 'GND', port: 'PORT', block: 'X' };
-    const parameters: Record<string, number | string> = sample?.parameters || (kind === 'nmos' || kind === 'pmos' ? { w_um: 1, l_um: .15, nf: 1, m: 1 } : kind === 'resistor' ? { value: 1000 } : kind === 'capacitor' ? { value: 1e-12 } : kind === 'voltage' || kind === 'current' ? { dc: kind === 'voltage' ? 1.8 : .001 } : {});
-    const pins: Record<string,string> = kind === 'nmos' || kind === 'pmos' ? { D: '', G: '', S: '0', B: '0' } : kind === 'ground' ? { G: '0' } : kind === 'port' ? { P: '' } : { '+': '', '-': '0' };
-    const next: Device = { id: `device-${crypto.randomUUID()}`, name: `${prefix[kind]}${number}`, kind, model: sample?.model || (mosLibraryAvailable ? kind === 'nmos' ? 'sky130_fd_pr__nfet_01v8' : kind === 'pmos' ? 'sky130_fd_pr__pfet_01v8_hvt' : undefined : undefined), parameters, pins, x: 100 + currentDevices.length * 30, y: 360 };
+    if (!project || readOnly) return; if (kind === 'block') { setTab('schematic'); setNotice('Hierarchy 메뉴에서 cell을 만들고 block을 배치하세요.'); return; } const currentDevices = schematicDocument?.devices || project.schematic.devices;
+    const next=makePlacedDevice(kind,currentDevices,[100+currentDevices.length*30,360],`device-${crypto.randomUUID()}`);
     await schematicCommand({ type: 'add_device', device: next }); setSelectedDevice(next.id); setTab('schematic');
   };
   const createProject = async () => { await action('create', async () => { await load(await rpc<Project>('project.create', { name: projectName, example })); setModal(null); setTab('layout3d'); }); };

@@ -1,10 +1,10 @@
-import {localRpc,setRpcOverride,WorkerError,type Project} from '@mos/contracts';
+import {isLocalWorkbench,localRpc,setRpcOverride,WorkerError,type Project} from '@mos/contracts';
 export interface Presence {peerId:string;userId?:string;name:string;color:string;selection?:string|null;cursor?:{x:string;y:string;layer_id?:string}|null}
 export interface CloudStatus {configured:boolean;mode:'local'|'self-hosted'|'supabase';url:string;authenticated:boolean;user?:{id:string;email:string;name:string};room?:{id:string;name:string;role:'owner'|'editor'|'viewer';revision:number;sequence?:number};sync:{state:'local'|'connecting'|'synced'|'pending'|'conflict'|'offline'|'error';pending:number;message?:string;sequence?:number};presence:Presence[];capabilities:{auth:boolean;rooms:boolean;invites:boolean;presence:boolean;remoteRuns:boolean}}
 export type CloudEvent={kind:'project'|'job'|'presence'|'status'};
 const listeners=new Set<(event:CloudEvent)=>void>();
 const storage=typeof window!=='undefined'?window.localStorage:undefined;
-let url=storage?.getItem('register.cloud.url')||(typeof location!=='undefined'&&location.protocol!=='file:'&&location.port!=='5173'?location.origin:'http://127.0.0.1:18766');
+let url=storage?.getItem('register.cloud.url')||(typeof location!=='undefined'&&!isLocalWorkbench()?location.origin:'http://127.0.0.1:18766');
 let token=typeof sessionStorage!=='undefined'?sessionStorage.getItem('register.cloud.session')||'':'';
 let socket:WebSocket|undefined,reconnect:ReturnType<typeof setTimeout>|undefined,heartbeat:ReturnType<typeof setInterval>|undefined,generation=0;
 const peerId=globalThis.crypto.randomUUID();
@@ -59,7 +59,7 @@ async function remoteRpc(method:string,params:Record<string,unknown>){
 }
 async function activate(result:{room:NonNullable<CloudStatus['room']>;project:Project;presence?:Presence[]}){pending.clear();state.room=result.room;savedRoom=result.room.id;sessionStorage.setItem('register.cloud.room',result.room.id);state.presence=result.presence||[];setRpcOverride(remoteRpc);connect();emit('project');return result.project;}
 export const cloud={
-  isRemoteClient(){return typeof location!=='undefined'&&location.protocol!=='file:'&&location.port!=='5173';},
+  isRemoteClient(){return typeof location!=='undefined'&&!isLocalWorkbench();},
   async status():Promise<CloudStatus>{if(token&&savedRoom&&!state.room){try{await resume();}catch(e){state.sync={...state.sync,state:'error',message:(e as Error).message};}}if(state.configured&&Date.now()-lastStatus<10000)return {...state,sync:{...state.sync},presence:[...state.presence]};lastStatus=Date.now();try{const info=await request<{mode:CloudStatus['mode'];capabilities:CloudStatus['capabilities']}>('cloud.info');state.configured=true;state.mode=info.mode;state.capabilities=info.capabilities;if(token&&!state.authenticated){const data=await request<{user:CloudStatus['user']}>('cloud.auth.status');state.user=data.user;state.authenticated=true;}}catch(e){if((e as WorkerError).code==='AUTH_EXPIRED'){token='';sessionStorage.removeItem('register.cloud.session');state.authenticated=false;state.user=undefined;}state.configured=false;}return {...state,sync:{...state.sync},presence:[...state.presence]};},
   async configure(input:{url:string;publishableKey?:string}){const parsed=new URL(input.url);if(parsed.protocol!=='https:'&&!(parsed.protocol==='http:'&&['127.0.0.1','localhost'].includes(parsed.hostname)))throw new WorkerError('HTTPS_REQUIRED','외부 서버는 HTTPS 주소를 사용하세요.');disconnect();setRpcOverride(undefined);savedRoom=null;restore=undefined;token='';sessionStorage.removeItem('register.cloud.room');sessionStorage.removeItem('register.cloud.session');url=parsed.origin;storage?.setItem('register.cloud.url',url);state={...state,url,configured:false,authenticated:false,user:undefined,room:undefined,presence:[],sync:{state:'local',pending:0,sequence:0}};emit();return this.status();},
   async signUp(input:{email:string;password:string;name:string}){const auth=await request<{token:string;user:CloudStatus['user']}>('cloud.auth.signUp',input);token=auth.token;sessionStorage.setItem('register.cloud.session',token);state.user=auth.user;state.authenticated=true;emit();return auth.user;},

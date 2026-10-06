@@ -8,12 +8,17 @@
 .mos-viewer input[type=range] { accent-color: var(--accent,#6bd2da); cursor: pointer; min-width: 0; }
 .mos-viewer input[type=checkbox] { accent-color: var(--accent,#6bd2da); margin: 0; }
 .mos-viewer-toolbar { display: flex; align-items: center; gap: 12px; padding: 8px 10px; background: var(--panel,#111e30); border-bottom: 1px solid var(--line,#283a50); flex-wrap: wrap; }
+.mos-drawing-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 10px;border-bottom:1px solid var(--line,#283a50);background:var(--panel,#111e30);font-size:11px}
+.mos-drawing-toolbar label{display:flex;align-items:center;gap:5px;white-space:nowrap}
+.mos-drawing-toolbar input{width:90px;border:1px solid var(--line,#344357);background:var(--canvas,#0a1424);color:var(--text,#d8e4f3);padding:4px;font-variant-numeric:tabular-nums;font-family:var(--mono,monospace)}
+.mos-drawing-toolbar>span{color:var(--muted,#9fc4d4);font-family:var(--mono,monospace);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .mos-toolgroup { display: flex; gap: 4px; }
 .mos-toolgroup-end { margin-left: auto; }
 .mos-viewer-stage { position: relative; flex: 1; min-height: 330px; overflow: hidden; background: radial-gradient(circle at 48% 40%, var(--canvas,#14283e), var(--canvas,#0a1424)); }
 .mos-viewer-host { position: absolute; inset: 0; }
 .mos-viewer-has-palette .mos-viewer-host { right: 304px; }
 .mos-viewer-canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.mos-viewer[data-tool=box] .mos-viewer-canvas,.mos-viewer[data-tool=polygon] .mos-viewer-canvas,.mos-viewer[data-tool=route] .mos-viewer-canvas{cursor:crosshair}
 .mos-viewer-view-label { position: absolute; top: 16px; left: 18px; display: flex; flex-direction: column; gap: 5px; pointer-events: none; }
 .mos-viewer-view-label strong { color: var(--muted,#9fc4d4); font-size: 11px; letter-spacing: .14em; }
 .mos-viewer-view-label span { color: var(--muted,#6c839e); font-size: 11px; }

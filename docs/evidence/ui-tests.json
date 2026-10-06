@@ -4,7 +4,8 @@
       "C:\\Program Files\\nodejs\\node.exe",
       "D:\\Coldbrew\\Resistor\\node_modules\\@playwright\\test\\cli.js",
       "test",
-      "tests/ui/desktop.spec.ts"
+      "editor-drawing.spec.ts",
+      "--max-failures=1"
     ],
     "configFile": "D:\\Coldbrew\\Resistor\\playwright.config.ts",
     "rootDir": "D:/Coldbrew/Resistor/tests/ui",
@@ -16,7 +17,7 @@
     "globalTimeout": 0,
     "grep": {},
     "grepInvert": null,
-    "maxFailures": 0,
+    "maxFailures": 1,
     "metadata": {
       "actualWorkers": 1
     },
@@ -66,13 +67,13 @@
   },
   "suites": [
     {
-      "title": "desktop.spec.ts",
-      "file": "desktop.spec.ts",
+      "title": "editor-drawing.spec.ts",
+      "file": "editor-drawing.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [
         {
-          "title": "Packaged desktop loads real worker through sandbox IPC",
+          "title": "schematic: repeated placement, preview, orientation, actual pins and undo",
           "ok": true,
           "tags": [],
           "tests": [
@@ -87,144 +88,68 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4935,
+                  "duration": 5373,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-02T16:58:32.087Z",
+                  "startTime": "2026-10-06T01:26:36.981Z",
                   "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "12cc77c408bab7a1d6ba-08302f0d5f6036d0cc6d",
-          "file": "desktop.spec.ts",
-          "line": 8,
-          "column": 1
-        },
-        {
-          "title": "Packaged viewer opens GDS without Docker, credentials or native runtime initialization",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 90000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [
-                {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 2064,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-02T16:58:37.046Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "12cc77c408bab7a1d6ba-50b5ad642ce205ffee30",
-          "file": "desktop.spec.ts",
-          "line": 19,
-          "column": 1
-        },
-        {
-          "title": "Missing Docker: actual packaged startup diagnostics, rejected path overrides, reconnect and offline viewer",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 90000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [
-                {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 6068,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-02T16:58:39.122Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "12cc77c408bab7a1d6ba-53c20858e48ad862ff7b",
-          "file": "desktop.spec.ts",
-          "line": 29,
-          "column": 1
-        },
-        {
-          "title": "Mac native menu delivers sandbox commands and Dock activation reopens the offline viewer",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 90000,
-              "annotations": [
-                {
-                  "type": "skip",
-                  "description": "Requires actual macOS; never count a Windows run as Mac QA.",
-                  "location": {
-                    "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\desktop.spec.ts",
-                    "line": 42,
-                    "column": 8
-                  }
-                }
-              ],
-              "expectedStatus": "skipped",
-              "projectId": "",
-              "projectName": "",
-              "results": [
-                {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "skipped",
-                  "duration": 1,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-02T16:58:45.199Z",
-                  "annotations": [
+                  "attachments": [
                     {
-                      "type": "skip",
-                      "description": "Requires actual macOS; never count a Windows run as Mac QA.",
-                      "location": {
-                        "file": "D:\\Coldbrew\\Resistor\\tests\\ui\\desktop.spec.ts",
-                        "line": 42,
-                        "column": 8
-                      }
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\editor-drawing-schematic-r-ac6eb-tation-actual-pins-and-undo\\video.webm"
                     }
-                  ],
-                  "attachments": []
+                  ]
                 }
               ],
-              "status": "skipped"
+              "status": "expected"
             }
           ],
-          "id": "12cc77c408bab7a1d6ba-ed6a325402caed8cfca0",
-          "file": "desktop.spec.ts",
-          "line": 41,
+          "id": "248c7ead2c2b9e1b0f0e-b375aac64a45aa52c5bb",
+          "file": "editor-drawing.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "layout: rectangle, polygon, route, rejected width, cancel, locked layer and undo",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9296,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:26:42.571Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "D:\\Coldbrew\\Resistor\\test-results\\editor-drawing-layout-rect-c89c4-ancel-locked-layer-and-undo\\video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "248c7ead2c2b9e1b0f0e-c46d4b2421c31cc714c7",
+          "file": "editor-drawing.spec.ts",
+          "line": 26,
           "column": 1
         }
       ]
@@ -232,10 +157,10 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-02T16:58:31.675Z",
-    "duration": 13555.18,
-    "expected": 3,
-    "skipped": 1,
+    "startTime": "2026-10-06T01:26:36.485Z",
+    "duration": 15617.568000000001,
+    "expected": 2,
+    "skipped": 0,
     "unexpected": 0,
     "flaky": 0
   }

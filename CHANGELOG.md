@@ -4,6 +4,21 @@ This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
 `docs/evidence/` and the example READMEs. Package version: 0.14.0.
 
+## Unreleased — drawing workbench (2026-10-06)
+
+- On-canvas layout rectangles, concave polygons and Manhattan routes with draft
+  preview, exact absolute DBU snapping, grid/width validation, cancel/backtrack,
+  layer locks and native Undo. Existing numeric editing and 3D controls remain.
+- Repeated schematic placement with ghost previews and collision-free names,
+  mirror/rotation commands, matching native pin geometry and wire bend switching.
+  Preserve SI parameters, explicit nodes, hierarchy and existing engine APIs.
+- Native connectivity, SPICE invariance, actual ngspice, isolated browser drawing,
+  dark/light appearance and stale revision protection are covered by
+  [drawing QA](docs/evidence/editor-drawing/native.json).
+- macOS r5 previews include the new drawing workbench and previous worker-startup
+  fixes. Archive/signature/installer checks are separate from native Mac execution,
+  Developer ID signing and notarization.
+
 ## Unreleased — open-source baseline (2026-10-05)
 
 - macOS r4 fixes missing `/workspace/workers/eda/server.py` on engine reconnect.

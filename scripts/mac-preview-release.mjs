@@ -7,7 +7,7 @@ import {macBuildOptions} from './mac-build-options.mjs';
 const json=async file=>JSON.parse(await readFile(file,'utf8'));
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const {version}=await json('package.json');
-const {revision}=macBuildOptions(process.argv.length>2?process.argv.slice(2):['--revision=4']);
+const {revision}=macBuildOptions(process.argv.length>2?process.argv.slice(2):['--revision=5']);
 if(revision<3)throw Error('Use revision 3 or later for current installer QA.');
 const inspected=await json(`docs/evidence/macos-r${revision}/archives.json`);
 const built=await json(`release/installers/mac-build-${version}-r${revision}.json`);
