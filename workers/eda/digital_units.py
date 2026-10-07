@@ -143,6 +143,11 @@ def flattened(ir):
                 item=copy.deepcopy(d);item.update(id=prefix+d['id'],name=(prefix+d['name']).replace('.','_'),pins={port:net.replace('.','__') for port,net in pins.items()});devices.append(item)
     visit(ir,{p:p for p in ir['ports']},'');return {**cell(ir['ports']),'devices':devices,'cells':{}}
 
+def cpu_cycles(value):
+    if isinstance(value,bool) or not isinstance(value,int) or not 16<=value<=64:raise EDAError('PARAMETER_RANGE','CPU execution must contain 16..64 integer cycles.')
+    return value
+
+
 def cpu_trace(program,cycles=16):
     acc=0;rows=[]
     for i in range(cycles):
@@ -161,13 +166,13 @@ def validate_project(p):
     meta=p.get('digital_unit');spec=next((v for v in CATALOG if isinstance(meta,dict) and v['id']==meta.get('kind')),None)
     if not spec or p.get('pdk_id')!='sky130A' or p.get('ports')!=spec['ports'] or meta.get('schema_version')!=1:raise EDAError('INVALID_DIGITAL_UNIT','Digital project metadata/PDK/ports disagree.')
     if not 20<=native.num(meta.get('period_ns'))<=1000:raise EDAError('PARAMETER_RANGE','Digital period is invalid.')
-    if meta['kind']=='cpu4':program_input(meta.get('program'))
+    if meta['kind']=='cpu4':program_input(meta.get('program'));cpu_cycles(meta.get('cycles',16))
     check=native.validate(p['schematic'])
     if not check['valid']:raise EDAError('SCHEMATIC_INVALID','Digital hierarchy needs repair.',check)
     return meta
 
 def create(params):
-    if set(params)-{'kind','name','physical','program','period_ns','corner','temperature_C','supply_V','command_id'}:raise EDAError('INVALID_PARAMETER','Unsupported digital unit fields.')
+    if set(params)-{'kind','name','physical','program','cycles','period_ns','corner','temperature_C','supply_V','command_id'}:raise EDAError('INVALID_PARAMETER','Unsupported digital unit fields.')
     kind=params.get('kind');spec=next((v for v in CATALOG if v['id']==kind),None)
     if not spec:raise EDAError('UNSUPPORTED_DIGITAL','Select a supported digital unit.')
     cid=params.get('command_id')
@@ -178,7 +183,9 @@ def create(params):
     if not 20<=period<=1000:raise EDAError('PARAMETER_RANGE','Period must be 20..1000ns.')
     program=program_input(params.get('program',DEFAULT_PROGRAM)) if kind=='cpu4' else None
     if kind!='cpu4' and 'program' in params:raise EDAError('INVALID_PROGRAM','Adder has no program memory.')
-    settings=native.testbench({'analysis':'tran','corner':params.get('corner','tt'),'temperature_C':params.get('temperature_C',27),'supply_V':params.get('supply_V',1.8),'duration_s':period*1e-9*(19 if kind=='cpu4' else spec['case_count']),'step_s':period*1e-9/100,'load_F':5e-15})
+    if kind!='cpu4' and 'cycles' in params:raise EDAError('INVALID_PARAMETER','Cycles apply only to CPU execution.')
+    cycles=cpu_cycles(params.get('cycles',16)) if kind=='cpu4' else spec['case_count']
+    settings=native.testbench({'analysis':'tran','corner':params.get('corner','tt'),'temperature_C':params.get('temperature_C',27),'supply_V':params.get('supply_V',1.8),'duration_s':period*1e-9*(cycles+3 if kind=='cpu4' else spec['case_count']),'step_s':period*1e-9/100,'load_F':5e-15})
     fingerprint=hashlib.sha256(json.dumps({'method':'digital.create','params':params},sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
     with S.LOCK:
         rows=S.DB.execute('SELECT payload_hash,result FROM receipts WHERE command_id=?',(cid,)).fetchall()
@@ -191,6 +198,7 @@ def create(params):
             pid=uuid.uuid4().hex;layout=k.Layout();layout.dbu=.001;layout.create_cell(kind)
             if physical:layout,_,_=digital_mux.physical(S.STATE/'projects'/pid/'generator',flattened(ir),kind,spec['ports'])
             meta={'schema_version':1,'kind':kind,'period_ns':period,'program':program,'protocol':'digital-native-v1','physical':'generated-reference' if physical else 'not-generated','electrical_hierarchy':'native-subcircuits','physical_hierarchy':'flat-transistor-reference' if physical else 'not-generated'}
+            if kind=='cpu4':meta['cycles']=cycles
             p={'schema_version':1,'id':pid,'name':name,'cell':kind,'pdk_id':'sky130A','revision':1,'dbu_um':.001,'grid_dbu':5,'source':'pdk' if physical else 'fixture','example':kind,'schematic':ir,'testbench':settings,'runs':[],'ports':spec['ports'],'layers':[],'undo_stack':[],'redo_stack':[],'next_revision':2,'digital_unit':meta,'layout_parameter_policy':'reference-layout-independent-edit'}
             return S.commit(p,layout)
         return S.mutate('digital.create',params,action)
@@ -238,7 +246,9 @@ def spice_tb(p,folder,params,netlist):
     return '\n'.join(text)+'\n',names,units,'s','time'
 
 def verify(p,run,params):
+    import signal_metrics as metrics
     settings=native.testbench({**p['testbench'],**{key:params[key] for key in native.TESTBENCH if key in params}});waves={w['name']:w for w in run.get('waveforms',[])};v=settings['supply_V'];meta=p['digital_unit'];kind=meta['kind'];period=meta['period_ns']*1e-9
+    for wave in waves.values():metrics.validate_wave(wave)
     def voltage(n,t):
         if n not in waves:raise EDAError('MISSING_WAVEFORM','Actual digital input/output traces are required.')
         x,y=waves[n]['x'],waves[n]['y'];j=bisect.bisect_left(x,t)
@@ -250,16 +260,17 @@ def verify(p,run,params):
         values=[bit(prefix+str(i),t) for i in range(count)];return None if None in values else sum(b<<i for i,b in enumerate(values))
     def stable(n,wanted,a,b):
         if n not in waves:raise EDAError('MISSING_WAVEFORM','Actual trace missing.')
-        w=waves[n];start=bisect.bisect_left(w['x'],a);end=bisect.bisect_right(w['x'],b);window=w['y'][start:end]
-        return bool(window) and all((value<=.3*v if wanted==0 else value>=.7*v) for value in window)
+        return metrics.stable(waves[n],wanted,a,b,v)
     rows=[]
     if kind=='cpu4':
-        for row in cpu_trace(meta['program']):
+        for row in cpu_trace(meta['program'],cpu_cycles(meta.get('cycles',16))):
             edge=(row['index']+2.25)*period;t=edge+.2*period;pre=edge-.1*period;actual=word('ACC',4,t);pc=word('PC',4,t)
             inputs={'pc_before':word('PC',4,pre),'op':word('OP',2,pre),'immediate':word('IMM',4,pre),'clock':bit('CLK',t),'reset':bit('RESET',t)}
             passed=inputs=={'pc_before':row['pc_before'],'op':OPS.index(row['op']),'immediate':row['immediate'],'clock':1,'reset':0} and actual==row['expected'] and pc==row['pc_after'] and bit('CARRY',t)==row['carry_expected'] and bit('ZERO',t)==row['zero_expected']
-            passed=passed and all(stable(f'ACC{i}',(row['expected']>>i)&1,edge+.15*period,edge+.3*period) for i in range(4))
-            rows.append({**row,'actual':actual,'pc_actual':pc,'carry_actual':bit('CARRY',t),'zero_actual':bit('ZERO',t),'observed_inputs':inputs,'sample_time_s':t,'pass':passed})
+            expected={**{f'ACC{i}':(row['expected']>>i)&1 for i in range(4)},**{f'PC{i}':(row['pc_after']>>i)&1 for i in range(4)},'CARRY':row['carry_expected'],'ZERO':row['zero_expected']}
+            passed=passed and all(stable(n,wanted,edge+.15*period,edge+.3*period) for n,wanted in expected.items())
+            power=metrics.supply_metrics(waves['supply_current'],edge,edge+period,v) if 'supply_current' in waves else {'available':False,'reason':'No actual supply-current trace.'}
+            rows.append({**row,'actual':actual,'pc_actual':pc,'carry_actual':bit('CARRY',t),'zero_actual':bit('ZERO',t),'observed_inputs':inputs,'sample_time_s':t,'pass':passed,'settling_time_s':metrics.settling(waves,expected,edge,edge+.3*period,v),'power':power})
     else:
         operands=[(a,b,c) for a in range(2 if kind=='full_adder' else 16) for b in range(2 if kind=='full_adder' else 16) for c in range(2)];bits=1 if kind=='full_adder' else 4
         for index,(a,b,c) in enumerate(operands):
@@ -269,6 +280,12 @@ def verify(p,run,params):
             passed=inputs==(a,b,c) and actual==want and bit('COUT',t)==carry and all(stable(n,(want>>i)&1,(index+.7)*period,(index+.95)*period) for i,n in enumerate(output_names)) and stable('COUT',carry,(index+.7)*period,(index+.95)*period)
             rows.append({'index':index,'a':a,'b':b,'cin':c,'expected':want,'carry_expected':carry,'actual':actual,'carry_actual':bit('COUT',t),'sample_time_s':t,'pass':passed})
     result={'schema_version':1,'kind':kind,'source':'actual-ngspice-input-and-output-samples','expected_cases':len(rows),'passed_cases':sum(r['pass'] for r in rows),'pass':all(r['pass'] for r in rows),'rows':rows,'logic_low_max_V':.3*v,'logic_high_min_V':.7*v,'scope':'Native transistor transient samples, stable windows and actual input/PC/ROM checks. Not STA, timing closure or manufacturing signoff.'}
+    if kind=='cpu4':
+        reset_targets={**{f'ACC{i}':0 for i in range(4)},**{f'PC{i}':0 for i in range(4)},'CARRY':0,'ZERO':1}
+        reset_pass=all(stable(n,wanted,1.4*period,1.55*period) for n,wanted in reset_targets.items()) and stable('RESET',1,1.4*period,1.55*period)
+        result.update(reset_verified=reset_pass,rom_wraps=sum(row['pc_before']==15 for row in rows),timing_source='sampled settling of ACC/PC/flags through 30% cycle; not propagation-delay characterization or STA')
+        result['pass']=result['pass'] and reset_pass
+    result['power']=metrics.supply_metrics(waves['supply_current'],0,settings['duration_s'],v) if 'supply_current' in waves else {'available':False,'reason':'No actual supply-current trace.'}
     run['unit_verification']=result;run['measurements'].update(unit_kind=kind,truth_cases=len(rows),truth_passed=result['passed_cases'],truth_status='pass' if result['pass'] else 'fail',metric_source=result['source'])
     return result
 

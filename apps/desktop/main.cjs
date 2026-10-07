@@ -11,6 +11,7 @@ async function boot(){
   const root=path.resolve(__dirname,'../..');
   const workspace=await prepareWorkspace({root,userData:app.getPath('userData'),executable:app.getPath('exe'),override:process.env.MOS_WORKSPACE,packaged:app.isPackaged});
   const {runtimeConfig,workerRpc}=await import(pathToFileURL(path.join(root,'scripts/runtime.mjs')));
+  const {assistantRpc}=await import(pathToFileURL(path.join(root,'scripts/design-assistant.mjs')));
   // A viewer session opens immediately and never starts Docker or a server.
   // Design transport starts the native runtime once, on the first design request.
   const ensureRuntime=()=>runtimePromise??=(async()=>{
@@ -37,7 +38,9 @@ async function boot(){
         const {desktopDiagnostics}=await import(pathToFileURL(path.join(root,'scripts/desktop-diagnostics.mjs')));
         return {ok:true,result:await desktopDiagnostics({workspace,resourcesRoot:root})};
       }
-      return await workerRpc(await ensureRuntime(),payload.method,payload.params??{});
+      const runtime=await ensureRuntime();
+      if(typeof payload.method==='string'&&payload.method.startsWith('assistant.'))return await assistantRpc(runtime,payload.method,payload.params??{});
+      return await workerRpc(runtime,payload.method,payload.params??{});
     }catch(e){return {ok:false,error:{code:'WORKER_UNAVAILABLE',message:e.message}};}
   });
   mainWindow.webContents.setWindowOpenHandler(()=>({action:'deny'}));

@@ -1,0 +1,1408 @@
+{
+  "schema_version": 1,
+  "case_count": 7,
+  "passed": 7,
+  "cases": [
+    {
+      "name": "blocked straight path finds deterministic native-checked detour; commit/replay/stale guard",
+      "pass": true,
+      "source": "actual-native-geometry",
+      "input": {
+        "project_id": "04dd0505f324431eb30ca1897811b724",
+        "layer_id": "68/20",
+        "start": [
+          "0",
+          "0"
+        ],
+        "end": [
+          "4000",
+          "0"
+        ],
+        "width": "140",
+        "rule_fingerprint": "750a4b6c7ae16c7cf09f97f09e16233011a161ceeb939b519738d5ce420b8b4c"
+      },
+      "preview": {
+        "schema_version": 1,
+        "project_id": "04dd0505f324431eb30ca1897811b724",
+        "revision": 3,
+        "preview": {
+          "project_id": "04dd0505f324431eb30ca1897811b724",
+          "revision": 3,
+          "rule_fingerprint": "750a4b6c7ae16c7cf09f97f09e16233011a161ceeb939b519738d5ce420b8b4c",
+          "layer_id": "68/20",
+          "points": [
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "-855"
+            ],
+            [
+              "4000",
+              "-855"
+            ],
+            [
+              "4000",
+              "0"
+            ]
+          ],
+          "width": "140",
+          "net": null,
+          "order": "x-first",
+          "geometry_hash": "7092347e436f0ae79b3d6c831a907db8fbf8548b0fb29c580c922742ae0ecc26",
+          "preview_hash": "19b1c7be2659bd75ca27e93ef7d30e69500261cebc35d90ab59a0ad4ee382d17",
+          "valid": true,
+          "length_dbu": "5710",
+          "area_dbu2": "799400",
+          "collisions": [],
+          "checked_shape_count": 1,
+          "scope": "whole native hierarchy",
+          "collision_list_bounded": false,
+          "limits": [
+            "Single metal1 (68/20) Manhattan path; no new vias or contacts.",
+            "Conservative 0.28um spacing applies to all other or unknown-net metal, including wide-metal halos.",
+            "New path width must be below 3um; metal area is checked using actual integer polygon geometry.",
+            "Contacts/vias intersecting the new path are rejected; no inferred electrical connection is certified.",
+            "Density, antenna, slots, metal-hole, contact enclosure and full-chip checks require separate actual DRC.",
+            "A valid preview is not a DRC/LVS/signoff pass. Net properties are explicit annotations, not extraction proof."
+          ]
+        },
+        "input": {
+          "project_id": "04dd0505f324431eb30ca1897811b724",
+          "layer_id": "68/20",
+          "start": [
+            "0",
+            "0"
+          ],
+          "end": [
+            "4000",
+            "0"
+          ],
+          "width": "140",
+          "rule_fingerprint": "750a4b6c7ae16c7cf09f97f09e16233011a161ceeb939b519738d5ce420b8b4c",
+          "points": [
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "-855"
+            ],
+            [
+              "4000",
+              "-855"
+            ],
+            [
+              "4000",
+              "0"
+            ]
+          ]
+        },
+        "searched_candidates": 6,
+        "candidate_budget": 32,
+        "search_exhaustive": false,
+        "algorithm": "bounded bbox-track detours, ranked by collision then Manhattan length",
+        "scope": "single metal1; at most two bends; no vias/global optimization",
+        "status": "candidate-found",
+        "limits": [
+          "Single metal1 (68/20) Manhattan path; no new vias or contacts.",
+          "Conservative 0.28um spacing applies to all other or unknown-net metal, including wide-metal halos.",
+          "New path width must be below 3um; metal area is checked using actual integer polygon geometry.",
+          "Contacts/vias intersecting the new path are rejected; no inferred electrical connection is certified.",
+          "Density, antenna, slots, metal-hole, contact enclosure and full-chip checks require separate actual DRC.",
+          "A valid preview is not a DRC/LVS/signoff pass. Net properties are explicit annotations, not extraction proof.",
+          "A blocked finite search does not prove that no other route exists."
+        ]
+      },
+      "revision_after": 4
+    },
+    {
+      "name": "covered endpoint never returns an applicable route",
+      "pass": true,
+      "source": "actual-native-geometry",
+      "searched": 5
+    },
+    {
+      "name": "custom endpoints, diagonal, reversal and self-crossing are rejected",
+      "pass": true,
+      "source": "actual-native-geometry"
+    },
+    {
+      "name": "interpolation, signed trapezoidal energy and window boundary validation",
+      "pass": true,
+      "source": "numerical-fixtures"
+    },
+    {
+      "name": "cycle range and independent arithmetic oracle wraps PC while retaining accumulator",
+      "pass": true,
+      "source": "numerical-fixtures"
+    },
+    {
+      "name": "actual SKY130 ngspice 32-cycle CPU, reset/ROM wrap and measured supply energy",
+      "pass": true,
+      "source": "actual-ngspice",
+      "project_id": "f57ed247c364456ba98c4cee34f46715",
+      "run_id": "6990cd40a259418ba9d97e1100aa5c21",
+      "program": [
+        {
+          "op": "ADD",
+          "value": 1
+        },
+        {
+          "op": "ADD",
+          "value": 5
+        },
+        {
+          "op": "ADD",
+          "value": 9
+        },
+        {
+          "op": "XOR",
+          "value": 10
+        },
+        {
+          "op": "AND",
+          "value": 7
+        },
+        {
+          "op": "LOAD",
+          "value": 15
+        },
+        {
+          "op": "ADD",
+          "value": 1
+        },
+        {
+          "op": "ADD",
+          "value": 15
+        },
+        {
+          "op": "AND",
+          "value": 6
+        },
+        {
+          "op": "XOR",
+          "value": 15
+        },
+        {
+          "op": "LOAD",
+          "value": 0
+        },
+        {
+          "op": "ADD",
+          "value": 7
+        },
+        {
+          "op": "ADD",
+          "value": 8
+        },
+        {
+          "op": "XOR",
+          "value": 5
+        },
+        {
+          "op": "AND",
+          "value": 10
+        },
+        {
+          "op": "XOR",
+          "value": 15
+        }
+      ],
+      "verification": {
+        "schema_version": 1,
+        "kind": "cpu4",
+        "source": "actual-ngspice-input-and-output-samples",
+        "expected_cases": 32,
+        "passed_cases": 32,
+        "pass": true,
+        "rows": [
+          {
+            "index": 0,
+            "pc_before": 0,
+            "pc_after": 1,
+            "op": "ADD",
+            "immediate": 1,
+            "acc_before": 0,
+            "expected": 1,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 1,
+            "pc_actual": 1,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 0,
+              "op": 1,
+              "immediate": 1,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.2250000000000002e-07,
+            "pass": true,
+            "settling_time_s": 5.610389999999967e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.1250000000000001e-07,
+              "end_s": 1.625e-07,
+              "energy_J": 5.001596054341387e-13,
+              "average_current_A": 5.557328949268208e-06,
+              "peak_current_A": 0.000769864056,
+              "minimum_current_A": -0.000269315279,
+              "average_power_W": 1.0003192108682775e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 1,
+            "pc_before": 1,
+            "pc_after": 2,
+            "op": "ADD",
+            "immediate": 5,
+            "acc_before": 1,
+            "expected": 6,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 6,
+            "pc_actual": 2,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 1,
+              "op": 1,
+              "immediate": 5,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.7250000000000002e-07,
+            "pass": true,
+            "settling_time_s": 5.600459999999813e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.625e-07,
+              "end_s": 2.125e-07,
+              "energy_J": 8.850421125116429e-13,
+              "average_current_A": 9.833801250129365e-06,
+              "peak_current_A": 0.000887743885,
+              "minimum_current_A": -0.000293383588,
+              "average_power_W": 1.770084225023286e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 2,
+            "pc_before": 2,
+            "pc_after": 3,
+            "op": "ADD",
+            "immediate": 9,
+            "acc_before": 6,
+            "expected": 15,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 15,
+            "pc_actual": 3,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 2,
+              "op": 1,
+              "immediate": 9,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 2.2250000000000004e-07,
+            "pass": true,
+            "settling_time_s": 5.659519999999648e-10,
+            "power": {
+              "available": true,
+              "start_s": 2.1250000000000003e-07,
+              "end_s": 2.6250000000000003e-07,
+              "energy_J": 1.0315656181252215e-12,
+              "average_current_A": 1.146184020139135e-05,
+              "peak_current_A": 0.00088763165,
+              "minimum_current_A": -0.00034704614,
+              "average_power_W": 2.063131236250443e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 3,
+            "pc_before": 3,
+            "pc_after": 4,
+            "op": "XOR",
+            "immediate": 10,
+            "acc_before": 15,
+            "expected": 5,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 5,
+            "pc_actual": 4,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 3,
+              "op": 3,
+              "immediate": 10,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 2.7250000000000004e-07,
+            "pass": true,
+            "settling_time_s": 5.372109999999714e-10,
+            "power": {
+              "available": true,
+              "start_s": 2.6250000000000003e-07,
+              "end_s": 3.125e-07,
+              "energy_J": 1.2406961138533133e-12,
+              "average_current_A": 1.3785512376147925e-05,
+              "peak_current_A": 0.000971915522,
+              "minimum_current_A": -0.000308349796,
+              "average_power_W": 2.4813922277066266e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 4,
+            "pc_before": 4,
+            "pc_after": 5,
+            "op": "AND",
+            "immediate": 7,
+            "acc_before": 5,
+            "expected": 5,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 5,
+            "pc_actual": 5,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 4,
+              "op": 2,
+              "immediate": 7,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 3.2250000000000004e-07,
+            "pass": true,
+            "settling_time_s": 5.699009999999696e-10,
+            "power": {
+              "available": true,
+              "start_s": 3.125e-07,
+              "end_s": 3.625e-07,
+              "energy_J": 3.999076537753074e-13,
+              "average_current_A": 4.443418375281194e-06,
+              "peak_current_A": 0.0008031514,
+              "minimum_current_A": -0.000312606694,
+              "average_power_W": 7.998153075506149e-06,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 5,
+            "pc_before": 5,
+            "pc_after": 6,
+            "op": "LOAD",
+            "immediate": 15,
+            "acc_before": 5,
+            "expected": 15,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 15,
+            "pc_actual": 6,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 5,
+              "op": 0,
+              "immediate": 15,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 3.7250000000000003e-07,
+            "pass": true,
+            "settling_time_s": 5.716119999999823e-10,
+            "power": {
+              "available": true,
+              "start_s": 3.625e-07,
+              "end_s": 4.125e-07,
+              "energy_J": 1.2508538137624376e-12,
+              "average_current_A": 1.389837570847153e-05,
+              "peak_current_A": 0.000876635582,
+              "minimum_current_A": -0.00034955303,
+              "average_power_W": 2.5017076275248756e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 6,
+            "pc_before": 6,
+            "pc_after": 7,
+            "op": "ADD",
+            "immediate": 1,
+            "acc_before": 15,
+            "expected": 0,
+            "carry_expected": 1,
+            "zero_expected": 1,
+            "actual": 0,
+            "pc_actual": 7,
+            "carry_actual": 1,
+            "zero_actual": 1,
+            "observed_inputs": {
+              "pc_before": 6,
+              "op": 1,
+              "immediate": 1,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 4.2250000000000003e-07,
+            "pass": true,
+            "settling_time_s": 6.187059999999795e-10,
+            "power": {
+              "available": true,
+              "start_s": 4.125e-07,
+              "end_s": 4.625e-07,
+              "energy_J": 9.979238119456537e-13,
+              "average_current_A": 1.1088042354951709e-05,
+              "peak_current_A": 0.00095634143,
+              "minimum_current_A": -0.000324445276,
+              "average_power_W": 1.9958476238913076e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 7,
+            "pc_before": 7,
+            "pc_after": 8,
+            "op": "ADD",
+            "immediate": 15,
+            "acc_before": 0,
+            "expected": 15,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 15,
+            "pc_actual": 8,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 7,
+              "op": 1,
+              "immediate": 15,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 4.7250000000000003e-07,
+            "pass": true,
+            "settling_time_s": 5.239879999999683e-10,
+            "power": {
+              "available": true,
+              "start_s": 4.625e-07,
+              "end_s": 5.125000000000001e-07,
+              "energy_J": 1.5546989760087868e-12,
+              "average_current_A": 1.7274433066764277e-05,
+              "peak_current_A": 0.00157410993,
+              "minimum_current_A": -0.000334513577,
+              "average_power_W": 3.10939795201757e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 8,
+            "pc_before": 8,
+            "pc_after": 9,
+            "op": "AND",
+            "immediate": 6,
+            "acc_before": 15,
+            "expected": 6,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 6,
+            "pc_actual": 9,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 8,
+              "op": 2,
+              "immediate": 6,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 5.225000000000001e-07,
+            "pass": true,
+            "settling_time_s": 6.192679999999535e-10,
+            "power": {
+              "available": true,
+              "start_s": 5.125000000000001e-07,
+              "end_s": 5.625000000000001e-07,
+              "energy_J": 6.931275776599209e-13,
+              "average_current_A": 7.70141752955467e-06,
+              "peak_current_A": 0.000832194158,
+              "minimum_current_A": -0.000320395264,
+              "average_power_W": 1.3862551553198406e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 9,
+            "pc_before": 9,
+            "pc_after": 10,
+            "op": "XOR",
+            "immediate": 15,
+            "acc_before": 6,
+            "expected": 9,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 9,
+            "pc_actual": 10,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 9,
+              "op": 3,
+              "immediate": 15,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 5.725e-07,
+            "pass": true,
+            "settling_time_s": 5.512669999999787e-10,
+            "power": {
+              "available": true,
+              "start_s": 5.625e-07,
+              "end_s": 6.125000000000001e-07,
+              "energy_J": 1.5285941859537765e-12,
+              "average_current_A": 1.6984379843930834e-05,
+              "peak_current_A": 0.00115029264,
+              "minimum_current_A": -8.19371064e-05,
+              "average_power_W": 3.05718837190755e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 10,
+            "pc_before": 10,
+            "pc_after": 11,
+            "op": "LOAD",
+            "immediate": 0,
+            "acc_before": 9,
+            "expected": 0,
+            "carry_expected": 0,
+            "zero_expected": 1,
+            "actual": 0,
+            "pc_actual": 11,
+            "carry_actual": 0,
+            "zero_actual": 1,
+            "observed_inputs": {
+              "pc_before": 10,
+              "op": 0,
+              "immediate": 0,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 6.225000000000001e-07,
+            "pass": true,
+            "settling_time_s": 5.789919999999658e-10,
+            "power": {
+              "available": true,
+              "start_s": 6.125000000000001e-07,
+              "end_s": 6.625000000000001e-07,
+              "energy_J": 7.569535463207647e-13,
+              "average_current_A": 8.4105949591196e-06,
+              "peak_current_A": 0.000812408783,
+              "minimum_current_A": -0.000299570506,
+              "average_power_W": 1.513907092641528e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 11,
+            "pc_before": 11,
+            "pc_after": 12,
+            "op": "ADD",
+            "immediate": 7,
+            "acc_before": 0,
+            "expected": 7,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 7,
+            "pc_actual": 12,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 11,
+              "op": 1,
+              "immediate": 7,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 6.725e-07,
+            "pass": true,
+            "settling_time_s": 5.461980000000139e-10,
+            "power": {
+              "available": true,
+              "start_s": 6.625e-07,
+              "end_s": 7.125000000000001e-07,
+              "energy_J": 1.2808928849975168e-12,
+              "average_current_A": 1.423214316663906e-05,
+              "peak_current_A": 0.00114328602,
+              "minimum_current_A": -0.000328574402,
+              "average_power_W": 2.5617857699950307e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 12,
+            "pc_before": 12,
+            "pc_after": 13,
+            "op": "ADD",
+            "immediate": 8,
+            "acc_before": 7,
+            "expected": 15,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 15,
+            "pc_actual": 13,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 12,
+              "op": 1,
+              "immediate": 8,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 7.225000000000001e-07,
+            "pass": true,
+            "settling_time_s": 5.662009999999416e-10,
+            "power": {
+              "available": true,
+              "start_s": 7.125000000000001e-07,
+              "end_s": 7.625000000000001e-07,
+              "energy_J": 9.024721959430758e-13,
+              "average_current_A": 1.0027468843811943e-05,
+              "peak_current_A": 0.000866472257,
+              "minimum_current_A": -0.000369544377,
+              "average_power_W": 1.80494439188615e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 13,
+            "pc_before": 13,
+            "pc_after": 14,
+            "op": "XOR",
+            "immediate": 5,
+            "acc_before": 15,
+            "expected": 10,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 10,
+            "pc_actual": 14,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 13,
+              "op": 3,
+              "immediate": 5,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 7.725000000000001e-07,
+            "pass": true,
+            "settling_time_s": 5.495649999998398e-10,
+            "power": {
+              "available": true,
+              "start_s": 7.625000000000001e-07,
+              "end_s": 8.125000000000002e-07,
+              "energy_J": 1.1519343687537702e-12,
+              "average_current_A": 1.2799270763930766e-05,
+              "peak_current_A": 0.000862031438,
+              "minimum_current_A": -0.000130510561,
+              "average_power_W": 2.303868737507538e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 14,
+            "pc_before": 14,
+            "pc_after": 15,
+            "op": "AND",
+            "immediate": 10,
+            "acc_before": 10,
+            "expected": 10,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 10,
+            "pc_actual": 15,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 14,
+              "op": 2,
+              "immediate": 10,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 8.225000000000001e-07,
+            "pass": true,
+            "settling_time_s": 5.714059999999762e-10,
+            "power": {
+              "available": true,
+              "start_s": 8.125000000000001e-07,
+              "end_s": 8.625000000000001e-07,
+              "energy_J": 7.07918256209834e-13,
+              "average_current_A": 7.86575840233148e-06,
+              "peak_current_A": 0.000904331811,
+              "minimum_current_A": -0.000351216311,
+              "average_power_W": 1.4158365124196664e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 15,
+            "pc_before": 15,
+            "pc_after": 0,
+            "op": "XOR",
+            "immediate": 15,
+            "acc_before": 10,
+            "expected": 5,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 5,
+            "pc_actual": 0,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 15,
+              "op": 3,
+              "immediate": 15,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 8.725000000000001e-07,
+            "pass": true,
+            "settling_time_s": 4.254999999998869e-10,
+            "power": {
+              "available": true,
+              "start_s": 8.625000000000001e-07,
+              "end_s": 9.125000000000002e-07,
+              "energy_J": 1.4655490042219238e-12,
+              "average_current_A": 1.6283877824688027e-05,
+              "peak_current_A": 0.00176504857,
+              "minimum_current_A": -0.00028892524,
+              "average_power_W": 2.931098008443845e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 16,
+            "pc_before": 0,
+            "pc_after": 1,
+            "op": "ADD",
+            "immediate": 1,
+            "acc_before": 5,
+            "expected": 6,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 6,
+            "pc_actual": 1,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 0,
+              "op": 1,
+              "immediate": 1,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 9.225000000000001e-07,
+            "pass": true,
+            "settling_time_s": 5.995179999999907e-10,
+            "power": {
+              "available": true,
+              "start_s": 9.125e-07,
+              "end_s": 9.625e-07,
+              "energy_J": 6.029495033331358e-13,
+              "average_current_A": 6.6994389259237236e-06,
+              "peak_current_A": 0.000794247356,
+              "minimum_current_A": -0.00029374045,
+              "average_power_W": 1.2058990066662703e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 17,
+            "pc_before": 1,
+            "pc_after": 2,
+            "op": "ADD",
+            "immediate": 5,
+            "acc_before": 6,
+            "expected": 11,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 11,
+            "pc_actual": 2,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 1,
+              "op": 1,
+              "immediate": 5,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 9.725e-07,
+            "pass": true,
+            "settling_time_s": 5.424369999999234e-10,
+            "power": {
+              "available": true,
+              "start_s": 9.625e-07,
+              "end_s": 1.0125e-06,
+              "energy_J": 9.55030881558489e-13,
+              "average_current_A": 1.0611454239538777e-05,
+              "peak_current_A": 0.000832743291,
+              "minimum_current_A": -0.000314003426,
+              "average_power_W": 1.91006176311698e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 18,
+            "pc_before": 2,
+            "pc_after": 3,
+            "op": "ADD",
+            "immediate": 9,
+            "acc_before": 11,
+            "expected": 4,
+            "carry_expected": 1,
+            "zero_expected": 0,
+            "actual": 4,
+            "pc_actual": 3,
+            "carry_actual": 1,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 2,
+              "op": 1,
+              "immediate": 9,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.0225e-06,
+            "pass": true,
+            "settling_time_s": 5.812699999998648e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.0125e-06,
+              "end_s": 1.0625e-06,
+              "energy_J": 9.4657278088343e-13,
+              "average_current_A": 1.0517475343149234e-05,
+              "peak_current_A": 0.00083406676,
+              "minimum_current_A": -0.000317533409,
+              "average_power_W": 1.8931455617668623e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 19,
+            "pc_before": 3,
+            "pc_after": 4,
+            "op": "XOR",
+            "immediate": 10,
+            "acc_before": 4,
+            "expected": 14,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 14,
+            "pc_actual": 4,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 3,
+              "op": 3,
+              "immediate": 10,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.0725e-06,
+            "pass": true,
+            "settling_time_s": 5.367599999999765e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.0625e-06,
+              "end_s": 1.1125e-06,
+              "energy_J": 1.2275327998722742e-12,
+              "average_current_A": 1.3639253331914173e-05,
+              "peak_current_A": 0.000764935091,
+              "minimum_current_A": -0.000319283365,
+              "average_power_W": 2.4550655997445513e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 20,
+            "pc_before": 4,
+            "pc_after": 5,
+            "op": "AND",
+            "immediate": 7,
+            "acc_before": 14,
+            "expected": 6,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 6,
+            "pc_actual": 5,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 4,
+              "op": 2,
+              "immediate": 7,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.1225e-06,
+            "pass": true,
+            "settling_time_s": 5.876799999998236e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.1125000000000001e-06,
+              "end_s": 1.1625e-06,
+              "energy_J": 4.843114136623015e-13,
+              "average_current_A": 5.381237929581134e-06,
+              "peak_current_A": 0.000803150035,
+              "minimum_current_A": -0.000130845204,
+              "average_power_W": 9.686228273246041e-06,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 21,
+            "pc_before": 5,
+            "pc_after": 6,
+            "op": "LOAD",
+            "immediate": 15,
+            "acc_before": 6,
+            "expected": 15,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 15,
+            "pc_actual": 6,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 5,
+              "op": 0,
+              "immediate": 15,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.1725e-06,
+            "pass": true,
+            "settling_time_s": 5.738699999999146e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.1625e-06,
+              "end_s": 1.2125e-06,
+              "energy_J": 1.2573116993050833e-12,
+              "average_current_A": 1.3970129992278718e-05,
+              "peak_current_A": 0.000876629189,
+              "minimum_current_A": -0.000349538436,
+              "average_power_W": 2.5146233986101693e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 22,
+            "pc_before": 6,
+            "pc_after": 7,
+            "op": "ADD",
+            "immediate": 1,
+            "acc_before": 15,
+            "expected": 0,
+            "carry_expected": 1,
+            "zero_expected": 1,
+            "actual": 0,
+            "pc_actual": 7,
+            "carry_actual": 1,
+            "zero_actual": 1,
+            "observed_inputs": {
+              "pc_before": 6,
+              "op": 1,
+              "immediate": 1,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.2225e-06,
+            "pass": true,
+            "settling_time_s": 5.733200000000371e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.2125e-06,
+              "end_s": 1.2625e-06,
+              "energy_J": 9.947872753938378e-13,
+              "average_current_A": 1.1053191948820432e-05,
+              "peak_current_A": 0.000957076545,
+              "minimum_current_A": -0.000324437679,
+              "average_power_W": 1.9895745507876777e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 23,
+            "pc_before": 7,
+            "pc_after": 8,
+            "op": "ADD",
+            "immediate": 15,
+            "acc_before": 0,
+            "expected": 15,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 15,
+            "pc_actual": 8,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 7,
+              "op": 1,
+              "immediate": 15,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.2725e-06,
+            "pass": true,
+            "settling_time_s": 5.23999999999853e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.2625000000000002e-06,
+              "end_s": 1.3125000000000001e-06,
+              "energy_J": 1.552589239499954e-12,
+              "average_current_A": 1.7250991549999506e-05,
+              "peak_current_A": 0.00157854005,
+              "minimum_current_A": -0.000334487188,
+              "average_power_W": 3.105178478999911e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 24,
+            "pc_before": 8,
+            "pc_after": 9,
+            "op": "AND",
+            "immediate": 6,
+            "acc_before": 15,
+            "expected": 6,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 6,
+            "pc_actual": 9,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 8,
+              "op": 2,
+              "immediate": 6,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.3225e-06,
+            "pass": true,
+            "settling_time_s": 6.11969999999844e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.3125000000000001e-06,
+              "end_s": 1.3625e-06,
+              "energy_J": 6.997887109101816e-13,
+              "average_current_A": 7.775430121224249e-06,
+              "peak_current_A": 0.00083219403,
+              "minimum_current_A": -0.000124633529,
+              "average_power_W": 1.3995774218203649e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 25,
+            "pc_before": 9,
+            "pc_after": 10,
+            "op": "XOR",
+            "immediate": 15,
+            "acc_before": 6,
+            "expected": 9,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 9,
+            "pc_actual": 10,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 9,
+              "op": 3,
+              "immediate": 15,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.3725e-06,
+            "pass": true,
+            "settling_time_s": 5.518799999999789e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.3625e-06,
+              "end_s": 1.4125e-06,
+              "energy_J": 1.5331940494008068e-12,
+              "average_current_A": 1.703548943778676e-05,
+              "peak_current_A": 0.00115036038,
+              "minimum_current_A": -8.19371051e-05,
+              "average_power_W": 3.066388098801617e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 26,
+            "pc_before": 10,
+            "pc_after": 11,
+            "op": "LOAD",
+            "immediate": 0,
+            "acc_before": 9,
+            "expected": 0,
+            "carry_expected": 0,
+            "zero_expected": 1,
+            "actual": 0,
+            "pc_actual": 11,
+            "carry_actual": 0,
+            "zero_actual": 1,
+            "observed_inputs": {
+              "pc_before": 10,
+              "op": 0,
+              "immediate": 0,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.4225e-06,
+            "pass": true,
+            "settling_time_s": 5.789499999999193e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.4125e-06,
+              "end_s": 1.4625e-06,
+              "energy_J": 7.569797666168822e-13,
+              "average_current_A": 8.410886295743145e-06,
+              "peak_current_A": 0.000812407328,
+              "minimum_current_A": -0.000299570475,
+              "average_power_W": 1.5139595332337662e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 27,
+            "pc_before": 11,
+            "pc_after": 12,
+            "op": "ADD",
+            "immediate": 7,
+            "acc_before": 0,
+            "expected": 7,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 7,
+            "pc_actual": 12,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 11,
+              "op": 1,
+              "immediate": 7,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.4725e-06,
+            "pass": true,
+            "settling_time_s": 5.461099999998005e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.4625000000000002e-06,
+              "end_s": 1.5125000000000001e-06,
+              "energy_J": 1.2799107376831233e-12,
+              "average_current_A": 1.4221230418701387e-05,
+              "peak_current_A": 0.00114275512,
+              "minimum_current_A": -0.000328572916,
+              "average_power_W": 2.5598214753662496e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 28,
+            "pc_before": 12,
+            "pc_after": 13,
+            "op": "ADD",
+            "immediate": 8,
+            "acc_before": 7,
+            "expected": 15,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 15,
+            "pc_actual": 13,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 12,
+              "op": 1,
+              "immediate": 8,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.5225e-06,
+            "pass": true,
+            "settling_time_s": 5.677199999998401e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.5125000000000001e-06,
+              "end_s": 1.5625e-06,
+              "energy_J": 9.144576867065058e-13,
+              "average_current_A": 1.0160640963405632e-05,
+              "peak_current_A": 0.000866472139,
+              "minimum_current_A": -0.000155664454,
+              "average_power_W": 1.8289153734130136e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 29,
+            "pc_before": 13,
+            "pc_after": 14,
+            "op": "XOR",
+            "immediate": 5,
+            "acc_before": 15,
+            "expected": 10,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 10,
+            "pc_actual": 14,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 13,
+              "op": 3,
+              "immediate": 5,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.5725e-06,
+            "pass": true,
+            "settling_time_s": 5.515099999999072e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.5625e-06,
+              "end_s": 1.6125e-06,
+              "energy_J": 1.1376049173719772e-12,
+              "average_current_A": 1.2640054637466427e-05,
+              "peak_current_A": 0.000852099045,
+              "minimum_current_A": -0.000343504693,
+              "average_power_W": 2.275209834743957e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 30,
+            "pc_before": 14,
+            "pc_after": 15,
+            "op": "AND",
+            "immediate": 10,
+            "acc_before": 10,
+            "expected": 10,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 10,
+            "pc_actual": 15,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 14,
+              "op": 2,
+              "immediate": 10,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.6225000000000001e-06,
+            "pass": true,
+            "settling_time_s": 5.71409999999673e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.6125000000000002e-06,
+              "end_s": 1.6625000000000002e-06,
+              "energy_J": 7.083852338371901e-13,
+              "average_current_A": 7.870947042635454e-06,
+              "peak_current_A": 0.000904331773,
+              "minimum_current_A": -0.000351216844,
+              "average_power_W": 1.4167704676743818e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          },
+          {
+            "index": 31,
+            "pc_before": 15,
+            "pc_after": 0,
+            "op": "XOR",
+            "immediate": 15,
+            "acc_before": 10,
+            "expected": 5,
+            "carry_expected": 0,
+            "zero_expected": 0,
+            "actual": 5,
+            "pc_actual": 0,
+            "carry_actual": 0,
+            "zero_actual": 0,
+            "observed_inputs": {
+              "pc_before": 15,
+              "op": 3,
+              "immediate": 15,
+              "clock": 1,
+              "reset": 0
+            },
+            "sample_time_s": 1.6725e-06,
+            "pass": true,
+            "settling_time_s": 4.2235999999982565e-10,
+            "power": {
+              "available": true,
+              "start_s": 1.6625000000000002e-06,
+              "end_s": 1.7125000000000001e-06,
+              "energy_J": 1.4663729616696401e-12,
+              "average_current_A": 1.6293032907440466e-05,
+              "peak_current_A": 0.00176703193,
+              "minimum_current_A": -0.0002889255,
+              "average_power_W": 2.932745923339284e-05,
+              "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+            }
+          }
+        ],
+        "logic_low_max_V": 0.54,
+        "logic_high_min_V": 1.26,
+        "scope": "Native transistor transient samples, stable windows and actual input/PC/ROM checks. Not STA, timing closure or manufacturing signoff.",
+        "reset_verified": true,
+        "rom_wraps": 2,
+        "timing_source": "sampled settling of ACC/PC/flags through 30% cycle; not propagation-delay characterization or STA",
+        "power": {
+          "available": true,
+          "start_s": 0,
+          "end_s": 1.7500000000000002e-06,
+          "energy_J": 3.401612952356497e-11,
+          "average_current_A": 1.0798771277322212e-05,
+          "peak_current_A": 0.00176703193,
+          "minimum_current_A": -0.000369544377,
+          "average_power_W": 1.943778829917998e-05,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        }
+      }
+    },
+    {
+      "name": "actual-wave replay rejects unknown PC, missing reset and truncated observation",
+      "pass": true,
+      "source": "altered-actual-waveform-regression"
+    }
+  ],
+  "state_root": "/workspace/.runtime/evidence/assistant-extensions-81e2c9dfeb6c410a9ff7fcb82141f336/state",
+  "source_sha256": {
+    "workers/eda/design_tools.py": "74d9b9b393c39c7864cb61d83564d77f8a5b93c12284efb6ca4e5410c3de233f",
+    "workers/eda/digital_units.py": "5902686a82c8a057b830bcad93608b5b8a01ad5adf5108e78990bf1c17322840",
+    "workers/eda/signal_metrics.py": "0ed481b9bbf111b1e954cdfbcd386d82b21c7cbb64e5ca20674da935eb279d29",
+    "workers/eda/test_assistant_extensions.py": "f6c15a4170bfbfac8955d86bddf077c34132b8fb16ce9e5e00e9f38030215d92"
+  }
+}

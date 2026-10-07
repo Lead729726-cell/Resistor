@@ -1,6 +1,6 @@
 # Typed AI/MCP 연동
 
-Numerical evaluator와 외부 agent를 분리합니다. 프로그램은 외부 LLM/provider API를 호출하지 않습니다. 자체 seeded grid/random/univariate Parzen TPE가 실제 도구 결과만 평가합니다. 공개 MOS nf=m1 W/L, grid0.005µm, 최대16trial·동시2experiment·시간60..1800초 subset입니다.
+Numerical evaluator와 외부 agent를 분리합니다. Numerical optimizer와 MCP는 외부 LLM/provider API를 호출하지 않습니다. 별도 로컬 설계 검토 화면의 Ollama/OpenAI 연결은 [명시적 호출·예산·근거 설정](design-assistant.md)을 따릅니다. 자체 seeded grid/random/univariate Parzen TPE가 실제 도구 결과만 평가합니다. 공개 MOS nf=m1 W/L, grid0.005µm, 최대16trial·동시2experiment·시간60..1800초 subset입니다.
 
 Id_max/Id_min은 실제 DC sampled drain current, area_um2는 실제 layout bbox footprint, power_W는 Vds×최대 sampled drain current입니다. 마지막 값을 일반 회로의 total OP power로 표시하지 않습니다. feasible 후보는 실제 DRC/LVS/ngspice를 모두 통과해야 합니다. 실패한 점수는 null이며 actual run/manifest와 이유를 남깁니다. 원본 source revision은 유지합니다.
 
@@ -29,3 +29,7 @@ pin-net 연결, PVT 공급원/조건표/실행/결과/목록/취소를 추가해
 [공식 TypeScript SDK v1](https://ts.sdk.modelcontextprotocol.io/server)의 stdio/tool API를 사용합니다. `npm run test:mcp`는 실제 MCP handshake/doctor/KLayout 수정/중복 receipt 및 잘못된 revision/schema 거부를 검증합니다. docs/evidence/mcp-integration.json에 기록했습니다.
 
 독립 로컬 MCP의 직접 변경은 shared history 밖 변경으로 감지하고 stale rebase를 차단합니다. 외부 AI 클라이언트를 연결하면 반환된 tool data를 해당 클라이언트가 받습니다. 이 adapter는 PDK/model/deck 원문을 전송하지 않습니다.
+
+## v0.15
+
+MCP는 총 41개 도구를 제공합니다. register_route_search는 실제 도형과 PDK 규칙으로 검사한 제한된 우회 후보를 읽습니다. apply는 별도 승인·revision·preview hash 검사로 유지됩니다. CPU creation에는 16..64 사이클을 지정할 수 있습니다. provider key, AI 호출 및 예산 설정은 MCP와 cloud.native에 노출하지 않습니다.

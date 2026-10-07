@@ -1,0 +1,10 @@
+import {spawn} from 'node:child_process';
+import {readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+const p=spawn('docker',['exec','mos-studio-eda','python3','/workspace/workers/eda/test_assistant_extensions.py'],{stdio:'inherit',windowsHide:true});
+const code=await new Promise((resolve,reject)=>{p.once('error',reject);p.once('exit',resolve);});
+if(code!==0)process.exit(code??1);
+const r=JSON.parse(await readFile('docs/evidence/assistant-extensions.json','utf8'));
+if(r.case_count!==7||r.passed!==7)throw Error('Incomplete extensions evidence');
+for(const [p,hash] of Object.entries(r.source_sha256))if(createHash('sha256').update(await readFile(p)).digest('hex')!==hash)throw Error('Evidence source differs: '+p);
+console.log('Native geometry / numerical fixtures / actual ngspice: 7/7; source hashes match.');

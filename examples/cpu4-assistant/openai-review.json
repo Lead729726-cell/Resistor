@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "id": "37079868-efe7-43e4-9c2a-c35a1983f075",
+  "provider": "openai",
+  "model": "gpt-6-luna",
+  "project_id": "33afadec975f484e86ec381dd07f107b",
+  "revision": 1,
+  "evidence_hash": "dd62fc53a21d524328edea4e33b921d78e4b23cc5cfd6347effff25dcc1ad976",
+  "freshness": "current",
+  "execution_status": "completed",
+  "advisory_only": true,
+  "review": {
+    "summary": "현재 트랜지언트 시뮬레이션은 완료되었고, 보고된 CPU truth 검증은 32/32 통과했습니다. 다만 출력 및 내부 신호의 관측 전압이 전원 레일 범위를 벗어난 구간이 있으며, 현재 DRC/LVS/PEX 증거는 없습니다. 선택된 루트 셀의 연결 정보만으로는 전체 계층이나 물리 구현 상태를 판단할 수 없습니다.",
+    "findings": [
+      {
+        "severity": "info",
+        "title": "기능 truth 검증 결과",
+        "explanation": "현재 실행된 ngspice 트랜지언트 시뮬레이션에서 truth 검증은 32/32 통과로 보고되었습니다. 이는 해당 시뮬레이션 조건의 기능 결과이며, 물리 검증이나 제조 적합성의 증거는 아닙니다.",
+        "evidence_ids": [
+          "run:4b740cb150c24c7094c2a4653d2ddbdc",
+          "design"
+        ],
+        "suggested_check": "inspect_waveforms"
+      },
+      {
+        "severity": "warning",
+        "title": "관측 전압이 전원 레일 범위를 벗어남",
+        "explanation": "시뮬레이션 공급 전압은 1.8 V로 보고되었지만, 예를 들어 OP1은 -0.134 V부터 1.920 V, IMM0은 -0.050 V부터 1.970 V까지의 극값이 보고되었습니다. 과도 현상인지 또는 회로 동작상 문제인지 현재 요약 정보만으로는 판정할 수 없으므로 파형에서 지속 시간과 동작 시점을 확인하는 것이 좋습니다.",
+        "evidence_ids": [
+          "run:4b740cb150c24c7094c2a4653d2ddbdc",
+          "net:OP1",
+          "net:IMM0"
+        ],
+        "suggested_check": "inspect_waveforms"
+      },
+      {
+        "severity": "warning",
+        "title": "현재 DRC/LVS/PEX 검증 증거 없음",
+        "explanation": "제공된 상태에는 최신 12개 실행 내 완료된 현재 DRC, LVS, PEX 증거가 없다고 명시되어 있습니다. 따라서 이 검토에서 해당 검증의 통과 여부는 알 수 없습니다.",
+        "evidence_ids": [
+          "issue:1",
+          "issue:2",
+          "issue:3",
+          "design"
+        ],
+        "suggested_check": "drc"
+      },
+      {
+        "severity": "warning",
+        "title": "검토 범위가 루트 연결 그래프와 제한된 레이아웃 메타데이터에 한정됨",
+        "explanation": "연결 정보는 선택된 루트 셀을 대상으로 하며, 전체 하위 계층의 평탄화된 전기 그래프가 아닙니다. 레이아웃 상태도 unmapped로 보고되었고, 제공된 정보는 전기 추출이나 물리적 유효성을 증명하지 않습니다. 따라서 전체 설계 및 물리 구현 상태는 이 자료만으로 확인할 수 없습니다.",
+        "evidence_ids": [
+          "connectivity",
+          "design",
+          "net:VGND",
+          "net:VPWR"
+        ],
+        "suggested_check": "lvs"
+      },
+      {
+        "severity": "info",
+        "title": "접지 선언 관련 주의사항",
+        "explanation": "입력에는 명시적 zero node 또는 소유된 템플릿 ground 선언이 없다는 advisory가 있습니다. VGND라는 이름만으로 접지가 자동 추론되지 않으므로, 접지 기준과 계층 내 연결 상태는 별도로 확인해야 합니다.",
+        "evidence_ids": [
+          "issue:0",
+          "net:VGND",
+          "device:port_VGND"
+        ],
+        "suggested_check": "inspect_schematic"
+      }
+    ],
+    "limitations": [
+      "시뮬레이션 결과는 현재 제공된 실행 및 조건에 한정됩니다. 파형 원본은 제공되지 않았습니다.",
+      "루트 셀의 연결 정보는 전체 평탄화 계층의 연결을 보여주지 않습니다.",
+      "레이아웃 메타데이터만으로 전기 추출, 물리적 유효성 또는 제조 적합성을 판단할 수 없습니다.",
+      "현재 DRC/LVS/PEX 실행 결과가 제공되지 않아 해당 검증 상태는 미확인입니다."
+    ]
+  },
+  "usage": {
+    "input_tokens": 12037,
+    "input_tokens_details": {
+      "cache_write_tokens": 12034,
+      "cached_tokens": 0
+    },
+    "output_tokens": 1466,
+    "output_tokens_details": {
+      "reasoning_tokens": 441
+    },
+    "total_tokens": 13503
+  },
+  "budget_reservation": {
+    "id": "81795a5b-3f92-4797-9af8-4acff4a90120",
+    "reserved_usd": 0.010712
+  },
+  "created_at": "2026-10-07T04:30:55.665Z",
+  "note": "Review collected after pre-layout simulation only. Later DRC/LVS/PEX/post-layout evidence changes its fingerprint; this historic advice is stale against the final workspace."
+}

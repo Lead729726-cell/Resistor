@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "adapter": "register-design-tools-1",
+  "adapter": "register-design-tools-2",
   "passed": 27,
   "case_count": 27,
   "cases": [
     {
       "case": "actual confined public model subset and corner injection rejection",
       "result": "pass",
-      "elapsed_s": 0.05149114201776683,
+      "elapsed_s": 0.017505174037069082,
       "model_resources": [
         {
           "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
@@ -39,10 +39,10 @@
     {
       "case": "actual hashed tech width spacing area grid and wrong rule adapter rejection",
       "result": "pass",
-      "elapsed_s": 1.0122436289675534,
+      "elapsed_s": 0.2080057369894348,
       "rules": {
         "schema_version": 1,
-        "adapter": "register-design-tools-1",
+        "adapter": "register-design-tools-2",
         "profile_id": "sky130A",
         "dbu_um": "0.001",
         "resources": [
@@ -95,14 +95,14 @@
           "Density, antenna, slots, metal-hole, contact enclosure and full-chip checks require separate actual DRC.",
           "A valid preview is not a DRC/LVS/signoff pass. Net properties are explicit annotations, not extraction proof."
         ],
-        "fingerprint": "ea8bcd06aee82de079686bd082486a3d1721825c73bb3720126d242a4032a907"
+        "fingerprint": "750a4b6c7ae16c7cf09f97f09e16233011a161ceeb939b519738d5ce420b8b4c"
       }
     },
     {
       "case": "actual mux4 explicit graph; empty physical layout gates",
       "result": "pass",
-      "elapsed_s": 0.8354674440342933,
-      "project_id": "85262f0427a9445797db1f05fc99aa46",
+      "elapsed_s": 0.18526003998704255,
+      "project_id": "49a22047e7504bab92dcb2dd13230081",
       "device_count": 29,
       "ports": [
         "D0",
@@ -120,8 +120,8 @@
     {
       "case": "actual rc_lowpass explicit graph; empty physical layout gates",
       "result": "pass",
-      "elapsed_s": 0.8160312119871378,
-      "project_id": "1acef105c1b94c689ef8b1a4004b7780",
+      "elapsed_s": 0.1847192509449087,
+      "project_id": "ecc04ed69f07443ab721f991e47aa589",
       "device_count": 5,
       "ports": [
         "IN",
@@ -133,8 +133,8 @@
     {
       "case": "actual common_source explicit graph; empty physical layout gates",
       "result": "pass",
-      "elapsed_s": 0.3295857129851356,
-      "project_id": "14322f818d5a4fc0be6f4e50b86f4126",
+      "elapsed_s": 0.18373303301632404,
+      "project_id": "9f1f24349dc64e169a1f4f07c2ad99ed",
       "device_count": 6,
       "ports": [
         "IN",
@@ -147,8 +147,8 @@
     {
       "case": "actual common_source_bias explicit graph; empty physical layout gates",
       "result": "pass",
-      "elapsed_s": 0.33406403404660523,
-      "project_id": "3dae4c764c64430692e9063d7fdd0414",
+      "elapsed_s": 0.1865123439929448,
+      "project_id": "a9b7c44a0b344879ab8461b060f99501",
       "device_count": 9,
       "ports": [
         "IN",
@@ -161,8 +161,8 @@
     {
       "case": "actual current_mirror explicit graph; empty physical layout gates",
       "result": "pass",
-      "elapsed_s": 0.2646546349860728,
-      "project_id": "d699afece6714a5db6ed78af8ebd17bc",
+      "elapsed_s": 0.18547489895718172,
+      "project_id": "32c06341210c4632894f3eab9b67d403",
       "device_count": 5,
       "ports": [
         "REF",
@@ -174,8 +174,8 @@
     {
       "case": "actual differential_pair explicit graph; empty physical layout gates",
       "result": "pass",
-      "elapsed_s": 0.44050700799562037,
-      "project_id": "e00f3b00f94d46b3988b86775a910193",
+      "elapsed_s": 0.18910284800222144,
+      "project_id": "790f602cdaad48468dda14609ed701ed",
       "device_count": 9,
       "ports": [
         "INP",
@@ -190,37 +190,37 @@
     {
       "case": "new-project CID replay conflict and physical parameter binding rejection",
       "result": "pass",
-      "elapsed_s": 0.3833916540024802
+      "elapsed_s": 0.09958818799350411
     },
     {
       "case": "bare GDS into RC target removes inherited template circuit PDK and stimuli",
       "result": "pass",
-      "elapsed_s": 0.6403220209758729,
-      "project_id": "ea9e260604d541c6ae37e61c7b99931b",
+      "elapsed_s": 0.25037095398874953,
+      "project_id": "80c34b39e9a5408b85476d037c86d46c",
       "revision": 2,
-      "import_sha256": "09d9bb15aac26a71333cb005101f7e04b69bf6e874ed97c97418dfea65361a00",
+      "import_sha256": "2832b3f5a4a593b35554d873eec556fd2b0ee07b204554fa8ac662055c2da0da",
       "prior_template_removed": true,
       "inherited_models_stimuli": "none"
     },
     {
       "case": "matching GDS sidecar restores only origin RC parameters ports and testbench; wrong hash rejects",
       "result": "pass",
-      "elapsed_s": 1.2346191810211167,
-      "origin_project_id": "69fdd595971e406798403ab636c53220",
-      "imported_project_id": "13caf9ef85584349963d43058c2aaa19",
+      "elapsed_s": 0.6888341050362214,
+      "origin_project_id": "cf69f2aabe524038bde40c91285d36b4",
+      "imported_project_id": "68c0b9fecc0144288c6191138b53a661",
       "revision": 2,
-      "source_sha256": "a444436ce05532aa541ccb16c4a16031812716700a72250cb353d6dd0a89c82d",
+      "source_sha256": "8b72f8612faa5dc6aa568ec5329a65358f03ef32ecf036149f4a1f90adeef8d3",
       "explicit_matching_template_restored": true,
       "wrong_geometry_hash_template_rejected": true
     },
     {
       "case": "exact integer Manhattan route and negative width area grid wrong process checks",
       "result": "pass",
-      "elapsed_s": 0.8224563100375235,
+      "elapsed_s": 0.31191879097605124,
       "preview": {
-        "project_id": "4a058311354f47039390f510c2be1de3",
+        "project_id": "ed96b1960fd94e308df0ef14dbd0c080",
         "revision": 1,
-        "rule_fingerprint": "ea8bcd06aee82de079686bd082486a3d1721825c73bb3720126d242a4032a907",
+        "rule_fingerprint": "750a4b6c7ae16c7cf09f97f09e16233011a161ceeb939b519738d5ce420b8b4c",
         "layer_id": "68/20",
         "points": [
           [
@@ -240,7 +240,7 @@
         "net": null,
         "order": "x-first",
         "geometry_hash": "5c1ae284fc08b856f21b2b150e67f5471f258d739f07ca1193add2970d383938",
-        "preview_hash": "a9e9c32eeaddbe6f503334df47288b062495073bb9af997aba275aff9a034bf0",
+        "preview_hash": "bca5fa23764dd69b2d0c9f4e7c19a4b691a6302347610569b54d7e7ca8de685c",
         "valid": true,
         "length_dbu": "2000",
         "area_dbu2": "280000",
@@ -261,20 +261,20 @@
     {
       "case": "atomic route applies once with room CID and stale revision/hash rejection",
       "result": "pass",
-      "elapsed_s": 0.4485518679721281,
-      "project_id": "4a058311354f47039390f510c2be1de3",
+      "elapsed_s": 0.3161932110087946,
+      "project_id": "ed96b1960fd94e308df0ef14dbd0c080",
       "revision": 2,
-      "preview_hash": "a9e9c32eeaddbe6f503334df47288b062495073bb9af997aba275aff9a034bf0",
-      "shape_property_id": "58f85df3a087427b90c00221dc200727"
+      "preview_hash": "bca5fa23764dd69b2d0c9f4e7c19a4b691a6302347610569b54d7e7ca8de685c",
+      "shape_property_id": "6fc94d0d8c714c27be8b0ffd109bba61"
     },
     {
       "case": "actual obstacle spacing, same-net disjoint rejection, preserved IDs labels pins and contact rejection",
       "result": "pass",
-      "elapsed_s": 1.3566717560170218,
-      "project_id": "806b28ec985f4d3a9c6eacdc91653e05",
+      "elapsed_s": 1.1700924579636194,
+      "project_id": "738393c2d66f49be965c4ef50b106041",
       "preserved_shape_ids": [
-        "rc_lowpass/31ec1972aebf4396bdf1fa1985fa2e38",
-        "rc_lowpass/eea71987660a46cfb4eb85693a98354b"
+        "rc_lowpass/ccfe9074235748eb8b4293c7ebe627fe",
+        "rc_lowpass/4a17a19e63254a6ba906adcac7782b29"
       ],
       "preserved_label_count": 2,
       "preserved_pin_count": 1,
@@ -283,8 +283,8 @@
     {
       "case": "actual declared pin connectivity, no fake geometry link and floating-net advisory",
       "result": "pass",
-      "elapsed_s": 0.5782095700269565,
-      "project_id": "3dae4c764c64430692e9063d7fdd0414",
+      "elapsed_s": 0.21449767297599465,
+      "project_id": "a9b7c44a0b344879ab8461b060f99501",
       "net_count": 5,
       "source": "native-explicit-schematic-pins",
       "issues": [
@@ -299,10 +299,10 @@
     {
       "case": "actual restored RC sidecar simulation uses origin parameters and no physical arrows",
       "result": "pass",
-      "elapsed_s": 1.7433609949657694,
-      "project_id": "0d42c039f2ab44c3856be5ecb1baad9e",
-      "run_id": "40e3ed1e3139464388e9567bc06535bc",
-      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/40e3ed1e3139464388e9567bc06535bc/manifest.json",
+      "elapsed_s": 1.1507437690161169,
+      "project_id": "50e835e6f6b14b5c92bc65a9ce4cf9b4",
+      "run_id": "7dec386cab324d058799c0288599ec8e",
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/7dec386cab324d058799c0288599ec8e/manifest.json",
       "measured_tau_s": 2.0000510884568886e-08,
       "geometry_mapping": "unmapped",
       "explicit_original_resistance_Ohm": 20000.0
@@ -310,11 +310,11 @@
     {
       "case": "actual Magic full DRC of applied route metal geometry",
       "result": "pass",
-      "elapsed_s": 1.777615338913165,
-      "project_id": "4a058311354f47039390f510c2be1de3",
-      "run_id": "2376c05cccda4086b4ec7293d4a1ab52",
+      "elapsed_s": 1.1758695549797267,
+      "project_id": "ed96b1960fd94e308df0ef14dbd0c080",
+      "run_id": "086c57d8d93d4f2a9d385d1a2900bebc",
       "revision": 2,
-      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/2376c05cccda4086b4ec7293d4a1ab52/manifest.json",
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/086c57d8d93d4f2a9d385d1a2900bebc/manifest.json",
       "tool": "Magic",
       "analysis_result": "pass",
       "scope": "only actual routed metal fixture, not RC layout completion",
@@ -323,11 +323,11 @@
     {
       "case": "actual ngspice mux4 supported analysis signed currents no invented physical arrows",
       "result": "pass",
-      "elapsed_s": 2.201599993975833,
-      "project_id": "d68fb2d73703477682be38695d7b30b9",
-      "run_id": "7de3b8fa1b7c4904b5179bd1598b0758",
+      "elapsed_s": 1.9021901579690166,
+      "project_id": "744c068c68854fbb9ad66ee487074df0",
+      "run_id": "4c600f3ab14c4577979b63ef586b3a6e",
       "revision": 1,
-      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/7de3b8fa1b7c4904b5179bd1598b0758/manifest.json",
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/4c600f3ab14c4577979b63ef586b3a6e/manifest.json",
       "analysis_result": "pass",
       "measurements": {
         "analysis": "tran",
@@ -338,6 +338,7 @@
         "supply_V": 1.8,
         "post_layout": "false",
         "samples": 3684,
+        "solver": "SPARSE 1.3",
         "D0_min": 0.0,
         "D0_max": 1.8,
         "D1_min": 0.0,
@@ -373,11 +374,11 @@
     {
       "case": "actual ngspice rc_lowpass supported analysis signed currents no invented physical arrows",
       "result": "pass",
-      "elapsed_s": 1.0654106680303812,
-      "project_id": "5a7360a7fde544b2a83690afde66fad4",
-      "run_id": "ae814711e72746f28059252fdb5788cd",
+      "elapsed_s": 0.8434258869965561,
+      "project_id": "6c99e8da023c404cb2b6705db1c92d6f",
+      "run_id": "6b450826e91e4b838dbc2898477ed775",
       "revision": 1,
-      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/ae814711e72746f28059252fdb5788cd/manifest.json",
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/6b450826e91e4b838dbc2898477ed775/manifest.json",
       "analysis_result": "pass",
       "measurements": {
         "analysis": "op",
@@ -388,6 +389,7 @@
         "supply_V": 1.8,
         "post_layout": "false",
         "samples": 1,
+        "solver": "SPARSE 1.3",
         "IN_min": 0.0,
         "IN_max": 0.0,
         "OUT_min": 0.0,
@@ -403,11 +405,11 @@
     {
       "case": "actual ngspice common_source supported analysis signed currents no invented physical arrows",
       "result": "pass",
-      "elapsed_s": 1.2267643070081249,
-      "project_id": "dfb557e1e06b4cc2bdf339dfa2dd2bf3",
-      "run_id": "4ed8817af50246d0a24e94c16052d1c6",
+      "elapsed_s": 0.7521606709924527,
+      "project_id": "f93e59c2156044049fe5b362f47dc3ca",
+      "run_id": "a5b7e5fdc4a94da2886345e2e0a730ac",
       "revision": 1,
-      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/4ed8817af50246d0a24e94c16052d1c6/manifest.json",
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/a5b7e5fdc4a94da2886345e2e0a730ac/manifest.json",
       "analysis_result": "pass",
       "measurements": {
         "analysis": "op",
@@ -418,6 +420,7 @@
         "supply_V": 1.8,
         "post_layout": "false",
         "samples": 1,
+        "solver": "SPARSE 1.3",
         "IN_min": 0.7,
         "IN_max": 0.7,
         "OUT_min": 1.76081041,
@@ -435,11 +438,11 @@
     {
       "case": "actual ngspice common_source_bias supported analysis signed currents no invented physical arrows",
       "result": "pass",
-      "elapsed_s": 0.9149215440265834,
-      "project_id": "a3673565821646f1bf67b4700ee7fc9c",
-      "run_id": "f9e1d5237a2348dbb0148581a3ccfb0d",
+      "elapsed_s": 0.7974742770311423,
+      "project_id": "56011f979f62456bba79d2757c49481e",
+      "run_id": "e5889060b1e44be984fd468f93c7a17e",
       "revision": 1,
-      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/f9e1d5237a2348dbb0148581a3ccfb0d/manifest.json",
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/e5889060b1e44be984fd468f93c7a17e/manifest.json",
       "analysis_result": "pass",
       "measurements": {
         "analysis": "op",
@@ -450,6 +453,7 @@
         "supply_V": 1.8,
         "post_layout": "false",
         "samples": 1,
+        "solver": "SPARSE 1.3",
         "IN_min": 0.0,
         "IN_max": 0.0,
         "OUT_min": 1.77411637,
@@ -469,11 +473,11 @@
     {
       "case": "actual ngspice current_mirror supported analysis signed currents no invented physical arrows",
       "result": "pass",
-      "elapsed_s": 0.9274311430053785,
-      "project_id": "f2db32030df54020a070d8117d7c05c5",
-      "run_id": "827843e3fd3641bc999e178d67b8ce6b",
+      "elapsed_s": 0.7465228110086173,
+      "project_id": "25dd3892bee0402bb307f2094a4b10b7",
+      "run_id": "3a24e35ab92f49ea9637a84907ec2197",
       "revision": 1,
-      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/827843e3fd3641bc999e178d67b8ce6b/manifest.json",
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/3a24e35ab92f49ea9637a84907ec2197/manifest.json",
       "analysis_result": "pass",
       "measurements": {
         "analysis": "op",
@@ -484,6 +488,7 @@
         "supply_V": 1.8,
         "post_layout": "false",
         "samples": 1,
+        "solver": "SPARSE 1.3",
         "REF_min": 1.16117951,
         "REF_max": 1.16117951,
         "OUT_min": 1.8,
@@ -505,11 +510,11 @@
     {
       "case": "actual ngspice differential_pair supported analysis signed currents no invented physical arrows",
       "result": "pass",
-      "elapsed_s": 1.200934689026326,
-      "project_id": "577d52224daf445a940d12884352c2cf",
-      "run_id": "f45bed1e38c942f0994f9ffbcd4aa024",
+      "elapsed_s": 0.7865424409974366,
+      "project_id": "c91c5835cb6244ddb73c8b0689844dc4",
+      "run_id": "1077d416906f407ba76b6cbe6c4aeea3",
       "revision": 1,
-      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/f45bed1e38c942f0994f9ffbcd4aa024/manifest.json",
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/1077d416906f407ba76b6cbe6c4aeea3/manifest.json",
       "analysis_result": "pass",
       "measurements": {
         "analysis": "op",
@@ -520,6 +525,7 @@
         "supply_V": 1.8,
         "post_layout": "false",
         "samples": 1,
+        "solver": "SPARSE 1.3",
         "INP_min": 0.905,
         "INP_max": 0.905,
         "INN_min": 0.895,
@@ -543,12 +549,12 @@
     {
       "case": "actual RC transient time constant and AC cutoff from parsed samples",
       "result": "pass",
-      "elapsed_s": 2.1143751610070467,
-      "project_id": "3aa3e1f25feb4c61a227b8728336daca",
-      "tran_run_id": "d4736dc99b1e4e899386309817d259f8",
-      "ac_run_id": "0e1ea942fa024a13833abc3380778dd8",
-      "tran_manifest": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/d4736dc99b1e4e899386309817d259f8/manifest.json",
-      "ac_manifest": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/0e1ea942fa024a13833abc3380778dd8/manifest.json",
+      "elapsed_s": 1.5746592769864947,
+      "project_id": "f32ddb66d95a48d1a0af6581ac352ba7",
+      "tran_run_id": "dec6e12097bc4084b44f8ee7066dc172",
+      "ac_run_id": "0db7cbc554f749b8bd31d75c84fc68b1",
+      "tran_manifest": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/dec6e12097bc4084b44f8ee7066dc172/manifest.json",
+      "ac_manifest": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/0db7cbc554f749b8bd31d75c84fc68b1/manifest.json",
       "measured_tau_s": 1.0000527327111767e-08,
       "measured_3db_frequency_Hz": 15914651.432474554,
       "comparison_from_explicit_R_C": {
@@ -560,10 +566,10 @@
     {
       "case": "actual public-MOS common-source AC magnitude and inverting phase",
       "result": "pass",
-      "elapsed_s": 1.6581667859572917,
-      "project_id": "09940220f90247adad1280e3792f1465",
-      "run_id": "3a561c66e9124d13ba43d862af16cdb4",
-      "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/3a561c66e9124d13ba43d862af16cdb4/manifest.json",
+      "elapsed_s": 0.6783793150098063,
+      "project_id": "f72c938de8104d6e92bbc1b37ddbb318",
+      "run_id": "6224159963c04d808562c3d79643689c",
+      "manifest_path": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/6224159963c04d808562c3d79643689c/manifest.json",
       "actual_low_frequency_magnitude": 0.620424229,
       "actual_low_frequency_phase_deg": 180.0,
       "measurements": {
@@ -575,6 +581,7 @@
         "supply_V": 1.8,
         "post_layout": "false",
         "samples": 361,
+        "solver": "SPARSE 1.3",
         "OUT_gain_min": 0.620424229,
         "OUT_gain_max": 0.63671441,
         "OUT_phase_min": 156.832695,
@@ -589,27 +596,27 @@
     {
       "case": "actual independent declared DC sweeps for mirror diffpair and biased common-source",
       "result": "pass",
-      "elapsed_s": 7.208635907038115,
+      "elapsed_s": 2.313739589008037,
       "runs": [
         {
           "template": "current_mirror",
-          "project_id": "82e9b019b64d45df98c40faf7c9c349f",
-          "run_id": "978a4806cca6431d98e47f6a8093380f",
-          "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/978a4806cca6431d98e47f6a8093380f/manifest.json",
+          "project_id": "fba97a5c84a54922a2d6411693b6dc40",
+          "run_id": "21b2acd09bee4f728ef6ccd9374d51f1",
+          "manifest_path": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/21b2acd09bee4f728ef6ccd9374d51f1/manifest.json",
           "samples": 181
         },
         {
           "template": "differential_pair",
-          "project_id": "315831fdb91840cbbf6fbe990ec51fe6",
-          "run_id": "ec7b14b615d94718848addf0fd7e2e6a",
-          "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/ec7b14b615d94718848addf0fd7e2e6a/manifest.json",
+          "project_id": "17602874240f4fa780dcd48667bb621d",
+          "run_id": "09ebecc95473490095fec09d84911383",
+          "manifest_path": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/09ebecc95473490095fec09d84911383/manifest.json",
           "samples": 101
         },
         {
           "template": "common_source_bias",
-          "project_id": "82a18c79540d4f498a12787a3db724a1",
-          "run_id": "11d0e6cfdece4788847aca19968f83c8",
-          "manifest_path": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/11d0e6cfdece4788847aca19968f83c8/manifest.json",
+          "project_id": "a5dc704d610b487a80fde905fe779782",
+          "run_id": "7d8b4b7fdda3409491c7b346dfc0e792",
+          "manifest_path": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/7d8b4b7fdda3409491c7b346dfc0e792/manifest.json",
           "samples": 181
         }
       ]
@@ -617,15 +624,15 @@
     {
       "case": "actual fixed public mirror physical core DRC and pre/post extracted current",
       "result": "pass",
-      "elapsed_s": 9.26782336900942,
-      "project_id": "65901a18703e4978b645d54d1cb729ac",
+      "elapsed_s": 4.250515963009093,
+      "project_id": "277ff6a0f653465f82acfaebeda9ee09",
       "physical_status": "generated-public-core",
-      "drc_run_id": "ddb675c8ff7d440d932be3a259b364ea",
-      "pre_run_id": "c81a5ce3c26e4641ae909a816fc819de",
-      "post_run_id": "9f12fe8c71c144dc85d8ef8b90bf3e99",
-      "drc_manifest": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/ddb675c8ff7d440d932be3a259b364ea/manifest.json",
-      "pre_manifest": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/c81a5ce3c26e4641ae909a816fc819de/manifest.json",
-      "post_manifest": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state/runs/9f12fe8c71c144dc85d8ef8b90bf3e99/manifest.json",
+      "drc_run_id": "daaf1c37ace6429295f5ce2c2260a89e",
+      "pre_run_id": "fae26285b05547bba7596bac2fef5b3b",
+      "post_run_id": "a9be3024f8a748ceaf41a9ed4813ce5b",
+      "drc_manifest": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/daaf1c37ace6429295f5ce2c2260a89e/manifest.json",
+      "pre_manifest": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/fae26285b05547bba7596bac2fef5b3b/manifest.json",
+      "post_manifest": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state/runs/a9be3024f8a748ceaf41a9ed4813ce5b/manifest.json",
       "actual_output_current_pre_A": 0.000115240071,
       "actual_output_current_post_A": 0.000114126446,
       "layout_annotation_binding_count": 96,
@@ -633,8 +640,8 @@
     }
   ],
   "source_sha256": {
-    "workers/eda/design_tools.py": "266814bb72e88fe9c214fa4f520b76573ec2e191e883003267409ea32b8c0459",
-    "workers/eda/server.py": "08195ff0fac5a2ccebc063418165f3323802116115fd25bad08ddd767c6070ed",
+    "workers/eda/design_tools.py": "74d9b9b393c39c7864cb61d83564d77f8a5b93c12284efb6ca4e5410c3de233f",
+    "workers/eda/server.py": "ba5d0493f3a81dbd86ceae199a79bc3a148a8a8d45d51af163bff409d36e133b",
     "workers/eda/test_design_tools.py": "f19e5879857c5400c87ca7755c079b9d20717da9115859ce5c2e5f033f989f15"
   },
   "actual_tools": [
@@ -651,5 +658,5 @@
     "Density, antenna, slots, metal-hole, contact enclosure and full-chip checks require separate actual DRC.",
     "A valid preview is not a DRC/LVS/signoff pass. Net properties are explicit annotations, not extraction proof."
   ],
-  "state_root": "/workspace/.runtime/evidence/design-tools-132c5a3887394f20882a0192797b816e/state"
+  "state_root": "/workspace/.runtime/evidence/design-tools-debfbd14db0a428ea24c83f3405746f8/state"
 }

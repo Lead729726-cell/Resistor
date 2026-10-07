@@ -21,7 +21,7 @@ for (const method of ['compat.inspect','compat.export']) readonly.add(method);
 for (const method of ['compat.import','compat.import_results']) mutations.add(method);
 for (const method of ['database.catalog','database.list_sources','database.probe','database.list_cells','database.read','database.read_artifact']) readonly.add(method);
 mutations.add('database.import');
-for(const method of ['pvt.sources','pvt.status','pvt.list','design.catalog','design.routing_rules','design.route_preview','design.connectivity','design.check'])readonly.add(method);
+for(const method of ['pvt.sources','pvt.status','pvt.list','design.catalog','design.routing_rules','design.route_preview','design.route_search','design.connectivity','design.check'])readonly.add(method);
 for(const method of ['pvt.create','pvt.start','pvt.cancel','design.route_apply'])mutations.add(method);
 function scopes(method,params){
   const c=params.command||{};

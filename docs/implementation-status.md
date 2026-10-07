@@ -1,5 +1,14 @@
 # 레지스터 구현 상태
 
+2026-10-07 v0.15: 로컬 Ollama/OpenAI 설계 검토, 실제 근거 ID·revision·해시 검사,
+사용자 승인과 원자적 API 예산 예약, 추가 호출 없는 저장 검토 재열기를 구현했습니다.
+단일 metal1의 실제 정수 기하 우회 후보·명시적 적용, CPU 16–64 cycle 설정,
+reset/PC/ROM wrap/ACC/carry/zero 안정 구간과 실제 VDD 전류·전력·에너지 검사를 추가했습니다.
+[범위·설정·한계](design-assistant.md), [직접 만든 CPU와 실제 결과](../examples/cpu4-assistant/README.md).
+로컬 핵심 150개, 실제 엔진 확장 7개, 배선 회귀 27개, AI/배선 UI 2개를 통과했습니다.
+OpenAI 키·호출 예산·Ollama 모델·사용자 DB는 공개 소스와 설치 패키지에 포함하지 않습니다.
+M1 arm64 ZIP의 구조·서명 해시 검사는 네이티브 macOS 실행 확인과 구분합니다.
+
 2026-10-06: [레이아웃·회로도 직접 그리기](drawing-tools.md), 네이티브 핀 방향 처리,
 반복 소자 배치, DBU 격자·폭 검사와 밝은/어두운 화면 검증을 추가했습니다.
 [실제 엔진 및 화면 검증](evidence/editor-drawing/native.json).

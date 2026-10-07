@@ -7,6 +7,7 @@ const files = [...new Set(execFileSync('git', ['ls-files', '--cached', '--others
 const issues = [];
 let bytes = 0, archives = 0;
 const rules = [
+  ['openai-api-key', /\bsk-(?:proj-|svcacct-)?[A-Za-z0-9_-]{40,}\b/g],
   ['github-token', /\b(?:gh[pousr]_[A-Za-z0-9]{36,}|github_pat_[A-Za-z0-9_]{50,})\b/g],
   ['private-key', /-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----/g],
   ['aws-access-key', /\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/g],

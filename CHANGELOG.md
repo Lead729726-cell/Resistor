@@ -2,7 +2,24 @@
 
 This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
-`docs/evidence/` and the example READMEs. Package version: 0.14.0.
+`docs/evidence/` and the example READMEs. Package version: 0.15.0.
+
+## 0.15.0 — evidence-backed design assistant (2026-10-07)
+
+- Optional local Ollama and OpenAI review with visible evidence preview, one-call
+  approval, server-only credentials, atomic budget reservations, schema/citation
+  checks, saved review history and stale-evidence handling. Shared rooms do not
+  expose local provider credentials or calls. AI advice remains separate from
+  actual engine verification.
+- Bounded native-checked obstacle detours, exact on-grid custom Manhattan paths,
+  reversible apply and the typed `register_route_search` tool (41 MCP tools).
+- CPU execution for 16–64 cycles, ROM wrap/reset/ACC/PC/flag stable-window checks,
+  sampled settling and actual signed VDD current, energy and power measurements.
+- Directly operated custom 32-cycle CPU demonstration and live provider receipts;
+  numerical fixtures, actual native execution and AI advice are labelled separately.
+- Packaged Windows/macOS main-process assistant, with no shipped credentials or
+  spending authorization. Apple hardware, Developer ID and notarization remain
+  separate release gates.
 
 ## Unreleased — drawing workbench (2026-10-06)
 

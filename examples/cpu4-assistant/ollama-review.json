@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "id": "52a33e86-ed80-4b5e-a46c-b1d4ceec0940",
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "project_id": "33afadec975f484e86ec381dd07f107b",
+  "revision": 1,
+  "evidence_hash": "dd62fc53a21d524328edea4e33b921d78e4b23cc5cfd6347effff25dcc1ad976",
+  "freshness": "current",
+  "execution_status": "completed",
+  "advisory_only": true,
+  "review": {
+    "summary": "The design is complete and passes the simulation with 32 out of 32 expected cases. The design is not verified due to incomplete DRC, LVS, and PEX evidence. The design is not manufactured due to incomplete verification.",
+    "findings": [
+      {
+        "severity": "info",
+        "title": "No completed current drc evidence in the latest 12 runs",
+        "explanation": "No completed current DRC evidence in the latest 12 runs.",
+        "evidence_ids": [
+          "design",
+          "connectivity",
+          "device:ROM",
+          "device:ALU_ADD",
+          "device:IR",
+          "device:ALU_AND0",
+          "device:ALU_XOR0",
+          "device:LOW0",
+          "device:HIGH0",
+          "device:RESULT0",
+          "device:RESET_ACC0",
+          "device:ACC_REG0"
+        ],
+        "suggested_check": "drc"
+      },
+      {
+        "severity": "info",
+        "title": "No completed current lvs evidence in the latest 12 runs",
+        "explanation": "No completed current LVS evidence in the latest 12 runs.",
+        "evidence_ids": [
+          "design",
+          "connectivity",
+          "device:ROM",
+          "device:ALU_ADD",
+          "device:IR",
+          "device:ALU_AND0",
+          "device:ALU_XOR0",
+          "device:LOW0",
+          "device:HIGH0",
+          "device:RESULT0",
+          "device:RESET_ACC0",
+          "device:ACC_REG0"
+        ],
+        "suggested_check": "lvs"
+      },
+      {
+        "severity": "info",
+        "title": "No completed current pex evidence in the latest 12 runs",
+        "explanation": "No completed current PEX evidence in the latest 12 runs.",
+        "evidence_ids": [
+          "design",
+          "connectivity",
+          "device:ROM",
+          "device:ALU_ADD",
+          "device:IR",
+          "device:ALU_AND0",
+          "device:ALU_XOR0",
+          "device:LOW0",
+          "device:HIGH0",
+          "device:RESULT0",
+          "device:RESET_ACC0",
+          "device:ACC_REG0"
+        ],
+        "suggested_check": "lvs"
+      }
+    ],
+    "limitations": [
+      "Graph is the selected/root cell, not a flattened electrical graph of all child cells.",
+      "Geometry, PDK files, model/deck text, credentials and raw waveforms are not sent.",
+      "AI suggestions are advisory, never engine PASS or manufacturing signoff."
+    ]
+  },
+  "usage": {
+    "prompt_tokens": 11274,
+    "output_tokens": 555
+  },
+  "budget_reservation": null,
+  "created_at": "2026-10-07T04:29:56.261Z",
+  "note": "Review collected after pre-layout simulation only. Later DRC/LVS/PEX/post-layout evidence changes its fingerprint; this historic advice is stale against the final workspace."
+}

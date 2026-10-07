@@ -20,7 +20,7 @@ import templates as physical_templates
 import digital_mux
 
 S = None
-VERSION = 'register-design-tools-1'
+VERSION = 'register-design-tools-2'
 MAX_SHAPES = 100000
 LIMITS = [
     'Single metal1 (68/20) Manhattan path; no new vias or contacts.',
@@ -98,9 +98,9 @@ def routing_rules(p):
     record={'schema_version':1,'adapter':VERSION,'profile_id':'sky130A','dbu_um':str(dbu),'resources':[{'path':str(path),'sha256':sha} for path,sha in zip(resources,hashes)],'layers':[layer],'supported_scope':'single-layer Manhattan; no via creation','via_resources':[{'path':str(resources[2]),'sha256':hashes[2],'helper':'sky130::via1_draw','execution':'not used by routing'}],'limits':LIMITS}
     record['fingerprint']=digest(record);return record
 
-def _route(p,params):
-    require_keys(params,('project_id','layer_id','start','end','width','net','order','rule_fingerprint'))
-    rules=routing_rules(p);rule=rules['layers'][0]
+def _route(p,params,_context=None):
+    require_keys(params,('project_id','layer_id','start','end','width','net','order','points','rule_fingerprint'))
+    rules=_context['rules'] if _context else routing_rules(p);rule=rules['layers'][0]
     if params.get('rule_fingerprint') is not None and params['rule_fingerprint']!=rules['fingerprint']:raise EDAError('STALE_RULES','PDK rule fingerprint changed; reload rules and preview.')
     if params.get('layer_id')!='68/20':raise EDAError('UNSUPPORTED_LAYER','Only actual SKY130 metal1 68/20 is supported.')
     project_grid=p.get('grid_dbu')
@@ -120,15 +120,27 @@ def _route(p,params):
     if order not in ('x-first','y-first'):raise EDAError('INVALID_GEOMETRY','Route order must be x-first/y-first.')
     corner=[end[0],start[1]] if order=='x-first' else [start[0],end[1]]
     points=[start]+([corner] if corner not in (start,end) else [])+[end]
+    if 'points' in params:
+        raw=params['points']
+        if not isinstance(raw,list) or not 2<=len(raw)<=16 or any(not isinstance(v,list) or len(v)!=2 for v in raw):raise EDAError('INVALID_GEOMETRY','Custom route needs 2..16 canonical on-grid points.')
+        points=[[G.coord(v,grid) for v in xy] for xy in raw]
+        if points[0]!=start or points[-1]!=end:raise EDAError('INVALID_GEOMETRY','Custom path endpoints must match start/end.')
+        segments=list(zip(points,points[1:]))
+        for i,(a,b) in enumerate(segments):
+            if a==b or (a[0]!=b[0] and a[1]!=b[1]):raise EDAError('INVALID_GEOMETRY','Custom path segments must be nonzero Manhattan segments.')
+            for j,(c,d) in enumerate(segments[:i]):
+                intersection=k.Edge(k.Point(*a),k.Point(*b)).intersects(k.Edge(k.Point(*c),k.Point(*d)))
+                if intersection and j!=i-1:raise EDAError('INVALID_GEOMETRY','Custom path cannot cross or revisit itself.')
+                if j==i-1 and a[0]==b[0]==c[0]==d[0] and (b[1]-a[1])*(d[1]-c[1])<0 or j==i-1 and a[1]==b[1]==c[1]==d[1] and (b[0]-a[0])*(d[0]-c[0])<0:raise EDAError('INVALID_GEOMETRY','Custom path cannot reverse over an adjacent segment.')
     path=k.Path([k.Point(*xy) for xy in points],width)
     box=path.bbox()
     spacing=int(rule['conservative_spacing_dbu'])
     for value in (box.left-spacing,box.bottom-spacing,box.right+spacing,box.top+spacing):G.coord(str(value))
     region=k.Region(path.polygon());area=int(region.area())
     if area<int(rule['min_area_dbu2']):raise EDAError('ROUTE_AREA','Actual proposed polygon area is below the PDK metal1 minimum area.')
-    layout=S.load_layout(p);top=layout.cell(p['cell']);collisions=[];checked=0;max_collision=128
+    layout=_context['layout'] if _context else S.load_layout(p);top=layout.cell(p['cell']);collisions=[];checked=0;max_collision=128
     # Whole native hierarchy, independent of any truncated client scene or ROI.
-    for shape,polygon,layer_id,occurrence in G.walk(layout,top):
+    for shape,polygon,layer_id,occurrence in (_context['shapes'] if _context else G.walk(layout,top)):
         checked+=1
         if checked>MAX_SHAPES:raise EDAError('DESIGN_TOO_LARGE','Whole-layout route validation exceeds 100000 shapes; no partial-scene pass is returned.')
         if layer_id not in ('68/20','68/44','67/44'):continue
@@ -141,9 +153,48 @@ def _route(p,params):
             if not (region & obstacle.sized(spacing-1)).is_empty():reason='other/unknown net metal violates conservative spacing'
         elif not (region & obstacle).is_empty():reason='existing contact/via intersection has no verified electrical terminal mapping'
         if reason and len(collisions)<max_collision:collisions.append({'shape_id':f'{occurrence}/{shape.property(1)}','layer_id':layer_id,'reason':reason})
-    payload={'project_id':p['id'],'revision':p['revision'],'rule_fingerprint':rules['fingerprint'],'layer_id':'68/20','points':[[str(x),str(y)] for x,y in points],'width':str(width),'net':net,'order':order,'geometry_hash':G.semantic_hash(layout,top)}
+    payload={'project_id':p['id'],'revision':p['revision'],'rule_fingerprint':rules['fingerprint'],'layer_id':'68/20','points':[[str(x),str(y)] for x,y in points],'width':str(width),'net':net,'order':order,'geometry_hash':_context['geometry_hash'] if _context else G.semantic_hash(layout,top)}
     result={**payload,'preview_hash':digest(payload),'valid':not collisions,'length_dbu':str(sum(abs(a[0]-b[0])+abs(a[1]-b[1]) for a,b in zip(points,points[1:]))),'area_dbu2':str(area),'collisions':collisions,'checked_shape_count':checked,'scope':'whole native hierarchy','collision_list_bounded':len(collisions)>=max_collision,'limits':LIMITS}
     return result
+
+
+def route_search(params):
+    """Finite, deterministic single-layer detours; every candidate uses native checks."""
+    require_keys(params,('project_id','layer_id','start','end','width','net','order','rule_fingerprint'))
+    p=S.get_project(params['project_id']);rules=routing_rules(p);layout=S.load_layout(p);top=layout.cell(p['cell'])
+    shapes=[]
+    for item in G.walk(layout,top):
+        shapes.append(item)
+        if len(shapes)>MAX_SHAPES:raise EDAError('DESIGN_TOO_LARGE','Whole-layout route search limit exceeded; no partial inspection is accepted.')
+    context={'rules':rules,'layout':layout,'shapes':shapes,'geometry_hash':G.semantic_hash(layout,top)}
+    base=_route(p,params,context);rule=rules['layers'][0];grid=math.lcm(int(rule['grid_dbu']),p['grid_dbu']);width=int(base['width']);gap=width//2+int(rule['conservative_spacing_dbu'])+grid
+    start=[int(v) for v in params['start']];end=[int(v) for v in params['end']];tracks=set()
+    for shape,poly,layer,occurrence in shapes:
+        if layer not in ('68/20','68/44','67/44'):continue
+        box=poly.bbox()
+        for axis,lower,upper in ((0,box.left,box.right),(1,box.bottom,box.top)):
+            tracks.add((axis,((lower-gap)//grid)*grid));tracks.add((axis,-(-(upper+gap)//grid)*grid))
+    tracks=sorted(tracks,key=lambda v:(abs(v[1]-start[v[0]])+abs(v[1]-end[v[0]]),v))
+    inputs=[{**params,'order':'x-first'},{**params,'order':'y-first'}]
+    for axis,value in tracks:
+        raw=[start,[value,start[1]],[value,end[1]],end] if axis==0 else [start,[start[0],value],[end[0],value],end]
+        points=[]
+        for xy in raw:
+            if not points or xy!=points[-1]:points.append(xy)
+        # Endpoints on a track may reduce the path to an ordinary L route.
+        inputs.append({**params,'points':[[str(v) for v in xy] for xy in points]})
+    budget=min(32,max(2,1000000//max(1,len(shapes))));candidates=[];seen=set()
+    for candidate in inputs[:budget]:
+        try:preview=_route(p,candidate,context)
+        except EDAError as e:
+            if e.code in ('INVALID_GEOMETRY','ROUTE_AREA','COORDINATE_RANGE'):continue
+            raise
+        if preview['preview_hash'] in seen:continue
+        seen.add(preview['preview_hash']);candidates.append((preview,candidate))
+    candidates.sort(key=lambda item:(not item[0]['valid'],len(item[0]['collisions']),int(item[0]['length_dbu']),item[0]['points']))
+    if not candidates:raise EDAError('NO_ROUTE_CANDIDATE','No valid candidate geometry could be inspected.')
+    preview,selected=candidates[0]
+    return {'schema_version':1,'project_id':p['id'],'revision':p['revision'],'preview':preview,'input':selected,'searched_candidates':len(candidates),'candidate_budget':budget,'search_exhaustive':False,'algorithm':'bounded bbox-track detours, ranked by collision then Manhattan length','scope':'single metal1; at most two bends; no vias/global optimization','status':'candidate-found' if preview['valid'] else 'blocked','limits':LIMITS+['A blocked finite search does not prove that no other route exists.']}
 
 def route_apply(params):
     require_keys(params,('project_id','expected_revision','command_id','preview','preview_hash','rule_fingerprint'))
@@ -398,5 +449,6 @@ def rpc(method,params):
     if method in ('design.connectivity','design.check'):return connectivity(params)
     if method=='design.routing_rules':require_keys(params,('project_id',));return routing_rules(S.get_project(params['project_id']))
     if method=='design.route_preview':return _route(S.get_project(params['project_id']),params)
+    if method=='design.route_search':return route_search(params)
     if method=='design.route_apply':return route_apply(params)
     raise EDAError('UNKNOWN_METHOD','Unknown design-tool method.')

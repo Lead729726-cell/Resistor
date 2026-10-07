@@ -8,7 +8,7 @@ test('real MCP client handshake, native tool boundary, revision and job referenc
   const entryHash=createHash('sha256').update(await fs.readFile(entry)).digest('hex');
   const transport=new StdioClientTransport({command:process.execPath,args:[entry],env:{MOS_WORKSPACE:process.cwd()},stderr:'pipe'});
   const client=new Client({name:'register-verification',version:'1.0.0'});t.after(()=>client.close());await client.connect(transport);
-  const tools=await client.listTools();assert.equal(tools.tools.length,40);assert.equal(tools.tools.some(x=>/shell|exec|password|secret|pdk.modify|backend.register|database.register/.test(x.name)),false);
+  const tools=await client.listTools();assert.equal(tools.tools.length,41);assert.equal(tools.tools.some(x=>/shell|exec|password|secret|pdk.modify|backend.register|database.register/.test(x.name)),false);
   const invoke=async(name,args={})=>{const r=await client.callTool({name,arguments:args});if(r.isError)throw Object.assign(new Error(r.content[0].text),{result:r});return r.structuredContent.result;};
   const doctor=await invoke('register_doctor');assert.equal(doctor.pdk.available,true);assert.equal(doctor.tools.every(t=>t.available),true);
   const p=await invoke('register_create',{name:'MCP actual native transaction',example:'fixture'});const before=await invoke('register_snapshot',{project_id:p.id,max_shapes:10});
@@ -48,6 +48,7 @@ test('real MCP client handshake, native tool boundary, revision and job referenc
   const routing=await invoke('register_route_rules',{project_id:mos.id});assert(routing.resources.length>0);
   const route={layer_id:routing.layers[0].layer_id,start:['50000','50000'],end:['52000','52000'],width:'200',net:'D'};
   const routePreview=await invoke('register_route_preview',{project_id:mos.id,...route});assert.equal(routePreview.valid,true);
+  const search=await invoke('register_route_search',{project_id:mos.id,...route});assert.equal(search.preview.valid,true);assert.equal(search.project_id,mos.id);assert(search.searched_candidates>0);
   const routed=await invoke('register_route_apply',{project_id:mos.id,expected_revision:mos.revision,command_id:randomUUID(),preview:route,preview_hash:routePreview.preview_hash,rule_fingerprint:routing.fingerprint});assert.equal(routed.revision,mos.revision+1);
   assert.equal((await invoke('register_pvt_study',{project_id:mos.id,study_id:studyId})).freshness,'stale');
   const connections=await invoke('register_connectivity',{project_id:mos.id});assert(connections.nets.length>0);

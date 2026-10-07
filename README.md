@@ -16,6 +16,15 @@ integrated schematic, layout, waveform and 3D inspection workspace.
 레이아웃 화면에서 사각형·다각형·배선을 직접 그리고, 회로도에서 소자를
 미리보기·반복 배치·회전·반전할 수 있습니다. [그리기 도구 사용법](docs/drawing-tools.md).
 
+v0.15는 로컬 Ollama / OpenAI 설계 검토, 근거·비용·승인 표시, 저장된 검토 재개방,
+실제 도형에 따른 장애물 우회 후보, 16–64사이클 CPU 검증과 실제 VDD 전류·에너지
+측정을 추가합니다. AI는 검사 제안이며 엔진 검증 결과와 구분합니다.
+[설정과 검증 범위](docs/design-assistant.md) · [직접 만든 CPU 예제](examples/cpu4-assistant/README.md).
+
+[M1용 v0.15 설치 ZIP](https://github.com/Lead729726-cell/Resistor/releases/tag/v0.15.0)은
+arm64 **preview**입니다. 번들 구조·서명 해시는 확인했지만 macOS 직접 실행과
+Developer ID/notarization은 아직 확인하지 않았습니다.
+
 ## 소스에서 시작하기
 
 Node.js 24와 Git이 필요합니다. 계산기 화면은 Docker 없이 실행할 수 있습니다.

@@ -38,6 +38,8 @@ test('integrated PVT and exact route transactions preserve shared project bounda
   const rules=await native('design.routing_rules',{},'viewer');assert.match(rules.fingerprint,/^[a-f0-9]{64}$/);
   const previewInput={layer_id:rules.layers[0].layer_id,start:['50000','50000'],end:['52000','52000'],width:'200',net:'D',order:'x-first'};
   const preview=await native('design.route_preview',previewInput,'viewer');assert.equal(preview.valid,true,JSON.stringify(preview));
+  const search=await native('design.route_search',previewInput,'viewer');assert.equal(search.preview.valid,true);assert.equal(search.project_id,shared.project.id);
+  await assert.rejects(native('assistant.status',{},'viewer'),{code:'UNSUPPORTED_METHOD'});
   const base=shared.project.revision,routeCid=crypto.randomUUID(),apply={expected_revision:base,preview:previewInput,preview_hash:preview.preview_hash,rule_fingerprint:rules.fingerprint};
   await assert.rejects(native('design.route_apply',apply,'viewer',base),{code:'READ_ONLY'});
   const changed=await native('design.route_apply',apply,'editor',base,routeCid);assert.equal(changed.revision,base+1);

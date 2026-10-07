@@ -6,7 +6,7 @@ for (const method of ['pdk.list_profiles', 'analysis.inspect', 'analysis.configu
 for (const method of ['backend.catalog', 'backend.list_profiles', 'backend.register', 'backend.validate', 'backend.configure', 'backend.run', 'backend.read_artifact', 'backend.import_layout']) METHODS.add(method);
 for (const method of ['compat.inspect','compat.import','compat.export','compat.import_results']) METHODS.add(method);
 for (const method of ['database.catalog','database.list_sources','database.register','database.probe','database.list_cells','database.read','database.read_artifact','database.import']) METHODS.add(method);
-for (const method of ['starter.catalog','starter.create','pvt.create','pvt.start','pvt.sources','pvt.status','pvt.list','pvt.cancel','design.catalog','design.create_template','design.routing_rules','design.route_preview','design.route_apply','design.connectivity','design.check']) METHODS.add(method);
+for (const method of ['starter.catalog','starter.create','pvt.create','pvt.start','pvt.sources','pvt.status','pvt.list','pvt.cancel','design.catalog','design.create_template','design.routing_rules','design.route_preview','design.route_search','design.route_apply','design.connectivity','design.check']) METHODS.add(method);
 export const IMAGE = 'hpretl/iic-osic-tools@sha256:92961478ad3c4f508efb42d9ccdba12ab262eb42a14926d2bd49862230ba8521';
 for (const method of ['digital.catalog','digital.create','hierarchy.sources','hierarchy.preview','hierarchy.apply']) METHODS.add(method);
 export async function runtimeConfig(workspace=process.env.MOS_WORKSPACE??process.cwd()){
