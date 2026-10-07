@@ -31,10 +31,11 @@ sensitive data.
 ## Development history
 
 The public repository [Lead729726-cell/Resistor](https://github.com/Lead729726-cell/Resistor)
-was created on 2026-10-05. It is currently empty: local source commits have not
-been pushed because GitHub CLI authentication still requires the account owner's
-identity verification. Repository creation, source publication and macOS CI
-execution are separate states. The configured origin matches this repository.
+was created on 2026-10-05 and is the configured origin. Source publication is
+verified by comparing the remote `main` commit with the local commit after a
+successful push. Repository creation, source publication and macOS CI execution
+are separate states. Codex-local checkpoint refs, raw traces and machine-local
+working files are not sent by the explicit `main` push.
 
 There were no existing Git commits or remote at publication preparation time.
 The initial commit is a snapshot of the current implementation. `CHANGELOG.md`
