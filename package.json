@@ -1,6 +1,6 @@
 {
   "name": "register-eda",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "private": true,
   "type": "module",
   "description": "Resistor: deterministic electronics calculators and integrated Register EDA workspace",
@@ -78,7 +78,11 @@
     "test:editor-drawing": "node tests/integration/editor-drawing.mjs",
     "test:assistant": "node --test --test-isolation=none tests/design-assistant.test.mjs",
     "test:assistant-native": "node tests/integration/assistant-extensions.mjs",
-    "assistant:settings": "node scripts/assistant-settings.mjs"
+    "assistant:settings": "node scripts/assistant-settings.mjs",
+    "test:cpu16": "node tests/integration/cpu16.mjs",
+    "package:linux": "npm run build && node scripts/linux-zip-preview.mjs",
+    "download:site": "node scripts/download-site.mjs",
+    "test:download-site": "node tests/integration/download-site.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.31.0",

@@ -1,11 +1,15 @@
-# 레지스터 0.14 설치와 Mac 실행
+# 레지스터 0.16 설치와 실행
+
+[운영체제별 다운로드](https://resistor-downloads.vercel.app)에서 현재 GitHub 릴리스의
+설치 파일·크기·SHA-256을 확인할 수 있습니다. 웹 페이지에는 엔진이나 사용자
+설계를 올리지 않습니다. 아래 경로는 소스에서 만든 로컬 패키지의 위치입니다.
 
 ## Mac 설치
 
-- Apple Silicon(M1 이후) 최신 작업대: `release/installers/Register-0.14.0-mac-arm64-r5.zip`
-- Intel 최신 작업대: `release/installers/Register-0.14.0-mac-x64-r5.zip`
+- Apple Silicon(M1 이후): `release/installers/Register-0.16.0-mac-arm64-r5.zip`
+- Intel: 기존 0.14 x64 preview는 보존합니다. 이번 공개 다운로드에는 포함하지 않습니다.
 
-두 CPU 모두 **r5 ZIP 전체를 Mac에서 압축 해제**한 뒤 `Install Register.command`를 실행합니다. 도우미가 SHA-256, 앱 식별자, 하위 구성요소와 앱 리소스 서명을 확인하고 설치 내용을 보여줍니다. **설치**를 선택하면 `~/Applications/Register.app`에 복사하고 이 앱의 다운로드 차단 표시만 처리한 뒤 실행합니다. **뷰어로 설치**는 Docker 없이 GDS/OASIS 뷰어부터 엽니다. 관리자 암호는 필요하지 않습니다. 기존 레지스터를 먼저 종료하세요. 기존 사용자 설치 앱은 같은 폴더에 백업하고 설계 데이터는 보존합니다. 복사·복사본 서명 검사·실행 요청이 실패하면 기존 앱을 유지하거나 복원하고 실패한 새 앱도 진단용으로 보관합니다. 실행 요청 성공은 앱 내부 실행 완료를 보장하지 않습니다. 기존 `/Applications/Register.app` 대신 도우미가 설치한 사용자 앱을 사용하세요.
+두 CPU 모두 **r5 ZIP 전체를 Mac에서 압축 해제**한 뒤 `Install Register.command`를 실행합니다. 도우미가 SHA-256, 앱 식별자, 하위 구성요소와 앱 리소스 서명을 확인하고 설치 내용을 보여줍니다. **설치**를 선택하면 `~/Applications/Register.app`에 복사하고 이 앱의 다운로드 차단 표시만 처리한 뒤 실행합니다. **뷰어로 설치**는 Docker 없이 GDS 로컬 뷰어부터 엽니다. 관리자 암호는 필요하지 않습니다. 기존 레지스터를 먼저 종료하세요. 기존 사용자 설치 앱은 같은 폴더에 백업하고 설계 데이터는 보존합니다. 복사·복사본 서명 검사·실행 요청이 실패하면 기존 앱을 유지하거나 복원하고 실패한 새 앱도 진단용으로 보관합니다. 실행 요청 성공은 앱 내부 실행 완료를 보장하지 않습니다. 기존 `/Applications/Register.app` 대신 도우미가 설치한 사용자 앱을 사용하세요.
 
 r5에는 Docker 이미지 내부 엔진 실행 파일, 실제 설계 폴더 연결 검사, 누락된 backend 모듈 보완과 Precision Workbench의 최신 디자인·상태 표시·프로젝트 목록 개선이 들어 있습니다. `Diagnose Register.command`는 macOS 버전, CPU, 실제 앱 버전·최소 OS, 자체 서명, 다운로드 차단 표시와 Docker 설치 여부를 확인하고 `~/Library/Logs/Register`에 기록합니다. 앱이나 보안 설정을 변경하거나 로그를 외부로 보내지 않습니다. 지원 요청에는 필요한 오류 부분만 보내세요.
 
@@ -31,7 +35,7 @@ Mac 설치본의 설계 폴더는 `~/Library/Application Support/레지스터/wo
 
 Mac 소스 체크아웃에서 `npm ci` 후 `npm run package:mac:preview`를 실행하면 현재 Mac CPU용 자체 서명 `.app`를 만들고 실제 Electron으로 Docker 없는 GDS 52개 shape, 연결 진단/재시도, Mac 메뉴·Dock 재열기, 공백이 있는 설치 위치에서의 첫 실행·앱 교체·설계 보존을 검사한 뒤 DMG와 설치 도우미를 포함한 r5 ZIP을 만듭니다. 네 테스트가 모두 성공해야 결과 패키지 검증 기록을 생성합니다. Developer ID/공증은 별도이며 자동 업로드하지 않습니다.
 
-다른 CPU의 앱만 만들려면 `npm run package:mac:arm64` 또는 `npm run package:mac:x64`를 사용합니다. CPU가 다른 바이너리는 해당 CPU의 Mac에서 따로 검사해야 합니다. `.github/workflows/macos-preview.yml`은 관련 소스의 main push 또는 수동 실행 시 Apple Silicon `macos-15`와 Intel `macos-15-intel`에서 각각 네이티브 검사와 최종 ZIP 검증을 수행합니다. 실제 CPU를 먼저 확인하고 실패·스킵은 성공으로 기록하지 않습니다. GitHub 인증·푸시가 완료되지 않아 이 변경의 workflow는 아직 실행되지 않았습니다.
+다른 CPU의 앱만 만들려면 `npm run package:mac:arm64` 또는 `npm run package:mac:x64`를 사용합니다. CPU가 다른 바이너리는 해당 CPU의 Mac에서 따로 검사해야 합니다. `.github/workflows/macos-preview.yml`은 관련 소스의 main push 또는 수동 실행 시 Apple Silicon `macos-15`와 Intel `macos-15-intel`에서 각각 네이티브 검사와 최종 ZIP 검증을 수행합니다. 실제 CPU를 먼저 확인하고 실패·스킵은 성공으로 기록하지 않습니다. GitHub의 v0.15 native preview 검사에서는 일부 뷰어 UI 검사가 실패했습니다. 실행한 CI와 완료된 검사 범위를 구분하며, 현재 공개 Mac ZIP은 교차 빌드 preview입니다.
 
 Docker가 준비된 실제 Mac에서는 `REGISTER_NATIVE_QA=1 npm run package:mac:preview`로 실제 패키지의 엔진 연결과 full adder의 pre → DRC → LVS → PEX → 실제 RC post, 각 8개 입력 조합을 추가 검사합니다. 별도로 `npm run test:mac:native`도 가능합니다. 실패한 단계/실제 run ID를 `docs/evidence/macos-native-<arch>.json`에 저장하고 합성 PASS로 대체하지 않습니다. 새 검증 프로젝트는 기존 프로젝트와 별도로 생성합니다.
 
@@ -51,7 +55,15 @@ Docker가 준비된 실제 Mac에서는 `REGISTER_NATIVE_QA=1 npm run package:ma
 
 ## Windows
 
-새 설치 파일은 `release/installers/Register-0.14.0-win-x64.exe`이며 기존 확인된 0.13 설치본도 보존합니다. `npm run package:installer`로 현재 0.14 소스의 Windows 앱과 NSIS 설치 파일도 만듭니다. 현재 사용자 계정에 설치하며 설치 위치를 선택하고 삭제 시 앱 데이터를 자동 삭제하지 않습니다. 플랫폼별 설치/실행 증거는 `docs/evidence/`에서 확인합니다.
+설치 파일은 `Register-0.16.0-win-x64.exe`입니다. 현재 사용자 계정에 설치하며 위치를 선택할 수 있습니다. 삭제 시 설계 데이터를 자동 삭제하지 않습니다. `npm run package:installer`로 빌드합니다. 실제 Windows에서 패키지의 GDS 뷰어를 실행하고 파일을 열었습니다. 이번 설치 EXE의 설치/삭제 UI는 별도 검사이며, Authenticode 서명은 없습니다.
+
+## Linux x64
+
+`Register-0.16.0-linux-x64.tar.gz` 전체를 압축 해제하고 폴더 안에서 `./install.sh`를 실행합니다. 별도 Node.js나 관리자 권한 없이 `~/.local/opt/register/0.16.0`에 설치하고 응용 프로그램 메뉴에 Resistor를 등록합니다. 같은 버전이 있으면 덮어쓰지 않고 종료합니다. 새 버전 설치는 사용자 설계 폴더를 삭제하지 않습니다. 설치하지 않고 `./Register/Register`로 실행하거나 `./Register/Register --viewer`로 GDS 로컬 뷰어만 열 수 있습니다.
+
+x86-64 Linux의 그래픽 세션, glibc, GTK 3, NSS와 활성화된 Chromium sandbox가 필요합니다. 루트 계정으로 앱을 실행하거나 시스템 sandbox를 해제하지 마세요. 실제 해석에는 Docker Linux 엔진과 해당 사용자 계정의 접근 권한이 필요합니다. OASIS 교환은 연결된 EDA 엔진을 사용합니다.
+
+Linux 컨테이너에서 ELF CPU·실행 권한·Electron Node 모드·사용자 설치·재설치 보존을 확인했습니다. 일반 Linux 데스크톱 GUI 실행은 아직 확인하지 않았습니다. `npm run package:linux`는 Windows/macOS에서 별도의 Linux 빌드 컨테이너를 사용하며, 기존 EDA 컨테이너를 변경하지 않습니다.
 
 ## Docker에서 server.py를 찾지 못할 때
 

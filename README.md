@@ -21,9 +21,15 @@ v0.15는 로컬 Ollama / OpenAI 설계 검토, 근거·비용·승인 표시, �
 측정을 추가합니다. AI는 검사 제안이며 엔진 검증 결과와 구분합니다.
 [설정과 검증 범위](docs/design-assistant.md) · [직접 만든 CPU 예제](examples/cpu4-assistant/README.md).
 
-[M1용 v0.15 설치 ZIP](https://github.com/Lead729726-cell/Resistor/releases/tag/v0.15.0)은
-arm64 **preview**입니다. 번들 구조·서명 해시는 확인했지만 macOS 직접 실행과
-Developer ID/notarization은 아직 확인하지 않았습니다.
+[운영체제별 다운로드](https://resistor-downloads.vercel.app)에서 Windows x64 EXE,
+Mac Apple Silicon ZIP, Linux x64 tar.gz를 받을 수 있습니다. 설치 파일은 GitHub
+Releases가 전달하며 SHA-256과 검증 범위를 표시합니다. Mac과 Linux는 **preview**이며
+일반 데스크톱 실기기 실행은 미확인입니다. Apple Developer ID/notarization도 미완료입니다.
+
+v0.16은 16비트 ACC/ALU, 4비트 PC, 16×18비트 ROM을 갖는 CPU와 16비트 가산기를
+추가합니다. LOAD/ADD/AND/XOR, 상위 비트, 오버플로, Carry/Zero와 리셋을 실제
+ngspice로 검사합니다. [직접 만든 CPU16과 검증 기록](examples/cpu16/README.md).
+16비트 가산기는 70개 지정 입력을 검사하며 2³³ 조합의 전수 검사는 아닙니다.
 
 ## 소스에서 시작하기
 
@@ -42,7 +48,8 @@ npm run dev:calculators
 첫 엔진 이미지 다운로드에는 시간과 저장 공간이 필요합니다.
 [설치 안내와 Mac 검증 범위](docs/desktop-installation.md)를 확인하세요.
 
-고정된 공개 데모 주소는 아직 없습니다. 임시 다운로드 주소는 영구 링크로 사용하지 않습니다.
+다운로드 사이트는 [Vercel 고정 주소](https://resistor-downloads.vercel.app)입니다.
+EDA 엔진과 사용자 설계 서버는 로컬에서 실행합니다.
 
 ![Precision Workbench · EDA](docs/evidence/precision-workbench/eda-dark.png)
 ![전압 분배 계산기](docs/evidence/precision-workbench/calculator-dark.png)

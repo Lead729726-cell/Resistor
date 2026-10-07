@@ -2,7 +2,23 @@
 
 This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
-`docs/evidence/` and the example READMEs. Package version: 0.15.0.
+`docs/evidence/` and the example READMEs. Package version: 0.16.0.
+
+## 0.16.0 — 16-bit datapath and cross-platform downloads (2026-10-07)
+
+- Native hierarchical 16-bit adder and CPU, unsigned 16-bit ROM immediates,
+  decimal/hex trace display, balanced Zero reduction and accurate wide-symbol spacing.
+  CPU16 retains a 4-bit PC and 16-word ROM; it has no RAM, branch or interrupt ISA.
+- Directed 70-vector adder tests, actual wrapped CPU transistor runs, legacy CPU4
+  regression and rejection of corrupt/missing high-bit traces. Reference layout
+  loads the entire 201,207-shape CPU16 scene within a bounded 300,000-shape request.
+- CPU16 Magic/Netgen stages allow 600 seconds per command; cancellation and failed
+  engine results remain visible. Original 120-second failures are retained.
+- Vercel download portal with published GitHub assets, byte size, SHA-256,
+  dark/light themes and the existing PDK catalog. Static deploy excludes runtime data.
+- Windows x64 NSIS, Mac arm64 r5 preview and Linux x64 tar.gz/user install helper.
+  Linux ELF/permissions and isolated installer are checked; native Linux desktop,
+  Apple native launch, Developer ID/notarization and Windows Authenticode are separate.
 
 ## 0.15.0 — evidence-backed design assistant (2026-10-07)
 

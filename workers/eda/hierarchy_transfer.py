@@ -145,7 +145,7 @@ def plan(params):
                         if s.property(prop) is not None:new.set_property(prop,s.property(prop))
                     new.set_property(1,uuid.uuid5(uuid.NAMESPACE_URL,p['id']+parent+str(s.property(1))).hex)
         p['cell']=parent;pin_map=pins;imported={old:old}
-        if p.get('digital_unit',{}).get('kind')=='cpu4':p['digital_unit']['internal_probe_prefix']='xu.xMAIN.'+p['digital_unit'].get('internal_probe_prefix','xu.')[3:]
+        if p.get('digital_unit',{}).get('kind') in ('cpu4','cpu16'):p['digital_unit']['internal_probe_prefix']='xu.xMAIN.'+p['digital_unit'].get('internal_probe_prefix','xu.')[3:]
         warnings[0]='Current root becomes the MAIN child at the same position. Mask geometry is retained; parent port declarations are added.'
     else:
         src=S.get_project(params['source_project_id']);src_layout=S.load_layout(src);source_hash=fingerprint(src,src_layout);source_revision=src['revision']

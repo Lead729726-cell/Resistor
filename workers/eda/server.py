@@ -552,7 +552,7 @@ puts $f "{\\\"marker_count\\\":$count}"
 close $f
 quit -noprompt
 ''')
-    process(run,folder,magic_args(folder,script,resources),'magic-drc',manifest)
+    process(run,folder,magic_args(folder,script,resources),'magic-drc',manifest,timeout=600 if p.get('digital_unit',{}).get('kind')=='cpu16' else 120)
     status=json.loads((folder/'drc-status.json').read_text()); markers=[]
     for i,line in enumerate((folder/'markers.tsv').read_text().splitlines()):
         parts=line.split('\t'); parts=[parts[0]]+parts[1].split() if len(parts)==2 else parts
@@ -590,7 +590,7 @@ ext2spice merge none
     else: text+='ext2spice lvs\n'
     dest=folder/('pex.spice' if pex else 'layout.spice')
     text+=f'ext2spice -o {{{dest}}}\nquit -noprompt\n'; script.write_text(text)
-    process(run,folder,magic_args(folder,script,resources),'magic-pex' if pex else 'magic-extract',manifest)
+    process(run,folder,magic_args(folder,script,resources),'magic-pex' if pex else 'magic-extract',manifest,timeout=600 if p.get('digital_unit',{}).get('kind')=='cpu16' else 120)
     if not dest.is_file(): raise EDAError('PARSER_FAILED','Magic exited without an extracted SPICE netlist.')
     content=dest.read_text(); mos=len(re.findall(r'^X\S+',content,re.M)); caps=len(re.findall(r'^C\S+',content,re.M)); resistors=len(re.findall(r'^R\S+',content,re.M))
     if not re.search(r'^\.subckt\s',content,re.M|re.I): raise EDAError('PARSER_FAILED','Extracted netlist has no top subcircuit.')
@@ -618,7 +618,7 @@ ext2spice merge none
 def lvs(run,p,folder,manifest):
     layout=extract(run,p,folder,manifest); reference=folder/'reference.spice'; reference.write_text(native.emit(p['schematic'],p['cell'],p['ports']))
     report=folder/'lvs.log'; cmd=['netgen','-batch','lvs',f'{layout} {p["cell"]}',f'{reference} {p["cell"]}',str(profile.SETUP),str(report),'-json']
-    process(run,folder,cmd,'netgen-lvs',manifest)
+    process(run,folder,cmd,'netgen-lvs',manifest,timeout=600 if p.get('digital_unit',{}).get('kind')=='cpu16' else 120)
     if not report.is_file(): raise EDAError('PARSER_FAILED','Netgen did not produce comparison report.')
     content=report.read_text(errors='replace')
     if 'Circuits match uniquely.' in content and 'Property errors were found.' not in content: result='pass'
@@ -716,7 +716,7 @@ def simulation(run,p,folder,manifest,params):
         tb=current_flow.instrument_control(tb,branches,selected_vectors,voltage_probes)
         if selected_vectors is not None:manifest['settings']['trace_scope']={'waveforms':selected_vectors,'signed_current_branches':len(branches),'all_extracted_RC_elements_retained':True}
     deck=folder/'testbench.spice'; deck.write_text(tb); run['artifacts']['testbench']=str(deck)
-    log=process(run,folder,['ngspice','-b',str(deck)],'ngspice',manifest,timeout=600 if p.get('digital_unit',{}).get('kind')=='cpu4' else 120)
+    log=process(run,folder,['ngspice','-b',str(deck)],'ngspice',manifest,timeout=600 if p.get('digital_unit',{}).get('kind') in ('cpu4','cpu16') else 120)
     path=folder/'waveform.dat'
     if not path.is_file() or any(t in log.lower() for t in ('fatal error','timestep too small','unknown subckt','singular matrix','error on line','simulation interrupted')):
         raise EDAError('SIMULATION_FAILED','ngspice failed/convergence or no waveform output. Raw log retained.')

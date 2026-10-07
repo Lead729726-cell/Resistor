@@ -148,7 +148,7 @@ function DesignWorkspace({onViewer}:{onViewer:()=>void}) {
     finally { if (mounted.current) setBusy(current => current.filter(item => item !== key)); }
   }, []);
   const load = useCallback(async (next: Project) => {
-    const nextScene = await rpc<Scene>('view.get_scene', { project_id: next.id, max_shapes: next.digital_unit ? 100000 : 2000 });
+    const nextScene = await rpc<Scene>('view.get_scene', { project_id: next.id, max_shapes: next.digital_unit?.datapath_bits === 16 ? 300000 : next.digital_unit ? 100000 : 2000 });
     if (!mounted.current) return;
     setProject(next); setScene(nextScene); setRuns(next.runs || []); setSelectedShape(null); setViewerFocus(undefined); setSelectedDevice(null); setSchematicCell(null); setAnalysis(next.analysis_setup?.analysis || next.testbench?.analysis || 'tran'); setNetlister('native');
     if(next.digital_unit)setDisplay(current=>({...current,renderLimit:1000000,scopeCentre:undefined,highlightNet:undefined}));
@@ -158,7 +158,7 @@ function DesignWorkspace({onViewer}:{onViewer:()=>void}) {
   }, []);
   const refresh = useCallback(async () => {
     const current = projectRef.current; if (!current) return;
-    const [next, nextScene] = await Promise.all([rpc<Project>('project.snapshot', { project_id: current.id }), rpc<Scene>('view.get_scene', { project_id: current.id, max_shapes: current.digital_unit ? 100000 : 2000 })]);
+    const [next, nextScene] = await Promise.all([rpc<Project>('project.snapshot', { project_id: current.id }), rpc<Scene>('view.get_scene', { project_id: current.id, max_shapes: current.digital_unit?.datapath_bits === 16 ? 300000 : current.digital_unit ? 100000 : 2000 })]);
     if (mounted.current && projectRef.current?.id === current.id) { setProject(next); setScene(nextScene); setRuns(next.runs || []); }
   }, []);
   useEffect(() => {
