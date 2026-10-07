@@ -1,0 +1,45 @@
+{
+  "framework": null,
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "redirects": [
+    {
+      "source": "/download/windows",
+      "destination": "https://github.com/Lead729726-cell/Resistor/releases/download/v0.16.0/Register-0.16.0-win-x64.exe",
+      "permanent": false
+    },
+    {
+      "source": "/download/macos",
+      "destination": "https://github.com/Lead729726-cell/Resistor/releases/download/v0.16.0/Register-0.16.0-mac-arm64-r5.zip",
+      "permanent": false
+    },
+    {
+      "source": "/download/linux",
+      "destination": "https://github.com/Lead729726-cell/Resistor/releases/download/v0.16.0/Register-0.16.0-linux-x64.tar.gz",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; script-src 'self'; frame-ancestors 'none'; base-uri 'self'"
+        }
+      ]
+    }
+  ]
+}

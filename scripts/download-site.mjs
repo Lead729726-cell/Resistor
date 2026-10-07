@@ -13,7 +13,7 @@ if(!files.length||files.some(a=>!a.size||!/^sha256:[a-f0-9]{64}$/.test(a.digest)
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const platforms={
   windows:{label:'Windows · x64',title:'Windows 설치 프로그램',format:'64비트 Windows · EXE installer',button:'Windows EXE',scope:'실제 Windows에서 패키지 뷰어와 GDS 열기를 확인했습니다. 설치·삭제 UI는 미확인이며 Authenticode 서명은 없습니다.'},
-  macos:{label:'macOS · Apple Silicon',title:'M1 이후 Mac',format:'macOS 13 이상 · arm64 ZIP · preview',button:'Mac ZIP',scope:'번들 구조·자체 서명 해시 검사 완료. Mac 직접 실행·Developer ID·Apple 공증은 미확인입니다.'},
+  macos:{label:'macOS · Apple Silicon',title:'M1 이후 Mac',format:'macOS 13 이상 · arm64 ZIP · preview',button:'Mac ZIP',scope:'번들 구조·자체 서명 해시 검사 완료. Mac 실행 CI의 일부 검사가 실패했습니다. 현재 ZIP의 Mac 직접 실행·Developer ID·Apple 공증은 미확인입니다.'},
   linux:{label:'Linux · x64',title:'Linux 데스크톱',format:'x86-64 · tar.gz · 설치 도우미 포함',button:'Linux tar.gz',scope:'Linux에서 빌드한 실행 패키지. GTK 3·NSS와 Chromium sandbox가 필요합니다. 일반 Linux 데스크톱 실기기 실행은 미확인입니다.'}
 };
 const downloads=files.map(a=>({name:a.name,platform:a.name.includes('-mac-')?'macos':a.name.includes('-linux-')?'linux':'windows',bytes:a.size,sha256:a.digest.slice(7),url:a.browser_download_url})).sort((a,b)=>Object.keys(platforms).indexOf(a.platform)-Object.keys(platforms).indexOf(b.platform));
