@@ -178,7 +178,7 @@ function DesignWorkspace({onViewer}:{onViewer:()=>void}) {
     });
     return () => { canceled = true; mounted.current = false; };
   }, [action, load, remoteClient,bootAttempt]);
-  useEffect(() => { document.title = '레지스터 · Register'; }, []);
+  useEffect(() => { document.title = 'Resistor'; }, []);
   useEffect(() => { if (display) localStorage.setItem('mos.display', JSON.stringify(display)); }, [display]);
   useEffect(() => { if (!notice) return; const timer = window.setTimeout(() => setNotice(null), 4500); return () => clearTimeout(timer); }, [notice]);
   const runningIds = runs.filter(activeRun).map(run => run.id).join('|');

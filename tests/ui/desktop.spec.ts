@@ -5,7 +5,7 @@ import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import os from 'node:os';
 const version=JSON.parse(await (await import('node:fs/promises')).readFile('package.json','utf8')).version;
-const release=path.resolve(process.platform==='darwin'?`release/${version}/Register-darwin-${process.arch}/Register.app/Contents/MacOS/Register`:`release/${version}/Register-win32-x64/Register.exe`);
+const release=path.resolve(process.platform==='darwin'?`release/${version}/Resistor-darwin-${process.arch}/Resistor.app/Contents/MacOS/Resistor`:`release/${version}/Resistor-win32-x64/Resistor.exe`);
 const evidenceOS=process.platform==='darwin'?'macos':'windows';
 test('Packaged desktop loads real worker through sandbox IPC',async()=>{
   const app=await electron.launch({executablePath:release,env:{...process.env,MOS_WORKSPACE:process.cwd(),REGISTER_USER_DATA:path.resolve('.runtime/desktop-qa')},timeout:60000});
@@ -63,15 +63,15 @@ test('Mac native menu delivers sandbox commands and Dock activation reopens the 
 
 test('Mac installed application outside the checkout seeds writable data and preserves it across replacement',async()=>{
   test.skip(process.platform!=='darwin','Requires actual macOS and its ditto/codesign utilities.');
-  const execute=promisify(execFile),temporary=await mkdtemp(path.join(os.tmpdir(),'Register installed QA '));
-  const installed=path.join(temporary,'Applications with spaces/Register.app'),userData=path.join(temporary,'User data with spaces');
+  const execute=promisify(execFile),temporary=await mkdtemp(path.join(os.tmpdir(),'Resistor installed QA '));
+  const installed=path.join(temporary,'Applications with spaces/Resistor.app'),userData=path.join(temporary,'User data with spaces');
   const source=path.resolve(release,'../../..'),workspace=path.join(userData,'workspace');
   const marker=path.join(workspace,'.runtime/eda/preserved-design.json');
   const env={...process.env,REGISTER_USER_DATA:userData};delete env.MOS_WORKSPACE;delete env.MOS_DEV_URL;
   for(const replacement of [false,true]){
     await execute('/usr/bin/ditto',['--noqtn',source,installed]);
     await execute('/usr/bin/codesign',['--verify','--deep','--strict',installed]);
-    const app=await electron.launch({executablePath:path.join(installed,'Contents/MacOS/Register'),args:['--viewer'],env,timeout:60000});
+    const app=await electron.launch({executablePath:path.join(installed,'Contents/MacOS/Resistor'),args:['--viewer'],env,timeout:60000});
     try{
       const window=await app.firstWindow();await expect(window.getByTestId('viewer-empty-gds-input')).toBeAttached();
       expect(await app.evaluate(({app})=>app.getPath('userData'))).toBe(userData);

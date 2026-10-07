@@ -24,11 +24,11 @@ export async function desktopDiagnostics({workspace,resourcesRoot=workspace,plat
   try{await check(workspace,constants.W_OK);add('workspace','pass','설계 저장 폴더에 접근할 수 있습니다.');}catch{add('workspace','blocked','설계 저장 폴더에 접근할 수 없습니다.','폴더 권한과 연결된 드라이브를 확인하세요.');}
   let resourcesReady=true;
   for(const file of ['workers/eda/Dockerfile','workers/eda/bootstrap.py','workers/eda/server.py','platform/commercial/runner.py','platform/commercial/agent.py','adapters/commercial/catalog.json']){
-    try{await check(path.join(resourcesRoot,file));}catch{resourcesReady=false;add('resources','blocked',`엔진 실행 파일이 없습니다: ${file}`,'ZIP 전체를 풀고 새 Register.app을 설치하세요. 설계 저장 폴더는 삭제하지 마세요.');break;}
+    try{await check(path.join(resourcesRoot,file));}catch{resourcesReady=false;add('resources','blocked',`엔진 실행 파일이 없습니다: ${file}`,'ZIP 전체를 풀고 새 Resistor.app을 설치하세요. 설계 저장 폴더는 삭제하지 마세요.');break;}
   }
   if(resourcesReady)add('resources','pass','앱의 엔진 실행 파일과 backend 모듈이 있습니다.');
   const cli=await run(['--version']);let linux=false,mountMatched=true;
-  if(!cli.ok)add('docker','missing','Docker 명령을 실행할 수 없습니다.','Docker Desktop을 설치한 뒤 레지스터를 다시 실행하세요.');
+  if(!cli.ok)add('docker','missing','Docker 명령을 실행할 수 없습니다.','Docker Desktop을 설치한 뒤 Resistor를 다시 실행하세요.');
   else{
     add('docker','pass',cli.stdout.trim());const info=await run(['info','--format','{{.OSType}}']);linux=info.ok&&info.stdout.trim()==='linux';
     add('docker-engine',linux?'pass':'blocked',linux?'Docker Linux 엔진이 실행 중입니다.':'Docker Linux 엔진에 연결할 수 없습니다.','Docker Desktop을 실행하고 Linux containers 모드를 선택하세요.');

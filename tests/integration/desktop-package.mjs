@@ -6,7 +6,7 @@ const {version}=JSON.parse(await readFile('package.json','utf8'));
 if(process.platform!=='win32')throw Error('This check runs the packaged Windows application.');
 await mkdir('.runtime/desktop-package-qa',{recursive:true});
 const isolated=await mkdtemp(path.resolve('.runtime/desktop-package-qa/windows-'));
-const app=await electron.launch({executablePath:path.resolve(`release/${version}/Register-win32-x64/Register.exe`),args:['--viewer'],env:{...process.env,REGISTER_USER_DATA:path.join(isolated,'user-data'),MOS_WORKSPACE:path.join(isolated,'workspace')},timeout:45000});
+const app=await electron.launch({executablePath:path.resolve(`release/${version}/Resistor-win32-x64/Resistor.exe`),args:['--viewer'],env:{...process.env,REGISTER_USER_DATA:path.join(isolated,'user-data'),MOS_WORKSPACE:path.join(isolated,'workspace')},timeout:45000});
 try{
   const window=await app.firstWindow();
   await window.getByRole('heading',{name:/GDS|뷰어|Viewer/}).first().waitFor({state:'visible',timeout:45000});

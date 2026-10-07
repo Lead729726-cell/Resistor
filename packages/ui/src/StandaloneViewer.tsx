@@ -54,7 +54,7 @@ function validateLayer(value: unknown): value is Layer {
 function validateScene(value: unknown): asserts value is ImportedScene {
   if (!object(value) || typeof value.project_id !== 'string' || !Number.isSafeInteger(value.revision) || typeof value.dbu_um !== 'number' || !Number.isFinite(value.dbu_um) || value.dbu_um <= 0
     || !['pdk', 'fixture', 'imported'].includes(String(value.source)) || !Array.isArray(value.layers) || value.layers.length > 4096 || !value.layers.every(validateLayer)
-    || !Array.isArray(value.shapes) || value.shapes.length > 200000) throw new Error('유효한 Register scene이 아닙니다. 단위, layer, 좌표 형식을 확인하세요.');
+    || !Array.isArray(value.shapes) || value.shapes.length > 200000) throw new Error('유효한 Resistor scene이 아닙니다. 단위, layer, 좌표 형식을 확인하세요.');
   const layers = new Set(value.layers.map(layer => layer.id));
   if (layers.size !== value.layers.length) throw new Error('중복 layer ID가 있습니다.');
   for (const key of ['top_cell', 'gds_fingerprint'] as const) if (value[key] !== undefined && typeof value[key] !== 'string') throw new Error('GDS source metadata가 올바르지 않습니다.');
@@ -156,7 +156,7 @@ export default function StandaloneViewer({ onExit }: { onExit: () => void }) {
   const [portableBackend, setPortableBackend] = useState<BackendSetup | undefined>();
   const originalInput = useRef<{ buffer: ArrayBuffer; name: string } | null>(null);
   const remoteOnly = !window.mos && !isLocalWorkbench();
-  useEffect(() => { document.title = '레지스터 · Local GDS Viewer'; }, []);
+  useEffect(() => { document.title = 'Resistor · Local GDS Viewer'; }, []);
   useEffect(() => () => { sequence.current++; }, []);
 
   const execute = async (label: string, work: () => Promise<void>) => {
@@ -195,7 +195,7 @@ export default function StandaloneViewer({ onExit }: { onExit: () => void }) {
   });
   const openBundle = (file: File) => void execute('뷰어 파일 읽는 중', async () => {
     const id = ++sequence.current, buffer = await readFile(file, 192), bundle: unknown = JSON.parse(new TextDecoder().decode(buffer));
-    if (!object(bundle)) throw new Error('Register 뷰어 JSON 객체가 필요합니다.');
+    if (!object(bundle)) throw new Error('Resistor 뷰어 JSON 객체가 필요합니다.');
     validateScene(bundle.scene);
     const nextPdk: Pdk | null = bundle.pdk == null ? null : object(bundle.pdk) && typeof bundle.pdk.id === 'string' && typeof bundle.pdk.name === 'string' && Array.isArray(bundle.pdk.layers) && bundle.pdk.layers.every(validateLayer)
       ? { id: bundle.pdk.id, name: bundle.pdk.name, layers: bundle.pdk.layers, notes: Array.isArray(bundle.pdk.notes) ? bundle.pdk.notes.filter((note): note is string => typeof note === 'string') : [], ...(bundle.pdk.compact_default_stack === true ? { compact_default_stack: true } : {}) } : null;
@@ -235,7 +235,7 @@ export default function StandaloneViewer({ onExit }: { onExit: () => void }) {
   };
   const exportBundle = () => void execute('뷰어 파일 저장 중', async () => {
     if (!scene) return;
-    const bundle: ViewerBundle = { schema_version: 1, kind: 'register-view', name: sourceName || 'Register layout', saved_at: new Date().toISOString(), scene, pdk, currentFlow, display, topCell, sourceName, ...(processDocument ? {processDocument} : {}), analysisSetup: analysisProject?.analysis_setup || portableSetup, backendSetup: analysisProject?.backend_setup || portableBackend,
+    const bundle: ViewerBundle = { schema_version: 1, kind: 'register-view', name: sourceName || 'Resistor layout', saved_at: new Date().toISOString(), scene, pdk, currentFlow, display, topCell, sourceName, ...(processDocument ? {processDocument} : {}), analysisSetup: analysisProject?.analysis_setup || portableSetup, backendSetup: analysisProject?.backend_setup || portableBackend,
       ...(includeSource && gds.current ? { sourceGdsBase64: base64(gds.current) } : {}), ...(includeSource && originalInput.current ? { originalInputGdsBase64: base64(originalInput.current.buffer), originalInputName: originalInput.current.name } : {}) };
     const blob = new Blob([JSON.stringify(bundle)], { type: 'application/json' }), url = URL.createObjectURL(blob), anchor = document.createElement('a');
     anchor.href = url; anchor.download = `${(sourceName || 'layout').replace(/\.(gdsii|gds|json)$/i, '').replace(/[^\p{L}\p{N}._-]/gu, '_')}.register-view.json`; anchor.click();

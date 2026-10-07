@@ -27,7 +27,7 @@ export default function WorkspaceBrowser({ currentId, onOpen, onCreate }: Props)
     finally { setBusy(null); }
   };
   const importFile=async(file:File)=>execute('import',async()=>{
-    if(!file.size||file.size>24*1024*1024)throw Error('설계 파일은 24 MiB 이하의 Register 프로젝트 ZIP을 선택하세요.');
+    if(!file.size||file.size>24*1024*1024)throw Error('설계 파일은 24 MiB 이하의 Resistor 프로젝트 ZIP을 선택하세요.');
     const bytes=new Uint8Array(await file.arrayBuffer()),hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))).map(b=>b.toString(16).padStart(2,'0')).join('');
     if(importReceipt.current?.hash!==hash)importReceipt.current={hash,id:crypto.randomUUID()};
     let binary='';for(let i=0;i<bytes.length;i+=32768)binary+=String.fromCharCode(...bytes.subarray(i,i+32768));

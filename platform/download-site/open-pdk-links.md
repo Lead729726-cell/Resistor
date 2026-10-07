@@ -4,7 +4,7 @@
 
 자료 확인: 2026-10-04 · 13개 항목 · 33개 링크
 
-레지스터의 현재 기본 실행 검증 공정은 SKY130A입니다. 나머지 항목은 참고 자료이며 자동 설치 또는 완전 호환 인증을 뜻하지 않습니다. 자료별 라이선스·제조 제출 조건을 확인하세요. GDS만으로 공정 높이·피복 특성을 알 수 없으므로 별도 공정 자료가 필요합니다.
+Resistor의 현재 기본 실행 검증 공정은 SKY130A입니다. 나머지 항목은 참고 자료이며 자동 설치 또는 완전 호환 인증을 뜻하지 않습니다. 자료별 라이선스·제조 제출 조건을 확인하세요. GDS만으로 공정 높이·피복 특성을 알 수 없으므로 별도 공정 자료가 필요합니다.
 
 ## 제조 공정 기반 공개 PDK
 
@@ -16,7 +16,7 @@ SkyWater의 130 nm 공개 PDK. 소자 모델, 배선·소자 규칙과 표준셀
 
 공개판: Experimental Preview / alpha
 
-레지스터: SKY130A 기본 프로파일에서 회로 해석·DRC·LVS 실행 확인. 제조 signoff 인증과는 별도입니다.
+Resistor: SKY130A 기본 프로파일에서 회로 해석·DRC·LVS 실행 확인. 제조 signoff 인증과는 별도입니다.
 
 - [공식 문서](https://skywater-pdk.readthedocs.io/en/main/)
 - [PDK 구성](https://skywater-pdk.readthedocs.io/en/main/contents.html)
@@ -29,7 +29,7 @@ GlobalFoundries의 공개 MCU 공정 자료. MOS·수동 소자 모델과 표준
 
 공개판: Experimental Preview / alpha. Google 원본 저장소는 보관 상태입니다.
 
-레지스터: 참고 자료 · 레지스터에서 전체 공정 실행 검증은 아직 하지 않았습니다.
+Resistor: 참고 자료 · Resistor에서 전체 공정 실행 검증은 아직 하지 않았습니다.
 
 - [공식 문서](https://gf180mcu-pdk.readthedocs.io/en/latest/)
 - [Google 원본 · 보관됨](https://github.com/google/gf180mcu-pdk)
@@ -43,7 +43,7 @@ IHP의 아날로그·혼합 신호·RF 설계를 위한 공개 PDK. MOS, HBT와 
 
 공개판: preview · 각 도구별 지원 범위는 공식 문서 참조
 
-레지스터: 참고 자료 · 레지스터에서 전체 공정 실행 검증은 아직 하지 않았습니다.
+Resistor: 참고 자료 · Resistor에서 전체 공정 실행 검증은 아직 하지 않았습니다.
 
 - [공식 문서](https://ihp-open-pdk-docs.readthedocs.io/en/latest/)
 - [소스·설치 안내](https://github.com/IHP-GmbH/IHP-Open-PDK)
@@ -58,7 +58,7 @@ Arizona State University의 연구·교육용 예측 PDK와 표준셀 자료. Op
 
 실제 제조 공정용 PDK와 구분 · Calibre 관련 자료는 ASU 안내의 별도 취득 절차 참조
 
-레지스터: 참고 자료 · 레지스터 실행 검증 전
+Resistor: 참고 자료 · Resistor 실행 검증 전
 
 - [ASU 공식 사이트](https://asap.asu.edu/)
 - [OpenROAD PDK·표준셀](https://github.com/The-OpenROAD-Project/asap7)
@@ -69,7 +69,7 @@ NC State의 FreePDK45와 이를 사용하는 Nangate45 디지털 설계 플랫�
 
 교육·연구용 예측 모델 · Nangate 셀은 별도 비상업적 사용 조건을 확인하세요.
 
-레지스터: 참고 자료 · 레지스터 실행 검증 전
+Resistor: 참고 자료 · Resistor 실행 검증 전
 
 - [NC State 원본 안내](https://eda.ncsu.edu/freepdk/freepdk45/)
 - [Lambdapdk 패키지](https://github.com/siliconcompiler/lambdapdk/tree/main/lambdapdk/freepdk45)
@@ -85,7 +85,7 @@ KLayout에서 광 도파로와 광 회로를 설계하는 PDK·소자 라이브�
 
 플랫폼·소자별 적용 조건은 프로젝트 문서 참조
 
-레지스터: 참고 자료 · 레지스터의 광 소자 해석·제조 제출 검증 전
+Resistor: 참고 자료 · Resistor의 광 소자 해석·제조 제출 검증 전
 
 - [소스·설치 안내](https://github.com/SiEPIC/SiEPIC_EBeam_PDK)
 - [배포 버전](https://github.com/SiEPIC/SiEPIC_EBeam_PDK/releases)
@@ -101,7 +101,7 @@ SKY130·GF180MCU 원본 자료를 오픈소스 EDA 도구에서 사용할 수 �
 
 설치 도구 · 자체 제조 공정 PDK가 아닙니다.
 
-레지스터: 외부 설정 참고 · 현재 엔진의 고정 버전을 임의로 변경하지 않습니다.
+Resistor: 외부 설정 참고 · 현재 엔진의 고정 버전을 임의로 변경하지 않습니다.
 
 - [현재 소스·사용법](https://github.com/fossi-foundation/open-pdks)
 - [GF180 구성 안내](https://github.com/fossi-foundation/open-pdks/blob/main/gf180mcu/README)
@@ -112,7 +112,7 @@ SKY130·GF180MCU 원본 자료를 오픈소스 EDA 도구에서 사용할 수 �
 
 프로젝트 명칭: formerly Volare
 
-레지스터: 외부 설치 참고 · 레지스터에 자동 설치되지 않습니다.
+Resistor: 외부 설치 참고 · Resistor에 자동 설치되지 않습니다.
 
 - [소스·사용법](https://github.com/fossi-foundation/ciel)
 - [배포 버전](https://github.com/fossi-foundation/ciel/releases)
@@ -123,7 +123,7 @@ SKY130·GF180MCU를 사용하는 기존 Volare 환경의 설정 자료. 이전 e
 
 기존 Volare 환경용 · Ciel 자료도 함께 참고
 
-레지스터: 외부 설치 참고 · 레지스터에 자동 설치되지 않습니다.
+Resistor: 외부 설치 참고 · Resistor에 자동 설치되지 않습니다.
 
 - [현재 소스·사용법](https://github.com/chipfoundry/volare)
 - [배포 버전](https://github.com/chipfoundry/volare/releases)
@@ -134,7 +134,7 @@ SKY130, GF180MCU, IHP, ASAP7와 FreePDK45 등 여러 공개 설계 자료를 Sil
 
 각 PDK·표준셀의 개별 라이선스와 사용 조건 적용
 
-레지스터: 외부 설정 참고 · 패키지 지원 목록은 레지스터의 지원 목록과 별도입니다.
+Resistor: 외부 설정 참고 · 패키지 지원 목록은 Resistor의 지원 목록과 별도입니다.
 
 - [소스·지원 PDK·사용 조건](https://github.com/siliconcompiler/lambdapdk)
 - [배포 버전](https://github.com/siliconcompiler/lambdapdk/releases)
@@ -145,7 +145,7 @@ SKY130, GF180MCU, IHP, ASAP7와 FreePDK45 등 여러 공개 설계 자료를 Sil
 
 개발 환경 묶음 · 도구와 PDK별 버전·사용 조건 확인
 
-레지스터: 외부 개발 환경 참고 · 현재 레지스터 엔진과 별도로 구성할 수 있습니다.
+Resistor: 외부 개발 환경 참고 · 현재 Resistor 엔진과 별도로 구성할 수 있습니다.
 
 - [소스·설치 안내](https://github.com/iic-jku/IIC-OSIC-TOOLS)
 - [배포 버전](https://github.com/iic-jku/IIC-OSIC-TOOLS/releases)
@@ -160,7 +160,7 @@ OpenROAD 기반 디지털 설계 흐름과 PDK별 플랫폼 예제. 지원 공�
 
 설계 도구 · 공정 자체와 지원 도구의 검증 범위는 별도
 
-레지스터: 외부 흐름 참고 · 레지스터의 자동 연동 검증 전
+Resistor: 외부 흐름 참고 · Resistor의 자동 연동 검증 전
 
 - [공식 문서](https://openroad-flow-scripts.readthedocs.io/en/latest/)
 - [소스·플랫폼 목록](https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts)
@@ -171,7 +171,7 @@ OpenLane에서 이어진 공개 디지털 설계 흐름. 공정 설정, 실행 �
 
 설계 도구 · PDK 설치와 흐름별 설정 절차 필요
 
-레지스터: 외부 흐름 참고 · 레지스터의 자동 연동 검증 전
+Resistor: 외부 흐름 참고 · Resistor의 자동 연동 검증 전
 
 - [공식 문서](https://librelane.readthedocs.io/en/latest/)
 - [소스 저장소](https://github.com/librelane/librelane)

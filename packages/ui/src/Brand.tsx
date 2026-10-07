@@ -4,5 +4,5 @@ export function RegisterMark({ size = 38 }: { size?: number }) {
   return <svg data-testid="register-logo" width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d={REGISTER_FRAME} stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity=".55"/><path d={REGISTER_MARK} stroke="currentColor" strokeWidth="3.3" strokeLinecap="round" strokeLinejoin="round"/><circle cx="6" cy="24" r="2.4" fill="currentColor"/><circle cx="42" cy="24" r="2.4" fill="currentColor"/></svg>;
 }
 export default function Brand({ viewer = false }: { viewer?: boolean }) {
-  return <div className="register-brand" aria-label="레지스터 Register"><div className="register-brand-symbol"><RegisterMark/></div><div className="register-brand-wordmark"><strong>레지스터 <span>Register</span></strong><small>{viewer ? 'LAYOUT VIEWER' : 'INTEGRATED EDA'}</small></div></div>;
+  return <div className="register-brand" aria-label="Resistor"><div className="register-brand-symbol"><RegisterMark/></div><div className="register-brand-wordmark"><strong>Resistor</strong><small>{viewer ? 'LAYOUT VIEWER' : 'INTEGRATED EDA'}</small></div></div>;
 }

@@ -27,7 +27,7 @@ export async function signMacApp(app){
     await run('/usr/bin/codesign',['--verify','--deep','--strict','--verbose=2',app]);
   }else{
     signer??=linuxSigner();
-    await run(await signer,['--config-file','/dev/null','sign','--timestamp-url','none','--entitlements-xml-file',entitlements,'--entitlements-xml-file',`Contents/Frameworks/Register Helper.app:${entitlements}`,'--entitlements-xml-file',`Contents/Frameworks/Register Helper (GPU).app:${entitlements}`,'--entitlements-xml-file',`Contents/Frameworks/Register Helper (Renderer).app:${entitlements}`,'--entitlements-xml-file',`Contents/Frameworks/Register Helper (Plugin).app:${entitlements}`,app]);
+    await run(await signer,['--config-file','/dev/null','sign','--timestamp-url','none','--entitlements-xml-file',entitlements,'--entitlements-xml-file',`Contents/Frameworks/Resistor Helper.app:${entitlements}`,'--entitlements-xml-file',`Contents/Frameworks/Resistor Helper (GPU).app:${entitlements}`,'--entitlements-xml-file',`Contents/Frameworks/Resistor Helper (Renderer).app:${entitlements}`,'--entitlements-xml-file',`Contents/Frameworks/Resistor Helper (Plugin).app:${entitlements}`,app]);
   }
   return {ad_hoc_signed:true,hardened_runtime:false,developer_id_signed:false,notarized:false,signing_tool:process.platform==='darwin'?'macOS codesign':'apple-codesign 0.29.0'};
 }

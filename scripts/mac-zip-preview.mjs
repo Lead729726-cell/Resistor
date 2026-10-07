@@ -7,7 +7,7 @@ const run=(exe,args,options={})=>new Promise((resolve,reject)=>{
   const child=spawn(exe,args,{stdio:'inherit',windowsHide:true,...options});
   child.once('error',reject);child.once('exit',code=>code===0?resolve():reject(Error(`Mac ZIP stage failed: ${code}`)));
 });
-await run(process.execPath,['scripts/package.mjs','--stage-only']);
+if(!process.argv.includes('--skip-stage'))await run(process.execPath,['scripts/package.mjs','--stage-only']);
 if(process.platform==='win32'){
   const root=process.cwd(),output=path.join(root,'release/installers');await mkdir(output,{recursive:true});
   const docker=await dockerExecutable();

@@ -31,4 +31,4 @@ const icnsHeader=Buffer.alloc(8);icnsHeader.write('icns',0,'ascii');icnsHeader.w
 await writeFile('apps/desktop/assets/register.icns',Buffer.concat([icnsHeader,...macImages]));
 await mkdir('docs/evidence',{recursive:true});
 await writeFile('docs/evidence/brand-assets.json',JSON.stringify({checked_at:new Date().toISOString(),source:'public/register-symbol.svg',source_sha256:createHash('sha256').update(source).digest('hex'),icon_sizes:sizes,png_sha256:createHash('sha256').update(images.at(-1)).digest('hex'),ico_sha256:createHash('sha256').update(Buffer.concat([header,...images])).digest('hex'),renderer:'Chromium SVG rasterization; original vector artwork'},null,2));
-console.log(`Register brand: SVG favicon, ${sizes.length} ICO sizes and desktop PNG.`);
+console.log(`Resistor brand: SVG favicon, ${sizes.length} ICO sizes and desktop PNG.`);

@@ -2,7 +2,15 @@
 
 This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
-`docs/evidence/` and the example READMEs. Package version: 0.16.0.
+`docs/evidence/` and the example READMEs. Package version: 0.16.1.
+
+## 0.16.1 — Resistor product name (2026-10-07)
+
+- Product name, window title, installer, shortcuts and package names use Resistor.
+- Preserve the historical user data directory, application ID and all existing
+  project, simulation and file format identifiers across the rename.
+- Rebuild Windows x64, Mac arm64/x64 preview and Linux x64 distributions.
+  Previous Register assets and verification records remain available.
 
 ## 0.16.0 — 16-bit datapath and cross-platform downloads (2026-10-07)
 

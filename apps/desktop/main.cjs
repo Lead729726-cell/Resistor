@@ -3,10 +3,10 @@ const path=require('node:path');
 const {pathToFileURL}=require('node:url');
 const {prepareWorkspace}=require('./workspace.cjs');
 const {macMenuTemplate}=require('./menu.cjs');
+const {configureAppIdentity}=require('./identity.cjs');
 let mainWindow,ownedHub;
 let runtimePromise;
-app.setName('레지스터');
-if(process.env.REGISTER_USER_DATA)app.setPath('userData',path.resolve(process.env.REGISTER_USER_DATA));
+configureAppIdentity(app,{userDataOverride:process.env.REGISTER_USER_DATA});
 async function boot(){
   const root=path.resolve(__dirname,'../..');
   const workspace=await prepareWorkspace({root,userData:app.getPath('userData'),executable:app.getPath('exe'),override:process.env.MOS_WORKSPACE,packaged:app.isPackaged});
@@ -21,7 +21,7 @@ async function boot(){
     if(!present){const {startHub}=await import(pathToFileURL(path.join(root,'platform/cloud/hub.mjs')));ownedHub=await startHub({workspace,workerConfig:config,staticDirectory:path.join(root,'dist')});}
     return config;
   })().catch(e=>{runtimePromise=undefined;throw e;});
-  mainWindow=new BrowserWindow({width:1600,height:1000,minWidth:1050,minHeight:720,title:'레지스터',icon:path.join(root,'apps/desktop/assets/register.png'),backgroundColor:'#121c29',show:false,webPreferences:{preload:path.join(__dirname,'preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true,webSecurity:true}});
+  mainWindow=new BrowserWindow({width:1600,height:1000,minWidth:1050,minHeight:720,title:'Resistor',icon:path.join(root,'apps/desktop/assets/register.png'),backgroundColor:'#121c29',show:false,webPreferences:{preload:path.join(__dirname,'preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true,webSecurity:true}});
   if(process.platform==='darwin')Menu.setApplicationMenu(Menu.buildFromTemplate(macMenuTemplate({name:app.getName(),send:command=>mainWindow?.webContents.send('mos:menu-command',command)})));
   else mainWindow.removeMenu();
   mainWindow.once('ready-to-show',()=>mainWindow.show());
@@ -49,7 +49,7 @@ async function boot(){
   mainWindow.on('closed',()=>{mainWindow=null;});
   if(devURL)await mainWindow.loadURL(devURL+(viewerOnly?'?mode=viewer':''));else await mainWindow.loadFile(path.join(root,'dist/index.html'),viewerOnly?{query:{mode:'viewer'}}:undefined);
 }
-app.whenReady().then(boot).catch(e=>{dialog.showErrorBox('레지스터',e.message);app.quit();});
+app.whenReady().then(boot).catch(e=>{dialog.showErrorBox('Resistor',e.message);app.quit();});
 app.on('will-quit',()=>{void ownedHub?.close();});
-app.on('activate',()=>{if(BrowserWindow.getAllWindows().length===0)void boot().catch(e=>dialog.showErrorBox('레지스터',e.message));});
+app.on('activate',()=>{if(BrowserWindow.getAllWindows().length===0)void boot().catch(e=>dialog.showErrorBox('Resistor',e.message));});
 app.on('window-all-closed',()=>{if(process.platform!=='darwin')app.quit();});

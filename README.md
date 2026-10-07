@@ -1,4 +1,8 @@
-# Resistor · 레지스터 / Register
+# Resistor
+
+제품 이름은 저항을 뜻하는 **Resistor**입니다. 0.16.1부터 앱·설치 파일·바로가기의 이름을 Resistor로 통일합니다. 이전 Register 배포본의 파일과 검증 기록은 그대로 보존합니다. 기존 설계·설정은 이전 앱의 저장 경로를 계속 사용하며, 프로젝트 ZIP과 해석 결과 형식도 유지합니다.
+
+다운로드: https://resistor-downloads.vercel.app/
 
 전자공학 계산기와 회로·레이아웃·시뮬레이션을 연결하는 오픈소스 작업공간입니다.
 계산은 결정적인 수학 로직으로 수행하며, EDA 결과는 실제 해석 엔진의 수치와
@@ -223,7 +227,7 @@ pin/net 연결 탐색을 제공합니다. 회로 템플릿의 미생성 레이�
 
 ## 실행
 
-설계·해석에는 Docker Desktop을 Linux containers 모드로 실행한 뒤 **Start-Register.cmd** 또는 **release/0.13.0/Register-win32-x64/Register.exe**를 실행합니다. 기존 `.runtime/eda` 작업은 보존됩니다. 앱은 첫 설계 요청에서 전용 EDA worker와 공동 작업 허브를 시작합니다. 독립 뷰어는 해당 서비스를 시작하지 않습니다.
+설계·해석에는 Docker Desktop을 Linux containers 모드로 실행한 뒤 **Start-Resistor.cmd** 또는 **release/0.13.0/Register-win32-x64/Register.exe**를 실행합니다. 기존 `.runtime/eda` 작업은 보존됩니다. 앱은 첫 설계 요청에서 전용 EDA worker와 공동 작업 허브를 시작합니다. 독립 뷰어는 해당 서비스를 시작하지 않습니다.
 
 ```powershell
 cd Resistor

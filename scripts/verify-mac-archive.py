@@ -50,7 +50,11 @@ def verify(archive,require_bundle_signature=False):
         assert len(entries)==len(z.infolist()),'Duplicate ZIP entries'
         for name in entries:
             assert not name.startswith('/') and '..' not in name.split('/'),name
-        root='Register.app/Contents/'
+        product='Resistor' if 'Resistor.app/Contents/Info.plist' in entries else 'Register'
+        app_prefix=product+'.app/'
+        install_helper='Install '+product+'.command'
+        diagnose_helper='Diagnose '+product+'.command'
+        root=app_prefix+'Contents/'
         plist=plistlib.loads(z.read(root+'Info.plist'))
         version=json.loads(z.read(root+'Resources/app/package.json'))['version']
         assert plist['CFBundleIdentifier']=='org.register.eda'
@@ -67,7 +71,7 @@ def verify(archive,require_bundle_signature=False):
                     if item and stat.S_ISLNK(item.external_attr>>16):
                         target=z.read(prefix).decode();assert not target.startswith('/'),prefix
                         value=posixpath.normpath(posixpath.join(posixpath.dirname(prefix),target,*parts[index+1:]))
-                        assert value.startswith('Register.app/'),prefix
+                        assert value.startswith(app_prefix),prefix
                         changed=True;break
                 if not changed:return value
             raise AssertionError('Symlink resolution exceeded safe depth')
@@ -77,7 +81,7 @@ def verify(archive,require_bundle_signature=False):
             if stat.S_ISLNK(mode):
                 target=z.read(name).decode();assert not target.startswith('/'),name
                 resolved=posixpath.normpath(posixpath.join(posixpath.dirname(name),target))
-                assert resolved.startswith('Register.app/'),name
+                assert resolved.startswith(app_prefix),name
                 resolved=resolve_link(resolved)
                 assert resolved in entries or any(n.startswith(resolved+'/') for n in entries),name
                 links.append({'path':name,'target':target})
@@ -97,7 +101,7 @@ def verify(archive,require_bundle_signature=False):
             seal=plistlib.loads(z.read(seal_path));checked=0
             for relative,item in seal.get('files2',{}).items():
                 resource=posixpath.normpath(posixpath.join(base,relative))
-                assert resource.startswith('Register.app/'),('Resource seal escaped app',relative)
+                assert resource.startswith(app_prefix),('Resource seal escaped app',relative)
                 if 'symlink' in item:
                     assert resource in entries and stat.S_ISLNK(entries[resource].external_attr>>16)
                     assert z.read(resource).decode()==item['symlink'],('Sealed symlink mismatch',resource)
@@ -124,9 +128,9 @@ def verify(archive,require_bundle_signature=False):
             assert root+'_CodeSignature/CodeResources' in entries and len(seals)>=5,'Missing app/framework/helper bundle seals'
             assert all(s['ad_hoc'] and not s['hardened_runtime'] for values in signatures.values() for s in values),'Preview must use ad-hoc signing without hardened runtime'
             for executable,values in signatures.items():
-                if executable==main or '/Register Helper' in executable:
+                if executable==main or '/'+product+' Helper' in executable:
                     assert all(s['entitlements'].get('com.apple.security.cs.allow-jit') is True for s in values),('Missing JIT entitlement',executable)
-            assert 'Install Register.command' in entries and entries['Install Register.command'].external_attr>>16&0o111
+            assert install_helper in entries and entries[install_helper].external_attr>>16&0o111
             manifest=z.read('BUNDLE-SHA256SUMS.txt').decode().splitlines();manifest_names=[]
             for line in manifest:
                 checksum,name=line.split('  ',1)
@@ -134,21 +138,22 @@ def verify(archive,require_bundle_signature=False):
                 assert hashlib.sha256(z.read(name)).hexdigest()==checksum,('Installer manifest mismatch',name)
                 manifest_names.append(name)
             assert len(set(manifest_names))==len(manifest_names),'Duplicate installer manifest entries'
-            assert {n for n,e in entries.items() if n.startswith('Register.app/') and not stat.S_ISLNK(e.external_attr>>16) and not e.is_dir()}<=set(manifest_names),'Installer manifest omitted app resources'
+            assert {n for n,e in entries.items() if n.startswith(app_prefix) and not stat.S_ISLNK(e.external_attr>>16) and not e.is_dir()}<=set(manifest_names),'Installer manifest omitted app resources'
             link_manifest=dict(line.split('\t',1) for line in z.read('BUNDLE-SYMLINKS.tsv').decode().splitlines())
             assert link_manifest=={l['path']:l['target'] for l in links},'Installer symlink manifest mismatch'
         assert any('/Versions/Current' in l['path'] for l in links),'Framework symlinks lost'
         required=['dist/index.html','.dockerignore','scripts/docker-cli.mjs','scripts/worker.mjs','scripts/desktop-diagnostics.mjs','apps/desktop/main.cjs','apps/desktop/preload.cjs','apps/desktop/menu.cjs','apps/desktop/workspace.cjs','workers/eda/server.py','workers/eda/native.py','workers/eda/Dockerfile','examples/sky130/mosfet.gds','licenses/THIRD-PARTY-NOTICES.md','docs/desktop-installation.md']
+        if product=='Resistor':required.append('apps/desktop/identity.cjs')
         if b'/opt/register-engine/' in z.read(root+'Resources/app/workers/eda/Dockerfile'):
             required.extend(['workers/eda/bootstrap.py','workers/eda/commercial_backend.py','platform/commercial/runner.py','platform/commercial/agent.py','adapters/commercial/catalog.json'])
-        if 'Diagnose Register.command' in entries:
-            required.extend(['apps/desktop/Diagnose Register.command','apps/desktop/Install Register.command','workers/eda/project_index.py'])
-            assert b'\r' not in z.read('Install Register.command'),'Mac shell helper must use LF line endings'
-            assert b'\r' not in z.read('Diagnose Register.command'),'Mac diagnostic helper must use LF line endings'
-            assert entries['Diagnose Register.command'].external_attr>>16&0o111
-            assert z.read('Diagnose Register.command')==z.read(root+'Resources/app/apps/desktop/Diagnose Register.command')
-            template=z.read(root+'Resources/app/apps/desktop/Install Register.command').decode().replace('@VERSION@',version).replace('@ARCH@',expected_arch)
-            assert z.read('Install Register.command').decode()==template,'Installer template differs from bundled source'
+        if diagnose_helper in entries:
+            required.extend(['apps/desktop/'+diagnose_helper,'apps/desktop/'+install_helper,'workers/eda/project_index.py'])
+            assert b'\r' not in z.read(install_helper),'Mac shell helper must use LF line endings'
+            assert b'\r' not in z.read(diagnose_helper),'Mac diagnostic helper must use LF line endings'
+            assert entries[diagnose_helper].external_attr>>16&0o111
+            assert z.read(diagnose_helper)==z.read(root+'Resources/app/apps/desktop/'+diagnose_helper)
+            template=z.read(root+'Resources/app/apps/desktop/'+install_helper).decode().replace('@VERSION@',version).replace('@ARCH@',expected_arch)
+            assert z.read(install_helper).decode()==template,'Installer template differs from bundled source'
         required.extend(p.as_posix() for p in Path('dist').rglob('*') if p.is_file())
         for relative in required:assert root+'Resources/app/'+relative in entries,relative
         assert not any('/.runtime/' in name or '/.secrets/' in name or name.endswith('worker.json') for name in entries),'Private runtime data in archive'

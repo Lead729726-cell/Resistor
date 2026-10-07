@@ -47,10 +47,10 @@ jobs:
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
       - name: Verify final signed installer ZIP and its checksum
-        run: python3 scripts/verify-mac-archive.py release/installers/Register-*-mac-${{ matrix.arch }}-r5.zip --require-bundle-signature --output docs/evidence/macos-archive-${{ matrix.arch }}.json
+        run: python3 scripts/verify-mac-archive.py release/installers/Resistor-*-mac-${{ matrix.arch }}-r5.zip --require-bundle-signature --output docs/evidence/macos-archive-${{ matrix.arch }}.json
       - uses: actions/upload-artifact@v4
         with:
-          name: Register-macOS-${{ matrix.arch }}-adhoc-preview
+          name: Resistor-macOS-${{ matrix.arch }}-adhoc-preview
           path: |
             release/installers/*.dmg
             release/installers/*.zip
@@ -61,5 +61,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: Register-macOS-${{ matrix.arch }}-failed-QA
+          name: Resistor-macOS-${{ matrix.arch }}-failed-QA
           path: test-results/

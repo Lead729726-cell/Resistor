@@ -1,13 +1,77 @@
 {
-  "appId":"org.register.eda",
-  "productName":"Register",
-  "electronVersion":"44.5.0",
-  "asar":false,
-  "directories":{"app":"release/staging","output":"release/installers"},
-  "files":["**/*","!**/*.map"],
-  "artifactName":"Register-${version}-${os}-${arch}.${ext}",
-  "win":{"icon":"apps/desktop/assets/register.ico","target":[{"target":"nsis","arch":["x64"]}],"signAndEditExecutable":false},
-  "nsis":{"oneClick":false,"perMachine":false,"allowElevation":false,"allowToChangeInstallationDirectory":true,"createDesktopShortcut":true,"createStartMenuShortcut":true,"shortcutName":"레지스터","deleteAppDataOnUninstall":false,"runAfterFinish":false},
-  "mac":{"icon":"apps/desktop/assets/register.icns","category":"public.app-category.developer-tools","target":[{"target":"dmg","arch":["arm64","x64"]},{"target":"zip","arch":["arm64","x64"]}],"identity":"-","hardenedRuntime":false,"entitlements":"apps/desktop/mac-entitlements.plist","entitlementsInherit":"apps/desktop/mac-entitlements.plist"},
-  "dmg":{"title":"Register ${version}","contents":[{"x":130,"y":150},{"x":410,"y":150,"type":"link","path":"/Applications"}]}
+  "appId": "org.register.eda",
+  "productName": "Resistor",
+  "electronVersion": "44.5.0",
+  "asar": false,
+  "directories": {
+    "app": "release/staging",
+    "output": "release/installers"
+  },
+  "files": [
+    "**/*",
+    "!**/*.map"
+  ],
+  "artifactName": "Resistor-${version}-${os}-${arch}.${ext}",
+  "win": {
+    "icon": "apps/desktop/assets/register.ico",
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "signAndEditExecutable": false
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowElevation": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Resistor",
+    "deleteAppDataOnUninstall": false,
+    "runAfterFinish": false
+  },
+  "mac": {
+    "icon": "apps/desktop/assets/register.icns",
+    "category": "public.app-category.developer-tools",
+    "target": [
+      {
+        "target": "dmg",
+        "arch": [
+          "arm64",
+          "x64"
+        ]
+      },
+      {
+        "target": "zip",
+        "arch": [
+          "arm64",
+          "x64"
+        ]
+      }
+    ],
+    "identity": "-",
+    "hardenedRuntime": false,
+    "entitlements": "apps/desktop/mac-entitlements.plist",
+    "entitlementsInherit": "apps/desktop/mac-entitlements.plist"
+  },
+  "dmg": {
+    "title": "Resistor ${version}",
+    "contents": [
+      {
+        "x": 130,
+        "y": 150
+      },
+      {
+        "x": 410,
+        "y": 150,
+        "type": "link",
+        "path": "/Applications"
+      }
+    ]
+  }
 }

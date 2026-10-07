@@ -16,7 +16,7 @@ if(installer.cases.length!==13||!installer.cases.every(c=>c.passed&&c.user_desig
 if(inspected.archives.length!==2||new Set(inspected.archives.map(a=>a.architecture)).size!==2||built.artifacts.length!==2)throw Error('Both Mac architectures must be inspected.');
 const artifacts=[];
 for(const a of inspected.archives){
-  const name=`Register-${version}-mac-${a.architecture}-r${revision}.zip`,b=built.artifacts.find(b=>b.arch===a.architecture);
+  const name=`Resistor-${version}-mac-${a.architecture}-r${revision}.zip`,b=built.artifacts.find(b=>b.arch===a.architecture);
   if(!['arm64','x64'].includes(a.architecture)||a.version!==version||path.basename(a.file)!==name||!a.crc_checked||!a.installer_manifest_checked||a.bundle_resource_seals.length<5||a.native_execution_verified||!b||b.file!==name||b.build_revision!==revision||!b.ad_hoc_signed||b.native_execution_verified||b.sha256!==a.sha256)throw Error('Invalid Mac preview evidence.');
   const bytes=await readFile(path.join('release/installers',name));
   if(bytes.length!==a.bytes||hash(bytes)!==a.sha256)throw Error('Current Mac ZIP differs from inspected bytes.');
