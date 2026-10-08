@@ -4,6 +4,11 @@
 
 다운로드: https://resistor-downloads.vercel.app/
 
+[1080p 한국어 사용 가이드 · 7분 7초](https://resistor-downloads.vercel.app/tutorial/):
+실제 앱 조작으로 CMOS 인버터, 전압·전류 파형, 신호 시험, DRC/LVS와 GDS 뷰어를
+따라갑니다. 10개 챕터, 한국어 음성·자막과 실습 프로젝트를 제공합니다.
+촬영 화면은 이름 변경 전 Register 0.16.0이며 현재 제품명은 Resistor입니다.
+
 전자공학 계산기와 회로·레이아웃·시뮬레이션을 연결하는 오픈소스 작업공간입니다.
 계산은 결정적인 수학 로직으로 수행하며, EDA 결과는 실제 해석 엔진의 수치와
 설계 revision을 함께 표시합니다. A deterministic electronics calculator hub and
