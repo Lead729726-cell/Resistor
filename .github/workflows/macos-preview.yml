@@ -43,6 +43,8 @@ jobs:
       - run: node --import tsx --test --test-isolation=none tests/shortcuts.test.ts
       - run: npm run build
       - run: npm run test:core
+      - name: Install the video encoder required by the native recording test
+        run: npx --no-install playwright install ffmpeg
       - run: node scripts/mac-preview.mjs
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
