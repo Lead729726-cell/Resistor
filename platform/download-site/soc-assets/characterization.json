@@ -1,0 +1,846 @@
+{
+  "schema_version": 1,
+  "source_sha256": {
+    "workers/eda/analog_soc.py": "011bcd40f404d9d0139bdc8c75b678050a00968873c62cccf6b9838676ed64a9",
+    "workers/eda/characterization.py": "6b0a9feb9acaff73a7675835748bdc3ec98c0d12cbafec3b7085f98249920349",
+    "workers/eda/digital_units.py": "8570ed536be9f102082ab4ef8fce041e1eba0c86723e679cfb5f0c78a1a30004",
+    "workers/eda/physical_library.py": "24080bfc8f7c6858412dd610557b4c13148802cafd992ebb617200756c3c8f61",
+    "workers/eda/native.py": "561f9f8ad914e438c04d4e57946cc093dd9c5f22a8be7b661d1c6bcc16fc1136",
+    "workers/eda/design_tools.py": "051d1e0e5a43ffa95c4e3e873ab19b87ff35484718819f4fa0c61ab4a1c9ef5b",
+    "workers/eda/chip_references.py": "2f1497545c097f223e95522eef259833fcb16d8a483f80246b879971ba2b029f",
+    "workers/eda/server.py": "4c47ce32087e1e1f8575bc72aa48ba09a2b30f4f2718b6cf43eefd8e0382abcc",
+    "workers/eda/pex_reduce.py": "d84adb5f857a8f6887f4621a07008b2a4526763dd214477d1df4a06e71caf7ba",
+    "workers/eda/profile.py": "bba5cf8d5ad36e776ff2f0511141573072ef1171244d7b87b178de258e63b5d8"
+  },
+  "runs": [
+    {
+      "name": "pre-noise",
+      "run_id": "45223fa52c7e4cf4bcab6584ead483c2",
+      "project_id": "2fc3635e781449279500bfa00d25c04c",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "post_layout": false,
+      "metrics": {
+        "output_noise_rms_V": 0.00008134595557700754,
+        "input_noise_rms_V": 0.00010287899843837755,
+        "numerical_output_noise_rms_V": 0.00008136237695817634,
+        "frequency_start_Hz": 10,
+        "frequency_end_Hz": 10000000.000000015,
+        "samples": 241
+      },
+      "config": {
+        "mode": "noise",
+        "noise_limit_V": 0.0001,
+        "frequency_start_Hz": 10,
+        "frequency_end_Hz": 10000000,
+        "points_dec": 40
+      },
+      "rows": []
+    },
+    {
+      "name": "pre-mismatch",
+      "run_id": "3d2e0f3350f04258a4e55366c4ece81f",
+      "project_id": "2fc3635e781449279500bfa00d25c04c",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "post_layout": false,
+      "metrics": {
+        "samples": 16,
+        "seed": 729726,
+        "offset_mean_V": -0.00036347899125532823,
+        "offset_sample_std_V": 0.0026087519909364677,
+        "offset_min_V": -0.003871338397766544,
+        "offset_max_V": 0.004323061969080277,
+        "offset_abs_max_V": 0.004323061969080277,
+        "within_limit_samples": 16
+      },
+      "config": {
+        "mode": "mismatch",
+        "samples": 16,
+        "seed": 729726,
+        "offset_limit_V": 0.01
+      },
+      "rows": [
+        {
+          "index": 1,
+          "seed": 729726,
+          "output_V": 0.9043230619690803,
+          "input_V": 0.9,
+          "offset_V": 0.004323061969080277,
+          "supply_current_A": 0.00004261263828518288,
+          "output_sha256": "ce7187d543c3f5774f92682ad5cb5bbea47b89febc911356279880b6306176de",
+          "controller_sha256": "431d40bdca90531524bedbf25d69aa4f40e0c1da38ed41590d5760f4d2bc52e3"
+        },
+        {
+          "index": 2,
+          "seed": 729727,
+          "output_V": 0.9033517410744025,
+          "input_V": 0.9,
+          "offset_V": 0.0033517410744025034,
+          "supply_current_A": 0.00004452222881764473,
+          "output_sha256": "4a770132efa5063640673c0f50990da9c23f39582e54158b2938b9e27295d31f",
+          "controller_sha256": "f2a5a58234c77913b87c195adb6b992584877254e8b6cd3fc11204686f82e7c2"
+        },
+        {
+          "index": 3,
+          "seed": 729728,
+          "output_V": 0.9012791630520951,
+          "input_V": 0.9,
+          "offset_V": 0.001279163052095078,
+          "supply_current_A": 0.00004355221824388518,
+          "output_sha256": "162ce579ca51d853927f4e2b363c5f9027d86c6b4ab3cf07f8b8f117c33c8fc6",
+          "controller_sha256": "d8248305e7193cdf7b586c0c95e813c0691ab665b1abb60de0bbaafeed3e9521"
+        },
+        {
+          "index": 4,
+          "seed": 729729,
+          "output_V": 0.8961286616022335,
+          "input_V": 0.9,
+          "offset_V": -0.003871338397766544,
+          "supply_current_A": 0.00004365354343515316,
+          "output_sha256": "e71dc84357e7caa18e427bec2c48f14db3948e2943531a36f5c3d367c0ecfa98",
+          "controller_sha256": "a38c4a652362abe7a7394a418c8741cc8cfcde2593619aaf1eb5df5782719420"
+        },
+        {
+          "index": 5,
+          "seed": 729730,
+          "output_V": 0.8985205651233628,
+          "input_V": 0.9,
+          "offset_V": -0.0014794348766372645,
+          "supply_current_A": 0.000044033863519774664,
+          "output_sha256": "2c906563178e54058237c7bf5910178d57cd5b0d34eade773dd36367ac5fd2fc",
+          "controller_sha256": "c9bdc1cbf8c8c04bd956e393313229c4e44930d392d03cbd9a10654a44ca369d"
+        },
+        {
+          "index": 6,
+          "seed": 729731,
+          "output_V": 0.903012970972668,
+          "input_V": 0.9,
+          "offset_V": 0.00301297097266795,
+          "supply_current_A": 0.000043917456600440244,
+          "output_sha256": "c8f899df3eaba7a0eb3b154670ef9b28c3fd48d92d7ebc0578ba4a3479984e0c",
+          "controller_sha256": "d269ec351b6654ef7365dc161bdd0028196babd6ad5dfc24dad22337447b3a66"
+        },
+        {
+          "index": 7,
+          "seed": 729732,
+          "output_V": 0.8983228611696177,
+          "input_V": 0.9,
+          "offset_V": -0.001677138830382341,
+          "supply_current_A": 0.00004364049437696532,
+          "output_sha256": "bfe30223969e76cf7f78bdc72e33cec6e9a56b66530e1bd4f08ba63e37d6c63f",
+          "controller_sha256": "f4d80fdf112c214f84da6429df545b09333c49884229c61a5b998235bfddebc3"
+        },
+        {
+          "index": 8,
+          "seed": 729733,
+          "output_V": 0.8972697084700485,
+          "input_V": 0.9,
+          "offset_V": -0.002730291529951523,
+          "supply_current_A": 0.00004405540196818206,
+          "output_sha256": "14459d2266eff45cd7ae06759446827a6a2b98b34ec743fa156d7b02a0af10f9",
+          "controller_sha256": "9cb0665639ede40d92f6d7c0091a505d07c45bbb9fb414ad7e12e3b45d9bca68"
+        },
+        {
+          "index": 9,
+          "seed": 729734,
+          "output_V": 0.8971984395602703,
+          "input_V": 0.9,
+          "offset_V": -0.002801560439729678,
+          "supply_current_A": 0.000044363784098600754,
+          "output_sha256": "b91d8b6f74000e48dcb8a29e5102008964ff7932ffd0a3cb00d819418d664256",
+          "controller_sha256": "2c3470004927e788f55ef53e41a52cfc714ea0ef30a8dee374fee70902716950"
+        },
+        {
+          "index": 10,
+          "seed": 729735,
+          "output_V": 0.8981257034438386,
+          "input_V": 0.9,
+          "offset_V": -0.0018742965561614477,
+          "supply_current_A": 0.000043737924631537966,
+          "output_sha256": "d1420c81261fa07c09e83bf2fb67a5b8920dcced1602e6dfbb5d8a5755b3e259",
+          "controller_sha256": "ed04ec9e490a25d54033b0d94f316dace5d95d14b6ee532caa98e93781d30fab"
+        },
+        {
+          "index": 11,
+          "seed": 729736,
+          "output_V": 0.8968731439035764,
+          "input_V": 0.9,
+          "offset_V": -0.0031268560964236025,
+          "supply_current_A": 0.00004389178858733861,
+          "output_sha256": "5b97db4d07f28e731184c0f8362442846fbdfc4282982f948cabe9e9ae77fac8",
+          "controller_sha256": "dff6a475f03b90cbf09798c92886729ae7d73f82d92a704cc92c67c07c14b6aa"
+        },
+        {
+          "index": 12,
+          "seed": 729737,
+          "output_V": 0.8986840892357577,
+          "input_V": 0.9,
+          "offset_V": -0.0013159107642423118,
+          "supply_current_A": 0.00004362589533457646,
+          "output_sha256": "e6fb23cbd859f68c172a3d3fe724fff73dea0f09f13334a562f4de5e97e47f93",
+          "controller_sha256": "3e0800a0ff517b57f19d21cf6791ce32823a1e42f88200bd841fc01a144f493b"
+        },
+        {
+          "index": 13,
+          "seed": 729738,
+          "output_V": 0.9023317984765526,
+          "input_V": 0.9,
+          "offset_V": 0.0023317984765526267,
+          "supply_current_A": 0.00004411451869743116,
+          "output_sha256": "bcd0c6f4aefd54a74133c3da90d02292a78d1595788e7f07c604b0ace070dc6b",
+          "controller_sha256": "31abe4b8fd96a77b1fe83c04f374b634c6f892cad4a70ca99fd6723574064406"
+        },
+        {
+          "index": 14,
+          "seed": 729739,
+          "output_V": 0.9001802298689654,
+          "input_V": 0.9,
+          "offset_V": 0.00018022986896537585,
+          "supply_current_A": 0.000043789723462819705,
+          "output_sha256": "5ff23e77a3cfeb60093fdf326dca63e27f43955ad67cb6371b224e8172fd5f63",
+          "controller_sha256": "78b23d1b28c0bfdd240724d1fdf6ba286138d501617933936e94675984f2b8c7"
+        },
+        {
+          "index": 15,
+          "seed": 729740,
+          "output_V": 0.8974510326588643,
+          "input_V": 0.9,
+          "offset_V": -0.002548967341135744,
+          "supply_current_A": 0.00004396127307142376,
+          "output_sha256": "a8d4bd53cf8cd8d0aad6a6b0317a42af57249199d31ceb4812d8577b4f9eefad",
+          "controller_sha256": "55850a4abaa0b10a7aa62d55f0fd61091f41e3203f988b62669db291a040ffd9"
+        },
+        {
+          "index": 16,
+          "seed": 729741,
+          "output_V": 0.9011311655585814,
+          "input_V": 0.9,
+          "offset_V": 0.001131165558581393,
+          "supply_current_A": 0.000043817158447126,
+          "output_sha256": "717e0e51772a198897b6e80f99a83f2260b491542d0acc39b621b54ad6050b51",
+          "controller_sha256": "bc7ac7524da3b5dd87e52d7eb1eece525ef38c3456e6a026c108d58b9c0688b8"
+        }
+      ]
+    },
+    {
+      "name": "post-noise",
+      "run_id": "6c0765e5fd3d4cecb21057576b0f6cab",
+      "project_id": "2fc3635e781449279500bfa00d25c04c",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "post_layout": true,
+      "metrics": {
+        "output_noise_rms_V": 0.00008431571518283129,
+        "input_noise_rms_V": 0.00010651061903932155,
+        "numerical_output_noise_rms_V": 0.00008433117763133822,
+        "frequency_start_Hz": 10,
+        "frequency_end_Hz": 10000000.000000015,
+        "samples": 241
+      },
+      "config": {
+        "mode": "noise",
+        "noise_limit_V": 0.0001,
+        "frequency_start_Hz": 10,
+        "frequency_end_Hz": 10000000,
+        "points_dec": 40
+      },
+      "rows": []
+    },
+    {
+      "name": "post-mismatch",
+      "run_id": "d496ddd835a44230af9d91329b9241a0",
+      "project_id": "2fc3635e781449279500bfa00d25c04c",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "post_layout": true,
+      "metrics": {
+        "samples": 16,
+        "seed": 729726,
+        "offset_mean_V": -0.0008860929191775724,
+        "offset_sample_std_V": 0.0029348057096866714,
+        "offset_min_V": -0.0072639942934282775,
+        "offset_max_V": 0.003770776254448993,
+        "offset_abs_max_V": 0.0072639942934282775,
+        "within_limit_samples": 16
+      },
+      "config": {
+        "mode": "mismatch",
+        "samples": 16,
+        "seed": 729726,
+        "offset_limit_V": 0.01
+      },
+      "rows": [
+        {
+          "index": 1,
+          "seed": 729726,
+          "output_V": 0.901214656814672,
+          "input_V": 0.9,
+          "offset_V": 0.0012146568146720327,
+          "supply_current_A": 0.00004301476918891489,
+          "output_sha256": "c50bdb04db6c87c969c25b754bc5ad7f9ad578bf4fdb357236c88a364d93e15a",
+          "controller_sha256": "052f84bbef9abe442f25468837d7a4beea5bd9df91199b924d2d2e1024a57f3a"
+        },
+        {
+          "index": 2,
+          "seed": 729727,
+          "output_V": 0.8994308924306189,
+          "input_V": 0.9,
+          "offset_V": -0.000569107569381111,
+          "supply_current_A": 0.00004262748690110445,
+          "output_sha256": "1be2b378749661e3a69e487969f2e06a15acbbab27309e5b9e3ba24172022d50",
+          "controller_sha256": "5685ae56c2118bdac658e0202658f91493042b60e3220a27c6d66e5c7a3a2b40"
+        },
+        {
+          "index": 3,
+          "seed": 729728,
+          "output_V": 0.8986917250704232,
+          "input_V": 0.9,
+          "offset_V": -0.001308274929576858,
+          "supply_current_A": 0.000044029379473963653,
+          "output_sha256": "c800890dbd88e2f132a9f7db266799119c5826c0b2d2c31427771a46d2408ef2",
+          "controller_sha256": "1627c7b19669044efa8ba978c0509c2f7782dcecde7f9ceae60f4670d92cd022"
+        },
+        {
+          "index": 4,
+          "seed": 729729,
+          "output_V": 0.8987677878452516,
+          "input_V": 0.9,
+          "offset_V": -0.0012322121547484466,
+          "supply_current_A": 0.00004204362442026405,
+          "output_sha256": "b70daf5191c5c7010400d2c055f139eb4fccccfd669216ab8a98fcb750d1f1fa",
+          "controller_sha256": "e69b76d731b3960bee6f0f5b2d4e3497ca886199c02863697e561846709c4514"
+        },
+        {
+          "index": 5,
+          "seed": 729730,
+          "output_V": 0.8994525237907935,
+          "input_V": 0.9,
+          "offset_V": -0.0005474762092064767,
+          "supply_current_A": 0.00004264643157733845,
+          "output_sha256": "cd421e1f8516da31fcd259c7b1a30ac90ea9e269ac316feac77cc311cf370eba",
+          "controller_sha256": "d1ccaa4bd94795f08aa629283243e1e8e32a28cd1c1746280d2c7885f9995595"
+        },
+        {
+          "index": 6,
+          "seed": 729731,
+          "output_V": 0.8939345500258875,
+          "input_V": 0.9,
+          "offset_V": -0.006065449974112513,
+          "supply_current_A": 0.00004310597286726579,
+          "output_sha256": "6a40a1e89379aa63440023c9a5e8ae8c2ef131f19b5ae8bbf19f6f33ea0500e3",
+          "controller_sha256": "e51fec1659becc94242c581cb28f9fc98ceaca91a1e6cf3ee4b83c53331b38de"
+        },
+        {
+          "index": 7,
+          "seed": 729732,
+          "output_V": 0.9023660218603734,
+          "input_V": 0.9,
+          "offset_V": 0.0023660218603733796,
+          "supply_current_A": 0.00004382875869193663,
+          "output_sha256": "1affd53c69eb6d4c00a2da659d7d0f2055830c6aaa62bc3cdc0fefee8cc03c92",
+          "controller_sha256": "e5aeff67cded949f0b793bc715c916be85adcf07029d617a112b316f08713625"
+        },
+        {
+          "index": 8,
+          "seed": 729733,
+          "output_V": 0.8989813612261133,
+          "input_V": 0.9,
+          "offset_V": -0.0010186387738867486,
+          "supply_current_A": 0.00004306075732008613,
+          "output_sha256": "8dfedf6c402ca9de9de97a00adafd9e2b6058f220303670f182e4e5a3f334e58",
+          "controller_sha256": "c79836a6b57b0f3fbe4521a3425ee3828110d224bdddb152edaaaac0f16314e6"
+        },
+        {
+          "index": 9,
+          "seed": 729734,
+          "output_V": 0.8927360057065717,
+          "input_V": 0.9,
+          "offset_V": -0.0072639942934282775,
+          "supply_current_A": 0.00004180266838349142,
+          "output_sha256": "e5e3e4182b99619ef0bc23dec260451c89d4a83f2c1227c1ab24515a8b49155e",
+          "controller_sha256": "b6117bbce8ff751dbb57a72a08e677f730d9c02954833ea973c403ec143b3718"
+        },
+        {
+          "index": 10,
+          "seed": 729735,
+          "output_V": 0.8973369694185411,
+          "input_V": 0.9,
+          "offset_V": -0.0026630305814588917,
+          "supply_current_A": 0.000042893418211837134,
+          "output_sha256": "ea5cfe7a514ac7e4c26173118cd001fc590c0fb4c2391ad5de3923854709c1cd",
+          "controller_sha256": "4e2823d7bd68406f071c56b0e717e65598c715a778492435d4780192325334a4"
+        },
+        {
+          "index": 11,
+          "seed": 729736,
+          "output_V": 0.9011212643516013,
+          "input_V": 0.9,
+          "offset_V": 0.0011212643516013143,
+          "supply_current_A": 0.000042828346542839527,
+          "output_sha256": "334932fc207d98efc1c76cc620cd2f62398b56a391e5402f16a6d889f5578698",
+          "controller_sha256": "afc578100f118e49782b4c97de82d62778599099ce39924230285658432b650c"
+        },
+        {
+          "index": 12,
+          "seed": 729737,
+          "output_V": 0.903770776254449,
+          "input_V": 0.9,
+          "offset_V": 0.003770776254448993,
+          "supply_current_A": 0.000042890665706465936,
+          "output_sha256": "421e00f3f42523d2e868dd061517843784df4b636cc0eb43525cd0248aef7823",
+          "controller_sha256": "223d31322d1377aec832cc32d5e7e11faf254662c168f08d87edc6418b0804e6"
+        },
+        {
+          "index": 13,
+          "seed": 729738,
+          "output_V": 0.9025346480490695,
+          "input_V": 0.9,
+          "offset_V": 0.0025346480490694434,
+          "supply_current_A": 0.0000438538453701922,
+          "output_sha256": "2145cfc19df306b21612de80d9d1ac7be7982967e328f9599319a00f83e71810",
+          "controller_sha256": "53fb33c374203373fc5d67ed83bb85c92f4d8ccb2bd5781ad61334416b561d75"
+        },
+        {
+          "index": 14,
+          "seed": 729739,
+          "output_V": 0.8982537602094531,
+          "input_V": 0.9,
+          "offset_V": -0.0017462397905468885,
+          "supply_current_A": 0.000042917284200407954,
+          "output_sha256": "956c8a8f1b205fee80d41d39dcdc8067298ae6c2e7b2eb8b0a6d0ff8ec9229d9",
+          "controller_sha256": "8a020fd47e6fd5b38ebd920cec2db0233e31f69a7af052f436a9ab2edd9158a8"
+        },
+        {
+          "index": 15,
+          "seed": 729740,
+          "output_V": 0.8971383418822755,
+          "input_V": 0.9,
+          "offset_V": -0.0028616581177245415,
+          "supply_current_A": 0.000043537627830299644,
+          "output_sha256": "a07b2169afa47aa1caa20b62c88b5e3e1a8115f1872fbb9be5c633eccf0893d7",
+          "controller_sha256": "e678fc740c6975ef024a441ad1d66ba4041fd8c1358c9b156d66861b067bd65a"
+        },
+        {
+          "index": 16,
+          "seed": 729741,
+          "output_V": 0.9000912283570645,
+          "input_V": 0.9,
+          "offset_V": 0.00009122835706443233,
+          "supply_current_A": 0.00004255576050043661,
+          "output_sha256": "b019562acfaaf82b68430b8b79c92703b8c6ada5f41a8bbf7fea610fae73e7db",
+          "controller_sha256": "b24cb1765222067d02c218857363b1902e1022132161e2b13d476c9f671f4a13"
+        }
+      ]
+    },
+    {
+      "name": "pre-mismatch-replay",
+      "run_id": "d2b76475f86c4cbbbc62fe36c257b48a",
+      "project_id": "2fc3635e781449279500bfa00d25c04c",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "post_layout": false,
+      "metrics": {
+        "samples": 16,
+        "seed": 729726,
+        "offset_mean_V": -0.00036347899125532823,
+        "offset_sample_std_V": 0.0026087519909364677,
+        "offset_min_V": -0.003871338397766544,
+        "offset_max_V": 0.004323061969080277,
+        "offset_abs_max_V": 0.004323061969080277,
+        "within_limit_samples": 16
+      },
+      "config": {
+        "mode": "mismatch",
+        "samples": 16,
+        "seed": 729726,
+        "offset_limit_V": 0.01
+      },
+      "rows": [
+        {
+          "index": 1,
+          "seed": 729726,
+          "output_V": 0.9043230619690803,
+          "input_V": 0.9,
+          "offset_V": 0.004323061969080277,
+          "supply_current_A": 0.00004261263828518288,
+          "output_sha256": "ce7187d543c3f5774f92682ad5cb5bbea47b89febc911356279880b6306176de",
+          "controller_sha256": "64159d1d6191aef12a275c7d1fbc21645e59cc17d221539db004779ae09aec7b"
+        },
+        {
+          "index": 2,
+          "seed": 729727,
+          "output_V": 0.9033517410744025,
+          "input_V": 0.9,
+          "offset_V": 0.0033517410744025034,
+          "supply_current_A": 0.00004452222881764473,
+          "output_sha256": "4a770132efa5063640673c0f50990da9c23f39582e54158b2938b9e27295d31f",
+          "controller_sha256": "0111b7562a9cdf91f19ce44758068e687fdef0d3c0aac3957bf1dcbb6b072b03"
+        },
+        {
+          "index": 3,
+          "seed": 729728,
+          "output_V": 0.9012791630520951,
+          "input_V": 0.9,
+          "offset_V": 0.001279163052095078,
+          "supply_current_A": 0.00004355221824388518,
+          "output_sha256": "162ce579ca51d853927f4e2b363c5f9027d86c6b4ab3cf07f8b8f117c33c8fc6",
+          "controller_sha256": "851d8ab950b3683060e8d1b10dfde0ddd8c9cb9bba5bfc8a1a394314a78778eb"
+        },
+        {
+          "index": 4,
+          "seed": 729729,
+          "output_V": 0.8961286616022335,
+          "input_V": 0.9,
+          "offset_V": -0.003871338397766544,
+          "supply_current_A": 0.00004365354343515316,
+          "output_sha256": "e71dc84357e7caa18e427bec2c48f14db3948e2943531a36f5c3d367c0ecfa98",
+          "controller_sha256": "efb77f19d5eecac59bbff0f2acd13889f0859190c4c5d719a69f4ae7011f91e3"
+        },
+        {
+          "index": 5,
+          "seed": 729730,
+          "output_V": 0.8985205651233628,
+          "input_V": 0.9,
+          "offset_V": -0.0014794348766372645,
+          "supply_current_A": 0.000044033863519774664,
+          "output_sha256": "2c906563178e54058237c7bf5910178d57cd5b0d34eade773dd36367ac5fd2fc",
+          "controller_sha256": "86c01b13b3ec29f72295ad83f384d767fd3ec9d6a2abf763f039faa474c2ccc9"
+        },
+        {
+          "index": 6,
+          "seed": 729731,
+          "output_V": 0.903012970972668,
+          "input_V": 0.9,
+          "offset_V": 0.00301297097266795,
+          "supply_current_A": 0.000043917456600440244,
+          "output_sha256": "c8f899df3eaba7a0eb3b154670ef9b28c3fd48d92d7ebc0578ba4a3479984e0c",
+          "controller_sha256": "06ace615b0f9508b80108fc0aa26410d0c1e1b94fecdcbbbdddc60afddf817ac"
+        },
+        {
+          "index": 7,
+          "seed": 729732,
+          "output_V": 0.8983228611696177,
+          "input_V": 0.9,
+          "offset_V": -0.001677138830382341,
+          "supply_current_A": 0.00004364049437696532,
+          "output_sha256": "bfe30223969e76cf7f78bdc72e33cec6e9a56b66530e1bd4f08ba63e37d6c63f",
+          "controller_sha256": "e57e72ebe2d5100b1a750758039419dd96d1ebf53ec1916a75d310acf73f872c"
+        },
+        {
+          "index": 8,
+          "seed": 729733,
+          "output_V": 0.8972697084700485,
+          "input_V": 0.9,
+          "offset_V": -0.002730291529951523,
+          "supply_current_A": 0.00004405540196818206,
+          "output_sha256": "14459d2266eff45cd7ae06759446827a6a2b98b34ec743fa156d7b02a0af10f9",
+          "controller_sha256": "bc524d2aa805c4f6d47b1b0e0291e21b0f76a452640d163de4c91ed11d8a4e19"
+        },
+        {
+          "index": 9,
+          "seed": 729734,
+          "output_V": 0.8971984395602703,
+          "input_V": 0.9,
+          "offset_V": -0.002801560439729678,
+          "supply_current_A": 0.000044363784098600754,
+          "output_sha256": "b91d8b6f74000e48dcb8a29e5102008964ff7932ffd0a3cb00d819418d664256",
+          "controller_sha256": "7abc107d3653c139b7a30c31528f4a19acf3ccb8d662134f3210ec4afb25b79a"
+        },
+        {
+          "index": 10,
+          "seed": 729735,
+          "output_V": 0.8981257034438386,
+          "input_V": 0.9,
+          "offset_V": -0.0018742965561614477,
+          "supply_current_A": 0.000043737924631537966,
+          "output_sha256": "d1420c81261fa07c09e83bf2fb67a5b8920dcced1602e6dfbb5d8a5755b3e259",
+          "controller_sha256": "5b6938fef79ad5b323f4d3360866c949bd396550dc10a146acb22f16b68296c5"
+        },
+        {
+          "index": 11,
+          "seed": 729736,
+          "output_V": 0.8968731439035764,
+          "input_V": 0.9,
+          "offset_V": -0.0031268560964236025,
+          "supply_current_A": 0.00004389178858733861,
+          "output_sha256": "5b97db4d07f28e731184c0f8362442846fbdfc4282982f948cabe9e9ae77fac8",
+          "controller_sha256": "71df70e1f04312e95a3e0f30e5a24993b8a15fe385322436e2716f86bc5ec4e5"
+        },
+        {
+          "index": 12,
+          "seed": 729737,
+          "output_V": 0.8986840892357577,
+          "input_V": 0.9,
+          "offset_V": -0.0013159107642423118,
+          "supply_current_A": 0.00004362589533457646,
+          "output_sha256": "e6fb23cbd859f68c172a3d3fe724fff73dea0f09f13334a562f4de5e97e47f93",
+          "controller_sha256": "ae7a66eed4044f045d2d642808379a8cdf0b674ff4727fe7e198cdeca06feeea"
+        },
+        {
+          "index": 13,
+          "seed": 729738,
+          "output_V": 0.9023317984765526,
+          "input_V": 0.9,
+          "offset_V": 0.0023317984765526267,
+          "supply_current_A": 0.00004411451869743116,
+          "output_sha256": "bcd0c6f4aefd54a74133c3da90d02292a78d1595788e7f07c604b0ace070dc6b",
+          "controller_sha256": "2c4e1f46d543b1a173f316c23f73840b275965c6df86cde24ec19c89d89e2868"
+        },
+        {
+          "index": 14,
+          "seed": 729739,
+          "output_V": 0.9001802298689654,
+          "input_V": 0.9,
+          "offset_V": 0.00018022986896537585,
+          "supply_current_A": 0.000043789723462819705,
+          "output_sha256": "5ff23e77a3cfeb60093fdf326dca63e27f43955ad67cb6371b224e8172fd5f63",
+          "controller_sha256": "41f7800ef5a1ee93b65750147836738c76467307d1ec3ee5bcd6e5b6d411853e"
+        },
+        {
+          "index": 15,
+          "seed": 729740,
+          "output_V": 0.8974510326588643,
+          "input_V": 0.9,
+          "offset_V": -0.002548967341135744,
+          "supply_current_A": 0.00004396127307142376,
+          "output_sha256": "a8d4bd53cf8cd8d0aad6a6b0317a42af57249199d31ceb4812d8577b4f9eefad",
+          "controller_sha256": "c69925c022a65280aba5856bd189b4d9eb9ccb88d626327c1d07e6e9317efba6"
+        },
+        {
+          "index": 16,
+          "seed": 729741,
+          "output_V": 0.9011311655585814,
+          "input_V": 0.9,
+          "offset_V": 0.001131165558581393,
+          "supply_current_A": 0.000043817158447126,
+          "output_sha256": "717e0e51772a198897b6e80f99a83f2260b491542d0acc39b621b54ad6050b51",
+          "controller_sha256": "42e1d5071cc212f65bfcf3e7f8fccd47799f718c12d548cbd63ae06eb058f863"
+        }
+      ]
+    },
+    {
+      "name": "post-mismatch-replay",
+      "run_id": "f0dc409facac488a88ec1cabee3ddb95",
+      "project_id": "2fc3635e781449279500bfa00d25c04c",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "post_layout": true,
+      "metrics": {
+        "samples": 16,
+        "seed": 729726,
+        "offset_mean_V": -0.0008860945893672534,
+        "offset_sample_std_V": 0.0029348057066462163,
+        "offset_min_V": -0.007263995941252044,
+        "offset_max_V": 0.0037707745727518782,
+        "offset_abs_max_V": 0.007263995941252044,
+        "within_limit_samples": 16
+      },
+      "config": {
+        "mode": "mismatch",
+        "samples": 16,
+        "seed": 729726,
+        "offset_limit_V": 0.01
+      },
+      "rows": [
+        {
+          "index": 1,
+          "seed": 729726,
+          "output_V": 0.9012146551466572,
+          "input_V": 0.9,
+          "offset_V": 0.0012146551466571953,
+          "supply_current_A": 0.00004301476889125369,
+          "output_sha256": "9ec15084c3bc2078e7db7d961b29184cf98acafdee445e057062e9282d94e4a1",
+          "controller_sha256": "e41da8a079ea396fc32b86bd86045f2498e8b155a3041279c00a22b2858c0608"
+        },
+        {
+          "index": 2,
+          "seed": 729727,
+          "output_V": 0.8994308907540756,
+          "input_V": 0.9,
+          "offset_V": -0.0005691092459244596,
+          "supply_current_A": 0.000042627486603726006,
+          "output_sha256": "8080724582eb59bb755fd579848b12186440af5a6125322809e8d3b9f98aa867",
+          "controller_sha256": "21a72620dc68b47ef73f9ec81f0580037a68556b098a950d87988e795678142c"
+        },
+        {
+          "index": 3,
+          "seed": 729728,
+          "output_V": 0.8986917234478227,
+          "input_V": 0.9,
+          "offset_V": -0.0013082765521773565,
+          "supply_current_A": 0.000044029379177919215,
+          "output_sha256": "e132a9bb35574fe97258e7fe56094194e09a3523c0c2496ebe14991979f3bb44",
+          "controller_sha256": "1a6e5a75c0c57dbb2b6d0df0fe2fbefbbdada593d5a9429957d1c1eccd3dbe99"
+        },
+        {
+          "index": 4,
+          "seed": 729729,
+          "output_V": 0.8987677861168041,
+          "input_V": 0.9,
+          "offset_V": -0.0012322138831959428,
+          "supply_current_A": 0.000042043624122051204,
+          "output_sha256": "f195c331e5268e08a56b618b9852b0b4744ecba0c965903343ca1faba08fa346",
+          "controller_sha256": "a6ee70728a6f65806f6a1aecc8a4b78bfa0fe031254736aa8a819160539baf61"
+        },
+        {
+          "index": 5,
+          "seed": 729730,
+          "output_V": 0.8994525221346813,
+          "input_V": 0.9,
+          "offset_V": -0.000547477865318724,
+          "supply_current_A": 0.00004264643127804314,
+          "output_sha256": "a495b294dcebd5ff9ee53594c3445852a24ddfc732268dd9ed40d341cfc2cb9e",
+          "controller_sha256": "93477e9ca389a15254b73ad52cb0213fd049f3f8fec06a3c33989a7a6e099a97"
+        },
+        {
+          "index": 6,
+          "seed": 729731,
+          "output_V": 0.893934548379948,
+          "input_V": 0.9,
+          "offset_V": -0.006065451620052009,
+          "supply_current_A": 0.000043105972566112594,
+          "output_sha256": "5774395ce010cbf06083785471d87beb8f8ef428c5f3d9be6bcf4e734a79a23f",
+          "controller_sha256": "77fc27fcd33e16e6701d21e34182729d2cf5520f5a65cbd86ffb363f821f3293"
+        },
+        {
+          "index": 7,
+          "seed": 729732,
+          "output_V": 0.9023660202122337,
+          "input_V": 0.9,
+          "offset_V": 0.0023660202122336438,
+          "supply_current_A": 0.00004382875839388685,
+          "output_sha256": "e0b12673ea83b7047d6f52348f8e0619a184066799166af1811c319387ce6397",
+          "controller_sha256": "cbec8f81682ab7ce625e8490c18394ae47598966d0272d63f63eec889a0753a0"
+        },
+        {
+          "index": 8,
+          "seed": 729733,
+          "output_V": 0.898981359538059,
+          "input_V": 0.9,
+          "offset_V": -0.0010186404619410006,
+          "supply_current_A": 0.00004306075701979856,
+          "output_sha256": "36858df488fea89b14628290eef4591d92b442bf70b3245e5d90f84bc490148e",
+          "controller_sha256": "a7a0c0d5336e3d08127e93d3891a73532ad199cba3a3246a7536f3ae02f49c29"
+        },
+        {
+          "index": 9,
+          "seed": 729734,
+          "output_V": 0.892736004058748,
+          "input_V": 0.9,
+          "offset_V": -0.007263995941252044,
+          "supply_current_A": 0.00004180266808419958,
+          "output_sha256": "9f587cc3a088fb22af54539a64772b92eedbe90ba18ded6fe5cedaf05ef7920b",
+          "controller_sha256": "446ec3074462d00a080310c4cd952c3fee3c162e0ff139040e686635816233a1"
+        },
+        {
+          "index": 10,
+          "seed": 729735,
+          "output_V": 0.8973369677514351,
+          "input_V": 0.9,
+          "offset_V": -0.0026630322485649005,
+          "supply_current_A": 0.00004289341791385501,
+          "output_sha256": "c4175fb4410bfa84ada9897bda8fd8f1b75868a174a10e3911b69ffa02d55555",
+          "controller_sha256": "dfec6ecec54da69962b46699f481303516694ebae3b0cb1b1325959b892d344f"
+        },
+        {
+          "index": 11,
+          "seed": 729736,
+          "output_V": 0.9011212626852716,
+          "input_V": 0.9,
+          "offset_V": 0.0011212626852715735,
+          "supply_current_A": 0.000042828346241818166,
+          "output_sha256": "eab774c3348d59d596d58da93500cc45b0106ddfc4c8fcb96c5e082302d5076b",
+          "controller_sha256": "11f1ff51894b9b57d1d85054e35280857534d1a5f38b456cc4ac143c8c088696"
+        },
+        {
+          "index": 12,
+          "seed": 729737,
+          "output_V": 0.9037707745727519,
+          "input_V": 0.9,
+          "offset_V": 0.0037707745727518782,
+          "supply_current_A": 0.00004289066540620265,
+          "output_sha256": "6e0f608694f7a0aa34b728d722bd6990b05b4a92280bdc8d3d68a0eee2135faa",
+          "controller_sha256": "acd00cab43cc02415d77fec966657776dcd5fccd47584946d5cd6082bc5e7aa9"
+        },
+        {
+          "index": 13,
+          "seed": 729738,
+          "output_V": 0.9025346464126283,
+          "input_V": 0.9,
+          "offset_V": 0.0025346464126282386,
+          "supply_current_A": 0.00004385384507079107,
+          "output_sha256": "5a0af669f852cc1f2382a9683bc173ebf32ac08d5d4a488ee384c098422515f6",
+          "controller_sha256": "92d922cab60c85988d45e429887af4fcc6bb86835b587071a1e999075f357309"
+        },
+        {
+          "index": 14,
+          "seed": 729739,
+          "output_V": 0.8982537585225527,
+          "input_V": 0.9,
+          "offset_V": -0.0017462414774472856,
+          "supply_current_A": 0.000042917283900089157,
+          "output_sha256": "1a8bcaf2f719b3f99e72ad6a130226dda1a2a2b06b975a36944b88641d7eba8e",
+          "controller_sha256": "9ad9882524a2c53b5c51c0651bc1d5efb49f094ea493c97a9b6e68369d8f922b"
+        },
+        {
+          "index": 15,
+          "seed": 729740,
+          "output_V": 0.8971383402000573,
+          "input_V": 0.9,
+          "offset_V": -0.002861659799942684,
+          "supply_current_A": 0.00004353762753141893,
+          "output_sha256": "4a0a6619ca6c1377afd732867f4e0fb48ed354889c752148c309b792bd4a1c0d",
+          "controller_sha256": "553503a825c99a4aab8f8c29f79f5a43fe216faf4440a4ad9b2ddb491d101bb4"
+        },
+        {
+          "index": 16,
+          "seed": 729741,
+          "output_V": 0.9000912266363978,
+          "input_V": 0.9,
+          "offset_V": 0.00009122663639782314,
+          "supply_current_A": 0.00004255576020091405,
+          "output_sha256": "be9eefcef0a643cdcc583e9c1ca6e2b48e7a8841947dadc9254430d9299356d0",
+          "controller_sha256": "9e34942db6c281d886a0be4ec7db265c5c6fcc3f2b1160ca98a6622dd741f678"
+        }
+      ]
+    }
+  ],
+  "replay": {
+    "pre": {
+      "offset_max_delta_V": 0,
+      "supply_current_max_delta_A": 0,
+      "exact": true
+    },
+    "post": {
+      "offset_max_delta_V": 1.7284474962409035e-9,
+      "supply_current_max_delta_A": 3.0115319960000164e-13,
+      "exact": false,
+      "offset_tolerance_V": 5e-9,
+      "current_tolerance_A": 1e-12,
+      "scope": "Repeats actual Magic extraction and native OP; numeric matrix ordering may differ. Tolerance is explicit, not bitwise equality."
+    }
+  },
+  "invalid_input_rejected": "CHARACTERIZATION_RANGE",
+  "source_preserved": true,
+  "cancellation": {
+    "run_id": "afc6787d094b4041aeb0466c5b72a707",
+    "execution_status": "canceled",
+    "analysis_result": "unknown"
+  },
+  "scope": "Actual installed public-model OTA unity follower, TT/27C/1.8V, typical extracted RC; finite 16-sample mismatch, not foundry yield.",
+  "foundry_signoff": false,
+  "paid_calls": 0
+}
