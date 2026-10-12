@@ -17,7 +17,9 @@ else{
   release=await response.json();
 }
 if(release.tag_name!==tag)throw Error('Download release tag differs from the requested version.');
+if(release.draft)throw Error('Publish the release before generating public download URLs.');
 const files=release.assets.filter(a=>/^Resistor-[0-9.]+-(mac-(arm64|x64)-r\d+\.zip|win-x64\.exe|linux-x64\.tar\.gz)$/.test(a.name));
+if(files.some(a=>!a.browser_download_url.startsWith(`https://github.com/${repo}/releases/download/${tag}/`)))throw Error('Download links must use the published release tag, not a temporary draft URL.');
 if(!files.length||files.some(a=>!a.size||!/^sha256:[a-f0-9]{64}$/.test(a.digest)))throw Error('Published assets require actual byte size and SHA-256 digest.');
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const platforms={
