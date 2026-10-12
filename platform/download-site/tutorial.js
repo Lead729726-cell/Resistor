@@ -8,7 +8,7 @@
   let waiting = false;
   const update = () => {
     const duration = Number.isFinite(video.duration) ? video.duration : 0;
-    time.textContent = `${clock(video.currentTime)} / ${duration ? clock(duration) : '07:07'}`;
+    time.textContent = `${clock(video.currentTime)} / ${duration ? clock(duration) : clock(Number(video.dataset.duration || 427))}`;
     play.textContent = video.paused ? '영상 재생' : '일시정지';
     if (video.error) state.textContent = '영상을 불러오지 못했습니다. MP4 다운로드를 사용하세요.';
     else if (!duration) state.textContent = '영상 정보 불러오는 중';

@@ -42,5 +42,6 @@ export async function preparePhysicalSite(root,tag){
  const confPath=path.join(site,'vercel.json'),conf=JSON.parse(await readFile(confPath,'utf8'));conf.rewrites.push({source:'/references',destination:'/references.html'},{source:'/references/',destination:'/references.html'},...['physical-logic','physical-chips'].flatMap(s=>[{source:'/tutorial/'+s,destination:'/'+s+'.html'},{source:'/tutorial/'+s+'/',destination:'/'+s+'.html'}]));
  conf.headers.unshift({source:'/tutorial-assets/(.*).vtt',headers:[{key:'Content-Type',value:'text/vtt; charset=utf-8'}]});await writeFile(confPath,JSON.stringify(conf,null,2)+'\n');
  await appendFile(path.join(site,'.vercelignore'),'!physical-*.html\n!physical.css\n!physical-series.json\n!physical-evidence.json\n!references.html\n!physical-assets/\n!physical-assets/**\n');
+ await appendFile(path.join(site,'physical.css'),'\nhtml[data-theme=light] .pass{color:#187156}html[data-theme=light] .fail{color:#ab3830}@media(prefers-color-scheme:light){html:not([data-theme=dark]) .pass{color:#187156}html:not([data-theme=dark]) .fail{color:#ab3830}}\n');
  console.log(JSON.stringify({physical_references:evidence.rows.length,lessons:series.map(s=>s.url),source_version:evidence.source_version}));
 }
