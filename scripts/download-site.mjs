@@ -3,6 +3,7 @@ import path from 'node:path';
 import {preparePdkCatalog} from './download-pdk-catalog.mjs';
 import {prepareTutorialSite} from './download-tutorial.mjs';
 import {preparePhysicalSite} from './download-physical.mjs';
+import {prepareLayoutEditorSite} from './download-layout-editor.mjs';
 const root=process.cwd(),folder=path.join(root,'platform/download-site');
 const current=JSON.parse(await readFile(path.join(root,'package.json'),'utf8')).version;
 const tag=process.argv.find(a=>a.startsWith('--release='))?.slice(10)||'v'+current;
@@ -46,4 +47,5 @@ await writeFile(path.join(folder,'index.html'),`<!doctype html><html lang="ko"><
 await writeFile(path.join(folder,'vercel.json'),JSON.stringify({framework:null,buildCommand:null,outputDirectory:'.',rewrites:[{source:'/tutorial',destination:'/tutorial.html'},{source:'/tutorial/',destination:'/tutorial.html'}],redirects:downloads.map(a=>({source:'/download/'+a.platform,destination:a.url,permanent:false})),headers:[{source:'/tutorial-assets/subtitles-ko.vtt',headers:[{key:'Content-Type',value:'text/vtt; charset=utf-8'}]},{source:'/tutorial-assets/guide-ko-v1.mp4',headers:[{key:'Cache-Control',value:'public, max-age=86400'}]},{source:'/(.*)',headers:[{key:'X-Content-Type-Options',value:'nosniff'},{key:'Referrer-Policy',value:'strict-origin-when-cross-origin'},{key:'X-Frame-Options',value:'DENY'},{key:'Content-Security-Policy',value:"default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; script-src 'self'; frame-ancestors 'none'; base-uri 'self'"}]}]},null,2)+'\n');
 await writeFile(path.join(folder,'.vercelignore'),'*\n!index.html\n!appearance.js\n!register-symbol.svg\n!register.png\n!pdk-links.html\n!open-pdk-links.json\n!open-pdk-links.md\n!downloads.json\n!vercel.json\n!tutorial.html\n!tutorial.css\n!tutorial.js\n!tutorial.json\n!tutorial-assets/\n!tutorial-assets/**\n');
 await preparePhysicalSite(root,tag);
+await prepareLayoutEditorSite(root,tag);
 console.log(JSON.stringify({directory:'platform/download-site',release:tag,files:downloads.map(a=>({name:a.name,bytes:a.bytes,sha256:a.sha256})),static_only:true,credentials_included:false},null,2));

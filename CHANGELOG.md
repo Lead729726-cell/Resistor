@@ -2,7 +2,24 @@
 
 This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
-`docs/evidence/` and the example READMEs. Package version: 0.17.0.
+`docs/evidence/` and the example READMEs. Package version: 0.18.0.
+
+## 0.18.0 — Direct mask editing (2026-10-12)
+
+- Start from an empty SKY130 layout with 19 available mask purposes; no
+  fabricated device geometry or inherited verification results.
+- Drag rectangles, click polygons and Manhattan routes, use R/P/W/M/C/F
+  shortcuts, and keep the view steady across geometry revisions.
+- Edit actual rectangle coordinates, layer and Net in µm or integer DBU.
+  Exact decimal conversion rejects off-grid input instead of rounding it.
+- Copy mask shapes with new IDs, preserving the original and holes while
+  clearing device identity. Child/PCell geometry remains protected.
+- Layer locks protect canvas and property edits. Delete/Undo/Redo and stable-ID
+  GDS/OASIS round trips were checked against the native engine and actual UI.
+- Empty layouts cannot claim DRC success. Manual layouts require explicit
+  reference SPICE and analysis configuration for LVS, PEX and simulation.
+- Keep the v0.17.0 physical-library media and reports at their original release
+  URLs while publishing the new editor packages and direct-editing guide.
 
 ## 0.17.0 — Public-PDK physical library (2026-10-12)
 

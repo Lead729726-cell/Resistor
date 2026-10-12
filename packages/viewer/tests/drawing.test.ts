@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {drawingPoint,drawingCommand,appendDrawingPoint} from '../src/drawing';
+import {drawingPoint,drawingCommand,appendDrawingPoint,lengthToDbu,dbuToLength} from '../src/drawing';
 test('absolute grid snap is exact beyond Number precision and with off-grid origin',()=>{
   const origin=9007199254741003n;
   assert.deepEqual(drawingPoint(.012,-.008,{origin:[origin,-origin],dbuUm:.001,boundsUm:[-1,-1,1,1]},5),['9007199254741015','-9007199254741010']);
@@ -30,4 +30,14 @@ test('coordinate range and off-grid input fail before submission',()=>{
   assert.throws(()=>drawingCommand('box','68/20',[['0','0'],['11','10']],5,'200',''),/grid/);
   assert.throws(()=>drawingCommand('box','68/20',[['0','0'],['9223372036854775808','10']],1,'200',''),/64 bit/);
   assert.throws(()=>drawingCommand('route','68/20',[['9223372036854775800','0'],['9223372036854775805','0']],1,'20',''),/가장자리/);
+});
+test('micrometre fields keep exact DBU and reject fractional or off-grid lengths',()=>{
+  assert.equal(lengthToDbu('0.35','um',.001,5),'350');
+  assert.equal(lengthToDbu('-1.25e1','um',.001,5),'-12500');
+  assert.equal(lengthToDbu('200','dbu',.005,5),'200');
+  assert.equal(dbuToLength('9007199254741005',.001),'9007199254741.005');
+  assert.equal(dbuToLength('-350',.0025),'-0.875');
+  assert.throws(()=>lengthToDbu('0.0005','um',.001),/DBU/);
+  assert.throws(()=>lengthToDbu('0.003','um',.001,5),/격자/);
+  for(const value of ['Infinity','NaN','','1e999'])assert.throws(()=>lengthToDbu(value,'um',.001));
 });

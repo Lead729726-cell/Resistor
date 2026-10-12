@@ -23,6 +23,8 @@ export function deltaUm(value: string, origin: bigint, dbuUm: number): number {
 
 export function sceneFrame(scene: Scene): LocalFrame {
   if (!Number.isFinite(scene.dbu_um) || scene.dbu_um <= 0) throw new Error('유효한 DBU 단위가 필요합니다.');
+  // Display-only workspace for a genuinely empty layout; no mask is invented.
+  if(scene.total_shape_count===0&&!scene.shapes.length)return {origin:[0n,0n],dbuUm:scene.dbu_um,boundsUm:[-10,-10,10,10]};
   const bounds=(scene as Scene & {bounds_filter?:[string,string,string,string]|null}).bounds_filter ?? (!scene.truncated?scene.bounds:undefined);
   if (bounds) {
     const [minX,minY,maxX,maxY] = bounds.map(decimalCoordinate);

@@ -68,7 +68,7 @@ TOOL_DIAGNOSTICS=ToolchainDiagnostics()
 MODEL_HASHES=None
 FILE_CACHE={}
 MUTATION_DEPTH=0
-PORTS={'inverter':['A','VGND','VPWR','Y'],'mosfet':['B','D','S','G'],'wire':['IN','OUT'],'fixture':[],'performance':[],'current_mirror':['REF','OUT','VGND'],'differential_pair':['INP','INN','OUTP','OUTN','BIAS','VGND']}
+PORTS={'inverter':['A','VGND','VPWR','Y'],'mosfet':['B','D','S','G'],'wire':['IN','OUT'],'fixture':[],'performance':[],'layout':[],'current_mirror':['REF','OUT','VGND'],'differential_pair':['INP','INN','OUTP','OUTN','BIAS','VGND']}
 
 def now(): return datetime.now(timezone.utc).isoformat()
 def dump(path,value): Path(path).write_text(json.dumps(value,indent=2,ensure_ascii=False)+'\n')
@@ -106,6 +106,10 @@ def snapshot_dir(p,revision=None): return STATE/'projects'/p['id']/'snapshots'/s
 def load_layout(p):
     l=k.Layout(); l.read(str(snapshot_dir(p)/'layout.oas')); return l
 def commit(p,l,parent=None,analysis_configuration=False):
+    if p.get('example')=='layout' and p.get('pdk_id')=='sky130A' and not p.get('analysis_setup'):
+        # OASIS need not retain unused layer indexes. The editing palette must
+        # remain available after the first rectangle, deletion or bundle import.
+        for layer,purpose in [(64,20),(65,20),(65,44),(66,20),(66,44),(67,20),(67,44),(68,20),(68,44),(69,20),(69,44),(70,20),(70,44),(71,20),(71,44),(72,20),(93,44),(94,20),(95,20)]:l.layer(layer,purpose)
     d=snapshot_dir(p)
     if DB.execute('SELECT 1 FROM history WHERE project_id=? AND revision=?',(p['id'],p['revision'])).fetchone(): raise EDAError('HISTORY_DIVERGENCE','An immutable revision already exists.')
     d.mkdir(parents=True,exist_ok=True)
@@ -330,6 +334,10 @@ def create(params,starter=None):
     l=k.Layout(); l.dbu=.001; top=l.create_cell(cell)
     if example in {'current_mirror','differential_pair'}:
         l,schematic,ports=templates.analog(sys.modules[__name__],STATE/'projects'/pid/'generator',example);p.update(schematic=schematic,ports=ports,layout_parameter_policy='verified_analog_core_fixed_routing')
+    elif example=='layout':
+        # Register known mask purposes without inserting fabricated geometry.
+        for layer,purpose in [(64,20),(65,20),(65,44),(66,20),(66,44),(67,20),(67,44),(68,20),(68,44),(69,20),(69,44),(70,20),(70,44),(71,20),(71,44),(72,20),(93,44),(94,20),(95,20)]:l.layer(layer,purpose)
+        p['layout_parameter_policy']='manual_layout'; p['user_cells']=[cell]
     elif example=='performance':
         count=params.get('count',100000)
         if isinstance(count,bool) or not isinstance(count,int) or not 1<=count<=100000: raise EDAError('ARRAY_LIMIT','Performance fixture count is 1..100000.')
@@ -477,6 +485,9 @@ def start_job(params,kind):
     if not isinstance(p['cell'],str) or not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*',p['cell']): raise EDAError('UNSUPPORTED_NAME','Imported cell name is outside the supported engine identifier subset.')
     if not isinstance(p.get('ports'),list) or any(not isinstance(name,str) or not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*',name) for name in p['ports']): raise EDAError('UNSUPPORTED_NAME','Imported port metadata is outside the supported engine identifier subset.')
     template=bool(p.get('design_template'))
+    if p['example']=='layout':
+        if not any(not cell.is_empty() for cell in load_layout(p).each_cell()):raise EDAError('NO_PHYSICAL_LAYOUT','Draw actual geometry before checking the empty layout.')
+        if kind!='drc':raise EDAError('REFERENCE_REQUIRED','Configure the actual reference SPICE and analysis setup for a manually drawn layout.')
     digital=bool(p.get('digital_unit'))
     if digital:digital_units.validate_project(p)
     if template: design_tools.validate_template_project(p)

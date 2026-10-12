@@ -42,3 +42,27 @@ export function drawingCommand(tool:DrawTool,layer:string,points:DecimalPoint[],
   for(let i=0;i<p.length;i++){if(p[i].some(v=>v-w/2n<min||v+w/2n>max))throw new Error('배선 가장자리가 좌표 범위를 넘습니다.');if(i&& (same(points[i-1],points[i])||p[i][0]!==p[i-1][0]&&p[i][1]!==p[i-1][1]))throw new Error('배선은 서로 다른 점을 잇는 수평·수직 구간이어야 합니다.');}
   return {type:'add_route',layer_id:layer,points,width:String(w),...metadata};
 }
+
+function decimalFraction(text:string):[bigint,bigint]{
+  const m=/^([+-]?)(\d*\.?\d+)(?:e([+-]?\d+))?$/i.exec(text.trim());
+  if(!m||text.length>100)throw new Error('유한한 십진수를 입력하세요.');
+  const exponent=Number(m[3]??0);if(!Number.isSafeInteger(exponent)||Math.abs(exponent)>30)throw new Error('길이 범위를 확인하세요.');
+  const decimals=m[2].split('.')[1]?.length??0,n=BigInt(m[2].replace('.',''))*(m[1]==='-'?-1n:1n),scale=decimals-exponent;
+  return scale>=0?[n,10n**BigInt(scale)]:[n*10n**BigInt(-scale),1n];
+}
+/** Explicit units, exact decimal arithmetic; reject instead of silently rounding. */
+export function lengthToDbu(text:string,unit:'um'|'dbu',dbuUm:number,grid=1):string{
+  if(!Number.isFinite(dbuUm)||dbuUm<=0||!Number.isSafeInteger(grid)||grid<1)throw new Error('DBU와 격자를 확인하세요.');
+  const [n,d]=decimalFraction(text),[u,v]=unit==='um'?decimalFraction(String(dbuUm)):[1n,1n];
+  const numerator=n*v,denominator=d*u;
+  if(numerator%denominator)throw new Error('이 길이는 정수 DBU로 표현할 수 없습니다.');
+  const value=coordinate(String(numerator/denominator));if(value%BigInt(grid))throw new Error(`${grid} DBU 격자에 맞는 길이를 입력하세요.`);
+  return String(value);
+}
+export function dbuToLength(value:string,dbuUm:number):string{
+  if(!Number.isFinite(dbuUm)||dbuUm<=0)throw new Error('DBU를 확인하세요.');
+  const [u,v]=decimalFraction(String(dbuUm)),n=decimalCoordinate(value)*u,negative=n<0n,a=negative?-n:n;
+  const whole=a/v,remainder=a%v;if(!remainder)return (negative?'-':'')+whole;
+  const digits=String(v).length-1;
+  return `${negative?'-':''}${whole}.${String(remainder).padStart(digits,'0').replace(/0+$/,'')}`;
+}

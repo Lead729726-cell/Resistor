@@ -107,7 +107,7 @@ def scene(layout, project, layers,options=None):
         if len(shapes)>=limit: truncated=True; break
         ident=f'{path}/{s.property(1)}'
         xy=[[str(pt.x),str(pt.y)] for pt in p.each_point_hull()]
-        item={'id':ident,'layer_id':li,'cell_path':path,'polygon':xy}
+        item={'id':ident,'layer_id':li,'cell_path':path,'polygon':xy,'shape_type':'box' if s.is_box() else 'path' if s.is_path() else 'polygon'}
         if ':' in path: item['instance_id']=path.rsplit('/',1)[0]+'/@'+path.rsplit('/',1)[1].split(':')[1]
         holes=[[[str(pt.x),str(pt.y)] for pt in p.each_point_hole(i)] for i in range(p.holes())]
         if holes: item['holes']=holes
@@ -150,12 +150,12 @@ def scene(layout, project, layers,options=None):
             if len(names)==1:pin['name']=next(iter(names));pin['net']=pin.get('net') or pin['name']
     cells=[]
     for c in layout.each_cell():
-        cb=c.bbox(); cells.append({'name':c.name,'bbox':[str(cb.left),str(cb.bottom),str(cb.right),str(cb.top)],'shape_count':sum(c.shapes(li).size() for li in layout.layer_indices()),'instance_count':sum(1 for _ in c.each_inst())})
+        cb=c.bbox(); cells.append({'name':c.name,'bbox':['0','0','0','0'] if cb.empty() else [str(cb.left),str(cb.bottom),str(cb.right),str(cb.top)],'shape_count':sum(c.shapes(li).size() for li in layout.layer_indices()),'instance_count':sum(1 for _ in c.each_inst())})
     b=top.bbox()
     return {'project_id':project['id'],'revision':project['revision'],'dbu_um':layout.dbu,'grid_dbu':project['grid_dbu'],'source':project['source'],
             'layers':layers,'shapes':shapes,'devices':project['schematic']['devices'],'cells':cells,'instances':instances,'labels':labels,'pins':pins,
             'total_shape_count':authoritative_total,'returned_shape_count':len(shapes),'truncated':truncated,'bounds_filter':options.get('bounds'),
-            'bounds':[str(b.left),str(b.bottom),str(b.right),str(b.top)]}
+            'bounds':['0','0','0','0'] if b.empty() else [str(b.left),str(b.bottom),str(b.right),str(b.top)]}
 
 def semantic_hash(layout,top):
     # Geometry fingerprint intentionally excludes IDs and display metadata.
@@ -332,20 +332,35 @@ def apply(layout,project,command):
         s=target.shapes(layout.layer(*map(int,layer.split('/')))).insert(path)
         s.set_property(1,uuid.uuid4().hex)
         if command.get('net'): s.set_property(2,command['net'])
-    elif ty in ('move_shape','delete_shape'):
-        wanted=command.get('id'); found=None
+    elif ty in ('move_shape','delete_shape','copy_shape','update_box'):
+        wanted=command.get('id'); found=None; found_li=None
+        if not isinstance(wanted,str):raise EDAError('INVALID_COMMAND','An existing shape ID is required.')
+        if target==top and (not wanted.startswith(top.name+'/') or wanted.count('/')>1): raise EDAError('GENERATED_GEOMETRY','Child/PCell geometry is read-only; select an editable child cell explicitly.')
         for li in layout.layer_indices():
             for s in target.shapes(li).each():
-                if s.property(1)==wanted.rsplit('/',1)[-1]: found=s; break
-        for s,_,_,path in walk(layout,top):
-            if found is not None: break
-            if f'{path}/{s.property(1)}'==wanted: found=s; break
+                if s.property(1)==wanted.rsplit('/',1)[-1]: found=s; found_li=li; break
+            if found is not None:break
         if found is None: raise EDAError('NOT_FOUND','Shape no longer exists.')
         # Editing shared child geometry affects every occurrence; do not silently mutate PCells.
         if target==top and (not wanted.startswith(top.name+'/') or wanted.count('/')>1): raise EDAError('GENERATED_GEOMETRY','Child/PCell geometry is read-only; select an editable child cell explicitly.')
         if ty=='delete_shape': found.delete()
+        elif ty=='update_box':
+            if not found.is_box(): raise EDAError('UNSUPPORTED','Only actual rectangle primitives support box coordinate editing.')
+            vals=[coord(v,grid) for v in command.get('box',[])]
+            if len(vals)!=4 or vals[0]>=vals[2] or vals[1]>=vals[3]: raise EDAError('INVALID_GEOMETRY','Rectangle corners must define positive area.')
+            if 'net' in command:
+                net=command['net']
+                if not isinstance(net,str) or len(net)>128 or any(ord(c)<32 for c in net): raise EDAError('INVALID_NET','Net annotation must be printable text up to 128 characters.')
+            li=layer_index() if 'layer_id' in command else found_li
+            if li!=found_li:
+                replacement=target.shapes(li).insert(found); found.delete(); found=replacement
+            found.box=k.Box(*vals)
+            if 'net' in command:
+                found.set_property(2,net) if net else found.delete_property(2)
         else:
             dx=coord(command.get('dx'),grid); dy=coord(command.get('dy'),grid); b=found.bbox()
             for n in (b.left+dx,b.right+dx,b.bottom+dy,b.top+dy): coord(str(n))
-            found.transform(k.Trans(dx,dy))
+            if ty=='copy_shape':
+                copied=target.shapes(found_li).insert(found); copied.set_property(1,uuid.uuid4().hex); copied.delete_property(3); copied.transform(k.Trans(dx,dy))
+            else: found.transform(k.Trans(dx,dy))
     else: raise EDAError('UNSUPPORTED',f'Unsupported layout command: {ty}')

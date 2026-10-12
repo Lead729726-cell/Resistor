@@ -8,7 +8,10 @@ const nav=`<header><div class="bar"><a class="brand" href="/"><img src="/registe
 const head=(title,url)=>`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(title)} · Resistor</title><meta name="description" content="실제 SKY130 물리 설계와 DRC/LVS/PEX, ngspice 기생 전후 파형을 따라 배우는 Resistor 가이드"><link rel="canonical" href="https://resistor-downloads.vercel.app${url}"><link rel="icon" href="/register-symbol.svg" type="image/svg+xml"><link rel="stylesheet" href="/tutorial.css"><link rel="stylesheet" href="/physical.css"></head><body>${nav}<main>`;
 const tail=`<footer><span>Resistor · 공개 공정 물리 참조 / foundry signoff 별도</span><a href="https://github.com/Lead729726-cell/Resistor">GitHub</a></footer></main><script src="/appearance.js" defer></script></body></html>`;
 export async function preparePhysicalSite(root,tag){
- const site=path.join(root,'platform/download-site'),base=`https://github.com/Lead729726-cell/Resistor/releases/download/${tag}/`;
+ // These media and evidence belong to the original, verified physical release.
+ // A later application release must not move their URLs to nonexistent assets.
+ const physicalRelease='v0.17.0';
+ const site=path.join(root,'platform/download-site'),base=`https://github.com/Lead729726-cell/Resistor/releases/download/${physicalRelease}/`;
  await mkdir(path.join(site,'physical-assets'),{recursive:true});
  const evidence=JSON.parse(await readFile(path.join(root,'examples/physical-library/evidence.json'),'utf8'));
  if(evidence.rows.length!==14||!evidence.rows.every(r=>r.physical_verification_pass))throw Error('Actual physical evidence is incomplete');

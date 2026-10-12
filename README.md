@@ -42,8 +42,12 @@ integrated schematic, layout, waveform and 3D inspection workspace.
 영역, 실제 job의 상태·오류·로그·결과 파일 위치를 정돈했습니다.
 [화면 사용법과 검증 범위](docs/precision-workbench.md).
 
-레이아웃 화면에서 사각형·다각형·배선을 직접 그리고, 회로도에서 소자를
-미리보기·반복 배치·회전·반전할 수 있습니다. [그리기 도구 사용법](docs/drawing-tools.md).
+**새 프로젝트 → 빈 SKY130 레이아웃 → Layout 2D**에서 사각형을 드래그해 만들 수 있습니다.
+R/P/W로 사각형·다각형·Manhattan 배선, M/C로 이동·도형 복사,
+오른쪽 속성에서 사각형 좌표·레이어·Net을 µm/DBU 단위로 수정합니다.
+삭제·Undo/Redo와 격자·잠금 보호를 지원하며, 미저장 미리보기와 실제 검증 상태를 구분합니다.
+회로도 소자의 미리보기·반복 배치·회전·반전도 유지합니다.
+[그리기 도구 사용법](docs/drawing-tools.md) · [실제 편집 검증](docs/evidence/layout-editor/native.json).
 
 v0.15는 로컬 Ollama / OpenAI 설계 검토, 근거·비용·승인 표시, 저장된 검토 재개방,
 실제 도형에 따른 장애물 우회 후보, 16–64사이클 CPU 검증과 실제 VDD 전류·에너지
