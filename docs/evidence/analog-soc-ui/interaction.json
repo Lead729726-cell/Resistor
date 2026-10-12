@@ -1,0 +1,81 @@
+{
+  "app_url": "http://127.0.0.1:5176/eda",
+  "actual_browser_actions": [
+    "catalog load",
+    "create seven hierarchical projects",
+    "open sensor AFE",
+    "Simulate",
+    "inspect schematic",
+    "open physical AFE",
+    "inspect Layout 2D and DRC/LVS/PEX states"
+  ],
+  "hierarchical_projects": [
+    {
+      "id": "soc_bias",
+      "project_id": "461eeb61edc1484b8f2d27f87438bdc4"
+    },
+    {
+      "id": "soc_cascode_mirror",
+      "project_id": "a2bd6e91235048eba2397601ef0b83ce"
+    },
+    {
+      "id": "soc_miller_ota",
+      "project_id": "0800d4d8f7dd4b49ba9b36babddad0ff"
+    },
+    {
+      "id": "soc_pga",
+      "project_id": "f2256b3464eb4f41bd2a61f46bac4269"
+    },
+    {
+      "id": "soc_filter2",
+      "project_id": "a5041b5eae724abe8d39133cc96b3ee6"
+    },
+    {
+      "id": "soc_tia",
+      "project_id": "ea19d8748c4d4cceaf14c24421ac9f20"
+    },
+    {
+      "id": "soc_sensor_afe",
+      "project_id": "21b10932a8324d1188190380225dca58"
+    }
+  ],
+  "app_created_simulation": {
+    "project_id": "21b10932a8324d1188190380225dca58",
+    "run_id": "f7a7815b49604981bb6166ef91050296",
+    "execution_status": "completed",
+    "analysis_result": "pass",
+    "checks": [
+      {
+        "name": "low measured gain within 8%",
+        "pass": true,
+        "observed": 2.079190964158775
+      },
+      {
+        "name": "low settled sine residual <5mV",
+        "pass": true,
+        "observed": 0.000039391725467578564
+      },
+      {
+        "name": "high measured gain within 8%",
+        "pass": true,
+        "observed": 7.992406408050918
+      },
+      {
+        "name": "high settled sine residual <5mV",
+        "pass": true,
+        "observed": 0.00002856291886572301
+      },
+      {
+        "name": "clocked interface: >=50 unambiguous samples all match",
+        "pass": true,
+        "observed": 0
+      }
+    ]
+  },
+  "physical_project_id": "fff7a8a24c584fea850d5429b77803b1",
+  "screenshots": [
+    "hierarchy.png",
+    "physical.png"
+  ],
+  "native_os_installer_execution_verified": false
+}
