@@ -28,7 +28,8 @@ export async function signMacApp(app){
     const binaries=[];
     async function walk(folder){for(const item of await readdir(folder,{withFileTypes:true})){const file=path.join(folder,item.name);if(item.isDirectory())await walk(file);else if(item.isFile()){const handle=await open(file,'r');try{const bytes=Buffer.alloc(4);await handle.read(bytes,0,4,0);if(['cffaedfe','cefaedfe','feedfacf','feedface','cafebabe','bebafeca','cafebabf','bfbafeca'].includes(bytes.toString('hex')))binaries.push(file);}finally{await handle.close();}}}}
     await walk(app);
-    for(const file of binaries.sort())await run('/usr/bin/codesign',['--force','--sign','-','--timestamp=none','--entitlements',entitlements,file]);
+    const deepestFirst=(a,b)=>b.split(path.sep).length-a.split(path.sep).length||a.localeCompare(b);
+    for(const file of binaries.sort(deepestFirst))await run('/usr/bin/codesign',['--force','--deep','--sign','-','--timestamp=none','--entitlements',entitlements,file]);
     await run('/usr/bin/codesign',['--force','--deep','--sign','-','--timestamp=none','--entitlements',entitlements,app]);
     await run('/usr/bin/codesign',['--verify','--deep','--strict','--verbose=2',app]);
   }else{
