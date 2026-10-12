@@ -24,7 +24,13 @@ test('Packaged viewer opens GDS without Docker, credentials or native runtime in
   try{
     const window=await app.firstWindow();await expect(window.getByTestId('viewer-empty-gds-input')).toBeAttached();await window.getByTestId('viewer-empty-gds-input').setInputFiles(path.resolve('examples/sky130/mosfet.gds'));await expect(window.getByTestId('viewer-shape-count')).toHaveText('52 / 52');await window.getByTestId('viewer-sky130').click();await expect(window.locator('canvas').first()).toBeVisible();
     await expect(window.getByRole('button',{name:'XY 이동',exact:true})).toBeDisabled();let initialized=false;try{await access(path.join(workspace,'.runtime/worker.json'));initialized=true;}catch{}expect(initialized).toBe(false);
-    await window.screenshot({path:`docs/evidence/${evidenceOS}-viewer-only.png`});await writeFile(`docs/evidence/${evidenceOS}-viewer-only.json`,JSON.stringify({executable:release,platform:process.platform,arch:process.arch,argument:'--viewer',docker_not_on_PATH:true,empty_workspace:true,native_session_created:initialized,real_gds_shape_count:52,pdk_layer_display:true,readonly:true},null,2));
+    await window.screenshot({path:`docs/evidence/${evidenceOS}-viewer-only.png`});
+    await window.addInitScript(()=>{const get=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(kind:string,...args:unknown[]){if(kind==='webgl2')return null;return Reflect.apply(get,this,[kind,...args]);} as typeof get;});
+    await window.reload();await window.getByTestId('viewer-empty-gds-input').setInputFiles(path.resolve('examples/sky130/mosfet.gds'));
+    await expect(window.getByTestId('viewer-shape-count')).toHaveText('52 / 52');await expect(window.getByTestId('layout-cpu-fallback')).toBeVisible();
+    const painted=await window.locator('canvas').first().evaluate((canvas:HTMLCanvasElement)=>{const data=canvas.getContext('2d')!.getImageData(0,0,canvas.width,canvas.height).data;const colors=new Set<string>();for(let i=0;i<data.length;i+=4)colors.add(`${data[i]},${data[i+1]},${data[i+2]}`);return colors.size>1;});expect(painted).toBe(true);
+    await window.screenshot({path:`docs/evidence/${evidenceOS}-cpu-viewer.png`});
+    await writeFile(`docs/evidence/${evidenceOS}-viewer-only.json`,JSON.stringify({executable:release,platform:process.platform,arch:process.arch,argument:'--viewer',docker_not_on_PATH:true,empty_workspace:true,native_session_created:initialized,real_gds_shape_count:52,pdk_layer_display:true,readonly:true,forced_no_webgl_cpu_fallback:true,cpu_canvas_contains_actual_colored_shapes:painted},null,2));
   }finally{await app.close();}
 });
 
@@ -54,7 +60,10 @@ test('Mac native menu delivers sandbox commands and Dock activation reopens the 
     });
     expect(menu.quit).toBe(true);expect(menu.commands.map(i=>i.accelerator)).toEqual(['Command+S','Command+Z','Command+Shift+Z']);
     await expect.poll(()=>window.evaluate(()=>(globalThis as any).nativeCommands)).toEqual(['save','undo','redo']);
-    await window.close();const reopened=app.waitForEvent('window');await app.evaluate(({app})=>{app.emit('activate');});
+    // Closing a CDP Page may close only WebContents and leave its native window
+    // alive. Exercise the actual Mac window lifecycle used by the red button.
+    await app.evaluate(({BrowserWindow})=>{BrowserWindow.getAllWindows()[0].close();});
+    const reopened=app.waitForEvent('window');await app.evaluate(({app})=>{app.emit('activate');});
     const next=await reopened;await expect(next.getByTestId('viewer-empty-gds-input')).toBeAttached();
     await next.getByTestId('viewer-empty-gds-input').setInputFiles(path.resolve('examples/sky130/mosfet.gds'));await expect(next.getByTestId('viewer-shape-count')).toHaveText('52 / 52');
     await writeFile('docs/evidence/macos-native-menu.json',JSON.stringify({platform:process.platform,arch:process.arch,version,menu,sandbox_commands_delivered:true,dock_window_reopened:true,offline_gds_shapes_after_reopen:52},null,2));

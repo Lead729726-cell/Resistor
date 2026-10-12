@@ -58,7 +58,14 @@ def parameters(kind, values):
 def library(v):
     v={**DEFAULTS,**v}
     lib = D.make_library(1)
-    lib['SOC_OTA_FIRST'] = C.ota(10.)
+    first=C.ota(10.)
+    first['devices']=first['devices'][2:]
+    units=C.cell(first['ports'])
+    for name,role,d,g in [('N_INP0','A','OUT','INP'),('N_INN0','B','MIR','INN'),('N_INN1','B','MIR','INN'),('N_INP1','A','OUT','INP')]:
+        C.mos(units,name,'nmos',d,g,'TAIL',5.,1.)
+        units['devices'][-1].update(matching_group='INPUT_PAIR_ABBA',matching_role=role)
+    first['devices']=units['devices']+first['devices']
+    lib['SOC_OTA_FIRST'] = first
     ota = C.cell(PARTS['soc_miller_ota'][2])
     C.block(ota, 'FIRST', 'SOC_OTA_FIRST', lib['SOC_OTA_FIRST']['ports'], {'OUT': 'PRE'})
     C.mos(ota, 'P_SECOND', 'pmos', 'OUT', 'PRE', 'VPWR', 40, 1)
@@ -78,13 +85,21 @@ def library(v):
         C.mos(mirror, name, 'nmos', d, g, s, 2, 1)
     lib['SOC_CASCODE'] = mirror
     pga = C.cell(PARTS['soc_pga'][2])
-    C.block(pga, 'AMP', 'SOC_OTA', ota['ports'], {'INP': 'VIN', 'INN': 'FB'})
-    C.passive(pga, 'R_GROUND', 'resistor', 'FB', 'VCM', 10000)
-    C.passive(pga, 'R_HIGH', 'resistor', 'OUT', 'FB', 70000)
-    C.passive(pga, 'R_LOW', 'resistor', 'LOW', 'FB', 70000/6)
+    # Select a voltage into a high-impedance MOS input, not a resistor feedback
+    # current. Both gains have fixed passive ratios; R_on now contributes to
+    # acquisition settling instead of directly changing the feedback gain.
+    for gain in (2, 8):
+        name=f'SOC_GAIN{gain}'; branch=C.cell(['VIN','VCM','BIAS','OUT',*SUPPLY])
+        C.block(branch, 'AMP', 'SOC_OTA', ota['ports'], {'INP':'VIN','INN':'FB'})
+        C.passive(branch, 'R_GROUND', 'resistor', 'FB', 'VCM', 10000)
+        C.passive(branch, 'R_FEEDBACK', 'resistor', 'OUT', 'FB', (gain-1)*10000)
+        lib[name]=branch
+        C.block(pga, f'GAIN{gain}', name, branch['ports'], {'OUT':f'V{gain}'})
     C.block(pga, 'GAIN_INVERTER', 'INV', lib['INV']['ports'], {'A': 'GAIN', 'Y': 'GAINB'})
-    C.mos(pga, 'N_GAIN', 'nmos', 'OUT', 'GAINB', 'LOW', 20, .15)
-    C.mos(pga, 'P_GAIN', 'pmos', 'OUT', 'GAIN', 'LOW', 20, .15)
+    for name,node,ng,pg in [('LOW','V2','GAINB','GAIN'),('HIGH','V8','GAIN','GAINB')]:
+        C.mos(pga, 'N_'+name, 'nmos', node, ng, 'SELECTED', 20, .15)
+        C.mos(pga, 'P_'+name, 'pmos', node, pg, 'SELECTED', 20, .15)
+    C.block(pga, 'OUTPUT_BUFFER', 'SOC_OTA', ota['ports'], {'INP':'SELECTED','INN':'OUT'})
     lib['SOC_PGA'] = pga
     filt = C.cell(PARTS['soc_filter2'][2])
     for i in range(2):
@@ -258,7 +273,7 @@ def measurements(p, run, settings):
                 out=sine_amplitude(waves['OUT'],a,b); inp=sine_amplitude(waves['input_current' if kind=='soc_tia' else 'VIN'],a,b)
                 ratio=out['amplitude']/inp['amplitude'] if inp['amplitude']>0 else None
                 m[label+'_gain']=ratio; m[label+'_output_fit']=out
-                check(label+' measured gain within 8%',ratio is not None and abs(ratio/target-1)<.08,ratio)
+                check(label+' measured gain within 3%',ratio is not None and abs(ratio/target-1)<.03,ratio)
                 check(label+' settled sine residual <5mV',out['residual_rms']<.005,out['residual_rms'])
             if kind=='soc_sensor_afe':
                 rows=[]

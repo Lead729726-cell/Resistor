@@ -7,12 +7,12 @@ const root=process.cwd(),out='examples/analog-soc',cfg=await runtimeConfig();
 await mkdir(out,{recursive:true});await mkdir('.runtime/analog-soc',{recursive:true});
 const rpc=async(method,params={})=>{const r=await workerRpc(cfg,method,params);if(!r.ok)throw Error(`${r.error.code}: ${r.error.message}`);return r.result;};
 const sha=b=>createHash('sha256').update(b).digest('hex');
-const files=['workers/eda/analog_soc.py','workers/eda/digital_units.py','workers/eda/physical_library.py','workers/eda/native.py','workers/eda/design_tools.py','workers/eda/chip_references.py','workers/eda/server.py','workers/eda/pex_reduce.py','workers/eda/profile.py'];
+const files=['workers/eda/analog_soc.py','workers/eda/characterization.py','workers/eda/digital_units.py','workers/eda/physical_library.py','workers/eda/native.py','workers/eda/design_tools.py','workers/eda/chip_references.py','workers/eda/server.py','workers/eda/pex_reduce.py','workers/eda/profile.py'];
 const source=Object.fromEntries(await Promise.all(files.map(async f=>[f,sha(await readFile(f))])));const version=sha(JSON.stringify(source)).slice(0,12);
 const stateFile=`.runtime/analog-soc/state-${version}.json`;let state;try{state=JSON.parse(await readFile(stateFile,'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;state={source,projects:{},commands:{},jobs:{}};}
 const save=()=>writeFile(stateFile,JSON.stringify(state,null,2));
 const local=f=>{if(!f.startsWith('/workspace/'))throw Error('Unexpected native artifact root');return path.join(root,f.slice(11));};
-const wait=async run=>{const until=Date.now()+420000;while(['queued','running'].includes(run.execution_status)){if(Date.now()>until)throw Error(`Job ${run.id} deadline; preserved on worker`);await new Promise(r=>setTimeout(r,800));run=await rpc('job.status',{run_id:run.id});}return run;};
+const wait=async run=>{const until=Date.now()+900000;while(['queued','running'].includes(run.execution_status)){if(Date.now()>until)throw Error(`Job ${run.id} deadline; preserved on worker`);await new Promise(r=>setTimeout(r,800));run=await rpc('job.status',{run_id:run.id});}return run;};
 const templates=(await rpc('design.catalog')).templates.filter(t=>t.id.startsWith('soc_'));
 const requested=process.argv.slice(2).filter(a=>!a.startsWith('--'));const rows=[];
 for(const t of templates.filter(t=>!requested.length||requested.includes(t.id))){

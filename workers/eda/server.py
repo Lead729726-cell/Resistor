@@ -496,6 +496,9 @@ def start_job(params,kind):
     if (template or digital) and (kind!='simulation' or params.get('post_layout')) and not any(not cell.is_empty() for cell in load_layout(p).each_cell()):
         raise EDAError('NO_PHYSICAL_LAYOUT','This circuit template has no physical layout. Create actual PDK geometry before physical verification or post-layout analysis.')
     if kind=='simulation':
+        if 'characterization' in params:
+            import characterization
+            characterization.configuration(p,params)
         adc=p.get('design_template',{}).get('id') in design_tools.sigma_delta.CATALOG
         settings=(design_tools.sigma_delta.settings if adc else native.testbench)({**p.get('testbench',{}),**{key:params[key] for key in native.TESTBENCH if key in params}})
         params={**params,**settings}
@@ -731,6 +734,9 @@ def simulation(run,p,folder,manifest,params):
         bridged=xschem_bridge.netlist(p,folder/'xschem'); netlist=Path(bridged['path']); run['artifacts'].update(xschem_schematic=bridged['schematic_path'],xschem_manifest=bridged['manifest_path']); manifest['xschem_bridge']=bridged['manifest_path']
     else:
         netlist=folder/'reference.spice'; netlist.write_text(native.emit(p['schematic'],p['cell'],p['ports']))
+    if 'characterization' in params:
+        import characterization
+        return characterization.execute(sys.modules[__name__],run,p,folder,manifest,params,netlist)
     analysis=params.get('analysis','tran');branches=[];warnings=[];probe_netlist=netlist
     if analysis!='ac':probe_netlist,branches,warnings=current_flow.prepare(p,netlist,folder,bool(params.get('post_layout')))
     tb,names,units,xunit,xlabel=spice_tb(p,folder,params,probe_netlist)

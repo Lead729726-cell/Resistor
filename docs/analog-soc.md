@@ -1,6 +1,6 @@
 # Analog SoC sensor-interface references
 
-Resistor 0.20 adds seven editable SKY130 macros and actual public-PDK layouts.
+Resistor 0.21 improves seven editable SKY130 macros and actual public-PDK layouts.
 The integrated circuit is a sensor interface with clocked one-bit output; ADC,
 CPU, pad ring and a tapeout-ready complete SoC remain separate designs.
 
@@ -8,8 +8,8 @@ CPU, pad ring and a tapeout-ready complete SoC remain separate designs.
 |---|---|---|
 | `soc_bias` | NMOS diode/resistor bias, VDD/2 divider, decoupling, OTA VCM buffer | VCM and bias range |
 | `soc_cascode_mirror` | Four-NMOS self-biased cascode mirror | Current/compliance DC sweep; external IREF |
-| `soc_miller_ota` | 5-MOS differential input + balanced 2-MOS output + 5pF/5k Miller network | Open-loop gain and unwrapped phase margin |
-| `soc_pga` | OTA, feedback resistors, CMOS gain-select transmission gate | Actual ×2/×8 transfer, sine-fit residual |
+| `soc_miller_ota` | Equal-width ABBA input units + balanced 2-MOS output + 5pF/5k Miller network | Open-loop gain, phase margin, native noise and mismatch |
+| `soc_pga` | Fixed ×2/×8 branches, CMOS voltage selector and output OTA buffer | Actual transfer, sine-fit residual |
 | `soc_filter2` | Two RC poles, each followed by a real OTA buffer | Gain and −3dB bandwidth |
 | `soc_tia` | Virtual VCM summing node with parallel R/C feedback | Actual input-current/output-voltage transfer |
 | `soc_sensor_afe` | Bias → PGA → filter → comparator → reset MUX → DFF | Gains and clocked decisions from actual OUT−VCM |
@@ -33,9 +33,11 @@ is distinct from model-corner functional testing and manufacturing approval.
 
 ## Equations and assumptions
 
-PGA: `A=1+Rf/Rg`; GAIN=1 uses 70k/10k (×8). GAIN=0 uses
-`Rf=70k || (70k/6 + R_on)`. The actual MOS switch resistance makes low gain
-greater than ×2 and varies with voltage/process/temperature.
+PGA: `A=1+Rf/Rg`; fixed branches use 10k/10k (×2) and 70k/10k (×8).
+A transmission gate selects the branch voltage into a high-impedance MOS input;
+an additional unity OTA buffers OUT. Switch resistance now affects acquisition
+settling rather than the feedback ratio. Three OTAs cost more area and current
+than the old single-OTA PGA. The gain criterion is tightened from 8% to 3%.
 
 Filter: ideal `H(s)=1/(1+sRC)^2`, `fp=1/(2πRC)`,
 `f−3dB=fp·sqrt(sqrt(2)−1)`. Default R=40k, C=20pF. Finite OTA transfer and
@@ -70,10 +72,10 @@ external owned fixtures. VCM is ratiometric VDD/2, not a precision bandgap.
 [Physical results](../examples/analog-soc/evidence.json),
 [model-corner sweep](../examples/analog-soc/pvt.json) retain failures as well as passes.
 Seven circuits pass nominal TT/27°C/1.8V DRC/LVS/PEX/pre/post named criteria.
-The separate AFE sweep executes 18 MOS-corner/temperature/voltage combinations:
-9 pass, 9 fail the low-gain accuracy criterion. All failures are preserved.
-Cold and 1.6V gain-select switch resistance is a measured limit; broad PVT
-performance is not qualified. RC remains typical in that sweep and PEX is absent.
+The schematic AFE sweep executes 18 MOS-corner/temperature/voltage combinations
+and passes the new 3% gain criterion at all 18 points. The prior 9 failures remain
+in [v0.20 history](../examples/analog-soc/history/v0.20.0/pvt.json).
+RC remains typical; source and post-PEX qualifications are reported separately.
 
 Layouts deliberately use spacious one-row PCells. Deterministic interval-heap
 rail coloring is O(n log n) and optimal for the defined interval allocation,
@@ -82,12 +84,33 @@ recursive cells, >64 levels and >100000 primitives. Physical conversion/routing
 enforces 512 primitives, including already modeled devices, and rejects declared
 ports absent from the actual primitive graph. Grid and engine APIs are preserved.
 
-Mismatch, thermal/flicker noise, reliability, common-centroid matching, substrate
-coupling, guard rings, full-chip antenna/density, ESD, EM/IR, packaging and foundry
-signoff remain separate work. Existing ADC/CPU/LDO/PLL examples have not been
-jointly verified as one finished SoC.
+The OTA inputs use two 5µm units per side in an ABBA row, preserving 10µm total
+width per input. The physical routing report computes both centroids from actual
+generated gate anchors. This cancels the nominal first spatial moment; dummies,
+guard rings, stress and substrate coupling have not been qualified.
+
+## Native noise and mismatch
+
+Select a SoC Miller OTA project and open **OTA 잡음 · 편차** in integrated tools.
+The dedicated unity follower fixture uses 1pF external load and 0.9V BIAS.
+Noise uses ngspice SPARSE, 10Hz–10MHz and V/√Hz vectors. Native integrated RMS
+is independently checked by integrating squared density. Mismatch enables only
+the installed public model's `MC_MM_SWITCH` (global process switch stays zero),
+sets each seed **before** parsing AGAUSS models, and performs 4–64 actual OP
+solves. Reusing the same seed/model/circuit permits reproducibility checks.
+Thresholds are explicit engineering limits, not foundry acceptance criteria.
+Canceled, incomplete, inactive-mismatch or nonfinite data cannot receive PASS.
+Physical projects may run the same fixture with actual PEX and exact RC reduction.
+
+Reliability, global process Monte Carlo, substrate coupling, guard rings,
+full-chip antenna/density, ESD, EM/IR, packaging and foundry signoff remain separate
+work. Existing ADC/CPU/LDO/PLL examples have not been jointly verified as one
+finished SoC. Apple notarization requires the owner's Developer ID credentials;
+Mac native CI execution is distinct from full Docker EDA execution on a user's Mac.
 
 Reproduce with `node scripts/analog-soc-library.mjs` and
 `node scripts/analog-soc-qa.mjs`; detached probe/PVT scripts never open the live DB.
 Background: [Berkeley Two-Stage OTA Design](https://rfic.eecs.berkeley.edu/courses/ee240sp06/pdf/topic13.pdf).
 Device sizes and measurements come from actual Resistor circuits, not the lecture.
+Noise, source-before-seed ordering and output units follow the
+[ngspice manual](https://ngspice.sourceforge.io/docs/ngspice-manual.pdf).

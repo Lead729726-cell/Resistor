@@ -15,6 +15,7 @@ import type { ExtractedMapping, ViewerCursor, ViewerFocus, ViewerPresence } from
 import { branchCurrent,currentDirection,currentPath,flowStatus,formatCurrent,projectedCurrent,sampleIndex } from './current';
 import { CurrentFlowPanel } from './CurrentFlowPanel';
 import { AdvancedTools } from './AdvancedTools';
+import { CanvasLayoutFallback } from './CanvasLayoutFallback';
 import './viewer.css';
 
 export interface LayoutViewerProps {
@@ -125,6 +126,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
   const display = props.display ?? internalDisplay;
   const displayRef = useRef(display); displayRef.current = display;
   const [error, setError] = useState<string | null>(null);
+  const [cpuFallback,setCpuFallback]=useState(false);
   const [note, setNote] = useState('도형 선택 · 드래그 회전/이동 · 휠 확대');
   const [pending, setPending] = useState(false);
   const pendingRef = useRef(false);
@@ -267,7 +269,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
     canvas.setAttribute('aria-label', mode === '2d' ? '정수 DBU 레이아웃 2D 뷰' : '실제 레이아웃 레이어 3D 뷰');
     canvas.tabIndex = 0;
     const context = canvas.getContext('webgl2', { antialias: true, alpha: false, preserveDrawingBuffer: true });
-    if (!context) { setError('WebGL2를 사용할 수 없습니다. GPU 가속과 그래픽 드라이버를 확인하세요. WebGPU backend는 아직 지원하지 않습니다.'); return; }
+    if (!context) { setCpuFallback(true); return; }
     let renderer: THREE.WebGLRenderer;
     try { renderer = new THREE.WebGLRenderer({ canvas, context, antialias: true, preserveDrawingBuffer: true }); }
     catch (cause) { setError(cause instanceof Error ? cause.message : String(cause)); return; }
@@ -926,6 +928,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
   const clipActive = display.clip?.axis !== undefined && display.clip.axis !== 'none';
   const input = (name: keyof typeof fields, label: string) => <label key={name}>{label}<input value={fields[name]} onChange={event => setFields({ ...fields, [name]: event.target.value })} inputMode={name === 'net' ? 'text' : 'numeric'} /></label>;
 
+  if(cpuFallback&&scene)return <CanvasLayoutFallback scene={scene} display={display} onSelect={props.onSelect}/>;
   return <div className={`mos-viewer mos-viewer-${mode}${paletteOpen ? ' mos-viewer-has-palette' : ''}`} data-testid={`layout-viewer-${mode}`} data-tool={tool}>
     <div className="mos-viewer-toolbar">
       <div className="mos-toolgroup">

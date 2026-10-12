@@ -9,6 +9,17 @@ import native
 from geometry import EDAError
 
 class AnalogSocTests(unittest.TestCase):
+    def test_matching_units_preserve_electrical_width_and_metadata(self):
+        ir=A.schematic('soc_miller_ota',{})
+        pair=ir['cells']['SOC_OTA_FIRST']['devices'][:4]
+        self.assertEqual([d['matching_role'] for d in pair],['A','B','B','A'])
+        for role in ('A','B'):
+            self.assertEqual(sum(d['parameters']['w_um'] for d in pair if d['matching_role']==role),10.)
+        flat,_=P.materialize(ir)
+        units=[d for d in flat['devices'] if d.get('matching_group')]
+        self.assertEqual(len(units),4)
+        self.assertEqual([d['matching_role'] for d in units],['A','B','B','A'])
+        self.assertEqual(len({(d['x'],d['y']) for d in flat['devices']}),len(flat['devices']))
     def test_all_real_editable_hierarchies_and_physical_passives(self):
         for key,row in A.CATALOG.items():
             with self.subTest(key=key):

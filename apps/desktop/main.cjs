@@ -6,6 +6,7 @@ const {macMenuTemplate}=require('./menu.cjs');
 const {configureAppIdentity}=require('./identity.cjs');
 let mainWindow,ownedHub;
 let runtimePromise;
+let windowBootPromise;
 configureAppIdentity(app,{userDataOverride:process.env.REGISTER_USER_DATA});
 async function boot(){
   const root=path.resolve(__dirname,'../..');
@@ -49,7 +50,8 @@ async function boot(){
   mainWindow.on('closed',()=>{mainWindow=null;});
   if(devURL)await mainWindow.loadURL(devURL+(viewerOnly?'?mode=viewer':''));else await mainWindow.loadFile(path.join(root,'dist/index.html'),viewerOnly?{query:{mode:'viewer'}}:undefined);
 }
-app.whenReady().then(boot).catch(e=>{dialog.showErrorBox('Resistor',e.message);app.quit();});
+const ensureWindow=()=>windowBootPromise??=(boot().finally(()=>{windowBootPromise=undefined;}));
+app.whenReady().then(ensureWindow).catch(e=>{dialog.showErrorBox('Resistor',e.message);app.quit();});
 app.on('will-quit',()=>{void ownedHub?.close();});
-app.on('activate',()=>{if(BrowserWindow.getAllWindows().length===0)void boot().catch(e=>dialog.showErrorBox('Resistor',e.message));});
+app.on('activate',()=>{if(BrowserWindow.getAllWindows().length===0)void ensureWindow().catch(e=>dialog.showErrorBox('Resistor',e.message));else{mainWindow?.show();mainWindow?.focus();}});
 app.on('window-all-closed',()=>{if(process.platform!=='darwin')app.quit();});

@@ -4,6 +4,7 @@ import './integrated-tools.css';
 import ValidationPanel from './ValidationPanel';
 import AdcBlockLibrary from './AdcBlockLibrary';
 import AnalogSocLibrary from './AnalogSocLibrary';
+import OtaCharacterization from './OtaCharacterization';
 
 export interface IntegratedToolsProps {
   project: Project | null; scene: Scene | null; transport?: typeof rpc; readOnly?: boolean; shared?: boolean;
@@ -12,7 +13,7 @@ export interface IntegratedToolsProps {
   onRun?: (run:Run) => void | Promise<void>;
   initialTab?: Tab;
 }
-type Tab = 'pvt' | 'routing' | 'design' | 'verification';
+type Tab = 'pvt' | 'routing' | 'design' | 'verification' | 'characterization';
 const terminal = (status: string) => ['completed', 'failed', 'canceled'].includes(status);
 const message = (error: unknown) => error instanceof Error ? `${'code' in error ? `${String(error.code)} · ` : ''}${error.message}` : String(error);
 const numeric = (value: unknown) => typeof value === 'number' && Number.isFinite(value) ? value.toPrecision(7) : '—';
@@ -27,8 +28,8 @@ export default function IntegratedTools(props: IntegratedToolsProps) {
   const [tab, setTab] = useState<Tab>(props.initialTab || 'pvt');
   return <div className="integrated-tools" data-testid="integrated-tools">
     <header className="it-heading"><div><span className="it-eyebrow">INTEGRATED DESIGN</span><h3>조건을 비교하고 실제 연결을 확인합니다</h3></div><div><strong>{props.project?.name || '프로젝트 없음'}</strong><small>{props.project ? `r${props.project.revision} · ${props.project.cell}` : '프로젝트를 연 뒤 사용하세요.'}{props.shared ? ' · 공동 설계' : ' · 로컬'}{props.readOnly ? ' · 읽기 전용' : ''}</small></div></header>
-    <nav className="it-tabs" aria-label="통합 설계 도구">{([['verification','회로 → 물리 검증'],['pvt', 'PVT 일괄 해석'], ['routing', 'PDK 배선 보조'], ['design', '회로 · 연결 탐색']] as const).map(([id, label]) => <button key={id} data-testid={`integrated-tab-${id}`} aria-selected={tab === id} onClick={() => setTab(id)}>{label}</button>)}</nav>
-    <div className="it-content"><div hidden={tab !== 'verification'}><ValidationPanel {...props}/></div><div hidden={tab !== 'pvt'}><PvtPanel {...props} /></div><div hidden={tab !== 'routing'}><RoutingPanel {...props} /></div><div hidden={tab !== 'design'}><DesignPanel {...props} /></div></div>
+    <nav className="it-tabs" aria-label="통합 설계 도구">{([['verification','회로 → 물리 검증'],['pvt', 'PVT 일괄 해석'], ['characterization','OTA 잡음 · 편차'], ['routing', 'PDK 배선 보조'], ['design', '회로 · 연결 탐색']] as const).map(([id, label]) => <button key={id} data-testid={`integrated-tab-${id}`} aria-selected={tab === id} onClick={() => setTab(id)}>{label}</button>)}</nav>
+    <div className="it-content"><div hidden={tab !== 'verification'}><ValidationPanel {...props}/></div><div hidden={tab !== 'pvt'}><PvtPanel {...props} /></div><div hidden={tab !== 'characterization'}><OtaCharacterization {...props}/></div><div hidden={tab !== 'routing'}><RoutingPanel {...props} /></div><div hidden={tab !== 'design'}><DesignPanel {...props} /></div></div>
     <footer className="it-footer"><span>도구를 열기만 하면 worker 요청을 보내지 않습니다. 각 읽기·실행 버튼이 실제 작업을 시작합니다.</span><span>{props.scene?.truncated ? `현재 물리 화면 ${props.scene.returned_shape_count ?? props.scene.shapes.length} / ${props.scene.total_shape_count ?? '?'} 도형 · 부분 범위` : `${props.scene?.shapes.length ?? 0} 로드된 도형`}</span></footer>
   </div>;
 }

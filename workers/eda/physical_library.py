@@ -71,6 +71,10 @@ def materialize(ir):
             result.append(item)
         rows.append({'source_device':d['name'],'kind':d['kind'],'requested_SI':value,'nominal_geometry_SI':nominal,'instances':len(pieces),'model':CAP if d['kind']=='capacitor' else RES,'w_um':w,'l_um':l,'value_scope':'PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative.'})
     flat['devices']=result
+    # Physical references flatten independent cell coordinate frames. Give
+    # primitives a fresh deterministic schematic grid instead of overlapping
+    # each child cell at the same origin. Explicit electrical nets are retained.
+    for index,d in enumerate(result):d.update(x=180+(index%5)*260,y=170+(index//5)*190)
     return flat,rows
 
 def _base(folder,d):
@@ -135,7 +139,19 @@ def physical(folder,ir,cell_name,ports):
     # otherwise an M4 descent crosses the other electrode's contact landing.
     if any(d['model']==CAP for d in devices):rails.update({n:y for n,y in [('VGND',ymax+3000+track_count*1200),('VPWR',ymax+4500+track_count*1200)] if n in spans})
     import json
-    (folder/'routing-report.json').write_text(json.dumps({'algorithm':'interval-heap-v2','primitive_count':len(devices),'signal_track_count':track_count,'track_clearance_dbu':800,'tracks':tracks,'scope':'single-row PCell reference; no matching/density/antenna/full-chip signoff'},sort_keys=True,indent=2))
+    groups={}
+    for d,(_,_,anchors,_),cx in placed:
+        if d.get('matching_group'):
+            key=d['id'].rpartition('.')[0]+'::'+d['matching_group']
+            groups.setdefault(key,[]).append({'device':d['name'],'role':d.get('matching_role'),'model':d['model'],'w_um':d['parameters']['w_um'],'l_um':d['parameters']['l_um'],'gate_center_dbu':[cx+anchors['G'][0],anchors['G'][1]]})
+    matching=[]
+    for key,units in sorted(groups.items()):
+        roles=sorted({u['role'] for u in units});centroids={role:[sum(u['gate_center_dbu'][axis] for u in units if u['role']==role)/sum(u['role']==role for u in units) for axis in (0,1)] for role in roles}
+        identical=len({(u['model'],u['w_um'],u['l_um']) for u in units})==1
+        delta=max((abs(a-b) for axis in (0,1) for a in [min(c[axis] for c in centroids.values())] for b in [max(c[axis] for c in centroids.values())]),default=0)
+        valid_pair=roles==['A','B'] and sum(u['role']=='A' for u in units)==sum(u['role']=='B' for u in units)>=2
+        matching.append({'group':key,'units':units,'centroids_dbu':centroids,'max_centroid_delta_dbu':delta,'equal_unit_geometry':identical,'nominal_centroid_match':valid_pair and identical and delta==0,'scope':'ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff'})
+    (folder/'routing-report.json').write_text(json.dumps({'algorithm':'interval-heap-v2','primitive_count':len(devices),'signal_track_count':track_count,'track_clearance_dbu':800,'tracks':tracks,'matching_groups':matching,'scope':'single-row PCell reference; no full-chip density/antenna/foundry signoff'},sort_keys=True,indent=2))
     v1=templates.via(folder/'via1','via1_core','via1');v2=templates.via(folder/'via2','via2_core','via2',280,280)
     # Installed via3 helper, with explicit M3/M4 area-compliant landings.
     f=folder/'via3';f.mkdir(exist_ok=True);t=f/'make.tcl';t.write_text('load via3_core\nbox 0um 0um 0.32um 0.32um\nsky130::via3_draw\nbox -0.14um -0.14um 0.46um 0.46um\npaint m3\npaint m4\nsave via3_core\ngds write via3_core.gds\nquit -noprompt\n')
