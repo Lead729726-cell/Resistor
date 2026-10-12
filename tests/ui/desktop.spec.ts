@@ -62,8 +62,8 @@ test('Mac native menu delivers sandbox commands and Dock activation reopens the 
     await expect.poll(()=>window.evaluate(()=>(globalThis as any).nativeCommands)).toEqual(['save','undo','redo']);
     // Closing a CDP Page may close only WebContents and leave its native window
     // alive. Exercise the actual Mac window lifecycle used by the red button.
-    await app.evaluate(({BrowserWindow})=>{BrowserWindow.getAllWindows()[0].close();});
-    const reopened=app.waitForEvent('window');await app.evaluate(({app})=>{app.emit('activate');});
+    const reopened=app.waitForEvent('window');
+    await app.evaluate(({app,BrowserWindow})=>{app.once('window-all-closed',()=>{app.emit('activate');});BrowserWindow.getAllWindows()[0].close();});
     const next=await reopened;await expect(next.getByTestId('viewer-empty-gds-input')).toBeAttached();
     await next.getByTestId('viewer-empty-gds-input').setInputFiles(path.resolve('examples/sky130/mosfet.gds'));await expect(next.getByTestId('viewer-shape-count')).toHaveText('52 / 52');
     await writeFile('docs/evidence/macos-native-menu.json',JSON.stringify({platform:process.platform,arch:process.arch,version,menu,sandbox_commands_delivered:true,dock_window_reopened:true,offline_gds_shapes_after_reopen:52},null,2));

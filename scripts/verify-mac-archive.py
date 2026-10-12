@@ -126,7 +126,7 @@ def verify(archive,require_bundle_signature=False):
             seals.append({'path':seal_path,'resources_checked':checked,'info_plist_bound':True,'resource_seal_bound':True})
         if require_bundle_signature:
             assert root+'_CodeSignature/CodeResources' in entries and len(seals)>=5,'Missing app/framework/helper bundle seals'
-            assert all(s['ad_hoc'] and not s['hardened_runtime'] for values in signatures.values() for s in values),'Preview must use ad-hoc signing without hardened runtime'
+            assert all(s.get('ad_hoc') and not s.get('hardened_runtime') for values in signatures.values() for s in values),'Every preview Mach-O must be ad-hoc signed without hardened runtime; unsigned leaves are rejected'
             for executable,values in signatures.items():
                 if executable==main or '/'+product+' Helper' in executable:
                     assert all(s['entitlements'].get('com.apple.security.cs.allow-jit') is True for s in values),('Missing JIT entitlement',executable)

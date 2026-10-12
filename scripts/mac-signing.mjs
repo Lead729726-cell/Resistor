@@ -1,4 +1,4 @@
-import {readFile,writeFile,mkdtemp} from 'node:fs/promises';
+import {readFile,writeFile,mkdtemp,readdir,open} from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import {spawn} from 'node:child_process';
@@ -23,6 +23,12 @@ async function linuxSigner(){
 export async function signMacApp(app){
   const entitlements=path.resolve('apps/desktop/mac-entitlements.plist');await readFile(entitlements);
   if(process.platform==='darwin'){
+    // codesign --deep does not necessarily sign loose embedded dylibs.
+    // Sign actual Mach-O leaves first, then seal helpers/frameworks/app.
+    const binaries=[];
+    async function walk(folder){for(const item of await readdir(folder,{withFileTypes:true})){const file=path.join(folder,item.name);if(item.isDirectory())await walk(file);else if(item.isFile()){const handle=await open(file,'r');try{const bytes=Buffer.alloc(4);await handle.read(bytes,0,4,0);if(['cffaedfe','cefaedfe','feedfacf','feedface','cafebabe','bebafeca','cafebabf','bfbafeca'].includes(bytes.toString('hex')))binaries.push(file);}finally{await handle.close();}}}}
+    await walk(app);
+    for(const file of binaries.sort())await run('/usr/bin/codesign',['--force','--sign','-','--timestamp=none','--entitlements',entitlements,file]);
     await run('/usr/bin/codesign',['--force','--deep','--sign','-','--timestamp=none','--entitlements',entitlements,app]);
     await run('/usr/bin/codesign',['--verify','--deep','--strict','--verbose=2',app]);
   }else{
