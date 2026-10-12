@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';import {mkdir,writeFile,readFile,copyFile} from 'node:fs/promises';import {randomUUID,createHash} from 'node:crypto';
 import {runtimeConfig,workerRpc} from './runtime.mjs';
-const cfg=await runtimeConfig(),rpc=async(m,p={})=>{const r=await workerRpc(cfg,m,p);assert(r.ok,r.error?.message);return r.result;},folder='docs/evidence/layout-editor';await mkdir(folder,{recursive:true});
+const cfg=await runtimeConfig(),rpc=async(m,p={})=>{const r=await workerRpc(cfg,m,p);assert(r.ok,r.error?.message);return r.result;},folder=process.argv.find(a=>a.startsWith('--evidence='))?.slice(11)||'docs/evidence/layout-editor';assert(/^docs\/evidence\/[a-z0-9-]+$/.test(folder));await mkdir(folder,{recursive:true});
 const p=await rpc('project.create',{name:'Layout editor native QA',example:'layout',command_id:randomUUID()});let current=p;
 const cmd=async(command)=>{current=await rpc('layout.apply_command',{project_id:p.id,expected_revision:current.revision,command,command_id:randomUUID()});};
 const scene=()=>rpc('view.get_scene',{project_id:p.id});let s=await scene();assert.equal(s.shapes.length,0);assert.deepEqual(s.bounds,['0','0','0','0']);assert.equal(s.layers.length,19);assert.equal(current.runs.length,0);

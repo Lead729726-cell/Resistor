@@ -113,7 +113,7 @@ type RpcOverride = (method:string,params:Record<string,unknown>)=>Promise<unknow
 let override:RpcOverride|undefined;
 export function setRpcOverride(next:RpcOverride|undefined){override=next;}
 declare global { interface Window { mos?:{rpc:(method:string,params:Record<string,unknown>)=>Promise<{ok:boolean;result?:unknown;error?:{code:string;message:string;details?:unknown}}>;
-onMenuCommand?:(callback:(command:'save'|'undo'|'redo')=>void)=>()=>void}; } }
+onMenuCommand?:(callback:(command:'save'|'undo'|'redo'|'new'|'open'|'shortcuts')=>void)=>()=>void}; } }
 export async function rpc<T=unknown>(method:string,params:Record<string,unknown>={}):Promise<T>{
   if(override) return await override(method,params) as T;
   return localRpc<T>(method,params);

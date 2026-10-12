@@ -12,6 +12,8 @@ import NativeDatabasePanel from './NativeDatabasePanel';
 import ProcessPanel, { readProcessDocument, type ProcessDocument } from './ProcessPanel';
 import Brand from './Brand';
 import AppearanceControl from './AppearanceControl';
+import ShortcutHelp from './ShortcutHelp';
+import {resolveShortcut,appleKeyboard,editingText} from './shortcuts';
 import './styles.css';
 import './standalone.css';
 
@@ -156,6 +158,10 @@ export default function StandaloneViewer({ onExit }: { onExit: () => void }) {
   const [portableBackend, setPortableBackend] = useState<BackendSetup | undefined>();
   const originalInput = useRef<{ buffer: ArrayBuffer; name: string } | null>(null);
   const remoteOnly = !window.mos && !isLocalWorkbench();
+  const [shortcutHelpOpen,setShortcutHelpOpen]=useState(false);
+  useEffect(()=>{const handler=(e:KeyboardEvent)=>{if(!shortcutHelpOpen&&resolveShortcut('global',e,{apple:appleKeyboard(),textEditing:editingText(e.target),modalOpen:!!modal})?.id==='help'){e.preventDefault();setShortcutHelpOpen(true);}};window.addEventListener('keydown',handler);return()=>window.removeEventListener('keydown',handler);},[shortcutHelpOpen,modal]);
+  useEffect(()=>{const guard=(e:KeyboardEvent)=>{if((shortcutHelpOpen||modal)&&e.target instanceof Element&&!e.target.closest('[role="dialog"]')){e.preventDefault();e.stopImmediatePropagation();if(e.key==='Escape'){setShortcutHelpOpen(false);setModal(null);}}};window.addEventListener('keydown',guard,true);return()=>window.removeEventListener('keydown',guard,true);},[shortcutHelpOpen,modal]);
+  useEffect(()=>window.mos?.onMenuCommand?.(command=>{if(command==='shortcuts'&&!modal)setShortcutHelpOpen(true);else if((command==='undo'||command==='redo')&&editingText(document.activeElement))document.execCommand(command);}),[modal]);
   useEffect(() => { document.title = 'Resistor · Local GDS Viewer'; }, []);
   useEffect(() => () => { sequence.current++; }, []);
 
@@ -259,8 +265,8 @@ export default function StandaloneViewer({ onExit }: { onExit: () => void }) {
   const importNotes = sourceScene?.import_notes || [];
   const fileInput = (label: string, testId: string, accept: string, callback: (file: File) => void, disabled = false) => <label className={`sv-file-button${disabled || busy ? ' disabled' : ''}`}><span>{label}</span><input aria-label={label} data-testid={testId} type="file" accept={accept} disabled={disabled || !!busy} onChange={event => { const file = event.target.files?.[0]; event.target.value = ''; if (file) callback(file); }}/></label>;
 
-  return <main className="standalone-viewer" data-testid="standalone-viewer" data-ready="true">
-    <header className="sv-header"><Brand viewer/><span className="sv-local-badge">● 브라우저 로컬</span><div className="sv-header-actions"><AppearanceControl/><button className="button small" data-testid="viewer-exit" onClick={onExit}>설계 workspace</button></div></header>
+  return <main className="standalone-viewer" data-testid="standalone-viewer" data-ready="true">{shortcutHelpOpen&&<ShortcutHelp context="layout" viewerOnly readOnly onClose={()=>setShortcutHelpOpen(false)}/>}
+    <header className="sv-header"><Brand viewer/><span className="sv-local-badge">● 브라우저 로컬</span><div className="sv-header-actions"><button className="button small" title="단축키 안내 · F1 / ?" onClick={()=>setShortcutHelpOpen(true)}>단축키</button><AppearanceControl/><button className="button small" data-testid="viewer-exit" onClick={onExit}>설계 workspace</button></div></header>
     <div className="sv-topbar"><button className="button small" data-testid="viewer-process" disabled={!!busy} onClick={() => setModal('process')}>공정 3D</button><button className="button small" data-testid="viewer-native-database" disabled={!!busy} onClick={() => setModal('native-database')}>원본 DB 읽기</button><button className="button small" data-testid="viewer-design-review" disabled={!scene || !!busy} onClick={() => setModal('design-review')}>설계 검토</button><button className="button primary small" data-testid="viewer-interchange" disabled={!!busy} onClick={() => setModal('interchange')}>EDA 파일 호환</button>{fileInput('GDS 파일 열기', 'viewer-gds-input', '.gds,.gdsii', openGds)}{fileInput('PDK layer 가져오기', 'viewer-pdk-input', '.lyp,.json', openPdk)}{fileInput('전류 결과 가져오기', 'viewer-current-input', '.json', openCurrent, !scene)}{fileInput('뷰어 파일 열기', 'viewer-bundle-input', '.json,.register-view.json', openBundle)}<button className="button small" data-testid="viewer-pdk-setup" disabled={!!busy} onClick={() => setModal('setup')}>PDK·해석 설정</button><button className="button small" data-testid="viewer-commercial-backend" disabled={!!busy} onClick={() => setModal('backend')}>상용 Backend</button><span/><button className="button primary small" data-testid="viewer-export" disabled={!scene || !!busy} onClick={exportBundle}>뷰어 파일 저장</button></div>
     {(error || busy) && <div className={`sv-alert ${error ? 'error' : ''}`} role={error ? 'alert' : 'status'} data-testid="viewer-status">{error || `${busy}…`}{error && <button aria-label="오류 닫기" onClick={() => setError('')}>×</button>}</div>}
     <div className="sv-body"><aside className="sv-sidebar">

@@ -2,7 +2,22 @@
 
 This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
-`docs/evidence/` and the example READMEs. Package version: 0.18.0.
+`docs/evidence/` and the example READMEs. Package version: 0.18.1.
+
+## 0.18.1 — Keyboard workbench and searchable guide (2026-10-12)
+
+- Shared shortcut definitions drive the handlers, searchable in-app guide and
+  published cheat sheet. F1, ?, or Ctrl/Command+/ opens the guide.
+- Project creation/open/save, Undo/Redo, Alt/Option+1–4 view switching and
+  Ctrl/Command+Shift+L result-panel toggling preserve existing workflows.
+- Layout V selection, grid/10-grid arrow nudges, Ctrl/Command+D mask duplication,
+  +/- zoom and L layer palette join existing R/P/W/M/C/F drawing controls.
+- Schematic V/W/J/H, eight shifted placement keys, R/M transformation, arrow
+  nudging of selected devices/wires/junctions, duplication, fit and zoom.
+- Text fields, IME composition, held keys, read-only roles, pending edits and
+  dialogs protect design data. Schematic child keys cannot duplicate an edit.
+- Mac native New/Open/Save/Undo/Redo/Help menu commands use the same guards.
+  Local read-only viewer help omits unavailable project/schematic actions.
 
 ## 0.18.0 — Direct mask editing (2026-10-12)
 

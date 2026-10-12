@@ -7,6 +7,7 @@ import { clipRange, decimalCoordinate, deltaUm, isPickable, manhattanPoints, poi
 import type { LayerDisplay, LocalFrame, ViewerDisplay } from './geometry';
 import {drawingPoint,appendDrawingPoint,drawingCommand,conductorLayers,lengthToDbu,dbuToLength,type DrawTool} from './drawing';
 import type {DecimalPoint} from './geometry';
+import {resolveShortcut,nudgeVector} from '../../shortcuts/src/index';
 import { polygonShape } from './mesh';
 import { BatchedScene, scopedScene } from './batching';
 import { extrusionCap } from './caps';
@@ -500,15 +501,19 @@ export function LayoutViewer(props: LayoutViewerProps) {
       propsRef.current.onSelect(pick(event)?.id ?? null);
     };
     const keydown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') { cancelDrag();clearDrawing();setError(null);setNote('그리기를 취소했습니다.');setTool('select');toolRef.current='select'; propsRef.current.onSelect(null); }
-      if(['box','polygon','route'].includes(toolRef.current)&&!pendingRef.current){
-        if(event.key==='Enter'){event.preventDefault();event.stopPropagation();void finishDrawing();}
-        if(event.key==='Backspace'){event.preventDefault();event.stopPropagation();const count=drawHistory.current.pop()??0;drawRef.current.points=drawRef.current.points.slice(0,count);setDraft(drawRef.current.points);}
-        if(event.code==='Space'&&toolRef.current==='route'){event.preventDefault();setDrawOrder(order=>order==='x-first'?'y-first':'x-first');}
-      }
-      if(toolRef.current==='copy'&&event.key==='Enter'){event.preventDefault();event.stopPropagation();void finishCopy();}
-      if(mode==='2d'&&!pendingRef.current&&!propsRef.current.readOnly&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!event.repeat){const shortcuts:Record<string,typeof tool>={r:'box',p:'polygon',w:'route',m:'move',c:'copy'};const next=shortcuts[event.key.toLowerCase()];if(next){event.preventDefault();chooseTool(next);}}
-      if (event.key.toLowerCase() === 'f') { stage.focusBounds=undefined; stage.fit(); }
+      const action=resolveShortcut('layout',event,{apple:/Mac|iPhone|iPad/.test(navigator.platform),readOnly:propsRef.current.readOnly,pending:pendingRef.current||!propsRef.current.scene,drawing:['box','polygon','route','copy'].includes(toolRef.current)});
+      if(!action)return;event.preventDefault();event.stopPropagation();
+      if(action.id==='cancel'||action.id==='select'){cancelDrag();chooseTool('select');propsRef.current.onSelect(null);return;}
+      if(action.id==='finish'){if(toolRef.current==='copy')void finishCopy();else void finishDrawing();return;}
+      if(action.id==='undo_point'){if(toolRef.current==='copy'){clearDrawing();return;}const count=drawHistory.current.pop()??0;drawRef.current.points=drawRef.current.points.slice(0,count);setDraft(drawRef.current.points);return;}
+      if(action.id==='bend'){if(toolRef.current==='route')setDrawOrder(order=>order==='x-first'?'y-first':'x-first');return;}
+      if(['box','polygon','route','move','copy'].includes(action.id)){if(mode==='2d'||action.id==='move')chooseTool(action.id as typeof tool);return;}
+      if(action.id==='fit'){stage.focusBounds=undefined;stage.fit();return;}
+      if(action.id==='layers'){setPaletteOpen(value=>!value);return;}
+      if(action.id==='zoom_in'||action.id==='zoom_out'){const factor=action.id==='zoom_in'?1.2:1/1.2;if(stage.camera instanceof THREE.OrthographicCamera)stage.camera.zoom=Math.max(.01,Math.min(1000,stage.camera.zoom*factor));else{const distance=stage.camera.position.clone().sub(stage.controls.target);distance.setLength(Math.max(.001,Math.min(1e8,distance.length()/factor)));stage.camera.position.copy(stage.controls.target).add(distance);}stage.camera.updateProjectionMatrix();stage.controls.update();return;}
+      const source=propsRef.current.scene,id=propsRef.current.selection;if(!source||!id)return;
+      if(action.id==='nudge'&&mode==='2d'&&toolRef.current==='select'){const [dx,dy]=nudgeVector(event.key,!!event.shiftKey,source.grid_dbu??1);void execute({type:'move_shape',id,dx:String(dx),dy:String(dy)});}
+      if(action.id==='duplicate'){try{const offset=lengthToDbu('1','um',source.dbu_um,source.grid_dbu??1);void execute({type:'copy_shape',id,dx:offset,dy:offset});}catch(cause){setError(String(cause));}}
     };
     const contextLost = (event: Event) => { event.preventDefault(); setError('WebGL2 context가 중단되었습니다. 화면을 다시 열거나 GPU 드라이버를 확인하세요. 설계는 worker에 보존됩니다.'); };
     const pointerLeave = () => propsRef.current.onCursorMove?.(null);
@@ -924,7 +929,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
   return <div className={`mos-viewer mos-viewer-${mode}${paletteOpen ? ' mos-viewer-has-palette' : ''}`} data-testid={`layout-viewer-${mode}`} data-tool={tool}>
     <div className="mos-viewer-toolbar">
       <div className="mos-toolgroup">
-        <button className={tool === 'select' ? 'active' : ''} onClick={() => chooseTool('select')} title="도형 선택, orbit/pan">선택</button>
+        <button className={tool === 'select' ? 'active' : ''} onClick={() => chooseTool('select')} title="도형 선택, orbit/pan · V">선택</button>
         <button className={tool === 'move' ? 'active' : ''} disabled={!scene || pending || props.readOnly} onClick={() => { chooseTool('move'); setNote('도형을 XY 방향으로 드래그하세요. 표시 Z 높이는 설계 명령에 포함되지 않습니다.'); }} title={props.readOnly ? '읽기 전용 설계 · 편집 기능 비활성화' : 'XY grid 이동 · M'}>XY 이동</button>
         {mode==='2d'&&(['box','polygon','route','copy'] as const).map(kind=><button key={kind} data-testid={`layout-draw-${kind}`} title={kind==='box'?'드래그 또는 두 점 클릭 · R':kind==='polygon'?'꼭짓점 클릭 · P':kind==='route'?'Manhattan 배선 · W':'원본 도형과 새 위치 클릭 · C'} aria-pressed={tool===kind} className={tool===kind?'active':''} disabled={!scene||pending||props.readOnly} onClick={()=>chooseTool(kind)}>{kind==='box'?'사각형':kind==='polygon'?'다각형':kind==='route'?'배선 그리기':'복사'}</button>)}
         <button onClick={() => { if (stageRef.current) stageRef.current.focusBounds = undefined; stageRef.current?.fit(); }} title="전체 맞춤 (F)">맞춤</button>
@@ -934,7 +939,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
         <select aria-label="카메라 투영" value={mode === '2d' ? 'orthographic' : display.projection ?? 'orthographic'} disabled={mode === '2d'} onChange={event => updateDisplay({ projection: event.target.value as ViewerDisplay['projection'] })}><option value="orthographic">정사영</option><option value="perspective">원근</option></select>
       </div>
       <div className="mos-toolgroup mos-toolgroup-end">
-        <button onClick={() => setPaletteOpen(!paletteOpen)} aria-expanded={paletteOpen}>레이어</button>
+        <button onClick={() => setPaletteOpen(!paletteOpen)} aria-expanded={paletteOpen} title="레이어 패널 · L">레이어</button>
         <button disabled={!scene || !!error} onClick={capture}>PNG</button>
         <button disabled={!scene || mode !== '3d' || clipActive || !!error} onClick={() => void exportMesh()} title={clipActive ? 'clipping shader를 실제 잘린 GLB mesh로 내보내는 기능은 지원하지 않습니다. 단면을 끄세요.' : '표시용 extrusion mesh. GDS/OASIS는 프로젝트 교환 메뉴를 사용하세요.'}>GLB</button>
       </div>

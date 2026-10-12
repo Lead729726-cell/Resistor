@@ -51,8 +51,8 @@ test('Mac menus have native quit/edit/window roles and circuit commands reach th
   const commands=[],menu=macMenuTemplate({name:'레지스터',send:c=>commands.push(c)});
   assert(menu[0].submenu.some(i=>i.role==='quit'));assert(menu.some(i=>i.role==='windowMenu'));
   const items=menu.flatMap(i=>i.submenu??[]);
-  for(const id of ['register-save','register-undo','register-redo'])items.find(i=>i.id===id).click();
-  assert.deepEqual(commands,['save','undo','redo']);assert(items.some(i=>i.role==='paste'));
+  for(const id of ['register-save','register-undo','register-redo','register-new','register-open','register-shortcuts'])items.find(i=>i.id===id).click();
+  assert.deepEqual(commands,['save','undo','redo','new','open','shortcuts']);assert(items.some(i=>i.role==='paste'));
 });
 
 test('only release development packages reuse a checkout; an installed app under that checkout seeds its own user data',async()=>{
