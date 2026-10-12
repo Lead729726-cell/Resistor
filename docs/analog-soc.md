@@ -67,10 +67,9 @@ Self-biased bias/AFE fixtures provide `.nodeset` guesses at VDD/2 for VCM
 and AFE OUT. These are nonlinear DC convergence hints, not extra voltage sources
 or forced capacitor initial conditions. The engine must still solve every node.
 The earlier post-PEX SS/−40°C/1.6V solve found a nonphysical VCM near 4V; its
-failure is retained in the history. Supply-current sign, common-mode/bias ranges
-are checked. The diode-generated BIAS is solved without a nodeset; an earlier
+failure is retained in the history. The diode-generated BIAS is solved without a nodeset; an earlier
 BIAS hint disturbed the FF/125°C/1.8V equilibrium and its failure is also retained.
-Common-mode/bias ranges
+Supply-current sign, common-mode/bias ranges
 and settled output rails now also gate PASS. Power-up ramp/bistability and all
 possible initial states have not been qualified by this directed fixture.
 

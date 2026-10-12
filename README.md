@@ -1,5 +1,12 @@
 # Resistor
 
+v0.21은 고정 ×2/×8 분기와 전압 선택기를 사용하는 PGA, ABBA 입력쌍,
+실제 OTA 잡음·소자 편차 검사와 비정상 동작점 차단을 추가합니다.
+원본과 실제 PEX 조건표·실패 이력·재현성 기록은
+[아날로그 SoC 예제](examples/analog-soc/README.md)와 [검증 절차](docs/analog-soc.md)에서 확인합니다.
+Mac 설치 ZIP은 두 CPU의 네이티브 뷰어·메뉴·재실행·데이터 보존 검사와
+실제 파일 해시를 연결하여 공개합니다. Apple 공증·Mac Docker EDA·제조 승인은 별도 검증입니다.
+
 제품 이름은 저항을 뜻하는 **Resistor**입니다. 0.16.1부터 앱·설치 파일·바로가기의 이름을 Resistor로 통일합니다. 이전 Register 배포본의 파일과 검증 기록은 그대로 보존합니다. 기존 설계·설정은 이전 앱의 저장 경로를 계속 사용하며, 프로젝트 ZIP과 해석 결과 형식도 유지합니다.
 
 다운로드: https://resistor-downloads.vercel.app/
