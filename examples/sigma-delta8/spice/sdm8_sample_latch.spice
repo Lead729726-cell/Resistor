@@ -1,0 +1,30 @@
+.subckt INV A Y VPWR VGND
+XMN Y A VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMP Y A VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+.ends INV
+.subckt MUX2 A B S Y VPWR VGND
+XIS S SB VPWR VGND INV
+XMNA Y SB A VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMNB Y S B VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMPA Y S A VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XMPB Y SB B VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+.ends MUX2
+.subckt DFF D CLK Q VPWR VGND
+XICLK CLK CLKB VPWR VGND INV
+XM1 M MB VPWR VGND INV
+XM2 MB MF VPWR VGND INV
+XMNIN M CLKB D VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMNMF M CLK MF VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMNOUT T CLK MF VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMNSF T CLKB Q VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMPIN M CLK D VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XMPMF M CLKB MF VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XMPOUT T CLKB MF VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XMPSF T CLK Q VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XS1 T TB VPWR VGND INV
+XS2 TB Q VPWR VGND INV
+.ends DFF
+.subckt sdm8_sample_latch D CLK RESET Q VPWR VGND
+XRESET_DATA D VGND RESET DATA VPWR VGND MUX2
+XSAMPLE DATA CLK Q VPWR VGND DFF
+.ends sdm8_sample_latch

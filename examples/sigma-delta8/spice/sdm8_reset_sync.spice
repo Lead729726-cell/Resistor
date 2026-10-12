@@ -1,0 +1,38 @@
+.subckt NOR2 A B Y VPWR VGND
+XN0 Y A VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XN1 Y B VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XP0 P A VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XP1 Y B P VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+.ends NOR2
+.subckt INV A Y VPWR VGND
+XMN Y A VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMP Y A VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+.ends INV
+.subckt OR2 A B Y VPWR VGND
+XINV N Y VPWR VGND INV
+XNOR A B N VPWR VGND NOR2
+.ends OR2
+.subckt DFF D CLK Q VPWR VGND
+XICLK CLK CLKB VPWR VGND INV
+XM1 M MB VPWR VGND INV
+XM2 MB MF VPWR VGND INV
+XMNIN M CLKB D VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMNMF M CLK MF VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMNOUT T CLK MF VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMNSF T CLKB Q VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMPIN M CLK D VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XMPMF M CLKB MF VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XMPOUT T CLKB MF VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XMPSF T CLK Q VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XS1 T TB VPWR VGND INV
+XS2 TB Q VPWR VGND INV
+.ends DFF
+.subckt DFF_N D CLK Q VPWR VGND
+XCLOCK CLK CLKB VPWR VGND INV
+XLATCH D CLKB Q VPWR VGND DFF
+.ends DFF_N
+.subckt sdm8_reset_sync CLK RESET RESET_INTERNAL VPWR VGND
+XG0 N5 RESET N6 VPWR VGND OR2
+XG1 RESET CLK N5 VPWR VGND DFF_N
+XG2 N6 CLK RESET_INTERNAL VPWR VGND DFF_N
+.ends sdm8_reset_sync

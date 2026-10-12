@@ -5,6 +5,7 @@ import {prepareTutorialSite} from './download-tutorial.mjs';
 import {preparePhysicalSite} from './download-physical.mjs';
 import {prepareLayoutEditorSite} from './download-layout-editor.mjs';
 import {prepareShortcutSite} from './download-shortcuts.mjs';
+import {prepareSigmaDeltaSite} from './download-sigma-delta.mjs';
 const root=process.cwd(),folder=path.join(root,'platform/download-site');
 const current=JSON.parse(await readFile(path.join(root,'package.json'),'utf8')).version;
 const tag=process.argv.find(a=>a.startsWith('--release='))?.slice(10)||'v'+current;
@@ -50,4 +51,5 @@ await writeFile(path.join(folder,'.vercelignore'),'*\n!index.html\n!appearance.j
 await preparePhysicalSite(root,tag);
 await prepareLayoutEditorSite(root,tag);
 await prepareShortcutSite(root,tag);
+await prepareSigmaDeltaSite(root,tag);
 console.log(JSON.stringify({directory:'platform/download-site',release:tag,files:downloads.map(a=>({name:a.name,bytes:a.bytes,sha256:a.sha256})),static_only:true,credentials_included:false},null,2));

@@ -21,6 +21,7 @@ import digital_mux
 import chip_references
 import physical_library
 import digital_units
+import sigma_delta
 
 S = None
 VERSION = 'register-design-tools-2'
@@ -232,6 +233,7 @@ CATALOG = {
 }
 CATALOG.update(chip_references.CATALOG)
 CATALOG.update(physical_library.CATALOG)
+CATALOG.update(sigma_delta.CATALOG)
 
 def catalog():
     return {'schema_version':1,'templates':[{'id':key,**copy.deepcopy(value),'limits':['Actual native schematic and public ngspice models; no commercial execution claim.','Empty layout is not physically verified.','Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library.']} for key,value in CATALOG.items()]}
@@ -249,9 +251,11 @@ def _parameters(template,raw):
     if template=='mux4':
         if not .5<=values['slot_ns']<=1000 or not .01<=values['rise_ns']<=values['slot_ns']*.1:raise EDAError('PARAMETER_RANGE','MUX slot must be 0.5..1000ns and rise 0.01ns..10% of slot.')
     if 'w_um' in values:native.validate_device({'id':'probe','name':'N','kind':'nmos','model':'sky130_fd_pr__nfet_01v8','pins':dict.fromkeys(('D','G','S','B'),'0'),'parameters':{'w_um':values['w_um'],'l_um':values['l_um'],'nf':1,'m':1}})
+    if template in sigma_delta.CATALOG:return sigma_delta.parameters(template,values)
     return chip_references.parameters(template,values) if template in chip_references.CATALOG else values
 
 def _schematic(template,params):
+    if template in sigma_delta.CATALOG:return sigma_delta.schematic(template,params)
     if template in physical_library.CATALOG:return physical_library.gate(template)
     if template in chip_references.CATALOG:return chip_references.schematic(template,params)
     if template=='mux4':return digital_mux.schematic(params['w_um'],params['l_um'])
@@ -337,6 +341,9 @@ def create_template(params):
             if template in chip_references.CATALOG:
                 p['testbench']=native.testbench(chip_references.SETTINGS[template])
                 meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True)
+            if template in sigma_delta.CATALOG:
+                p['testbench']=sigma_delta.settings(sigma_delta.DEFAULT_SETTINGS)
+                meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True,adc_output_bits=8,adc_effective_resolution='not-measured',adc_clock_Hz=1e6,adc_decimation=256)
             if starter:
                 p.update(testbench=copy.deepcopy(starter['testbench']),semiconductor_starter=copy.deepcopy(starter['metadata']))
             return S.commit(p,layout)

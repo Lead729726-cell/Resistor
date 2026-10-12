@@ -313,3 +313,7 @@ npm run test:ui
 실제 engine 테스트는 Docker worker가 필요합니다. UI 검증은 패키지 및 개발 서버를 사용합니다. 증거는 `docs/evidence`와 `packages/viewer/tests/evidence`에 있습니다. [AI/MCP 도구](docs/agent-integration.md)는 실제 typed transaction/job/experiment를 노출하고 외부 유료 AI API를 호출하지 않습니다.
 
 [구현 상태 및 제약](docs/implementation-status.md) · [검증](docs/verification.md) · [구조](docs/architecture.md) · [PDK](docs/pdk-integration.md) · [라이선스](docs/THIRD-PARTY-NOTICES.md)
+
+## 8-bit Sigma Delta ADC
+
+[19개 전체 하위 블록과 편집 예제](examples/sigma-delta8/README.md): 실제 SKY130 모듈레이터와 CIC2 ×256 디지털 필터. 1MHz / 3.90625kS/s, 8-bit CODE + VALID, 실제 SPICE/RTL/gate 비교와 coherent SINAD/ENOB. TT·27°C·1.8V·0.6V 진폭에서 측정 ENOB 7.34bit이며 8 ENOB·마스크·제조 승인을 주장하지 않습니다. `npm run test:adc`는 수식·단위·reset·포화·계층·실제 RTL/gate API를 검사합니다. [공개 ADC 가이드](https://resistor-downloads.vercel.app/tutorial/sigma-delta8/) · [예제 ZIP](examples/Resistor-Sigma-Delta8-Library.zip).

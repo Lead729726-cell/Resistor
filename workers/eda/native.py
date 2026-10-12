@@ -265,11 +265,11 @@ def emit(schematic,cell,ports):
     return '\n'.join(out)+'\n'
 
 TESTBENCH={'analysis':'tran','corner':'tt','temperature_C':27,'supply_V':1.8,'duration_s':30e-9,'step_s':20e-12,'load_F':5e-15,'vds_V':1.8,'vbs_V':0}
-def testbench(settings):
+def testbench(settings,*,duration_limit_s=.001):
     result={**TESTBENCH,**settings}
     if set(settings)-set(TESTBENCH): raise EDAError('INVALID_PARAMETER','Unknown testbench setting.')
     if result['analysis'] not in {'tran','dc','ac','op'} or result['corner'] not in {'tt','ff','ss'}: raise EDAError('UNSUPPORTED','Unsupported analysis or process corner.')
-    bounds={'temperature_C':(-40,125),'supply_V':(.1,1.8),'duration_s':(1e-12,.001),'step_s':(1e-12,.001),'load_F':(1e-18,1e-9),'vds_V':(0,1.8),'vbs_V':(-1.8,0)}
+    bounds={'temperature_C':(-40,125),'supply_V':(.1,1.8),'duration_s':(1e-12,duration_limit_s),'step_s':(1e-12,.001),'load_F':(1e-18,1e-9),'vds_V':(0,1.8),'vbs_V':(-1.8,0)}
     for key,(lo,hi) in bounds.items():
         value=num(result[key])
         if not lo<=value<=hi: raise EDAError('PARAMETER_RANGE',f'{key} is outside the verified app testbench bounds {lo}..{hi}.')

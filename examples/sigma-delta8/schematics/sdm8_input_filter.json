@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "VIN",
+    "OUT",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "R_AA",
+      "name": "R_AA",
+      "kind": "resistor",
+      "pins": {
+        "+": "VIN",
+        "-": "OUT"
+      },
+      "parameters": {
+        "value": 10000
+      },
+      "x": 180,
+      "y": 170
+    },
+    {
+      "id": "C_AA",
+      "name": "C_AA",
+      "kind": "capacitor",
+      "pins": {
+        "+": "OUT",
+        "-": "VGND"
+      },
+      "parameters": {
+        "value": 1e-10
+      },
+      "x": 420,
+      "y": 170
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

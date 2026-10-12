@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "run_id": "e50774627ac445c2970b62a824cc6774",
+  "native_execution": "ngspice + Icarus Verilog",
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "source_sha256": {
+    "workers/eda/sigma_delta.py": "f093720df75b1223fbadeb1d7b71c4a41087bc271fc03c5f59d94cb290d3d8a7",
+    "workers/eda/native.py": "561f9f8ad914e438c04d4e57946cc093dd9c5f22a8be7b661d1c6bcc16fc1136",
+    "workers/eda/server.py": "dee8d54ec4fa95f0116b590cce15012382c4c7bce74dd013d31810dd1507884d",
+    "workers/eda/design_tools.py": "27ea2a7eb300b997b3e6b2c52cd8ebdd54f9200d739c26c30a5387e44ccb9459",
+    "workers/eda/rtl/sigma_delta8.v": "06033a7a9d84f2cf0c43a73c30ba489626d02a515cb5f5decbf3bf908febb42c",
+    "workers/eda/rtl/sigma_delta8_gate.v": "5792a1a31a3275518b544cd5a0c69a08d161bf82526e6111fe90a469e5112eb9",
+    "workers/eda/rtl/sigma_delta8_cmos.json": "b2eaed1744483b63883404fde9090c14e0b04dacbb0ebce1b9f175cd2ca83900",
+    "packages/ui/src/AdcBlockLibrary.tsx": "a0487d664265c15091f406f4f21ce051a0aaab799b5e3bc580f5fd12491b1580",
+    "packages/ui/src/ChipReferenceResults.tsx": "ffae7927c25d3a03e3b6d2dbf4c76791ce9cac6e7f18fdea0d2e6ee8a7250749",
+    "packages/ui/src/IntegratedTools.tsx": "2973d8f6c32d835a1c11555e0c4ed1f5268202bde34f934a9cf29eb2ef66f956",
+    "packages/ui/src/App.tsx": "5cb0524d75de6dae8d9bf4e63246058f222bfa22f8b94d1a697a2cad38ff50d8",
+    "packages/ui/src/TestbenchEditor.tsx": "0a758f01f7d798a8b2eb7e951dac0c262083f0cc6cc6499bb4b80b7e0b2a2688"
+  },
+  "commands": [
+    {
+      "argv": [
+        "ngspice",
+        "-b",
+        "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774/testbench.spice"
+      ],
+      "cwd": "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774",
+      "timeout_s": 600,
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "replay",
+        "-o",
+        "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774/rtl.vvp",
+        "/opt/register-engine/workers/eda/rtl/sigma_delta8.v",
+        "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774/replay.v"
+      ],
+      "cwd": "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774",
+      "timeout_s": 120,
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "vvp",
+        "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774/rtl.vvp"
+      ],
+      "cwd": "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774",
+      "timeout_s": 120,
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "replay",
+        "-o",
+        "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774/gate.vvp",
+        "/foss/tools/yosys/share/yosys/simcells.v",
+        "/opt/register-engine/workers/eda/rtl/sigma_delta8_gate.v",
+        "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774/replay.v"
+      ],
+      "cwd": "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774",
+      "timeout_s": 120,
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "vvp",
+        "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774/gate.vvp"
+      ],
+      "cwd": "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774",
+      "timeout_s": 120,
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "replay",
+        "-o",
+        "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774/ir.vvp",
+        "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774/ir-replay.v",
+        "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774/replay.v"
+      ],
+      "cwd": "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774",
+      "timeout_s": 120,
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "vvp",
+        "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774/ir.vvp"
+      ],
+      "cwd": "/workspace/.runtime/eda/runs/e50774627ac445c2970b62a824cc6774",
+      "timeout_s": 120,
+      "returncode": 0
+    }
+  ],
+  "actual_run_manifest_sha256": "6491c464b70a7d29d641954863626af7333d34558eaed2678568eb556ab10188",
+  "cmOS_IR_wiring_replay": true,
+  "foundry_signoff": false,
+  "native_macos_execution": false
+}

@@ -17,6 +17,8 @@ resources = [p.relative_to(ROOT).as_posix() for p in (ROOT / 'dist').rglob('*') 
 resources += ['workers/eda/geometry.py', 'workers/eda/server.py', 'docs/drawing-tools.md', 'docs/desktop-installation.md', 'apps/desktop/menu.cjs', 'apps/desktop/preload.cjs']
 if (ROOT / 'docs/shortcuts.md').exists():
     resources.append('docs/shortcuts.md')
+if (ROOT / 'workers/eda/sigma_delta.py').exists():
+    resources += ['workers/eda/sigma_delta.py','workers/eda/design_tools.py','workers/eda/native.py',*[p.relative_to(ROOT).as_posix() for p in (ROOT/'workers/eda/rtl').glob('sigma_delta8*') if p.is_file()]]
 expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
 rows = []
 for arch in ['arm64', 'x64']:

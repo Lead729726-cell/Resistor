@@ -1,0 +1,90 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "ngspice",
+        "-b",
+        "/workspace/.runtime/sigma-delta8/native-sine/testbench.spice"
+      ],
+      "timeout_s": 600,
+      "reused_prior_execution": true,
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "replay",
+        "-o",
+        "/workspace/.runtime/sigma-delta8/native-sine/rtl.vvp",
+        "/workspace/workers/eda/rtl/sigma_delta8.v",
+        "/workspace/.runtime/sigma-delta8/native-sine/replay.v"
+      ],
+      "timeout_s": 120,
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "vvp",
+        "/workspace/.runtime/sigma-delta8/native-sine/rtl.vvp"
+      ],
+      "timeout_s": 120,
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "replay",
+        "-o",
+        "/workspace/.runtime/sigma-delta8/native-sine/gate.vvp",
+        "/foss/tools/yosys/share/yosys/simcells.v",
+        "/workspace/workers/eda/rtl/sigma_delta8_gate.v",
+        "/workspace/.runtime/sigma-delta8/native-sine/replay.v"
+      ],
+      "timeout_s": 120,
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "vvp",
+        "/workspace/.runtime/sigma-delta8/native-sine/gate.vvp"
+      ],
+      "timeout_s": 120,
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "replay",
+        "-o",
+        "/workspace/.runtime/sigma-delta8/native-sine/ir.vvp",
+        "/workspace/.runtime/sigma-delta8/native-sine/ir-replay.v",
+        "/workspace/.runtime/sigma-delta8/native-sine/replay.v"
+      ],
+      "timeout_s": 120,
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "vvp",
+        "/workspace/.runtime/sigma-delta8/native-sine/ir.vvp"
+      ],
+      "timeout_s": 120,
+      "returncode": 0
+    }
+  ],
+  "settings": {
+    "analog_block_context": "sigma_delta8",
+    "adc_clock_Hz": 1000000.0,
+    "adc_decimation": 256,
+    "adc_output_rate_Hz": 3906.25,
+    "adc_cosimulation": "ngspice transistor modulator \u2192 Icarus RTL and synthesized-gate replay",
+    "analog_initialization": "UIC with explicit nodes; reset eight clocks",
+    "digital_edge": "falling; analog bit latched on preceding rising edge"
+  }
+}

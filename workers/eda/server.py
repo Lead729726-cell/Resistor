@@ -285,10 +285,11 @@ def input_signature():
     models=initial_models()
     decks={str(p):cached_sha(p) for p in (profile.TECH,profile.MAGIC_RC,profile.SETUP,profile.ROOT/'libs.tech/magic/sky130A.tcl',profile.ROOT/'.config/nodeinfo.json')}
     bins=tool_hashes()
-    adapters={p.name:cached_sha(p) for p in Path(__file__).parent.glob('*.py') if not p.name.startswith('test_')}
+    adapters={str(p.relative_to(Path(__file__).parent)):cached_sha(p) for p in [*Path(__file__).parent.glob('*.py'), *Path(__file__).parent.glob('rtl/*')] if p.is_file() and not p.name.startswith('test_')}
     return hashlib.sha256(json.dumps({'models':models,'decks':decks,'tools':bins,'image':profile.IMAGE,'adapters':adapters},sort_keys=True).encode()).hexdigest()
 def tool_hashes():
-    paths=[Path(shutil.which(name)) for name in ('magic','ngspice','netgen','python3') if shutil.which(name)]
+    paths=[Path(shutil.which(name)) for name in ('magic','ngspice','netgen','python3','iverilog','vvp') if shutil.which(name)]
+    paths += [Path('/foss/tools/yosys/share/yosys/simcells.v')]
     paths += [Path('/foss/tools/magic/lib/magic/tcl/magicdnull'),Path('/foss/tools/magic/lib/magic/tcl/tclmagic.so'),Path('/foss/tools/netgen/lib/netgen/tcl/netgenexec'),Path('/foss/tools/netgen/lib/netgen/tcl/tclnetgen.so')]
     for pattern in ('dbcore*.so','tlcore*.so','libcore*.so'): paths+=list(Path('/foss/tools/klayout/pymod/klayout').glob(pattern))
     return {str(p):cached_sha(p) for p in paths if p.is_file()}
@@ -401,7 +402,7 @@ def edit(pid,c,mode,cell_name=None):
             return commit(restored,l,parent=p['revision'])
         l=load_layout(p); old=p['revision']; p['revision']=p['next_revision']; p['next_revision']+=1; p['redo_stack']=[]; p['undo_stack']=p.get('undo_stack',[])+[old]
         if mode=='schematic':
-            if c.get('type')=='update_testbench': p['testbench']=native.testbench({**p.get('testbench',{}),**c.get('settings',{})})
+            if c.get('type')=='update_testbench': p['testbench']=(design_tools.sigma_delta.settings if p.get('design_template',{}).get('id') in design_tools.sigma_delta.CATALOG else native.testbench)({**p.get('testbench',{}),**c.get('settings',{})})
             elif c.get('type')=='add_cell' and c.get('name','').lower()==p['cell'].lower():raise EDAError('INVALID_NAME','A schematic child cell cannot shadow the root cell name.')
             else: native.apply(p['schematic'],copy.deepcopy(c),cell_name)
         elif c.get('type')=='update_device':
@@ -469,7 +470,7 @@ def import_layout(params):
         meta=json.loads(side.read_text())
         if meta.get('file_hash')==profile.sha(src):
             origin=meta.get('project',{}); p['schematic']=origin.get('schematic',p['schematic']); p['source']=origin.get('source','fixture'); p['example']=origin.get('example','fixture'); p['ports']=origin.get('ports',[]); p['pdk_id']=origin.get('pdk_id','fixture'); preserved=True
-            if origin.get('testbench'):p['testbench']=native.testbench(origin['testbench'])
+            if origin.get('testbench'):p['testbench']=(design_tools.sigma_delta.settings if origin.get('design_template',{}).get('id') in design_tools.sigma_delta.CATALOG else native.testbench)(origin['testbench'])
             if origin.get('design_template'):
                 p['design_template']=copy.deepcopy(origin['design_template']);design_tools.validate_template_project(p)
     p['import_metadata']={'sidecar_preserved':preserved,'source_path':str(src),'source_hash':profile.sha(src)}
@@ -495,12 +496,13 @@ def start_job(params,kind):
     if (template or digital) and (kind!='simulation' or params.get('post_layout')) and not any(not cell.is_empty() for cell in load_layout(p).each_cell()):
         raise EDAError('NO_PHYSICAL_LAYOUT','This circuit template has no physical layout. Create actual PDK geometry before physical verification or post-layout analysis.')
     if kind=='simulation':
-        settings=native.testbench({**p.get('testbench',{}),**{key:params[key] for key in native.TESTBENCH if key in params}})
+        adc=p.get('design_template',{}).get('id') in design_tools.sigma_delta.CATALOG
+        settings=(design_tools.sigma_delta.settings if adc else native.testbench)({**p.get('testbench',{}),**{key:params[key] for key in native.TESTBENCH if key in params}})
         params={**params,**settings}
         if not template and not digital and p['example'] not in {'inverter','mosfet','wire','current_mirror','differential_pair'}: raise EDAError('UNSUPPORTED','No testbench for this cell.')
         native.validate(p['schematic'])
         duration=native.num(params.get('duration_s',30e-9)); step=native.num(params.get('step_s',20e-12))
-        if duration<=0 or duration>1e-3 or step<1e-12 or step>duration or duration/step>200000:
+        if duration<=0 or duration>(.02 if adc else 1e-3) or step<1e-12 or step>duration or duration/step>200000:
             raise EDAError('TESTBENCH_RANGE','Transient duration/step must be positive, at most 1ms and at most 200000 nominal points, with step >=1ps.')
     if kind=='lvs' and p['example']=='wire': raise EDAError('UNSUPPORTED','Wire fixture demonstrates extraction; it has no reference devices for LVS.')
     rid=uuid.uuid4().hex; folder=STATE/'runs'/rid; folder.mkdir(parents=True)
@@ -714,6 +716,8 @@ def spice_tb(p,folder,params,netlist):
     return '\n'.join(lines)+'\n',names,units,xunit,xlabel
 
 def simulation(run,p,folder,manifest,params):
+    if p.get('design_template',{}).get('id') in design_tools.sigma_delta.CATALOG:
+        return design_tools.sigma_delta.execute(sys.modules[__name__],run,p,folder,manifest,params)
     manifest['settings']['ngspice_num_threads']=1
     if params.get('post_layout'):
         if p.get('design_template') or p.get('digital_unit') or p['example'] in {'wire','mosfet','inverter','current_mirror','differential_pair'}: netlist=extract(run,p,folder,manifest,pex=True)
