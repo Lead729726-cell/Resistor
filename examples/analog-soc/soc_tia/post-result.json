@@ -1,16 +1,17 @@
 {
   "reference": "soc_tia",
   "stage": "post",
-  "project_id": "99b10b8462854201971318fb340e4a20",
-  "run_id": "bb0e79a8a7fc4569adc38b2002b02b4c",
+  "project_id": "fff515306c464c5284d509975edc4ac5",
+  "run_id": "3d2af95139b44f21906c1dd86f4b60d4",
   "revision": 1,
+  "freshness": "current",
   "execution_status": "completed",
   "analysis_result": "pass",
-  "message": "Actual ngspice tran: 10008 samples.; reference criteria 2/2",
-  "elapsed_s": 7.912834159913473,
+  "message": "Actual ngspice tran: 10008 samples.; reference criteria 3/3",
+  "elapsed_s": 8.728404183057137,
   "parasitics": {
-    "resistors": 5512,
-    "capacitors": 1270
+    "resistors": 5669,
+    "capacitors": 1289
   },
   "measurements": {
     "analysis": "tran",
@@ -22,26 +23,26 @@
     "post_layout": "true",
     "samples": 10008,
     "solver": "SPARSE 1.3",
-    "OUT_min": 0.7997395642691374,
-    "OUT_max": 0.9998871493773521,
-    "supply_current_min": 0.0000421422459084814,
-    "supply_current_max": 0.000044483267187293314,
+    "OUT_min": 0.7997148072448466,
+    "OUT_max": 0.999856374336911,
+    "supply_current_min": 0.00004180833064185345,
+    "supply_current_max": 0.000044149011002691387,
     "input_current_min": -9.999999845244603e-7,
     "input_current_max": 9.999999845244603e-7,
-    "IIN_min": 0.8997075640595772,
-    "IIN_max": 0.8999181667342073,
+    "IIN_min": 0.899673477344611,
+    "IIN_max": 0.899896587481657,
     "current_flow_status": "available_partial",
     "template_id": "soc_tia",
     "layout_status": "generated-public-core",
     "metric_source": "actual-ngspice-samples",
     "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
-    "average_supply_current_A": 0.00004257209078156991,
-    "average_supply_power_W": 0.00007662976340682583,
-    "transfer_gain": 100074.31937292535,
+    "average_supply_current_A": 0.00004223780812670197,
+    "average_supply_power_W": 0.00007602805462806356,
+    "transfer_gain": 100071.31261080616,
     "transfer_output_fit": {
-      "amplitude": 0.10007431608058326,
-      "mean": 0.8998130034950126,
-      "residual_rms": 5.155732566917343e-7
+      "amplitude": 0.10007130931856298,
+      "mean": 0.899785200209559,
+      "residual_rms": 5.345652597227361e-7
     }
   },
   "verification": {
@@ -50,32 +51,37 @@
     "source": "actual-ngspice-samples",
     "checks": [
       {
-        "name": "transfer measured gain within 8%",
+        "name": "passive sensor macro draws nonnegative mean supply current",
         "pass": true,
-        "observed": 100074.31937292535
+        "observed": 0.00004223780812670197
+      },
+      {
+        "name": "transfer measured gain within 3%",
+        "pass": true,
+        "observed": 100071.31261080616
       },
       {
         "name": "transfer settled sine residual <5mV",
         "pass": true,
-        "observed": 5.155732566917343e-7
+        "observed": 5.345652597227361e-7
       }
     ],
     "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
     "pass": true
   },
   "artifacts": {
-    "pex_netlist": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/pex.spice",
-    "pex_quality": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/pex-quality.json",
-    "pex_simulation_netlist": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/pex-simulation.spice",
-    "pex_reduction": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/pex-reduction.json",
-    "testbench": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/testbench.spice",
-    "current_flow_data": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/current-flow.dat",
-    "current_probe_netlist": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/current-probe.spice",
-    "node_voltage_data": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/node-voltages.dat",
-    "node_voltage_probes": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/voltage-probes.json",
-    "waveform_data": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/waveform.dat",
-    "waveform_raw": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/waveform.raw",
-    "reference_netlist": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/pex-simulation.spice",
-    "stdout": "/workspace/.runtime/eda/runs/bb0e79a8a7fc4569adc38b2002b02b4c/stdout.log"
+    "pex_netlist": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/pex.spice",
+    "pex_quality": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/pex-quality.json",
+    "pex_simulation_netlist": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/pex-simulation.spice",
+    "pex_reduction": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/pex-reduction.json",
+    "testbench": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/testbench.spice",
+    "current_flow_data": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/current-flow.dat",
+    "current_probe_netlist": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/current-probe.spice",
+    "node_voltage_data": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/node-voltages.dat",
+    "node_voltage_probes": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/voltage-probes.json",
+    "waveform_data": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/waveform.dat",
+    "waveform_raw": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/waveform.raw",
+    "reference_netlist": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/pex-simulation.spice",
+    "stdout": "/workspace/.runtime/eda/runs/3d2af95139b44f21906c1dd86f4b60d4/stdout.log"
   }
 }

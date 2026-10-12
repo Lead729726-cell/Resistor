@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
   "parser_version": "mos-eda-1",
-  "run_id": "498baddf13c944da98b3b9881fa423ea",
-  "project_id": "810a86020dfb4a3da623eba3ed3fcf7c",
+  "run_id": "8e67c663686c47fc917cdd1876ac5a80",
+  "project_id": "0853f872d2e142ab9781435a8257a1c0",
   "cell": "soc_bias",
   "revision": 1,
-  "started_at": "2026-10-12T11:34:54.938491+00:00",
-  "input_signature": "ff9ae3b6f69da2124d930ddb83489102b36af47dad55cb6e9633e5a3119eedbe",
+  "started_at": "2026-10-12T13:57:20.328086+00:00",
+  "input_signature": "0fc4d5abfe4934cbf8d6fb0166b4b969302970b49c2a9f7b029a18bafded400d",
   "settings": {
-    "project_id": "810a86020dfb4a3da623eba3ed3fcf7c",
+    "project_id": "0853f872d2e142ab9781435a8257a1c0",
     "expected_revision": 1,
     "analysis": "tran",
     "corner": "tt",
@@ -19,7 +19,7 @@
     "load_F": 5e-15,
     "vds_V": 1.8,
     "vbs_V": 0.0,
-    "command_id": "ca2b3045-f97d-47e4-a1eb-5ea10ea9a8cb",
+    "command_id": "3179bc43-199f-4adf-9864-82ecb213403c",
     "ngspice_num_threads": 1,
     "trace_scope": {
       "waveforms": [
@@ -27,7 +27,7 @@
         "i(VDD)",
         "v(BIAS)"
       ],
-      "signed_current_branches": 10,
+      "signed_current_branches": 12,
       "all_extracted_RC_elements_retained": true
     },
     "solver_observed": "SPARSE 1.3"
@@ -39,7 +39,7 @@
         "-b",
         "./testbench.spice"
       ],
-      "cwd": "/workspace/.runtime/eda/runs/498baddf13c944da98b3b9881fa423ea",
+      "cwd": "/workspace/.runtime/eda/runs/8e67c663686c47fc917cdd1876ac5a80",
       "timeout_s": 300,
       "returncode": 0
     }
@@ -47,9 +47,10 @@
   "adapter_sources": {
     "sigma_delta.py": "f093720df75b1223fbadeb1d7b71c4a41087bc271fc03c5f59d94cb290d3d8a7",
     "native.py": "561f9f8ad914e438c04d4e57946cc093dd9c5f22a8be7b661d1c6bcc16fc1136",
-    "analog_soc.py": "d81c7b861dbace1442999eaff538cfaf40ef4decdb2c21bab8bb7c62f83bbcfb",
+    "analog_soc.py": "011bcd40f404d9d0139bdc8c75b678050a00968873c62cccf6b9838676ed64a9",
     "bootstrap.py": "88e9e525d4868e34b18f9dd6b953ac2b745d8ff739716a24079018c99b8b3c17",
     "digital_units.py": "8570ed536be9f102082ab4ef8fce041e1eba0c86723e679cfb5f0c78a1a30004",
+    "characterization.py": "6b0a9feb9acaff73a7675835748bdc3ec98c0d12cbafec3b7085f98249920349",
     "signal_metrics.py": "0ed481b9bbf111b1e954cdfbcd386d82b21c7cbb64e5ca20674da935eb279d29",
     "native_database.py": "267705c19667526ff2557a4d9f13f19320b8f18c9d5c52cde83355181f8fdb81",
     "profile.py": "bba5cf8d5ad36e776ff2f0511141573072ef1171244d7b87b178de258e63b5d8",
@@ -62,14 +63,14 @@
     "interchange.py": "c310a3f0963bfe596c2a2c35474d6d6be8f5b463a338ec915efcd3ca892ce7e8",
     "xschem_bridge.py": "dcc3816848f47ebff83d66fe1561cca69e09e0004017d86467f3cc58e99bbe6e",
     "pex_reduce.py": "d84adb5f857a8f6887f4621a07008b2a4526763dd214477d1df4a06e71caf7ba",
-    "server.py": "099de24807b8c9e05ce71afef875c4aebcbf1abf7e172bf4630e7023dfdbb40b",
+    "server.py": "4c47ce32087e1e1f8575bc72aa48ba09a2b30f4f2718b6cf43eefd8e0382abcc",
     "configured_analysis.py": "c5a2e0b4f96eb6d2eb3796b3bc5b84e09f6fee6978354e1229fdf82c98d49df0",
     "geometry.py": "50defdd0615c2dabbaa2adbb6c89f3276370e79d1a723011adc0ebdac1694506",
     "build_current_example.py": "23bc6dd70e109e13e494a434463457c0f5888499a3a50a910c20a4ad22b766ce",
     "templates.py": "78d98e3340ad823b7353744bc7cce546081ded2a3faa27232527c381a11f53fe",
     "experiments.py": "569057559a6b813ae8c356d9935db078d524cb8ae28e666460e5ba869442cd87",
     "job_evidence.py": "fcbdfcee94bc4d7090f7b6fec438b85d0ccc6057613de9729d74203fd793047f",
-    "physical_library.py": "020f1dcddd24c5216ecfab4951e8bc5366517347900a4037abbf4f5305ad812c",
+    "physical_library.py": "24080bfc8f7c6858412dd610557b4c13148802cafd992ebb617200756c3c8f61",
     "toolchain_diagnostics.py": "f8d439cfe011351152b8c6b8147195e22f41c40c4c2de15e1a3b36cd11ddb382",
     "commercial_backend.py": "34e4c2eafdc90ade1dacc9957d369553c76e6d1f41bb3ae594c947cda2805e09",
     "hierarchy_transfer.py": "f79af0f29314c9f11bd7d7ad426b9aa9b1d832c4554c8a31393346439723bcf4",
@@ -78,8 +79,8 @@
     "project_index.py": "3b9a1606eca2ea951617b2735c63d2470d6f7d04c299aefc9451c839cd8576f9",
     "commercial_results.py": "8d417102a078b3e0969becd3f48a87759fc27341288e2a991d8e1f2a2db01a56"
   },
-  "layout_hash": "73dae4edeab28f63930b2b60dfef4e9d9ee1df59249ee4069b1236ac630aa591",
-  "schematic_hash": "b599ecab8a966b8d69ff121d2ca0c27db72a4cc0983bbb01cc5fe05b8499417c",
+  "layout_hash": "385586c111086f7de73c5cc5709de3dc9be4e5b9039d8fcf8ac8328a9b4ca4ca",
+  "schematic_hash": "559dc086aa780cc7b5ac2afb79e615e3dd17fbfb9d6ecc78b877fcede49f137b",
   "pdk": {
     "pdk_id": "sky130A",
     "image": "hpretl/iic-osic-tools@sha256:92961478ad3c4f508efb42d9ccdba12ab262eb42a14926d2bd49862230ba8521",
@@ -1142,23 +1143,43 @@
         "values_A": null
       },
       {
-        "id": "XU/XVCM_BUFFER_FIRST_N_INN",
-        "name": "VCM_BUFFER_FIRST_N_INN drain terminal (D→S reference)",
+        "id": "XU/XVCM_BUFFER_FIRST_N_INN0",
+        "name": "VCM_BUFFER_FIRST_N_INN0 drain terminal (D→S reference)",
         "from_net": "XU.VCM_BUFFER__FIRST__MIR",
         "to_net": "XU.VCM_BUFFER__FIRST__TAIL",
         "mapping": "unmapped",
-        "source_vector": "i(v.xu.vregister_cf_1a7de0195852d3e0)",
-        "device_id": "VCM_BUFFER.FIRST.N_INN",
+        "source_vector": "i(v.xu.vregister_cf_69342855ba0445e2)",
+        "device_id": "VCM_BUFFER.FIRST.N_INN0",
         "values_A": null
       },
       {
-        "id": "XU/XVCM_BUFFER_FIRST_N_INP",
-        "name": "VCM_BUFFER_FIRST_N_INP drain terminal (D→S reference)",
+        "id": "XU/XVCM_BUFFER_FIRST_N_INN1",
+        "name": "VCM_BUFFER_FIRST_N_INN1 drain terminal (D→S reference)",
+        "from_net": "XU.VCM_BUFFER__FIRST__MIR",
+        "to_net": "XU.VCM_BUFFER__FIRST__TAIL",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_0d6f797e8c61b080)",
+        "device_id": "VCM_BUFFER.FIRST.N_INN1",
+        "values_A": null
+      },
+      {
+        "id": "XU/XVCM_BUFFER_FIRST_N_INP0",
+        "name": "VCM_BUFFER_FIRST_N_INP0 drain terminal (D→S reference)",
         "from_net": "XU.VCM_BUFFER__PRE",
         "to_net": "XU.VCM_BUFFER__FIRST__TAIL",
         "mapping": "unmapped",
-        "source_vector": "i(v.xu.vregister_cf_bf547ee9a36c5973)",
-        "device_id": "VCM_BUFFER.FIRST.N_INP",
+        "source_vector": "i(v.xu.vregister_cf_58c8ce7f8f03221e)",
+        "device_id": "VCM_BUFFER.FIRST.N_INP0",
+        "values_A": null
+      },
+      {
+        "id": "XU/XVCM_BUFFER_FIRST_N_INP1",
+        "name": "VCM_BUFFER_FIRST_N_INP1 drain terminal (D→S reference)",
+        "from_net": "XU.VCM_BUFFER__PRE",
+        "to_net": "XU.VCM_BUFFER__FIRST__TAIL",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_7ce6359e676873b0)",
+        "device_id": "VCM_BUFFER.FIRST.N_INP1",
         "values_A": null
       },
       {
@@ -1231,24 +1252,24 @@
       }
     ]
   },
-  "ended_at": "2026-10-12T11:34:58.684521+00:00",
-  "elapsed_s": 3.7563233129912987,
+  "ended_at": "2026-10-12T13:57:24.038512+00:00",
+  "elapsed_s": 3.7204061549855396,
   "execution_status": "completed",
   "analysis_result": "pass",
   "artifacts": {
-    "./current-flow.dat": "db2dd9052a467a2f6cfb2415116622924896e4f752852a3a45285da3b6c21701",
-    "./current-probe.spice": "725148cf3e7425474dd14c6b0c2920910db35d2eb322b00575d1ddd634bc1ef1",
-    "./input.oas": "73dae4edeab28f63930b2b60dfef4e9d9ee1df59249ee4069b1236ac630aa591",
-    "./ngspice.log": "a28985c5be6d32f3c2aa3b837fec3275f6d85cfe87f00fc00451884fe98a4109",
-    "./node-voltages.dat": "0b79c3893f3ce5be5165f8a2c2ac0e611f88caf2bbe6ac3dc62fadc7f836a251",
-    "./project.json": "fef240dc98f8d3d61bf47b9232a1ab025612008e4f6a999baed8a094e1eac628",
-    "./reference.spice": "26daa6711c55b48e2764d02d3fd0d5b359614a30cade20cfbf80d5d307e3bfa0",
-    "./soc_bias.gds": "cf3ab63f02fb38aa7c9e995f06ec3250f00fa20637858d7d20ba8f57979ed4c3",
-    "./stdout.log": "3db20eac1f589d492e00cf6878aed73ee745a4f51c0a3223d8915c0d874ff8ee",
+    "./current-flow.dat": "baf5189c423d9ae9198817377b2da970449d90d38df846e458af0825bbab518f",
+    "./current-probe.spice": "73eb036f30e415d1b369fdc79e49818cff53e312082f93617e7478966361b764",
+    "./input.oas": "385586c111086f7de73c5cc5709de3dc9be4e5b9039d8fcf8ac8328a9b4ca4ca",
+    "./ngspice.log": "b2ad5db6d0b8332bb587a032af36343a6673e8846c5b0873edc6b54942bdc8e0",
+    "./node-voltages.dat": "dae95d6d67268fdf3307343a0c7ce8597f02b8ba43525e15deac171b6cb654e8",
+    "./project.json": "3e6098d511cbe17dcc86b677afff505126787971eb51f4131c36845b23aa3184",
+    "./reference.spice": "b59d0d2489242eba5bd592772ffc96f755ae5e8defd56cc5504bdc99dd1896ab",
+    "./soc_bias.gds": "539a806560016c0479e268bf57c8ce0a640028370290faa23d958bf48022110b",
+    "./stdout.log": "fed6833731573ad3bf7748e6ba221ed4314278c5a2c655e0470d9c72d8245565",
     "./supported-tt.spice": "96b82792f60d901588fa18ab36ddc6d96ce178d3bf8ef9009c680effcc12eeb7",
-    "./testbench.spice": "3c95fe9fb48f3584b8b0cdbb9b5ec62809a3e3447b537751fabd3873ed420b3e",
+    "./testbench.spice": "ac930a6fabc02e33be0db6de967d5c26f9bbc7c8927df9ae02edecbf97c318f1",
     "./voltage-probes.json": "c5acecdbf356f518562e8b770f731461edec269901efcce3c10f9dcb304cb52a",
-    "./waveform.dat": "44669c883170e04aba257b45fcd5c5602b8f45238dfbd8d06447c76e01a6d6f5",
-    "./waveform.raw": "600ab3f90361d2d0d710470f6d22c1ecab5bcb775933bd97f74664d5796e166c"
+    "./waveform.dat": "9f965319805a57c388bf629950b0c19cf431d3fc406fa45279c611cf81242cd0",
+    "./waveform.raw": "87fa934367fd18d9f403c2b24c7cc18390c73416b95b89b7a8af0c5dfa3d8734"
   }
 }

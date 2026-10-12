@@ -1,24 +1,55 @@
 * NGSPICE file created from soc_pga.ext - technology: sky130A
 
-.subckt soc_pga VGND OUT VCM VPWR BIAS GAIN VIN
-X0 LOW GAINB OUT VGND sky130_fd_pr__nfet_01v8 ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
-X1 OUT R_HIGH_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=24.51
-X2 AMP__PRE AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X3 AMP__PRE AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X4 VGND GAIN GAINB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
-X5 VPWR AMP__PRE OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
-X6 AMP__FIRST__TAIL FB AMP__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
-X7 VGND BIAS AMP__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
-X8 AMP__FIRST__TAIL VIN AMP__PRE VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
-X9 AMP__COMP OUT VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
-X10 VPWR GAIN GAINB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
-X11 VGND BIAS OUT VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
-X12 AMP__PRE AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X13 FB VCM VGND sky130_fd_pr__res_xhigh_po_1p41 l=6.89
-X14 R_HIGH_R0_N0 FB VGND sky130_fd_pr__res_xhigh_po_1p41 l=24.51
-X15 VPWR AMP__FIRST__MIR AMP__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
-X16 LOW FB VGND sky130_fd_pr__res_xhigh_po_1p41 l=8.06
-X17 VPWR AMP__FIRST__MIR AMP__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
-X18 LOW GAIN OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+.subckt soc_pga VPWR OUT BIAS GAIN VGND VCM VIN
+X0 VPWR GAIN GAINB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X1 OUTPUT_BUFFER__FIRST__TAIL SELECTED OUTPUT_BUFFER__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X2 OUTPUT_BUFFER__FIRST__TAIL SELECTED OUTPUT_BUFFER__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X3 GAIN8__AMP__PRE GAIN8__AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X4 GAIN2__FB VCM VGND sky130_fd_pr__res_xhigh_po_1p41 l=6.89
+X5 GAIN8_R_FEEDBACK_R0_N0 GAIN8__FB VGND sky130_fd_pr__res_xhigh_po_1p41 l=24.51
+X6 GAIN2__AMP__FIRST__TAIL VIN GAIN2__AMP__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X7 GAIN2__AMP__PRE GAIN2__AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X8 VPWR GAIN8__AMP__FIRST__MIR GAIN8__AMP__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X9 VPWR GAIN8__AMP__FIRST__MIR GAIN8__AMP__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X10 GAIN8__FB VCM VGND sky130_fd_pr__res_xhigh_po_1p41 l=6.89
+X11 OUTPUT_BUFFER__FIRST__TAIL OUT OUTPUT_BUFFER__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X12 V2 GAIN2__FB VGND sky130_fd_pr__res_xhigh_po_1p41 l=6.89
+X13 GAIN8__AMP__FIRST__TAIL GAIN8__FB GAIN8__AMP__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X14 GAIN2__AMP__PRE GAIN2__AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X15 OUTPUT_BUFFER__PRE OUTPUT_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X16 GAIN8__AMP__PRE GAIN8__AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X17 OUTPUT_BUFFER__PRE OUTPUT_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X18 GAIN2__AMP__FIRST__TAIL GAIN2__FB GAIN2__AMP__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X19 VGND BIAS GAIN2__AMP__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X20 VGND BIAS V2 VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X21 V8 GAIN8_R_FEEDBACK_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=24.51
+X22 SELECTED GAINB V2 VGND sky130_fd_pr__nfet_01v8 ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X23 GAIN2__AMP__PRE GAIN2__AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X24 GAIN8__AMP__FIRST__TAIL VIN GAIN8__AMP__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X25 VGND GAIN GAINB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X26 VPWR OUTPUT_BUFFER__PRE OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X27 GAIN8__AMP__PRE GAIN8__AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X28 GAIN2__AMP__COMP V2 VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X29 GAIN8__AMP__FIRST__TAIL VIN GAIN8__AMP__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X30 VPWR GAIN2__AMP__PRE V2 VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X31 GAIN8__AMP__FIRST__TAIL GAIN8__FB GAIN8__AMP__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X32 VPWR GAIN8__AMP__PRE V8 VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X33 VPWR GAIN2__AMP__FIRST__MIR GAIN2__AMP__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X34 VGND BIAS GAIN8__AMP__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X35 OUTPUT_BUFFER__FIRST__TAIL OUT OUTPUT_BUFFER__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X36 VPWR GAIN2__AMP__FIRST__MIR GAIN2__AMP__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X37 VGND BIAS OUTPUT_BUFFER__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X38 OUTPUT_BUFFER__COMP OUT VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X39 VPWR OUTPUT_BUFFER__FIRST__MIR OUTPUT_BUFFER__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X40 SELECTED GAIN V2 VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X41 GAIN2__AMP__FIRST__TAIL VIN GAIN2__AMP__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X42 GAIN2__AMP__FIRST__TAIL GAIN2__FB GAIN2__AMP__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X43 VGND BIAS V8 VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X44 GAIN8__AMP__COMP V8 VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X45 SELECTED GAINB V8 VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X46 VPWR OUTPUT_BUFFER__FIRST__MIR OUTPUT_BUFFER__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X47 SELECTED GAIN V8 VGND sky130_fd_pr__nfet_01v8 ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X48 VGND BIAS OUT VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X49 OUTPUT_BUFFER__PRE OUTPUT_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
 .ends
 

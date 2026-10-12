@@ -217,8 +217,8 @@
       "connectivity_mode": "explicit",
       "devices": [
         {
-          "id": "N_INP",
-          "name": "N_INP",
+          "id": "N_INP0",
+          "name": "N_INP0",
           "kind": "nmos",
           "pins": {
             "D": "OUT",
@@ -227,18 +227,20 @@
             "B": "VGND"
           },
           "parameters": {
-            "w_um": 10,
+            "w_um": 5,
             "l_um": 1,
             "nf": 1,
             "m": 1
           },
           "x": 180,
           "y": 170,
-          "model": "sky130_fd_pr__nfet_01v8"
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "A"
         },
         {
-          "id": "N_INN",
-          "name": "N_INN",
+          "id": "N_INN0",
+          "name": "N_INN0",
           "kind": "nmos",
           "pins": {
             "D": "MIR",
@@ -247,14 +249,60 @@
             "B": "VGND"
           },
           "parameters": {
-            "w_um": 10,
+            "w_um": 5,
             "l_um": 1,
             "nf": 1,
             "m": 1
           },
           "x": 420,
           "y": 170,
-          "model": "sky130_fd_pr__nfet_01v8"
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "B"
+        },
+        {
+          "id": "N_INN1",
+          "name": "N_INN1",
+          "kind": "nmos",
+          "pins": {
+            "D": "MIR",
+            "G": "INN",
+            "S": "TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5,
+            "l_um": 1,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 660,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "B"
+        },
+        {
+          "id": "N_INP1",
+          "name": "N_INP1",
+          "kind": "nmos",
+          "pins": {
+            "D": "OUT",
+            "G": "INP",
+            "S": "TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5,
+            "l_um": 1,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 900,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "A"
         },
         {
           "id": "P_DIODE",

@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "file_hash": "8bef1b6cfc1c6021d254ea0372ba15647860e82939dee78cb974a8fbe37564db",
+  "file_hash": "1c55544ba994489cf43dce683207d7efdb1b811432120f4af751f66407b5fca2",
   "project": {
     "schema_version": 1,
-    "id": "7d198a6ae3b7478a9d862f9f71848bf1",
-    "name": "물리 · SoC [e051b6087ec1]",
+    "id": "17c5a03515904d6699d0748982a3c8f9",
+    "name": "물리 · 버퍼형 2극 active RC 필터 [2fcab7fbbf01]",
     "cell": "soc_filter2",
     "pdk_id": "sky130A",
     "revision": 1,
@@ -498,7 +498,7 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 420,
+          "x": 440,
           "y": 170,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
@@ -515,7 +515,7 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 590,
+          "x": 700,
           "y": 170,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
@@ -532,7 +532,7 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 760,
+          "x": 960,
           "y": 170,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
@@ -549,7 +549,7 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 930,
+          "x": 1220,
           "y": 170,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
@@ -566,8 +566,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 420,
-          "y": 330,
+          "x": 180,
+          "y": 360,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -583,8 +583,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 590,
-          "y": 330,
+          "x": 440,
+          "y": 360,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -600,8 +600,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 760,
-          "y": 330,
+          "x": 700,
+          "y": 360,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -617,8 +617,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 930,
-          "y": 330,
+          "x": 960,
+          "y": 360,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -634,8 +634,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 420,
-          "y": 490,
+          "x": 1220,
+          "y": 360,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -651,8 +651,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 590,
-          "y": 490,
+          "x": 180,
+          "y": 550,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -668,8 +668,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 760,
-          "y": 490,
+          "x": 440,
+          "y": 550,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -685,13 +685,13 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 930,
-          "y": 490,
+          "x": 700,
+          "y": 550,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
-          "id": "BUFFER0.FIRST.N_INP",
-          "name": "BUFFER0_FIRST_N_INP",
+          "id": "BUFFER0.FIRST.N_INP0",
+          "name": "BUFFER0_FIRST_N_INP0",
           "kind": "nmos",
           "pins": {
             "D": "BUFFER0__PRE",
@@ -700,18 +700,20 @@
             "B": "VGND"
           },
           "parameters": {
-            "w_um": 10.0,
+            "w_um": 5.0,
             "l_um": 1.0,
             "nf": 1,
             "m": 1
           },
-          "x": 180,
-          "y": 170,
-          "model": "sky130_fd_pr__nfet_01v8"
+          "x": 960,
+          "y": 550,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "A"
         },
         {
-          "id": "BUFFER0.FIRST.N_INN",
-          "name": "BUFFER0_FIRST_N_INN",
+          "id": "BUFFER0.FIRST.N_INN0",
+          "name": "BUFFER0_FIRST_N_INN0",
           "kind": "nmos",
           "pins": {
             "D": "BUFFER0__FIRST__MIR",
@@ -720,14 +722,60 @@
             "B": "VGND"
           },
           "parameters": {
-            "w_um": 10.0,
+            "w_um": 5.0,
             "l_um": 1.0,
             "nf": 1,
             "m": 1
           },
-          "x": 420,
-          "y": 170,
-          "model": "sky130_fd_pr__nfet_01v8"
+          "x": 1220,
+          "y": 550,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "B"
+        },
+        {
+          "id": "BUFFER0.FIRST.N_INN1",
+          "name": "BUFFER0_FIRST_N_INN1",
+          "kind": "nmos",
+          "pins": {
+            "D": "BUFFER0__FIRST__MIR",
+            "G": "MID",
+            "S": "BUFFER0__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 740,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "B"
+        },
+        {
+          "id": "BUFFER0.FIRST.N_INP1",
+          "name": "BUFFER0_FIRST_N_INP1",
+          "kind": "nmos",
+          "pins": {
+            "D": "BUFFER0__PRE",
+            "G": "FILTER0",
+            "S": "BUFFER0__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 440,
+          "y": 740,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "A"
         },
         {
           "id": "BUFFER0.FIRST.P_DIODE",
@@ -745,8 +793,8 @@
             "nf": 1,
             "m": 1
           },
-          "x": 660,
-          "y": 170,
+          "x": 700,
+          "y": 740,
           "model": "sky130_fd_pr__pfet_01v8_hvt"
         },
         {
@@ -765,8 +813,8 @@
             "nf": 1,
             "m": 1
           },
-          "x": 900,
-          "y": 170,
+          "x": 960,
+          "y": 740,
           "model": "sky130_fd_pr__pfet_01v8_hvt"
         },
         {
@@ -785,8 +833,8 @@
             "nf": 1,
             "m": 1
           },
-          "x": 180,
-          "y": 350,
+          "x": 1220,
+          "y": 740,
           "model": "sky130_fd_pr__nfet_01v8"
         },
         {
@@ -805,8 +853,8 @@
             "nf": 1,
             "m": 1
           },
-          "x": 420,
-          "y": 170,
+          "x": 180,
+          "y": 930,
           "model": "sky130_fd_pr__pfet_01v8_hvt"
         },
         {
@@ -825,8 +873,8 @@
             "nf": 1,
             "m": 1
           },
-          "x": 660,
-          "y": 170,
+          "x": 440,
+          "y": 930,
           "model": "sky130_fd_pr__nfet_01v8"
         },
         {
@@ -842,8 +890,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 900,
-          "y": 170,
+          "x": 700,
+          "y": 930,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -859,8 +907,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 1070,
-          "y": 170,
+          "x": 960,
+          "y": 930,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -876,8 +924,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 1240,
-          "y": 170,
+          "x": 1220,
+          "y": 930,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -895,7 +943,7 @@
             "l_um": 3.36
           },
           "x": 180,
-          "y": 350,
+          "y": 1120,
           "model": "sky130_fd_pr__res_xhigh_po_1p41"
         },
         {
@@ -912,8 +960,8 @@
             "w_um": 1.41,
             "l_um": 28.035
           },
-          "x": 900,
-          "y": 170,
+          "x": 440,
+          "y": 1120,
           "model": "sky130_fd_pr__res_xhigh_po_1p41"
         },
         {
@@ -929,8 +977,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 180,
-          "y": 350,
+          "x": 700,
+          "y": 1120,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -946,8 +994,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 350,
-          "y": 350,
+          "x": 960,
+          "y": 1120,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -963,8 +1011,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 520,
-          "y": 350,
+          "x": 1220,
+          "y": 1120,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -980,8 +1028,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 690,
-          "y": 350,
+          "x": 180,
+          "y": 1310,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -997,8 +1045,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 180,
-          "y": 510,
+          "x": 440,
+          "y": 1310,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -1014,8 +1062,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 350,
-          "y": 510,
+          "x": 700,
+          "y": 1310,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -1031,8 +1079,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 520,
-          "y": 510,
+          "x": 960,
+          "y": 1310,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -1048,8 +1096,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 690,
-          "y": 510,
+          "x": 1220,
+          "y": 1310,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -1066,7 +1114,7 @@
             "l_um": 28.68
           },
           "x": 180,
-          "y": 670,
+          "y": 1500,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -1082,8 +1130,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 350,
-          "y": 670,
+          "x": 440,
+          "y": 1500,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -1099,8 +1147,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 520,
-          "y": 670,
+          "x": 700,
+          "y": 1500,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -1116,13 +1164,13 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 690,
-          "y": 670,
+          "x": 960,
+          "y": 1500,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
-          "id": "BUFFER1.FIRST.N_INP",
-          "name": "BUFFER1_FIRST_N_INP",
+          "id": "BUFFER1.FIRST.N_INP0",
+          "name": "BUFFER1_FIRST_N_INP0",
           "kind": "nmos",
           "pins": {
             "D": "BUFFER1__PRE",
@@ -1131,18 +1179,20 @@
             "B": "VGND"
           },
           "parameters": {
-            "w_um": 10.0,
+            "w_um": 5.0,
             "l_um": 1.0,
             "nf": 1,
             "m": 1
           },
-          "x": 180,
-          "y": 170,
-          "model": "sky130_fd_pr__nfet_01v8"
+          "x": 1220,
+          "y": 1500,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "A"
         },
         {
-          "id": "BUFFER1.FIRST.N_INN",
-          "name": "BUFFER1_FIRST_N_INN",
+          "id": "BUFFER1.FIRST.N_INN0",
+          "name": "BUFFER1_FIRST_N_INN0",
           "kind": "nmos",
           "pins": {
             "D": "BUFFER1__FIRST__MIR",
@@ -1151,14 +1201,60 @@
             "B": "VGND"
           },
           "parameters": {
-            "w_um": 10.0,
+            "w_um": 5.0,
             "l_um": 1.0,
             "nf": 1,
             "m": 1
           },
-          "x": 420,
-          "y": 170,
-          "model": "sky130_fd_pr__nfet_01v8"
+          "x": 180,
+          "y": 1690,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "B"
+        },
+        {
+          "id": "BUFFER1.FIRST.N_INN1",
+          "name": "BUFFER1_FIRST_N_INN1",
+          "kind": "nmos",
+          "pins": {
+            "D": "BUFFER1__FIRST__MIR",
+            "G": "OUT",
+            "S": "BUFFER1__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 440,
+          "y": 1690,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "B"
+        },
+        {
+          "id": "BUFFER1.FIRST.N_INP1",
+          "name": "BUFFER1_FIRST_N_INP1",
+          "kind": "nmos",
+          "pins": {
+            "D": "BUFFER1__PRE",
+            "G": "FILTER1",
+            "S": "BUFFER1__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 700,
+          "y": 1690,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "A"
         },
         {
           "id": "BUFFER1.FIRST.P_DIODE",
@@ -1176,8 +1272,8 @@
             "nf": 1,
             "m": 1
           },
-          "x": 660,
-          "y": 170,
+          "x": 960,
+          "y": 1690,
           "model": "sky130_fd_pr__pfet_01v8_hvt"
         },
         {
@@ -1196,8 +1292,8 @@
             "nf": 1,
             "m": 1
           },
-          "x": 900,
-          "y": 170,
+          "x": 1220,
+          "y": 1690,
           "model": "sky130_fd_pr__pfet_01v8_hvt"
         },
         {
@@ -1217,7 +1313,7 @@
             "m": 1
           },
           "x": 180,
-          "y": 350,
+          "y": 1880,
           "model": "sky130_fd_pr__nfet_01v8"
         },
         {
@@ -1236,8 +1332,8 @@
             "nf": 1,
             "m": 1
           },
-          "x": 420,
-          "y": 170,
+          "x": 440,
+          "y": 1880,
           "model": "sky130_fd_pr__pfet_01v8_hvt"
         },
         {
@@ -1256,8 +1352,8 @@
             "nf": 1,
             "m": 1
           },
-          "x": 660,
-          "y": 170,
+          "x": 700,
+          "y": 1880,
           "model": "sky130_fd_pr__nfet_01v8"
         },
         {
@@ -1273,8 +1369,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 900,
-          "y": 170,
+          "x": 960,
+          "y": 1880,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -1290,8 +1386,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 1070,
-          "y": 170,
+          "x": 1220,
+          "y": 1880,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -1307,8 +1403,8 @@
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 1240,
-          "y": 170,
+          "x": 180,
+          "y": 2070,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
@@ -1325,8 +1421,8 @@
             "w_um": 1.41,
             "l_um": 3.36
           },
-          "x": 180,
-          "y": 350,
+          "x": 440,
+          "y": 2070,
           "model": "sky130_fd_pr__res_xhigh_po_1p41"
         }
       ],
@@ -1468,5 +1564,5 @@
     },
     "layout_parameter_policy": "reference-layout-independent-edit"
   },
-  "geometry_hash": "47eb8e62aefd47e1a5ba26b30b7aa00096be72b2b72967b96929e9af983c5442"
+  "geometry_hash": "a3397e11c564b7ff6f3e042d945cd19a2c6dceedc74a18037269d07db4a0430b"
 }

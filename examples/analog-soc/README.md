@@ -12,7 +12,7 @@
 | [SoC · 보상형 전류 입력 증폭기](soc_tia/README.md) | PASS | PASS |
 | [SoC · 센서 AFE·클록 동기 판정](soc_sensor_afe/README.md) | PASS | PASS |
 
-Nominal TT/27°C/1.8V. 18개 MOS corner/온도/전압 조건 중 9개 통과, 9개 저이득 오차 실패. broad PVT 및 제조 승인 미완료입니다. 모든 실패를 보존합니다.
+Nominal TT/27°C/1.8V. 18개 MOS corner/온도/전압 조건 중 18개 통과, 0개 기준 실패. 이득 허용 오차 3%. [실제 PEX 조건](pvt-pex.json)과 [OTA 잡음·편차·재현성](characterization/evidence.json)은 별도 기록입니다. 제조 승인과 전역 통계 수율은 미완료입니다. 이전 실패는 [v0.20 이력](history/v0.20.0/pvt.json)과 [수렴 보조 전 PEX 이력](history/v0.21-before-nodeset/pvt-pex.json)에 보존합니다.
 
 [사용 절차·공식·제한](../../docs/analog-soc.md) · [원본 실행 기록](evidence.json) · [PVT 기록](pvt.json) · [하위 블록 목록](blocks.json)
 

@@ -1,22 +1,22 @@
 {
-  "version": "0.20.0",
+  "version": "0.21.0",
   "native_evidence_matches_source": true,
   "resource_sha256": {
     "dist/appearance-init.js": "3ffedd99f24fadf9f2e8be3b13e0fb287d63a1879f89c40a85979f9c67138c92",
-    "dist/index.html": "d578fd8e9dde2e9b9018f4818c86f0f13cffa843f86c009f417f796921cea6cf",
+    "dist/index.html": "4b17ab11af78d19edb5d1fd4f48416b5220b70f4034b8958ae3929fdf8541d0b",
     "dist/process-engine.mjs": "ccf88658464ec08db993f06404c6b2cda517c06e7658f7c25f1653c173e7a997",
     "dist/register-symbol.svg": "46205af19ea2bb654c9211547ef74c6b3840b22789288ff305071e3a4aa682ab",
-    "dist/assets/index-DKpphyRj.js": "cc6c707bd21da5b83f8c477e1f4d813252a98b618a708617545c0828af44dd65",
-    "dist/assets/index-DKpphyRj.js.map": "30f012a30935520b67c6cf144b8c08345fea67a64cce36b748e5d97c81c02b37",
+    "dist/assets/index-DJOoDDVF.js": "bf79cbef2c0e983ce609d5c43afb0b7ac1655b1f744fe50cfb4e08cb9071fec0",
+    "dist/assets/index-DJOoDDVF.js.map": "e9dc8efa8fdb99192d326416c9b8927d83342aaf18d69ac3719f52615310b7f4",
     "dist/assets/index-DxWWH2HE.css": "77048c84548aea9922bb9c1559be234ffada91d5f372d02d0317391ccff74b4a",
     "dist/assets/process-run-worker-C94DPE8W.js": "6fbc3e584e5a1508a7614ddec56dbe227a088cf32693bf6efd06b99667f7a485",
     "dist/assets/process-run-worker-C94DPE8W.js.map": "4fed8ebf7a63919fd99ee036bf32dda9ef8baa7a7913dd385c0595a01143c931",
     "dist/assets/process-worker-lh5s54pi.js": "a0f1d9ff01b30e5757bfceac91ddca68961dd5afa8f4eaf91e26dabef1f2711e",
     "dist/assets/process-worker-lh5s54pi.js.map": "91eb44fe6a1d7aa98fe62ae3f1d8bfeec3b9cc3ed2ba1183f45bd1e6de94fb93",
     "workers/eda/geometry.py": "50defdd0615c2dabbaa2adbb6c89f3276370e79d1a723011adc0ebdac1694506",
-    "workers/eda/server.py": "099de24807b8c9e05ce71afef875c4aebcbf1abf7e172bf4630e7023dfdbb40b",
+    "workers/eda/server.py": "4c47ce32087e1e1f8575bc72aa48ba09a2b30f4f2718b6cf43eefd8e0382abcc",
     "docs/drawing-tools.md": "73e7863940e86cfc7e7656215a0a95376c501dcf5134024b56c754ad24febf91",
-    "docs/desktop-installation.md": "dbca4e298b3d76c01430e82fd8e336022287f0167703698842ce37eef45508ef",
+    "docs/desktop-installation.md": "0cc1c23e7e5dcc3ecd4ce545e1aa32d811c5873e66e1ca340cb2b3ecff53b265",
     "apps/desktop/menu.cjs": "3f245e6dba96615a1cdb19a65a90ec219282172b3d32084c10d970f2bdf65eed",
     "apps/desktop/preload.cjs": "3477c36176fe40c89cc859b7d95defb3e5b6af94fc92ac8c16f608436fa2e28e",
     "docs/shortcuts.md": "39de63b6cc4fdf438d25cd5247c36799c4dba84c21114562cf1c5c0e228dee74",
@@ -26,37 +26,67 @@
     "workers/eda/rtl/sigma_delta8.v": "06033a7a9d84f2cf0c43a73c30ba489626d02a515cb5f5decbf3bf908febb42c",
     "workers/eda/rtl/sigma_delta8_cmos.json": "b2eaed1744483b63883404fde9090c14e0b04dacbb0ebce1b9f175cd2ca83900",
     "workers/eda/rtl/sigma_delta8_gate.v": "5792a1a31a3275518b544cd5a0c69a08d161bf82526e6111fe90a469e5112eb9",
-    "workers/eda/analog_soc.py": "d81c7b861dbace1442999eaff538cfaf40ef4decdb2c21bab8bb7c62f83bbcfb",
+    "workers/eda/analog_soc.py": "011bcd40f404d9d0139bdc8c75b678050a00968873c62cccf6b9838676ed64a9",
+    "workers/eda/characterization.py": "6b0a9feb9acaff73a7675835748bdc3ec98c0d12cbafec3b7085f98249920349",
     "workers/eda/digital_units.py": "8570ed536be9f102082ab4ef8fce041e1eba0c86723e679cfb5f0c78a1a30004",
-    "workers/eda/physical_library.py": "020f1dcddd24c5216ecfab4951e8bc5366517347900a4037abbf4f5305ad812c",
-    "docs/analog-soc.md": "46da7318fb59d78041fd95cc67d6223176c9bdd0d8a16ea830325530282dbd42"
+    "workers/eda/physical_library.py": "24080bfc8f7c6858412dd610557b4c13148802cafd992ebb617200756c3c8f61",
+    "docs/analog-soc.md": "eec3c49328114950eb091ef1cca6bd86dfcef2d245ea794a01d880453a4b56c2"
   },
+  "line_ending_only_differences": {
+    "arm64": [
+      "workers/eda/sigma_delta.py",
+      "workers/eda/design_tools.py",
+      "workers/eda/rtl/sigma_delta8_cmos.json",
+      "workers/eda/digital_units.py"
+    ],
+    "x64": [
+      "workers/eda/sigma_delta.py",
+      "workers/eda/design_tools.py",
+      "workers/eda/rtl/sigma_delta8_cmos.json",
+      "workers/eda/digital_units.py"
+    ]
+  },
+  "resource_scope": "Runtime JS/CSS, binary assets and debug maps match exact bytes. Explicit source/document CRLF/LF differences are recorded; any other content difference fails.",
   "assets": [
     {
-      "file": "Resistor-0.20.0-mac-arm64-r5.zip",
-      "bytes": 132495809,
-      "sha256": "0323a4e6c07154ea3983ffe799acfcdf585a4a1e2ca38f43168d4a6847e9e18e",
+      "file": "Resistor-0.21.0-mac-arm64-r5.zip",
+      "bytes": 132515197,
+      "sha256": "cd46f188c3c6559428207e70dd6dd62f52f2ed159562f9645bb2ff514af7dc35",
+      "exact_resources": false,
+      "canonical_text_and_exact_binary_resources": true,
+      "line_ending_only_differences": [
+        "workers/eda/sigma_delta.py",
+        "workers/eda/design_tools.py",
+        "workers/eda/rtl/sigma_delta8_cmos.json",
+        "workers/eda/digital_units.py"
+      ],
+      "native_execution_verified": false
+    },
+    {
+      "file": "Resistor-0.21.0-mac-x64-r5.zip",
+      "bytes": 138973163,
+      "sha256": "de29a9ca10bad457141d3ba09aea55f45c99c01839bda2bfb2bf102da278f8aa",
+      "exact_resources": false,
+      "canonical_text_and_exact_binary_resources": true,
+      "line_ending_only_differences": [
+        "workers/eda/sigma_delta.py",
+        "workers/eda/design_tools.py",
+        "workers/eda/rtl/sigma_delta8_cmos.json",
+        "workers/eda/digital_units.py"
+      ],
+      "native_execution_verified": false
+    },
+    {
+      "file": "Resistor-0.21.0-linux-x64.tar.gz",
+      "bytes": 126000066,
+      "sha256": "d0b0e2062e341af60473f469ddd86bf5a76aacc5fbcf08b07bf2f14dab08a42d",
       "exact_resources": true,
       "native_execution_verified": false
     },
     {
-      "file": "Resistor-0.20.0-mac-x64-r5.zip",
-      "bytes": 138953890,
-      "sha256": "ed30ad2e32ba62815376298145e5d5181167b844f7836f69f471471fdddd7a6f",
-      "exact_resources": true,
-      "native_execution_verified": false
-    },
-    {
-      "file": "Resistor-0.20.0-linux-x64.tar.gz",
-      "bytes": 125987445,
-      "sha256": "49a8c645d010bedc76a849e754a1447407f9d51082507a3803631b8268e2d4a4",
-      "exact_resources": true,
-      "native_execution_verified": false
-    },
-    {
-      "file": "Resistor-0.20.0-win-x64.exe",
-      "bytes": 113849452,
-      "sha256": "f67e253668c967c90ef222a9000d8587b6f0a5a4736b39be2a040a89100d2d76",
+      "file": "Resistor-0.21.0-win-x64.exe",
+      "bytes": 113866399,
+      "sha256": "53cb4dfa0781cbc495642156d7bb615005beeceea1737e3326ded02dc7d7155e",
       "exact_resources": true,
       "scope": "NSIS package source folder; installer UI is separate",
       "native_execution_verified": false

@@ -1,4 +1,4 @@
-import {mkdir,readFile,writeFile,copyFile,readdir} from 'node:fs/promises';
+import {mkdir,readFile,writeFile as writeRaw,copyFile,readdir,rename} from 'node:fs/promises';
 import path from 'node:path';
 import {randomUUID,createHash} from 'node:crypto';
 import {zipSync,strToU8} from 'fflate';
@@ -7,6 +7,9 @@ const root=process.cwd(),out='examples/analog-soc',cfg=await runtimeConfig();
 await mkdir(out,{recursive:true});await mkdir('.runtime/analog-soc',{recursive:true});
 const rpc=async(method,params={})=>{const r=await workerRpc(cfg,method,params);if(!r.ok)throw Error(`${r.error.code}: ${r.error.message}`);return r.result;};
 const sha=b=>createHash('sha256').update(b).digest('hex');
+// Replace complete exported files atomically: Windows readers may deny a
+// truncate-in-place even while allowing a new file and atomic replacement.
+const writeFile=async(file,data)=>{const temporary=file+'.'+randomUUID()+'.tmp';await writeRaw(temporary,data,{flag:'wx'});await rename(temporary,file);};
 const files=['workers/eda/analog_soc.py','workers/eda/characterization.py','workers/eda/digital_units.py','workers/eda/physical_library.py','workers/eda/native.py','workers/eda/design_tools.py','workers/eda/chip_references.py','workers/eda/server.py','workers/eda/pex_reduce.py','workers/eda/profile.py'];
 const source=Object.fromEntries(await Promise.all(files.map(async f=>[f,sha(await readFile(f))])));const version=sha(JSON.stringify(source)).slice(0,12);
 const stateFile=`.runtime/analog-soc/state-${version}.json`;let state;try{state=JSON.parse(await readFile(stateFile,'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;state={source,projects:{},commands:{},jobs:{}};}
@@ -23,7 +26,7 @@ for(const t of templates.filter(t=>!requested.length||requested.includes(t.id)))
  for(const [key,method,extra] of [['drc','verification.run_drc',{}],['lvs','verification.run_lvs',{}],['pex','extraction.run_pex',{}],['pre','simulation.run',{}],['post','simulation.run',{post_layout:true}]]){
   const id=t.id+'/'+key;let run=state.jobs[id]?await rpc('job.status',{run_id:state.jobs[id]}):null;
   if(!run){run=await rpc(method,{project_id:p.id,expected_revision:p.revision,...(key==='pre'||key==='post'?p.testbench:{}),...extra,command_id:randomUUID()});state.jobs[id]=run.id;await save();}
-  run=await wait(run);const record={reference:t.id,stage:key,project_id:p.id,run_id:run.id,revision:run.revision,execution_status:run.execution_status,analysis_result:run.analysis_result,message:run.message,elapsed_s:run.elapsed_s,parasitics:run.parasitics,measurements:run.measurements,verification:run.reference_verification,marker_count:run.markers?.length,artifacts:run.artifacts};
+  run=await wait(run);if(run.freshness!=='current')throw Error('Source inputs changed; stale native evidence is not exported as current');const record={reference:t.id,stage:key,project_id:p.id,run_id:run.id,revision:run.revision,freshness:run.freshness,execution_status:run.execution_status,analysis_result:run.analysis_result,message:run.message,elapsed_s:run.elapsed_s,parasitics:run.parasitics,measurements:run.measurements,verification:run.reference_verification,marker_count:run.markers?.length,artifacts:run.artifacts};
   await writeFile(path.join(folder,key+'-result.json'),JSON.stringify(record,null,2)+'\n');jobs.push(record);
   const nativeDir=path.dirname(local(run.manifest_path));const dest=path.join(folder,key);await mkdir(dest,{recursive:true});
   for(const f of await readdir(nativeDir))if(/^(manifest.json|lvs.log|markers.tsv|pex-quality.json|pex-reduction.json|.*\.spice)$/.test(f)){const text=(await readFile(path.join(nativeDir,f),'utf8')).replaceAll(path.posix.dirname(run.manifest_path)+'/','./');await writeFile(path.join(dest,f),text);}

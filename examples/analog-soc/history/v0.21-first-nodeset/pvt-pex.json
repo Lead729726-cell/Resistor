@@ -1,0 +1,2609 @@
+{
+  "source": "actual-ngspice-MOS-corners-with-Magic-PEX",
+  "cases": [
+    {
+      "corner": "tt",
+      "temperature_C": -40,
+      "supply_V": 1.6,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__tt.pm3.spice",
+          "sha256": "459eca963a134574cf7c842ad6d3814e7e0752bfb5de8e581c2f483534b5ad06"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__tt.pm3.spice",
+          "sha256": "3a1be2e1c50d710bdb951d414ecca711113a8c3fe8bcc1be65fb16c6fe004e83"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "b5fdc31d2c877ce6f4400f7e77fca7ab2544297f8f4eb0deb05decfed811aa3d",
+      "log_sha256": "28d8e6a7c462b35ed58b8c85e82479af1829e9657f86670285542ac583cf9249",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.0002187369692941083
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9781637453330767
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 4.338858537371962e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 8.04892309549342
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 0.00038261211390257596
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.7995266635690308
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.8848104087571006
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.5979569569131696,
+              0.9099630883580674
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.0002187369692941083,
+        "average_supply_power_W": 0.0003499791508705733,
+        "low_gain": 1.9781637453330767,
+        "low_output_fit": {
+          "amplitude": 0.04945409213883908,
+          "mean": 0.7980622414753906,
+          "residual_rms": 4.338858537371962e-05
+        },
+        "high_gain": 8.04892309549342,
+        "high_output_fit": {
+          "amplitude": 0.2012230711465309,
+          "mean": 0.799383475666596,
+          "residual_rms": 0.00038261211390257596
+        },
+        "common_mode_V": 0.7995266635690308,
+        "bias_V": 0.8848104087571006,
+        "sampled_interface_cases": 155,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "2b37bbe9ac4f342ab2aba5a0fb93e853a8d9c2e8ee82a53c322d142a831859f7"
+    },
+    {
+      "corner": "tt",
+      "temperature_C": -40,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__tt.pm3.spice",
+          "sha256": "459eca963a134574cf7c842ad6d3814e7e0752bfb5de8e581c2f483534b5ad06"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__tt.pm3.spice",
+          "sha256": "3a1be2e1c50d710bdb951d414ecca711113a8c3fe8bcc1be65fb16c6fe004e83"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "991d6c5250b50b555a2e4e93c15d23c5d2088493b1110306dedc5eaa77d7def6",
+      "log_sha256": "18fcd135895976aed1863d2622106436bc51b22c4d4e7efed25048c47c6d8ab4",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.0003079195022543617
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.988432661704073
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 5.172905485066039e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.954798328731112
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 7.742175911215103e-05
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.8998288479590201
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.9139920918965838
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.6995237434936479,
+              1.023463648426791
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.0003079195022543617,
+        "average_supply_power_W": 0.0005542551040578511,
+        "low_gain": 1.988432661704073,
+        "low_output_fit": {
+          "amplitude": 0.04971081505910714,
+          "mean": 0.8989534776362111,
+          "residual_rms": 5.172905485066039e-05
+        },
+        "high_gain": 7.954798328731112,
+        "high_output_fit": {
+          "amplitude": 0.198869952103048,
+          "mean": 0.8987158502303614,
+          "residual_rms": 7.742175911215103e-05
+        },
+        "common_mode_V": 0.8998288479590201,
+        "bias_V": 0.9139920918965838,
+        "sampled_interface_cases": 157,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "be62416de11902ce6b5a1e61d2301b1fc77f6924343c05915876336e708d357a"
+    },
+    {
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.6,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__tt.pm3.spice",
+          "sha256": "459eca963a134574cf7c842ad6d3814e7e0752bfb5de8e581c2f483534b5ad06"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__tt.pm3.spice",
+          "sha256": "3a1be2e1c50d710bdb951d414ecca711113a8c3fe8bcc1be65fb16c6fe004e83"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "f8a41f010d2d9117fdb7f20f25c4db8fed89cda73518be7f522365f7de195a9f",
+      "log_sha256": "0ba9acf1b9ea3dd36b62b0be527954d7c1c278e53dfe776a2211a89cf17f988d",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.00024598698130482544
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9804293658672116
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 3.6811689726684604e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.954292388031598
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 0.00017375545566479037
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.7995091456756513
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.8958541198117476
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.5992291521808691,
+              0.9094076224269144
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.00024598698130482544,
+        "average_supply_power_W": 0.00039357917008772073,
+        "low_gain": 1.9804293658672116,
+        "low_output_fit": {
+          "amplitude": 0.04951073266791177,
+          "mean": 0.797926936282289,
+          "residual_rms": 3.6811689726684604e-05
+        },
+        "high_gain": 7.954292388031598,
+        "high_output_fit": {
+          "amplitude": 0.19885730360110224,
+          "mean": 0.7983067878836526,
+          "residual_rms": 0.00017375545566479037
+        },
+        "common_mode_V": 0.7995091456756513,
+        "bias_V": 0.8958541198117476,
+        "sampled_interface_cases": 155,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "8368bcaf4f9a68fe4dfa941b2205c05a85b412c82793d9a7e5a27bd8f2e87a6f"
+    },
+    {
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__tt.pm3.spice",
+          "sha256": "459eca963a134574cf7c842ad6d3814e7e0752bfb5de8e581c2f483534b5ad06"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__tt.pm3.spice",
+          "sha256": "3a1be2e1c50d710bdb951d414ecca711113a8c3fe8bcc1be65fb16c6fe004e83"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "11ed9b6402211889c8353fcdc20ccf9d3351d38f7be90bc1ff7eee465016fc10",
+      "log_sha256": "287c90ca7d976095ce52387f410b19b320a114c939bb17932115c29e453e4503",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.00033553191491062824
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9874738961801135
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 4.1961918038575735e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.911969866134979
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 5.813327396159317e-05
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.8997718233855253
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.9319875631054857
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.700162012557322,
+              1.0226981723068018
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.00033553191491062824,
+        "average_supply_power_W": 0.0006039574468391308,
+        "low_gain": 1.9874738961801135,
+        "low_output_fit": {
+          "amplitude": 0.04968684590835314,
+          "mean": 0.8987033852123184,
+          "residual_rms": 4.1961918038575735e-05
+        },
+        "high_gain": 7.911969866134979,
+        "high_output_fit": {
+          "amplitude": 0.19779924060819057,
+          "mean": 0.8982105277099391,
+          "residual_rms": 5.813327396159317e-05
+        },
+        "common_mode_V": 0.8997718233855253,
+        "bias_V": 0.9319875631054857,
+        "sampled_interface_cases": 157,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "61bd3e496a763fafd439311f711b2320b4cd989f442a276defc462df5342fd25"
+    },
+    {
+      "corner": "tt",
+      "temperature_C": 125,
+      "supply_V": 1.6,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__tt.pm3.spice",
+          "sha256": "459eca963a134574cf7c842ad6d3814e7e0752bfb5de8e581c2f483534b5ad06"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__tt.pm3.spice",
+          "sha256": "3a1be2e1c50d710bdb951d414ecca711113a8c3fe8bcc1be65fb16c6fe004e83"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "826d7e36139f8172f1aaf6c8079988f4bb8e21b82c711ebafd7378f9e075e2c8",
+      "log_sha256": "212084519b9f32f451c6973fedaf6b72590af3ab43f96b2bf486841c646a316d",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.00027576926993397825
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9805035448036152
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 3.5816094963854337e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.875584120558208
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 0.00010363750885235565
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.799448881152661
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.9175304278190101
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.6003319603094202,
+              0.9088375222570434
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.00027576926993397825,
+        "average_supply_power_W": 0.0004412308318943652,
+        "low_gain": 1.9805035448036152,
+        "low_output_fit": {
+          "amplitude": 0.049512587153646204,
+          "mean": 0.7976352828195069,
+          "residual_rms": 3.5816094963854337e-05
+        },
+        "high_gain": 7.875584120558208,
+        "high_output_fit": {
+          "amplitude": 0.19688959698999398,
+          "mean": 0.7974429794232232,
+          "residual_rms": 0.00010363750885235565
+        },
+        "common_mode_V": 0.799448881152661,
+        "bias_V": 0.9175304278190101,
+        "sampled_interface_cases": 155,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "df7d5aace3546576541ff33fedd802fc26ed0cb65da7efa8b26ba50ead492c61"
+    },
+    {
+      "corner": "tt",
+      "temperature_C": 125,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__tt.pm3.spice",
+          "sha256": "459eca963a134574cf7c842ad6d3814e7e0752bfb5de8e581c2f483534b5ad06"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__tt.pm3.spice",
+          "sha256": "3a1be2e1c50d710bdb951d414ecca711113a8c3fe8bcc1be65fb16c6fe004e83"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "c0e69b1e9f6064ebb9d3024bd74f89ea644b828cd23990489639bcd198efb1c7",
+      "log_sha256": "2918d872ebc79d7dd7061aadf9d29cde453733ee1a65df8d07831aec241b3507",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.0003642431053938283
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9855452836358016
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 3.763415780303653e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.8622577268065035
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 4.9594560196739426e-05
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.8996763566859901
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.9636146114457695
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.700805496547545,
+              1.021779176720307
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.0003642431053938283,
+        "average_supply_power_W": 0.000655637589708891,
+        "low_gain": 1.9855452836358016,
+        "low_output_fit": {
+          "amplitude": 0.04963863060754117,
+          "mean": 0.8982977873236546,
+          "residual_rms": 3.763415780303653e-05
+        },
+        "high_gain": 7.8622577268065035,
+        "high_output_fit": {
+          "amplitude": 0.19655643714555707,
+          "mean": 0.8975847208064969,
+          "residual_rms": 4.9594560196739426e-05
+        },
+        "common_mode_V": 0.8996763566859901,
+        "bias_V": 0.9636146114457695,
+        "sampled_interface_cases": 157,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "739afb6822e30074c9bb80cd6687027ba4bc42667dc51aff000ea6bff60f1bbf"
+    },
+    {
+      "corner": "ss",
+      "temperature_C": -40,
+      "supply_V": 1.6,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ss.pm3.spice",
+          "sha256": "4a70607ef6e016b426e9b447fe75ca417cdb7e44fe98ca6d7f0319656e65ed0c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ss.pm3.spice",
+          "sha256": "ec4f1b79d6dc56c48f4bbf2a5d8aa33274e6e881b68433120974e27056f28076"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "024d04ec1f3211f42d014f3b76e83e4b8409b100e5599d4bf5234b7b31aaca7c",
+      "log_sha256": "c498d06389ddc16e03152d40e9744a77c429679b63b7f49adf1346966f4c03fa",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.00020251730027564285
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.982383169713713
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 4.44258535250344e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 8.088842250607804
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 0.0006329190543262621
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.7995096104861784
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.9114224059760344
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.5974645586469022,
+              0.9100488897233273
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.00020251730027564285,
+        "average_supply_power_W": 0.00032402768044102856,
+        "low_gain": 1.982383169713713,
+        "low_output_fit": {
+          "amplitude": 0.04955957777910837,
+          "mean": 0.7979792977332518,
+          "residual_rms": 4.44258535250344e-05
+        },
+        "high_gain": 8.088842250607804,
+        "high_output_fit": {
+          "amplitude": 0.2022210500215234,
+          "mean": 0.799840667159697,
+          "residual_rms": 0.0006329190543262621
+        },
+        "common_mode_V": 0.7995096104861784,
+        "bias_V": 0.9114224059760344,
+        "sampled_interface_cases": 155,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "0d30b9b01b445c964605a0949e4df8776b54535735f45f619c2572cd639886d0"
+    },
+    {
+      "corner": "ss",
+      "temperature_C": -40,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ss.pm3.spice",
+          "sha256": "4a70607ef6e016b426e9b447fe75ca417cdb7e44fe98ca6d7f0319656e65ed0c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ss.pm3.spice",
+          "sha256": "ec4f1b79d6dc56c48f4bbf2a5d8aa33274e6e881b68433120974e27056f28076"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "a26be0de89caa6d01646422a98660a8d390971af22eefd491c2208bb614d3097",
+      "log_sha256": "d9cb6806e73cdcfd0a9ff8ebf3186ba16e46f469a515d0c1af080354ca516052",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.00028843516160053425
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9905044012726711
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 5.2443233056307054e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.968234144883068
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 9.842416114659302e-05
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.8998277520645523
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.9421319457883905
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.6993076270813593,
+              1.0234771419734718
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.00028843516160053425,
+        "average_supply_power_W": 0.0005191832908809617,
+        "low_gain": 1.9905044012726711,
+        "low_output_fit": {
+          "amplitude": 0.04976260855322024,
+          "mean": 0.8989533009112637,
+          "residual_rms": 5.2443233056307054e-05
+        },
+        "high_gain": 7.968234144883068,
+        "high_output_fit": {
+          "amplitude": 0.19920584751693263,
+          "mean": 0.8988271197968383,
+          "residual_rms": 9.842416114659302e-05
+        },
+        "common_mode_V": 0.8998277520645523,
+        "bias_V": 0.9421319457883905,
+        "sampled_interface_cases": 157,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "0813a49e9dd446fd0c4e73c4840bdb596a213702961cd8d997a797188c3a5da2"
+    },
+    {
+      "corner": "ss",
+      "temperature_C": 27,
+      "supply_V": 1.6,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ss.pm3.spice",
+          "sha256": "4a70607ef6e016b426e9b447fe75ca417cdb7e44fe98ca6d7f0319656e65ed0c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ss.pm3.spice",
+          "sha256": "ec4f1b79d6dc56c48f4bbf2a5d8aa33274e6e881b68433120974e27056f28076"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "773c70af69a1220441057563bcb5c63dc3d288107bbc52252433291471b6c528",
+      "log_sha256": "33bf7eec3154ac6e798af752a6982677a5439ca37f83a77f56f24246bb586190",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.000227757918143109
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9807691043588775
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 3.8751834462377393e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.971849994001259
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 0.00025442121205099266
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.7994597171554625
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.924584966197978
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.5988777562092145,
+              0.9101138748300692
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.000227757918143109,
+        "average_supply_power_W": 0.0003644126690289744,
+        "low_gain": 1.9807691043588775,
+        "low_output_fit": {
+          "amplitude": 0.04951922613056346,
+          "mean": 0.7977551878484033,
+          "residual_rms": 3.8751834462377393e-05
+        },
+        "high_gain": 7.971849994001259,
+        "high_output_fit": {
+          "amplitude": 0.19929624372943922,
+          "mean": 0.7984136317618465,
+          "residual_rms": 0.00025442121205099266
+        },
+        "common_mode_V": 0.7994597171554625,
+        "bias_V": 0.924584966197978,
+        "sampled_interface_cases": 155,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "84270edea8ef68cbb961f2737205e550dca3b08b980905f526becb56c718a011"
+    },
+    {
+      "corner": "ss",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ss.pm3.spice",
+          "sha256": "4a70607ef6e016b426e9b447fe75ca417cdb7e44fe98ca6d7f0319656e65ed0c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ss.pm3.spice",
+          "sha256": "ec4f1b79d6dc56c48f4bbf2a5d8aa33274e6e881b68433120974e27056f28076"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "e253f7d7baf53b9ad26a0c982d68b69d2fc0bd20363114999551249c746c5eff",
+      "log_sha256": "3ebe1b99763e9e80cc9873b8f5d281ac16b04ee6b6f51e7270a68de32709ed9d",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.00031394326081355436
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9884661101580832
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 4.29565994682802e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.918661454143215
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 7.095286923066812e-05
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.8997451392709398
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.9626301774357131
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.6999746048046946,
+              1.0237545806387822
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.00031394326081355436,
+        "average_supply_power_W": 0.0005650978694643979,
+        "low_gain": 1.9884661101580832,
+        "low_output_fit": {
+          "amplitude": 0.049711651270403556,
+          "mean": 0.8986126707276032,
+          "residual_rms": 4.29565994682802e-05
+        },
+        "high_gain": 7.918661454143215,
+        "high_output_fit": {
+          "amplitude": 0.19796653025702993,
+          "mean": 0.8981948047217034,
+          "residual_rms": 7.095286923066812e-05
+        },
+        "common_mode_V": 0.8997451392709398,
+        "bias_V": 0.9626301774357131,
+        "sampled_interface_cases": 156,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "b6e29b29f7cb04493d2ecbffac43c243beafc51acd6f8b5defcac374d17bf24c"
+    },
+    {
+      "corner": "ss",
+      "temperature_C": 125,
+      "supply_V": 1.6,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ss.pm3.spice",
+          "sha256": "4a70607ef6e016b426e9b447fe75ca417cdb7e44fe98ca6d7f0319656e65ed0c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ss.pm3.spice",
+          "sha256": "ec4f1b79d6dc56c48f4bbf2a5d8aa33274e6e881b68433120974e27056f28076"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "dde71335ee4b0b70f7a14aaa5518a9a01070a7f2df69b1b57c6f3ed90c7d954c",
+      "log_sha256": "3da889e8fc0632dab4dd7a1e66badda4df3d30fae2417ddc03941aafa6c0d3fb",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.0002551711345277291
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9790865680839032
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 3.8988509067295046e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.877504717232041
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 0.00013908868012282285
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.7993793235693177
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.9489456419529926
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.6001747400674551,
+              0.9092709097316474
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.0002551711345277291,
+        "average_supply_power_W": 0.0004082738152443666,
+        "low_gain": 1.9790865680839032,
+        "low_output_fit": {
+          "amplitude": 0.04947716274044073,
+          "mean": 0.7974095524812885,
+          "residual_rms": 3.8988509067295046e-05
+        },
+        "high_gain": 7.877504717232041,
+        "high_output_fit": {
+          "amplitude": 0.19693761194155424,
+          "mean": 0.7973604483251124,
+          "residual_rms": 0.00013908868012282285
+        },
+        "common_mode_V": 0.7993793235693177,
+        "bias_V": 0.9489456419529926,
+        "sampled_interface_cases": 155,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "f436972bc5529044d3bd7fcbe3de57fa54616ea6d800c698fac5d7c2db91b63a"
+    },
+    {
+      "corner": "ss",
+      "temperature_C": 125,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ss.pm3.spice",
+          "sha256": "4a70607ef6e016b426e9b447fe75ca417cdb7e44fe98ca6d7f0319656e65ed0c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ss.pm3.spice",
+          "sha256": "ec4f1b79d6dc56c48f4bbf2a5d8aa33274e6e881b68433120974e27056f28076"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "353bbff2dae0c9127d3ac1a0dd891f014512323058217ade2039bf72c6056fa8",
+      "log_sha256": "103589b698f05af07005439328b7ac6f8d48e3cf61d03b32efc9138e9c5c9cfd",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.00033995543818483745
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9853320223739004
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 3.994802311989346e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.862336894216418
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 6.006555325470364e-05
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.8996269127497379
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.9974731653766313
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.7006729930248723,
+              1.0225997466057493
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.00033995543818483745,
+        "average_supply_power_W": 0.0006119197887327074,
+        "low_gain": 1.9853320223739004,
+        "low_output_fit": {
+          "amplitude": 0.049633299099538605,
+          "mean": 0.8981344033263459,
+          "residual_rms": 3.994802311989346e-05
+        },
+        "high_gain": 7.862336894216418,
+        "high_output_fit": {
+          "amplitude": 0.1965584163311093,
+          "mean": 0.8974766139557703,
+          "residual_rms": 6.006555325470364e-05
+        },
+        "common_mode_V": 0.8996269127497379,
+        "bias_V": 0.9974731653766313,
+        "sampled_interface_cases": 157,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "7908fafc597f013fb5e3ff1b468bae2f414061467cfa37ed96ff35447c8ffbab"
+    },
+    {
+      "corner": "ff",
+      "temperature_C": -40,
+      "supply_V": 1.6,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ff.pm3.spice",
+          "sha256": "abbf671996e76bf3e75ea2bb26036fa17b99f92599330e25bb814ac498b600fe"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ff.pm3.spice",
+          "sha256": "d67e1b0f7f379ea42f2e21d8976dbb94e93c52bbc77ece644b63ffa152c4d7ef"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "757e13d885792f18f82177f4863573ebae39b96c923697aaf5a743a575b2473d",
+      "log_sha256": "d388713a6ce00921ec4f2fd8bd07515785d71abff6f34aac70355d927503a1ee",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.00023581448217528412
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9794203455753774
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 4.488860937299333e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 8.010214782246385
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 0.0002420877909153837
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.7996162228509172
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.8585979002174374
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.5986439192775083,
+              0.9090203639224749
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.00023581448217528412,
+        "average_supply_power_W": 0.0003773031714804546,
+        "low_gain": 1.9794203455753774,
+        "low_output_fit": {
+          "amplitude": 0.04948550715915284,
+          "mean": 0.7983552843159172,
+          "residual_rms": 4.488860937299333e-05
+        },
+        "high_gain": 8.010214782246385,
+        "high_output_fit": {
+          "amplitude": 0.20025536339612218,
+          "mean": 0.7991271755436996,
+          "residual_rms": 0.0002420877909153837
+        },
+        "common_mode_V": 0.7996162228509172,
+        "bias_V": 0.8585979002174374,
+        "sampled_interface_cases": 156,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "a970cb7ae71bac2b0145f2b146a91dbf4c76cbe163d0c2f53685460b269b0145"
+    },
+    {
+      "corner": "ff",
+      "temperature_C": -40,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ff.pm3.spice",
+          "sha256": "abbf671996e76bf3e75ea2bb26036fa17b99f92599330e25bb814ac498b600fe"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ff.pm3.spice",
+          "sha256": "d67e1b0f7f379ea42f2e21d8976dbb94e93c52bbc77ece644b63ffa152c4d7ef"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "053fa72fc0b136927ce2a67284d5f386bec025a57077d7a45b3dae2000476149",
+      "log_sha256": "fba976ad1eebe3bd224a437d07d6f158e22a87fff699ea8279cae43114ffe74f",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.00032738525596721907
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9874488783762971
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 5.505067577971091e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.941778127479708
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 6.559050570957801e-05
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.8998617336164125
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.8864043357921048
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.6997858855429885,
+              1.022767222138589
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.00032738525596721907,
+        "average_supply_power_W": 0.0005892934607409944,
+        "low_gain": 1.9874488783762971,
+        "low_output_fit": {
+          "amplitude": 0.04968622046804808,
+          "mean": 0.8990592640343353,
+          "residual_rms": 5.505067577971091e-05
+        },
+        "high_gain": 7.941778127479708,
+        "high_output_fit": {
+          "amplitude": 0.19854444704968818,
+          "mean": 0.8986986421745189,
+          "residual_rms": 6.559050570957801e-05
+        },
+        "common_mode_V": 0.8998617336164125,
+        "bias_V": 0.8864043357921048,
+        "sampled_interface_cases": 157,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "7da89a25d2fdec7091bc7943d120024f6adbe9033722a23d450df880a08edd81"
+    },
+    {
+      "corner": "ff",
+      "temperature_C": 27,
+      "supply_V": 1.6,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ff.pm3.spice",
+          "sha256": "abbf671996e76bf3e75ea2bb26036fa17b99f92599330e25bb814ac498b600fe"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ff.pm3.spice",
+          "sha256": "d67e1b0f7f379ea42f2e21d8976dbb94e93c52bbc77ece644b63ffa152c4d7ef"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "d35a04e770286a380885e7b63678b7e08ff2cf505842ba073e87f288874c626d",
+      "log_sha256": "9bcfecf11eee017cd4d069d514e34e969c400cde4b85b89c294f0c48fb1b30ce",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.0002648677231418136
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9823500957042857
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 3.682901665531102e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.939306746105656
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 0.00012342412800926068
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.7996085610777486
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.8678461513051523
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.599670925277341,
+              0.908589976651617
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.0002648677231418136,
+        "average_supply_power_W": 0.0004237883570269018,
+        "low_gain": 1.9823500957042857,
+        "low_output_fit": {
+          "amplitude": 0.04955875090272609,
+          "mean": 0.7982569361538497,
+          "residual_rms": 3.682901665531102e-05
+        },
+        "high_gain": 7.939306746105656,
+        "high_output_fit": {
+          "amplitude": 0.19848266256152627,
+          "mean": 0.7983646010609556,
+          "residual_rms": 0.00012342412800926068
+        },
+        "common_mode_V": 0.7996085610777486,
+        "bias_V": 0.8678461513051523,
+        "sampled_interface_cases": 157,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "55977d5eb5fa3646654a08f3f74a2f9bb6a417c17ae3aaa14eab42b8b615b615"
+    },
+    {
+      "corner": "ff",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ff.pm3.spice",
+          "sha256": "abbf671996e76bf3e75ea2bb26036fa17b99f92599330e25bb814ac498b600fe"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ff.pm3.spice",
+          "sha256": "d67e1b0f7f379ea42f2e21d8976dbb94e93c52bbc77ece644b63ffa152c4d7ef"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "74843df95314b8b60701e75b8fdb837a84c11197216e2e06bd4f4eff85bd9d3d",
+      "log_sha256": "8922986cfdb8ac7e552b59a2511ce37780ce418a57bba1650b1391dd5d653685",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.00035710661513420534
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.987117163464147
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 4.384513257657473e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.905786128661096
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 5.1000789896302344e-05
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.8998249332069712
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.9022809411925071
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.700377778862594,
+              1.0217797280269303
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.00035710661513420534,
+        "average_supply_power_W": 0.0006427919072415696,
+        "low_gain": 1.987117163464147,
+        "low_output_fit": {
+          "amplitude": 0.04967792757717459,
+          "mean": 0.8988839465487027,
+          "residual_rms": 4.384513257657473e-05
+        },
+        "high_gain": 7.905786128661096,
+        "high_output_fit": {
+          "amplitude": 0.19764464704712786,
+          "mean": 0.8983113927130467,
+          "residual_rms": 5.1000789896302344e-05
+        },
+        "common_mode_V": 0.8998249332069712,
+        "bias_V": 0.9022809411925071,
+        "sampled_interface_cases": 157,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "d5478eb7c55f8d8200beeb65c9b8eee20c49809e4d5e7a75de445e6ee78795cb"
+    },
+    {
+      "corner": "ff",
+      "temperature_C": 125,
+      "supply_V": 1.6,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ff.pm3.spice",
+          "sha256": "abbf671996e76bf3e75ea2bb26036fa17b99f92599330e25bb814ac498b600fe"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ff.pm3.spice",
+          "sha256": "d67e1b0f7f379ea42f2e21d8976dbb94e93c52bbc77ece644b63ffa152c4d7ef"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "5398dc744745a894f131ef480d5d0f8a19a52689a31b83812090c5162eb2ca3d",
+      "log_sha256": "b8fd3df9159d2d5e45d114621d0a0abda8e9fe11ea5a76c904705e70ee73f536",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": true,
+            "observed": 0.0002968314575112895
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": true,
+            "observed": 1.9829928420513465
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 3.358268487844751e-05
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": true,
+            "observed": 7.875581359124385
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 7.960702625586043e-05
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": true,
+            "observed": 0.7995629214264627
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.8872311630831439
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              0.6006214945927991,
+              0.9086772502206503
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": true
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": 0.0002968314575112895,
+        "average_supply_power_W": 0.0004749303320180632,
+        "low_gain": 1.9829928420513465,
+        "low_output_fit": {
+          "amplitude": 0.049574819565822735,
+          "mean": 0.7980298627781229,
+          "residual_rms": 3.358268487844751e-05
+        },
+        "high_gain": 7.875581359124385,
+        "high_output_fit": {
+          "amplitude": 0.19688952790874653,
+          "mean": 0.797707118910311,
+          "residual_rms": 7.960702625586043e-05
+        },
+        "common_mode_V": 0.7995629214264627,
+        "bias_V": 0.8872311630831439,
+        "sampled_interface_cases": 157,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "2fe172a021221242317536c98dfa5e4bf71cbf248e9d789120810dbcae6457a3"
+    },
+    {
+      "corner": "ff",
+      "temperature_C": 125,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "rc_corner": "typical",
+      "netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+      "model_resources": [
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/all.spice",
+          "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+          "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ff.pm3.spice",
+          "sha256": "abbf671996e76bf3e75ea2bb26036fa17b99f92599330e25bb814ac498b600fe"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+          "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ff.pm3.spice",
+          "sha256": "d67e1b0f7f379ea42f2e21d8976dbb94e93c52bbc77ece644b63ffa152c4d7ef"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+          "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+          "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+          "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+          "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+          "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+          "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+          "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+        },
+        {
+          "path": "/foss/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+          "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+        }
+      ],
+      "testbench_sha256": "09d3cefb0f481f99aeb81f1db4397df9c022e570484cdbb28a2d514841683260",
+      "log_sha256": "f953ab4441f18496b74f74ff2ac8cb69bb5dccb28d8bbbfac955a681562280ab",
+      "trace_scope": "owned output/control vectors; every extracted RC stays in the solve",
+      "verification": {
+        "schema_version": 1,
+        "kind": "soc_sensor_afe",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "passive sensor macro draws nonnegative mean supply current",
+            "pass": false,
+            "observed": -0.04491066580849917
+          },
+          {
+            "name": "low measured gain within 3%",
+            "pass": false,
+            "observed": 1.7439412647516844e-05
+          },
+          {
+            "name": "low settled sine residual <5mV",
+            "pass": true,
+            "observed": 5.205680211748524e-06
+          },
+          {
+            "name": "high measured gain within 3%",
+            "pass": false,
+            "observed": 1.2032808433368315e-05
+          },
+          {
+            "name": "high settled sine residual <5mV",
+            "pass": true,
+            "observed": 5.033502237429922e-06
+          },
+          {
+            "name": "self-biased VCM within 1% of VDD/2",
+            "pass": false,
+            "observed": 4.46679186439905
+          },
+          {
+            "name": "self-generated bias within 0.5..1.1V",
+            "pass": true,
+            "observed": 0.9311734264608941
+          },
+          {
+            "name": "settled analog output stays within supply rails plus 50mV",
+            "pass": true,
+            "observed": [
+              -0.0005675091229221853,
+              0.1100830322807827
+            ]
+          },
+          {
+            "name": "clocked interface: >=50 unambiguous samples all match",
+            "pass": true,
+            "observed": 0
+          }
+        ],
+        "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "pass": false
+      },
+      "measurements": {
+        "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+        "average_supply_current_A": -0.04491066580849917,
+        "average_supply_power_W": -0.08083919845529851,
+        "low_gain": 1.7439412647516844e-05,
+        "low_output_fit": {
+          "amplitude": 4.3598530292119114e-07,
+          "mean": 6.158291048683301e-06,
+          "residual_rms": 5.205680211748524e-06
+        },
+        "high_gain": 1.2032808433368315e-05,
+        "high_output_fit": {
+          "amplitude": 3.0082020172188775e-07,
+          "mean": 6.532169751007888e-06,
+          "residual_rms": 5.033502237429922e-06
+        },
+        "common_mode_V": 4.46679186439905,
+        "bias_V": 0.9311734264608941,
+        "sampled_interface_cases": 180,
+        "sampled_interface_failures": 0
+      },
+      "waveform_sha256": "31a4a8425938a44a6b0ba9562164290b849c8fb5320d878f94e152b37cb16360"
+    }
+  ],
+  "planned_cases": 18,
+  "physical_pex": true,
+  "parent_pex": {
+    "project_id": "576fe7cbbf864ac89857635cf1c14dd6",
+    "revision": 1,
+    "run_id": "1c96e0ec77944dbcb21cf9a93e4b1b83",
+    "pex_netlist_sha256": "b8e9868977da7e4318370bf79de64edbb411db6780ff0f86e81da31fe422ec41",
+    "original_pex_sha256": "bad351563733d84ac92d96e02e71d4260f77f3261a80c550cbabc7c388090a56"
+  },
+  "rc_corner": "typical",
+  "mismatch_noise_verified": false,
+  "foundry_signoff": false
+}

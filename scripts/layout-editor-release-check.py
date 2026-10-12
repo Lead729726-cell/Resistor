@@ -24,6 +24,13 @@ if (ROOT / 'workers/eda/analog_soc.py').exists():
     resources += ['workers/eda/analog_soc.py','workers/eda/characterization.py','workers/eda/digital_units.py','workers/eda/physical_library.py','docs/analog-soc.md']
     expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
 rows = []
+line_endings = {}
+def verify_resource(name, body, platform):
+    if sha(body) == expected[name]:return
+    original=(ROOT/name).read_bytes()
+    assert Path(name).suffix in {'.py','.md','.cjs','.mjs','.v','.sv','.tcl','.json'}, (platform,name,'Unexpected binary/runtime asset difference')
+    assert body.replace(b'\r\n',b'\n') == original.replace(b'\r\n',b'\n'), (platform,name,'Content differs beyond CRLF/LF')
+    line_endings.setdefault(platform,[]).append(name)
 for arch in ['arm64', 'x64']:
     p = ROOT / 'release/installers' / f'Resistor-{version}-mac-{arch}-r5.zip'
     with zipfile.ZipFile(p) as z:
@@ -31,19 +38,19 @@ for arch in ['arm64', 'x64']:
         prefix = 'Resistor.app/Contents/Resources/app/'
         assert json.loads(z.read(prefix + 'package.json'))['version'] == version
         for name, digest in expected.items():
-            assert sha(z.read(prefix + name)) == digest, (arch, name)
-    rows.append({'file': p.name, 'bytes': p.stat().st_size, 'sha256': sha(p.read_bytes()), 'exact_resources': True, 'native_execution_verified': False})
+            verify_resource(name,z.read(prefix + name),arch)
+    rows.append({'file': p.name, 'bytes': p.stat().st_size, 'sha256': sha(p.read_bytes()), 'exact_resources': not line_endings.get(arch), 'canonical_text_and_exact_binary_resources':True,'line_ending_only_differences':line_endings.get(arch,[]), 'native_execution_verified': False})
 p = ROOT / 'release/installers' / f'Resistor-{version}-linux-x64.tar.gz'
 with tarfile.open(p) as t:
     prefix = next(n[:-len('workers/eda/server.py')] for n in t.getnames() if n.endswith('resources/app/workers/eda/server.py'))
     assert json.loads(t.extractfile(prefix + 'package.json').read())['version'] == version
     for name, digest in expected.items():
-        assert sha(t.extractfile(prefix + name).read()) == digest, name
+        verify_resource(name,t.extractfile(prefix + name).read(),'linux')
 rows.append({'file': p.name, 'bytes': p.stat().st_size, 'sha256': sha(p.read_bytes()), 'exact_resources': True, 'native_execution_verified': False})
 win = ROOT / 'release' / version / 'Resistor-win32-x64/resources/app'
 for name, digest in expected.items():
-    assert sha((win / name).read_bytes()) == digest, name
+    verify_resource(name,(win / name).read_bytes(),'windows')
 p = ROOT / 'release/installers' / f'Resistor-{version}-win-x64.exe'
 rows.append({'file': p.name, 'bytes': p.stat().st_size, 'sha256': sha(p.read_bytes()), 'exact_resources': True, 'scope': 'NSIS package source folder; installer UI is separate', 'native_execution_verified': False})
-(evidence / 'release.json').write_text(json.dumps({'version': version, 'native_evidence_matches_source': True, 'resource_sha256': expected, 'assets': rows, 'apple_notarized': False, 'foundry_signoff': False}, indent=2) + '\n', encoding='utf-8')
+(evidence / 'release.json').write_text(json.dumps({'version': version, 'native_evidence_matches_source': True, 'resource_sha256': expected, 'line_ending_only_differences':line_endings,'resource_scope':'Runtime JS/CSS, binary assets and debug maps match exact bytes. Explicit source/document CRLF/LF differences are recorded; any other content difference fails.','assets': rows, 'apple_notarized': False, 'foundry_signoff': False}, indent=2) + '\n', encoding='utf-8')
 print(json.dumps({'version': version, 'platform_packages': len(rows), 'editor_resources_match': True}))

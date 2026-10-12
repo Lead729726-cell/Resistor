@@ -1,0 +1,18 @@
+Resistor owned characterization controller
+.control
+set noaskquit
+set num_threads=1
+unset klu
+setseed 729740
+source /workspace/.runtime/eda/runs/d2b76475f86c4cbbbc62fe36c257b48a/follower.spice
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+op
+let sample_index=0
+setscale sample_index
+let supply_current=-i(VDD)
+wrdata offset.dat v(OUT) v(INP) supply_current
+quit
+.endc
+.end

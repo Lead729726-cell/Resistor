@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "file_hash": "0ee6c3ad3766d931430152131128750f471076b67418172bd39e47af7c272747",
+  "file_hash": "e3d2ea7739b836420f51b6cba5ce65e1cb0cca5a88b0ddfab7c2ad122044d14d",
   "project": {
     "schema_version": 1,
-    "id": "6ef671c3025e4ff58df2a3af6bee0f8e",
-    "name": "물리 · SoC [e051b6087ec1]",
+    "id": "6efecd303b6d4c32bf6ba38e0baad805",
+    "name": "물리 · ×2/×8 가변 이득 증폭기 [2fcab7fbbf01]",
     "cell": "soc_pga",
     "pdk_id": "sky130A",
     "revision": 1,
@@ -470,91 +470,139 @@
       ],
       "devices": [
         {
-          "id": "AMP.FIRST.N_INP",
-          "name": "AMP_FIRST_N_INP",
+          "id": "GAIN2.AMP.FIRST.N_INP0",
+          "name": "GAIN2_AMP_FIRST_N_INP0",
           "kind": "nmos",
           "pins": {
-            "D": "AMP__PRE",
+            "D": "GAIN2__AMP__PRE",
             "G": "VIN",
-            "S": "AMP__FIRST__TAIL",
+            "S": "GAIN2__AMP__FIRST__TAIL",
             "B": "VGND"
           },
           "parameters": {
-            "w_um": 10.0,
+            "w_um": 5.0,
             "l_um": 1.0,
             "nf": 1,
             "m": 1
           },
           "x": 180,
           "y": 170,
-          "model": "sky130_fd_pr__nfet_01v8"
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "A"
         },
         {
-          "id": "AMP.FIRST.N_INN",
-          "name": "AMP_FIRST_N_INN",
+          "id": "GAIN2.AMP.FIRST.N_INN0",
+          "name": "GAIN2_AMP_FIRST_N_INN0",
           "kind": "nmos",
           "pins": {
-            "D": "AMP__FIRST__MIR",
-            "G": "FB",
-            "S": "AMP__FIRST__TAIL",
+            "D": "GAIN2__AMP__FIRST__MIR",
+            "G": "GAIN2__FB",
+            "S": "GAIN2__AMP__FIRST__TAIL",
             "B": "VGND"
           },
           "parameters": {
-            "w_um": 10.0,
+            "w_um": 5.0,
             "l_um": 1.0,
             "nf": 1,
             "m": 1
           },
-          "x": 420,
+          "x": 440,
           "y": 170,
-          "model": "sky130_fd_pr__nfet_01v8"
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "B"
         },
         {
-          "id": "AMP.FIRST.P_DIODE",
-          "name": "AMP_FIRST_P_DIODE",
-          "kind": "pmos",
-          "pins": {
-            "D": "AMP__FIRST__MIR",
-            "G": "AMP__FIRST__MIR",
-            "S": "VPWR",
-            "B": "VPWR"
-          },
-          "parameters": {
-            "w_um": 20.0,
-            "l_um": 1.0,
-            "nf": 1,
-            "m": 1
-          },
-          "x": 660,
-          "y": 170,
-          "model": "sky130_fd_pr__pfet_01v8_hvt"
-        },
-        {
-          "id": "AMP.FIRST.P_MIRROR",
-          "name": "AMP_FIRST_P_MIRROR",
-          "kind": "pmos",
-          "pins": {
-            "D": "AMP__PRE",
-            "G": "AMP__FIRST__MIR",
-            "S": "VPWR",
-            "B": "VPWR"
-          },
-          "parameters": {
-            "w_um": 20.0,
-            "l_um": 1.0,
-            "nf": 1,
-            "m": 1
-          },
-          "x": 900,
-          "y": 170,
-          "model": "sky130_fd_pr__pfet_01v8_hvt"
-        },
-        {
-          "id": "AMP.FIRST.N_TAIL",
-          "name": "AMP_FIRST_N_TAIL",
+          "id": "GAIN2.AMP.FIRST.N_INN1",
+          "name": "GAIN2_AMP_FIRST_N_INN1",
           "kind": "nmos",
           "pins": {
-            "D": "AMP__FIRST__TAIL",
+            "D": "GAIN2__AMP__FIRST__MIR",
+            "G": "GAIN2__FB",
+            "S": "GAIN2__AMP__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 700,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "B"
+        },
+        {
+          "id": "GAIN2.AMP.FIRST.N_INP1",
+          "name": "GAIN2_AMP_FIRST_N_INP1",
+          "kind": "nmos",
+          "pins": {
+            "D": "GAIN2__AMP__PRE",
+            "G": "VIN",
+            "S": "GAIN2__AMP__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 960,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "A"
+        },
+        {
+          "id": "GAIN2.AMP.FIRST.P_DIODE",
+          "name": "GAIN2_AMP_FIRST_P_DIODE",
+          "kind": "pmos",
+          "pins": {
+            "D": "GAIN2__AMP__FIRST__MIR",
+            "G": "GAIN2__AMP__FIRST__MIR",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 20.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 1220,
+          "y": 170,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "GAIN2.AMP.FIRST.P_MIRROR",
+          "name": "GAIN2_AMP_FIRST_P_MIRROR",
+          "kind": "pmos",
+          "pins": {
+            "D": "GAIN2__AMP__PRE",
+            "G": "GAIN2__AMP__FIRST__MIR",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 20.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 360,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "GAIN2.AMP.FIRST.N_TAIL",
+          "name": "GAIN2_AMP_FIRST_N_TAIL",
+          "kind": "nmos",
+          "pins": {
+            "D": "GAIN2__AMP__FIRST__TAIL",
             "G": "BIAS",
             "S": "VGND",
             "B": "VGND"
@@ -565,17 +613,17 @@
             "nf": 1,
             "m": 1
           },
-          "x": 180,
-          "y": 350,
+          "x": 440,
+          "y": 360,
           "model": "sky130_fd_pr__nfet_01v8"
         },
         {
-          "id": "AMP.P_SECOND",
-          "name": "AMP_P_SECOND",
+          "id": "GAIN2.AMP.P_SECOND",
+          "name": "GAIN2_AMP_P_SECOND",
           "kind": "pmos",
           "pins": {
-            "D": "OUT",
-            "G": "AMP__PRE",
+            "D": "V2",
+            "G": "GAIN2__AMP__PRE",
             "S": "VPWR",
             "B": "VPWR"
           },
@@ -585,16 +633,16 @@
             "nf": 1,
             "m": 1
           },
-          "x": 420,
-          "y": 170,
+          "x": 700,
+          "y": 360,
           "model": "sky130_fd_pr__pfet_01v8_hvt"
         },
         {
-          "id": "AMP.N_SECOND",
-          "name": "AMP_N_SECOND",
+          "id": "GAIN2.AMP.N_SECOND",
+          "name": "GAIN2_AMP_N_SECOND",
           "kind": "nmos",
           "pins": {
-            "D": "OUT",
+            "D": "V2",
             "G": "BIAS",
             "S": "VGND",
             "B": "VGND"
@@ -605,68 +653,68 @@
             "nf": 1,
             "m": 1
           },
-          "x": 660,
-          "y": 170,
+          "x": 960,
+          "y": 360,
           "model": "sky130_fd_pr__nfet_01v8"
         },
         {
-          "id": "AMP.C_MILLER:p0",
-          "name": "AMP_C_MILLER_P0",
+          "id": "GAIN2.AMP.C_MILLER:p0",
+          "name": "GAIN2_AMP_C_MILLER_P0",
           "kind": "capacitor",
           "pins": {
-            "+": "AMP__PRE",
-            "-": "AMP__COMP"
+            "+": "GAIN2__AMP__PRE",
+            "-": "GAIN2__AMP__COMP"
           },
           "parameters": {
             "value": 1.6666666666666666e-12,
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 900,
-          "y": 170,
+          "x": 1220,
+          "y": 360,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
-          "id": "AMP.C_MILLER:p1",
-          "name": "AMP_C_MILLER_P1",
+          "id": "GAIN2.AMP.C_MILLER:p1",
+          "name": "GAIN2_AMP_C_MILLER_P1",
           "kind": "capacitor",
           "pins": {
-            "+": "AMP__PRE",
-            "-": "AMP__COMP"
+            "+": "GAIN2__AMP__PRE",
+            "-": "GAIN2__AMP__COMP"
           },
           "parameters": {
             "value": 1.6666666666666666e-12,
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 1070,
-          "y": 170,
+          "x": 180,
+          "y": 550,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
-          "id": "AMP.C_MILLER:p2",
-          "name": "AMP_C_MILLER_P2",
+          "id": "GAIN2.AMP.C_MILLER:p2",
+          "name": "GAIN2_AMP_C_MILLER_P2",
           "kind": "capacitor",
           "pins": {
-            "+": "AMP__PRE",
-            "-": "AMP__COMP"
+            "+": "GAIN2__AMP__PRE",
+            "-": "GAIN2__AMP__COMP"
           },
           "parameters": {
             "value": 1.6666666666666666e-12,
             "w_um": 28.68,
             "l_um": 28.68
           },
-          "x": 1240,
-          "y": 170,
+          "x": 440,
+          "y": 550,
           "model": "sky130_fd_pr__cap_mim_m3_1"
         },
         {
-          "id": "AMP.R_ZERO:p0",
-          "name": "AMP_R_ZERO_P0",
+          "id": "GAIN2.AMP.R_ZERO:p0",
+          "name": "GAIN2_AMP_R_ZERO_P0",
           "kind": "resistor",
           "pins": {
-            "+": "AMP__COMP",
-            "-": "OUT",
+            "+": "GAIN2__AMP__COMP",
+            "-": "V2",
             "B": "VGND"
           },
           "parameters": {
@@ -674,16 +722,16 @@
             "w_um": 1.41,
             "l_um": 3.36
           },
-          "x": 180,
-          "y": 350,
+          "x": 700,
+          "y": 550,
           "model": "sky130_fd_pr__res_xhigh_po_1p41"
         },
         {
-          "id": "R_GROUND:p0",
-          "name": "R_GROUND_P0",
+          "id": "GAIN2.R_GROUND:p0",
+          "name": "GAIN2_R_GROUND_P0",
           "kind": "resistor",
           "pins": {
-            "+": "FB",
+            "+": "GAIN2__FB",
             "-": "VCM",
             "B": "VGND"
           },
@@ -692,17 +740,310 @@
             "w_um": 1.41,
             "l_um": 6.885
           },
-          "x": 420,
-          "y": 170,
+          "x": 960,
+          "y": 550,
           "model": "sky130_fd_pr__res_xhigh_po_1p41"
         },
         {
-          "id": "R_HIGH:p0",
-          "name": "R_HIGH_P0",
+          "id": "GAIN2.R_FEEDBACK:p0",
+          "name": "GAIN2_R_FEEDBACK_P0",
           "kind": "resistor",
           "pins": {
-            "+": "OUT",
-            "-": "R_HIGH_R0_N0",
+            "+": "V2",
+            "-": "GAIN2__FB",
+            "B": "VGND"
+          },
+          "parameters": {
+            "value": 10000.0,
+            "w_um": 1.41,
+            "l_um": 6.885
+          },
+          "x": 1220,
+          "y": 550,
+          "model": "sky130_fd_pr__res_xhigh_po_1p41"
+        },
+        {
+          "id": "GAIN8.AMP.FIRST.N_INP0",
+          "name": "GAIN8_AMP_FIRST_N_INP0",
+          "kind": "nmos",
+          "pins": {
+            "D": "GAIN8__AMP__PRE",
+            "G": "VIN",
+            "S": "GAIN8__AMP__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 740,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "A"
+        },
+        {
+          "id": "GAIN8.AMP.FIRST.N_INN0",
+          "name": "GAIN8_AMP_FIRST_N_INN0",
+          "kind": "nmos",
+          "pins": {
+            "D": "GAIN8__AMP__FIRST__MIR",
+            "G": "GAIN8__FB",
+            "S": "GAIN8__AMP__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 440,
+          "y": 740,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "B"
+        },
+        {
+          "id": "GAIN8.AMP.FIRST.N_INN1",
+          "name": "GAIN8_AMP_FIRST_N_INN1",
+          "kind": "nmos",
+          "pins": {
+            "D": "GAIN8__AMP__FIRST__MIR",
+            "G": "GAIN8__FB",
+            "S": "GAIN8__AMP__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 700,
+          "y": 740,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "B"
+        },
+        {
+          "id": "GAIN8.AMP.FIRST.N_INP1",
+          "name": "GAIN8_AMP_FIRST_N_INP1",
+          "kind": "nmos",
+          "pins": {
+            "D": "GAIN8__AMP__PRE",
+            "G": "VIN",
+            "S": "GAIN8__AMP__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 960,
+          "y": 740,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "A"
+        },
+        {
+          "id": "GAIN8.AMP.FIRST.P_DIODE",
+          "name": "GAIN8_AMP_FIRST_P_DIODE",
+          "kind": "pmos",
+          "pins": {
+            "D": "GAIN8__AMP__FIRST__MIR",
+            "G": "GAIN8__AMP__FIRST__MIR",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 20.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 1220,
+          "y": 740,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "GAIN8.AMP.FIRST.P_MIRROR",
+          "name": "GAIN8_AMP_FIRST_P_MIRROR",
+          "kind": "pmos",
+          "pins": {
+            "D": "GAIN8__AMP__PRE",
+            "G": "GAIN8__AMP__FIRST__MIR",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 20.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 930,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "GAIN8.AMP.FIRST.N_TAIL",
+          "name": "GAIN8_AMP_FIRST_N_TAIL",
+          "kind": "nmos",
+          "pins": {
+            "D": "GAIN8__AMP__FIRST__TAIL",
+            "G": "BIAS",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 2.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 440,
+          "y": 930,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "GAIN8.AMP.P_SECOND",
+          "name": "GAIN8_AMP_P_SECOND",
+          "kind": "pmos",
+          "pins": {
+            "D": "V8",
+            "G": "GAIN8__AMP__PRE",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 40,
+            "l_um": 1,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 700,
+          "y": 930,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "GAIN8.AMP.N_SECOND",
+          "name": "GAIN8_AMP_N_SECOND",
+          "kind": "nmos",
+          "pins": {
+            "D": "V8",
+            "G": "BIAS",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 2,
+            "l_um": 1,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 960,
+          "y": 930,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "GAIN8.AMP.C_MILLER:p0",
+          "name": "GAIN8_AMP_C_MILLER_P0",
+          "kind": "capacitor",
+          "pins": {
+            "+": "GAIN8__AMP__PRE",
+            "-": "GAIN8__AMP__COMP"
+          },
+          "parameters": {
+            "value": 1.6666666666666666e-12,
+            "w_um": 28.68,
+            "l_um": 28.68
+          },
+          "x": 1220,
+          "y": 930,
+          "model": "sky130_fd_pr__cap_mim_m3_1"
+        },
+        {
+          "id": "GAIN8.AMP.C_MILLER:p1",
+          "name": "GAIN8_AMP_C_MILLER_P1",
+          "kind": "capacitor",
+          "pins": {
+            "+": "GAIN8__AMP__PRE",
+            "-": "GAIN8__AMP__COMP"
+          },
+          "parameters": {
+            "value": 1.6666666666666666e-12,
+            "w_um": 28.68,
+            "l_um": 28.68
+          },
+          "x": 180,
+          "y": 1120,
+          "model": "sky130_fd_pr__cap_mim_m3_1"
+        },
+        {
+          "id": "GAIN8.AMP.C_MILLER:p2",
+          "name": "GAIN8_AMP_C_MILLER_P2",
+          "kind": "capacitor",
+          "pins": {
+            "+": "GAIN8__AMP__PRE",
+            "-": "GAIN8__AMP__COMP"
+          },
+          "parameters": {
+            "value": 1.6666666666666666e-12,
+            "w_um": 28.68,
+            "l_um": 28.68
+          },
+          "x": 440,
+          "y": 1120,
+          "model": "sky130_fd_pr__cap_mim_m3_1"
+        },
+        {
+          "id": "GAIN8.AMP.R_ZERO:p0",
+          "name": "GAIN8_AMP_R_ZERO_P0",
+          "kind": "resistor",
+          "pins": {
+            "+": "GAIN8__AMP__COMP",
+            "-": "V8",
+            "B": "VGND"
+          },
+          "parameters": {
+            "value": 5000.0,
+            "w_um": 1.41,
+            "l_um": 3.36
+          },
+          "x": 700,
+          "y": 1120,
+          "model": "sky130_fd_pr__res_xhigh_po_1p41"
+        },
+        {
+          "id": "GAIN8.R_GROUND:p0",
+          "name": "GAIN8_R_GROUND_P0",
+          "kind": "resistor",
+          "pins": {
+            "+": "GAIN8__FB",
+            "-": "VCM",
+            "B": "VGND"
+          },
+          "parameters": {
+            "value": 10000.0,
+            "w_um": 1.41,
+            "l_um": 6.885
+          },
+          "x": 960,
+          "y": 1120,
+          "model": "sky130_fd_pr__res_xhigh_po_1p41"
+        },
+        {
+          "id": "GAIN8.R_FEEDBACK:p0",
+          "name": "GAIN8_R_FEEDBACK_P0",
+          "kind": "resistor",
+          "pins": {
+            "+": "V8",
+            "-": "GAIN8_R_FEEDBACK_R0_N0",
             "B": "VGND"
           },
           "parameters": {
@@ -710,17 +1051,17 @@
             "w_um": 1.41,
             "l_um": 24.51
           },
-          "x": 660,
-          "y": 170,
+          "x": 1220,
+          "y": 1120,
           "model": "sky130_fd_pr__res_xhigh_po_1p41"
         },
         {
-          "id": "R_HIGH:p1",
-          "name": "R_HIGH_P1",
+          "id": "GAIN8.R_FEEDBACK:p1",
+          "name": "GAIN8_R_FEEDBACK_P1",
           "kind": "resistor",
           "pins": {
-            "+": "R_HIGH_R0_N0",
-            "-": "FB",
+            "+": "GAIN8_R_FEEDBACK_R0_N0",
+            "-": "GAIN8__FB",
             "B": "VGND"
           },
           "parameters": {
@@ -728,26 +1069,8 @@
             "w_um": 1.41,
             "l_um": 24.51
           },
-          "x": 830,
-          "y": 170,
-          "model": "sky130_fd_pr__res_xhigh_po_1p41"
-        },
-        {
-          "id": "R_LOW:p0",
-          "name": "R_LOW_P0",
-          "kind": "resistor",
-          "pins": {
-            "+": "LOW",
-            "-": "FB",
-            "B": "VGND"
-          },
-          "parameters": {
-            "value": 11666.666666666666,
-            "w_um": 1.41,
-            "l_um": 8.06
-          },
-          "x": 900,
-          "y": 170,
+          "x": 180,
+          "y": 1310,
           "model": "sky130_fd_pr__res_xhigh_po_1p41"
         },
         {
@@ -767,8 +1090,8 @@
             "nf": 1,
             "m": 1
           },
-          "x": 180,
-          "y": 160
+          "x": 440,
+          "y": 1310
         },
         {
           "id": "GAIN_INVERTER.MN",
@@ -787,17 +1110,17 @@
             "nf": 1,
             "m": 1
           },
-          "x": 370,
-          "y": 160
+          "x": 700,
+          "y": 1310
         },
         {
-          "id": "N_GAIN",
-          "name": "N_GAIN",
+          "id": "N_LOW",
+          "name": "N_LOW",
           "kind": "nmos",
           "pins": {
-            "D": "OUT",
+            "D": "V2",
             "G": "GAINB",
-            "S": "LOW",
+            "S": "SELECTED",
             "B": "VGND"
           },
           "parameters": {
@@ -806,18 +1129,18 @@
             "nf": 1,
             "m": 1
           },
-          "x": 420,
-          "y": 350,
+          "x": 960,
+          "y": 1310,
           "model": "sky130_fd_pr__nfet_01v8"
         },
         {
-          "id": "P_GAIN",
-          "name": "P_GAIN",
+          "id": "P_LOW",
+          "name": "P_LOW",
           "kind": "pmos",
           "pins": {
-            "D": "OUT",
+            "D": "V2",
             "G": "GAIN",
-            "S": "LOW",
+            "S": "SELECTED",
             "B": "VPWR"
           },
           "parameters": {
@@ -826,9 +1149,306 @@
             "nf": 1,
             "m": 1
           },
-          "x": 660,
-          "y": 350,
+          "x": 1220,
+          "y": 1310,
           "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "N_HIGH",
+          "name": "N_HIGH",
+          "kind": "nmos",
+          "pins": {
+            "D": "V8",
+            "G": "GAIN",
+            "S": "SELECTED",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 20,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 1500,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "P_HIGH",
+          "name": "P_HIGH",
+          "kind": "pmos",
+          "pins": {
+            "D": "V8",
+            "G": "GAINB",
+            "S": "SELECTED",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 20,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 440,
+          "y": 1500,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "OUTPUT_BUFFER.FIRST.N_INP0",
+          "name": "OUTPUT_BUFFER_FIRST_N_INP0",
+          "kind": "nmos",
+          "pins": {
+            "D": "OUTPUT_BUFFER__PRE",
+            "G": "SELECTED",
+            "S": "OUTPUT_BUFFER__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 700,
+          "y": 1500,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "A"
+        },
+        {
+          "id": "OUTPUT_BUFFER.FIRST.N_INN0",
+          "name": "OUTPUT_BUFFER_FIRST_N_INN0",
+          "kind": "nmos",
+          "pins": {
+            "D": "OUTPUT_BUFFER__FIRST__MIR",
+            "G": "OUT",
+            "S": "OUTPUT_BUFFER__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 960,
+          "y": 1500,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "B"
+        },
+        {
+          "id": "OUTPUT_BUFFER.FIRST.N_INN1",
+          "name": "OUTPUT_BUFFER_FIRST_N_INN1",
+          "kind": "nmos",
+          "pins": {
+            "D": "OUTPUT_BUFFER__FIRST__MIR",
+            "G": "OUT",
+            "S": "OUTPUT_BUFFER__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 1220,
+          "y": 1500,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "B"
+        },
+        {
+          "id": "OUTPUT_BUFFER.FIRST.N_INP1",
+          "name": "OUTPUT_BUFFER_FIRST_N_INP1",
+          "kind": "nmos",
+          "pins": {
+            "D": "OUTPUT_BUFFER__PRE",
+            "G": "SELECTED",
+            "S": "OUTPUT_BUFFER__FIRST__TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 5.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 1690,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "matching_group": "INPUT_PAIR_ABBA",
+          "matching_role": "A"
+        },
+        {
+          "id": "OUTPUT_BUFFER.FIRST.P_DIODE",
+          "name": "OUTPUT_BUFFER_FIRST_P_DIODE",
+          "kind": "pmos",
+          "pins": {
+            "D": "OUTPUT_BUFFER__FIRST__MIR",
+            "G": "OUTPUT_BUFFER__FIRST__MIR",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 20.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 440,
+          "y": 1690,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "OUTPUT_BUFFER.FIRST.P_MIRROR",
+          "name": "OUTPUT_BUFFER_FIRST_P_MIRROR",
+          "kind": "pmos",
+          "pins": {
+            "D": "OUTPUT_BUFFER__PRE",
+            "G": "OUTPUT_BUFFER__FIRST__MIR",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 20.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 700,
+          "y": 1690,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "OUTPUT_BUFFER.FIRST.N_TAIL",
+          "name": "OUTPUT_BUFFER_FIRST_N_TAIL",
+          "kind": "nmos",
+          "pins": {
+            "D": "OUTPUT_BUFFER__FIRST__TAIL",
+            "G": "BIAS",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 2.0,
+            "l_um": 1.0,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 960,
+          "y": 1690,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "OUTPUT_BUFFER.P_SECOND",
+          "name": "OUTPUT_BUFFER_P_SECOND",
+          "kind": "pmos",
+          "pins": {
+            "D": "OUT",
+            "G": "OUTPUT_BUFFER__PRE",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 40,
+            "l_um": 1,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 1220,
+          "y": 1690,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "OUTPUT_BUFFER.N_SECOND",
+          "name": "OUTPUT_BUFFER_N_SECOND",
+          "kind": "nmos",
+          "pins": {
+            "D": "OUT",
+            "G": "BIAS",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 2,
+            "l_um": 1,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 1880,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "OUTPUT_BUFFER.C_MILLER:p0",
+          "name": "OUTPUT_BUFFER_C_MILLER_P0",
+          "kind": "capacitor",
+          "pins": {
+            "+": "OUTPUT_BUFFER__PRE",
+            "-": "OUTPUT_BUFFER__COMP"
+          },
+          "parameters": {
+            "value": 1.6666666666666666e-12,
+            "w_um": 28.68,
+            "l_um": 28.68
+          },
+          "x": 440,
+          "y": 1880,
+          "model": "sky130_fd_pr__cap_mim_m3_1"
+        },
+        {
+          "id": "OUTPUT_BUFFER.C_MILLER:p1",
+          "name": "OUTPUT_BUFFER_C_MILLER_P1",
+          "kind": "capacitor",
+          "pins": {
+            "+": "OUTPUT_BUFFER__PRE",
+            "-": "OUTPUT_BUFFER__COMP"
+          },
+          "parameters": {
+            "value": 1.6666666666666666e-12,
+            "w_um": 28.68,
+            "l_um": 28.68
+          },
+          "x": 700,
+          "y": 1880,
+          "model": "sky130_fd_pr__cap_mim_m3_1"
+        },
+        {
+          "id": "OUTPUT_BUFFER.C_MILLER:p2",
+          "name": "OUTPUT_BUFFER_C_MILLER_P2",
+          "kind": "capacitor",
+          "pins": {
+            "+": "OUTPUT_BUFFER__PRE",
+            "-": "OUTPUT_BUFFER__COMP"
+          },
+          "parameters": {
+            "value": 1.6666666666666666e-12,
+            "w_um": 28.68,
+            "l_um": 28.68
+          },
+          "x": 960,
+          "y": 1880,
+          "model": "sky130_fd_pr__cap_mim_m3_1"
+        },
+        {
+          "id": "OUTPUT_BUFFER.R_ZERO:p0",
+          "name": "OUTPUT_BUFFER_R_ZERO_P0",
+          "kind": "resistor",
+          "pins": {
+            "+": "OUTPUT_BUFFER__COMP",
+            "-": "OUT",
+            "B": "VGND"
+          },
+          "parameters": {
+            "value": 5000.0,
+            "w_um": 1.41,
+            "l_um": 3.36
+          },
+          "x": 1220,
+          "y": 1880,
+          "model": "sky130_fd_pr__res_xhigh_po_1p41"
         }
       ],
       "wires": [],
@@ -873,7 +1493,7 @@
       "physical_adapter": "sky130-pcell-library-v1",
       "passive_replacements": [
         {
-          "source_device": "AMP_C_MILLER",
+          "source_device": "GAIN2_AMP_C_MILLER",
           "kind": "capacitor",
           "requested_SI": 5e-12,
           "nominal_geometry_SI": 5.0006448e-12,
@@ -884,7 +1504,7 @@
           "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
         },
         {
-          "source_device": "AMP_R_ZERO",
+          "source_device": "GAIN2_AMP_R_ZERO",
           "kind": "resistor",
           "requested_SI": 5000.0,
           "nominal_geometry_SI": 4998.353425682813,
@@ -895,7 +1515,7 @@
           "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
         },
         {
-          "source_device": "R_GROUND",
+          "source_device": "GAIN2_R_GROUND",
           "kind": "resistor",
           "requested_SI": 10000.0,
           "nominal_geometry_SI": 9998.353425682812,
@@ -906,7 +1526,51 @@
           "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
         },
         {
-          "source_device": "R_HIGH",
+          "source_device": "GAIN2_R_FEEDBACK",
+          "kind": "resistor",
+          "requested_SI": 10000.0,
+          "nominal_geometry_SI": 9998.353425682812,
+          "instances": 1,
+          "model": "sky130_fd_pr__res_xhigh_po_1p41",
+          "w_um": 1.41,
+          "l_um": 6.885,
+          "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+        },
+        {
+          "source_device": "GAIN8_AMP_C_MILLER",
+          "kind": "capacitor",
+          "requested_SI": 5e-12,
+          "nominal_geometry_SI": 5.0006448e-12,
+          "instances": 3,
+          "model": "sky130_fd_pr__cap_mim_m3_1",
+          "w_um": 28.68,
+          "l_um": 28.68,
+          "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+        },
+        {
+          "source_device": "GAIN8_AMP_R_ZERO",
+          "kind": "resistor",
+          "requested_SI": 5000.0,
+          "nominal_geometry_SI": 4998.353425682813,
+          "instances": 1,
+          "model": "sky130_fd_pr__res_xhigh_po_1p41",
+          "w_um": 1.41,
+          "l_um": 3.36,
+          "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+        },
+        {
+          "source_device": "GAIN8_R_GROUND",
+          "kind": "resistor",
+          "requested_SI": 10000.0,
+          "nominal_geometry_SI": 9998.353425682812,
+          "instances": 1,
+          "model": "sky130_fd_pr__res_xhigh_po_1p41",
+          "w_um": 1.41,
+          "l_um": 6.885,
+          "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+        },
+        {
+          "source_device": "GAIN8_R_FEEDBACK",
           "kind": "resistor",
           "requested_SI": 70000.0,
           "nominal_geometry_SI": 69996.70685136563,
@@ -917,14 +1581,25 @@
           "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
         },
         {
-          "source_device": "R_LOW",
+          "source_device": "OUTPUT_BUFFER_C_MILLER",
+          "kind": "capacitor",
+          "requested_SI": 5e-12,
+          "nominal_geometry_SI": 5.0006448e-12,
+          "instances": 3,
+          "model": "sky130_fd_pr__cap_mim_m3_1",
+          "w_um": 28.68,
+          "l_um": 28.68,
+          "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+        },
+        {
+          "source_device": "OUTPUT_BUFFER_R_ZERO",
           "kind": "resistor",
-          "requested_SI": 11666.666666666666,
-          "nominal_geometry_SI": 11665.02009234948,
+          "requested_SI": 5000.0,
+          "nominal_geometry_SI": 4998.353425682813,
           "instances": 1,
           "model": "sky130_fd_pr__res_xhigh_po_1p41",
           "w_um": 1.41,
-          "l_um": 8.06,
+          "l_um": 3.36,
           "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
         }
       ],
@@ -936,5 +1611,5 @@
     },
     "layout_parameter_policy": "reference-layout-independent-edit"
   },
-  "geometry_hash": "0e585bd4d9295105db7b450c8811227958a4d628b3496db7e6a145c738dd7032"
+  "geometry_hash": "b0913372369d604533b86f7b013e7affe943730f56bb3373c0c4adf952fcabda"
 }

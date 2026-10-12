@@ -1,16 +1,81 @@
 {
   "algorithm": "interval-heap-v2",
-  "primitive_count": 11,
-  "scope": "single-row PCell reference; no matching/density/antenna/full-chip signoff",
-  "signal_track_count": 6,
+  "matching_groups": [
+    {
+      "centroids_dbu": {
+        "A": [
+          13200.0,
+          2775.0
+        ],
+        "B": [
+          13200.0,
+          2775.0
+        ]
+      },
+      "equal_unit_geometry": true,
+      "group": "FIRST::INPUT_PAIR_ABBA",
+      "max_centroid_delta_dbu": 0.0,
+      "nominal_centroid_match": true,
+      "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+      "units": [
+        {
+          "device": "FIRST_N_INP0",
+          "gate_center_dbu": [
+            1425,
+            2775
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        },
+        {
+          "device": "FIRST_N_INN0",
+          "gate_center_dbu": [
+            9275,
+            2775
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "FIRST_N_INN1",
+          "gate_center_dbu": [
+            17125,
+            2775
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "FIRST_N_INP1",
+          "gate_center_dbu": [
+            24975,
+            2775
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        }
+      ]
+    }
+  ],
+  "primitive_count": 13,
+  "scope": "single-row PCell reference; no full-chip density/antenna/foundry signoff",
+  "signal_track_count": 7,
   "track_clearance_dbu": 800,
   "tracks": {
     "BIAS": 2,
     "COMP": 0,
-    "FIRST__MIR": 0,
+    "FIRST__MIR": 6,
     "FIRST__TAIL": 5,
-    "INN": 1,
-    "INP": 0,
+    "INN": 0,
+    "INP": 1,
     "OUT": 3,
     "PRE": 4
   }

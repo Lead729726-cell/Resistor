@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
   "parser_version": "mos-eda-1",
-  "run_id": "45659a44b3fd401d9d938877d4e15040",
-  "project_id": "6ef671c3025e4ff58df2a3af6bee0f8e",
+  "run_id": "f5b43832f81f41969a556cb85344ce57",
+  "project_id": "6efecd303b6d4c32bf6ba38e0baad805",
   "cell": "soc_pga",
   "revision": 1,
-  "started_at": "2026-10-12T11:36:10.143559+00:00",
-  "input_signature": "ff9ae3b6f69da2124d930ddb83489102b36af47dad55cb6e9633e5a3119eedbe",
+  "started_at": "2026-10-12T14:00:30.031218+00:00",
+  "input_signature": "0fc4d5abfe4934cbf8d6fb0166b4b969302970b49c2a9f7b029a18bafded400d",
   "settings": {
-    "project_id": "6ef671c3025e4ff58df2a3af6bee0f8e",
+    "project_id": "6efecd303b6d4c32bf6ba38e0baad805",
     "expected_revision": 1,
     "analysis": "tran",
     "corner": "tt",
@@ -20,7 +20,7 @@
     "vds_V": 1.8,
     "vbs_V": 0.0,
     "post_layout": true,
-    "command_id": "3bd3afab-8a85-4c49-99d1-a075412a61c5",
+    "command_id": "e63c5df9-b27e-4ef9-9382-70ebe4636dc9",
     "ngspice_num_threads": 1,
     "extraction": {
       "cthresh_fF": 0,
@@ -32,19 +32,19 @@
     },
     "pex_exact_reduction": {
       "method": "exact-resistor-star-mesh-v2",
-      "resistors_before": 6805,
-      "resistors_after": 3477,
-      "eliminated_unobserved_nodes": 2418,
+      "resistors_before": 15485,
+      "resistors_after": 8927,
+      "eliminated_unobserved_nodes": 4722,
       "passive_closed_loops_removed": 0,
       "capacitors_changed": 0,
-      "protected_nodes": 1856,
+      "protected_nodes": 4957,
       "max_elimination_degree": 8,
       "max_fill_edges": 100000,
       "approximation": false,
       "original_path": "./pex.spice",
-      "original_sha256": "216863678d5936eaba2f2dc036c4ef83ef1659745cc514c3ca9d432ff32f04fe",
+      "original_sha256": "6d8a9c905aa80b1939dbbb84d2b171644b5c21c2e2a3af940df004d9ff03d265",
       "simulation_path": "./pex-simulation.spice",
-      "simulation_sha256": "2d52360dddf92159c5bd4c2f105a4f6223ea27f9f318cc64bbec47a837f5d76f",
+      "simulation_sha256": "f0970fede251832c36153c48d14e54c75962527e3967a7b56990e7b333f019fc",
       "implementation_sha256": "d84adb5f857a8f6887f4621a07008b2a4526763dd214477d1df4a06e71caf7ba",
       "scope": "Original PEX retained. Ports, logical nets and every capacitive/device terminal preserved; no spatial RC map is inferred."
     },
@@ -55,7 +55,7 @@
         "v(VIN)",
         "v(GAIN)"
       ],
-      "signed_current_branches": 17,
+      "signed_current_branches": 39,
       "all_extracted_RC_elements_retained": true
     },
     "solver_observed": "SPARSE 1.3"
@@ -70,7 +70,7 @@
         "/foss/pdks/sky130A/libs.tech/magic/sky130A.magicrc",
         "./pex.tcl"
       ],
-      "cwd": "/workspace/.runtime/eda/runs/45659a44b3fd401d9d938877d4e15040",
+      "cwd": "/workspace/.runtime/eda/runs/f5b43832f81f41969a556cb85344ce57",
       "timeout_s": 120,
       "returncode": 0
     },
@@ -80,7 +80,7 @@
         "-b",
         "./testbench.spice"
       ],
-      "cwd": "/workspace/.runtime/eda/runs/45659a44b3fd401d9d938877d4e15040",
+      "cwd": "/workspace/.runtime/eda/runs/f5b43832f81f41969a556cb85344ce57",
       "timeout_s": 300,
       "returncode": 0
     }
@@ -88,9 +88,10 @@
   "adapter_sources": {
     "sigma_delta.py": "f093720df75b1223fbadeb1d7b71c4a41087bc271fc03c5f59d94cb290d3d8a7",
     "native.py": "561f9f8ad914e438c04d4e57946cc093dd9c5f22a8be7b661d1c6bcc16fc1136",
-    "analog_soc.py": "d81c7b861dbace1442999eaff538cfaf40ef4decdb2c21bab8bb7c62f83bbcfb",
+    "analog_soc.py": "011bcd40f404d9d0139bdc8c75b678050a00968873c62cccf6b9838676ed64a9",
     "bootstrap.py": "88e9e525d4868e34b18f9dd6b953ac2b745d8ff739716a24079018c99b8b3c17",
     "digital_units.py": "8570ed536be9f102082ab4ef8fce041e1eba0c86723e679cfb5f0c78a1a30004",
+    "characterization.py": "6b0a9feb9acaff73a7675835748bdc3ec98c0d12cbafec3b7085f98249920349",
     "signal_metrics.py": "0ed481b9bbf111b1e954cdfbcd386d82b21c7cbb64e5ca20674da935eb279d29",
     "native_database.py": "267705c19667526ff2557a4d9f13f19320b8f18c9d5c52cde83355181f8fdb81",
     "profile.py": "bba5cf8d5ad36e776ff2f0511141573072ef1171244d7b87b178de258e63b5d8",
@@ -103,14 +104,14 @@
     "interchange.py": "c310a3f0963bfe596c2a2c35474d6d6be8f5b463a338ec915efcd3ca892ce7e8",
     "xschem_bridge.py": "dcc3816848f47ebff83d66fe1561cca69e09e0004017d86467f3cc58e99bbe6e",
     "pex_reduce.py": "d84adb5f857a8f6887f4621a07008b2a4526763dd214477d1df4a06e71caf7ba",
-    "server.py": "099de24807b8c9e05ce71afef875c4aebcbf1abf7e172bf4630e7023dfdbb40b",
+    "server.py": "4c47ce32087e1e1f8575bc72aa48ba09a2b30f4f2718b6cf43eefd8e0382abcc",
     "configured_analysis.py": "c5a2e0b4f96eb6d2eb3796b3bc5b84e09f6fee6978354e1229fdf82c98d49df0",
     "geometry.py": "50defdd0615c2dabbaa2adbb6c89f3276370e79d1a723011adc0ebdac1694506",
     "build_current_example.py": "23bc6dd70e109e13e494a434463457c0f5888499a3a50a910c20a4ad22b766ce",
     "templates.py": "78d98e3340ad823b7353744bc7cce546081ded2a3faa27232527c381a11f53fe",
     "experiments.py": "569057559a6b813ae8c356d9935db078d524cb8ae28e666460e5ba869442cd87",
     "job_evidence.py": "fcbdfcee94bc4d7090f7b6fec438b85d0ccc6057613de9729d74203fd793047f",
-    "physical_library.py": "020f1dcddd24c5216ecfab4951e8bc5366517347900a4037abbf4f5305ad812c",
+    "physical_library.py": "24080bfc8f7c6858412dd610557b4c13148802cafd992ebb617200756c3c8f61",
     "toolchain_diagnostics.py": "f8d439cfe011351152b8c6b8147195e22f41c40c4c2de15e1a3b36cd11ddb382",
     "commercial_backend.py": "34e4c2eafdc90ade1dacc9957d369553c76e6d1f41bb3ae594c947cda2805e09",
     "hierarchy_transfer.py": "f79af0f29314c9f11bd7d7ad426b9aa9b1d832c4554c8a31393346439723bcf4",
@@ -119,8 +120,8 @@
     "project_index.py": "3b9a1606eca2ea951617b2735c63d2470d6f7d04c299aefc9451c839cd8576f9",
     "commercial_results.py": "8d417102a078b3e0969becd3f48a87759fc27341288e2a991d8e1f2a2db01a56"
   },
-  "layout_hash": "13c496193848ca2f6e8348aa512e596a792f2cb8878057ca210147fc47540f67",
-  "schematic_hash": "06ffef3ece020f7e7dec0f2ffd5b54ea0f0e5f2cbef20f3752b00cdd10dabb2a",
+  "layout_hash": "c973a6f40c0f2dd66a093b58adea4739fb32d540d4ef899bb87645b997f5a563",
+  "schematic_hash": "e5615a72f6391f58d7c67615025787d2b5382f56da36ef6a5412fb4d1ebd296b",
   "pdk": {
     "pdk_id": "sky130A",
     "image": "hpretl/iic-osic-tools@sha256:92961478ad3c4f508efb42d9ccdba12ab262eb42a14926d2bd49862230ba8521",
@@ -1177,100 +1178,298 @@
       {
         "id": "XU/X0",
         "name": "X0 native drain→source",
-        "from_net": "XU.LOW.t2",
-        "to_net": "XU.OUT.t5",
+        "from_net": "XU.VPWR.t6",
+        "to_net": "XU.GAINB.t0",
         "mapping": "unmapped",
         "source_vector": "i(v.xu.vregister_cf_312e3edd9e44762b)",
         "values_A": null
       },
       {
-        "id": "XU/X4",
-        "name": "X4 native drain→source",
-        "from_net": "XU.VGND.t8",
-        "to_net": "XU.GAINB.t0",
+        "id": "XU/X1",
+        "name": "X1 native drain→source",
+        "from_net": "XU.OUTPUT_BUFFER__FIRST__TAIL.t2",
+        "to_net": "XU.OUTPUT_BUFFER__PRE.t1",
         "mapping": "unmapped",
-        "source_vector": "i(v.xu.vregister_cf_a60e6ca5ab433b6c)",
+        "source_vector": "i(v.xu.vregister_cf_d953608209b6203c)",
         "values_A": null
       },
       {
-        "id": "XU/X5",
-        "name": "X5 native drain→source",
-        "from_net": "XU.VPWR.t8",
-        "to_net": "XU.OUT.t3",
+        "id": "XU/X2",
+        "name": "X2 native drain→source",
+        "from_net": "XU.OUTPUT_BUFFER__FIRST__TAIL.t1",
+        "to_net": "XU.OUTPUT_BUFFER__PRE.t2",
         "mapping": "unmapped",
-        "source_vector": "i(v.xu.vregister_cf_303007dd1d269360)",
+        "source_vector": "i(v.xu.vregister_cf_d8993326838a9d1f)",
         "values_A": null
       },
       {
         "id": "XU/X6",
         "name": "X6 native drain→source",
-        "from_net": "XU.AMP__FIRST__TAIL.t1",
-        "to_net": "XU.AMP__FIRST__MIR.t2",
+        "from_net": "XU.GAIN2__AMP__FIRST__TAIL.t2",
+        "to_net": "XU.GAIN2__AMP__PRE.t2",
         "mapping": "unmapped",
         "source_vector": "i(v.xu.vregister_cf_48e24b57b2858724)",
         "values_A": null
       },
       {
-        "id": "XU/X7",
-        "name": "X7 native drain→source",
-        "from_net": "XU.VGND.t6",
-        "to_net": "XU.AMP__FIRST__TAIL.t0",
-        "mapping": "unmapped",
-        "source_vector": "i(v.xu.vregister_cf_aaf9080a22b05a3b)",
-        "values_A": null
-      },
-      {
         "id": "XU/X8",
         "name": "X8 native drain→source",
-        "from_net": "XU.AMP__FIRST__TAIL.t2",
-        "to_net": "XU.AMP__PRE.t1",
+        "from_net": "XU.VPWR.t19",
+        "to_net": "XU.GAIN8__AMP__PRE.t2",
         "mapping": "unmapped",
         "source_vector": "i(v.xu.vregister_cf_55c22409457ffa2b)",
         "values_A": null
       },
       {
-        "id": "XU/X10",
-        "name": "X10 native drain→source",
-        "from_net": "XU.VPWR.t4",
-        "to_net": "XU.GAINB.t1",
+        "id": "XU/X9",
+        "name": "X9 native drain→source",
+        "from_net": "XU.VPWR.t14",
+        "to_net": "XU.GAIN8__AMP__FIRST__MIR.t3",
         "mapping": "unmapped",
-        "source_vector": "i(v.xu.vregister_cf_da573ecc7c5c91a0)",
+        "source_vector": "i(v.xu.vregister_cf_8c25e32194cf0ea1)",
         "values_A": null
       },
       {
         "id": "XU/X11",
         "name": "X11 native drain→source",
-        "from_net": "XU.VGND.t1",
-        "to_net": "XU.OUT.t0",
+        "from_net": "XU.OUTPUT_BUFFER__FIRST__TAIL.t3",
+        "to_net": "XU.OUTPUT_BUFFER__FIRST__MIR.t1",
         "mapping": "unmapped",
         "source_vector": "i(v.xu.vregister_cf_73b03ba63fc8c827)",
         "values_A": null
       },
       {
-        "id": "XU/X15",
-        "name": "X15 native drain→source",
-        "from_net": "XU.VPWR.t1",
-        "to_net": "XU.AMP__FIRST__MIR.t1",
+        "id": "XU/X13",
+        "name": "X13 native drain→source",
+        "from_net": "XU.GAIN8__AMP__FIRST__TAIL.t4",
+        "to_net": "XU.GAIN8__AMP__FIRST__MIR.t0",
         "mapping": "unmapped",
-        "source_vector": "i(v.xu.vregister_cf_5d8b12250d66d708)",
-        "values_A": null
-      },
-      {
-        "id": "XU/X17",
-        "name": "X17 native drain→source",
-        "from_net": "XU.VPWR.t6",
-        "to_net": "XU.AMP__PRE.t0",
-        "mapping": "unmapped",
-        "source_vector": "i(v.xu.vregister_cf_035e1ed724895bd5)",
+        "source_vector": "i(v.xu.vregister_cf_c94a91fbbdeabd79)",
         "values_A": null
       },
       {
         "id": "XU/X18",
         "name": "X18 native drain→source",
-        "from_net": "XU.LOW.t0",
-        "to_net": "XU.OUT.t1",
+        "from_net": "XU.GAIN2__AMP__FIRST__TAIL.t4",
+        "to_net": "XU.GAIN2__AMP__FIRST__MIR.t3",
         "mapping": "unmapped",
         "source_vector": "i(v.xu.vregister_cf_9e35ad6c31d34ba6)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X19",
+        "name": "X19 native drain→source",
+        "from_net": "XU.VGND.t3",
+        "to_net": "XU.GAIN2__AMP__FIRST__TAIL.t0",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_94f8f4857a333a6e)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X20",
+        "name": "X20 native drain→source",
+        "from_net": "XU.VGND.t23",
+        "to_net": "XU.V2.t3",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_1a6757184ac6b498)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X22",
+        "name": "X22 native drain→source",
+        "from_net": "XU.SELECTED.t2",
+        "to_net": "XU.V2.t5",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_136c1a42e9ff459b)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X24",
+        "name": "X24 native drain→source",
+        "from_net": "XU.GAIN8__AMP__FIRST__TAIL.t2",
+        "to_net": "XU.GAIN8__AMP__PRE.t1",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_78a8a5817f190ad2)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X25",
+        "name": "X25 native drain→source",
+        "from_net": "XU.VGND.t10",
+        "to_net": "XU.GAINB.t1",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_8d650daa64b33fa4)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X26",
+        "name": "X26 native drain→source",
+        "from_net": "XU.VPWR.t8",
+        "to_net": "XU.OUT.t1",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_20a0499853bb0c9d)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X29",
+        "name": "X29 native drain→source",
+        "from_net": "XU.GAIN8__AMP__FIRST__TAIL.t1",
+        "to_net": "XU.GAIN8__AMP__PRE.t0",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_5b2a9f50038db3d1)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X30",
+        "name": "X30 native drain→source",
+        "from_net": "XU.VPWR.t21",
+        "to_net": "XU.V2.t4",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_92b5ba1ba0fc9711)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X31",
+        "name": "X31 native drain→source",
+        "from_net": "XU.GAIN8__AMP__FIRST__TAIL.t3",
+        "to_net": "XU.GAIN8__AMP__FIRST__MIR.t1",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_25382f22d5e0f9c4)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X32",
+        "name": "X32 native drain→source",
+        "from_net": "XU.VPWR.t10",
+        "to_net": "XU.V8.t4",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_bcb3b4807c63af31)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X33",
+        "name": "X33 native drain→source",
+        "from_net": "XU.VPWR.t16",
+        "to_net": "XU.GAIN2__AMP__PRE.t0",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_99b886bb92c1717a)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X34",
+        "name": "X34 native drain→source",
+        "from_net": "XU.VGND.t1",
+        "to_net": "XU.GAIN8__AMP__FIRST__TAIL.t0",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_8265073df66edb8c)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X35",
+        "name": "X35 native drain→source",
+        "from_net": "XU.OUTPUT_BUFFER__FIRST__TAIL.t4",
+        "to_net": "XU.OUTPUT_BUFFER__FIRST__MIR.t0",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_92dcac895ca87ee6)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X36",
+        "name": "X36 native drain→source",
+        "from_net": "XU.VPWR.t12",
+        "to_net": "XU.GAIN2__AMP__FIRST__MIR.t1",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_dc4174e13f13f45f)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X37",
+        "name": "X37 native drain→source",
+        "from_net": "XU.VGND.t7",
+        "to_net": "XU.OUTPUT_BUFFER__FIRST__TAIL.t0",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_0d7d0533c59c3d29)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X39",
+        "name": "X39 native drain→source",
+        "from_net": "XU.VPWR.t3",
+        "to_net": "XU.OUTPUT_BUFFER__FIRST__MIR.t3",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_ed161a698e64f790)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X40",
+        "name": "X40 native drain→source",
+        "from_net": "XU.SELECTED.t1",
+        "to_net": "XU.V2.t0",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_710e881db0c0b62c)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X41",
+        "name": "X41 native drain→source",
+        "from_net": "XU.GAIN2__AMP__FIRST__TAIL.t1",
+        "to_net": "XU.GAIN2__AMP__PRE.t1",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_69de4e49c2f0a644)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X42",
+        "name": "X42 native drain→source",
+        "from_net": "XU.GAIN2__AMP__FIRST__TAIL.t3",
+        "to_net": "XU.GAIN2__AMP__FIRST__MIR.t2",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_24aff15dc5793e6e)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X43",
+        "name": "X43 native drain→source",
+        "from_net": "XU.VGND.t30",
+        "to_net": "XU.V8.t2",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_c407d7156a1b966c)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X45",
+        "name": "X45 native drain→source",
+        "from_net": "XU.SELECTED.t3",
+        "to_net": "XU.V8.t5",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_89be12ac925e1a7f)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X46",
+        "name": "X46 native drain→source",
+        "from_net": "XU.VPWR.t1",
+        "to_net": "XU.OUTPUT_BUFFER__PRE.t0",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_ade8fb5cf3d4a6ff)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X47",
+        "name": "X47 native drain→source",
+        "from_net": "XU.SELECTED.t0",
+        "to_net": "XU.V8.t0",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_4c2b109a5da3f5bc)",
+        "values_A": null
+      },
+      {
+        "id": "XU/X48",
+        "name": "X48 native drain→source",
+        "from_net": "XU.VGND.t32",
+        "to_net": "XU.OUT.t2",
+        "mapping": "unmapped",
+        "source_vector": "i(v.xu.vregister_cf_84b8a24b63bab397)",
         "values_A": null
       },
       {
@@ -1329,33 +1528,33 @@
       }
     ]
   },
-  "ended_at": "2026-10-12T11:36:22.369796+00:00",
-  "elapsed_s": 12.273190030013211,
+  "ended_at": "2026-10-12T14:01:02.635061+00:00",
+  "elapsed_s": 32.61495595402084,
   "execution_status": "completed",
   "analysis_result": "pass",
   "artifacts": {
-    "./current-flow.dat": "4e56e914998e0d3709fea22c595f53cbd944169f9713af69528f8e17c88bd58a",
-    "./current-probe.spice": "2ca8605db9837dfc5219d020b53430a17199551cbbdf4a454627b67a3d429bdc",
-    "./input.oas": "13c496193848ca2f6e8348aa512e596a792f2cb8878057ca210147fc47540f67",
-    "./magic-pex.log": "59a192d57a7cd61f164368a04cae0c8b040b408591ac1d09f58759491cdbe6d5",
-    "./ngspice.log": "9ec6022c3d5cb5ea48e2156cfbeacfa0a69de6134d2af4db7e3a6758f0eeb481",
-    "./node-voltages.dat": "922d1ec6650ae4b138125a160d4f8cae4b8577fc7fb8aaa052659c40f0a2af12",
-    "./pex-quality.json": "59ba990a650ea85a8a74647f001aa362b9040eef40ec255116181cf010d9d66a",
-    "./pex-reduction.json": "ee1442b6fda5ddb3a2b3b8c50c990c92d1dea12b9d9d7c4ccc829aed4192756c",
-    "./pex-simulation.spice": "2d52360dddf92159c5bd4c2f105a4f6223ea27f9f318cc64bbec47a837f5d76f",
-    "./pex.spice": "216863678d5936eaba2f2dc036c4ef83ef1659745cc514c3ca9d432ff32f04fe",
-    "./pex.tcl": "09e5d5cf5410c1d622c844deb0d2148bec86c8e650709b8bc60010ee8432f420",
-    "./project.json": "78edf19a0ad4b17bd1cf1750c3c1e7358a02840e6ccf30fcb1c4c4b2fd531430",
-    "./soc_pga.ext": "6ea5fca6e1d87a7aea321d6a1ace8f66977ea1bb8aeb152fa16b36cda1f4f51e",
-    "./soc_pga.gds": "310a01e410d8d48e5bfd6fb0d691c4ad2200eac248f91bd09eff03835ca9fae7",
-    "./soc_pga.nodes": "9b6fde83a13559c982455ade43121ab91dd0806273a8b4ef7bde69707a19f696",
-    "./soc_pga.res.ext": "314119ae7de183f6b9e164ac69ea2d37b859c7e0dd30ef3cdac619e5f949b499",
-    "./soc_pga.sim": "059d058ab760625d57c701b67497d77a9fad7853d218344ee5f70da5ae4b0d9d",
-    "./stdout.log": "68382daf57a08477995e58cca9c91e5893ab6dc3d75032cce0ef5d6f9ab6d17a",
+    "./current-flow.dat": "072340d6fed1b4d8a58fb2a3a167a51d9c39ada9854436292ddfb33561adc1b4",
+    "./current-probe.spice": "c31ce501ca9337e2d20cd80788ed9a333e95dd7f8399eab8d1fd0267dc1c43d7",
+    "./input.oas": "c973a6f40c0f2dd66a093b58adea4739fb32d540d4ef899bb87645b997f5a563",
+    "./magic-pex.log": "44fc89919511e0c77cd7764f372e833814d021f9d7424c7088e4fcfe9bb5255b",
+    "./ngspice.log": "9f502d4da7474cef7427af3c9708a3044ec2ffebae6c82c2479d27f3961c46c6",
+    "./node-voltages.dat": "288b25828d0bbf1770d2c3cff1e2bedc4c8f30f94412b5feb34b0f5c99862f41",
+    "./pex-quality.json": "2737d77f68449baed8a67fc62c11b858683fd6372b5998ed3c9a3e4b686e15ee",
+    "./pex-reduction.json": "24ee05cf2b189a3c39e63c615e415b2057db7d949934b769c8ed403661fd4655",
+    "./pex-simulation.spice": "f0970fede251832c36153c48d14e54c75962527e3967a7b56990e7b333f019fc",
+    "./pex.spice": "6d8a9c905aa80b1939dbbb84d2b171644b5c21c2e2a3af940df004d9ff03d265",
+    "./pex.tcl": "c0e4e367b28c0a1b3fe39a3cdf53e591545abad8d296f870e3d159aa87b15373",
+    "./project.json": "15a0d07afaf63207eae577102f8e8d06d8c395e110b1b671478e75202590a20f",
+    "./soc_pga.ext": "f709b95156a8b3bf95d0276c09d94613119aa17d60ee820d1b9dc7892e123229",
+    "./soc_pga.gds": "d541b1e15a94f585f0071a566c11632628bf0ba8379247b5e861d7ebc852e39b",
+    "./soc_pga.nodes": "4e0b6346bd6b73fda6e377ddf16ddd08413c66b9162b8cbc4e88401ee9acf9b9",
+    "./soc_pga.res.ext": "4f4a9dcbf5a45be7381252d24533c97cc2997c3dacbf95989da2fd6cf1eddc05",
+    "./soc_pga.sim": "a08b927e7113c04023afec874355af960ef0cebd40442e65159c3de7fcbc6f39",
+    "./stdout.log": "dc5ff128ab97b887e8d6e4f98997a64c78062dfe534dafb90023be78a6c4ee14",
     "./supported-tt.spice": "96b82792f60d901588fa18ab36ddc6d96ce178d3bf8ef9009c680effcc12eeb7",
-    "./testbench.spice": "996086cb3ed6771b468fc4385a923e408e5ca9dac7c9c614753b20ef666bdf4c",
-    "./voltage-probes.json": "ed10ec2c36a33e9c88592ce64af63da84849afd70be4a08a889e7551139f6402",
-    "./waveform.dat": "b7e2855cdfe9a788252e4b85191949319210ffb31dbe2eaa976fd1607e6310d6",
-    "./waveform.raw": "2487368a60e64d253370e994bb6540ecdd96039b055175fecf6396be8679105e"
+    "./testbench.spice": "ccaa5f2eeccdc66e1e87bd50c94af94bb8139a49a142386cb6f0b96f20497ecd",
+    "./voltage-probes.json": "a7d0240abd47040e123987c096bdcab831f7024aa1e4d7c053256e099d233b2d",
+    "./waveform.dat": "7db41d67c0e11af7c8d1503c9f1a6b5922fae1e81e6bf818d118d424084cbd15",
+    "./waveform.raw": "50bb81ce16ad8b8f05566456f833fd594cb57ea83b26617c1dfa3facb85c04c1"
   }
 }

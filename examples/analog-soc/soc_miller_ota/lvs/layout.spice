@@ -1,16 +1,18 @@
 * NGSPICE file created from soc_miller_ota.ext - technology: sky130A
 
-.subckt soc_miller_ota VGND VPWR OUT BIAS INN INP
-X0 PRE COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+.subckt soc_miller_ota VPWR VGND OUT BIAS INP INN
+X0 FIRST__TAIL INP PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
 X1 PRE COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X2 VPWR PRE OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
-X3 FIRST__TAIL INN FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X2 PRE COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X3 FIRST__TAIL INN FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
 X4 VGND BIAS FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
-X5 FIRST__TAIL INP PRE VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
-X6 COMP OUT VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
-X7 VGND BIAS OUT VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
-X8 PRE COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X9 VPWR FIRST__MIR FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
-X10 VPWR FIRST__MIR PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X5 VGND BIAS OUT VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X6 PRE COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X7 COMP OUT VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X8 VPWR PRE OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X9 VPWR FIRST__MIR PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X10 VPWR FIRST__MIR FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X11 FIRST__TAIL INP PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X12 FIRST__TAIL INN FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
 .ends
 

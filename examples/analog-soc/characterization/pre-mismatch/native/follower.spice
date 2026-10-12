@@ -1,0 +1,11 @@
+Resistor actual OTA voltage follower characterization
+.include "/workspace/.runtime/eda/runs/3d2e0f3350f04258a4e55366c4ece81f/supported-tt.spice"
+.include "/workspace/.runtime/eda/runs/3d2e0f3350f04258a4e55366c4ece81f/reference.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VINP INP VGND DC 0.90000000000000002 AC 1
+VBIAS BIAS VGND 0.9
+CLOAD OUT VGND 1p
+XU INP OUT BIAS OUT VPWR VGND soc_miller_ota
+.end

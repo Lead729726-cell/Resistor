@@ -1,0 +1,19 @@
+Resistor owned characterization controller
+.control
+set noaskquit
+set num_threads=1
+unset klu
+source /workspace/.runtime/eda/runs/6c0765e5fd3d4cecb21057576b0f6cab/follower.spice
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+noise v(OUT) VINP dec 40 10 10000000
+setplot noise1
+wrdata spectrum.dat onoise_spectrum inoise_spectrum
+setplot noise2
+let sample_index=0
+setscale sample_index
+wrdata integrated.dat onoise_total inoise_total
+quit
+.endc
+.end

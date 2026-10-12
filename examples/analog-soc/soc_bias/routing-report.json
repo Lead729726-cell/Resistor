@@ -1,8 +1,73 @@
 {
   "algorithm": "interval-heap-v2",
-  "primitive_count": 31,
-  "scope": "single-row PCell reference; no matching/density/antenna/full-chip signoff",
-  "signal_track_count": 5,
+  "matching_groups": [
+    {
+      "centroids_dbu": {
+        "A": [
+          503250.0,
+          2775.0
+        ],
+        "B": [
+          503250.0,
+          2775.0
+        ]
+      },
+      "equal_unit_geometry": true,
+      "group": "VCM_BUFFER.FIRST::INPUT_PAIR_ABBA",
+      "max_centroid_delta_dbu": 0.0,
+      "nominal_centroid_match": true,
+      "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+      "units": [
+        {
+          "device": "VCM_BUFFER_FIRST_N_INP0",
+          "gate_center_dbu": [
+            491475,
+            2775
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        },
+        {
+          "device": "VCM_BUFFER_FIRST_N_INN0",
+          "gate_center_dbu": [
+            499325,
+            2775
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "VCM_BUFFER_FIRST_N_INN1",
+          "gate_center_dbu": [
+            507175,
+            2775
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "VCM_BUFFER_FIRST_N_INP1",
+          "gate_center_dbu": [
+            515025,
+            2775
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        }
+      ]
+    }
+  ],
+  "primitive_count": 33,
+  "scope": "single-row PCell reference; no full-chip density/antenna/foundry signoff",
+  "signal_track_count": 6,
   "track_clearance_dbu": 800,
   "tracks": {
     "BIAS": 0,
@@ -12,7 +77,7 @@
     "R_VCM_TOP_R0_N1": 2,
     "VCM": 1,
     "VCM_BUFFER__COMP": 0,
-    "VCM_BUFFER__FIRST__MIR": 2,
+    "VCM_BUFFER__FIRST__MIR": 5,
     "VCM_BUFFER__FIRST__TAIL": 4,
     "VCM_BUFFER__PRE": 3,
     "VCM_RAW": 2

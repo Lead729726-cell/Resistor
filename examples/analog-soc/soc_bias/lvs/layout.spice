@@ -1,36 +1,38 @@
 * NGSPICE file created from soc_bias.ext - technology: sky130A
 
-.subckt soc_bias VPWR VGND VCM BIAS
-X0 VCM_BUFFER__FIRST__TAIL VCM VCM_BUFFER__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
-X1 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X2 VGND BIAS VCM_BUFFER__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
-X3 VCM_RAW R_VCM_BOTTOM_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
-X4 VPWR VCM_BUFFER__PRE VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+.subckt soc_bias VGND VPWR VCM BIAS
+X0 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X1 VCM_RAW R_VCM_BOTTOM_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X2 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X3 R_VCM_BOTTOM_R0_N0 R_VCM_BOTTOM_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X4 VPWR VCM_BUFFER__FIRST__MIR VCM_BUFFER__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
 X5 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X6 R_VCM_BOTTOM_R0_N0 R_VCM_BOTTOM_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X6 VPWR VCM_BUFFER__FIRST__MIR VCM_BUFFER__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
 X7 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X8 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X9 VCM_BUFFER__COMP VCM VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
-X10 VCM_BUFFER__PRE VCM_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X11 R_VCM_BOTTOM_R0_N1 VGND VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
-X12 VPWR VCM_BUFFER__FIRST__MIR VCM_BUFFER__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
-X13 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X14 VPWR VCM_BUFFER__FIRST__MIR VCM_BUFFER__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
-X15 R_VCM_TOP_R0_N1 VCM_RAW VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
-X16 VGND BIAS VCM VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X8 VCM_BUFFER__FIRST__TAIL VCM_RAW VCM_BUFFER__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X9 R_VCM_BOTTOM_R0_N1 VGND VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X10 VCM_BUFFER__FIRST__TAIL VCM VCM_BUFFER__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X11 VGND BIAS VCM_BUFFER__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X12 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X13 VGND BIAS VCM VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X14 R_VCM_TOP_R0_N1 VCM_RAW VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X15 VCM_BUFFER__COMP VCM VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X16 VCM_BUFFER__PRE VCM_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
 X17 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X18 VCM_BUFFER__FIRST__TAIL VCM_RAW VCM_BUFFER__PRE VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X18 VCM_BUFFER__FIRST__TAIL VCM VCM_BUFFER__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
 X19 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X20 VCM_BUFFER__PRE VCM_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X21 VPWR R_VCM_TOP_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
-X22 R_VCM_TOP_R0_N0 R_VCM_TOP_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
-X23 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X24 VPWR BIAS VGND sky130_fd_pr__res_xhigh_po_1p41 l=20.99
-X25 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X26 VGND BIAS BIAS VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
-X27 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X28 VCM_BUFFER__PRE VCM_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X29 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
-X30 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X20 VPWR R_VCM_TOP_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X21 VCM_BUFFER__FIRST__TAIL VCM_RAW VCM_BUFFER__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X22 VCM_BUFFER__PRE VCM_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X23 R_VCM_TOP_R0_N0 R_VCM_TOP_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X24 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X25 VPWR BIAS VGND sky130_fd_pr__res_xhigh_po_1p41 l=20.99
+X26 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X27 VGND BIAS BIAS VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X28 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X29 VCM_BUFFER__PRE VCM_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X30 VPWR VCM_BUFFER__PRE VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X31 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X32 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
 .ends
 
