@@ -182,7 +182,7 @@ def spice_tb(p, folder, settings, netlist, model_deck, sub):
     if kind in ('soc_bias','soc_sensor_afe'):
         # Initial guesses help the nonlinear DC solve find the intended
         # self-biased equilibrium. They are not voltage sources or forced ICs.
-        rows.append(f'.nodeset v(VCM)={s/2:.12g} v(BIAS)={s/2:.12g}'+(f' v(OUT)={s/2:.12g}' if kind=='soc_sensor_afe' else ''))
+        rows.append(f'.nodeset v(VCM)={s/2:.12g}'+(f' v(OUT)={s/2:.12g}' if kind=='soc_sensor_afe' else ''))
     rows.extend(['XU '+' '.join(sub or p['ports'])+' '+p['cell'], '.control', 'set num_threads=1',
                  'set numdgt=17', 'set wr_singlescale', 'set wr_vecnames', 'set noaskquit'])
     if analysis == 'ac':
