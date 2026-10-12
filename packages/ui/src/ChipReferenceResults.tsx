@@ -13,6 +13,7 @@ export default function ChipReferenceResults({run,revision}:{run:Run|null|undefi
     <p>명시된 관측 구간의 회로 기준입니다. 레이아웃·DRC/LVS·PEX·제조 승인은 별도로 검증해야 합니다.</p>
     {(report.kind==='sigma_delta8'||report.kind.startsWith('sdm8_'))&&<><p>아날로그 모듈레이터는 실제 MOS 해석, 디지털 필터는 실제 RTL·합성 게이트 재생으로 검사합니다. 단독 블록은 연결된 검사 회로에서 실행합니다. 디지털 전체의 트랜지스터 타이밍·열잡음·공정 편차는 별도 검사입니다.</p><p className="mono">평균 CODE {typeof run.measurements?.mean_code==='number'?run.measurements.mean_code.toFixed(3):'—'} · DC 오차 {typeof run.measurements?.dc_error_LSB==='number'?run.measurements.dc_error_LSB.toFixed(3)+' LSB':'—'} · SINAD {typeof run.measurements?.SINAD_dB==='number'?run.measurements.SINAD_dB.toFixed(2)+' dB':'미측정'} · ENOB {typeof run.measurements?.ENOB_bits==='number'?run.measurements.ENOB_bits.toFixed(2)+' bit':'미측정'}</p><p>{run.measurements?.ENOB_status}</p></>}
     {report.kind==='chip_pll'&&<p>이 PLL은 XOR 위상 검출을 사용하는 Type-I, N=1 기초 루프입니다. PFD/charge-pump 합성기와 phase-noise 검사를 포함하지 않습니다.</p>}
+    {report.kind.startsWith('soc_')&&<p>아날로그 SoC 매크로 · TT/선택 corner의 실제 소자 해석입니다. ×2 저이득은 MOS 스위치 저항을 포함하며, 위상 여유는 외부 DC servo·1pF 부하 조건입니다. 잡음·오프셋 통계·ESD·EM/IR·완성 SoC 검증은 별도입니다.</p>}
     <div className="chip-reference-table"><table><thead><tr><th>실제 파형 검사</th><th>관측값</th><th>결과</th></tr></thead><tbody>{report.checks.map(c=><tr key={c.name}><td>{c.name}</td><td>{value(c.observed)}</td><td className={current&&completed?(c.pass?'good':'bad'):''}>{!completed?'미완료':!current?'이전 결과':c.pass?'PASS':'FAIL'}</td></tr>)}</tbody></table></div>
   </section>;
 }

@@ -1,0 +1,14 @@
+.subckt SOC_OTA_FIRST INP INN BIAS OUT VPWR VGND
+XN_INN MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+XN_INP OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+XN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+XP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+XP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+.ends SOC_OTA_FIRST
+.subckt soc_miller_ota INP INN BIAS OUT VPWR VGND
+CC_MILLER PRE COMP 5e-12
+XFIRST INP INN BIAS PRE VPWR VGND SOC_OTA_FIRST
+XN_SECOND OUT BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+XP_SECOND OUT PRE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1
+RR_ZERO COMP OUT 5000
+.ends soc_miller_ota

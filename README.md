@@ -4,6 +4,8 @@
 
 다운로드: https://resistor-downloads.vercel.app/
 
+[0.20 아날로그 SoC 센서 입력부 · 7개 매크로](docs/analog-soc.md): 바이어스·캐스코드 미러·Miller OTA·PGA·2극 필터·TIA·클록 동기 AFE를 제공합니다. 실제 SKY130 레이아웃과 nominal DRC/LVS/PEX/pre/post 결과, 18조건 corner sweep의 통과와 실패를 함께 제공합니다. 완성 SoC와 제조 승인은 별도입니다.
+
 [1080p 한국어 사용 가이드 · 7분 7초](https://resistor-downloads.vercel.app/tutorial/):
 실제 앱 조작으로 CMOS 인버터, 전압·전류 파형, 신호 시험, DRC/LVS와 GDS 뷰어를
 따라갑니다. 10개 챕터, 한국어 음성·자막과 실습 프로젝트를 제공합니다.

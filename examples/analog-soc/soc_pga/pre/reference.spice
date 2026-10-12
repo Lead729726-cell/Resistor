@@ -1,0 +1,21 @@
+.subckt soc_pga VIN GAIN VCM BIAS OUT VPWR VGND
+XAMP_C_MILLER_P0 AMP__PRE AMP__COMP sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XAMP_C_MILLER_P1 AMP__PRE AMP__COMP sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XAMP_C_MILLER_P2 AMP__PRE AMP__COMP sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XAMP_FIRST_N_INN AMP__FIRST__MIR FB AMP__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+XAMP_FIRST_N_INP AMP__PRE VIN AMP__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+XAMP_FIRST_N_TAIL AMP__FIRST__TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+XAMP_FIRST_P_DIODE AMP__FIRST__MIR AMP__FIRST__MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+XAMP_FIRST_P_MIRROR AMP__PRE AMP__FIRST__MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+XAMP_N_SECOND OUT BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+XAMP_P_SECOND OUT AMP__PRE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1
+XAMP_R_ZERO_P0 AMP__COMP OUT VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+XGAIN_INVERTER_MN GAINB GAIN VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XGAIN_INVERTER_MP GAINB GAIN VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XN_GAIN OUT GAINB LOW VGND sky130_fd_pr__nfet_01v8 w=20 l=0.15 nf=1 m=1
+XP_GAIN OUT GAIN LOW VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1
+XR_GROUND_P0 FB VCM VGND sky130_fd_pr__res_xhigh_po_1p41 l=6.885
+XR_HIGH_P0 OUT R_HIGH_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=24.51
+XR_HIGH_P1 R_HIGH_R0_N0 FB VGND sky130_fd_pr__res_xhigh_po_1p41 l=24.51
+XR_LOW_P0 LOW FB VGND sky130_fd_pr__res_xhigh_po_1p41 l=8.06
+.ends soc_pga

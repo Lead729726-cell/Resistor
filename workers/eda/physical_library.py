@@ -3,7 +3,7 @@
 Ideal R/C are explicitly replaced by dimensioned public primitive instances.
 The source schematic is never modified. Wide reference routing is not an HD library.
 """
-import copy, math, subprocess
+import copy, math, subprocess, heapq
 from pathlib import Path
 import klayout.db as k
 import geometry as G
@@ -46,6 +46,7 @@ def materialize(ir):
     flat=digital_units.flattened({**ir,'cells':ir.get('cells',{})});rows=[];result=[]
     for d in flat['devices']:
         if d['kind'] not in ('resistor','capacitor') or d.get('model'):
+            if len(result)>=512:raise EDAError('PHYSICAL_LIMIT','Physical reference is limited to 512 primitives total, including MOS and pre-modeled passives.')
             result.append(d);continue
         value=native.num(d['parameters']['value']);a=d['pins']['+'];b=d['pins']['-']
         if d['kind']=='capacitor':
@@ -85,9 +86,29 @@ def _base(folder,d):
     if src.dbu!=.001 or not set(mapping)<=set(labels):raise EDAError('PDK_MAPPING_FAILED','Public PCell terminal labels or DBU changed.')
     return src,cell,{mapping[p]:labels[p] for p in mapping},mapping
 
+def interval_tracks(spans, clearance=800):
+    """Optimal interval coloring in O(n log n), retaining lowest-free track IDs.
+
+    Track ends include routing clearance; equality is an allowed adjacent join
+    in time/space. This is rail allocation, not full-chip detailed routing.
+    """
+    if isinstance(clearance,bool) or not isinstance(clearance,int) or clearance<0:
+        raise EDAError('INVALID_GEOMETRY','Track clearance must be a non-negative integer DBU value.')
+    busy=[];free=[];tracks={};count=0
+    for net,(left,right) in sorted(spans.items(),key=lambda item:(item[1],item[0])):
+        if not isinstance(left,int) or not isinstance(right,int) or left>right:
+            raise EDAError('INVALID_GEOMETRY','Track spans must be ordered integer DBU intervals.')
+        while busy and busy[0][0]<=left:
+            _,track=heapq.heappop(busy);heapq.heappush(free,track)
+        if free:track=heapq.heappop(free)
+        else:track=count;count+=1
+        tracks[net]=track;heapq.heappush(busy,(right+clearance,track))
+    return tracks,count
+
 def physical(folder,ir,cell_name,ports):
     folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
     ir=copy.deepcopy(ir);devices=[d for d in ir['devices'] if d['kind']!='port']
+    if len(devices)>512:raise EDAError('PHYSICAL_LIMIT','Physical routing is bounded to 512 actual primitives.')
     if not devices or any(d['kind'] not in ('nmos','pmos','resistor','capacitor') or not d.get('model') for d in devices):raise EDAError('UNSUPPORTED_PHYSICAL','Physical reference requires dimensioned supported MOS/poly/MIM primitives, with sources in the testbench.')
     cache={};placed=[];cursor=0
     for d in devices:
@@ -97,6 +118,7 @@ def physical(folder,ir,cell_name,ports):
         placed.append((d,base,cx));cursor=cx+bb.right+5000
     ymax=max(base[1].bbox().top for _,base,_ in placed);ymin=min(base[1].bbox().bottom for _,base,_ in placed)
     nets=sorted({n for d in devices for n in d['pins'].values()});xs={n:[] for n in nets}
+    if set(ports)-set(nets):raise EDAError('UNCONNECTED_PORT','Physical reference cannot route ports absent from the actual primitive graph.',sorted(set(ports)-set(nets)))
     for d,(_,_,anchors,_),cx in placed:
         for pin,(px,_) in anchors.items():
             x=cx+px
@@ -106,16 +128,14 @@ def physical(folder,ir,cell_name,ports):
                 elif pin=='G':x=cx+max(a[0] for a in anchors.values())+1600
             xs[d['pins'][pin]].append(x)
     spans={n:(-1800 if n in ports else min(v)-300,max(v)+300) for n,v in xs.items()}
-    ends=[];rails={}
-    for net in sorted((n for n in nets if n not in ('VGND','VPWR')),key=lambda n:spans[n]):
-        left,right=spans[net];track=next((i for i,end in enumerate(ends) if end+800<=left),len(ends))
-        if track==len(ends):ends.append(right)
-        else:ends[track]=right
-        rails[net]=ymax+3000+track*1200
-    rails.update(VGND=ymin-3000,VPWR=ymin-4500)
+    tracks,track_count=interval_tracks({n:spans[n] for n in nets if n not in ('VGND','VPWR')})
+    rails={net:ymax+3000+track*1200 for net,track in tracks.items()}
+    rails.update({n:y for n,y in [('VGND',ymin-3000),('VPWR',ymin-4500)] if n in spans})
     # MIM terminals are on M4: supply tracks must also lie above the array,
     # otherwise an M4 descent crosses the other electrode's contact landing.
-    if any(d['model']==CAP for d in devices):rails.update(VGND=ymax+3000+len(ends)*1200,VPWR=ymax+4500+len(ends)*1200)
+    if any(d['model']==CAP for d in devices):rails.update({n:y for n,y in [('VGND',ymax+3000+track_count*1200),('VPWR',ymax+4500+track_count*1200)] if n in spans})
+    import json
+    (folder/'routing-report.json').write_text(json.dumps({'algorithm':'interval-heap-v2','primitive_count':len(devices),'signal_track_count':track_count,'track_clearance_dbu':800,'tracks':tracks,'scope':'single-row PCell reference; no matching/density/antenna/full-chip signoff'},sort_keys=True,indent=2))
     v1=templates.via(folder/'via1','via1_core','via1');v2=templates.via(folder/'via2','via2_core','via2',280,280)
     # Installed via3 helper, with explicit M3/M4 area-compliant landings.
     f=folder/'via3';f.mkdir(exist_ok=True);t=f/'make.tcl';t.write_text('load via3_core\nbox 0um 0um 0.32um 0.32um\nsky130::via3_draw\nbox -0.14um -0.14um 0.46um 0.46um\npaint m3\npaint m4\nsave via3_core\ngds write via3_core.gds\nquit -noprompt\n')

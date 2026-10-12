@@ -20,6 +20,9 @@ if (ROOT / 'docs/shortcuts.md').exists():
 if (ROOT / 'workers/eda/sigma_delta.py').exists():
     resources += ['workers/eda/sigma_delta.py','workers/eda/design_tools.py','workers/eda/native.py',*[p.relative_to(ROOT).as_posix() for p in (ROOT/'workers/eda/rtl').glob('sigma_delta8*') if p.is_file()]]
 expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
+if (ROOT / 'workers/eda/analog_soc.py').exists():
+    resources += ['workers/eda/analog_soc.py','workers/eda/digital_units.py','workers/eda/physical_library.py','docs/analog-soc.md']
+    expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
 rows = []
 for arch in ['arm64', 'x64']:
     p = ROOT / 'release/installers' / f'Resistor-{version}-mac-{arch}-r5.zip'

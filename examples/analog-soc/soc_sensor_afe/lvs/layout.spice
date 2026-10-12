@@ -1,0 +1,134 @@
+* NGSPICE file created from soc_sensor_afe.ext - technology: sky130A
+
+.subckt soc_sensor_afe VPWR VGND DATA CLK RESET BIAS OUT VCM GAIN VIN
+X0 VPWR PGA__AMP__FIRST__MIR PGA__AMP__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X1 VGND RESET RESET_MUX__SB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X2 AMPLIFIED FILTER__FILTER0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=28.04
+X3 BIAS_SOURCE__VCM_BUFFER__FIRST__TAIL VCM BIAS_SOURCE__VCM_BUFFER__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X4 FILTER__FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X5 FILTER__BUFFER0__PRE FILTER__BUFFER0__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X6 VGND SAMPLE__MB SAMPLE__MF VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X7 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X8 PGA__AMP__FIRST__TAIL PGA__FB PGA__AMP__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X9 FILTER__FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X10 VGND SAMPLE__M SAMPLE__MB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X11 VGND BIAS COMPARATOR__PREAMP__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X12 VGND BIAS BIAS_SOURCE__VCM_BUFFER__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X13 PGA__LOW GAIN AMPLIFIED VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X14 PGA__AMP__PRE PGA__AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X15 FILTER__FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X16 BIAS_SOURCE__VCM_RAW BIAS_SOURCE_R_VCM_BOTTOM_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X17 FILTER__FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X18 VGND SAMPLE__T SAMPLE__TB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X19 VPWR BIAS_SOURCE__VCM_BUFFER__PRE VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X20 FILTER__BUFFER1__PRE FILTER__BUFFER1__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X21 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X22 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X23 BIAS_SOURCE_R_VCM_BOTTOM_R0_N0 BIAS_SOURCE_R_VCM_BOTTOM_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X24 PGA__AMP__COMP AMPLIFIED VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X25 FILTER__FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X26 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X27 AMPLIFIED PGA_R_HIGH_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=24.51
+X28 FILTER__BUFFER0__FIRST__TAIL FILTER__FILTER0 FILTER__BUFFER0__PRE VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X29 BIAS_SOURCE__VCM_BUFFER__COMP VCM VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X30 VGND RESET D VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X31 FILTER__FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X32 SAMPLE__MF SAMPLE__CLKB SAMPLE__T VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X33 VGND GAIN PGA__GAINB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X34 D SAMPLE__CLKB SAMPLE__M VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X35 FILTER__FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X36 PGA__AMP__PRE PGA__AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X37 COMPARATOR__PREAMP__TAIL OUT COMPARATOR__PRE VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X38 BIAS_SOURCE__VCM_BUFFER__PRE BIAS_SOURCE__VCM_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X39 FILTER__FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X40 DATA CLK SAMPLE__T VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X41 FILTER__FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X42 SAMPLE__MF SAMPLE__CLKB SAMPLE__M VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X43 FILTER__BUFFER1__FIRST__TAIL OUT FILTER__BUFFER1__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X44 BIAS_SOURCE_R_VCM_BOTTOM_R0_N1 VGND VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X45 VPWR BIAS_SOURCE__VCM_BUFFER__FIRST__MIR BIAS_SOURCE__VCM_BUFFER__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X46 D CLK SAMPLE__M VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X47 VPWR FILTER__BUFFER0__PRE FILTER__MID VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X48 VGND BIAS AMPLIFIED VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X49 VPWR RESET RESET_MUX__SB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X50 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X51 VPWR FILTER__BUFFER1__FIRST__MIR FILTER__BUFFER1__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X52 VPWR SAMPLE__T SAMPLE__TB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X53 FILTER__FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X54 PGA__LOW PGA__GAINB AMPLIFIED VGND sky130_fd_pr__nfet_01v8 ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X55 VPWR SAMPLE__TB DATA VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X56 VPWR SAMPLE__MB SAMPLE__MF VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X57 VPWR BIAS_SOURCE__VCM_BUFFER__FIRST__MIR BIAS_SOURCE__VCM_BUFFER__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X58 VPWR FILTER__BUFFER1__PRE OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X59 VGND BIAS FILTER__BUFFER1__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X60 VPWR SAMPLE__M SAMPLE__MB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X61 BIAS_SOURCE_R_VCM_TOP_R0_N1 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X62 PGA__AMP__PRE PGA__AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X63 FILTER__FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X64 FILTER__FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X65 VGND BIAS VCM VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X66 FILTER__BUFFER0__PRE FILTER__BUFFER0__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X67 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X68 VGND BIAS PGA__AMP__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X69 CMP RESET_MUX__SB D VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X70 VPWR COMPARATOR__PREAMP__MIR COMPARATOR__PREAMP__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X71 FILTER__BUFFER0__FIRST__TAIL FILTER__MID FILTER__BUFFER0__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X72 FILTER__FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X73 VGND RESET_MUX__SB D VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X74 VGND BIAS OUT VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X75 PGA__FB VCM VGND sky130_fd_pr__res_xhigh_po_1p41 l=6.89
+X76 FILTER__FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X77 VPWR GAIN PGA__GAINB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X78 FILTER__BUFFER1__PRE FILTER__BUFFER1__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X79 VPWR COMPARATOR__PREAMP__MIR COMPARATOR__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X80 FILTER__BUFFER1__FIRST__TAIL FILTER__FILTER1 FILTER__BUFFER1__PRE VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X81 FILTER__FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X82 FILTER__FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X83 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X84 BIAS_SOURCE__VCM_BUFFER__PRE BIAS_SOURCE__VCM_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X85 BIAS_SOURCE__VCM_BUFFER__FIRST__TAIL BIAS_SOURCE__VCM_RAW BIAS_SOURCE__VCM_BUFFER__PRE VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X86 FILTER__FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X87 VPWR BIAS_SOURCE_R_VCM_TOP_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X88 VGND CLK SAMPLE__CLKB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X89 FILTER__FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X90 FILTER__FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X91 PGA__AMP__FIRST__TAIL VIN PGA__AMP__PRE VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X92 VPWR CLK SAMPLE__CLKB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X93 BIAS_SOURCE_R_VCM_TOP_R0_N0 BIAS_SOURCE_R_VCM_TOP_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X94 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X95 VGND SAMPLE__TB DATA VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X96 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X97 VPWR BIAS VGND sky130_fd_pr__res_xhigh_po_1p41 l=20.99
+X98 VPWR FILTER__BUFFER0__FIRST__MIR FILTER__BUFFER0__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X99 VGND BIAS BIAS VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X100 VPWR PGA__AMP__FIRST__MIR PGA__AMP__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X101 PGA_R_HIGH_R0_N0 PGA__FB VGND sky130_fd_pr__res_xhigh_po_1p41 l=24.51
+X102 PGA__LOW PGA__FB VGND sky130_fd_pr__res_xhigh_po_1p41 l=8.06
+X103 FILTER__FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X104 VPWR PGA__AMP__PRE AMPLIFIED VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X105 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X106 COMPARATOR__PREAMP__TAIL VCM COMPARATOR__PREAMP__MIR VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X107 CMP RESET D VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X108 VGND BIAS FILTER__MID VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X109 FILTER__FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X110 FILTER__BUFFER1__COMP OUT VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X111 FILTER__MID FILTER__FILTER1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=28.04
+X112 VPWR COMPARATOR__PRE CMP VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X113 VPWR FILTER__BUFFER0__FIRST__MIR FILTER__BUFFER0__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X114 VPWR FILTER__BUFFER1__FIRST__MIR FILTER__BUFFER1__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X115 BIAS_SOURCE__VCM_BUFFER__PRE BIAS_SOURCE__VCM_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X116 FILTER__FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X117 FILTER__FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X118 FILTER__BUFFER0__PRE FILTER__BUFFER0__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X119 FILTER__BUFFER1__PRE FILTER__BUFFER1__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X120 VGND BIAS FILTER__BUFFER0__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X121 SAMPLE__MF CLK SAMPLE__T VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X122 FILTER__BUFFER0__COMP FILTER__MID VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X123 FILTER__FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X124 DATA SAMPLE__CLKB SAMPLE__T VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X125 SAMPLE__MF CLK SAMPLE__M VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X126 VGND COMPARATOR__PRE CMP VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X127 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X128 BIAS_SOURCE__VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+.ends
+

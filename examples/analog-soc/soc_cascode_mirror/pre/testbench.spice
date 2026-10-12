@@ -1,0 +1,43 @@
+Resistor analog SoC soc_cascode_mirror
+.include "./supported-tt.spice"
+.options method=gear maxord=2
+.include "./current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+IREF VPWR REF 1e-05
+VOUT OUT VGND 1.8
+XU REF OUT VGND soc_cascode_mirror
+.control
+save v(OUT) i(VDD) v(REF) i(VOUT) i(v.xu.vregister_cf_29151762590876d4) i(v.xu.vregister_cf_67bc1ac676366eb7) i(v.xu.vregister_cf_d2e253cde050b897) i(v.xu.vregister_cf_7c1f3f6495b66aca) i(VGND) v(XU.LOW_OUT) v(VGND) v(XU.LOW_REF) v(VPWR)
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+set noaskquit
+dc VOUT 0 1.8 0.01
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(REF)
+let mos_wave_3 = -i(VOUT)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_29151762590876d4)
+let register_flow_1 = i(v.xu.vregister_cf_67bc1ac676366eb7)
+let register_flow_2 = i(v.xu.vregister_cf_d2e253cde050b897)
+let register_flow_3 = i(v.xu.vregister_cf_7c1f3f6495b66aca)
+let register_flow_4 = i(VGND)
+let register_flow_5 = i(VDD)
+let register_flow_6 = i(VOUT)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6
+let register_voltage_0 = v(XU.LOW_OUT)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(XU.LOW_REF)
+let register_voltage_3 = v(OUT)
+let register_voltage_4 = v(REF)
+let register_voltage_5 = 0*register_flow_0
+let register_voltage_6 = v(VPWR)
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6
+quit
+.endc
+.end

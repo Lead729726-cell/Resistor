@@ -1,0 +1,205 @@
+{
+  "blocks": [
+    {
+      "id": "soc_bias",
+      "name": "SoC · 바이어스·공통모드 기준",
+      "ports": [
+        "BIAS",
+        "VCM",
+        "VPWR",
+        "VGND"
+      ],
+      "hierarchy_project_id": "461eeb61edc1484b8f2d27f87438bdc4",
+      "physical_project_id": "810a86020dfb4a3da623eba3ed3fcf7c",
+      "dependencies": [
+        "SOC_OTA",
+        "SOC_OTA_FIRST"
+      ],
+      "cell_definition_counts": {
+        "block": 2,
+        "pmos": 3,
+        "nmos": 5,
+        "capacitor": 2,
+        "resistor": 4
+      },
+      "parameters": {}
+    },
+    {
+      "id": "soc_cascode_mirror",
+      "name": "SoC · 4-MOS 캐스코드 전류 미러",
+      "ports": [
+        "REF",
+        "OUT",
+        "VGND"
+      ],
+      "hierarchy_project_id": "a2bd6e91235048eba2397601ef0b83ce",
+      "physical_project_id": "d2026e7a1e09438fbed96afa54d0039b",
+      "dependencies": [],
+      "cell_definition_counts": {
+        "nmos": 4
+      },
+      "parameters": {
+        "reference_current_A": 0.00001
+      }
+    },
+    {
+      "id": "soc_miller_ota",
+      "name": "SoC · 2단 Miller 보상 OTA",
+      "ports": [
+        "INP",
+        "INN",
+        "BIAS",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "hierarchy_project_id": "0800d4d8f7dd4b49ba9b36babddad0ff",
+      "physical_project_id": "5d0aa5afe01a4ae18f5ed44171bd21aa",
+      "dependencies": [
+        "SOC_OTA_FIRST"
+      ],
+      "cell_definition_counts": {
+        "nmos": 4,
+        "pmos": 3,
+        "block": 1,
+        "capacitor": 1,
+        "resistor": 1
+      },
+      "parameters": {
+        "compensation_F": 5e-12
+      }
+    },
+    {
+      "id": "soc_pga",
+      "name": "SoC · ×2/×8 가변 이득 증폭기",
+      "ports": [
+        "VIN",
+        "GAIN",
+        "VCM",
+        "BIAS",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "hierarchy_project_id": "f2256b3464eb4f41bd2a61f46bac4269",
+      "physical_project_id": "6ef671c3025e4ff58df2a3af6bee0f8e",
+      "dependencies": [
+        "SOC_OTA",
+        "SOC_OTA_FIRST",
+        "INV"
+      ],
+      "cell_definition_counts": {
+        "block": 3,
+        "pmos": 5,
+        "nmos": 6,
+        "capacitor": 1,
+        "resistor": 4
+      },
+      "parameters": {
+        "compensation_F": 5e-12
+      }
+    },
+    {
+      "id": "soc_filter2",
+      "name": "SoC · 버퍼형 2극 active RC 필터",
+      "ports": [
+        "VIN",
+        "BIAS",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "hierarchy_project_id": "a5041b5eae724abe8d39133cc96b3ee6",
+      "physical_project_id": "7d198a6ae3b7478a9d862f9f71848bf1",
+      "dependencies": [
+        "SOC_OTA",
+        "SOC_OTA_FIRST"
+      ],
+      "cell_definition_counts": {
+        "block": 3,
+        "pmos": 3,
+        "nmos": 4,
+        "capacitor": 3,
+        "resistor": 3
+      },
+      "parameters": {
+        "compensation_F": 5e-12,
+        "filter_Ohm": 40000,
+        "filter_F": 2e-11
+      }
+    },
+    {
+      "id": "soc_tia",
+      "name": "SoC · 보상형 전류 입력 증폭기",
+      "ports": [
+        "IIN",
+        "VCM",
+        "BIAS",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "hierarchy_project_id": "ea19d8748c4d4cceaf14c24421ac9f20",
+      "physical_project_id": "99b10b8462854201971318fb340e4a20",
+      "dependencies": [
+        "SOC_OTA",
+        "SOC_OTA_FIRST"
+      ],
+      "cell_definition_counts": {
+        "block": 2,
+        "pmos": 3,
+        "nmos": 4,
+        "capacitor": 2,
+        "resistor": 2
+      },
+      "parameters": {
+        "compensation_F": 5e-12,
+        "feedback_Ohm": 100000,
+        "feedback_F": 1e-12
+      }
+    },
+    {
+      "id": "soc_sensor_afe",
+      "name": "SoC · 센서 AFE·클록 동기 판정",
+      "ports": [
+        "VIN",
+        "GAIN",
+        "CLK",
+        "RESET",
+        "OUT",
+        "DATA",
+        "VCM",
+        "BIAS",
+        "VPWR",
+        "VGND"
+      ],
+      "hierarchy_project_id": "21b10932a8324d1188190380225dca58",
+      "physical_project_id": "fff7a8a24c584fea850d5429b77803b1",
+      "dependencies": [
+        "SOC_BIAS",
+        "SOC_OTA",
+        "SOC_OTA_FIRST",
+        "SOC_PGA",
+        "INV",
+        "SOC_FILTER2",
+        "SOC_COMPARATOR",
+        "PREAMP",
+        "MUX2",
+        "DFF"
+      ],
+      "cell_definition_counts": {
+        "nmos": 17,
+        "resistor": 9,
+        "capacitor": 4,
+        "block": 19,
+        "pmos": 14,
+        "port": 6
+      },
+      "parameters": {
+        "compensation_F": 5e-12,
+        "filter_Ohm": 40000,
+        "filter_F": 2e-11
+      }
+    }
+  ]
+}

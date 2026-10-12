@@ -1,0 +1,65 @@
+Resistor analog SoC soc_bias
+.include "./supported-tt.spice"
+.options method=gear maxord=2
+.include "./current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+XU VPWR VGND VCM BIAS soc_bias
+.control
+save v(VCM) i(VDD) v(BIAS) i(v.xu.vregister_cf_f042fbae08c1cdf7) i(v.xu.vregister_cf_5f818c44fcf3ca85) i(v.xu.vregister_cf_2f8e879de146637c) i(v.xu.vregister_cf_75c363f56a1b575f) i(v.xu.vregister_cf_0661e1c01a436b76) i(v.xu.vregister_cf_2436d183c8e89122) i(v.xu.vregister_cf_0dbc9d465d659a93) i(v.xu.vregister_cf_35543b516bbae7e1) i(VGND) v(XU.VCM_BUFFER__FIRST__TAIL.t0) v(XU.VCM_BUFFER__FIRST__MIR.t2) v(XU.VCM.t3) v(XU.VGND.t8) v(XU.VGND.t27) v(XU.VCM_BUFFER__FIRST__TAIL.t2) v(XU.BIAS.t3) v(XU.VGND.t26) v(VPWR) v(XU.VCM.t2) v(XU.VCM_BUFFER__PRE.t2) v(XU.VCM_BUFFER__FIRST__MIR.t1) v(XU.VCM_BUFFER__FIRST__MIR.t0) v(XU.VCM_BUFFER__PRE.t0) v(XU.VCM_BUFFER__FIRST__MIR.t3) v(XU.VGND.t3) v(XU.VCM.t0) v(XU.BIAS.t4) v(XU.VGND.t2) v(XU.VCM_BUFFER__FIRST__TAIL.t1) v(XU.VCM_BUFFER__PRE.t1) v(XU.VCM_RAW.t8) v(XU.VGND.t22) v(XU.VGND.t12) v(XU.BIAS.t1) v(XU.BIAS.t0) v(XU.VGND.t11) v(VGND)
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+set noaskquit
+tran 2e-08 0.0002
+let mos_wave_0 = v(VCM)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(BIAS)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_f042fbae08c1cdf7)
+let register_flow_1 = i(v.xu.vregister_cf_5f818c44fcf3ca85)
+let register_flow_2 = i(v.xu.vregister_cf_2f8e879de146637c)
+let register_flow_3 = i(v.xu.vregister_cf_75c363f56a1b575f)
+let register_flow_4 = i(v.xu.vregister_cf_0661e1c01a436b76)
+let register_flow_5 = i(v.xu.vregister_cf_2436d183c8e89122)
+let register_flow_6 = i(v.xu.vregister_cf_0dbc9d465d659a93)
+let register_flow_7 = i(v.xu.vregister_cf_35543b516bbae7e1)
+let register_flow_8 = i(VGND)
+let register_flow_9 = i(VDD)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9
+let register_voltage_0 = v(XU.VCM_BUFFER__FIRST__TAIL.t0)
+let register_voltage_1 = v(XU.VCM_BUFFER__FIRST__MIR.t2)
+let register_voltage_2 = v(XU.VCM.t3)
+let register_voltage_3 = v(XU.VGND.t8)
+let register_voltage_4 = v(XU.VGND.t27)
+let register_voltage_5 = v(XU.VCM_BUFFER__FIRST__TAIL.t2)
+let register_voltage_6 = v(XU.BIAS.t3)
+let register_voltage_7 = v(XU.VGND.t26)
+let register_voltage_8 = v(VPWR)
+let register_voltage_9 = v(XU.VCM.t2)
+let register_voltage_10 = v(XU.VCM_BUFFER__PRE.t2)
+let register_voltage_11 = v(XU.VCM_BUFFER__FIRST__MIR.t1)
+let register_voltage_12 = v(XU.VCM_BUFFER__FIRST__MIR.t0)
+let register_voltage_13 = v(XU.VCM_BUFFER__PRE.t0)
+let register_voltage_14 = v(XU.VCM_BUFFER__FIRST__MIR.t3)
+let register_voltage_15 = v(XU.VGND.t3)
+let register_voltage_16 = v(XU.VCM.t0)
+let register_voltage_17 = v(XU.BIAS.t4)
+let register_voltage_18 = v(XU.VGND.t2)
+let register_voltage_19 = v(XU.VCM_BUFFER__FIRST__TAIL.t1)
+let register_voltage_20 = v(XU.VCM_BUFFER__PRE.t1)
+let register_voltage_21 = v(XU.VCM_RAW.t8)
+let register_voltage_22 = v(XU.VGND.t22)
+let register_voltage_23 = v(XU.VGND.t12)
+let register_voltage_24 = v(XU.BIAS.t1)
+let register_voltage_25 = v(XU.BIAS.t0)
+let register_voltage_26 = v(XU.VGND.t11)
+let register_voltage_27 = v(VGND)
+let register_voltage_28 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11 register_voltage_12 register_voltage_13 register_voltage_14 register_voltage_15 register_voltage_16 register_voltage_17 register_voltage_18 register_voltage_19 register_voltage_20 register_voltage_21 register_voltage_22 register_voltage_23 register_voltage_24 register_voltage_25 register_voltage_26 register_voltage_27 register_voltage_28
+quit
+.endc
+.end

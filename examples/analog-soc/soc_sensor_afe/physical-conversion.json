@@ -1,0 +1,232 @@
+{
+  "ports": [
+    "VIN",
+    "GAIN",
+    "CLK",
+    "RESET",
+    "OUT",
+    "DATA",
+    "VCM",
+    "BIAS",
+    "VPWR",
+    "VGND"
+  ],
+  "parameters": {
+    "compensation_F": 5e-12,
+    "filter_Ohm": 40000,
+    "filter_F": 2e-11
+  },
+  "passive_replacements": [
+    {
+      "source_device": "BIAS_SOURCE_R_BIAS",
+      "kind": "resistor",
+      "requested_SI": 30000,
+      "nominal_geometry_SI": 29998.353425682813,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 20.985,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "BIAS_SOURCE_R_VCM_TOP",
+      "kind": "resistor",
+      "requested_SI": 100000,
+      "nominal_geometry_SI": 99995.06027704844,
+      "instances": 3,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 23.335,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "BIAS_SOURCE_R_VCM_BOTTOM",
+      "kind": "resistor",
+      "requested_SI": 100000,
+      "nominal_geometry_SI": 99995.06027704844,
+      "instances": 3,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 23.335,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "BIAS_SOURCE_C_VCM",
+      "kind": "capacitor",
+      "requested_SI": 2e-11,
+      "nominal_geometry_SI": 2.00025792e-11,
+      "instances": 12,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 28.68,
+      "l_um": 28.68,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "BIAS_SOURCE_VCM_BUFFER_C_MILLER",
+      "kind": "capacitor",
+      "requested_SI": 5e-12,
+      "nominal_geometry_SI": 5.0006448e-12,
+      "instances": 3,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 28.68,
+      "l_um": 28.68,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "BIAS_SOURCE_VCM_BUFFER_R_ZERO",
+      "kind": "resistor",
+      "requested_SI": 5000,
+      "nominal_geometry_SI": 4998.353425682813,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 3.36,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "PGA_AMP_C_MILLER",
+      "kind": "capacitor",
+      "requested_SI": 5e-12,
+      "nominal_geometry_SI": 5.0006448e-12,
+      "instances": 3,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 28.68,
+      "l_um": 28.68,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "PGA_AMP_R_ZERO",
+      "kind": "resistor",
+      "requested_SI": 5000,
+      "nominal_geometry_SI": 4998.353425682813,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 3.36,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "PGA_R_GROUND",
+      "kind": "resistor",
+      "requested_SI": 10000,
+      "nominal_geometry_SI": 9998.353425682812,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 6.885,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "PGA_R_HIGH",
+      "kind": "resistor",
+      "requested_SI": 70000,
+      "nominal_geometry_SI": 69996.70685136563,
+      "instances": 2,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 24.51,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "PGA_R_LOW",
+      "kind": "resistor",
+      "requested_SI": 11666.666666666666,
+      "nominal_geometry_SI": 11665.02009234948,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 8.06,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "FILTER_R_POLE0",
+      "kind": "resistor",
+      "requested_SI": 40000,
+      "nominal_geometry_SI": 39998.35342568281,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 28.035,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "FILTER_C_POLE0",
+      "kind": "capacitor",
+      "requested_SI": 2e-11,
+      "nominal_geometry_SI": 2.00025792e-11,
+      "instances": 12,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 28.68,
+      "l_um": 28.68,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "FILTER_BUFFER0_C_MILLER",
+      "kind": "capacitor",
+      "requested_SI": 5e-12,
+      "nominal_geometry_SI": 5.0006448e-12,
+      "instances": 3,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 28.68,
+      "l_um": 28.68,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "FILTER_BUFFER0_R_ZERO",
+      "kind": "resistor",
+      "requested_SI": 5000,
+      "nominal_geometry_SI": 4998.353425682813,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 3.36,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "FILTER_R_POLE1",
+      "kind": "resistor",
+      "requested_SI": 40000,
+      "nominal_geometry_SI": 39998.35342568281,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 28.035,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "FILTER_C_POLE1",
+      "kind": "capacitor",
+      "requested_SI": 2e-11,
+      "nominal_geometry_SI": 2.00025792e-11,
+      "instances": 12,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 28.68,
+      "l_um": 28.68,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "FILTER_BUFFER1_C_MILLER",
+      "kind": "capacitor",
+      "requested_SI": 5e-12,
+      "nominal_geometry_SI": 5.0006448e-12,
+      "instances": 3,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 28.68,
+      "l_um": 28.68,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "FILTER_BUFFER1_R_ZERO",
+      "kind": "resistor",
+      "requested_SI": 5000,
+      "nominal_geometry_SI": 4998.353425682813,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 3.36,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    }
+  ],
+  "rc_corner": "typical",
+  "manufacturing_signoff": false
+}

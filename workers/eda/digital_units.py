@@ -164,17 +164,31 @@ def schematic(kind,program=None):
     return ir
 
 def flattened(ir):
-    devices=[];cells=ir['cells']
-    def visit(node,mapping,prefix):
+    devices=[];cells=ir.get('cells',{});names=set();ids=set();net_paths={}
+    def encode_net(raw):
+        encoded=raw.replace('.','__')
+        if encoded in net_paths and net_paths[encoded]!=raw:
+            raise EDAError('FLAT_NAME_COLLISION','Distinct hierarchical nets collapse to the same physical name: '+encoded)
+        net_paths[encoded]=raw;return encoded
+    def visit(node,mapping,prefix,active=()):
+        if len(active)>64:raise EDAError('HIERARCHY_LIMIT','Flattening is limited to 64 levels.')
         for d in node['devices']:
             if d['kind']=='port':continue
             pins={p:mapping.get(v,prefix+v) for p,v in d['pins'].items()}
-            if d['kind']=='block':visit(cells[d['cell_name']],{port:pins[port] for port in cells[d['cell_name']]['ports']},prefix+d['name']+'.')
+            if d['kind']=='block':
+                name=d['cell_name']
+                if name not in cells:raise EDAError('MISSING_CELL','Flattening requires a defined child cell: '+name)
+                if name in active:raise EDAError('HIERARCHY_CYCLE','Recursive cells cannot be flattened.')
+                visit(cells[name],{port:pins[port] for port in cells[name]['ports']},prefix+d['name']+'.',active+(name,))
             else:
                 # Magic's distributed RC node syntax uses periods for its own
                 # hierarchy. Keep physical flat nets unambiguous; device IDs
                 # retain their logical path for cross-probing.
-                item=copy.deepcopy(d);item.update(id=prefix+d['id'],name=(prefix+d['name']).replace('.','_'),pins={port:net.replace('.','__') for port,net in pins.items()});devices.append(item)
+                name=(prefix+d['name']).replace('.','_');identity=prefix+d['id']
+                if name in names or identity in ids:raise EDAError('FLAT_NAME_COLLISION','Distinct devices collapse to the same physical name or ID: '+name)
+                if len(devices)>=100000:raise EDAError('HIERARCHY_LIMIT','Flattening is limited to 100000 primitives.')
+                names.add(name);ids.add(identity)
+                item=copy.deepcopy(d);item.update(id=identity,name=name,pins={port:encode_net(net) for port,net in pins.items()});devices.append(item)
     visit(ir,{p:p for p in ir['ports']},'');return {**cell(ir['ports']),'devices':devices,'cells':{}}
 
 def cpu_cycles(value):

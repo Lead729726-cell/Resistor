@@ -1,0 +1,12 @@
+import {execFile} from 'node:child_process';
+import {promisify} from 'node:util';
+import {mkdir,writeFile,readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+const execute=promisify(execFile),folder='docs/evidence/analog-soc';await mkdir(folder,{recursive:true});
+const tests='test_analog_soc test_physical_library test_sigma_delta test_pex_reduce test_layout_edit test_drawing test_current_flow test_voltage_probes test_thread_budget test_toolchain_diagnostics test_job_evidence';
+const r=await execute('docker',['exec','mos-studio-eda','bash','-lc','cd /workspace/workers/eda && python3 -m unittest '+tests+' -v'],{windowsHide:true,timeout:180000,maxBuffer:4*1024*1024});
+await writeFile(folder+'/native-tests.txt',r.stdout+r.stderr);
+const files=['analog_soc.py','digital_units.py','physical_library.py','native.py','design_tools.py','chip_references.py','server.py','pex_reduce.py','profile.py'];
+const source=Object.fromEntries(await Promise.all(files.map(async f=>['workers/eda/'+f,createHash('sha256').update(await readFile('workers/eda/'+f)).digest('hex')])));
+await writeFile(folder+'/native.json',JSON.stringify({source_sha256:source,unit_tests_pass:true,tests:tests.split(' '),scope:'Native arithmetic, hierarchy integrity, routing optimality and preservation regressions; physical and SPICE evidence in examples/analog-soc/evidence.json',foundry_signoff:false},null,2)+'\n');
+console.log(r.stderr.slice(-150));

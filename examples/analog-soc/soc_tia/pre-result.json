@@ -1,0 +1,73 @@
+{
+  "reference": "soc_tia",
+  "stage": "pre",
+  "project_id": "99b10b8462854201971318fb340e4a20",
+  "run_id": "a3aca5455f9648beb85f5d684cce81ac",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "message": "Actual ngspice tran: 10008 samples.; reference criteria 2/2",
+  "elapsed_s": 2.6466792300343513,
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "false",
+    "samples": 10008,
+    "solver": "SPARSE 1.3",
+    "OUT_min": 0.799841645192905,
+    "OUT_max": 0.9997461464276626,
+    "supply_current_min": 0.000042882603363735006,
+    "supply_current_max": 0.00004523391993335735,
+    "input_current_min": -9.999999845244603e-7,
+    "input_current_max": 9.999999845244603e-7,
+    "IIN_min": 0.8996900269458016,
+    "IIN_max": 0.8998967724283248,
+    "current_flow_status": "available",
+    "template_id": "soc_tia",
+    "layout_status": "generated-public-core",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+    "average_supply_current_A": 0.00004331384056882733,
+    "average_supply_power_W": 0.00007796491302388919,
+    "transfer_gain": 99952.77445774474,
+    "transfer_output_fit": {
+      "amplitude": 0.09995277116940135,
+      "mean": 0.8997935434488096,
+      "residual_rms": 5.148190185216029e-7
+    }
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "soc_tia",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "transfer measured gain within 8%",
+        "pass": true,
+        "observed": 99952.77445774474
+      },
+      {
+        "name": "transfer settled sine residual <5mV",
+        "pass": true,
+        "observed": 5.148190185216029e-7
+      }
+    ],
+    "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+    "pass": true
+  },
+  "artifacts": {
+    "testbench": "/workspace/.runtime/eda/runs/a3aca5455f9648beb85f5d684cce81ac/testbench.spice",
+    "current_flow_data": "/workspace/.runtime/eda/runs/a3aca5455f9648beb85f5d684cce81ac/current-flow.dat",
+    "current_probe_netlist": "/workspace/.runtime/eda/runs/a3aca5455f9648beb85f5d684cce81ac/current-probe.spice",
+    "node_voltage_data": "/workspace/.runtime/eda/runs/a3aca5455f9648beb85f5d684cce81ac/node-voltages.dat",
+    "node_voltage_probes": "/workspace/.runtime/eda/runs/a3aca5455f9648beb85f5d684cce81ac/voltage-probes.json",
+    "waveform_data": "/workspace/.runtime/eda/runs/a3aca5455f9648beb85f5d684cce81ac/waveform.dat",
+    "waveform_raw": "/workspace/.runtime/eda/runs/a3aca5455f9648beb85f5d684cce81ac/waveform.raw",
+    "reference_netlist": "/workspace/.runtime/eda/runs/a3aca5455f9648beb85f5d684cce81ac/reference.spice",
+    "stdout": "/workspace/.runtime/eda/runs/a3aca5455f9648beb85f5d684cce81ac/stdout.log"
+  }
+}

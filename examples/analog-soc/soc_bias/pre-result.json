@@ -1,0 +1,67 @@
+{
+  "reference": "soc_bias",
+  "stage": "pre",
+  "project_id": "810a86020dfb4a3da623eba3ed3fcf7c",
+  "run_id": "498baddf13c944da98b3b9881fa423ea",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "message": "Actual ngspice tran: 10008 samples.; reference criteria 2/2",
+  "elapsed_s": 3.7563233129912987,
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "false",
+    "samples": 10008,
+    "solver": "SPARSE 1.3",
+    "VCM_min": 0.8997431991860606,
+    "VCM_max": 0.8997431998533086,
+    "supply_current_min": 0.00008919868837747325,
+    "supply_current_max": 0.00008919868925772755,
+    "BIAS_min": 0.9294435369243627,
+    "BIAS_max": 0.9294435369339349,
+    "current_flow_status": "available",
+    "template_id": "soc_bias",
+    "layout_status": "generated-public-core",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+    "average_supply_current_A": 0.00008919868891692807,
+    "average_supply_power_W": 0.00016055764005047052,
+    "common_mode_V": 0.8997431995229495,
+    "bias_V": 0.9294435369304105
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "soc_bias",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "VCM within 1% of VDD/2",
+        "pass": true,
+        "observed": 0.8997431995229495
+      },
+      {
+        "name": "NMOS bias within 0.5..1.1V",
+        "pass": true,
+        "observed": 0.9294435369304105
+      }
+    ],
+    "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+    "pass": true
+  },
+  "artifacts": {
+    "testbench": "/workspace/.runtime/eda/runs/498baddf13c944da98b3b9881fa423ea/testbench.spice",
+    "current_flow_data": "/workspace/.runtime/eda/runs/498baddf13c944da98b3b9881fa423ea/current-flow.dat",
+    "current_probe_netlist": "/workspace/.runtime/eda/runs/498baddf13c944da98b3b9881fa423ea/current-probe.spice",
+    "node_voltage_data": "/workspace/.runtime/eda/runs/498baddf13c944da98b3b9881fa423ea/node-voltages.dat",
+    "node_voltage_probes": "/workspace/.runtime/eda/runs/498baddf13c944da98b3b9881fa423ea/voltage-probes.json",
+    "waveform_data": "/workspace/.runtime/eda/runs/498baddf13c944da98b3b9881fa423ea/waveform.dat",
+    "waveform_raw": "/workspace/.runtime/eda/runs/498baddf13c944da98b3b9881fa423ea/waveform.raw",
+    "reference_netlist": "/workspace/.runtime/eda/runs/498baddf13c944da98b3b9881fa423ea/reference.spice",
+    "stdout": "/workspace/.runtime/eda/runs/498baddf13c944da98b3b9881fa423ea/stdout.log"
+  }
+}

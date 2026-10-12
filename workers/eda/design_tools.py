@@ -22,6 +22,7 @@ import chip_references
 import physical_library
 import digital_units
 import sigma_delta
+import analog_soc
 
 S = None
 VERSION = 'register-design-tools-2'
@@ -234,6 +235,7 @@ CATALOG = {
 CATALOG.update(chip_references.CATALOG)
 CATALOG.update(physical_library.CATALOG)
 CATALOG.update(sigma_delta.CATALOG)
+CATALOG.update(analog_soc.CATALOG)
 
 def catalog():
     return {'schema_version':1,'templates':[{'id':key,**copy.deepcopy(value),'limits':['Actual native schematic and public ngspice models; no commercial execution claim.','Empty layout is not physically verified.','Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library.']} for key,value in CATALOG.items()]}
@@ -252,9 +254,11 @@ def _parameters(template,raw):
         if not .5<=values['slot_ns']<=1000 or not .01<=values['rise_ns']<=values['slot_ns']*.1:raise EDAError('PARAMETER_RANGE','MUX slot must be 0.5..1000ns and rise 0.01ns..10% of slot.')
     if 'w_um' in values:native.validate_device({'id':'probe','name':'N','kind':'nmos','model':'sky130_fd_pr__nfet_01v8','pins':dict.fromkeys(('D','G','S','B'),'0'),'parameters':{'w_um':values['w_um'],'l_um':values['l_um'],'nf':1,'m':1}})
     if template in sigma_delta.CATALOG:return sigma_delta.parameters(template,values)
+    if template in analog_soc.CATALOG:return analog_soc.parameters(template,values)
     return chip_references.parameters(template,values) if template in chip_references.CATALOG else values
 
 def _schematic(template,params):
+    if template in analog_soc.CATALOG:return analog_soc.schematic(template,params)
     if template in sigma_delta.CATALOG:return sigma_delta.schematic(template,params)
     if template in physical_library.CATALOG:return physical_library.gate(template)
     if template in chip_references.CATALOG:return chip_references.schematic(template,params)
@@ -313,7 +317,7 @@ def create_template(params):
         def action():
             values=_parameters(template,params.get('parameters',{}));physical=params.get('physical_core',False)
             if not isinstance(physical,bool):raise EDAError('INVALID_PARAMETER','physical_core must be boolean.')
-            new_physical=template in chip_references.CATALOG or template in physical_library.CATALOG
+            new_physical=template in chip_references.CATALOG or template in physical_library.CATALOG or template in analog_soc.CATALOG
             if physical and not new_physical and template not in ('current_mirror','differential_pair','mux4'):raise EDAError('UNSUPPORTED_PHYSICAL','No physical adapter for this template.')
             if physical and not new_physical and (values['w_um']!=.65 or values['l_um']!=.15):raise EDAError('UNSUPPORTED_PHYSICAL','Legacy core requires exact fixed W=0.65um L=0.15um.')
             model_resources('tt')
@@ -325,7 +329,7 @@ def create_template(params):
             if physical and new_physical:
                 if template=='chip_sc_dcdc':
                     ports+=['FLYTOP','FLYBOTTOM'];schematic['ports']=ports
-                if template in chip_references.CATALOG:schematic,replacements=physical_library.materialize(schematic)
+                if template in chip_references.CATALOG or template in analog_soc.CATALOG:schematic,replacements=physical_library.materialize(schematic)
                 layout=physical_library.physical(S.STATE/'projects'/pid/'generator',digital_units.flattened(schematic),cell,ports)
             elif physical:
                 layout,core,ports=digital_mux.physical(S.STATE/'projects'/pid/'generator') if template=='mux4' else physical_templates.analog(S,S.STATE/'projects'/pid/'generator',template)
@@ -341,6 +345,9 @@ def create_template(params):
             if template in chip_references.CATALOG:
                 p['testbench']=native.testbench(chip_references.SETTINGS[template])
                 meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True)
+            if template in analog_soc.CATALOG:
+                p['testbench']=native.testbench(analog_soc.SETTINGS[template])
+                meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True,subsystem='analog-sensor-interface')
             if template in sigma_delta.CATALOG:
                 p['testbench']=sigma_delta.settings(sigma_delta.DEFAULT_SETTINGS)
                 meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True,adc_output_bits=8,adc_effective_resolution='not-measured',adc_clock_Hz=1e6,adc_decimation=256)
@@ -387,6 +394,7 @@ def _stimuli(p,settings):
 
 def pvt_sources(p):
     meta=validate_template_project(p);kind=meta['id']
+    if kind in analog_soc.CATALOG:return {'bindings':[{'kind':'testbench','source_names':['VDD']}],'analyses':CATALOG[kind]['analyses'],'source':'owned-analog-soc-stimuli','limits':['External BIAS is fixed at 0.9V; SoC AFE/bias macro generates its own bias. VCM and signal common mode follow VDD/2. Cascode DC sweeps VOUT, not VDD. RC corner remains typical.']}
     if kind in chip_references.CATALOG:return {'bindings':[{'kind':'testbench','source_names':['VDD']}],'analyses':CATALOG[kind]['analyses'],'source':'owned-chip-reference-stimuli','limits':['VREF and BIAS remain external fixed sources. Lock/stability must be checked at each PVT point.']}
     if kind in physical_library.CATALOG:return {'bindings':[{'kind':'testbench','source_names':['VDD']}],'analyses':['tran'],'source':'owned-exhaustive-gate-stimuli','limits':['One configured load and input slew; not full characterization.']}
     sources,analyses={
@@ -408,6 +416,7 @@ def spice_tb(p,folder,params,netlist):
         fields=line.split()
         if len(fields)>=2 and fields[0].lower()=='.subckt' and fields[1].lower()==p['cell'].lower():sub=fields[2:];break
     if sub is None or len(sub)!=len(p['ports']) or len(set(sub))!=len(sub) or set(sub)!=set(p['ports']):raise EDAError('PORT_MISMATCH','Actual emitted/extracted subcircuit ports differ from explicit template declarations.')
+    if meta['id'] in analog_soc.CATALOG:return analog_soc.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     if meta['id'] in chip_references.CATALOG:return chip_references.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     if meta['id'] in physical_library.CATALOG:return physical_library.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     sources,names,vectors,units,sweep=_stimuli(p,settings);deck=supported_model_deck(folder,settings['corner'])
@@ -432,6 +441,8 @@ def measurements(p,run,params):
     if not p.get('design_template'):return
     meta=validate_template_project(p);waves={w['name']:w for w in run.get('waveforms',[])};m=run.setdefault('measurements',{});m['template_id']=meta['id'];m['layout_status']=meta['layout_status'];m['metric_source']='actual-ngspice-samples'
     analysis=params.get('analysis',p['testbench']['analysis']);kind=meta['id']
+    if kind in analog_soc.CATALOG:
+        analog_soc.measurements(p,run,params);return
     if kind in physical_library.CATALOG:
         physical_library.measurements(p,run,params);return
     if kind in chip_references.CATALOG:

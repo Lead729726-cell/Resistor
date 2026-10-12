@@ -1,0 +1,39 @@
+{
+  "ports": [
+    "INP",
+    "INN",
+    "BIAS",
+    "OUT",
+    "VPWR",
+    "VGND"
+  ],
+  "parameters": {
+    "compensation_F": 5e-12
+  },
+  "passive_replacements": [
+    {
+      "source_device": "C_MILLER",
+      "kind": "capacitor",
+      "requested_SI": 5e-12,
+      "nominal_geometry_SI": 5.0006448e-12,
+      "instances": 3,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 28.68,
+      "l_um": 28.68,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "R_ZERO",
+      "kind": "resistor",
+      "requested_SI": 5000,
+      "nominal_geometry_SI": 4998.353425682813,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 3.36,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    }
+  ],
+  "rc_corner": "typical",
+  "manufacturing_signoff": false
+}

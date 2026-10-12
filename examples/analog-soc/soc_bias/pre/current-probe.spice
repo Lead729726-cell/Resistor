@@ -1,0 +1,49 @@
+.subckt soc_bias BIAS VCM VPWR VGND
+XC_VCM_P0 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XC_VCM_P1 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XC_VCM_P10 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XC_VCM_P11 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XC_VCM_P2 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XC_VCM_P3 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XC_VCM_P4 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XC_VCM_P5 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XC_VCM_P6 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XC_VCM_P7 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XC_VCM_P8 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XC_VCM_P9 VCM_RAW VGND sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XN_DIODE register_cf_node_a977a4ed402b1f2c BIAS register_cf_node_a977a4ed402b1f2c_source VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+Vregister_cf_a977a4ed402b1f2c BIAS register_cf_node_a977a4ed402b1f2c 0
+Vregister_cf_a977a4ed402b1f2c_source VGND register_cf_node_a977a4ed402b1f2c_source 0
+XR_BIAS_P0 VPWR BIAS VGND sky130_fd_pr__res_xhigh_po_1p41 l=20.985
+XR_VCM_BOTTOM_P0 VCM_RAW R_VCM_BOTTOM_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.335
+XR_VCM_BOTTOM_P1 R_VCM_BOTTOM_R0_N0 R_VCM_BOTTOM_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.335
+XR_VCM_BOTTOM_P2 R_VCM_BOTTOM_R0_N1 VGND VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.335
+XR_VCM_TOP_P0 VPWR R_VCM_TOP_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.335
+XR_VCM_TOP_P1 R_VCM_TOP_R0_N0 R_VCM_TOP_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.335
+XR_VCM_TOP_P2 R_VCM_TOP_R0_N1 VCM_RAW VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.335
+XVCM_BUFFER_C_MILLER_P0 VCM_BUFFER__PRE VCM_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XVCM_BUFFER_C_MILLER_P1 VCM_BUFFER__PRE VCM_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XVCM_BUFFER_C_MILLER_P2 VCM_BUFFER__PRE VCM_BUFFER__COMP sky130_fd_pr__cap_mim_m3_1 w=28.68 l=28.68
+XVCM_BUFFER_FIRST_N_INN register_cf_node_1a7de0195852d3e0 VCM register_cf_node_1a7de0195852d3e0_source VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+Vregister_cf_1a7de0195852d3e0 VCM_BUFFER__FIRST__MIR register_cf_node_1a7de0195852d3e0 0
+Vregister_cf_1a7de0195852d3e0_source VCM_BUFFER__FIRST__TAIL register_cf_node_1a7de0195852d3e0_source 0
+XVCM_BUFFER_FIRST_N_INP register_cf_node_bf547ee9a36c5973 VCM_RAW register_cf_node_bf547ee9a36c5973_source VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+Vregister_cf_bf547ee9a36c5973 VCM_BUFFER__PRE register_cf_node_bf547ee9a36c5973 0
+Vregister_cf_bf547ee9a36c5973_source VCM_BUFFER__FIRST__TAIL register_cf_node_bf547ee9a36c5973_source 0
+XVCM_BUFFER_FIRST_N_TAIL register_cf_node_3446b483d676b311 BIAS register_cf_node_3446b483d676b311_source VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+Vregister_cf_3446b483d676b311 VCM_BUFFER__FIRST__TAIL register_cf_node_3446b483d676b311 0
+Vregister_cf_3446b483d676b311_source VGND register_cf_node_3446b483d676b311_source 0
+XVCM_BUFFER_FIRST_P_DIODE register_cf_node_738fcc80be1c3ee5 VCM_BUFFER__FIRST__MIR register_cf_node_738fcc80be1c3ee5_source VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+Vregister_cf_738fcc80be1c3ee5 VCM_BUFFER__FIRST__MIR register_cf_node_738fcc80be1c3ee5 0
+Vregister_cf_738fcc80be1c3ee5_source VPWR register_cf_node_738fcc80be1c3ee5_source 0
+XVCM_BUFFER_FIRST_P_MIRROR register_cf_node_2cec6438f9e41c8a VCM_BUFFER__FIRST__MIR register_cf_node_2cec6438f9e41c8a_source VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+Vregister_cf_2cec6438f9e41c8a VCM_BUFFER__PRE register_cf_node_2cec6438f9e41c8a 0
+Vregister_cf_2cec6438f9e41c8a_source VPWR register_cf_node_2cec6438f9e41c8a_source 0
+XVCM_BUFFER_N_SECOND register_cf_node_5a299b0d3d0ff56d BIAS register_cf_node_5a299b0d3d0ff56d_source VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+Vregister_cf_5a299b0d3d0ff56d VCM register_cf_node_5a299b0d3d0ff56d 0
+Vregister_cf_5a299b0d3d0ff56d_source VGND register_cf_node_5a299b0d3d0ff56d_source 0
+XVCM_BUFFER_P_SECOND register_cf_node_4a24a9e0429e257f VCM_BUFFER__PRE register_cf_node_4a24a9e0429e257f_source VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1
+Vregister_cf_4a24a9e0429e257f VCM register_cf_node_4a24a9e0429e257f 0
+Vregister_cf_4a24a9e0429e257f_source VPWR register_cf_node_4a24a9e0429e257f_source 0
+XVCM_BUFFER_R_ZERO_P0 VCM_BUFFER__COMP VCM VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+.ends soc_bias

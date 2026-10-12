@@ -1,0 +1,56 @@
+Resistor analog SoC soc_cascode_mirror
+.include "./supported-tt.spice"
+.options method=gear maxord=2
+.include "./current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+IREF VPWR REF 1e-05
+VOUT OUT VGND 1.8
+XU VGND REF OUT soc_cascode_mirror
+.control
+save v(OUT) i(VDD) v(REF) i(VOUT) i(v.xu.vregister_cf_d4f01c71d35c270b) i(v.xu.vregister_cf_75d0ab99e3ad4b4b) i(v.xu.vregister_cf_e8d757f6f539c15b) i(v.xu.vregister_cf_d0889b5ac86b52c4) i(VGND) v(XU.LOW_OUT.t0) v(XU.OUT.t0) v(XU.REF.t2) v(XU.VGND.t1) v(XU.VGND.t5) v(XU.LOW_OUT.t1) v(XU.LOW_REF.t3) v(XU.VGND.t4) v(XU.LOW_REF.t0) v(XU.REF.t1) v(XU.REF.t0) v(XU.VGND.t0) v(XU.VGND.t3) v(XU.LOW_REF.t2) v(XU.LOW_REF.t1) v(XU.VGND.t2) v(VGND) v(VPWR)
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+set noaskquit
+dc VOUT 0 1.8 0.01
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(REF)
+let mos_wave_3 = -i(VOUT)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_d4f01c71d35c270b)
+let register_flow_1 = i(v.xu.vregister_cf_75d0ab99e3ad4b4b)
+let register_flow_2 = i(v.xu.vregister_cf_e8d757f6f539c15b)
+let register_flow_3 = i(v.xu.vregister_cf_d0889b5ac86b52c4)
+let register_flow_4 = i(VGND)
+let register_flow_5 = i(VDD)
+let register_flow_6 = i(VOUT)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6
+let register_voltage_0 = v(XU.LOW_OUT.t0)
+let register_voltage_1 = v(XU.OUT.t0)
+let register_voltage_2 = v(XU.REF.t2)
+let register_voltage_3 = v(XU.VGND.t1)
+let register_voltage_4 = v(XU.VGND.t5)
+let register_voltage_5 = v(XU.LOW_OUT.t1)
+let register_voltage_6 = v(XU.LOW_REF.t3)
+let register_voltage_7 = v(XU.VGND.t4)
+let register_voltage_8 = v(XU.LOW_REF.t0)
+let register_voltage_9 = v(XU.REF.t1)
+let register_voltage_10 = v(XU.REF.t0)
+let register_voltage_11 = v(XU.VGND.t0)
+let register_voltage_12 = v(XU.VGND.t3)
+let register_voltage_13 = v(XU.LOW_REF.t2)
+let register_voltage_14 = v(XU.LOW_REF.t1)
+let register_voltage_15 = v(XU.VGND.t2)
+let register_voltage_16 = v(VGND)
+let register_voltage_17 = 0*register_flow_0
+let register_voltage_18 = v(VPWR)
+let register_voltage_19 = v(OUT)
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11 register_voltage_12 register_voltage_13 register_voltage_14 register_voltage_15 register_voltage_16 register_voltage_17 register_voltage_18 register_voltage_19
+quit
+.endc
+.end

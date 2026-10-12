@@ -1,0 +1,94 @@
+* NGSPICE file created from soc_cascode_mirror.ext - technology: sky130A
+
+.subckt soc_cascode_mirror VGND REF OUT
+X0 register_cf_node_d4f01c71d35c270b REF.t2 register_cf_node_d4f01c71d35c270b_source VGND.t1 sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+Vregister_cf_d4f01c71d35c270b LOW_OUT.t0 register_cf_node_d4f01c71d35c270b 0
+Vregister_cf_d4f01c71d35c270b_source OUT.t0 register_cf_node_d4f01c71d35c270b_source 0
+X1 register_cf_node_75d0ab99e3ad4b4b LOW_REF.t3 register_cf_node_75d0ab99e3ad4b4b_source VGND.t4 sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+Vregister_cf_75d0ab99e3ad4b4b VGND.t5 register_cf_node_75d0ab99e3ad4b4b 0
+Vregister_cf_75d0ab99e3ad4b4b_source LOW_OUT.t1 register_cf_node_75d0ab99e3ad4b4b_source 0
+X2 register_cf_node_e8d757f6f539c15b REF.t0 register_cf_node_e8d757f6f539c15b_source VGND.t0 sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+Vregister_cf_e8d757f6f539c15b LOW_REF.t0 register_cf_node_e8d757f6f539c15b 0
+Vregister_cf_e8d757f6f539c15b_source REF.t1 register_cf_node_e8d757f6f539c15b_source 0
+X3 register_cf_node_d0889b5ac86b52c4 LOW_REF.t1 register_cf_node_d0889b5ac86b52c4_source VGND.t2 sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+Vregister_cf_d0889b5ac86b52c4 VGND.t3 register_cf_node_d0889b5ac86b52c4 0
+Vregister_cf_d0889b5ac86b52c4_source LOW_REF.t2 register_cf_node_d0889b5ac86b52c4_source 0
+C0 OUT LOW_REF 0.40336f
+C1 REF LOW_REF 2.28089f
+C2 LOW_REF LOW_OUT 0.55137f
+C3 REF OUT 1.86196f
+C4 OUT LOW_OUT 0.32149f
+C5 REF LOW_OUT 0.85208f
+C6 OUT VGND 1.84075f
+C7 REF VGND 4.02907f
+C8 LOW_OUT VGND 2.34261f $ **FLOATING
+C9 LOW_REF VGND 5.37345f $ **FLOATING
+C10 LOW_REF.n0 VGND 0.0115f $ **FLOATING
+C11 LOW_REF.t0 VGND 0.01873f $ **FLOATING
+C12 LOW_REF.t3 VGND 0.2198f $ **FLOATING
+C13 LOW_REF.n1 VGND 0.0115f $ **FLOATING
+C14 LOW_REF.t2 VGND 0.01873f $ **FLOATING
+C15 LOW_REF.n2 VGND 0.01109f $ **FLOATING
+C16 LOW_REF.n3 VGND 0.1779f $ **FLOATING
+C17 LOW_REF.t1 VGND 0.2198f $ **FLOATING
+C18 LOW_REF.n4 VGND 0.52791f $ **FLOATING
+C19 LOW_REF.n5 VGND 0.69946f $ **FLOATING
+C20 LOW_REF.n6 VGND 0.17121f $ **FLOATING
+C21 LOW_REF.n7 VGND 0.01109f $ **FLOATING
+C22 REF.t2 VGND 0.23285f $ **FLOATING
+C23 REF.n0 VGND 0.01174f $ **FLOATING
+C24 REF.t1 VGND 0.01985f $ **FLOATING
+C25 REF.n1 VGND 0.01218f $ **FLOATING
+C26 REF.n2 VGND 0.1648f $ **FLOATING
+C27 REF.n3 VGND 0.3476f $ **FLOATING
+C28 REF.t0 VGND 0.23285f $ **FLOATING
+C29 REF.n4 VGND 0.89658f $ **FLOATING
+rmesh_equiv_0 low_out low_out.t0 93.636673662990745
+rmesh_equiv_1 low_out low_out.t1 93.636673662990773
+rmesh_equiv_10 low_ref low_ref.t3 139.911
+rmesh_equiv_11 low_ref.n0 low_ref.n6 14.189499999999999
+rmesh_equiv_12 low_ref.n0 low_ref.t0 174.91200000000001
+rmesh_equiv_13 low_ref.n1 low_ref.n3 14.189499999999999
+rmesh_equiv_14 low_ref.n1 low_ref.t2 174.91200000000001
+rmesh_equiv_15 low_ref.n2 low_ref.n3 3.0467200000000001
+rmesh_equiv_16 low_ref.n2 low_ref.t2 181.41
+rmesh_equiv_17 low_ref.n3 low_ref.n4 11.148999999999999
+rmesh_equiv_18 low_ref.n4 low_ref.n5 0.78833799999999998
+rmesh_equiv_19 low_ref.n5 low_ref.n6 10.7559
+rmesh_equiv_2 low_out.t0 low_out.t1 25178.112847773929
+rmesh_equiv_20 low_ref.n6 low_ref.n7 3.0467200000000001
+rmesh_equiv_21 low_ref.n7 low_ref.t0 181.41
+rmesh_equiv_22 out out.t0 92.988255390884731
+rmesh_equiv_23 ref ref.n0 4.2590000000000003
+rmesh_equiv_24 ref ref.n1 19.837
+rmesh_equiv_25 ref ref.n3 1.1784399999999999
+rmesh_equiv_26 ref ref.n4 13.8331862395159
+rmesh_equiv_27 ref ref.t0 139.911
+rmesh_equiv_28 ref ref.t2 139.911
+rmesh_equiv_29 ref.n0 ref.n2 3.0467200000000001
+rmesh_equiv_3 low_ref low_ref.n0 19.837
+rmesh_equiv_30 ref.n0 ref.t1 181.41
+rmesh_equiv_31 ref.n1 ref.n2 14.189499999999999
+rmesh_equiv_32 ref.n1 ref.t1 174.91200000000001
+rmesh_equiv_33 ref.n2 ref.n3 10.3393
+rmesh_equiv_34 ref.n3 ref.n4 0.39353700000000003
+rmesh_equiv_35 vgnd vgnd.t0 167.06590130615618
+rmesh_equiv_36 vgnd vgnd.t1 167.06590187967137
+rmesh_equiv_37 vgnd vgnd.t2 167.06590074122616
+rmesh_equiv_38 vgnd vgnd.t3 92.904165257636265
+rmesh_equiv_39 vgnd vgnd.t4 167.06590131474124
+rmesh_equiv_4 low_ref low_ref.n1 19.837
+rmesh_equiv_40 vgnd vgnd.t5 92.960981425558927
+rmesh_equiv_41 vgnd.t0 vgnd.t1 1184504.3759535511
+rmesh_equiv_42 vgnd.t0 vgnd.t2 9000.7652366111233
+rmesh_equiv_43 vgnd.t0 vgnd.t4 9069.1518963745912
+rmesh_equiv_44 vgnd.t1 vgnd.t2 154705824.37792403
+rmesh_equiv_45 vgnd.t1 vgnd.t4 9000.7652116924164
+rmesh_equiv_46 vgnd.t2 vgnd.t4 1184504.3792326716
+rmesh_equiv_47 vgnd.t3 vgnd.t5 521684.14786356472
+rmesh_equiv_5 low_ref low_ref.n2 4.2590000000000003
+rmesh_equiv_6 low_ref low_ref.n4 27.196800000000003
+rmesh_equiv_7 low_ref low_ref.n5 28.2302
+rmesh_equiv_8 low_ref low_ref.n7 4.2590000000000003
+rmesh_equiv_9 low_ref low_ref.t1 139.911
+.ends
