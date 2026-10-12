@@ -1,0 +1,75 @@
+{
+  "reference": "chip_comparator",
+  "project_id": "c150d87f906d4448a04347f605429251",
+  "run_id": "28349f00501f475ea7e9ff0d644f5ac9",
+  "revision": 1,
+  "corner": "ff",
+  "temperature_C": -40,
+  "supply_V": 1.8,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "elapsed_s": 0.7700772129464895,
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "ff",
+    "temperature_C": -40,
+    "supply_V": 1.8,
+    "post_layout": "false",
+    "samples": 4050,
+    "solver": "SPARSE 1.3",
+    "OUT_min": -0.0030065634563553392,
+    "OUT_max": 1.8113610270775786,
+    "supply_current_min": 6.337252777960378e-7,
+    "supply_current_max": 0.00018089892909228106,
+    "INP_min": 0.85,
+    "INP_max": 0.9500000000000001,
+    "INN_min": 0.9,
+    "INN_max": 0.9,
+    "PRE_min": 0.19864619448623866,
+    "PRE_max": 1.7684876540755514,
+    "current_flow_status": "available",
+    "template_id": "chip_comparator",
+    "layout_status": "not-generated",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+    "settled_output_mean_V": 1.7917588625294893,
+    "settled_output_ripple_V": 1.8117591489749798,
+    "average_supply_current_A": 0.000024798477897183136,
+    "average_supply_power_W": 0.00004463726021492965
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "chip_comparator",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "negative input logic level",
+        "pass": true,
+        "observed": [
+          2.179500909176707e-10,
+          2.1795009232713353e-10
+        ]
+      },
+      {
+        "name": "positive input logic level",
+        "pass": true,
+        "observed": [
+          1.7999999749017355,
+          1.799999974901736
+        ]
+      },
+      {
+        "name": "negative recovery logic level",
+        "pass": true,
+        "observed": [
+          2.179500909176707e-10,
+          2.1795009232713353e-10
+        ]
+      }
+    ],
+    "pass": true,
+    "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+  }
+}

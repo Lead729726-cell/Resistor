@@ -132,7 +132,7 @@ def validate(schematic,cell_name=None):
         if d['kind']=='block':
             child=schematic.get('cells',{}).get(d.get('cell_name'))
             if child is None: issues.append({'device_id':d['id'],'code':'MISSING_CELL','message':'Block target is missing.'})
-            elif list(d['pins'])!=child.get('ports',[]): issues.append({'device_id':d['id'],'code':'PORT_MISMATCH','message':'Block pin order must match the child cell port declaration.'})
+            elif set(d['pins'])!=set(child.get('ports',[])) or len(child.get('ports',[]))!=len(set(child.get('ports',[]))): issues.append({'device_id':d['id'],'code':'PORT_MISMATCH','message':'Block named pins must match the unique child cell port declaration.'})
     def visit(name,stack):
         if name in stack: issues.append({'code':'HIERARCHY_CYCLE','message':'Schematic hierarchy is recursive.','cell_name':name}); return
         target=ir if name is None else schematic.get('cells',{}).get(name)

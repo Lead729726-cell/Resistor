@@ -1,0 +1,61 @@
+{
+  "reference": "chip_vco",
+  "project_id": "e77eaba182894210afc48222161dbe4a",
+  "run_id": "548d8e6a7da04f80a9e4fc2de098bd88",
+  "revision": 1,
+  "corner": "ff",
+  "temperature_C": -40,
+  "supply_V": 1.8,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "elapsed_s": 5.40768293000292,
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "ff",
+    "temperature_C": -40,
+    "supply_V": 1.8,
+    "post_layout": "false",
+    "samples": 6515,
+    "solver": "SPARSE 1.3",
+    "OUT_min": -0.0005240647668680234,
+    "OUT_max": 1.7949005464251058,
+    "supply_current_min": -0.00022801451604970852,
+    "supply_current_max": 0.008494860817810902,
+    "CTRL_min": 0.9,
+    "CTRL_max": 0.9,
+    "current_flow_status": "available",
+    "template_id": "chip_vco",
+    "layout_status": "not-generated",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+    "settled_output_mean_V": 0.8435670495076225,
+    "settled_output_ripple_V": 1.7953648704923058,
+    "average_supply_current_A": 0.0002163802127006781,
+    "average_supply_power_W": 0.0003894843828612206,
+    "output_frequency_Hz": 36714249.02171837
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "chip_vco",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "oscillation crosses both logic rails",
+        "pass": true,
+        "observed": [
+          -0.0004713103543970386,
+          1.7948935601379088
+        ]
+      },
+      {
+        "name": "at least 3 complete output periods measured",
+        "pass": true,
+        "observed": 44
+      }
+    ],
+    "pass": true,
+    "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+  }
+}

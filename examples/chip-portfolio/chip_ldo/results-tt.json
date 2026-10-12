@@ -1,0 +1,82 @@
+{
+  "reference": "chip_ldo",
+  "project_id": "3550510aaa8440e8990fe92fa8106ae6",
+  "run_id": "18ac3d56148648c0b5a053c5f778e9d2",
+  "revision": 1,
+  "corner": "tt",
+  "temperature_C": 27,
+  "supply_V": 1.8,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "elapsed_s": 0.844416942098178,
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "false",
+    "samples": 2026,
+    "solver": "SPARSE 1.3",
+    "OUT_min": 1.1160567733885178,
+    "OUT_max": 1.2660530632314217,
+    "supply_current_min": 0.000007811157687311054,
+    "supply_current_max": 0.00024826392135216674,
+    "FB_min": 0.558018942173081,
+    "FB_max": 0.6330271624463372,
+    "GATE_min": 0.8244056452348545,
+    "GATE_max": 1.0852602681282857,
+    "current_flow_status": "available",
+    "template_id": "chip_ldo",
+    "layout_status": "not-generated",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+    "settled_output_mean_V": 1.2032939208157045,
+    "settled_output_ripple_V": 0.006622849537297304,
+    "average_supply_current_A": 0.000027011566361594602,
+    "average_supply_power_W": 0.000048620819450870284,
+    "light_load_output_V": 1.2035798378903888,
+    "heavy_load_output_V": 1.2016579385268573,
+    "recovery_output_V": 1.2036181199427456,
+    "load_step_undershoot_V": 0.08394322661148212
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "chip_ldo",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "light_load every sample within 50mV of 1.2V",
+        "pass": true,
+        "observed": [
+          1.2035798378903797,
+          1.203579837890416
+        ]
+      },
+      {
+        "name": "heavy_load every sample within 50mV of 1.2V",
+        "pass": true,
+        "observed": [
+          1.2016579385268555,
+          1.2016579385268586
+        ]
+      },
+      {
+        "name": "recovery every sample within 50mV of 1.2V",
+        "pass": true,
+        "observed": [
+          1.2034050650885528,
+          1.203727459699236
+        ]
+      },
+      {
+        "name": "load-step undershoot below 150mV",
+        "pass": true,
+        "observed": 0.08394322661148212
+      }
+    ],
+    "pass": true,
+    "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+  }
+}

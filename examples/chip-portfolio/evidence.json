@@ -1,0 +1,1333 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-12T00:17:13.821Z",
+  "public_pdk": "SKY130A",
+  "source_sha256": {
+    "workers/eda/chip_references.py": "f6a9d8a50adaf4a81674b0f01f5ebdc8f229f26a3457bf7793ba95e0aa928d2f",
+    "workers/eda/design_tools.py": "f127b0b67140b3c0e4481ee07cae0afc381f390cb6952223f1ca5f1b257423e2",
+    "workers/eda/semiconductor_starters.py": "4045ed29d5b34639b7372285cd9c5179cb5e378468612b5bd0da14093df399bf",
+    "workers/eda/server.py": "93032b4f5947769dc91efd18cbce2d6fe23b4df668f5f7302ce0e1587bfb145a",
+    "packages/ui/src/ChipReferenceResults.tsx": "bec1ee123a682ad44dd8ad5b2130253e5c91e7193ccb13e1101f9a1597991448",
+    "scripts/chip-portfolio.mjs": "376890d1e4e9ea00c7c361ad18e2cf7fc0f64d3c50c728e89dc693e4e28cbc9e",
+    "workers/eda/native.py": "f08c6c08d0987cbdd699fa8bd3f0f5ae40a958d491448bc163c770d3b02663a0",
+    "workers/eda/test_chip_references.py": "ec10b0bbe0f4af55c9dc63ec344378c22fc89b6e63361f301491da3aeed0231d",
+    "scripts/chip-portfolio-plots.py": "96384924aa3604c9ead1780b2f85aedaf59a004397391c8c2bebbcdd31c402e8"
+  },
+  "native_runs": [
+    {
+      "reference": "chip_ldo",
+      "project_id": "3550510aaa8440e8990fe92fa8106ae6",
+      "run_id": "18ac3d56148648c0b5a053c5f778e9d2",
+      "revision": 1,
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 0.844416942098178,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 2026,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 1.1160567733885178,
+        "OUT_max": 1.2660530632314217,
+        "supply_current_min": 7.811157687311054e-06,
+        "supply_current_max": 0.00024826392135216674,
+        "FB_min": 0.558018942173081,
+        "FB_max": 0.6330271624463372,
+        "GATE_min": 0.8244056452348545,
+        "GATE_max": 1.0852602681282857,
+        "current_flow_status": "available",
+        "template_id": "chip_ldo",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 1.2032939208157045,
+        "settled_output_ripple_V": 0.006622849537297304,
+        "average_supply_current_A": 2.7011566361594602e-05,
+        "average_supply_power_W": 4.8620819450870284e-05,
+        "light_load_output_V": 1.2035798378903888,
+        "heavy_load_output_V": 1.2016579385268573,
+        "recovery_output_V": 1.2036181199427456,
+        "load_step_undershoot_V": 0.08394322661148212
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_ldo",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "light_load every sample within 50mV of 1.2V",
+            "pass": true,
+            "observed": [
+              1.2035798378903797,
+              1.203579837890416
+            ]
+          },
+          {
+            "name": "heavy_load every sample within 50mV of 1.2V",
+            "pass": true,
+            "observed": [
+              1.2016579385268555,
+              1.2016579385268586
+            ]
+          },
+          {
+            "name": "recovery every sample within 50mV of 1.2V",
+            "pass": true,
+            "observed": [
+              1.2034050650885528,
+              1.203727459699236
+            ]
+          },
+          {
+            "name": "load-step undershoot below 150mV",
+            "pass": true,
+            "observed": 0.08394322661148212
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_ldo",
+      "project_id": "3550510aaa8440e8990fe92fa8106ae6",
+      "run_id": "763c069dbb464d7a9ac25eca6ce66aec",
+      "revision": 1,
+      "corner": "ss",
+      "temperature_C": 125,
+      "supply_V": 1.62,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 0.645846811006777,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "post_layout": "false",
+        "samples": 2027,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 1.1082969581644007,
+        "OUT_max": 1.274866971196302,
+        "supply_current_min": 8.212441067301235e-06,
+        "supply_current_max": 0.00025183808648937545,
+        "FB_min": 0.5541558261428907,
+        "FB_max": 0.6374346488410523,
+        "GATE_min": 0.6986058306109575,
+        "GATE_max": 0.9993722561614727,
+        "current_flow_status": "available",
+        "template_id": "chip_ldo",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 1.2035226771825578,
+        "settled_output_ripple_V": 0.011497542128298788,
+        "average_supply_current_A": 2.785978240182486e-05,
+        "average_supply_power_W": 4.513284749095627e-05,
+        "light_load_output_V": 1.2036566253261156,
+        "heavy_load_output_V": 1.2011492813392532,
+        "recovery_output_V": 1.2036384030862926,
+        "load_step_undershoot_V": 0.0917030418355993
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_ldo",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "light_load every sample within 50mV of 1.2V",
+            "pass": true,
+            "observed": [
+              1.2036566253261112,
+              1.203656625326134
+            ]
+          },
+          {
+            "name": "heavy_load every sample within 50mV of 1.2V",
+            "pass": true,
+            "observed": [
+              1.2011492813392515,
+              1.2011492813392546
+            ]
+          },
+          {
+            "name": "recovery every sample within 50mV of 1.2V",
+            "pass": true,
+            "observed": [
+              1.203184482098071,
+              1.203827867071763
+            ]
+          },
+          {
+            "name": "load-step undershoot below 150mV",
+            "pass": true,
+            "observed": 0.0917030418355993
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_ldo",
+      "project_id": "3550510aaa8440e8990fe92fa8106ae6",
+      "run_id": "800d5cf1be194167b5f0d6ab7785f3f4",
+      "revision": 1,
+      "corner": "ff",
+      "temperature_C": -40,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 0.65167835901957,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 2026,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 1.1265427770809224,
+        "OUT_max": 1.2584432152647909,
+        "supply_current_min": 8.353993722669262e-06,
+        "supply_current_max": 0.0002370884917537383,
+        "FB_min": 0.5632717984590786,
+        "FB_max": 0.6292214915648575,
+        "GATE_min": 0.8166765561328058,
+        "GATE_max": 1.016771198263952,
+        "current_flow_status": "available",
+        "template_id": "chip_ldo",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 1.2039457761286616,
+        "settled_output_ripple_V": 0.0029507582702057444,
+        "average_supply_current_A": 2.598978743159953e-05,
+        "average_supply_power_W": 4.678161737687916e-05,
+        "light_load_output_V": 1.2041232312718546,
+        "heavy_load_output_V": 1.2025493563910827,
+        "recovery_output_V": 1.204137450379574,
+        "load_step_undershoot_V": 0.07345722291907752
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_ldo",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "light_load every sample within 50mV of 1.2V",
+            "pass": true,
+            "observed": [
+              1.204123231271853,
+              1.2041232312718566
+            ]
+          },
+          {
+            "name": "heavy_load every sample within 50mV of 1.2V",
+            "pass": true,
+            "observed": [
+              1.2025493563910785,
+              1.2025493563910856
+            ]
+          },
+          {
+            "name": "recovery every sample within 50mV of 1.2V",
+            "pass": true,
+            "observed": [
+              1.204090244594019,
+              1.2041715196424727
+            ]
+          },
+          {
+            "name": "load-step undershoot below 150mV",
+            "pass": true,
+            "observed": 0.07345722291907752
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_sc_dcdc",
+      "project_id": "90fdb7116b924ea3a5ebaedf836df84c",
+      "run_id": "31aa49fcf9a04a44af5e6274207a0d85",
+      "revision": 1,
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 2.2043262269580737,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 16707,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 1.8638907009525764e-05,
+        "OUT_max": 0.8890655388942483,
+        "supply_current_min": -0.00033471597495784294,
+        "supply_current_max": 0.007459033255460254,
+        "FLYTOP_min": 0.1834896862381569,
+        "FLYTOP_max": 1.8340491873299951,
+        "FLYBOTTOM_min": -0.16526287276413804,
+        "FLYBOTTOM_max": 1.0670046296732032,
+        "PHI1_min": 0,
+        "PHI1_max": 1.8,
+        "PHI2_min": 0,
+        "PHI2_max": 1.8,
+        "current_flow_status": "available",
+        "template_id": "chip_sc_dcdc",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 0.8888300309016713,
+        "settled_output_ripple_V": 0.00047713453707132203,
+        "average_supply_current_A": 9.016344103296306e-06,
+        "average_supply_power_W": 1.622941938593335e-05,
+        "output_power_W": 1.5800376828658275e-05,
+        "power_stage_efficiency": 0.9735638997876324,
+        "efficiency_scope": "Includes DUT MOS loss and VDD current; excludes externally supplied clock-driver power."
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_sc_dcdc",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "output near Vin/2",
+            "pass": true,
+            "observed": 0.8888300309016713
+          },
+          {
+            "name": "non-overlap clock high windows do not intersect",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "power-stage efficiency within physical bounds",
+            "pass": true,
+            "observed": 0.9735638997876324
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_sc_dcdc",
+      "project_id": "90fdb7116b924ea3a5ebaedf836df84c",
+      "run_id": "5615f44b06aa4a338f56b003a03d4875",
+      "revision": 1,
+      "corner": "ss",
+      "temperature_C": 125,
+      "supply_V": 1.62,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 2.2913860249100253,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "post_layout": "false",
+        "samples": 16690,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 1.862877773880574e-05,
+        "OUT_max": 0.7888096667680949,
+        "supply_current_min": -0.000318243998729581,
+        "supply_current_max": 0.0041972241138431565,
+        "FLYTOP_min": 0.04385081451431961,
+        "FLYTOP_max": 1.6731752116702976,
+        "FLYBOTTOM_min": -0.17164971259864525,
+        "FLYBOTTOM_max": 0.9470536236579465,
+        "PHI1_min": 0,
+        "PHI1_max": 1.62,
+        "PHI2_min": 0,
+        "PHI2_max": 1.62,
+        "current_flow_status": "available",
+        "template_id": "chip_sc_dcdc",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 0.7885992121357671,
+        "settled_output_ripple_V": 0.0004314489869876592,
+        "average_supply_current_A": 8.019578059660186e-06,
+        "average_supply_power_W": 1.2991716456649502e-05,
+        "output_power_W": 1.2437774625993501e-05,
+        "power_stage_efficiency": 0.9573619211514981,
+        "efficiency_scope": "Includes DUT MOS loss and VDD current; excludes externally supplied clock-driver power."
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_sc_dcdc",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "output near Vin/2",
+            "pass": true,
+            "observed": 0.7885992121357671
+          },
+          {
+            "name": "non-overlap clock high windows do not intersect",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "power-stage efficiency within physical bounds",
+            "pass": true,
+            "observed": 0.9573619211514981
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_sc_dcdc",
+      "project_id": "90fdb7116b924ea3a5ebaedf836df84c",
+      "run_id": "a31b64ef25464638b983b781689abaf2",
+      "revision": 1,
+      "corner": "ff",
+      "temperature_C": -40,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 6.649255112046376,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 17044,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 1.7440785240245293e-05,
+        "OUT_max": 0.8897538053841259,
+        "supply_current_min": -0.0003004481438268966,
+        "supply_current_max": 0.009576919152906378,
+        "FLYTOP_min": 0.26195996674709426,
+        "FLYTOP_max": 1.8304535587235626,
+        "FLYBOTTOM_min": -0.16427971819986964,
+        "FLYBOTTOM_max": 1.0996797032152061,
+        "PHI1_min": 0,
+        "PHI1_max": 1.8,
+        "PHI2_min": 0,
+        "PHI2_max": 1.8,
+        "current_flow_status": "available",
+        "template_id": "chip_sc_dcdc",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 0.8895369585952434,
+        "settled_output_ripple_V": 0.00047445652788746795,
+        "average_supply_current_A": 9.018440902907187e-06,
+        "average_supply_power_W": 1.6233193625232938e-05,
+        "output_power_W": 1.582552036219847e-05,
+        "power_stage_efficiency": 0.9748864411744106,
+        "efficiency_scope": "Includes DUT MOS loss and VDD current; excludes externally supplied clock-driver power."
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_sc_dcdc",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "output near Vin/2",
+            "pass": true,
+            "observed": 0.8895369585952434
+          },
+          {
+            "name": "non-overlap clock high windows do not intersect",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "power-stage efficiency within physical bounds",
+            "pass": true,
+            "observed": 0.9748864411744106
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_vco",
+      "project_id": "e77eaba182894210afc48222161dbe4a",
+      "run_id": "a1372d52863a457db7f4dadf74dde23f",
+      "revision": 1,
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 1.4747671920340508,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 6023,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 0.00047262607139294914,
+        "OUT_max": 1.7936561197601304,
+        "supply_current_min": -0.00036561458160411925,
+        "supply_current_max": 0.009171422388041361,
+        "CTRL_min": 0.9,
+        "CTRL_max": 0.9,
+        "current_flow_status": "available",
+        "template_id": "chip_vco",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 0.8528184094365474,
+        "settled_output_ripple_V": 1.7931797899922142,
+        "average_supply_current_A": 0.00018047778745541456,
+        "average_supply_power_W": 0.0003248600174197462,
+        "output_frequency_Hz": 30180114.878175654
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_vco",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "oscillation crosses both logic rails",
+            "pass": true,
+            "observed": [
+              0.00047262607139294914,
+              1.7936524160636071
+            ]
+          },
+          {
+            "name": "at least 3 complete output periods measured",
+            "pass": true,
+            "observed": 36
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_vco",
+      "project_id": "e77eaba182894210afc48222161dbe4a",
+      "run_id": "9c397804666d4f70852b341041144172",
+      "revision": 1,
+      "corner": "ss",
+      "temperature_C": 125,
+      "supply_V": 1.62,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 1.9127550199627876,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "post_layout": "false",
+        "samples": 6022,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 0.0010695717432071955,
+        "OUT_max": 1.6108233711385473,
+        "supply_current_min": -0.00048320999546662413,
+        "supply_current_max": 0.009011329280067839,
+        "CTRL_min": 0.9,
+        "CTRL_max": 0.9,
+        "current_flow_status": "available",
+        "template_id": "chip_vco",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 0.7746905489448354,
+        "settled_output_ripple_V": 1.6097536872408917,
+        "average_supply_current_A": 0.00013726999556981973,
+        "average_supply_power_W": 0.00022237739282310797,
+        "output_frequency_Hz": 24775779.225424565
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_vco",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "oscillation crosses both logic rails",
+            "pass": true,
+            "observed": [
+              0.001069680786389235,
+              1.610823368027281
+            ]
+          },
+          {
+            "name": "at least 3 complete output periods measured",
+            "pass": true,
+            "observed": 30
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_vco",
+      "project_id": "e77eaba182894210afc48222161dbe4a",
+      "run_id": "548d8e6a7da04f80a9e4fc2de098bd88",
+      "revision": 1,
+      "corner": "ff",
+      "temperature_C": -40,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 5.40768293000292,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 6515,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.0005240647668680234,
+        "OUT_max": 1.7949005464251058,
+        "supply_current_min": -0.00022801451604970852,
+        "supply_current_max": 0.008494860817810902,
+        "CTRL_min": 0.9,
+        "CTRL_max": 0.9,
+        "current_flow_status": "available",
+        "template_id": "chip_vco",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 0.8435670495076225,
+        "settled_output_ripple_V": 1.7953648704923058,
+        "average_supply_current_A": 0.0002163802127006781,
+        "average_supply_power_W": 0.0003894843828612206,
+        "output_frequency_Hz": 36714249.02171837
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_vco",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "oscillation crosses both logic rails",
+            "pass": true,
+            "observed": [
+              -0.0004713103543970386,
+              1.7948935601379088
+            ]
+          },
+          {
+            "name": "at least 3 complete output periods measured",
+            "pass": true,
+            "observed": 44
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_pll",
+      "project_id": "25f807ee4adc492ebb0b2e1b8d225578",
+      "run_id": "d60662bf9e8c40aa98bd6e8dc97f1e36",
+      "revision": 1,
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 13.734598685055971,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 32386,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 0.00017845902957847222,
+        "OUT_max": 1.7969048230326903,
+        "supply_current_min": 0.00011570346275659171,
+        "supply_current_max": 0.0048429780802021274,
+        "REF_min": 0,
+        "REF_max": 1.8,
+        "PD_min": -0.06456098555013233,
+        "PD_max": 1.6730423653933222,
+        "TUNE_min": 0.8549699077627044,
+        "TUNE_max": 0.9526346717226561,
+        "CTRL_min": 2.9703233078743663e-05,
+        "CTRL_max": 1.139211300273848,
+        "current_flow_status": "available",
+        "template_id": "chip_pll",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 0.8435617029479157,
+        "settled_output_ripple_V": 1.791992748927003,
+        "average_supply_current_A": 0.0002087129320033802,
+        "average_supply_power_W": 0.00037568327760608436,
+        "output_frequency_Hz": 30000269.298795212,
+        "reference_frequency_Hz": 30000000.00003,
+        "relative_frequency_error": 8.976625507067605e-06,
+        "phase_error_span_deg": 3.762822356591826,
+        "lock_scope": "Last 40% of simulated interval; deterministic frequency/phase-window criterion, not jitter/phase-noise characterization."
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_pll",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "oscillation crosses both logic rails",
+            "pass": true,
+            "observed": [
+              0.0004029111186263923,
+              1.7923956600456294
+            ]
+          },
+          {
+            "name": "at least 3 complete output periods measured",
+            "pass": true,
+            "observed": 180
+          },
+          {
+            "name": "frequency error under 1%",
+            "pass": true,
+            "observed": 8.976625507067605e-06
+          },
+          {
+            "name": "phase error remains bounded within 15 degrees",
+            "pass": true,
+            "observed": 3.762822356591826
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_pll",
+      "project_id": "25f807ee4adc492ebb0b2e1b8d225578",
+      "run_id": "3f7e6041867d4eff96b6f443a3897a79",
+      "revision": 1,
+      "corner": "ss",
+      "temperature_C": 125,
+      "supply_V": 1.62,
+      "execution_status": "completed",
+      "analysis_result": "fail",
+      "elapsed_s": 9.74650794302579,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "post_layout": "false",
+        "samples": 26399,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 0.000787833657839479,
+        "OUT_max": 1.6170639700093197,
+        "supply_current_min": 4.7602284002759565e-05,
+        "supply_current_max": 0.00459243446038473,
+        "REF_min": 0,
+        "REF_max": 1.62,
+        "PD_min": -0.15198271083746273,
+        "PD_max": 1.448191386717039,
+        "TUNE_min": 0.7734306856393701,
+        "TUNE_max": 0.9540878484951041,
+        "CTRL_min": 2.549042949691016e-05,
+        "CTRL_max": 0.7770107343428747,
+        "current_flow_status": "available",
+        "template_id": "chip_pll",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 0.7750383883835669,
+        "settled_output_ripple_V": 1.616235649258476,
+        "average_supply_current_A": 0.00010246165362536171,
+        "average_supply_power_W": 0.000165987878873086,
+        "output_frequency_Hz": 14690669.266031789,
+        "reference_frequency_Hz": 30000000.00003,
+        "relative_frequency_error": 0.5103110244660968,
+        "phase_error_span_deg": 177.84572959885165,
+        "lock_scope": "Last 40% of simulated interval; deterministic frequency/phase-window criterion, not jitter/phase-noise characterization."
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_pll",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "oscillation crosses both logic rails",
+            "pass": true,
+            "observed": [
+              0.0007925674913141327,
+              1.61702821674979
+            ]
+          },
+          {
+            "name": "at least 3 complete output periods measured",
+            "pass": true,
+            "observed": 88
+          },
+          {
+            "name": "frequency error under 1%",
+            "pass": false,
+            "observed": 0.5103110244660968
+          },
+          {
+            "name": "phase error remains bounded within 15 degrees",
+            "pass": false,
+            "observed": 177.84572959885165
+          }
+        ],
+        "pass": false,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_pll",
+      "project_id": "25f807ee4adc492ebb0b2e1b8d225578",
+      "run_id": "53ca054d537d4237aa4bb0400e50b7be",
+      "revision": 1,
+      "corner": "ff",
+      "temperature_C": -40,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "analysis_result": "fail",
+      "elapsed_s": 22.304974026046693,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 40278,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.0006356888932036548,
+        "OUT_max": 1.7993434416846419,
+        "supply_current_min": 0.00013950443947390034,
+        "supply_current_max": 0.0046117583680965885,
+        "REF_min": 0,
+        "REF_max": 1.8,
+        "PD_min": -0.05924988703960346,
+        "PD_max": 1.7209928223638709,
+        "TUNE_min": 0.8538491419536932,
+        "TUNE_max": 0.9488426809036552,
+        "CTRL_min": 1.810265153777864e-05,
+        "CTRL_max": 0.9346059406286488,
+        "current_flow_status": "available",
+        "template_id": "chip_pll",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 0.8324692541590206,
+        "settled_output_ripple_V": 1.7983290431709942,
+        "average_supply_current_A": 0.0002423919918120732,
+        "average_supply_power_W": 0.00043630558526173177,
+        "output_frequency_Hz": 36000595.08224337,
+        "reference_frequency_Hz": 30000000.00003,
+        "relative_frequency_error": 0.20001983607357893,
+        "phase_error_span_deg": 175.5287874203472,
+        "lock_scope": "Last 40% of simulated interval; deterministic frequency/phase-window criterion, not jitter/phase-noise characterization."
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_pll",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "oscillation crosses both logic rails",
+            "pass": true,
+            "observed": [
+              -0.0006356888932036548,
+              1.7976933542777904
+            ]
+          },
+          {
+            "name": "at least 3 complete output periods measured",
+            "pass": true,
+            "observed": 216
+          },
+          {
+            "name": "frequency error under 1%",
+            "pass": false,
+            "observed": 0.20001983607357893
+          },
+          {
+            "name": "phase error remains bounded within 15 degrees",
+            "pass": false,
+            "observed": 175.5287874203472
+          }
+        ],
+        "pass": false,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_ota",
+      "project_id": "3c8a960d3f4c49d3aca603ed615f8528",
+      "run_id": "1fde290377b34ddfb7b4a2bcda07fe0f",
+      "revision": 1,
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 0.3287352769402787,
+      "measurements": {
+        "analysis": "ac",
+        "x_unit": "Hz",
+        "x_label": "frequency",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 321,
+        "solver": "SPARSE 1.3",
+        "OUT_gain_min": 0.016783098913266004,
+        "OUT_gain_max": 114.64919509635646,
+        "OUT_phase_min": 45.91643831912205,
+        "OUT_phase_max": 179.997577129925,
+        "current_flow_status": "unsupported_complex_ac",
+        "template_id": "chip_ota",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "low_frequency_gain_V_per_V": 114.64919509635646,
+        "low_frequency_gain_dB": 41.18742020156549,
+        "bandwidth_3dB_Hz": 236778.57146596856
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_ota",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "OTA low-frequency gain exceeds 10 V/V",
+            "pass": true,
+            "observed": 114.64919509635646
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_ota",
+      "project_id": "3c8a960d3f4c49d3aca603ed615f8528",
+      "run_id": "01a157d4786f4369b6b769598ed42eb0",
+      "revision": 1,
+      "corner": "ss",
+      "temperature_C": 125,
+      "supply_V": 1.62,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 0.3154724769992754,
+      "measurements": {
+        "analysis": "ac",
+        "x_unit": "Hz",
+        "x_label": "frequency",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "post_layout": "false",
+        "samples": 321,
+        "solver": "SPARSE 1.3",
+        "OUT_gain_min": 0.013551551646505603,
+        "OUT_gain_max": 78.54944382419556,
+        "OUT_phase_min": 37.102398831589916,
+        "OUT_phase_max": 179.997509219043,
+        "current_flow_status": "unsupported_complex_ac",
+        "template_id": "chip_ota",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "low_frequency_gain_V_per_V": 78.54944382419556,
+        "low_frequency_gain_dB": 37.902862286580834,
+        "bandwidth_3dB_Hz": 230380.18796586109
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_ota",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "OTA low-frequency gain exceeds 10 V/V",
+            "pass": true,
+            "observed": 78.54944382419556
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_ota",
+      "project_id": "3c8a960d3f4c49d3aca603ed615f8528",
+      "run_id": "1de99edeb8874f29b5fd4bca8e141140",
+      "revision": 1,
+      "corner": "ff",
+      "temperature_C": -40,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 0.3164336100453511,
+      "measurements": {
+        "analysis": "ac",
+        "x_unit": "Hz",
+        "x_label": "frequency",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 321,
+        "solver": "SPARSE 1.3",
+        "OUT_gain_min": 0.02181148999692377,
+        "OUT_gain_max": 109.35747436858713,
+        "OUT_phase_min": 49.83924545440117,
+        "OUT_phase_max": 179.9983545359122,
+        "current_flow_status": "unsupported_complex_ac",
+        "template_id": "chip_ota",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "low_frequency_gain_V_per_V": 109.35747436858713,
+        "low_frequency_gain_dB": 40.77696943125896,
+        "bandwidth_3dB_Hz": 348628.2140261745
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_ota",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "OTA low-frequency gain exceeds 10 V/V",
+            "pass": true,
+            "observed": 109.35747436858713
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_comparator",
+      "project_id": "c150d87f906d4448a04347f605429251",
+      "run_id": "4bc406ec014041c1968130ea554f496f",
+      "revision": 1,
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 0.7406807369552553,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 4048,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.003302597287391112,
+        "OUT_max": 1.8099465606266065,
+        "supply_current_min": 4.6653193868720355e-06,
+        "supply_current_max": 0.00013867669755984052,
+        "INP_min": 0.85,
+        "INP_max": 0.9500000000000001,
+        "INN_min": 0.9,
+        "INN_max": 0.9,
+        "PRE_min": 0.23017835128499775,
+        "PRE_max": 1.7621681321745395,
+        "current_flow_status": "available",
+        "template_id": "chip_comparator",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 1.7892218151713735,
+        "settled_output_ripple_V": 1.8102042627154833,
+        "average_supply_current_A": 1.9724046257405065e-05,
+        "average_supply_power_W": 3.5503283263329116e-05
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_comparator",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "negative input logic level",
+            "pass": true,
+            "observed": [
+              3.4030566927779893e-10,
+              3.4030567057884153e-10
+            ]
+          },
+          {
+            "name": "positive input logic level",
+            "pass": true,
+            "observed": [
+              1.79999923104508,
+              1.7999992310450807
+            ]
+          },
+          {
+            "name": "negative recovery logic level",
+            "pass": true,
+            "observed": [
+              3.4030566927779893e-10,
+              3.4030567057884153e-10
+            ]
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_comparator",
+      "project_id": "c150d87f906d4448a04347f605429251",
+      "run_id": "89f4c7e7c76e489992c5f6caade32137",
+      "revision": 1,
+      "corner": "ss",
+      "temperature_C": 125,
+      "supply_V": 1.62,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 0.7173263820586726,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "post_layout": "false",
+        "samples": 4041,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.0026475454907394294,
+        "OUT_max": 1.6282206844679183,
+        "supply_current_min": 6.959050013896628e-06,
+        "supply_current_max": 8.766771938020779e-05,
+        "INP_min": 0.85,
+        "INP_max": 0.9500000000000001,
+        "INN_min": 0.9,
+        "INN_max": 0.9,
+        "PRE_min": 0.27351411749217797,
+        "PRE_max": 1.5690104447910929,
+        "current_flow_status": "available",
+        "template_id": "chip_comparator",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 1.6074025385448663,
+        "settled_output_ripple_V": 1.62857215782532,
+        "average_supply_current_A": 1.5720170376681715e-05,
+        "average_supply_power_W": 2.546667601022438e-05
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_comparator",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "negative input logic level",
+            "pass": true,
+            "observed": [
+              7.963089548000679e-09,
+              7.963089550602764e-09
+            ]
+          },
+          {
+            "name": "positive input logic level",
+            "pass": true,
+            "observed": [
+              1.6199706850288011,
+              1.6199706850288018
+            ]
+          },
+          {
+            "name": "negative recovery logic level",
+            "pass": true,
+            "observed": [
+              7.963089548000679e-09,
+              7.963089550602764e-09
+            ]
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    },
+    {
+      "reference": "chip_comparator",
+      "project_id": "c150d87f906d4448a04347f605429251",
+      "run_id": "28349f00501f475ea7e9ff0d644f5ac9",
+      "revision": 1,
+      "corner": "ff",
+      "temperature_C": -40,
+      "supply_V": 1.8,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "elapsed_s": 0.7700772129464895,
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 4050,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.0030065634563553392,
+        "OUT_max": 1.8113610270775786,
+        "supply_current_min": 6.337252777960378e-07,
+        "supply_current_max": 0.00018089892909228106,
+        "INP_min": 0.85,
+        "INP_max": 0.9500000000000001,
+        "INN_min": 0.9,
+        "INN_max": 0.9,
+        "PRE_min": 0.19864619448623866,
+        "PRE_max": 1.7684876540755514,
+        "current_flow_status": "available",
+        "template_id": "chip_comparator",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+        "settled_output_mean_V": 1.7917588625294893,
+        "settled_output_ripple_V": 1.8117591489749798,
+        "average_supply_current_A": 2.4798477897183136e-05,
+        "average_supply_power_W": 4.463726021492965e-05
+      },
+      "verification": {
+        "schema_version": 1,
+        "kind": "chip_comparator",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "negative input logic level",
+            "pass": true,
+            "observed": [
+              2.179500909176707e-10,
+              2.1795009232713353e-10
+            ]
+          },
+          {
+            "name": "positive input logic level",
+            "pass": true,
+            "observed": [
+              1.7999999749017355,
+              1.799999974901736
+            ]
+          },
+          {
+            "name": "negative recovery logic level",
+            "pass": true,
+            "observed": [
+              2.179500909176707e-10,
+              2.1795009232713353e-10
+            ]
+          }
+        ],
+        "pass": true,
+        "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+      }
+    }
+  ],
+  "bundle_checks": [
+    {
+      "reference": "chip_ldo",
+      "bundle_reopens": true,
+      "imported_runs": 0,
+      "shapes": 0,
+      "drc_lvs_pex_rejected": true
+    },
+    {
+      "reference": "chip_sc_dcdc",
+      "bundle_reopens": true,
+      "imported_runs": 0,
+      "shapes": 0,
+      "drc_lvs_pex_rejected": true
+    },
+    {
+      "reference": "chip_vco",
+      "bundle_reopens": true,
+      "imported_runs": 0,
+      "shapes": 0,
+      "drc_lvs_pex_rejected": true
+    },
+    {
+      "reference": "chip_pll",
+      "bundle_reopens": true,
+      "imported_runs": 0,
+      "shapes": 0,
+      "drc_lvs_pex_rejected": true
+    },
+    {
+      "reference": "chip_ota",
+      "bundle_reopens": true,
+      "imported_runs": 0,
+      "shapes": 0,
+      "drc_lvs_pex_rejected": true
+    },
+    {
+      "reference": "chip_comparator",
+      "bundle_reopens": true,
+      "imported_runs": 0,
+      "shapes": 0,
+      "drc_lvs_pex_rejected": true
+    }
+  ],
+  "physical_layout_generated": false,
+  "physical_signoff": false,
+  "paid_api_calls": 0,
+  "ui_validation": {
+    "project_created_through_app": true,
+    "native_job_reexecuted": true,
+    "criteria_display": "4/4",
+    "terminal_current_and_voltage_drop_visible": true,
+    "hierarchy_opened": "RING_VCO",
+    "old_waveforms_preserved": true
+  },
+  "waveform_precision_digits": 17,
+  "non_ac_current_branches_verified": true,
+  "strictly_increasing_waveform_axes_verified": true
+}

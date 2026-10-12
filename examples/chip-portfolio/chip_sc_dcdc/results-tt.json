@@ -1,0 +1,71 @@
+{
+  "reference": "chip_sc_dcdc",
+  "project_id": "90fdb7116b924ea3a5ebaedf836df84c",
+  "run_id": "31aa49fcf9a04a44af5e6274207a0d85",
+  "revision": 1,
+  "corner": "tt",
+  "temperature_C": 27,
+  "supply_V": 1.8,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "elapsed_s": 2.2043262269580737,
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "false",
+    "samples": 16707,
+    "solver": "SPARSE 1.3",
+    "OUT_min": 0.000018638907009525764,
+    "OUT_max": 0.8890655388942483,
+    "supply_current_min": -0.00033471597495784294,
+    "supply_current_max": 0.007459033255460254,
+    "FLYTOP_min": 0.1834896862381569,
+    "FLYTOP_max": 1.8340491873299951,
+    "FLYBOTTOM_min": -0.16526287276413804,
+    "FLYBOTTOM_max": 1.0670046296732032,
+    "PHI1_min": 0,
+    "PHI1_max": 1.8,
+    "PHI2_min": 0,
+    "PHI2_max": 1.8,
+    "current_flow_status": "available",
+    "template_id": "chip_sc_dcdc",
+    "layout_status": "not-generated",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "schematic-only; external ideal testbench components; no physical signoff",
+    "settled_output_mean_V": 0.8888300309016713,
+    "settled_output_ripple_V": 0.00047713453707132203,
+    "average_supply_current_A": 0.000009016344103296306,
+    "average_supply_power_W": 0.00001622941938593335,
+    "output_power_W": 0.000015800376828658275,
+    "power_stage_efficiency": 0.9735638997876324,
+    "efficiency_scope": "Includes DUT MOS loss and VDD current; excludes externally supplied clock-driver power."
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "chip_sc_dcdc",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "output near Vin/2",
+        "pass": true,
+        "observed": 0.8888300309016713
+      },
+      {
+        "name": "non-overlap clock high windows do not intersect",
+        "pass": true,
+        "observed": null
+      },
+      {
+        "name": "power-stage efficiency within physical bounds",
+        "pass": true,
+        "observed": 0.9735638997876324
+      }
+    ],
+    "pass": true,
+    "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+  }
+}

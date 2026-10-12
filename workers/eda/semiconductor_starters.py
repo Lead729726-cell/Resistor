@@ -9,6 +9,7 @@ from geometry import EDAError
 import native
 import profile
 import design_tools
+import chip_references
 
 S = None
 VERSION = 'register-semiconductor-starters-1'
@@ -70,6 +71,11 @@ PRESETS = {
         'testbench': {'analysis': 'tran', 'duration_s': 200e-9, 'step_s': 100e-12},
         'observe': ['계단 입력 뒤 OUT 상승과 측정 시정수 확인', '이상적 RC이며 반도체 공정 효과는 포함하지 않음']},
 }
+for key, row in chip_references.CATALOG.items():
+    PRESETS[key]={'title':row['name'],'subtitle':row['scope'],'category':'칩 포트폴리오 · '+row['category'],
+        'template_id':key,'parameters':copy.deepcopy(row['parameter_defaults']),'physical_core':False,'layout':'schematic',
+        'features':row['targets'],'observe':['계층 내부의 실제 MOS·RC와 외부 입력 조건을 살펴보세요.','실제 파형 검사 결과와 실패 항목을 확인하세요.','소자·보상·클록을 변경하고 다시 해석하세요.'],
+        'testbench':{**chip_references.SETTINGS[key],'load_F':row['parameter_defaults'].get('output_F',row['parameter_defaults'].get('load_F',row['parameter_defaults'].get('stage_F',5e-15)))}}
 
 
 def configure(server):

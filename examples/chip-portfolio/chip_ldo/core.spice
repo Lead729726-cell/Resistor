@@ -1,0 +1,19 @@
+.subckt ERROR_AMP INP INN BIAS OUT VPWR VGND
+XN_INN MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+XN_INP OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+XN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+XP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+XP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+.ends ERROR_AMP
+.subckt chip_ldo VREF BIAS OUT VPWR VGND
+CC_COMP GATE COMP 2e-11
+XERROR_AMP VREF FB BIAS GATE VPWR VGND ERROR_AMP
+XPASS0 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1
+XPASS1 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1
+XPASS2 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1
+XPASS3 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1
+XPASS4 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1
+RR_FB_BOTTOM FB VGND 200000
+RR_FB_TOP OUT FB 200000
+RR_ZERO COMP OUT 1000
+.ends chip_ldo

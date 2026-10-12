@@ -774,9 +774,10 @@ def simulation(run,p,folder,manifest,params):
         run['measurements']=measurements
         digital_units.verify(p,run,params)
         measurements=run['measurements']
-    verdict=run.get('digital_verification') or run.get('unit_verification')
-    result='fail' if verdict and not verdict['pass'] else 'pass'
-    suffix=f"; {verdict.get('kind','MUX')} truth {verdict['passed_cases']}/{verdict['expected_cases']}" if verdict else ''
+    reference=run.get('reference_verification')
+    verdict=run.get('digital_verification') or run.get('unit_verification') or reference
+    result='unknown' if verdict and verdict.get('pass') is None else 'fail' if verdict and not verdict['pass'] else 'pass'
+    suffix=(f"; reference criteria {sum(c['pass'] for c in reference['checks'])}/{len(reference['checks'])}" if reference else f"; {verdict.get('kind','MUX')} truth {verdict['passed_cases']}/{verdict['expected_cases']}" if verdict else '')
     run.update(analysis_result=result,waveforms=run['waveforms'],measurements=measurements,message=f'Actual ngspice {params.get("analysis","tran")}: {len(values)} samples.'+suffix)
     run['artifacts'].update(testbench=str(deck),waveform_data=str(path),waveform_raw=str(folder/'waveform.raw'),reference_netlist=str(netlist))
 

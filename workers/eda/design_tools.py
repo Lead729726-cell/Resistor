@@ -18,6 +18,7 @@ import native
 import profile
 import templates as physical_templates
 import digital_mux
+import chip_references
 
 S = None
 VERSION = 'register-design-tools-2'
@@ -223,6 +224,7 @@ CATALOG = {
     'current_mirror':{'name':'NMOS 전류 미러','parameter_defaults':{'w_um':.65,'l_um':.15,'reference_current_A':100e-6},'ports':['REF','OUT','VGND'],'analyses':['op','dc','tran'],'physical_status':'optional-fixed-public-core'},
     'differential_pair':{'name':'NMOS 차동 쌍','parameter_defaults':{'w_um':.65,'l_um':.15,'common_mode_V':.9,'tail_bias_V':.7,'differential_V':.01},'ports':['INP','INN','OUTP','OUTN','BIAS','VGND'],'analyses':['op','dc','tran'],'physical_status':'optional-fixed-public-core'}
 }
+CATALOG.update(chip_references.CATALOG)
 
 def catalog():
     return {'schema_version':1,'templates':[{'id':key,**copy.deepcopy(value),'limits':['Actual native schematic and public ngspice models; no commercial execution claim.','Empty layout is not generated or physically verified.','Optional mirror/differential/MUX4 cores support only fixed W=0.65um L=0.15um nf=m=1; independent DRC/LVS required.']} for key,value in CATALOG.items()]}
@@ -240,9 +242,10 @@ def _parameters(template,raw):
     if template=='mux4':
         if not .5<=values['slot_ns']<=1000 or not .01<=values['rise_ns']<=values['slot_ns']*.1:raise EDAError('PARAMETER_RANGE','MUX slot must be 0.5..1000ns and rise 0.01ns..10% of slot.')
     if 'w_um' in values:native.validate_device({'id':'probe','name':'N','kind':'nmos','model':'sky130_fd_pr__nfet_01v8','pins':dict.fromkeys(('D','G','S','B'),'0'),'parameters':{'w_um':values['w_um'],'l_um':values['l_um'],'nf':1,'m':1}})
-    return values
+    return chip_references.parameters(template,values) if template in chip_references.CATALOG else values
 
 def _schematic(template,params):
+    if template in chip_references.CATALOG:return chip_references.schematic(template,params)
     if template=='mux4':return digital_mux.schematic(params['w_um'],params['l_um'])
     devices=[]
     def device(id,name,kind,pins,parameters,**extra):
@@ -313,6 +316,9 @@ def create_template(params):
             duration=64*values['slot_ns']*1e-9 if template=='mux4' else 200e-9 if template=='rc_lowpass' else 100e-9
             meta={'schema_version':1,'id':template,'parameters':values,'layout_status':'generated-public-core' if physical else 'not-generated','physical_verification':'not-run','stimulus_source':'owned-template','ground_port':'VGND','generated_by':VERSION}
             p={'schema_version':1,'id':pid,'name':name,'cell':cell,'pdk_id':'sky130A','revision':1,'dbu_um':layout.dbu,'grid_dbu':5,'source':'pdk' if physical else 'fixture','example':template,'layers':[],'schematic':schematic,'testbench':native.testbench({'duration_s':duration,'step_s':100e-12,'analysis':'tran' if template in ('rc_lowpass','mux4') else 'op'}),'runs':[],'ports':list(CATALOG[template]['ports']),'redo_stack':[],'undo_stack':[],'next_revision':2,'design_template':meta,'layout_parameter_policy':'fixed_public_analog_core' if physical else 'schematic-only-no-generated-layout'}
+            if template in chip_references.CATALOG:
+                p['testbench']=native.testbench(chip_references.SETTINGS[template])
+                meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True)
             if starter:
                 p.update(testbench=copy.deepcopy(starter['testbench']),semiconductor_starter=copy.deepcopy(starter['metadata']))
             return S.commit(p,layout)
@@ -356,6 +362,7 @@ def _stimuli(p,settings):
 
 def pvt_sources(p):
     meta=validate_template_project(p);kind=meta['id']
+    if kind in chip_references.CATALOG:return {'bindings':[{'kind':'testbench','source_names':['VDD']}],'analyses':CATALOG[kind]['analyses'],'source':'owned-chip-reference-stimuli','limits':['VREF and BIAS remain external fixed sources. Lock/stability must be checked at each PVT point.']}
     sources,analyses={
         'mux4':(['VDD'],['tran']),
         'rc_lowpass':(['VIN'],['tran']),
@@ -375,6 +382,7 @@ def spice_tb(p,folder,params,netlist):
         fields=line.split()
         if len(fields)>=2 and fields[0].lower()=='.subckt' and fields[1].lower()==p['cell'].lower():sub=fields[2:];break
     if sub is None or len(sub)!=len(p['ports']) or len(set(sub))!=len(sub) or set(sub)!=set(p['ports']):raise EDAError('PORT_MISMATCH','Actual emitted/extracted subcircuit ports differ from explicit template declarations.')
+    if meta['id'] in chip_references.CATALOG:return chip_references.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']))
     sources,names,vectors,units,sweep=_stimuli(p,settings);deck=supported_model_deck(folder,settings['corner'])
     lines=['Register actual native '+meta['id'],f'.include "{deck}"','.option scale=1e-6',f'.include "{netlist}"',f'.temp {settings["temperature_C"]}',*sources,'XU '+' '.join(sub)+' '+p['cell'],'.control','set num_threads=1','set noaskquit','set wr_singlescale','set wr_vecnames']
     if meta['id']=='mux4':lines.insert(1,'.options method=gear maxord=2')
@@ -397,6 +405,9 @@ def measurements(p,run,params):
     if not p.get('design_template'):return
     meta=validate_template_project(p);waves={w['name']:w for w in run.get('waveforms',[])};m=run.setdefault('measurements',{});m['template_id']=meta['id'];m['layout_status']=meta['layout_status'];m['metric_source']='actual-ngspice-samples'
     analysis=params.get('analysis',p['testbench']['analysis']);kind=meta['id']
+    if kind in chip_references.CATALOG:
+        chip_references.measurements(p,run,params)
+        return
     if kind=='mux4':digital_mux.verify(run,native.testbench({**p.get('testbench',{}),**{key:params[key] for key in native.TESTBENCH if key in params}}),meta['parameters'])
     if kind=='rc_lowpass' and analysis=='tran' and 'OUT' in waves:
         wave=waves['OUT'];x,y=wave['x'],wave['y'];supply=native.num(params.get('supply_V',p['testbench']['supply_V']));target=supply*(1-math.exp(-1));cross=None

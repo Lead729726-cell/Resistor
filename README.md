@@ -9,6 +9,13 @@
 따라갑니다. 10개 챕터, 한국어 음성·자막과 실습 프로젝트를 제공합니다.
 촬영 화면은 이름 변경 전 Register 0.16.0이며 현재 제품명은 Resistor입니다.
 
+[칩 설계 포트폴리오 레퍼런스 6종](examples/chip-portfolio/README.md): PLL, LDO,
+2:1 switched-capacitor DC-DC, VCO, OTA와 비교기를 실제 SKY130 모델로 해석했습니다.
+최신 소스 앱의 **프로젝트 도구 → 내 반도체**에서 생성할 수 있습니다.
+계층 회로·프로젝트 ZIP·파형 CSV·그림·PVT 보고서를 제공하며 레이아웃과 제조 검증은
+미실행입니다. 기본 TT는 6종 모두 해당 파형 기준을 충족했고 PLL의 SS/FF 잠금 실패도
+함께 기록했습니다.
+
 전자공학 계산기와 회로·레이아웃·시뮬레이션을 연결하는 오픈소스 작업공간입니다.
 계산은 결정적인 수학 로직으로 수행하며, EDA 결과는 실제 해석 엔진의 수치와
 설계 revision을 함께 표시합니다. A deterministic electronics calculator hub and

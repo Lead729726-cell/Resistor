@@ -1,0 +1,55 @@
+Resistor actual SKY130 chip reference chip_comparator
+.options method=gear maxord=2
+.include "./supported-tt.spice"
+.option scale=1e-6
+.include "./current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VBIAS BIAS VGND 0.9
+VINN INN VGND 0.9
+VINP INP VGND PULSE(0.85 0.95 1u 2n 2n 1u 2u)
+COUT OUT VGND 5e-14
+XU INP INN BIAS OUT VPWR VGND chip_comparator
+.control
+save all i(v.xu.vregister_cf_11c997d2fb65d3f3) i(v.xu.vregister_cf_7c299422efe0f5e4) i(v.xu.xpreamp.vregister_cf_f5e6bb569eae4e57) i(v.xu.xpreamp.vregister_cf_8dfc281901a76fd7) i(v.xu.xpreamp.vregister_cf_982336a84ede3d8c) i(v.xu.xpreamp.vregister_cf_fa301aca43866ffd) i(v.xu.xpreamp.vregister_cf_ba06122c33a0aac9) i(VGND) i(VDD) i(VBIAS) i(VINN) i(VINP) v(OUT) v(VGND) v(XU.PRE) v(VPWR) v(XU.XPREAMP.MIR) v(XU.XPREAMP.TAIL) v(INN) v(INP) v(BIAS)
+set num_threads=1
+set numdgt=17
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 1e-09 4e-06
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(INP)
+let mos_wave_3 = v(INN)
+let mos_wave_4 = v(xu.PRE)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3 mos_wave_4
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_11c997d2fb65d3f3)
+let register_flow_1 = i(v.xu.vregister_cf_7c299422efe0f5e4)
+let register_flow_2 = i(v.xu.xpreamp.vregister_cf_f5e6bb569eae4e57)
+let register_flow_3 = i(v.xu.xpreamp.vregister_cf_8dfc281901a76fd7)
+let register_flow_4 = i(v.xu.xpreamp.vregister_cf_982336a84ede3d8c)
+let register_flow_5 = i(v.xu.xpreamp.vregister_cf_fa301aca43866ffd)
+let register_flow_6 = i(v.xu.xpreamp.vregister_cf_ba06122c33a0aac9)
+let register_flow_7 = i(VGND)
+let register_flow_8 = i(VDD)
+let register_flow_9 = i(VBIAS)
+let register_flow_10 = i(VINN)
+let register_flow_11 = i(VINP)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11
+let register_voltage_0 = v(OUT)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(XU.PRE)
+let register_voltage_3 = v(VPWR)
+let register_voltage_4 = v(XU.XPREAMP.MIR)
+let register_voltage_5 = v(XU.XPREAMP.TAIL)
+let register_voltage_6 = v(INN)
+let register_voltage_7 = v(INP)
+let register_voltage_8 = v(BIAS)
+let register_voltage_9 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9
+quit
+.endc
+.end
