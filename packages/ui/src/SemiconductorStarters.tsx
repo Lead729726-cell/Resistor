@@ -19,6 +19,7 @@ export default function SemiconductorStarters({ project, disabledReason, onProje
   const [mode, setMode] = useState<StarterMode>(project?.semiconductor_starter?.mode || 'nominal');
   const [name, setName] = useState(''), [nameTouched, setNameTouched] = useState(false), [runNow, setRunNow] = useState(false);
   const [busy, setBusy] = useState(false), [loading, setLoading] = useState(true), [error, setError] = useState('');
+  const [category,setCategory]=useState('전체');
   const live = useRef(true), command = useRef<{ signature: string; id: string } | null>(null);
   const created = useRef<Project | null>(null), launched = useRef<Run | null>(null);
   const loadCatalog = async () => {
@@ -68,8 +69,9 @@ export default function SemiconductorStarters({ project, disabledReason, onProje
         {process && <div className="starter-process-detail"><p>{process.features.join(' · ')}</p><span>PDK 파일 {process.installed ? '설치됨' : '미설치'} · {process.execution_available ? '스타터 어댑터 연결됨' : '스타터 모델·물리 어댑터 연결 필요'}</span><a href={process.source_url} target="_blank" rel="noreferrer">공식 공정 자료 ↗</a></div>}
         {process && !process.execution_available ? <div className="starter-unavailable"><ChipGlyph/><h4>{process.name}의 공정 특징을 비교할 수 있습니다.</h4><p>{process.reason || '현재 worker에 공개 SKY130 모델과 물리 설계 리소스가 준비되어 있지 않습니다.'}</p><p>이 공정의 전압을 SKY130 모델에 적용해 다른 공정처럼 표시하지 않습니다.</p><button className="button" disabled={busy} onClick={() => setTechnology('sky130A')}>SKY130 시작 설계 살펴보기</button></div> : <>
           <div className="starter-step-label"><b>02</b><h4>내 반도체의 역할 선택하기</h4><span>편집 가능한 실제 회로</span></div>
+          <label className="starter-category">설계 종류<select aria-label="시작 설계 종류" value={category} onChange={e=>setCategory(e.target.value)}><option>전체</option>{[...new Set(catalog.presets.filter(p=>p.technology_id===technology).map(p=>p.category))].map(c=><option key={c}>{c}</option>)}</select></label>
           <div className="starter-cards" role="group" aria-label="반도체 시작 설계 선택">
-            {catalog.presets.filter(item => item.technology_id === technology).map((item, index) => <button type="button" key={item.id} className={`starter-card ${selected === item.id ? 'selected' : ''}`} aria-pressed={selected === item.id} disabled={busy} data-testid={`starter-${item.id}`} onClick={() => selectPreset(item)}>
+            {catalog.presets.filter(item => item.technology_id === technology&&(category==='전체'||category===item.category)).map((item, index) => <button type="button" key={item.id} className={`starter-card ${selected === item.id ? 'selected' : ''}`} aria-pressed={selected === item.id} disabled={busy} data-testid={`starter-${item.id}`} onClick={() => selectPreset(item)}>
               <div className="starter-card-top"><ChipGlyph variant={index}/><span>{item.category}</span><span className="starter-selection">{selected === item.id ? '✓' : '+'}</span></div><strong>{item.title}</strong><p>{item.subtitle}</p><ul>{item.features.map(feature => <li key={feature}>{feature}</li>)}</ul><small>{item.layout === 'physical' ? '회로도 + 실제 물리 레이아웃' : '회로도 준비 · 레이아웃 미생성'}</small>
             </button>)}
           </div>

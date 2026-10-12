@@ -9,6 +9,19 @@
 따라갑니다. 10개 챕터, 한국어 음성·자막과 실습 프로젝트를 제공합니다.
 촬영 화면은 이름 변경 전 Register 0.16.0이며 현재 제품명은 Resistor입니다.
 
+[0.17.0 물리 설계 라이브러리 · 14개 실습](examples/physical-library/README.md):
+INV, NAND2, NOR2, AND2, OR2, XOR2, XNOR2, MUX2와 LDO, DC-DC, VCO, PLL, OTA, 비교기의
+실제 SKY130 PCell·접촉·배선을 제공합니다. 14개 모두 Magic DRC·Netgen LVS·Magic PEX를
+실행했고, 기생 후 이름 있는 동작 기준은 13개 통과했습니다. PLL의 잠금 FAIL과 원본
+파형은 보존했습니다. TT/27°C/1.8V 및 typical RC 범위이며 제조 승인은 별도입니다.
+
+[기본 셀 제작 영상](https://resistor-downloads.vercel.app/tutorial/physical-logic) ·
+[6개 칩 물리 설계 영상](https://resistor-downloads.vercel.app/tutorial/physical-chips) ·
+[설계·파형 모음](https://resistor-downloads.vercel.app/references/).
+실제 앱 조작을 녹화한 1080p 한국어 음성·자막 영상과 셀별 제작 절차, 편집 프로젝트,
+GDS/OASIS, 회로, 원본 검사·추출 보고서와 전후 파형을 제공합니다.
+기존 회로 전용 레퍼런스는 아래와 같이 보존합니다.
+
 [칩 설계 포트폴리오 레퍼런스 6종](examples/chip-portfolio/README.md): PLL, LDO,
 2:1 switched-capacitor DC-DC, VCO, OTA와 비교기를 실제 SKY130 모델로 해석했습니다.
 최신 소스 앱의 **프로젝트 도구 → 내 반도체**에서 생성할 수 있습니다.

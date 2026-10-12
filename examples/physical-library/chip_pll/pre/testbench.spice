@@ -1,0 +1,88 @@
+Resistor actual SKY130 chip reference chip_pll
+.options method=gear maxord=2
+.include "./supported-tt.spice"
+.option scale=1e-6
+.include "./current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VREF REF VGND PULSE(0 1.8 1n 100p 100p 1.65666666667e-08 3.33333333333e-08)
+.ic v(xu.OSCILLATOR__Q0)=0.1 v(xu.OSCILLATOR__Q1)=1.5 v(OUT)=0.2 v(CTRL)=0.9 v(xu.TUNE)=0.9
+XU REF CTRL OUT VPWR VGND chip_pll
+.control
+save v(OUT) i(VDD) v(REF) v(xu.PD) v(xu.TUNE) v(CTRL) i(v.xu.vregister_cf_611a7adabea56164) i(v.xu.vregister_cf_187c69a86515739c) i(v.xu.vregister_cf_a41d16a1047ed44c) i(v.xu.vregister_cf_a5809a940a210ff5) i(v.xu.vregister_cf_99ed6bf5d6c7bade) i(v.xu.vregister_cf_ab654e91d81305b5) i(v.xu.vregister_cf_d6fb0d00764270e1) i(v.xu.vregister_cf_2c754be20e9e1083) i(v.xu.vregister_cf_1a3836b0030729ef) i(v.xu.vregister_cf_99467f97a98d1e39) i(v.xu.vregister_cf_0fbff0300d425579) i(v.xu.vregister_cf_5860662fe1480ac2) i(v.xu.vregister_cf_b69ae517540b2da5) i(v.xu.vregister_cf_2b04b12e7e7fb88e) i(v.xu.vregister_cf_26863b5b6a00a9b8) i(v.xu.vregister_cf_bf95df23174799b1) i(v.xu.vregister_cf_59c5e519cc6ea3dc) i(v.xu.vregister_cf_8ad12ec1b4273416) i(v.xu.vregister_cf_0cf3ac7f9ba937db) i(v.xu.vregister_cf_c7ee7188f4699fd8) i(v.xu.vregister_cf_6d8948e956e490f2) i(v.xu.vregister_cf_992318c7d2516a90) i(v.xu.vregister_cf_66628a149eec7f39) i(v.xu.vregister_cf_72eb237a9c70e0c8) i(v.xu.vregister_cf_b6faa3d82ecafa3c) i(v.xu.vregister_cf_f1573a7f38d30d90) i(v.xu.vregister_cf_e0da7734c409f930) i(v.xu.vregister_cf_c9be47f7b2f94d83) i(v.xu.vregister_cf_d6673d65708192b0) i(v.xu.vregister_cf_4ed801369ef5996c) i(VGND) i(VREF) v(XU.OSCILLATOR__PBIAS) v(VGND) v(XU.TUNE) v(XU.OSCILLATOR__Q0) v(XU.OSCILLATOR__N0) v(XU.OSCILLATOR__Q1) v(XU.OSCILLATOR__N1) v(XU.OSCILLATOR__N2) v(VPWR) v(XU.OSCILLATOR__P0) v(XU.OSCILLATOR__P1) v(XU.OSCILLATOR__P2) v(XU.PHASE_DETECTOR__N1) v(XU.PHASE_DETECTOR__N1__N1) v(XU.PHASE_DETECTOR__N2) v(XU.PHASE_DETECTOR__N2__N1) v(XU.PHASE_DETECTOR__N3) v(XU.PHASE_DETECTOR__N3__N1) v(XU.PD) v(XU.PHASE_DETECTOR__N4__N1)
+set num_threads=1
+set numdgt=17
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 1e-09 1.5e-05 uic
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(REF)
+let mos_wave_3 = v(xu.PD)
+let mos_wave_4 = v(xu.TUNE)
+let mos_wave_5 = v(CTRL)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3 mos_wave_4 mos_wave_5
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_611a7adabea56164)
+let register_flow_1 = i(v.xu.vregister_cf_187c69a86515739c)
+let register_flow_2 = i(v.xu.vregister_cf_a41d16a1047ed44c)
+let register_flow_3 = i(v.xu.vregister_cf_a5809a940a210ff5)
+let register_flow_4 = i(v.xu.vregister_cf_99ed6bf5d6c7bade)
+let register_flow_5 = i(v.xu.vregister_cf_ab654e91d81305b5)
+let register_flow_6 = i(v.xu.vregister_cf_d6fb0d00764270e1)
+let register_flow_7 = i(v.xu.vregister_cf_2c754be20e9e1083)
+let register_flow_8 = i(v.xu.vregister_cf_1a3836b0030729ef)
+let register_flow_9 = i(v.xu.vregister_cf_99467f97a98d1e39)
+let register_flow_10 = i(v.xu.vregister_cf_0fbff0300d425579)
+let register_flow_11 = i(v.xu.vregister_cf_5860662fe1480ac2)
+let register_flow_12 = i(v.xu.vregister_cf_b69ae517540b2da5)
+let register_flow_13 = i(v.xu.vregister_cf_2b04b12e7e7fb88e)
+let register_flow_14 = i(v.xu.vregister_cf_26863b5b6a00a9b8)
+let register_flow_15 = i(v.xu.vregister_cf_bf95df23174799b1)
+let register_flow_16 = i(v.xu.vregister_cf_59c5e519cc6ea3dc)
+let register_flow_17 = i(v.xu.vregister_cf_8ad12ec1b4273416)
+let register_flow_18 = i(v.xu.vregister_cf_0cf3ac7f9ba937db)
+let register_flow_19 = i(v.xu.vregister_cf_c7ee7188f4699fd8)
+let register_flow_20 = i(v.xu.vregister_cf_6d8948e956e490f2)
+let register_flow_21 = i(v.xu.vregister_cf_992318c7d2516a90)
+let register_flow_22 = i(v.xu.vregister_cf_66628a149eec7f39)
+let register_flow_23 = i(v.xu.vregister_cf_72eb237a9c70e0c8)
+let register_flow_24 = i(v.xu.vregister_cf_b6faa3d82ecafa3c)
+let register_flow_25 = i(v.xu.vregister_cf_f1573a7f38d30d90)
+let register_flow_26 = i(v.xu.vregister_cf_e0da7734c409f930)
+let register_flow_27 = i(v.xu.vregister_cf_c9be47f7b2f94d83)
+let register_flow_28 = i(v.xu.vregister_cf_d6673d65708192b0)
+let register_flow_29 = i(v.xu.vregister_cf_4ed801369ef5996c)
+let register_flow_30 = i(VGND)
+let register_flow_31 = i(VDD)
+let register_flow_32 = i(VREF)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13 register_flow_14 register_flow_15 register_flow_16 register_flow_17 register_flow_18 register_flow_19 register_flow_20 register_flow_21 register_flow_22 register_flow_23 register_flow_24 register_flow_25 register_flow_26 register_flow_27 register_flow_28 register_flow_29 register_flow_30 register_flow_31 register_flow_32
+let register_voltage_0 = v(XU.OSCILLATOR__PBIAS)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(XU.TUNE)
+let register_voltage_3 = v(XU.OSCILLATOR__Q0)
+let register_voltage_4 = v(XU.OSCILLATOR__N0)
+let register_voltage_5 = v(OUT)
+let register_voltage_6 = v(XU.OSCILLATOR__Q1)
+let register_voltage_7 = v(XU.OSCILLATOR__N1)
+let register_voltage_8 = v(XU.OSCILLATOR__N2)
+let register_voltage_9 = v(VPWR)
+let register_voltage_10 = v(XU.OSCILLATOR__P0)
+let register_voltage_11 = v(XU.OSCILLATOR__P1)
+let register_voltage_12 = v(XU.OSCILLATOR__P2)
+let register_voltage_13 = v(XU.PHASE_DETECTOR__N1)
+let register_voltage_14 = v(XU.PHASE_DETECTOR__N1__N1)
+let register_voltage_15 = v(REF)
+let register_voltage_16 = v(XU.PHASE_DETECTOR__N2)
+let register_voltage_17 = v(XU.PHASE_DETECTOR__N2__N1)
+let register_voltage_18 = v(XU.PHASE_DETECTOR__N3)
+let register_voltage_19 = v(XU.PHASE_DETECTOR__N3__N1)
+let register_voltage_20 = v(XU.PD)
+let register_voltage_21 = v(XU.PHASE_DETECTOR__N4__N1)
+let register_voltage_22 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11 register_voltage_12 register_voltage_13 register_voltage_14 register_voltage_15 register_voltage_16 register_voltage_17 register_voltage_18 register_voltage_19 register_voltage_20 register_voltage_21 register_voltage_22
+quit
+.endc
+.end

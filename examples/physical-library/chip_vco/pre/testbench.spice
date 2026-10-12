@@ -1,0 +1,60 @@
+Resistor actual SKY130 chip reference chip_vco
+.options method=gear maxord=2
+.include "./supported-tt.spice"
+.option scale=1e-6
+.include "./current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VCTRL CTRL VGND 0.9
+.ic v(xu.Q0)=0.1 v(xu.Q1)=1.5 v(OUT)=0.2
+XU CTRL OUT VPWR VGND chip_vco
+.control
+save v(OUT) i(VDD) v(CTRL) i(v.xu.vregister_cf_ec12ff604a1a174f) i(v.xu.vregister_cf_7a24fdb14b83a7e9) i(v.xu.vregister_cf_611e3da0498dfe8b) i(v.xu.vregister_cf_29f3fb9bee427e78) i(v.xu.vregister_cf_d29d998cf1bdc76b) i(v.xu.vregister_cf_e404a067d3f3cf34) i(v.xu.vregister_cf_422b4a3416d28d86) i(v.xu.vregister_cf_382bd96dd739c377) i(v.xu.vregister_cf_09ec041b09a3ac0c) i(v.xu.vregister_cf_c541b689b7cdb6ee) i(v.xu.vregister_cf_92c43e96fc5b433e) i(v.xu.vregister_cf_e55af5006b029e00) i(v.xu.vregister_cf_9622e8be4cea711c) i(v.xu.vregister_cf_8dad081a4c6c4078) i(VGND) i(VCTRL) v(XU.PBIAS) v(VGND) v(XU.Q0) v(XU.N0) v(XU.Q1) v(XU.N1) v(XU.N2) v(VPWR) v(XU.P0) v(XU.P1) v(XU.P2)
+set num_threads=1
+set numdgt=17
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 5e-10 3e-06 uic
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(CTRL)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_ec12ff604a1a174f)
+let register_flow_1 = i(v.xu.vregister_cf_7a24fdb14b83a7e9)
+let register_flow_2 = i(v.xu.vregister_cf_611e3da0498dfe8b)
+let register_flow_3 = i(v.xu.vregister_cf_29f3fb9bee427e78)
+let register_flow_4 = i(v.xu.vregister_cf_d29d998cf1bdc76b)
+let register_flow_5 = i(v.xu.vregister_cf_e404a067d3f3cf34)
+let register_flow_6 = i(v.xu.vregister_cf_422b4a3416d28d86)
+let register_flow_7 = i(v.xu.vregister_cf_382bd96dd739c377)
+let register_flow_8 = i(v.xu.vregister_cf_09ec041b09a3ac0c)
+let register_flow_9 = i(v.xu.vregister_cf_c541b689b7cdb6ee)
+let register_flow_10 = i(v.xu.vregister_cf_92c43e96fc5b433e)
+let register_flow_11 = i(v.xu.vregister_cf_e55af5006b029e00)
+let register_flow_12 = i(v.xu.vregister_cf_9622e8be4cea711c)
+let register_flow_13 = i(v.xu.vregister_cf_8dad081a4c6c4078)
+let register_flow_14 = i(VGND)
+let register_flow_15 = i(VDD)
+let register_flow_16 = i(VCTRL)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13 register_flow_14 register_flow_15 register_flow_16
+let register_voltage_0 = v(XU.PBIAS)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(CTRL)
+let register_voltage_3 = v(XU.Q0)
+let register_voltage_4 = v(XU.N0)
+let register_voltage_5 = v(OUT)
+let register_voltage_6 = v(XU.Q1)
+let register_voltage_7 = v(XU.N1)
+let register_voltage_8 = v(XU.N2)
+let register_voltage_9 = v(VPWR)
+let register_voltage_10 = v(XU.P0)
+let register_voltage_11 = v(XU.P1)
+let register_voltage_12 = v(XU.P2)
+let register_voltage_13 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11 register_voltage_12 register_voltage_13
+quit
+.endc
+.end

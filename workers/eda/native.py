@@ -8,6 +8,7 @@ from geometry import EDAError
 
 NET = re.compile(r'(?:0|[A-Za-z_][A-Za-z0-9_.$!:/-]*)$')
 MODEL_KIND={'sky130_fd_pr__nfet_01v8':'nmos','sky130_fd_pr__pfet_01v8_hvt':'pmos'}
+PASSIVE_MODELS={'sky130_fd_pr__res_high_po_0p35':'resistor','sky130_fd_pr__res_xhigh_po_1p41':'resistor','sky130_fd_pr__cap_mim_m3_1':'capacitor'}
 
 def num(value):
     if isinstance(value,bool): raise EDAError('INVALID_PARAMETER','Boolean is not a circuit parameter.')
@@ -23,7 +24,7 @@ def validate_device(d):
     kind=d.get('kind'); pins=d.get('pins',{}); pars=d.get('parameters',{})
     if not isinstance(pins,dict) or not isinstance(pars,dict) or any(not isinstance(key,str) or not isinstance(value,str) for key,value in pins.items()):raise EDAError('INVALID_DEVICE','Pins must map string names to string nets and parameters must be an object.')
     if kind not in {'nmos','pmos','resistor','capacitor','voltage','current','ground','port','block'}: raise EDAError('UNSUPPORTED','Unsupported native device kind.')
-    supported={'w_um','l_um','nf','m'} if kind in {'nmos','pmos'} else {'value'} if kind in {'resistor','capacitor'} else {'dc'} if kind in {'voltage','current'} else set()
+    supported={'w_um','l_um','nf','m'} if kind in {'nmos','pmos'} else {'value','w_um','l_um'} if kind in {'resistor','capacitor'} and d.get('model') else {'value'} if kind in {'resistor','capacitor'} else {'dc'} if kind in {'voltage','current'} else set()
     if set(pars)-supported:raise EDAError('UNSUPPORTED_PARAMETER','This native symbol mapping does not support the supplied parameter keys.')
     if kind in {'resistor','capacitor','voltage','current'} and not ({'+','-'}<=set(pins) or {'1','2'}<=set(pins)):raise EDAError('INVALID_DEVICE','Two-terminal elements need + and - (or 1 and 2) pin keys.')
     for net in pins.values():
@@ -40,6 +41,13 @@ def validate_device(d):
         if nf!=1 or m!=1: raise EDAError('UNSUPPORTED_PARAMETER','This verified MOS model/layout profile currently supports nf=1 and m=1 only; other multiplicity mappings are unverified.')
     elif kind in {'resistor','capacitor'}:
         if num(pars.get('value',0))<=0: raise EDAError('PARAMETER_RANGE','R/C value must be positive in SI units.')
+        if d.get('model'):
+            if PASSIVE_MODELS.get(d['model'])!=kind:raise EDAError('UNSUPPORTED_MODEL','Passive model is outside the explicit public PCell adapter.')
+            w=num(pars.get('w_um'));l=num(pars.get('l_um'))
+            fixed_width=1.41 if d['model']=='sky130_fd_pr__res_xhigh_po_1p41' else .35
+            if kind=='resistor' and (w!=fixed_width or not .5<=l<=30 or not pins.get('B')):raise EDAError('PARAMETER_RANGE','Precision poly requires its model-specific fixed width, L=.5..30um and an explicit body pin.')
+            if kind=='capacitor' and not (2<=w<=30 and 2<=l<=30):raise EDAError('PARAMETER_RANGE','MIM dimensions require W/L=2..30um.')
+            if any(abs(v/.005-round(v/.005))>1e-6 for v in (w,l)):raise EDAError('OFF_GRID','PCell dimensions must use the public 5nm grid.')
     elif kind in {'voltage','current'}: num(pars.get('dc',0))
     for axis in ('x','y'):
         n=num(d.get(axis,0))
@@ -50,7 +58,7 @@ def validate_device(d):
 def base_pin_offsets(d):
     kind=d['kind']
     if kind in ('nmos','pmos'): return {'D':(30,42 if kind=='pmos' else -42),'G':(-46,0),'S':(30,-42 if kind=='pmos' else 42),'B':(49,0)}
-    if kind in ('resistor','capacitor','voltage','current'): return {'+':(0,-44),'-':(0,44),'1':(0,-44),'2':(0,44)}
+    if kind in ('resistor','capacitor','voltage','current'): return {'+':(0,-44),'-':(0,44),'1':(0,-44),'2':(0,44),**({'B':(44,0)} if kind=='resistor' and d.get('model') else {})}
     if kind=='ground': return {'G':(0,-30)}
     if kind=='port': return {'P':(-30,0)}
     keys=list(d.get('pins',{})); return {key:(-55,-(len(keys)-1)*12+i*24) for i,key in enumerate(keys)}
@@ -245,7 +253,13 @@ def emit(schematic,cell,ports):
             a=nets.get('+',nets.get('1','')); b=nets.get('-',nets.get('2',''))
             if not a or not b: raise EDAError('SCHEMATIC_INVALID','Two terminal element needs + and - pin nets.')
             value=num(p.get('value' if kind in ('resistor','capacitor') else 'dc',0))
-            out.append(f'{prefix}{name} {a} {b} {value:.12g}')
+            if kind in ('resistor','capacitor') and d.get('model'):
+                body=' '+nets['B'] if kind=='resistor' else ''
+                width=f' w={num(p["w_um"]):.12g}' if kind=='capacitor' else ''
+                # Precision-poly width is fixed in the model name, not a
+                # geometric LVS property in the installed extraction deck.
+                out.append(f'X{name} {a} {b}{body} {d["model"]}{width} l={num(p["l_um"]):.12g}')
+            else:out.append(f'{prefix}{name} {a} {b} {value:.12g}')
         elif kind=='block': out.append('X'+name+' '+' '.join(nets[pin] for pin in schematic['cells'][d['cell_name']]['ports'])+' '+d['cell_name'])
     emit_cell(cell,schematic,ports,None)
     return '\n'.join(out)+'\n'

@@ -10,6 +10,7 @@ import native
 import profile
 import design_tools
 import chip_references
+import physical_library
 
 S = None
 VERSION = 'register-semiconductor-starters-1'
@@ -76,6 +77,16 @@ for key, row in chip_references.CATALOG.items():
         'template_id':key,'parameters':copy.deepcopy(row['parameter_defaults']),'physical_core':False,'layout':'schematic',
         'features':row['targets'],'observe':['계층 내부의 실제 MOS·RC와 외부 입력 조건을 살펴보세요.','실제 파형 검사 결과와 실패 항목을 확인하세요.','소자·보상·클록을 변경하고 다시 해석하세요.'],
         'testbench':{**chip_references.SETTINGS[key],'load_F':row['parameter_defaults'].get('output_F',row['parameter_defaults'].get('load_F',row['parameter_defaults'].get('stage_F',5e-15)))}}
+    PRESETS['physical_'+key]={**copy.deepcopy(PRESETS[key]),'title':row['name']+' · 물리 설계',
+        'subtitle':'실제 PCell + 폴리 저항/MIM 배열. 외부 기준·클록·부하는 testbench에 유지.',
+        'category':'물리 칩 레퍼런스','physical_core':True,'layout':'physical',
+        'features':['실제 MOS W/L와 핀 배선','DRC → LVS → PEX 실행','회로/기생 추출 후 결과 비교'],
+        'observe':['회로와 실제 레이아웃을 비교하세요. 이상적 RC는 dimensioned PDK 소자로 바뀝니다.','DRC·LVS를 각각 실행하고 실패 원인과 report를 확인하세요.','PEX와 Post-layout 해석으로 기생 성분의 영향을 확인하세요.']}
+for key,row in physical_library.CATALOG.items():
+    PRESETS[key]={'title':row['name'],'subtitle':row['scope'],'category':'기본 로직 셀','template_id':key,
+        'parameters':{},'physical_core':True,'layout':'physical','features':row['targets'],
+        'observe':['모든 입력 조합의 출력 레벨을 검사하세요.','DRC·LVS·PEX를 독립 실행하고 배선 기생 후 파형을 비교하세요.','Hierarchy 가져오기에서 셀과 핀 연결을 미리 확인하고 재사용하세요.'],
+        'testbench':{'analysis':'tran','duration_s':400e-9,'step_s':100e-12}}
 
 
 def configure(server):

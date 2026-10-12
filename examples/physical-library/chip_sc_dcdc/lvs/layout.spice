@@ -1,0 +1,13 @@
+* NGSPICE file created from chip_sc_dcdc.ext - technology: sky130A
+
+.subckt chip_sc_dcdc VPWR VGND OUT FLYBOTTOM FLYTOP PHI1B PHI2B PHI2 PHI1
+X0 FLYTOP PHI1B VPWR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X1 FLYTOP PHI1 VPWR VGND sky130_fd_pr__nfet_01v8 ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X2 OUT PHI2B FLYTOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X3 VGND PHI2 FLYBOTTOM VGND sky130_fd_pr__nfet_01v8 ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X4 FLYBOTTOM PHI1B OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X5 VGND PHI2B FLYBOTTOM VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X6 FLYBOTTOM PHI1 OUT VGND sky130_fd_pr__nfet_01v8 ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X7 OUT PHI2 FLYTOP VGND sky130_fd_pr__nfet_01v8 ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+.ends
+

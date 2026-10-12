@@ -41,6 +41,7 @@ import pvt
 import design_tools
 import semiconductor_starters
 import digital_units
+import pex_reduce
 import hierarchy_transfer
 import project_index
 from toolchain_diagnostics import ToolchainDiagnostics
@@ -280,7 +281,8 @@ def input_signature():
     models=initial_models()
     decks={str(p):cached_sha(p) for p in (profile.TECH,profile.MAGIC_RC,profile.SETUP,profile.ROOT/'libs.tech/magic/sky130A.tcl',profile.ROOT/'.config/nodeinfo.json')}
     bins=tool_hashes()
-    return hashlib.sha256(json.dumps({'models':models,'decks':decks,'tools':bins,'image':profile.IMAGE},sort_keys=True).encode()).hexdigest()
+    adapters={p.name:cached_sha(p) for p in Path(__file__).parent.glob('*.py') if not p.name.startswith('test_')}
+    return hashlib.sha256(json.dumps({'models':models,'decks':decks,'tools':bins,'image':profile.IMAGE,'adapters':adapters},sort_keys=True).encode()).hexdigest()
 def tool_hashes():
     paths=[Path(shutil.which(name)) for name in ('magic','ngspice','netgen','python3') if shutil.which(name)]
     paths += [Path('/foss/tools/magic/lib/magic/tcl/magicdnull'),Path('/foss/tools/magic/lib/magic/tcl/tclmagic.so'),Path('/foss/tools/netgen/lib/netgen/tcl/netgenexec'),Path('/foss/tools/netgen/lib/netgen/tcl/tclnetgen.so')]
@@ -414,7 +416,11 @@ def export_layout(params):
     basename=re.sub(r'[^A-Za-z0-9_-]','_',p['cell'])[:128]
     dest=d/f"{basename}-r{p['revision']}.{fmt}"; l.write(str(dest))
     after=k.Layout(); after.read(str(dest)); before_hash=geo.semantic_hash(l,l.cell(p['cell'])); after_hash=geo.semantic_hash(after,after.cell(p['cell']))
-    sidecar=dest.with_suffix(dest.suffix+'.mos.json'); dump(sidecar,{'schema_version':1,'file_hash':profile.sha(dest),'project':p,'geometry_hash':before_hash})
+    # Exchange metadata preserves the editable design, never historical solver
+    # payloads. Runs may contain hundreds of MB and exceed our own 2 MiB import
+    # limit; importing geometry must not transfer successful verification jobs.
+    exchange_project=copy.deepcopy(p); exchange_project['runs']=[]
+    sidecar=dest.with_suffix(dest.suffix+'.mos.json'); dump(sidecar,{'schema_version':1,'file_hash':profile.sha(dest),'project':exchange_project,'geometry_hash':before_hash})
     ids_before={s['id'] for s in geo.scene(l,p,p['layers'])['shapes']}; ids_after={s['id'] for s in geo.scene(after,p,p['layers'])['shapes']}
     return {'path':str(dest),'sidecar_path':str(sidecar),'roundtrip':{'geometry_equal':before_hash==after_hash,'before_hash':before_hash,'after_hash':after_hash,'hierarchy_preserved':geo.hierarchy_hash(l)==geo.hierarchy_hash(after),'stable_ids_preserved':ids_before==ids_after},'metadata':{'ids':'layout properties + app sidecar','schematic':'sidecar','physical_stack':'unknown','flattened':False}}
 
@@ -701,6 +707,10 @@ def simulation(run,p,folder,manifest,params):
     if params.get('post_layout'):
         if p.get('design_template') or p.get('digital_unit') or p['example'] in {'wire','mosfet','inverter','current_mirror','differential_pair'}: netlist=extract(run,p,folder,manifest,pex=True)
         else: raise EDAError('UNSUPPORTED','No post-layout testbench.')
+        if p.get('design_template',{}).get('physical_adapter'):
+            netlist,audit,reduction=pex_reduce.prepare(p,netlist,folder)
+            run['artifacts'].update(pex_simulation_netlist=str(netlist),pex_reduction=str(audit))
+            manifest['settings']['pex_exact_reduction']=reduction
     elif p['example']=='wire': raise EDAError('UNSUPPORTED','Wire has no pre-layout reference circuit; run post-layout analysis.')
     elif params.get('netlister')=='xschem':
         bridged=xschem_bridge.netlist(p,folder/'xschem'); netlist=Path(bridged['path']); run['artifacts'].update(xschem_schematic=bridged['schematic_path'],xschem_manifest=bridged['manifest_path']); manifest['xschem_bridge']=bridged['manifest_path']
@@ -712,11 +722,17 @@ def simulation(run,p,folder,manifest,params):
     if analysis!='ac':
         current_flow.add_testbench_voltage_branches(tb.split('.control')[0].splitlines(),branches)
         selected_vectors=[v.removeprefix('-') for v in digital_units.stimuli(p,params)[2]] if p.get('digital_unit') else None
+        if p.get('design_template'):
+            # Owned template traces plus signed terminal probes suffice for
+            # results. Saving every distributed PEX node can create multi-GB
+            # raw files without adding visible evidence. RC stays in the solve.
+            selected_vectors=[v.removeprefix('-') for v in re.findall(r'^let mos_wave_\d+ = (.+)$',tb,re.M)]
         voltage_probes=current_flow.voltage_probes(branches,folder)
         tb=current_flow.instrument_control(tb,branches,selected_vectors,voltage_probes)
         if selected_vectors is not None:manifest['settings']['trace_scope']={'waveforms':selected_vectors,'signed_current_branches':len(branches),'all_extracted_RC_elements_retained':True}
     deck=folder/'testbench.spice'; deck.write_text(tb); run['artifacts']['testbench']=str(deck)
-    log=process(run,folder,['ngspice','-b',str(deck)],'ngspice',manifest,timeout=600 if p.get('digital_unit',{}).get('kind') in ('cpu4','cpu16') else 120)
+    timeout=600 if p.get('digital_unit',{}).get('kind') in ('cpu4','cpu16') else 300 if p.get('design_template',{}).get('physical_adapter') and p['example'] in ('chip_ldo','chip_pll') else 120
+    log=process(run,folder,['ngspice','-b',str(deck)],'ngspice',manifest,timeout=timeout)
     path=folder/'waveform.dat'
     if not path.is_file() or any(t in log.lower() for t in ('fatal error','timestep too small','unknown subckt','singular matrix','error on line','simulation interrupted')):
         raise EDAError('SIMULATION_FAILED','ngspice failed/convergence or no waveform output. Raw log retained.')
@@ -793,6 +809,7 @@ def execute_job(run,p,params,folder):
         run.update(execution_status='running',started_at=now()); put_run(run)
     manifest={'schema_version':1,'parser_version':'mos-eda-1','run_id':run['id'],'project_id':p['id'],'cell':p['cell'],'revision':p['revision'],'started_at':run['started_at'],
               'input_signature':run['input_signature'],'settings':params,'commands':[]}
+    manifest['adapter_sources']={p.name:cached_sha(p) for p in Path(__file__).parent.glob('*.py') if not p.name.startswith('test_')}
     try:
         manifest.update(layout_hash=profile.sha(folder/'input.oas'),schematic_hash=hashlib.sha256(json.dumps(p['schematic'],sort_keys=True).encode()).hexdigest(),pdk=profile.provenance(),
                         toolchain=doctor(),tool_binaries=tool_hashes(),model_files=initial_models())

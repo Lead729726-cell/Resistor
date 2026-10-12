@@ -19,6 +19,8 @@ import profile
 import templates as physical_templates
 import digital_mux
 import chip_references
+import physical_library
+import digital_units
 
 S = None
 VERSION = 'register-design-tools-2'
@@ -50,6 +52,10 @@ def model_resources(corner):
     for model in ('nfet_01v8','pfet_01v8_hvt'):
         base=profile.ROOT/'libs.ref/sky130_fd_pr/spice'
         files += [base/f'sky130_fd_pr__{model}__{corner}.pm3.spice',base/f'sky130_fd_pr__{model}__mismatch.corner.spice']
+    # Match the installed sky130.lib: MOS SS/FF do not implicitly select RC
+    # worst-case corners. RC sweeps need their own explicit future control.
+    rc='res_typical__cap_typical'
+    files += [root/'r+c'/f'{rc}.spice',root/'r+c'/f'{rc}__lin.spice',root/'r+c.mrp1monte.spice',base/'sky130_fd_pr__res_high_po_0p35.model.spice',base/'sky130_fd_pr__res_xhigh_po__base.model.spice',base/'sky130_fd_pr__res_xhigh_po_1p41.model.spice',base/'sky130_fd_pr__cap_mim_m3_1.model.spice']
     if not all(p.is_file() for p in files):raise EDAError('PDK_MISSING','Required actual supported SKY130 model resources are missing.')
     return [{'path':str(p),'sha256':profile.sha(p)} for p in files]
 
@@ -225,9 +231,10 @@ CATALOG = {
     'differential_pair':{'name':'NMOS 차동 쌍','parameter_defaults':{'w_um':.65,'l_um':.15,'common_mode_V':.9,'tail_bias_V':.7,'differential_V':.01},'ports':['INP','INN','OUTP','OUTN','BIAS','VGND'],'analyses':['op','dc','tran'],'physical_status':'optional-fixed-public-core'}
 }
 CATALOG.update(chip_references.CATALOG)
+CATALOG.update(physical_library.CATALOG)
 
 def catalog():
-    return {'schema_version':1,'templates':[{'id':key,**copy.deepcopy(value),'limits':['Actual native schematic and public ngspice models; no commercial execution claim.','Empty layout is not generated or physically verified.','Optional mirror/differential/MUX4 cores support only fixed W=0.65um L=0.15um nf=m=1; independent DRC/LVS required.']} for key,value in CATALOG.items()]}
+    return {'schema_version':1,'templates':[{'id':key,**copy.deepcopy(value),'limits':['Actual native schematic and public ngspice models; no commercial execution claim.','Empty layout is not physically verified.','Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library.']} for key,value in CATALOG.items()]}
 
 def _parameters(template,raw):
     if not isinstance(raw,dict) or set(raw)-set(CATALOG[template]['parameter_defaults']):raise EDAError('UNSUPPORTED_PARAMETER','Unknown template parameter.')
@@ -245,6 +252,7 @@ def _parameters(template,raw):
     return chip_references.parameters(template,values) if template in chip_references.CATALOG else values
 
 def _schematic(template,params):
+    if template in physical_library.CATALOG:return physical_library.gate(template)
     if template in chip_references.CATALOG:return chip_references.schematic(template,params)
     if template=='mux4':return digital_mux.schematic(params['w_um'],params['l_um'])
     devices=[]
@@ -271,7 +279,8 @@ def _schematic(template,params):
 def validate_template_project(p):
     meta=p.get('design_template')
     if not isinstance(meta,dict) or meta.get('schema_version')!=1 or meta.get('id') not in CATALOG or p.get('pdk_id')!='sky130A':raise EDAError('INVALID_TEMPLATE','Project has no supported explicit design template.')
-    if p.get('ports')!=CATALOG[meta['id']]['ports'] or meta.get('layout_status') not in ('not-generated','generated-public-core'):raise EDAError('INVALID_TEMPLATE','Template ports or physical status do not match the declared contract.')
+    ports=CATALOG[meta['id']]['ports']+(['FLYTOP','FLYBOTTOM'] if meta['id']=='chip_sc_dcdc' and meta.get('physical_adapter') else [])
+    if p.get('ports')!=ports or meta.get('layout_status') not in ('not-generated','generated-public-core'):raise EDAError('INVALID_TEMPLATE','Template ports or physical status do not match the declared contract.')
     _parameters(meta['id'],meta.get('parameters',{}))
     validation=native.validate(p['schematic'])
     if not validation['valid']:raise EDAError('INVALID_SCHEMATIC','Template native schematic has validation errors.',validation['issues'])
@@ -300,14 +309,21 @@ def create_template(params):
         def action():
             values=_parameters(template,params.get('parameters',{}));physical=params.get('physical_core',False)
             if not isinstance(physical,bool):raise EDAError('INVALID_PARAMETER','physical_core must be boolean.')
-            if physical and template not in ('current_mirror','differential_pair','mux4'):raise EDAError('UNSUPPORTED_PHYSICAL','Only the fixed public mirror/differential/MUX4 core is supported.')
-            if physical and (values['w_um']!=.65 or values['l_um']!=.15):raise EDAError('UNSUPPORTED_PHYSICAL','Physical core requires exact fixed W=0.65um L=0.15um; custom schematic parameters have no layout binding.')
+            new_physical=template in chip_references.CATALOG or template in physical_library.CATALOG
+            if physical and not new_physical and template not in ('current_mirror','differential_pair','mux4'):raise EDAError('UNSUPPORTED_PHYSICAL','No physical adapter for this template.')
+            if physical and not new_physical and (values['w_um']!=.65 or values['l_um']!=.15):raise EDAError('UNSUPPORTED_PHYSICAL','Legacy core requires exact fixed W=0.65um L=0.15um.')
             model_resources('tt')
             name=params.get('name',CATALOG[template]['name'])
             if not isinstance(name,str) or not 1<=len(name)<=160 or any(ord(c)<32 for c in name):raise EDAError('INVALID_NAME','Project name must be a bounded plain string.')
             pid=uuid.uuid4().hex;cell=template;layout=k.Layout();layout.dbu=.001;layout.create_cell(cell);layout.layer(68,20)
             schematic=_schematic(template,values)
-            if physical:
+            ports=list(CATALOG[template]['ports']);replacements=[]
+            if physical and new_physical:
+                if template=='chip_sc_dcdc':
+                    ports+=['FLYTOP','FLYBOTTOM'];schematic['ports']=ports
+                if template in chip_references.CATALOG:schematic,replacements=physical_library.materialize(schematic)
+                layout=physical_library.physical(S.STATE/'projects'/pid/'generator',digital_units.flattened(schematic),cell,ports)
+            elif physical:
                 layout,core,ports=digital_mux.physical(S.STATE/'projects'/pid/'generator') if template=='mux4' else physical_templates.analog(S,S.STATE/'projects'/pid/'generator',template)
                 # Exact core graph is retained; visual port symbols are data-only schematic markers.
                 schematic['devices']=[*core['devices'],*[d for d in schematic['devices'] if d['kind']=='port']]
@@ -315,7 +331,9 @@ def create_template(params):
             if not validation['valid']:raise EDAError('INVALID_SCHEMATIC','Generated template is invalid; project is not committed.',validation['issues'])
             duration=64*values['slot_ns']*1e-9 if template=='mux4' else 200e-9 if template=='rc_lowpass' else 100e-9
             meta={'schema_version':1,'id':template,'parameters':values,'layout_status':'generated-public-core' if physical else 'not-generated','physical_verification':'not-run','stimulus_source':'owned-template','ground_port':'VGND','generated_by':VERSION}
-            p={'schema_version':1,'id':pid,'name':name,'cell':cell,'pdk_id':'sky130A','revision':1,'dbu_um':layout.dbu,'grid_dbu':5,'source':'pdk' if physical else 'fixture','example':template,'layers':[],'schematic':schematic,'testbench':native.testbench({'duration_s':duration,'step_s':100e-12,'analysis':'tran' if template in ('rc_lowpass','mux4') else 'op'}),'runs':[],'ports':list(CATALOG[template]['ports']),'redo_stack':[],'undo_stack':[],'next_revision':2,'design_template':meta,'layout_parameter_policy':'fixed_public_analog_core' if physical else 'schematic-only-no-generated-layout'}
+            p={'schema_version':1,'id':pid,'name':name,'cell':cell,'pdk_id':'sky130A','revision':1,'dbu_um':layout.dbu,'grid_dbu':5,'source':'pdk' if physical else 'fixture','example':template,'layers':[],'schematic':schematic,'testbench':native.testbench({'duration_s':duration,'step_s':100e-12,'analysis':'tran' if template in ('rc_lowpass','mux4') else 'op'}),'runs':[],'ports':ports,'redo_stack':[],'undo_stack':[],'next_revision':2,'design_template':meta,'layout_parameter_policy':'reference-layout-independent-edit' if physical else 'schematic-only-no-generated-layout'}
+            if physical and new_physical:meta.update(physical_adapter='sky130-pcell-library-v1',passive_replacements=replacements,rc_corner='typical',manufacturing_signoff=False)
+            if template in physical_library.CATALOG:p['testbench']=native.testbench({'analysis':'tran','duration_s':400e-9,'step_s':100e-12})
             if template in chip_references.CATALOG:
                 p['testbench']=native.testbench(chip_references.SETTINGS[template])
                 meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True)
@@ -363,6 +381,7 @@ def _stimuli(p,settings):
 def pvt_sources(p):
     meta=validate_template_project(p);kind=meta['id']
     if kind in chip_references.CATALOG:return {'bindings':[{'kind':'testbench','source_names':['VDD']}],'analyses':CATALOG[kind]['analyses'],'source':'owned-chip-reference-stimuli','limits':['VREF and BIAS remain external fixed sources. Lock/stability must be checked at each PVT point.']}
+    if kind in physical_library.CATALOG:return {'bindings':[{'kind':'testbench','source_names':['VDD']}],'analyses':['tran'],'source':'owned-exhaustive-gate-stimuli','limits':['One configured load and input slew; not full characterization.']}
     sources,analyses={
         'mux4':(['VDD'],['tran']),
         'rc_lowpass':(['VIN'],['tran']),
@@ -382,7 +401,8 @@ def spice_tb(p,folder,params,netlist):
         fields=line.split()
         if len(fields)>=2 and fields[0].lower()=='.subckt' and fields[1].lower()==p['cell'].lower():sub=fields[2:];break
     if sub is None or len(sub)!=len(p['ports']) or len(set(sub))!=len(sub) or set(sub)!=set(p['ports']):raise EDAError('PORT_MISMATCH','Actual emitted/extracted subcircuit ports differ from explicit template declarations.')
-    if meta['id'] in chip_references.CATALOG:return chip_references.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']))
+    if meta['id'] in chip_references.CATALOG:return chip_references.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
+    if meta['id'] in physical_library.CATALOG:return physical_library.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     sources,names,vectors,units,sweep=_stimuli(p,settings);deck=supported_model_deck(folder,settings['corner'])
     lines=['Register actual native '+meta['id'],f'.include "{deck}"','.option scale=1e-6',f'.include "{netlist}"',f'.temp {settings["temperature_C"]}',*sources,'XU '+' '.join(sub)+' '+p['cell'],'.control','set num_threads=1','set noaskquit','set wr_singlescale','set wr_vecnames']
     if meta['id']=='mux4':lines.insert(1,'.options method=gear maxord=2')
@@ -405,6 +425,8 @@ def measurements(p,run,params):
     if not p.get('design_template'):return
     meta=validate_template_project(p);waves={w['name']:w for w in run.get('waveforms',[])};m=run.setdefault('measurements',{});m['template_id']=meta['id'];m['layout_status']=meta['layout_status'];m['metric_source']='actual-ngspice-samples'
     analysis=params.get('analysis',p['testbench']['analysis']);kind=meta['id']
+    if kind in physical_library.CATALOG:
+        physical_library.measurements(p,run,params);return
     if kind in chip_references.CATALOG:
         chip_references.measurements(p,run,params)
         return

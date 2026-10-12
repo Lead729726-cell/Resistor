@@ -1,4 +1,4 @@
-# Resistor 0.16 설치와 실행
+# Resistor 0.17 설치와 실행
 
 [운영체제별 다운로드](https://resistor-downloads.vercel.app)에서 현재 GitHub 릴리스의
 설치 파일·크기·SHA-256을 확인할 수 있습니다. 웹 페이지에는 엔진이나 사용자
@@ -6,8 +6,10 @@
 
 ## Mac 설치
 
-- Apple Silicon(M1 이후): `release/installers/Resistor-0.16.0-mac-arm64-r5.zip`
-- Intel: 기존 0.14 x64 preview는 보존합니다. 이번 공개 다운로드에는 포함하지 않습니다.
+- Apple Silicon(M1 이후): `release/installers/Resistor-0.17.0-mac-arm64-r5.zip`
+- Intel: `release/installers/Resistor-0.17.0-mac-x64-r5.zip`
+
+0.17.0에는 8개 기본 CMOS 셀과 6개 물리 칩 코어의 실제 SKY130 PCell·R/C·배선 backend가 들어 있습니다. [물리 설계와 영상 실습](https://resistor-downloads.vercel.app/references/)의 프로젝트 ZIP을 가져온 뒤 자신의 엔진에서 DRC/LVS/PEX와 시뮬레이션을 실행하세요. 이전 버전·사용자 저장 데이터는 유지합니다. 패키지 구조·자체 서명 검사는 Mac 실기기 실행이나 Apple 공증을 증명하지 않습니다.
 
 두 CPU 모두 **r5 ZIP 전체를 Mac에서 압축 해제**한 뒤 `Install Resistor.command`를 실행합니다. 도우미가 SHA-256, 앱 식별자, 하위 구성요소와 앱 리소스 서명을 확인하고 설치 내용을 보여줍니다. **설치**를 선택하면 `~/Applications/Resistor.app`에 복사하고 이 앱의 다운로드 차단 표시만 처리한 뒤 실행합니다. **뷰어로 설치**는 Docker 없이 GDS 로컬 뷰어부터 엽니다. 관리자 암호는 필요하지 않습니다. 기존 Resistor를 먼저 종료하세요. 기존 사용자 설치 앱은 같은 폴더에 백업하고 설계 데이터는 보존합니다. 복사·복사본 서명 검사·실행 요청이 실패하면 기존 앱을 유지하거나 복원하고 실패한 새 앱도 진단용으로 보관합니다. 실행 요청 성공은 앱 내부 실행 완료를 보장하지 않습니다. 기존 `/Applications/Resistor.app` 대신 도우미가 설치한 사용자 앱을 사용하세요.
 
@@ -15,9 +17,9 @@ r5에는 Docker 이미지 내부 엔진 실행 파일, 실제 설계 폴더 연�
 
 도우미 자체가 차단되면 터미널을 열고 `/bin/zsh ` 뒤에 `Install Resistor.command` 파일을 끌어 넣은 뒤 Enter를 누릅니다. 직접 앱을 실행할 때의 “개발자를 확인할 수 없음” 경고는 Apple 공증을 완료하기 전까지 나타날 수 있습니다. 출처와 다운로드 SHA-256을 확인한 이 배포본에만 설치 도우미를 사용하세요. 설치 과정 기록은 `~/Library/Logs/Register/install-날짜.log`에 남습니다. 시스템 전체 Gatekeeper 설정은 변경하지 않습니다.
 
-앱에 Electron 런타임이 포함되어 있어 별도 Node.js가 필요하지 않습니다. **M1 CPU도 macOS 13 Ventura 이상이 필요합니다.** OS 하한은 ZIP 안 `Info.plist`의 `LSMinimumSystemVersion`에서 확인합니다. Intel 기존 ZIP은 `Resistor.app`을 Applications로 복사해 사용하며 Developer ID 서명·Apple 공증을 완료하지 않았습니다.
+앱에 Electron 런타임이 포함되어 있어 별도 Node.js가 필요하지 않습니다. **M1 CPU도 macOS 13 Ventura 이상이 필요합니다.** OS 하한은 ZIP 안 `Info.plist`의 `LSMinimumSystemVersion`에서 확인합니다. Intel도 현재 r5 설치 도우미를 사용합니다. 두 버전 모두 Developer ID 서명·Apple 공증을 완료하지 않았습니다.
 
-GDS/OASIS 뷰어는 Docker·로그인 없이 열 수 있습니다. 압축 해제한 폴더의 `Open Viewer.command`로 독립 뷰어를 실행하거나 연결 진단에서 **GDS 뷰어로 열기**를 선택합니다. PDK layer 설정·전류 방향과 수치·공정 3D 표시도 기존 뷰어 경로로 사용할 수 있습니다. 전류는 입력한 실제 해석 결과가 있어야 표시됩니다.
+GDS 독립 뷰어는 Docker·로그인 없이 열 수 있습니다. OASIS 교환은 연결된 엔진을 사용합니다. 압축 해제한 폴더의 `Open Viewer.command`로 독립 뷰어를 실행하거나 연결 진단에서 **GDS 뷰어로 열기**를 선택합니다. PDK layer 설정·전류 방향과 수치·공정 3D 표시도 기존 뷰어 경로로 사용할 수 있습니다. 전류는 입력한 실제 해석 결과가 있어야 표시됩니다.
 
 회로 생성·ngspice·DRC·LVS·PEX에는 실행 중인 **Docker Linux 엔진**이 필요합니다. 엔진을 실행한 뒤 **설계 엔진 다시 연결**을 누릅니다. 최초 준비에는 인터넷과 큰 공개 EDA 이미지의 저장 공간이 필요합니다. 현재 고정 이미지의 압축 해제 크기는 이 Windows PC에서 약 21GB입니다. `linux/amd64`를 명시하므로 Apple Silicon에서는 엔진이 에뮬레이션으로 실행되고 앱/뷰어는 arm64로 실행됩니다. 실제 Mac 해석 속도는 아직 측정하지 않았습니다.
 

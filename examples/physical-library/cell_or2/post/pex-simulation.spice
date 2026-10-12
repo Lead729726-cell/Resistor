@@ -1,0 +1,67 @@
+* NGSPICE file created from cell_or2.ext - technology: sky130A
+
+.subckt cell_or2 VGND VPWR B Y A
+X0 VGND.t5 A.t0 N.t2 VGND.t4 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X1 VGND.t3 N.t3 Y.t1 VGND.t2 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X2 VGND.t1 B.t0 N.t0 VGND.t0 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X3 VPWR.t4 A.t1 CORE__N.t1 VPWR.t3 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X4 CORE__N.t0 B.t1 N.t1 VPWR.t0 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X5 VPWR.t2 N.t4 Y.t0 VPWR.t1 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+C0 A N 0.36669f
+C1 CORE__N Y 0.77223f
+C2 B N 0.45398f
+C3 A VPWR 0.45418f
+C4 CORE__N N 0.62179f
+C5 B VPWR 0.32348f
+C6 A B 1.2916f
+C7 VPWR CORE__N 0.38806f
+C8 Y N 1.49414f
+C9 A CORE__N 0.24971f
+C10 VPWR Y 0.2775f
+C11 B CORE__N 0.73959f
+C12 A Y 0.00202f
+C13 B Y 1.69772f
+C14 VPWR N 0.57041f
+C15 Y VGND 2.30174f
+C16 B VGND 1.90641f
+C17 A VGND 2.13842f
+C18 VPWR VGND 8.63648f
+C19 N VGND 6.16526f $ **FLOATING
+C20 CORE__N VGND 1.43185f $ **FLOATING
+rmesh_equiv_0 a a.t0 315.88
+rmesh_equiv_1 a a.t1 330.34100000000001
+rmesh_equiv_10 n n.t3 315.88
+rmesh_equiv_11 n n.t4 330.34100000000001
+rmesh_equiv_12 n.t0 n.t1 124743.59934417583
+rmesh_equiv_13 n.t0 n.t2 44915.736740380089
+rmesh_equiv_14 n.t1 n.t2 115131.72212992416
+rmesh_equiv_15 vgnd vgnd.t0 193.69819116526284
+rmesh_equiv_16 vgnd vgnd.t1 132.56480174307444
+rmesh_equiv_17 vgnd vgnd.t2 193.6981911652629
+rmesh_equiv_18 vgnd vgnd.t3 132.63650440427432
+rmesh_equiv_19 vgnd vgnd.t4 193.69819116526287
+rmesh_equiv_2 b b.t0 315.88
+rmesh_equiv_20 vgnd vgnd.t5 132.48909816577932
+rmesh_equiv_21 vgnd.t0 vgnd.t2 9497.4607123233527
+rmesh_equiv_22 vgnd.t0 vgnd.t4 4328.7440990295781
+rmesh_equiv_23 vgnd.t1 vgnd.t3 130633.00607386084
+rmesh_equiv_24 vgnd.t1 vgnd.t5 164264.3546567001
+rmesh_equiv_25 vgnd.t2 vgnd.t4 2870276.6148569253
+rmesh_equiv_26 vgnd.t3 vgnd.t5 190482.48085312889
+rmesh_equiv_27 vpwr vpwr.t0 117.18187411979875
+rmesh_equiv_28 vpwr vpwr.t1 117.18187411979875
+rmesh_equiv_29 vpwr vpwr.t2 355.04095945961598
+rmesh_equiv_3 b b.t1 330.34100000000001
+rmesh_equiv_30 vpwr vpwr.t3 117.18187411979875
+rmesh_equiv_31 vpwr vpwr.t4 354.84763775472476
+rmesh_equiv_32 vpwr.t2 vpwr.t4 4603084.7140079681
+rmesh_equiv_33 y y.t0 355.60159928238704
+rmesh_equiv_34 y y.t1 132.58928787042964
+rmesh_equiv_35 y.t0 y.t1 220718.16932139616
+rmesh_equiv_4 core__n core__n.t0 356.64225000000005
+rmesh_equiv_5 core__n core__n.t1 356.64224999999999
+rmesh_equiv_6 core__n.t0 core__n.t1 144069.4018785466
+rmesh_equiv_7 n n.t0 133.25907895182684
+rmesh_equiv_8 n n.t1 357.45092216153046
+rmesh_equiv_9 n n.t2 133.27651922191683
+.ends

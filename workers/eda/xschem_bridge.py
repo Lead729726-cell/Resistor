@@ -23,6 +23,7 @@ def netlist(p,folder):
     if not check['valid']: raise EDAError('SCHEMATIC_INVALID','Fix schematic issues before Xschem netlisting.',check)
     if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*',p['cell']) or any(not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*',port) for port in p['ports']): raise EDAError('UNSUPPORTED_NAME','Xschem bridge needs identifier cell/port names.')
     if any(d['kind']=='block' for d in p['schematic']['devices']): raise EDAError('UNSUPPORTED_HIERARCHY','This Xschem public-symbol bridge currently netlists flat cells. Native SPICE supports hierarchy.')
+    if any(d['kind'] in ('resistor','capacitor') and d.get('model') for d in p['schematic']['devices']):raise EDAError('UNSUPPORTED_SYMBOL','Dimensioned PDK passives need their matching public Xschem symbols; use native SPICE export to preserve the physical models.')
     folder.mkdir(parents=True,exist_ok=True); sch=folder/(p['cell']+'.sch'); rows=['v {xschem version=3.4.7 file_version=1.2}','G {}','K {}','V {}','S {}','E {}']; inputs=[]
     _,derived=native.connectivity(p['schematic']) if p['schematic'].get('connectivity_mode')=='geometric' else (None,{})
     lab=DEVICES/'lab_pin.sym'; iopin=DEVICES/'iopin.sym'

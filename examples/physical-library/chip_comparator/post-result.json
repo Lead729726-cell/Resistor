@@ -1,0 +1,93 @@
+{
+  "reference": "chip_comparator",
+  "stage": "post",
+  "project_id": "f0342eca6c634e36bbafb4fce9772822",
+  "run_id": "d2049e5fa7844f1ba9594a62a8a3e6df",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "message": "Actual ngspice tran: 4036 samples.; reference criteria 3/3",
+  "elapsed_s": 3.4048076539766043,
+  "parasitics": {
+    "resistors": 2294,
+    "capacitors": 763
+  },
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "true",
+    "samples": 4036,
+    "solver": "SPARSE 1.3",
+    "OUT_min": -0.0003286176075953497,
+    "OUT_max": 1.8070968838510564,
+    "supply_current_min": 0.00000852388363388511,
+    "supply_current_max": 0.00009613711366405204,
+    "INP_min": 0.85,
+    "INP_max": 0.9500000000000001,
+    "INN_min": 0.9,
+    "INN_max": 0.9,
+    "PRE_min": 0.234912639764395,
+    "PRE_max": 1.760819167305378,
+    "current_flow_status": "available_partial",
+    "template_id": "chip_comparator",
+    "layout_status": "generated-public-core",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "public PCell physical core with explicit external testbench; independent DRC/LVS/PEX; no foundry signoff",
+    "settled_output_mean_V": 1.7800239084562943,
+    "settled_output_ripple_V": 1.8074255014586518,
+    "average_supply_current_A": 0.000019445357379275425,
+    "average_supply_power_W": 0.00003500164328269577
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "chip_comparator",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "negative input logic level",
+        "pass": true,
+        "observed": [
+          0.0000017738432681307231,
+          0.0000017738432682642968
+        ]
+      },
+      {
+        "name": "positive input logic level",
+        "pass": true,
+        "observed": [
+          1.7999969870486308,
+          1.7999969870486325
+        ]
+      },
+      {
+        "name": "negative recovery logic level",
+        "pass": true,
+        "observed": [
+          0.0000017738432681367947,
+          0.0000017738432682582253
+        ]
+      }
+    ],
+    "pass": true,
+    "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+  },
+  "artifacts": {
+    "pex_netlist": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/pex.spice",
+    "pex_quality": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/pex-quality.json",
+    "pex_simulation_netlist": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/pex-simulation.spice",
+    "pex_reduction": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/pex-reduction.json",
+    "testbench": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/testbench.spice",
+    "current_flow_data": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/current-flow.dat",
+    "current_probe_netlist": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/current-probe.spice",
+    "node_voltage_data": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/node-voltages.dat",
+    "node_voltage_probes": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/voltage-probes.json",
+    "waveform_data": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/waveform.dat",
+    "waveform_raw": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/waveform.raw",
+    "reference_netlist": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/pex-simulation.spice",
+    "stdout": "/workspace/.runtime/eda/runs/d2049e5fa7844f1ba9594a62a8a3e6df/stdout.log"
+  }
+}

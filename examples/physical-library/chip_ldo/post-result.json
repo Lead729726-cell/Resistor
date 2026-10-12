@@ -1,0 +1,100 @@
+{
+  "reference": "chip_ldo",
+  "stage": "post",
+  "project_id": "87ba5b532cae4ee6ab3a2eccf96d5e6f",
+  "run_id": "45230eb4ba244442af4f01443f820d12",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "message": "Actual ngspice tran: 2026 samples.; reference criteria 4/4",
+  "elapsed_s": 7.034495629020967,
+  "parasitics": {
+    "resistors": 12955,
+    "capacitors": 2030
+  },
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "true",
+    "samples": 2026,
+    "solver": "SPARSE 1.3",
+    "OUT_min": 1.1081954461067856,
+    "OUT_max": 1.272078294754471,
+    "supply_current_min": 0.000007050036259313708,
+    "supply_current_max": 0.00024890460597348465,
+    "FB_min": 0.5541820406472722,
+    "FB_max": 0.6361225080381337,
+    "GATE_min": 0.8122219081724799,
+    "GATE_max": 1.0970679501700598,
+    "current_flow_status": "available_partial",
+    "template_id": "chip_ldo",
+    "layout_status": "generated-public-core",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "public PCell physical core with explicit external testbench; independent DRC/LVS/PEX; no foundry signoff",
+    "settled_output_mean_V": 1.2032477229604548,
+    "settled_output_ripple_V": 0.011297829666066406,
+    "average_supply_current_A": 0.00002679982444877963,
+    "average_supply_power_W": 0.000048239684007803336,
+    "light_load_output_V": 1.2034514992077257,
+    "heavy_load_output_V": 1.2013218460839916,
+    "recovery_output_V": 1.2034533757911148,
+    "load_step_undershoot_V": 0.0918045538932144
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "chip_ldo",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "light_load every sample within 50mV of 1.2V",
+        "pass": true,
+        "observed": [
+          1.2034514897889608,
+          1.2034515143680842
+        ]
+      },
+      {
+        "name": "heavy_load every sample within 50mV of 1.2V",
+        "pass": true,
+        "observed": [
+          1.2013218460838475,
+          1.2013218460841804
+        ]
+      },
+      {
+        "name": "recovery every sample within 50mV of 1.2V",
+        "pass": true,
+        "observed": [
+          1.202949629015235,
+          1.203652405879966
+        ]
+      },
+      {
+        "name": "load-step undershoot below 150mV",
+        "pass": true,
+        "observed": 0.0918045538932144
+      }
+    ],
+    "pass": true,
+    "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+  },
+  "artifacts": {
+    "pex_netlist": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/pex.spice",
+    "pex_quality": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/pex-quality.json",
+    "pex_simulation_netlist": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/pex-simulation.spice",
+    "pex_reduction": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/pex-reduction.json",
+    "testbench": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/testbench.spice",
+    "current_flow_data": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/current-flow.dat",
+    "current_probe_netlist": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/current-probe.spice",
+    "node_voltage_data": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/node-voltages.dat",
+    "node_voltage_probes": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/voltage-probes.json",
+    "waveform_data": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/waveform.dat",
+    "waveform_raw": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/waveform.raw",
+    "reference_netlist": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/pex-simulation.spice",
+    "stdout": "/workspace/.runtime/eda/runs/45230eb4ba244442af4f01443f820d12/stdout.log"
+  }
+}

@@ -44,6 +44,11 @@ class ChipReferenceQA(unittest.TestCase):
         self.assertFalse(C.measurements(self.project('chip_ldo'),run,{'analysis':'tran','supply_V':1.8})['pass'])
     def test_time_weighted_average_independent_of_sample_density(self):
         self.assertAlmostEqual(C.integrate([0,.1,.2,1],[0,.1,.2,1],0),.5)
+    def test_resistive_power_uses_mean_square_not_square_of_mean(self):
+        self.assertAlmostEqual(C.mean_square([0,.1,.2,1],[0,.1,.2,1],0),1/3)
+        self.assertAlmostEqual(C.mean_square([0,1],[0,1],.5),7/12)
+        self.assertNotAlmostEqual(C.mean_square([0,1],[0,1],0),.5**2)
+        with self.assertRaises(EDAError):C.mean_square([0,0,1],[1,2,3],0)
     def test_threshold_crossing_interpolates(self):
         self.assertEqual(C.crossings({'x':[0,1,2,3],'y':[0,2,0,2]},1),[.5,2.5])
     def test_constant_oscillator_never_reports_lock(self):

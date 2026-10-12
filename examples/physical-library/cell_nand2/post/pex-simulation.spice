@@ -1,0 +1,45 @@
+* NGSPICE file created from cell_nand2.ext - technology: sky130A
+
+.subckt cell_nand2 VPWR VGND A1 Y A0
+X0 VGND.t2 A1.t0 N1.t1 VGND.t1 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X1 VPWR.t1 A0.t0 Y.t0 VPWR.t0 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X2 N1.t0 A0.t1 Y.t1 VGND.t0 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X3 VPWR.t3 A1.t1 Y.t2 VPWR.t2 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+C0 VPWR A0 0.43865f
+C1 N1 Y 0.34236f
+C2 N1 VPWR 0.01205f
+C3 A1 Y 1.13097f
+C4 N1 A0 0.57614f
+C5 VPWR A1 0.42782f
+C6 VPWR Y 0.52665f
+C7 A1 A0 0.00702f
+C8 A0 Y 1.15678f
+C9 N1 A1 1.15233f
+C10 A1 VGND 2.82123f
+C11 Y VGND 1.78376f
+C12 A0 VGND 1.65826f
+C13 VPWR VGND 5.72877f
+C14 N1 VGND 2.02191f $ **FLOATING
+rmesh_equiv_0 a0 a0.t0 330.34100000000001
+rmesh_equiv_1 a0 a0.t1 315.88
+rmesh_equiv_10 vgnd.t0 vgnd.t1 10867.751849151125
+rmesh_equiv_11 vpwr vpwr.t0 117.18187411979875
+rmesh_equiv_12 vpwr vpwr.t1 354.85367889304194
+rmesh_equiv_13 vpwr vpwr.t2 117.18187411979875
+rmesh_equiv_14 vpwr vpwr.t3 354.9644965155864
+rmesh_equiv_15 vpwr.t1 vpwr.t3 3838764.2796160206
+rmesh_equiv_16 y y.t0 354.85166627640444
+rmesh_equiv_17 y y.t1 132.3198201732115
+rmesh_equiv_18 y y.t2 355.13923582639842
+rmesh_equiv_19 y.t0 y.t1 2858215.9754822394
+rmesh_equiv_2 a1 a1.t0 315.88
+rmesh_equiv_20 y.t0 y.t2 7957435.4389357241
+rmesh_equiv_21 y.t1 y.t2 607148.08503027877
+rmesh_equiv_3 a1 a1.t1 330.34100000000001
+rmesh_equiv_4 n1 n1.t0 134.07275000000001
+rmesh_equiv_5 n1 n1.t1 134.07275000000001
+rmesh_equiv_6 n1.t0 n1.t1 20306.535966629948
+rmesh_equiv_7 vgnd vgnd.t0 197.59161027487639
+rmesh_equiv_8 vgnd vgnd.t1 197.59161027487642
+rmesh_equiv_9 vgnd vgnd.t2 132.36865913061547
+.ends

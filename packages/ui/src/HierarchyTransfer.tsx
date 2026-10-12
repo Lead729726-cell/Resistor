@@ -29,11 +29,19 @@ export default function HierarchyTransfer({project,cellName,disabledReason,onPro
   const refresh=async()=>{const seq=++sequence.current;try{const r=await rpc<{projects:HierarchySource[]}>('hierarchy.sources',{query});if(live.current&&seq===sequence.current)setSources(r.projects);}catch(e){if(live.current)setError(e instanceof Error?e.message:String(e));}};
   useEffect(()=>{live.current=true;void refresh();return()=>{live.current=false;sequence.current++;};},[]);
   const source=sources.find(v=>v.id===sourceId),selected=source?.cells.find(c=>c.name===sourceCell);
+  useEffect(()=>{
+    // A filtered select can visually show its first option while its controlled
+    // value still names an excluded project. Keep model and visible choice in
+    // sync before enabling preview, preserving a valid copied child selection.
+    if(!sources.length)return;
+    if(!source){setSourceId(sources[0].id);setSourceCell(sources[0].cell);}
+    else if(!selected){setSourceCell(source.cell);}
+  },[sources,sourceId,sourceCell]);
   useEffect(()=>{setPins(Object.fromEntries((selected?.ports||[]).map(p=>[p,p==='VPWR'||p==='VGND'?p:namespace+'_'+p])));},[sourceId,sourceCell,selected?.ports.join('|')]);
   const request:HierarchyRequest=mode==='wrap'?{project_id:project.id,mode,parent_name:parent}:{project_id:project.id,mode,source_project_id:sourceId,source_cell:sourceCell,target_cell:target,namespace,scope,...(scope!=='layout'?{pins}:{}),...(scope!=='schematic'?{position,rotation,mirror}:{})};
   const signature=JSON.stringify(request),current=useRef(signature);current.current=signature;
-  const validPreview=preview&&JSON.stringify(preview.request)===signature&&preview.target_revision===project.revision?preview:undefined;
-  useEffect(()=>{setApproved(false);setPreview(undefined);},[signature,project.revision]);
+  const validPreview=preview&&JSON.stringify(preview.request)===signature&&preview.target_revision===project.revision&&(mode==='wrap'||preview.source_revision===source?.revision)?preview:undefined;
+  useEffect(()=>{setApproved(false);setPreview(undefined);},[signature,project.revision,source?.revision]);
   const inspect=async()=>{setBusy(true);setError('');setApproved(false);const sig=signature,rev=project.revision;
     try{const r=await rpc<HierarchyPreview>('hierarchy.preview',{...request});if(live.current&&current.current===sig&&r.target_revision===rev){setPreview(r);setHidden(new Set());setView('delta');}}
     catch(e){if(live.current)setError(e instanceof Error?e.message:String(e));}finally{if(live.current)setBusy(false);}};

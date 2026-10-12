@@ -1,0 +1,49 @@
+{
+  "ports": [
+    "CTRL",
+    "OUT",
+    "VPWR",
+    "VGND"
+  ],
+  "parameters": {
+    "stage_F": 5e-13,
+    "control_V": 0.9
+  },
+  "passive_replacements": [
+    {
+      "source_device": "C_STAGE0",
+      "kind": "capacitor",
+      "requested_SI": 5e-13,
+      "nominal_geometry_SI": 5.0015625e-13,
+      "instances": 1,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 15.625,
+      "l_um": 15.625,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "C_STAGE1",
+      "kind": "capacitor",
+      "requested_SI": 5e-13,
+      "nominal_geometry_SI": 5.0015625e-13,
+      "instances": 1,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 15.625,
+      "l_um": 15.625,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "C_STAGE2",
+      "kind": "capacitor",
+      "requested_SI": 5e-13,
+      "nominal_geometry_SI": 5.0015625e-13,
+      "instances": 1,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 15.625,
+      "l_um": 15.625,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    }
+  ],
+  "rc_corner": "typical",
+  "manufacturing_signoff": false
+}

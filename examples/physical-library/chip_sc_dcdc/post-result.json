@@ -1,0 +1,90 @@
+{
+  "reference": "chip_sc_dcdc",
+  "stage": "post",
+  "project_id": "c6f8b428bd2d45549a6cdf0af0573eae",
+  "run_id": "86fcc7d8a52344009a2f89836941e00b",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "message": "Actual ngspice tran: 17419 samples.; reference criteria 3/3",
+  "elapsed_s": 11.169603892951272,
+  "parasitics": {
+    "resistors": 4234,
+    "capacitors": 1143
+  },
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "true",
+    "samples": 17419,
+    "solver": "SPARSE 1.3",
+    "OUT_min": 0.000050257621987395104,
+    "OUT_max": 0.8785573573622383,
+    "supply_current_min": -0.00029285530445974205,
+    "supply_current_max": 0.011818021043576973,
+    "FLYTOP_min": 0.09212851446746888,
+    "FLYTOP_max": 1.8169928061785152,
+    "FLYBOTTOM_min": -0.08017455257608835,
+    "FLYBOTTOM_max": 0.9358690498830083,
+    "PHI1_min": 0,
+    "PHI1_max": 1.8,
+    "PHI2_min": 0,
+    "PHI2_max": 1.8,
+    "current_flow_status": "available_partial",
+    "template_id": "chip_sc_dcdc",
+    "layout_status": "generated-public-core",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "public PCell physical core with explicit external testbench; independent DRC/LVS/PEX; no foundry signoff",
+    "settled_output_mean_V": 0.8782770141873022,
+    "settled_output_ripple_V": 0.0005819806531190963,
+    "average_supply_current_A": 0.000009293879003454776,
+    "average_supply_power_W": 0.000016728982206218597,
+    "output_power_W": 0.00001542741068436854,
+    "power_stage_efficiency": 0.9221966103014786,
+    "output_power_method": "Exact integral of squared piecewise-linear sampled V(t), divided by load resistance and observation duration.",
+    "efficiency_scope": "Includes DUT MOS loss and VDD current; excludes externally supplied clock-driver power."
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "chip_sc_dcdc",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "output near Vin/2",
+        "pass": true,
+        "observed": 0.8782770141873022
+      },
+      {
+        "name": "non-overlap clock high windows do not intersect",
+        "pass": true,
+        "observed": null
+      },
+      {
+        "name": "power-stage efficiency within physical bounds",
+        "pass": true,
+        "observed": 0.9221966103014786
+      }
+    ],
+    "pass": true,
+    "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+  },
+  "artifacts": {
+    "pex_netlist": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/pex.spice",
+    "pex_quality": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/pex-quality.json",
+    "pex_simulation_netlist": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/pex-simulation.spice",
+    "pex_reduction": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/pex-reduction.json",
+    "testbench": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/testbench.spice",
+    "current_flow_data": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/current-flow.dat",
+    "current_probe_netlist": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/current-probe.spice",
+    "node_voltage_data": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/node-voltages.dat",
+    "node_voltage_probes": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/voltage-probes.json",
+    "waveform_data": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/waveform.dat",
+    "waveform_raw": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/waveform.raw",
+    "reference_netlist": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/pex-simulation.spice",
+    "stdout": "/workspace/.runtime/eda/runs/86fcc7d8a52344009a2f89836941e00b/stdout.log"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "reference": "chip_vco",
+  "stage": "post",
+  "project_id": "a8bea106731f403d9527da0527014d52",
+  "run_id": "dcaf3cf92a1e4f97b224f1911eeb4990",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "message": "Actual ngspice tran: 6024 samples.; reference criteria 2/2",
+  "elapsed_s": 6.692048638011329,
+  "parasitics": {
+    "resistors": 3309,
+    "capacitors": 1241
+  },
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "true",
+    "samples": 6024,
+    "solver": "SPARSE 1.3",
+    "OUT_min": 0.0010740730141110873,
+    "OUT_max": 1.7879888328662221,
+    "supply_current_min": -0.00001051673215191038,
+    "supply_current_max": 0.04900397154971171,
+    "CTRL_min": 0.9,
+    "CTRL_max": 0.9,
+    "current_flow_status": "available_partial",
+    "template_id": "chip_vco",
+    "layout_status": "generated-public-core",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "public PCell physical core with explicit external testbench; independent DRC/LVS/PEX; no foundry signoff",
+    "settled_output_mean_V": 0.8429301397668921,
+    "settled_output_ripple_V": 1.7869118475035248,
+    "average_supply_current_A": 0.00016976713272608008,
+    "average_supply_power_W": 0.00030558083890694414,
+    "output_frequency_Hz": 25565702.24764858
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "chip_vco",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "oscillation crosses both logic rails",
+        "pass": true,
+        "observed": [
+          0.0010746317679444905,
+          1.7879864792714693
+        ]
+      },
+      {
+        "name": "at least 3 complete output periods measured",
+        "pass": true,
+        "observed": 31
+      }
+    ],
+    "pass": true,
+    "scope": "Only the named deterministic waveform criteria, not complete chip specifications."
+  },
+  "artifacts": {
+    "pex_netlist": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/pex.spice",
+    "pex_quality": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/pex-quality.json",
+    "pex_simulation_netlist": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/pex-simulation.spice",
+    "pex_reduction": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/pex-reduction.json",
+    "testbench": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/testbench.spice",
+    "current_flow_data": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/current-flow.dat",
+    "current_probe_netlist": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/current-probe.spice",
+    "node_voltage_data": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/node-voltages.dat",
+    "node_voltage_probes": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/voltage-probes.json",
+    "waveform_data": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/waveform.dat",
+    "waveform_raw": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/waveform.raw",
+    "reference_netlist": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/pex-simulation.spice",
+    "stdout": "/workspace/.runtime/eda/runs/dcaf3cf92a1e4f97b224f1911eeb4990/stdout.log"
+  }
+}

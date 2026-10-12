@@ -109,7 +109,7 @@ def schematic(kind, v):
     for port in CATALOG[kind]['ports']:element(ir,'PORT_'+port,'port',{'P':port},{})
     return ir
 
-def spice_tb(p,folder,settings,netlist,model_deck):
+def spice_tb(p,folder,settings,netlist,model_deck,sub=None):
     kind=p['design_template']['id'];v=p['design_template']['parameters'];s=settings['supply_V'];analysis=settings['analysis']
     if s<1.5:raise EDAError('STIMULUS_RANGE','Chip references require 1.5..1.8V supply; external VREF/bias must remain valid.')
     rows=['Resistor actual SKY130 chip reference '+kind,'.options method=gear maxord=2',f'.include "{model_deck}"','.option scale=1e-6',f'.include "{netlist}"',f'.temp {settings["temperature_C"]}','VGND VGND 0 0',f'VDD VPWR VGND {s:.12g}']
@@ -136,7 +136,7 @@ def spice_tb(p,folder,settings,netlist,model_deck):
             delta=v['differential_V']/2;rows += [f'VINP INP VGND PULSE({.9-delta:.12g} {.9+delta:.12g} 1u 2n 2n 1u 2u)'];probe('INP','v(INP)');probe('INN','v(INN)');probe('PRE','v(xu.PRE)')
         else: rows += ['VINP INP VGND DC 0.9 AC 1','RLOAD OUT VGND 100meg']
         rows += [f'COUT OUT VGND {v["load_F"]:.12g}']
-    rows += ['XU '+' '.join(p['ports'])+' '+p['cell'],'.control','set num_threads=1','set numdgt=17','set noaskquit','set wr_singlescale','set wr_vecnames']
+    rows += ['XU '+' '.join(sub or p['ports'])+' '+p['cell'],'.control','set num_threads=1','set numdgt=17','set noaskquit','set wr_singlescale','set wr_vecnames']
     if analysis=='tran':rows += [f'tran {settings["step_s"]:.12g} {settings["duration_s"]:.12g}'+(' uic' if kind in ('chip_vco','chip_pll','chip_sc_dcdc') else '')];xunit,xlabel='s','time'
     elif analysis=='op':rows += ['op','let mos_sample_index=0','setscale mos_sample_index'];xunit,xlabel='point','operating point'
     elif analysis=='ac':
@@ -144,6 +144,10 @@ def spice_tb(p,folder,settings,netlist,model_deck):
     else:raise EDAError('UNSUPPORTED_ANALYSIS','Analysis has no owned chip-reference testbench.')
     for i,vector in enumerate(vectors):rows += [f'let mos_wave_{i} = {vector}']
     rows += ['wrdata waveform.dat '+' '.join(f'mos_wave_{i}' for i in range(len(vectors))),'write waveform.raw all','quit','.endc','.end']
+    if p['design_template'].get('physical_adapter'):
+        def flattened(line):
+            return line.replace('xu.OSCILLATOR.Q0','xu.OSCILLATOR__Q0').replace('xu.OSCILLATOR.Q1','xu.OSCILLATOR__Q1').replace('xu.FLYTOP','FLYTOP').replace('xu.FLYBOTTOM','FLYBOTTOM')
+        rows=[flattened(line) for line in rows]
     dest=Path(folder)/'testbench.spice';dest.write_text('\n'.join(rows)+'\n');return dest,names,units,xunit,xlabel
 
 def crossings(wave,threshold,start=0):
@@ -156,10 +160,23 @@ def integrate(x,y,start):
     if len(pairs)<2:return None
     return sum((b[0]-a[0])*(a[1]+b[1])/2 for a,b in zip(pairs,pairs[1:]))/(pairs[-1][0]-pairs[0][0])
 
+def mean_square(x,y,start):
+    """Exact integral of the squared piecewise-linear sampled voltage."""
+    if len(x)!=len(y) or len(x)<2:return None
+    if any(not math.isfinite(v) for v in [*x,*y]) or any(b<=a for a,b in zip(x,x[1:])):raise EDAError('INVALID_WAVEFORM','Mean-square requires finite, increasing actual samples.')
+    start=max(start,x[0]);end=x[-1]
+    if start>=end:return None
+    area=0.
+    for a,b,u,v in zip(x,x[1:],y,y[1:]):
+        if b<=start:continue
+        left=max(a,start);p=u+(v-u)*(left-a)/(b-a)
+        area+=(b-left)*(p*p+p*v+v*v)/3
+    return area/(end-start)
+
 def measurements(p,run,params):
     kind=p['design_template']['id'];v=p['design_template']['parameters'];m=run['measurements'];waves={w['name']:w for w in run['waveforms']};s=params['supply_V'];checks=[]
     def check(name,passed,value):checks.append({'name':name,'pass':bool(passed),'observed':value})
-    m['reference_scope']='schematic-only; external ideal testbench components; no physical signoff'
+    m['reference_scope']='public PCell physical core with explicit external testbench; independent DRC/LVS/PEX; no foundry signoff' if p['design_template'].get('physical_adapter') else 'schematic-only; external ideal testbench components; no physical signoff'
     if params['analysis']=='tran':
         out=waves['OUT'];end=out['x'][-1];start=end*.75;tail=window(out,start,end)
         if not tail:raise EDAError('INCOMPLETE_WAVEFORM','No samples in observation window.')
@@ -171,7 +188,8 @@ def measurements(p,run,params):
             m['load_step_undershoot_V']=1.2-min(window(out,20e-6,60e-6),default=1.2)
             check('load-step undershoot below 150mV',m['load_step_undershoot_V']<.15,m['load_step_undershoot_V'])
         elif kind=='chip_sc_dcdc':
-            mean=m['settled_output_mean_V'];power=integrate(out['x'],[y*y/v['load_Ohm'] for y in out['y']],start);m['output_power_W']=power;m['power_stage_efficiency']=power/m['average_supply_power_W'] if m['average_supply_power_W']>0 else None
+            mean=m['settled_output_mean_V'];power=mean_square(out['x'],out['y'],start)/v['load_Ohm'];m['output_power_W']=power;m['power_stage_efficiency']=power/m['average_supply_power_W'] if m['average_supply_power_W']>0 else None
+            m['output_power_method']='Exact integral of squared piecewise-linear sampled V(t), divided by load resistance and observation duration.'
             m['efficiency_scope']='Includes DUT MOS loss and VDD current; excludes externally supplied clock-driver power.'
             check('output near Vin/2',abs(mean-s/2)<.15,mean);check('non-overlap clock high windows do not intersect',all(not(a>s*.5 and b>s*.5) for a,b in zip(waves['PHI1']['y'],waves['PHI2']['y'])),None)
             check('power-stage efficiency within physical bounds',m['power_stage_efficiency'] is not None and 0<m['power_stage_efficiency']<=1.001,m['power_stage_efficiency'])

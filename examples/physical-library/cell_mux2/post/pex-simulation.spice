@@ -1,0 +1,186 @@
+* NGSPICE file created from cell_mux2.ext - technology: sky130A
+
+.subckt cell_mux2 VPWR VGND B Y S A
+X0 B.t1 S.t0 Y.t3 VGND.t3 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X1 A.t0 SB.t2 Y.t0 VGND.t0 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X2 B.t0 SB.t3 Y.t1 VPWR.t0 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X3 A.t1 S.t1 Y.t2 VPWR.t3 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X4 VPWR.t2 S.t2 SB.t0 VPWR.t1 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X5 VGND.t2 S.t3 SB.t1 VGND.t1 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+C0 VPWR SB 0.59088f
+C1 A SB 0.74357f
+C2 VPWR Y 0.28168f
+C3 A Y 0.61868f
+C4 S SB 0.53999f
+C5 S Y 2.58321f
+C6 VPWR B 0.13604f
+C7 A B 0
+C8 S B 0.68659f
+C9 Y SB 0.42078f
+C10 B SB 3.42175f
+C11 A VPWR 0.16514f
+C12 B Y 2.94731f
+C13 VPWR S 0.74324f
+C14 A S 2.27151f
+C15 B VGND 3.32689f
+C16 A VGND 2.28683f
+C17 Y VGND 3.329f
+C18 S VGND 3.87247f
+C19 VPWR VGND 8.85893f
+C20 SB VGND 5.55131f $ **FLOATING
+C21 A.n0 VGND 0.00837f $ **FLOATING
+C22 A.n1 VGND 0.00956f $ **FLOATING
+C23 A.t0 VGND 0.02325f $ **FLOATING
+C24 A.n2 VGND 0.00956f $ **FLOATING
+C25 A.n3 VGND 0.15672f $ **FLOATING
+C26 A.n4 VGND 1.29823f $ **FLOATING
+C27 A.n5 VGND 0.18575f $ **FLOATING
+C28 A.t1 VGND 0.02564f $ **FLOATING
+C29 A.n6 VGND 0.00837f $ **FLOATING
+C30 SB.n0 VGND 0.00584f $ **FLOATING
+C31 SB.t3 VGND 0.02506f $ **FLOATING
+C32 SB.t2 VGND 0.02412f $ **FLOATING
+C33 SB.n1 VGND 1.71656f $ **FLOATING
+C34 SB.n2 VGND 0.00667f $ **FLOATING
+C35 SB.t1 VGND 0.01622f $ **FLOATING
+C36 SB.n3 VGND 0.00667f $ **FLOATING
+C37 SB.n4 VGND 0.19073f $ **FLOATING
+C38 SB.n5 VGND 0.9314f $ **FLOATING
+C39 SB.n6 VGND 0.21514f $ **FLOATING
+C40 SB.t0 VGND 0.01788f $ **FLOATING
+C41 SB.n7 VGND 0.00584f $ **FLOATING
+C42 B.n0 VGND 0.01475f $ **FLOATING
+C43 B.n1 VGND 0.01685f $ **FLOATING
+C44 B.t1 VGND 0.04097f $ **FLOATING
+C45 B.n2 VGND 0.01685f $ **FLOATING
+C46 B.n3 VGND 0.42964f $ **FLOATING
+C47 B.n4 VGND 3.44962f $ **FLOATING
+C48 B.n5 VGND 0.48903f $ **FLOATING
+C49 B.t0 VGND 0.04517f $ **FLOATING
+C50 B.n6 VGND 0.01475f $ **FLOATING
+C51 Y.n0 VGND 0.01076f $ **FLOATING
+C52 Y.n1 VGND 0.0123f $ **FLOATING
+C53 Y.t0 VGND 0.0299f $ **FLOATING
+C54 Y.n2 VGND 0.0123f $ **FLOATING
+C55 Y.n3 VGND 0.27578f $ **FLOATING
+C56 Y.n4 VGND 1.21326f $ **FLOATING
+C57 Y.n5 VGND 0.01076f $ **FLOATING
+C58 Y.t2 VGND 0.03297f $ **FLOATING
+C59 Y.n6 VGND 0.01076f $ **FLOATING
+C60 Y.n7 VGND 0.27578f $ **FLOATING
+C61 Y.n8 VGND 0.85864f $ **FLOATING
+C62 Y.n9 VGND 0.0123f $ **FLOATING
+C63 Y.t3 VGND 0.0299f $ **FLOATING
+C64 Y.n10 VGND 0.0123f $ **FLOATING
+C65 Y.n11 VGND 0.27578f $ **FLOATING
+C66 Y.n12 VGND 1.4107f $ **FLOATING
+C67 Y.n13 VGND 0.3173f $ **FLOATING
+C68 Y.t1 VGND 0.03297f $ **FLOATING
+C69 Y.n14 VGND 0.01076f $ **FLOATING
+C70 S.t2 VGND 0.04738f $ **FLOATING
+C71 S.n0 VGND 0.87224f $ **FLOATING
+C72 S.t3 VGND 0.04559f $ **FLOATING
+C73 S.n1 VGND 1.24793f $ **FLOATING
+C74 S.t1 VGND 0.04738f $ **FLOATING
+C75 S.n2 VGND 1.91718f $ **FLOATING
+C76 S.t0 VGND 0.04559f $ **FLOATING
+rmesh_equiv_0 a a.n0 12.8005
+rmesh_equiv_1 a a.n1 12.8005
+rmesh_equiv_10 a.n2 a.t0 255.34500000000003
+rmesh_equiv_11 a.n3 a.n4 10.035399999999999
+rmesh_equiv_12 a.n4 a.n5 10.852600000000001
+rmesh_equiv_13 a.n5 a.n6 10.151300000000001
+rmesh_equiv_14 a.n6 a.t1 700.48400000000004
+rmesh_equiv_15 b b.n0 12.8005
+rmesh_equiv_16 b b.n1 12.8005
+rmesh_equiv_17 b b.n2 12.8005
+rmesh_equiv_18 b b.n4 3.8039800000000001
+rmesh_equiv_19 b b.n6 12.8005
+rmesh_equiv_2 a a.n2 12.8005
+rmesh_equiv_20 b.n0 b.n5 10.151300000000001
+rmesh_equiv_21 b.n0 b.t0 700.48400000000004
+rmesh_equiv_22 b.n1 b.n3 10.151300000000001
+rmesh_equiv_23 b.n1 b.t1 255.34500000000003
+rmesh_equiv_24 b.n2 b.n3 10.151300000000001
+rmesh_equiv_25 b.n2 b.t1 255.34500000000003
+rmesh_equiv_26 b.n3 b.n4 11.285399999999999
+rmesh_equiv_27 b.n4 b.n5 12.102600000000001
+rmesh_equiv_28 b.n5 b.n6 10.151300000000001
+rmesh_equiv_29 b.n6 b.t0 700.48400000000004
+rmesh_equiv_3 a a.n4 2.1460499999999998
+rmesh_equiv_30 s s.n0 0.55682930770503569
+rmesh_equiv_31 s s.n1 29.799399999999999
+rmesh_equiv_32 s s.n2 15.097203646670627
+rmesh_equiv_33 s s.t0 315.88
+rmesh_equiv_34 s s.t1 330.34100000000001
+rmesh_equiv_35 s s.t2 330.34100000000001
+rmesh_equiv_36 s s.t3 315.88
+rmesh_equiv_37 s.n0 s.n1 0.81771300000000002
+rmesh_equiv_38 s.n1 s.n2 1.6402100000000002
+rmesh_equiv_39 sb sb.n0 12.8005
+rmesh_equiv_4 a a.n6 12.8005
+rmesh_equiv_40 sb sb.n1 16.116149893352208
+rmesh_equiv_41 sb sb.n2 12.8005
+rmesh_equiv_42 sb sb.n3 12.8005
+rmesh_equiv_43 sb sb.n7 12.8005
+rmesh_equiv_44 sb sb.t2 315.88
+rmesh_equiv_45 sb sb.t3 330.34100000000001
+rmesh_equiv_46 sb.n0 sb.n6 10.151300000000001
+rmesh_equiv_47 sb.n0 sb.t0 700.48400000000004
+rmesh_equiv_48 sb.n1 sb.n5 1.1660999999999999
+rmesh_equiv_49 sb.n2 sb.n4 10.151300000000001
+rmesh_equiv_5 a.n0 a.n5 10.151300000000001
+rmesh_equiv_50 sb.n2 sb.t1 255.34500000000003
+rmesh_equiv_51 sb.n3 sb.n4 10.151300000000001
+rmesh_equiv_52 sb.n3 sb.t1 255.34500000000003
+rmesh_equiv_53 sb.n4 sb.n5 11.7021
+rmesh_equiv_54 sb.n5 sb.n6 12.519299999999999
+rmesh_equiv_55 sb.n6 sb.n7 10.151300000000001
+rmesh_equiv_56 sb.n7 sb.t0 700.48400000000004
+rmesh_equiv_57 vgnd vgnd.t0 193.69819116526284
+rmesh_equiv_58 vgnd vgnd.t1 193.69819116526284
+rmesh_equiv_59 vgnd vgnd.t2 132.2616614593461
+rmesh_equiv_6 a.n0 a.t1 700.48400000000004
+rmesh_equiv_60 vgnd vgnd.t3 193.69819116526287
+rmesh_equiv_61 vgnd.t0 vgnd.t1 4328.7440990295781
+rmesh_equiv_62 vgnd.t0 vgnd.t3 9497.4607123233527
+rmesh_equiv_63 vgnd.t1 vgnd.t3 2870276.6148569267
+rmesh_equiv_64 vpwr vpwr.t0 117.18187411979874
+rmesh_equiv_65 vpwr vpwr.t1 117.18187411979875
+rmesh_equiv_66 vpwr vpwr.t2 354.82093739892844
+rmesh_equiv_67 vpwr vpwr.t3 117.18187411979875
+rmesh_equiv_68 y y.n0 12.8005
+rmesh_equiv_69 y y.n1 12.8005
+rmesh_equiv_7 a.n1 a.n3 10.151300000000001
+rmesh_equiv_70 y y.n10 12.8005
+rmesh_equiv_71 y y.n14 12.8005
+rmesh_equiv_72 y y.n2 12.8005
+rmesh_equiv_73 y y.n4 1.86405
+rmesh_equiv_74 y y.n5 12.8005
+rmesh_equiv_75 y y.n6 12.8005
+rmesh_equiv_76 y y.n9 12.8005
+rmesh_equiv_77 y.n0 y.n13 10.151300000000001
+rmesh_equiv_78 y.n0 y.t1 700.48400000000004
+rmesh_equiv_79 y.n1 y.n3 10.151300000000001
+rmesh_equiv_8 a.n1 a.t0 255.34500000000003
+rmesh_equiv_80 y.n1 y.t0 255.34500000000003
+rmesh_equiv_81 y.n10 y.n11 10.151300000000001
+rmesh_equiv_82 y.n10 y.t3 255.34500000000003
+rmesh_equiv_83 y.n11 y.n12 10.8688
+rmesh_equiv_84 y.n11 y.n9 10.151300000000001
+rmesh_equiv_85 y.n12 y.n13 11.686
+rmesh_equiv_86 y.n12 y.n8 0.81771300000000002
+rmesh_equiv_87 y.n13 y.n14 10.151300000000001
+rmesh_equiv_88 y.n14 y.t1 700.48400000000004
+rmesh_equiv_89 y.n2 y.n3 10.151300000000001
+rmesh_equiv_9 a.n2 a.n3 10.151300000000001
+rmesh_equiv_90 y.n2 y.t0 255.34500000000003
+rmesh_equiv_91 y.n3 y.n4 10.8688
+rmesh_equiv_92 y.n4 y.n8 0.81771300000000002
+rmesh_equiv_93 y.n5 y.n7 10.151300000000001
+rmesh_equiv_94 y.n5 y.t2 700.48400000000004
+rmesh_equiv_95 y.n6 y.n7 10.151300000000001
+rmesh_equiv_96 y.n6 y.t2 700.48400000000004
+rmesh_equiv_97 y.n7 y.n8 10.8688
+rmesh_equiv_98 y.n9 y.t3 255.34500000000003
+.ends

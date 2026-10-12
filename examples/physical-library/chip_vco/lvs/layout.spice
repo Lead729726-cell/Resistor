@@ -1,0 +1,22 @@
+* NGSPICE file created from chip_vco.ext - technology: sky130A
+
+.subckt chip_vco VPWR VGND OUT CTRL
+X0 VGND CTRL PBIAS VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=0.5
+X1 P2 Q1 OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X2 Q0 VGND sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+X3 VGND CTRL N1 VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=0.5
+X4 P0 OUT Q0 VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X5 N0 OUT Q0 VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X6 VPWR PBIAS P1 VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X7 P1 Q0 Q1 VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X8 N1 Q0 Q1 VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X9 VPWR PBIAS P2 VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X10 OUT VGND sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+X11 VPWR PBIAS PBIAS VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X12 VPWR PBIAS P0 VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X13 VGND CTRL N2 VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=0.5
+X14 N2 Q1 OUT VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X15 VGND CTRL N0 VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=0.5
+X16 Q1 VGND sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+.ends
+

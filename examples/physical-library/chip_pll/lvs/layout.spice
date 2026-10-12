@@ -1,0 +1,75 @@
+* NGSPICE file created from chip_pll.ext - technology: sky130A
+
+.subckt chip_pll VPWR VGND OUT CTRL REF
+X0 VPWR PHASE_DETECTOR__N2 PD VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X1 PD CTRL VGND sky130_fd_pr__res_xhigh_po_1p41 l=13.94
+X2 CTRL R_TUNE_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X3 VGND TUNE OSCILLATOR__PBIAS VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=0.5
+X4 OSCILLATOR__P2 OSCILLATOR__Q1 OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X5 CTRL VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X6 VPWR OSCILLATOR__PBIAS OSCILLATOR__P1 VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X7 OSCILLATOR__Q1 VGND sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+X8 R_TUNE_R0_N1 R_TUNE_R0_N2 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X9 R_TUNE_R0_N10 R_TUNE_R0_N11 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X10 R_TUNE_R0_N22 TUNE VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X11 CTRL VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X12 R_TUNE_R0_N2 R_TUNE_R0_N3 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X13 R_TUNE_R0_N9 R_TUNE_R0_N10 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X14 R_TUNE_R0_N12 R_TUNE_R0_N13 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X15 R_TUNE_R0_N21 R_TUNE_R0_N22 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X16 R_TUNE_R0_N8 R_TUNE_R0_N9 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X17 R_TUNE_R0_N11 R_TUNE_R0_N12 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X18 OSCILLATOR__P1 OSCILLATOR__Q0 OSCILLATOR__Q1 VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X19 R_TUNE_R0_N14 R_TUNE_R0_N15 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X20 CTRL VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X21 PHASE_DETECTOR__N2__N1 REF PHASE_DETECTOR__N2 VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X22 VPWR PHASE_DETECTOR__N1 PHASE_DETECTOR__N3 VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X23 OUT VGND sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+X24 VPWR OUT PHASE_DETECTOR__N3 VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X25 R_BIAS_TOP_R0_N0 R_BIAS_TOP_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X26 VGND TUNE OSCILLATOR__N2 VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=0.5
+X27 VPWR R_BIAS_TOP_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X28 VPWR OSCILLATOR__PBIAS OSCILLATOR__P0 VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X29 VGND TUNE OSCILLATOR__N0 VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=0.5
+X30 OSCILLATOR__N0 OUT OSCILLATOR__Q0 VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X31 VGND OUT PHASE_DETECTOR__N1__N1 VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X32 CTRL VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X33 VPWR PHASE_DETECTOR__N1 PHASE_DETECTOR__N2 VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X34 PHASE_DETECTOR__N4__N1 PHASE_DETECTOR__N2 PD VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X35 VGND PHASE_DETECTOR__N3 PHASE_DETECTOR__N4__N1 VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X36 R_BIAS_BOTTOM_R0_N1 VGND VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X37 VPWR OSCILLATOR__PBIAS OSCILLATOR__P2 VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X38 CTRL VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X39 VPWR REF PHASE_DETECTOR__N1 VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X40 R_TUNE_R0_N19 R_TUNE_R0_N20 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X41 R_TUNE_R0_N18 R_TUNE_R0_N19 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X42 R_TUNE_R0_N20 R_TUNE_R0_N21 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X43 OSCILLATOR__N2 OSCILLATOR__Q1 OUT VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X44 R_BIAS_TOP_R0_N1 TUNE VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X45 VGND TUNE OSCILLATOR__N1 VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=0.5
+X46 OSCILLATOR__Q0 VGND sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+X47 R_BIAS_BOTTOM_R0_N0 R_BIAS_BOTTOM_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X48 OSCILLATOR__N1 OSCILLATOR__Q0 OSCILLATOR__Q1 VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X49 TUNE R_BIAS_BOTTOM_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X50 OSCILLATOR__P0 OUT OSCILLATOR__Q0 VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X51 CTRL VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X52 R_TUNE_R0_N5 R_TUNE_R0_N6 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X53 R_TUNE_R0_N17 R_TUNE_R0_N18 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X54 PHASE_DETECTOR__N1__N1 REF PHASE_DETECTOR__N1 VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X55 VPWR REF PHASE_DETECTOR__N2 VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X56 VGND PHASE_DETECTOR__N1 PHASE_DETECTOR__N3__N1 VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X57 VPWR PHASE_DETECTOR__N3 PD VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X58 R_TUNE_R0_N4 R_TUNE_R0_N5 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X59 R_TUNE_R0_N7 R_TUNE_R0_N8 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X60 R_TUNE_R0_N16 R_TUNE_R0_N17 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X61 PHASE_DETECTOR__N3__N1 OUT PHASE_DETECTOR__N3 VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X62 R_TUNE_R0_N3 R_TUNE_R0_N4 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X63 R_TUNE_R0_N6 R_TUNE_R0_N7 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X64 R_TUNE_R0_N13 R_TUNE_R0_N14 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X65 R_TUNE_R0_N15 R_TUNE_R0_N16 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X66 VPWR OUT PHASE_DETECTOR__N1 VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X67 VGND PHASE_DETECTOR__N1 PHASE_DETECTOR__N2__N1 VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X68 R_TUNE_R0_N0 R_TUNE_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X69 VPWR OSCILLATOR__PBIAS OSCILLATOR__PBIAS VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+.ends
+

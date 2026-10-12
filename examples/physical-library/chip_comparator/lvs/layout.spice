@@ -1,0 +1,12 @@
+* NGSPICE file created from chip_comparator.ext - technology: sky130A
+
+.subckt chip_comparator VPWR VGND OUT BIAS INN INP
+X0 PREAMP__TAIL INN PREAMP__MIR VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X1 VGND BIAS PREAMP__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X2 PREAMP__TAIL INP PRE VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X3 VGND PRE OUT VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X4 VPWR PREAMP__MIR PREAMP__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X5 VPWR PREAMP__MIR PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X6 VPWR PRE OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+.ends
+

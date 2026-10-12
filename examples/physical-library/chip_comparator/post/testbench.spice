@@ -1,0 +1,79 @@
+Resistor actual SKY130 chip reference chip_comparator
+.options method=gear maxord=2
+.include "./supported-tt.spice"
+.option scale=1e-6
+.include "./current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VBIAS BIAS VGND 0.9
+VINN INN VGND 0.9
+VINP INP VGND PULSE(0.85 0.95 1u 2n 2n 1u 2u)
+COUT OUT VGND 5e-14
+XU VPWR VGND OUT BIAS INN INP chip_comparator
+.control
+save v(OUT) i(VDD) v(INP) v(INN) v(xu.PRE) i(v.xu.vregister_cf_95e2936c94fee200) i(v.xu.vregister_cf_f7c938cabbea30bd) i(v.xu.vregister_cf_ca0b942977027eb6) i(v.xu.vregister_cf_bb0491c40ecf7b12) i(v.xu.vregister_cf_714e3e74813fe96c) i(v.xu.vregister_cf_aa59d738239aea19) i(v.xu.vregister_cf_f98ddd7830866f7c) i(VGND) i(VBIAS) i(VINN) i(VINP) v(XU.PREAMP__TAIL.t0) v(XU.PREAMP__MIR.t0) v(XU.INN.t0) v(XU.VGND.t0) v(XU.VGND.t5) v(XU.PREAMP__TAIL.t2) v(XU.BIAS.t0) v(XU.VGND.t4) v(XU.PREAMP__TAIL.t1) v(XU.PRE.t0) v(XU.INP.t0) v(XU.VGND.t3) v(XU.VGND.t2) v(XU.OUT.t0) v(XU.PRE.t2) v(XU.VGND.t1) v(XU.VPWR.t5) v(XU.PREAMP__MIR.t2) v(XU.PREAMP__MIR.t1) v(XU.VPWR.t4) v(XU.VPWR.t3) v(XU.PRE.t1) v(XU.PREAMP__MIR.t3) v(XU.VPWR.t2) v(XU.VPWR.t1) v(XU.OUT.t1) v(XU.PRE.t3) v(XU.VPWR.t0) v(VGND) v(VPWR) v(BIAS)
+set num_threads=1
+set numdgt=17
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 1e-09 4e-06
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(INP)
+let mos_wave_3 = v(INN)
+let mos_wave_4 = v(xu.PRE)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3 mos_wave_4
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_95e2936c94fee200)
+let register_flow_1 = i(v.xu.vregister_cf_f7c938cabbea30bd)
+let register_flow_2 = i(v.xu.vregister_cf_ca0b942977027eb6)
+let register_flow_3 = i(v.xu.vregister_cf_bb0491c40ecf7b12)
+let register_flow_4 = i(v.xu.vregister_cf_714e3e74813fe96c)
+let register_flow_5 = i(v.xu.vregister_cf_aa59d738239aea19)
+let register_flow_6 = i(v.xu.vregister_cf_f98ddd7830866f7c)
+let register_flow_7 = i(VGND)
+let register_flow_8 = i(VDD)
+let register_flow_9 = i(VBIAS)
+let register_flow_10 = i(VINN)
+let register_flow_11 = i(VINP)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11
+let register_voltage_0 = v(XU.PREAMP__TAIL.t0)
+let register_voltage_1 = v(XU.PREAMP__MIR.t0)
+let register_voltage_2 = v(XU.INN.t0)
+let register_voltage_3 = v(XU.VGND.t0)
+let register_voltage_4 = v(XU.VGND.t5)
+let register_voltage_5 = v(XU.PREAMP__TAIL.t2)
+let register_voltage_6 = v(XU.BIAS.t0)
+let register_voltage_7 = v(XU.VGND.t4)
+let register_voltage_8 = v(XU.PREAMP__TAIL.t1)
+let register_voltage_9 = v(XU.PRE.t0)
+let register_voltage_10 = v(XU.INP.t0)
+let register_voltage_11 = v(XU.VGND.t3)
+let register_voltage_12 = v(XU.VGND.t2)
+let register_voltage_13 = v(XU.OUT.t0)
+let register_voltage_14 = v(XU.PRE.t2)
+let register_voltage_15 = v(XU.VGND.t1)
+let register_voltage_16 = v(XU.VPWR.t5)
+let register_voltage_17 = v(XU.PREAMP__MIR.t2)
+let register_voltage_18 = v(XU.PREAMP__MIR.t1)
+let register_voltage_19 = v(XU.VPWR.t4)
+let register_voltage_20 = v(XU.VPWR.t3)
+let register_voltage_21 = v(XU.PRE.t1)
+let register_voltage_22 = v(XU.PREAMP__MIR.t3)
+let register_voltage_23 = v(XU.VPWR.t2)
+let register_voltage_24 = v(XU.VPWR.t1)
+let register_voltage_25 = v(XU.OUT.t1)
+let register_voltage_26 = v(XU.PRE.t3)
+let register_voltage_27 = v(XU.VPWR.t0)
+let register_voltage_28 = v(VGND)
+let register_voltage_29 = 0*register_flow_0
+let register_voltage_30 = v(VPWR)
+let register_voltage_31 = v(BIAS)
+let register_voltage_32 = v(INN)
+let register_voltage_33 = v(INP)
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11 register_voltage_12 register_voltage_13 register_voltage_14 register_voltage_15 register_voltage_16 register_voltage_17 register_voltage_18 register_voltage_19 register_voltage_20 register_voltage_21 register_voltage_22 register_voltage_23 register_voltage_24 register_voltage_25 register_voltage_26 register_voltage_27 register_voltage_28 register_voltage_29 register_voltage_30 register_voltage_31 register_voltage_32 register_voltage_33
+quit
+.endc
+.end

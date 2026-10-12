@@ -2,7 +2,27 @@
 
 This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
-`docs/evidence/` and the example READMEs. Package version: 0.16.1.
+`docs/evidence/` and the example READMEs. Package version: 0.17.0.
+
+## 0.17.0 — Public-PDK physical library (2026-10-12)
+
+- Eight reusable CMOS logic cells and six analog/power/clock physical cores,
+  using actual SKY130 MOS, precision poly resistors and MIM capacitors.
+- Native Magic DRC, Netgen unique LVS match, Magic RC extraction and ngspice
+  pre/post simulation: 14/14 physical checks and 13/14 post-layout criteria pass.
+  PLL frequency/phase lock fails; reports and waveforms retain the failure.
+- Exact resistor-only Schur elimination accelerates extracted simulation while
+  preserving the original PEX, all capacitors and protected ports/model nodes.
+  Full adapter source hashes participate in result freshness.
+- Bounded job-free GDS/OASIS metadata fixes exports exceeding the import limit.
+  Modelled R/C values clarify that actual W/L drives their PDK model.
+- Hierarchy search synchronizes the selected source and invalidates preview
+  approval when its revision changes. Existing themes and design formats remain.
+- Two actual-operation Korean 1080p lessons, cell-specific fabrication/design
+  instructions, reference gallery, original reports and downloadable project files.
+  Full human listening review and foundry/full-chip signoff remain pending.
+- Windows/Linux and Apple Silicon/Intel Mac packages include the new backend;
+  Mac archive/self-signature checks do not establish native execution or notarization.
 
 ## 0.16.1 — Resistor product name (2026-10-07)
 

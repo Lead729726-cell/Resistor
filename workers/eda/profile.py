@@ -26,7 +26,7 @@ def capabilities():
     return {'id': 'sky130A', 'available': available, 'path': str(ROOT),
             'version': 'd400e26845538beaeb7cc5fdb9bfc06c30ea27cb',
             'capabilities': {k: available for k in ('simulation','drc','lvs','pex','mos_pcell')},
-            'supported_devices': ['sky130_fd_pr__nfet_01v8','sky130_fd_pr__pfet_01v8_hvt'],
+            'supported_devices': ['sky130_fd_pr__nfet_01v8','sky130_fd_pr__pfet_01v8_hvt','sky130_fd_pr__res_xhigh_po_1p41','sky130_fd_pr__cap_mim_m3_1'],
             'supported_corners':['tt','ff','ss'] if available else [],
             'supported_analyses':['tran','dc','ac','op'] if available else [],
             'supported_vias':['via1','via2'] if available else [],

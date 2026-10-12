@@ -1,0 +1,96 @@
+{
+  "reference": "cell_xor2",
+  "stage": "post",
+  "project_id": "1048bc4ba3d144768f19b69c04fd2d1c",
+  "run_id": "6192116d054c4dcfbcb430168819f08b",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "message": "Actual ngspice tran: 2028 samples.; reference criteria 4/4",
+  "elapsed_s": 2.645124154048972,
+  "parasitics": {
+    "resistors": 1165,
+    "capacitors": 120
+  },
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "true",
+    "samples": 2028,
+    "solver": "SPARSE 1.3",
+    "A_min": 0,
+    "A_max": 1.8,
+    "B_min": 0,
+    "B_max": 1.8,
+    "Y_min": -0.048537893176195196,
+    "Y_max": 1.9676797207790189,
+    "supply_current_min": -0.000045600651408447986,
+    "supply_current_max": 0.00012427359667179871,
+    "current_flow_status": "available_partial",
+    "template_id": "cell_xor2",
+    "layout_status": "generated-public-core",
+    "metric_source": "actual-ngspice-samples",
+    "truth_cases": 4,
+    "truth_passed": 4
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "cell_xor2",
+    "source": "actual-ngspice-input-and-output-samples",
+    "pass": true,
+    "checks": [
+      {
+        "name": "input [0, 0] → 0",
+        "pass": true,
+        "observed": [
+          1.3662420092656956e-8,
+          1.3662510546017903e-8
+        ]
+      },
+      {
+        "name": "input [1, 0] → 1",
+        "pass": true,
+        "observed": [
+          1.800000268130681,
+          1.8000014061807403
+        ]
+      },
+      {
+        "name": "input [0, 1] → 1",
+        "pass": true,
+        "observed": [
+          1.7999754377082933,
+          1.7999822618921666
+        ]
+      },
+      {
+        "name": "input [1, 1] → 0",
+        "pass": true,
+        "observed": [
+          4.5014346749589455e-7,
+          8.891203613010838e-7
+        ]
+      }
+    ],
+    "scope": "Exhaustive input combinations at configured load/PVT; not Liberty/STA characterization."
+  },
+  "artifacts": {
+    "pex_netlist": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/pex.spice",
+    "pex_quality": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/pex-quality.json",
+    "pex_simulation_netlist": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/pex-simulation.spice",
+    "pex_reduction": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/pex-reduction.json",
+    "testbench": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/testbench.spice",
+    "current_flow_data": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/current-flow.dat",
+    "current_probe_netlist": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/current-probe.spice",
+    "node_voltage_data": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/node-voltages.dat",
+    "node_voltage_probes": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/voltage-probes.json",
+    "waveform_data": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/waveform.dat",
+    "waveform_raw": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/waveform.raw",
+    "reference_netlist": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/pex-simulation.spice",
+    "stdout": "/workspace/.runtime/eda/runs/6192116d054c4dcfbcb430168819f08b/stdout.log"
+  }
+}
