@@ -11,7 +11,7 @@ if(!process.argv.includes('--bundle-only')){
  const projects=await rpc('project.list',{metadata_only:true});const catalog=(await rpc('design.catalog')).templates;
  const blocks=[];
  for(const row of e.rows){
-  const t=catalog.find(t=>t.id===row.reference),name=`아날로그 SoC · ${t.name.replace(/^SoC · /,'')}`;
+  const t=catalog.find(t=>t.id===row.reference),name=`아날로그 SoC v0.21 · ${t.name.replace(/^SoC · /,'')}`;
   const matches=projects.filter(p=>p.cell===t.id&&p.name===name);
   if(matches.length!==1)throw Error('Expected one actual app-created hierarchy for '+t.id);
   const p=await rpc('project.open',{project_id:matches[0].id});const folder=out+'/'+t.id;

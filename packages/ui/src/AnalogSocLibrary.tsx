@@ -2,6 +2,7 @@ import {useEffect,useRef,useState} from 'react';
 import {type DesignCatalog,type Project,type Scene,rpc} from '@mos/contracts';
 
 interface Props {catalog:DesignCatalog;transport:typeof rpc;readOnly:boolean;shared:boolean;onProject:(p:Project,s:Scene)=>void|Promise<void>}
+const projectName=(name:string)=>`아날로그 SoC v0.21 · ${name.replace(/^SoC · /,'')}`;
 export default function AnalogSocLibrary({catalog,transport,readOnly,shared,onProject}:Props){
   const blocks=catalog.templates.filter(t=>t.id.startsWith('soc_'));
   const [busy,setBusy]=useState(false),[error,setError]=useState(''),[created,setCreated]=useState<Record<string,string>>({});
@@ -9,10 +10,10 @@ export default function AnalogSocLibrary({catalog,transport,readOnly,shared,onPr
   useEffect(()=>{alive.current=true;return()=>{alive.current=false;};},[]);
   if(!blocks.length)return null;
   const open=async(id:string)=>{setBusy(true);setError('');try{const p=await transport<Project>('project.open',{project_id:id});const s=await transport<Scene>('view.get_scene',{project_id:id,max_shapes:2000});if(alive.current)await onProject(p,s);}catch(c){if(alive.current)setError(c instanceof Error?c.message:String(c));}finally{if(alive.current)setBusy(false);}};
-  const read=async()=>{setBusy(true);setError('');try{const projects=await transport<Project[]>('project.list',{metadata_only:true});const found:Record<string,string>={};for(const b of blocks){const p=projects.filter(p=>p.cell===b.id&&p.name===`아날로그 SoC · ${b.name.replace(/^SoC · /,'')}`).at(-1);if(p)found[b.id]=p.id;}if(alive.current)setCreated(found);}catch(c){if(alive.current)setError(c instanceof Error?c.message:String(c));}finally{if(alive.current)setBusy(false);}};
+  const read=async()=>{setBusy(true);setError('');try{const projects=await transport<Project[]>('project.list',{metadata_only:true});const found:Record<string,string>={};for(const b of blocks){const p=projects.filter(p=>p.cell===b.id&&p.name===projectName(b.name)).at(-1);if(p)found[b.id]=p.id;}if(alive.current)setCreated(found);}catch(c){if(alive.current)setError(c instanceof Error?c.message:String(c));}finally{if(alive.current)setBusy(false);}};
   const build=async()=>{setBusy(true);setError('');try{let root:Project|undefined;
     for(const b of blocks){if(!alive.current)return;if(created[b.id]){if(b.id==='soc_sensor_afe')root=await transport<Project>('project.open',{project_id:created[b.id]});continue;}
-      commands.current[b.id]??=crypto.randomUUID();const p=await transport<Project>('design.create_template',{template_id:b.id,name:`아날로그 SoC · ${b.name.replace(/^SoC · /,'')}`,parameters:b.parameter_defaults,physical_core:false,command_id:commands.current[b.id]});
+      commands.current[b.id]??=crypto.randomUUID();const p=await transport<Project>('design.create_template',{template_id:b.id,name:projectName(b.name),parameters:b.parameter_defaults,physical_core:false,command_id:commands.current[b.id]});
       if(!alive.current)return;setCreated(current=>({...current,[b.id]:p.id}));if(b.id==='soc_sensor_afe')root=p;
     }if(root&&alive.current){const s=await transport<Scene>('view.get_scene',{project_id:root.id,max_shapes:2000});if(alive.current)await onProject(root,s);}
   }catch(c){if(alive.current)setError(c instanceof Error?c.message:String(c));}finally{if(alive.current)setBusy(false);}};
