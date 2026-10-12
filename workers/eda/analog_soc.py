@@ -179,6 +179,10 @@ def spice_tb(p, folder, settings, netlist, model_deck, sub):
         probe('input_current', 'i(VSENSOR)', 'A'); probe('IIN'); rows.append('CLOAD OUT VGND 50f')
     elif kind == 'soc_bias':
         probe('BIAS')
+    if kind in ('soc_bias','soc_sensor_afe'):
+        # Initial guesses help the nonlinear DC solve find the intended
+        # self-biased equilibrium. They are not voltage sources or forced ICs.
+        rows.append(f'.nodeset v(VCM)={s/2:.12g} v(BIAS)={s/2:.12g}'+(f' v(OUT)={s/2:.12g}' if kind=='soc_sensor_afe' else ''))
     rows.extend(['XU '+' '.join(sub or p['ports'])+' '+p['cell'], '.control', 'set num_threads=1',
                  'set numdgt=17', 'set wr_singlescale', 'set wr_vecnames', 'set noaskquit'])
     if analysis == 'ac':
@@ -264,6 +268,7 @@ def measurements(p, run, settings):
         if 'supply_current' in waves:
             m['average_supply_current_A']=window(waves['supply_current'],end*.75,end)[0]
             m['average_supply_power_W']=m['average_supply_current_A']*s
+            check('passive sensor macro draws nonnegative mean supply current',m['average_supply_current_A']>=0,m['average_supply_current_A'])
         if kind=='soc_bias':
             vc=window(waves['VCM'],end*.75,end)[0]; bias=window(waves['BIAS'],end*.75,end)[0]
             m.update(common_mode_V=vc,bias_V=bias)
@@ -276,6 +281,12 @@ def measurements(p, run, settings):
                 check(label+' measured gain within 3%',ratio is not None and abs(ratio/target-1)<.03,ratio)
                 check(label+' settled sine residual <5mV',out['residual_rms']<.005,out['residual_rms'])
             if kind=='soc_sensor_afe':
+                vc=window(waves['VCM'],end*.75,end)[0];bias=window(waves['BIAS'],end*.75,end)[0]
+                m.update(common_mode_V=vc,bias_V=bias)
+                check('self-biased VCM within 1% of VDD/2',abs(vc-s/2)<s*.005,vc)
+                check('self-generated bias within 0.5..1.1V',.5<bias<1.1,bias)
+                settled=[y for x,y in zip(waves['OUT']['x'],waves['OUT']['y']) if x>=20e-6]
+                check('settled analog output stays within supply rails plus 50mV',bool(settled) and min(settled)>=-.05 and max(settled)<=s+.05,[min(settled),max(settled)] if settled else None)
                 rows=[]
                 for edge in C.crossings(waves['CLK'],s/2,20e-6):
                     if edge+.2e-6>end: continue

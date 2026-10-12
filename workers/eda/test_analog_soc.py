@@ -94,4 +94,17 @@ class AnalogSocTests(unittest.TestCase):
         self.assertAlmostEqual(run['measurements']['phase_margin_deg'],-10.)
         self.assertFalse(result['pass'])
 
+    def test_nonphysical_bias_cannot_pass_with_correct_gain_and_stuck_data(self):
+        x=[i*20e-9 for i in range(10001)];s=1.8
+        values={'VIN':[s/2+.025*math.sin(2*math.pi*5000*t) for t in x],
+                'OUT':[s/2+(2 if t<100e-6 else 8)*.025*math.sin(2*math.pi*5000*t) for t in x],
+                'VCM':[4.]*len(x),'BIAS':[.8]*len(x),'DATA':[0.]*len(x),
+                'CLK':[s if int(t/.5e-6)%2 else 0. for t in x],'supply_current':[-.04]*len(x)}
+        run=dict(measurements={},waveforms=[dict(name=k,x=x,y=v,unit='A' if k=='supply_current' else 'V') for k,v in values.items()])
+        result=A.measurements(dict(design_template=dict(id='soc_sensor_afe',parameters={})),run,dict(analysis='tran',supply_V=s))
+        gain=[c for c in result['checks'] if 'measured gain' in c['name']]
+        self.assertTrue(all(c['pass'] for c in gain));self.assertFalse(result['pass'])
+        self.assertFalse(next(c['pass'] for c in result['checks'] if 'nonnegative' in c['name']))
+        self.assertFalse(next(c['pass'] for c in result['checks'] if 'self-biased VCM' in c['name']))
+
 if __name__=='__main__':unittest.main()

@@ -1,5 +1,5 @@
 """Actual nominal model-corner sweep; isolated files, no live DB import."""
-import sys,json,subprocess,hashlib,itertools
+import sys,json,subprocess,hashlib,itertools,re
 from pathlib import Path
 sys.path.insert(0,'/workspace/workers/eda')
 import numpy as np
@@ -21,10 +21,15 @@ for corner,temp,supply in itertools.product(['tt','ss','ff'],[-40,27,125],[1.6,1
     settings=native.testbench({**A.SETTINGS[kind], 'corner':corner,'temperature_C':temp,'supply_V':supply})
     net=folder/'core.spice';net.write_text(pex_text if post else native.emit(ir,kind,ir['ports']))
     if not post:p=dict(cell=kind,ports=ir['ports'],design_template=dict(id=kind,parameters=A.CATALOG[kind]['parameter_defaults']))
-    tb,names,units,_,_=design_tools.spice_tb(p,folder,settings,net)
+    tb,names,units,_,_=design_tools.spice_tb(p,folder,settings,net) if post else A.spice_tb(p,folder,settings,net,design_tools.supported_model_deck(folder,corner),p['ports'])
+    if post:
+        text=tb.read_text();vectors=list(dict.fromkeys(v.removeprefix('-') for v in re.findall(r'^let mos_wave_\d+ = (.+)$',text,re.M)))
+        if len(vectors)!=len(names):raise RuntimeError('Actual owned trace names/expressions must agree')
+        text=text.replace('set num_threads=1\n','set num_threads=1\nsave '+' '.join(vectors)+'\n',1)
+        tb.write_text(text)
     r=subprocess.run(['ngspice','-b',str(tb)],cwd=folder,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=120)
     (folder/'ngspice.log').write_text(r.stdout)
-    record=dict(corner=corner,temperature_C=temp,supply_V=supply,execution_status='failed',rc_corner='typical',netlist_sha256=hashlib.sha256(net.read_bytes()).hexdigest(),model_resources=design_tools.model_resources(corner),testbench_sha256=hashlib.sha256(tb.read_bytes()).hexdigest(),log_sha256=hashlib.sha256((folder/'ngspice.log').read_bytes()).hexdigest())
+    record=dict(corner=corner,temperature_C=temp,supply_V=supply,execution_status='failed',rc_corner='typical',netlist_sha256=hashlib.sha256(net.read_bytes()).hexdigest(),model_resources=design_tools.model_resources(corner),testbench_sha256=hashlib.sha256(tb.read_bytes()).hexdigest(),log_sha256=hashlib.sha256((folder/'ngspice.log').read_bytes()).hexdigest(),trace_scope='owned output/control vectors; every extracted RC stays in the solve' if post else 'hierarchy reference')
     try:
         if r.returncode:raise RuntimeError('ngspice failed')
         arr=np.loadtxt(folder/'waveform.dat',skiprows=1,ndmin=2)

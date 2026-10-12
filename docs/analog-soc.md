@@ -63,6 +63,14 @@ each rising edge against actual OUT−VCM at that edge; ±25mV threshold ambigui
 is explicitly excluded. At least 50 unambiguous samples must all agree.
 Reset is a synchronous data MUX, not an asynchronous reset or CDC synchronizer.
 
+Self-biased bias/AFE fixtures provide `.nodeset` guesses at VDD/2 for VCM/BIAS
+and AFE OUT. These are nonlinear DC convergence hints, not extra voltage sources
+or forced capacitor initial conditions. The engine must still solve every node.
+The earlier post-PEX SS/−40°C/1.6V solve found a nonphysical VCM near 4V; its
+failure is retained in the history. Supply-current sign, common-mode/bias ranges
+and settled output rails now also gate PASS. Power-up ramp/bistability and all
+possible initial states have not been qualified by this directed fixture.
+
 BIAS=0.9V is external for individual signal macros. The bias macro and integrated
 AFE generate their own BIAS/VCM. Supply, stimulus, clock and output load are
 external owned fixtures. VCM is ratiometric VDD/2, not a precision bandgap.
@@ -107,6 +115,8 @@ full-chip antenna/density, ESD, EM/IR, packaging and foundry signoff remain sepa
 work. Existing ADC/CPU/LDO/PLL examples have not been jointly verified as one
 finished SoC. Apple notarization requires the owner's Developer ID credentials;
 Mac native CI execution is distinct from full Docker EDA execution on a user's Mac.
+The offline viewer uses a clearly labeled Canvas 2D fallback when WebGL2 is absent,
+with actual integer XY polygons and holes; this fallback does not infer 3D or enable editing.
 
 Reproduce with `node scripts/analog-soc-library.mjs` and
 `node scripts/analog-soc-qa.mjs`; detached probe/PVT scripts never open the live DB.
