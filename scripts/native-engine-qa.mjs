@@ -1,6 +1,7 @@
 // Real host-process QA. No Docker executable, API or container is used here.
 import assert from 'node:assert/strict';
 import {createServer} from 'node:net';
+import {spawn} from 'node:child_process';
 import {mkdir,mkdtemp,writeFile,readFile} from 'node:fs/promises';
 import {createHash,randomUUID} from 'node:crypto';
 import path from 'node:path';
@@ -47,7 +48,8 @@ try{
   const unsafe=await workerRpc(config,'layout.import',{path:'/workspace/../outside.gds'});assert.equal(unsafe.error.code,'UNTRUSTED_PATH');check('workspace traversal rejected');
   await stopNativeWorker(workspace);started=false;
   await writeFile(path.join(workspace,'.runtime/engine.json'),JSON.stringify({mode:'native'}));
-  await startWorker(workspace,{resourcesRoot:resources,mode:'native',prepare:false});started=true;
+  const launcher=spawn(process.execPath,['--input-type=module','-e','const {startWorker}=await import(process.argv[1]);await startWorker(process.argv[2],{resourcesRoot:process.argv[3],mode:"native",prepare:false});',new URL('./worker.mjs',import.meta.url).href,workspace,resources],{windowsHide:true,stdio:['ignore','pipe','pipe']});let output='';launcher.stdout.on('data',b=>output+=b);launcher.stderr.on('data',b=>output+=b);const code=await new Promise((resolve,reject)=>{launcher.once('error',reject);launcher.once('close',resolve);});assert.equal(code,0,output);started=true;
+  await new Promise(r=>setTimeout(r,500));assert(await runtimeIdentity(config),'Native process exited with its launcher.');check('native engine survives launcher process exit');
   const reopened=await api('project.open',{project_id:circuit.id});assert.equal(reopened.revision,before);assert.equal(reopened.schematic.devices.length,3);assert(reopened.runs.some(r=>r.id===job.id));check('restart preserves designs and actual result history');
   const pdkDoctor=await api('toolchain.doctor');assert(pdkDoctor.pdk.available,'Release runtime must contain the declared public PDK.');
   const inverter=await api('project.create',{example:'inverter',name:'Native SKY130 inverter'});const actual=await wait(await api('simulation.run',{project_id:inverter.id,analysis:'tran',duration_s:30e-9,step_s:20e-12}));assert.equal(actual.execution_status,'completed',actual.message);assert(actual.waveforms.length>=2);assert(actual.current_flow.branches.length>0);check('actual SKY130 inverter model transient with signed currents',{run_id:actual.id,analysis_result:actual.analysis_result});
