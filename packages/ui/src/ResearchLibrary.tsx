@@ -15,7 +15,7 @@ export default function ResearchLibrary({project,transport=rpc,active,onDesign}:
   const entry=inventory?.coverage.find(v=>v.id===selected);
   const run=verifiedRun&&verifiedRun.id===latestRunId&&verifiedRun.project_id===project?.id?verifiedRun:null;
   const metric=run?.measurements as Record<string,unknown>|undefined;
-  const selectedMetrics=Object.fromEntries(['timing_characterization','source_energy','analog_supply_energy','cic_response','research_metrics','psrr_rejection_at_10Hz_dB','psrr_min_rejection_dB','psrr_convention','period_variation_s','unwrapped_phase_span_deg'].filter(k=>metric&&k in metric).map(k=>[k,metric![k]]));
+  const selectedMetrics=Object.fromEntries(['timing_characterization','source_energy','analog_supply_energy','cic_response','research_metrics','open_loop_gain_dB','phase_margin_deg','unity_gain_Hz','bandwidth_3dB_Hz','low_frequency_gain','SINAD_dB','ENOB_bits','ENOB_status','max_code_error','psrr_rejection_at_10Hz_dB','psrr_min_rejection_dB','psrr_convention','period_variation_s','unwrapped_phase_span_deg'].filter(k=>metric&&k in metric).map(k=>[k,metric![k]]));
   const download=()=>{if(!inventory)return;const url=URL.createObjectURL(new Blob([JSON.stringify(inventory,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='Resistor-literature-review-20261013.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
   return <section className="research-library it-panel" data-testid="research-library">
     <div className="it-intro"><h4>논문 참고 · 셀과 블록의 적용 범위</h4><p>새 구조의 성능은 현재 공정·부하에서 다시 측정합니다. 논문 참고와 실제 엔진 검증은 별개의 기록입니다.</p></div>

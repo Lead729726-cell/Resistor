@@ -768,7 +768,7 @@ def simulation(run,p,folder,manifest,params):
         tb=current_flow.instrument_control(tb,branches,selected_vectors,voltage_probes)
         if selected_vectors is not None:manifest['settings']['trace_scope']={'waveforms':selected_vectors,'signed_current_branches':len(branches),'all_extracted_RC_elements_retained':True}
     deck=folder/'testbench.spice'; deck.write_text(tb); run['artifacts']['testbench']=str(deck)
-    timeout=600 if p.get('digital_unit',{}).get('kind') in ('cpu4','cpu16') or p.get('design_template',{}).get('id')=='soc_sensor_afe' else 300 if p.get('design_template',{}).get('physical_adapter') and (p['example'] in ('chip_ldo','chip_pll') or p.get('design_template',{}).get('id') in design_tools.analog_soc.CATALOG) else 120
+    timeout=600 if p.get('digital_unit',{}).get('kind') in ('cpu4','cpu16') or p.get('design_template',{}).get('id')=='soc_sensor_afe' else 300 if p.get('design_template',{}).get('physical_adapter') and (p['example'] in ('chip_ldo','chip_pll') or p.get('design_template',{}).get('id') in design_tools.analog_soc.CATALOG or p.get('design_template',{}).get('id') in design_tools.physical_library.CATALOG) else 120
     log=process(run,folder,['ngspice','-b',str(deck)],'ngspice',manifest,timeout=timeout)
     path=folder/'waveform.dat'
     if not path.is_file() or any(t in log.lower() for t in ('fatal error','timestep too small','unknown subckt','singular matrix','error on line','simulation interrupted')):

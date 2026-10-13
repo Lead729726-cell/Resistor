@@ -333,6 +333,10 @@ def spice_tb(p,folder,settings,netlist,deck,sub):
     kind=p['design_template']['id'];ports=p['ports'];inputs=ports[:-3];s=settings['supply_V'];slot=50e-9;rows=stimulus_rows(kind)
     slew=parameters(p['design_template'].get('parameters',{}))['input_slew_ns']*1e-9
     lines=['Resistor public CMOS cell actual input truth matrix',f'.include "{deck}"','.option scale=1e-6',f'.include "{netlist}"',f'.temp {settings["temperature_C"]}','VGND VGND 0 0',f'VDD VPWR VGND {s:.12g}']
+    if p['design_template'].get('physical_adapter'):
+        # Same device models, tolerances and step controls; KLU avoids the
+        # observed SPARSE timeout on distributed XOR/XNOR PEX networks.
+        lines.insert(3,'.options klu')
     for i,pin in enumerate(inputs):
         points=[(0,rows[0]['inputs'][i]*s)]
         for row in rows[1:]:points.extend([(row['index']*slot,rows[row['index']-1]['inputs'][i]*s),(row['index']*slot+slew,row['inputs'][i]*s)])

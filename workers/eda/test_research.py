@@ -101,6 +101,14 @@ class ResearchQA(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             path,*_=C.spice_tb(p,folder,dict(analysis='ac',supply_V=1.8,temperature_C=27),'core.spice','model.spice',p['ports'])
             text=path.read_text();self.assertIn('VDD VPWR VGND 1.8 AC 1',text);self.assertNotIn('VLOAD ',text);self.assertNotIn('VINP ',text)
+    def test_physical_solver_change_preserves_models_steps_and_tolerances(self):
+        p=dict(cell='cell_xor2',ports=P.GATES['cell_xor2'][1],design_template=dict(id='cell_xor2',parameters={}))
+        settings=dict(supply_V=1.8,temperature_C=27,load_F=5e-15)
+        with tempfile.TemporaryDirectory() as folder:
+            path,*_=P.spice_tb(p,folder,settings,'core.spice','models.spice',p['ports']);original=path.read_text()
+            p['design_template']['physical_adapter']='sky130-pcell-library-v1'
+            path,*_=P.spice_tb(p,folder,settings,'core.spice','models.spice',p['ports']);revised=path.read_text()
+            self.assertEqual(revised.replace('.options klu\n',''),original)
 
 
 if __name__=='__main__':unittest.main()
