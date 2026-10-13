@@ -1,0 +1,14 @@
+import assert from'node:assert/strict';
+import{mkdir,writeFile}from'node:fs/promises';
+import{randomUUID}from'node:crypto';
+import{runtimeConfig,workerRpc}from'./runtime.mjs';
+const config=await runtimeConfig();const rpc=async(m,p={})=>{const r=await workerRpc(config,m,p);if(!r.ok)throw Error(r.error.code+': '+r.error.message);return r.result;};
+let p=await rpc('project.create',{name:'Chip envelope rollback QA '+randomUUID().slice(0,8),example:'layout'});
+p=await rpc('design.floorplan_apply',{project_id:p.id,expected_revision:p.revision,chip_limits:{width_um:40,height_um:30,max_area_um2:1200,edge_um:1},command_id:randomUUID()});
+p=await rpc('layout.apply_command',{project_id:p.id,expected_revision:p.revision,command_id:randomUUID(),command:{type:'add_box',layer_id:'68/20',box:['1000','1000','39000','29000']}});
+const before=await rpc('layout.export',{project_id:p.id,format:'oas'});const bad=await workerRpc(config,'layout.apply_command',{project_id:p.id,expected_revision:p.revision,command_id:randomUUID(),command:{type:'add_box',layer_id:'68/20',box:['39000','1000','40000','2000']}});
+assert.equal(bad.error?.code,'CHIP_ENVELOPE_EXCEEDED');const unchanged=await rpc('project.open',{project_id:p.id});assert.equal(unchanged.revision,p.revision);
+const after=await rpc('layout.export',{project_id:p.id,format:'oas'});assert.equal(before.roundtrip.before_hash,after.roundtrip.before_hash);
+const conflict=await workerRpc(config,'design.floorplan_apply',{project_id:p.id,expected_revision:p.revision-1,chip_limits:{width_um:50,height_um:40,max_area_um2:2000,edge_um:1},command_id:randomUUID()});assert.equal(conflict.error?.code,'REVISION_CONFLICT');
+const bundle=await rpc('project.export_bundle',{project_id:p.id,inline:true});const clone=await rpc('project.import_bundle',{bundle_base64:bundle.bundle_base64,mode:'new',command_id:randomUUID()});assert.deepEqual(clone.chip_limits,p.chip_limits);
+await mkdir('docs/evidence/bounded-sar',{recursive:true});await writeFile('docs/evidence/bounded-sar/envelope-integration.json',JSON.stringify({schema_version:1,project_id:p.id,revision:p.revision,outside_geometry_rejected:true,geometry_and_revision_unchanged:true,stale_revision_rejected:true,bundle_policy_preserved:true,imported_project_id:clone.id,scope:'Actual native API persistence and rollback; not physical DRC.'},null,2)+'\n');console.log('PASS envelope boundary, rollback, concurrency and bundle preservation');

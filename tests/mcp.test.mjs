@@ -36,7 +36,7 @@ test('real MCP client handshake, native tool boundary, revision and job referenc
   const imported=await invoke('register_database_import',{project_id:p.id,read_id:read.id,expected_revision:configured.revision,command_id:`mcp-import-${randomUUID()}`});assert.equal(imported.project.revision,configured.revision+1);
   const scene=await invoke('register_snapshot',{project_id:p.id,max_shapes:100});assert(scene.scene.shapes.length>0);
   const designCatalog=await invoke('register_design_catalog');assert(designCatalog.templates.length>=4);
-  const starterCatalog=await invoke('register_semiconductor_catalog');assert.equal(starterCatalog.presets.length,8);assert.equal(starterCatalog.technologies.filter(item=>item.execution_available).length,1);
+  const starterCatalog=await invoke('register_semiconductor_catalog');assert(starterCatalog.presets.length>=8);assert(starterCatalog.presets.some(p=>p.id==='signal_filter'));assert.equal(new Set(starterCatalog.presets.map(p=>p.id)).size,starterCatalog.presets.length);assert.equal(starterCatalog.technologies.filter(item=>item.execution_available).length,1);
   const starterCommand=randomUUID();const starter=await invoke('register_semiconductor_start',{preset_id:'signal_filter',name:'MCP semiconductor preset',command_id:starterCommand});
   const starterReplay=await invoke('register_semiconductor_start',{preset_id:'signal_filter',name:'MCP semiconductor preset',command_id:starterCommand});assert.equal(starterReplay.id,starter.id);assert.equal(starter.testbench.analysis,'tran');assert.equal(starter.semiconductor_starter.id,'signal_filter');
   const mos=await invoke('register_create',{name:'MCP immutable PVT',example:'mosfet'});

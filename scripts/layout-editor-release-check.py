@@ -23,6 +23,9 @@ expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
 if (ROOT / 'workers/eda/analog_soc.py').exists():
     resources += ['workers/eda/analog_soc.py','workers/eda/characterization.py','workers/eda/digital_units.py','workers/eda/physical_library.py','docs/analog-soc.md']
     expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
+if (ROOT / 'workers/eda/sar_adc.py').exists():
+    resources += ['workers/eda/sar_adc.py','workers/eda/floorplan.py','docs/sar-adc.md',*[p.relative_to(ROOT).as_posix() for p in (ROOT/'workers/eda/rtl').glob('sar8*') if p.is_file()]]
+    expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
 rows = []
 line_endings = {}
 def verify_resource(name, body, platform):

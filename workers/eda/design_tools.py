@@ -23,6 +23,8 @@ import physical_library
 import digital_units
 import sigma_delta
 import analog_soc
+import floorplan
+import sar_adc
 
 S = None
 VERSION = 'register-design-tools-2'
@@ -236,6 +238,8 @@ CATALOG.update(chip_references.CATALOG)
 CATALOG.update(physical_library.CATALOG)
 CATALOG.update(sigma_delta.CATALOG)
 CATALOG.update(analog_soc.CATALOG)
+sar_adc.populate_catalog()
+CATALOG.update(sar_adc.CATALOG)
 
 def catalog():
     return {'schema_version':1,'templates':[{'id':key,**copy.deepcopy(value),'limits':['Actual native schematic and public ngspice models; no commercial execution claim.','Empty layout is not physically verified.','Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library.']} for key,value in CATALOG.items()]}
@@ -255,9 +259,11 @@ def _parameters(template,raw):
     if 'w_um' in values:native.validate_device({'id':'probe','name':'N','kind':'nmos','model':'sky130_fd_pr__nfet_01v8','pins':dict.fromkeys(('D','G','S','B'),'0'),'parameters':{'w_um':values['w_um'],'l_um':values['l_um'],'nf':1,'m':1}})
     if template in sigma_delta.CATALOG:return sigma_delta.parameters(template,values)
     if template in analog_soc.CATALOG:return analog_soc.parameters(template,values)
+    if template in sar_adc.CATALOG:return sar_adc.parameters(template,values)
     return chip_references.parameters(template,values) if template in chip_references.CATALOG else values
 
 def _schematic(template,params):
+    if template in sar_adc.CATALOG:return sar_adc.schematic(template,params)
     if template in analog_soc.CATALOG:return analog_soc.schematic(template,params)
     if template in sigma_delta.CATALOG:return sigma_delta.schematic(template,params)
     if template in physical_library.CATALOG:return physical_library.gate(template)
@@ -295,7 +301,7 @@ def validate_template_project(p):
     return meta
 
 def create_template(params):
-    require_keys(params,('template_id','name','parameters','physical_core','command_id','starter_id','starter_mode'))
+    require_keys(params,('template_id','name','parameters','physical_core','command_id','starter_id','starter_mode','chip_limits'))
     template=params.get('template_id')
     if template not in CATALOG:raise EDAError('UNSUPPORTED_TEMPLATE','Unknown supported template.')
     starter=None
@@ -316,8 +322,10 @@ def create_template(params):
             return json.loads(rows[0][1])
         def action():
             values=_parameters(template,params.get('parameters',{}));physical=params.get('physical_core',False)
+            envelope=floorplan.policy(params['chip_limits']) if 'chip_limits' in params else None
             if not isinstance(physical,bool):raise EDAError('INVALID_PARAMETER','physical_core must be boolean.')
             new_physical=template in chip_references.CATALOG or template in physical_library.CATALOG or template in analog_soc.CATALOG
+            new_physical=new_physical or (template in sar_adc.CATALOG and sar_adc.CATALOG[template]['physical_supported'])
             if physical and not new_physical and template not in ('current_mirror','differential_pair','mux4'):raise EDAError('UNSUPPORTED_PHYSICAL','No physical adapter for this template.')
             if physical and not new_physical and (values['w_um']!=.65 or values['l_um']!=.15):raise EDAError('UNSUPPORTED_PHYSICAL','Legacy core requires exact fixed W=0.65um L=0.15um.')
             model_resources('tt')
@@ -329,17 +337,21 @@ def create_template(params):
             if physical and new_physical:
                 if template=='chip_sc_dcdc':
                     ports+=['FLYTOP','FLYBOTTOM'];schematic['ports']=ports
-                if template in chip_references.CATALOG or template in analog_soc.CATALOG:schematic,replacements=physical_library.materialize(schematic)
-                layout=physical_library.physical(S.STATE/'projects'/pid/'generator',digital_units.flattened(schematic),cell,ports)
+                if template in chip_references.CATALOG or template in analog_soc.CATALOG or template in sar_adc.CATALOG:schematic,replacements=physical_library.materialize(schematic)
+                layout=physical_library.physical(S.STATE/'projects'/pid/'generator',digital_units.flattened(schematic),cell,ports,envelope)
             elif physical:
                 layout,core,ports=digital_mux.physical(S.STATE/'projects'/pid/'generator') if template=='mux4' else physical_templates.analog(S,S.STATE/'projects'/pid/'generator',template)
                 # Exact core graph is retained; visual port symbols are data-only schematic markers.
                 schematic['devices']=[*core['devices'],*[d for d in schematic['devices'] if d['kind']=='port']]
+                if envelope:
+                    bb=layout.cell(cell).bbox();edge=round(envelope['edge_um']/layout.dbu)
+                    layout.cell(cell).transform(k.Trans(edge-bb.left,edge-bb.bottom))
             validation=native.validate(schematic)
             if not validation['valid']:raise EDAError('INVALID_SCHEMATIC','Generated template is invalid; project is not committed.',validation['issues'])
             duration=64*values['slot_ns']*1e-9 if template=='mux4' else 200e-9 if template=='rc_lowpass' else 100e-9
             meta={'schema_version':1,'id':template,'parameters':values,'layout_status':'generated-public-core' if physical else 'not-generated','physical_verification':'not-run','stimulus_source':'owned-template','ground_port':'VGND','generated_by':VERSION}
             p={'schema_version':1,'id':pid,'name':name,'cell':cell,'pdk_id':'sky130A','revision':1,'dbu_um':layout.dbu,'grid_dbu':5,'source':'pdk' if physical else 'fixture','example':template,'layers':[],'schematic':schematic,'testbench':native.testbench({'duration_s':duration,'step_s':100e-12,'analysis':'tran' if template in ('rc_lowpass','mux4') else 'op'}),'runs':[],'ports':ports,'redo_stack':[],'undo_stack':[],'next_revision':2,'design_template':meta,'layout_parameter_policy':'reference-layout-independent-edit' if physical else 'schematic-only-no-generated-layout'}
+            if envelope:p['chip_limits']=envelope
             if physical and new_physical:meta.update(physical_adapter='sky130-pcell-library-v1',passive_replacements=replacements,rc_corner='typical',manufacturing_signoff=False)
             if template in physical_library.CATALOG:p['testbench']=native.testbench({'analysis':'tran','duration_s':400e-9,'step_s':100e-12})
             if template in chip_references.CATALOG:
@@ -351,6 +363,9 @@ def create_template(params):
             if template in sigma_delta.CATALOG:
                 p['testbench']=sigma_delta.settings(sigma_delta.DEFAULT_SETTINGS)
                 meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True,adc_output_bits=8,adc_effective_resolution='not-measured',adc_clock_Hz=1e6,adc_decimation=256)
+            if template in sar_adc.CATALOG:
+                p['testbench']=sar_adc.recommended_settings(values)
+                meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True,adc_output_bits=8,adc_effective_resolution='not-measured',adc_architecture='charge-redistribution-SAR')
             if starter:
                 p.update(testbench=copy.deepcopy(starter['testbench']),semiconductor_starter=copy.deepcopy(starter['metadata']))
             return S.commit(p,layout)
@@ -393,6 +408,7 @@ def _stimuli(p,settings):
     return sources,names,vectors,units,sweep
 
 def pvt_sources(p):
+    if p.get('design_template',{}).get('id') in sar_adc.CATALOG:return {'bindings':[{'kind':'testbench','source_names':['VDD']}],'analyses':['tran'],'source':'owned-sar-stimuli','limits':['External VREF and BIAS remain fixed; VCM follows supply/2. Mixed RTL replay does not establish digital transistor timing.']}
     meta=validate_template_project(p);kind=meta['id']
     if kind in analog_soc.CATALOG:return {'bindings':[{'kind':'testbench','source_names':['VDD']}],'analyses':CATALOG[kind]['analyses'],'source':'owned-analog-soc-stimuli','limits':['External BIAS is fixed at 0.9V; SoC AFE/bias macro generates its own bias. VCM and signal common mode follow VDD/2. Cascode DC sweeps VOUT, not VDD. RC corner remains typical.']}
     if kind in chip_references.CATALOG:return {'bindings':[{'kind':'testbench','source_names':['VDD']}],'analyses':CATALOG[kind]['analyses'],'source':'owned-chip-reference-stimuli','limits':['VREF and BIAS remain external fixed sources. Lock/stability must be checked at each PVT point.']}
@@ -494,9 +510,21 @@ def connectivity(params):
     status='not-generated' if not nonempty else 'explicit-device-metadata' if bindings else 'unmapped'
     return {'schema_version':1,'project_id':p['id'],'revision':p['revision'],'cell_name':params.get('cell_name',p['cell']),'source':source,'nets':nets,'devices':devices,'ports':ports,'issues':issues,'ground_status':'owned-testbench-ground-declaration' if p.get('design_template') and not params.get('cell_name') else 'explicit-zero-node' if grounded else 'undeclared','layout_binding':{'status':status,'mappings':bindings,'reason':'Actual shape properties only; no geometric nearest-net inference or LVS proof.'},'scope':'selected schematic cell; layout metadata inspected over native hierarchy','limits':['Graph is the selected/root cell, not a flattened electrical graph of all child cells.','Advisory connectivity is not ERC/signoff.','Layout net/device annotations do not prove electrical extraction or physical validity.']}
 
+def floorplan_command(method,params):
+    require_keys(params,('project_id','chip_limits','expected_revision','command_id'))
+    p=S.get_project(params['project_id']);value=floorplan.policy(params.get('chip_limits',floorplan.specification(p['chip_limits']) if p.get('chip_limits') else None))
+    if method=='design.floorplan_preview':return floorplan.inspect(S.load_layout(p),p['cell'],value)
+    if 'expected_revision' not in params or not params.get('command_id'):raise EDAError('INVALID_COMMAND','Applying a chip envelope requires expected_revision and command_id.')
+    def action():
+        p=S.get_project(params['project_id']);layout=S.load_layout(p);floorplan.enforce(layout,p['cell'],value)
+        old=p['revision'];p.update(revision=p['next_revision'],next_revision=p['next_revision']+1,undo_stack=p.get('undo_stack',[])+[old],redo_stack=[],chip_limits=value)
+        return S.commit(p,layout,parent=old)
+    return S.mutate(method,params,action)
+
 def rpc(method,params):
     if method=='design.catalog':require_keys(params,());return catalog()
     if method=='design.create_template':return create_template(params)
+    if method in ('design.floorplan_preview','design.floorplan_apply'):return floorplan_command(method,params)
     if method in ('design.connectivity','design.check'):return connectivity(params)
     if method=='design.routing_rules':require_keys(params,('project_id',));return routing_rules(S.get_project(params['project_id']))
     if method=='design.route_preview':return _route(S.get_project(params['project_id']),params)

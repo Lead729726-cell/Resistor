@@ -21,15 +21,15 @@ for (const method of ['compat.inspect','compat.export']) readonly.add(method);
 for (const method of ['compat.import','compat.import_results']) mutations.add(method);
 for (const method of ['database.catalog','database.list_sources','database.probe','database.list_cells','database.read','database.read_artifact']) readonly.add(method);
 mutations.add('database.import');
-for(const method of ['pvt.sources','pvt.status','pvt.list','design.catalog','design.routing_rules','design.route_preview','design.route_search','design.connectivity','design.check'])readonly.add(method);
-for(const method of ['pvt.create','pvt.start','pvt.cancel','design.route_apply'])mutations.add(method);
+for(const method of ['pvt.sources','pvt.status','pvt.list','design.catalog','design.routing_rules','design.route_preview','design.route_search','design.floorplan_preview','design.connectivity','design.check'])readonly.add(method);
+for(const method of ['pvt.create','pvt.start','pvt.cancel','design.route_apply','design.floorplan_apply'])mutations.add(method);
 function scopes(method,params){
   const c=params.command||{};
   if(method==='project.rename')return ['project:name'];
   if(method==='view.set_display')return ['display'];
   if(['analysis.configure','backend.configure','backend.import_layout'].includes(method))return ['*'];
   if(['compat.import','compat.import_results','database.import'].includes(method))return ['*'];
-  if(['pvt.create','pvt.start','design.route_apply'].includes(method))return ['*'];
+  if(['pvt.create','pvt.start','design.route_apply','design.floorplan_apply'].includes(method))return ['*'];
   if(['layout.import','project.import_bundle','layout.generate_pcell'].includes(method))return ['*'];
   if(method.endsWith('.apply_command')){
     if(['undo','redo','set_connectivity_mode','update_testbench','add_cell'].includes(c.type)||method==='layout.apply_command'&&c.type==='update_device')return ['*'];
@@ -128,13 +128,13 @@ export async function startHub({workspace=process.cwd(),port=18766,host='127.0.0
       if(previous){if(previous.user_id!==user.id||previous.hash!==payloadHash)fail('IDEMPOTENCY_CONFLICT','Command id was reused for a different operation.');if(previous.status==='completed')return JSON.parse(previous.result);if(previous.status==='uncertain'){const receipt=await native('project.command_receipt',{project_id:r.project_id,command_id:key});if(receipt){db.prepare("UPDATE commands SET status='completed',result=?,revision=?,error=NULL WHERE id=?").run(JSON.stringify(receipt.result),receipt.revision,key);await snapshot(id);return receipt.result;}}if(previous.error){const e=JSON.parse(previous.error);fail(e.code,e.message,e.details);}fail('COMMAND_PENDING','This command is already processing.');}
       const current=(await native('project.snapshot',{project_id:r.project_id})).revision;
       const base=params.base_revision;if(!Number.isSafeInteger(base)||base<1||base>current)fail('REVISION_CONFLICT','Refresh the shared project before editing.',{current_revision:current});
-      if(['analysis.configure','analysis.run','analysis.verify','backend.configure','backend.run','backend.import_layout','compat.import','compat.import_results','database.import','pvt.create','pvt.start','design.route_apply'].includes(method)&&p.expected_revision!==undefined&&p.expected_revision!==base)fail('EDIT_CONFLICT','The analysis form was based on an older project revision. Refresh and inspect the current setup.',{current_revision:current,form_revision:p.expected_revision,base_revision:base});
+      if(['analysis.configure','analysis.run','analysis.verify','backend.configure','backend.run','backend.import_layout','compat.import','compat.import_results','database.import','pvt.create','pvt.start','design.route_apply','design.floorplan_apply'].includes(method)&&p.expected_revision!==undefined&&p.expected_revision!==base)fail('EDIT_CONFLICT','The analysis form was based on an older project revision. Refresh and inspect the current setup.',{current_revision:current,form_revision:p.expected_revision,base_revision:base});
       const scope=scopes(method,p);
       if(method==='layout.apply_command'||method==='schematic.apply_command')if(['undo','redo'].includes(p.command?.type)){
-        const latest=db.prepare("SELECT user_id,revision FROM commands WHERE room_id=? AND status='completed' AND method IN ('layout.apply_command','schematic.apply_command','layout.generate_pcell','layout.import','project.import_bundle','compat.import','database.import','design.route_apply') ORDER BY revision DESC,created_at DESC LIMIT 1").get(id);
+        const latest=db.prepare("SELECT user_id,revision FROM commands WHERE room_id=? AND status='completed' AND method IN ('layout.apply_command','schematic.apply_command','layout.generate_pcell','layout.import','project.import_bundle','compat.import','database.import','design.route_apply','design.floorplan_apply') ORDER BY revision DESC,created_at DESC LIMIT 1").get(id);
         if(latest?.revision===current&&latest.user_id!==user.id)fail('COLLABORATIVE_UNDO','The latest shared edit belongs to another collaborator. Use an explicit reverse edit after reviewing the design.');
       }
-      if(current>base){const tracked=new Set(db.prepare("SELECT revision FROM commands WHERE room_id=? AND status='completed' AND method IN ('layout.apply_command','schematic.apply_command','layout.generate_pcell','layout.import','project.import_bundle','project.rename','view.set_display','analysis.configure','backend.configure','backend.import_layout','compat.import','database.import','design.route_apply') AND revision>?").all(id,base).map(c=>c.revision));for(let revision=base+1;revision<=current;revision++)if(!tracked.has(revision))fail('EDIT_CONFLICT','The native design changed outside this collaboration history. Refresh and inspect the authoritative revision.',{current_revision:current});}
+      if(current>base){const tracked=new Set(db.prepare("SELECT revision FROM commands WHERE room_id=? AND status='completed' AND method IN ('layout.apply_command','schematic.apply_command','layout.generate_pcell','layout.import','project.import_bundle','project.rename','view.set_display','analysis.configure','backend.configure','backend.import_layout','compat.import','database.import','design.route_apply','design.floorplan_apply') AND revision>?").all(id,base).map(c=>c.revision));for(let revision=base+1;revision<=current;revision++)if(!tracked.has(revision))fail('EDIT_CONFLICT','The native design changed outside this collaboration history. Refresh and inspect the authoritative revision.',{current_revision:current});}
       for(const recent of db.prepare("SELECT scopes,user_id,revision FROM commands WHERE room_id=? AND status='completed' AND revision>?").all(id,base)){
         if(overlap(scope,JSON.parse(recent.scopes)))fail('EDIT_CONFLICT','Another collaborator changed the same design element. Review the current design before reapplying.',{current_revision:current,scope});
       }

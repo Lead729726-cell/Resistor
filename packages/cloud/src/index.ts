@@ -44,6 +44,7 @@ for (const method of ['backend.catalog', 'backend.list_profiles', 'backend.valid
 for (const method of ['compat.inspect', 'compat.export']) readMethods.add(method);
 for (const method of ['database.catalog', 'database.list_sources', 'database.probe', 'database.list_cells', 'database.read', 'database.read_artifact']) readMethods.add(method);
 for (const method of ['pvt.sources','pvt.status','pvt.list','design.catalog','design.routing_rules','design.route_preview','design.connectivity','design.check']) readMethods.add(method);
+readMethods.add('design.floorplan_preview');
 async function remoteRpc(method:string,params:Record<string,unknown>){
   if(!state.room)return localRpc(method,params);
   if(method==='project.list')return [await request('cloud.native',{room_id:state.room.id,method:'project.snapshot',params:{}})];

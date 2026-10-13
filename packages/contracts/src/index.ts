@@ -86,6 +86,8 @@ export interface RouteInput { layer_id:string;start:[Decimal,Decimal];end:[Decim
 export interface RoutePreview { project_id:string;revision:number;rule_fingerprint:string;preview_hash:string;valid:boolean;points:[Decimal,Decimal][];width:Decimal;length_dbu:Decimal;collisions:{shape_id:string;layer_id:string;reason:string}[];limits:string[];[key:string]:unknown }
 export interface DesignTemplate { id:string;name:string;parameter_defaults:Record<string,number>;ports:string[];analyses:string[];physical_status:string;limits:string[];[key:string]:unknown }
 export interface DesignCatalog { templates:DesignTemplate[];[key:string]:unknown }
+export interface ChipLimits {width_um:number;height_um:number;max_area_um2:number;edge_um:number}
+export interface ChipEnvelope {fits:boolean;used_width_um:number;used_height_um:number;used_area_um2:number;chip_area_um2:number;minimum_envelope_um:number[];bbox_dbu:string[]|null;policy:ChipLimits}
 export type StarterMode = 'nominal' | 'slow_hot' | 'fast_cold';
 export interface SemiconductorStarter { schema_version:1;id:string;title:string;technology_id:string;mode:StarterMode;mode_name:string;initial_testbench:Testbench;layout_scope:'physical'|'schematic';ideal_components:boolean;observe:string[];source_url:string;verification:string }
 export interface SemiconductorTechnology { id:string;name:string;node:string;voltages:string;features:string[];adapter:boolean;installed:boolean;execution_available:boolean;reason?:string;source_url:string }

@@ -1,6 +1,7 @@
 import { randomBytes, randomUUID } from 'node:crypto';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
+// Read-only preview and revision-bound envelope changes share the native engine.
 export const METHODS = new Set(['toolchain.doctor','project.create','project.list','project.open','project.save','project.snapshot','project.rename','project.clone','project.export_bundle','project.import_bundle','project.command_receipt','pdk.register','pdk.validate','pdk.list_devices','pdk.capabilities','layout.apply_command','layout.generate_pcell','layout.import','layout.export','schematic.apply_command','schematic.validate','schematic.export_spice','view.get_scene','view.set_display','view.pick','view.cross_probe','simulation.run','simulation.measure','simulation.compare','verification.run_drc','verification.run_lvs','extraction.run_pex','extraction.get_net_mapping','schematic.netlist_xschem','experiment.list','experiment.status','experiment.cancel','experiment.create','experiment.evaluate','experiment.compare','job.status','job.logs','job.cancel']);
 for (const method of ['pdk.list_profiles', 'analysis.inspect', 'analysis.configure', 'analysis.run', 'analysis.verify']) METHODS.add(method);
 for (const method of ['backend.catalog', 'backend.list_profiles', 'backend.register', 'backend.validate', 'backend.configure', 'backend.run', 'backend.read_artifact', 'backend.import_layout']) METHODS.add(method);
@@ -9,6 +10,7 @@ for (const method of ['database.catalog','database.list_sources','database.regis
 for (const method of ['starter.catalog','starter.create','pvt.create','pvt.start','pvt.sources','pvt.status','pvt.list','pvt.cancel','design.catalog','design.create_template','design.routing_rules','design.route_preview','design.route_search','design.route_apply','design.connectivity','design.check']) METHODS.add(method);
 export const IMAGE = 'hpretl/iic-osic-tools@sha256:92961478ad3c4f508efb42d9ccdba12ab262eb42a14926d2bd49862230ba8521';
 for (const method of ['digital.catalog','digital.create','hierarchy.sources','hierarchy.preview','hierarchy.apply']) METHODS.add(method);
+for (const method of ['design.floorplan_preview','design.floorplan_apply']) METHODS.add(method);
 export async function runtimeConfig(workspace=process.env.MOS_WORKSPACE??process.cwd()){
   const folder=path.join(workspace,'.runtime');const file=path.join(folder,'worker.json');
   await mkdir(folder,{recursive:true});

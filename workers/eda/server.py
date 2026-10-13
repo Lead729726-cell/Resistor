@@ -106,6 +106,9 @@ def snapshot_dir(p,revision=None): return STATE/'projects'/p['id']/'snapshots'/s
 def load_layout(p):
     l=k.Layout(); l.read(str(snapshot_dir(p)/'layout.oas')); return l
 def commit(p,l,parent=None,analysis_configuration=False):
+    if p.get('chip_limits'):
+        import floorplan
+        floorplan.enforce(l,p['cell'],p['chip_limits'])
     if p.get('example')=='layout' and p.get('pdk_id')=='sky130A' and not p.get('analysis_setup'):
         # OASIS need not retain unused layer indexes. The editing palette must
         # remain available after the first rectangle, deletion or bundle import.
@@ -236,6 +239,8 @@ def import_bundle(params):
     if mode=='new': p.update(id=uuid.uuid4().hex,revision=1,next_revision=2,undo_stack=[],redo_stack=[])
     elif mode=='replace':
         if 'expected_revision' not in params: raise EDAError('REVISION_REQUIRED','Replacing an authoritative snapshot requires expected_revision.')
+        target=get_project(params['project_id'])
+        if target.get('chip_limits'):p['chip_limits']=copy.deepcopy(target['chip_limits'])
         existing=get_project(params['project_id']); parent=existing['revision']; p.update(id=existing['id'],revision=existing['next_revision'],next_revision=existing['next_revision']+1,undo_stack=existing.get('undo_stack',[])+[parent],redo_stack=[])
     elif mode=='restore':
         pid=params.get('project_id',p['id'])
@@ -402,7 +407,7 @@ def edit(pid,c,mode,cell_name=None):
             return commit(restored,l,parent=p['revision'])
         l=load_layout(p); old=p['revision']; p['revision']=p['next_revision']; p['next_revision']+=1; p['redo_stack']=[]; p['undo_stack']=p.get('undo_stack',[])+[old]
         if mode=='schematic':
-            if c.get('type')=='update_testbench': p['testbench']=(design_tools.sigma_delta.settings if p.get('design_template',{}).get('id') in design_tools.sigma_delta.CATALOG else native.testbench)({**p.get('testbench',{}),**c.get('settings',{})})
+            if c.get('type')=='update_testbench': p['testbench']=testbench_validator(p)({**p.get('testbench',{}),**c.get('settings',{})})
             elif c.get('type')=='add_cell' and c.get('name','').lower()==p['cell'].lower():raise EDAError('INVALID_NAME','A schematic child cell cannot shadow the root cell name.')
             else: native.apply(p['schematic'],copy.deepcopy(c),cell_name)
         elif c.get('type')=='update_device':
@@ -470,7 +475,10 @@ def import_layout(params):
         meta=json.loads(side.read_text())
         if meta.get('file_hash')==profile.sha(src):
             origin=meta.get('project',{}); p['schematic']=origin.get('schematic',p['schematic']); p['source']=origin.get('source','fixture'); p['example']=origin.get('example','fixture'); p['ports']=origin.get('ports',[]); p['pdk_id']=origin.get('pdk_id','fixture'); preserved=True
-            if origin.get('testbench'):p['testbench']=(design_tools.sigma_delta.settings if origin.get('design_template',{}).get('id') in design_tools.sigma_delta.CATALOG else native.testbench)(origin['testbench'])
+            if origin.get('chip_limits') and not p.get('chip_limits'):
+                import floorplan
+                p['chip_limits']=floorplan.policy(floorplan.specification(origin['chip_limits']))
+            if origin.get('testbench'):p['testbench']=testbench_validator(origin)(origin['testbench'])
             if origin.get('design_template'):
                 p['design_template']=copy.deepcopy(origin['design_template']);design_tools.validate_template_project(p)
     p['import_metadata']={'sidecar_preserved':preserved,'source_path':str(src),'source_hash':profile.sha(src)}
@@ -480,6 +488,12 @@ def import_layout(params):
     p.pop('interchange_netlist',None);p.pop('interchange_layout',None);p.pop('interchange_report',None)
     if not preserved:p['schematic']={'devices':[],'wires':[]};p.pop('testbench',None)
     return commit(p,l,parent=old)
+
+def testbench_validator(p):
+    kind=p.get('design_template',{}).get('id')
+    if kind in design_tools.sigma_delta.CATALOG:return design_tools.sigma_delta.settings
+    if kind in design_tools.sar_adc.CATALOG:return design_tools.sar_adc.settings
+    return native.testbench
 
 def start_job(params,kind):
     p=get_project(params['project_id'])
@@ -499,8 +513,8 @@ def start_job(params,kind):
         if 'characterization' in params:
             import characterization
             characterization.configuration(p,params)
-        adc=p.get('design_template',{}).get('id') in design_tools.sigma_delta.CATALOG
-        settings=(design_tools.sigma_delta.settings if adc else native.testbench)({**p.get('testbench',{}),**{key:params[key] for key in native.TESTBENCH if key in params}})
+        adc=p.get('design_template',{}).get('id') in {**design_tools.sigma_delta.CATALOG,**design_tools.sar_adc.CATALOG}
+        settings=testbench_validator(p)({**p.get('testbench',{}),**{key:params[key] for key in native.TESTBENCH if key in params}})
         params={**params,**settings}
         if not template and not digital and p['example'] not in {'inverter','mosfet','wire','current_mirror','differential_pair'}: raise EDAError('UNSUPPORTED','No testbench for this cell.')
         native.validate(p['schematic'])
@@ -719,6 +733,8 @@ def spice_tb(p,folder,params,netlist):
     return '\n'.join(lines)+'\n',names,units,xunit,xlabel
 
 def simulation(run,p,folder,manifest,params):
+    if p.get('design_template',{}).get('id') in design_tools.sar_adc.CATALOG:
+        return design_tools.sar_adc.execute(sys.modules[__name__],run,p,folder,manifest,params)
     if p.get('design_template',{}).get('id') in design_tools.sigma_delta.CATALOG:
         return design_tools.sigma_delta.execute(sys.modules[__name__],run,p,folder,manifest,params)
     manifest['settings']['ngspice_num_threads']=1

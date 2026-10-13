@@ -109,7 +109,11 @@ def interval_tracks(spans, clearance=800):
         tracks[net]=track;heapq.heappush(busy,(right+clearance,track))
     return tracks,count
 
-def physical(folder,ir,cell_name,ports):
+def physical(folder,ir,cell_name,ports,chip_limits=None):
+    if chip_limits is not None:return bounded_physical(folder,ir,cell_name,ports,chip_limits)
+    return _single_row(folder,ir,cell_name,ports)
+
+def _single_row(folder,ir,cell_name,ports,rail_width=400):
     folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
     ir=copy.deepcopy(ir);devices=[d for d in ir['devices'] if d['kind']!='port']
     if len(devices)>512:raise EDAError('PHYSICAL_LIMIT','Physical routing is bounded to 512 actual primitives.')
@@ -199,10 +203,88 @@ def physical(folder,ir,cell_name,ports):
             route((68,20),[(x,y),(end,y)],170,net);via(v1,1,end,y,net)
             route((69,20),[(end,y),(end,rails[net])],360,net);via(v2,2,end,rails[net],net)
     for net,y in rails.items():
-        route((70,20),[(spans[net][0],y),(spans[net][1],y)],400,net)
+        route((70,20),[(spans[net][0],y),(spans[net][1],y)],rail_width,net)
         if net in ports:shape((70,5),k.Text(net,k.Trans(-1800,y)),net);box((70,16),-1800,y,400,400,net)
     G.assign_ids(layout)
     return layout
+
+def bounded_physical(folder,ir,cell_name,ports,chip_limits):
+    """Fold reference rows with M3 row rails / M4 inter-row trunks.
+
+    Trunks lie outside every PCell, including MIM M4 electrodes. Matched units
+    remain indivisible and in their source order. No shrinking or clipping.
+    """
+    import json
+    import floorplan as F
+    policy=F.policy(F.specification(chip_limits));folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
+    devices=[copy.deepcopy(d) for d in ir['devices'] if d['kind']!='port']
+    if not devices or len(devices)>512:raise EDAError('PHYSICAL_LIMIT','Bounded reference supports 1..512 primitives.')
+    nets=sorted({n for d in devices for n in d['pins'].values()})
+    if set(ports)-set(nets):raise EDAError('UNCONNECTED_PORT','Chip ports must exist in the primitive graph.')
+    edge=round(policy['edge_um']*1000);width=round(policy['width_um']*1000)
+    trunk_width=1200*len(nets)+3000;available=width-2*edge-trunk_width-4000
+    if available<=0:raise EDAError('CHIP_ENVELOPE_EXCEEDED','Chip width cannot fit the reserved inter-row routing channel.',{'required_channel_um':(trunk_width+4000+2*edge)/1000})
+    cache={};groups=[];seen={}
+    for d in devices:
+        native.validate_device(d)
+        key=(d['model'],d['parameters']['w_um'],d['parameters']['l_um'])
+        if key not in cache:cache[key]=_base(folder/'primitives',d)
+        group=d['id'].rpartition('.')[0]+'::'+d['matching_group'] if d.get('matching_group') else None
+        if group is not None and group in seen:groups[seen[group]].append(d)
+        else:
+            if group is not None:seen[group]=len(groups)
+            groups.append([d])
+    rows=[];row=[];used=0
+    for group in groups:
+        size=sum(cache[(d['model'],d['parameters']['w_um'],d['parameters']['l_um'])][1].bbox().width()+5000 for d in group)+2200
+        if size>available:raise EDAError('CHIP_ENVELOPE_EXCEEDED','An indivisible matched group / primitive cannot fit the chip row.',{'devices':[d['name'] for d in group],'required_row_um':size/1000,'available_row_um':available/1000})
+        if row and used+size>available:rows.append(row);row=[];used=0
+        row.extend(group);used+=size
+    if row:rows.append(row)
+    layout=k.Layout();layout.dbu=.001;top=layout.create_cell(cell_name);landings={n:[] for n in nets};reports=[];cursor=edge
+    for index,row in enumerate(rows):
+        rownets=sorted({n for d in row for n in d['pins'].values()})
+        subfolder=folder/f'row-{index:03d}';sub=_single_row(subfolder,{'devices':row},cell_name,rownets,600);cell=sub.cell(cell_name);bb=cell.bbox()
+        dx=edge+trunk_width+2000-bb.left;dy=cursor-bb.bottom;tr=k.Trans(dx,dy)
+        if bb.width()>available+4000:raise EDAError('CHIP_ENVELOPE_EXCEEDED','Actual row geometry exceeds its allocation; no layout is committed.')
+        for li in sub.layer_indices():
+            info=sub.get_info(li)
+            for s in cell.shapes(li).each():
+                if info.layer==70 and info.datatype==5 and s.is_text():
+                    p=s.text.transformed(tr);landings[p.string].append((p.x,p.y));continue
+                if info.layer==70 and info.datatype==16:continue
+                p=s.text.transformed(tr) if s.is_text() else G.shape_poly(s).transformed(tr)
+                item=top.shapes(layout.layer(info)).insert(p)
+                for prop in (2,3):
+                    if s.property(prop) is not None:item.set_property(prop,s.property(prop))
+        report=json.loads((subfolder/'routing-report.json').read_text())
+        for group in report['matching_groups']:
+            for unit in group['units']:unit['gate_center_dbu']=[unit['gate_center_dbu'][0]+dx,unit['gate_center_dbu'][1]+dy]
+            for role,point in group['centroids_dbu'].items():group['centroids_dbu'][role]=[point[0]+dx,point[1]+dy]
+        reports.append({'row':index,'translation_dbu':[dx,dy],**report});cursor+=bb.height()+6000
+    # Row generator already created the public via3 helper. Copy its native
+    # polygons for each M3/M4 connection; trunks never cross a PCell electrode.
+    via=k.Layout();via.read(str(folder/'row-000/via3/via3_core.gds'));vc=via.cell('via3_core')
+    vb=next(s.bbox() for s in vc.shapes(via.find_layer(70,44)).each())
+    def shape(layer,p,net):
+        item=top.shapes(layout.layer(*layer)).insert(p);item.set_property(2,net)
+    for index,net in enumerate(nets):
+        x=edge+600+index*1200;points=landings[net]
+        if not points:raise EDAError('UNCONNECTED_PORT','Inter-row trunk lacks a real terminal landing.')
+        ys=[p[1] for p in points]
+        shape((71,20),k.Box(x-250,min(ys)-300,x+250,max(ys)+300),net)
+        for rx,y in points:
+            shape((70,20),k.Path([k.Point(x,y),k.Point(rx,y)],400),net)
+            tr=k.Trans(x-(vb.left+vb.right)//2,y-(vb.bottom+vb.top)//2)
+            for li in via.layer_indices():
+                info=via.get_info(li)
+                for s in vc.shapes(li).each():
+                    if not s.is_text():shape((info.layer,info.datatype),G.shape_poly(s).transformed(tr),net)
+        if net in ports:
+            y=min(ys);shape((71,5),k.Text(net,k.Trans(x,y)),net);shape((71,16),k.Box(x-250,y-250,x+250,y+250),net)
+    result=F.enforce(layout,cell_name,policy)
+    (folder/'routing-report.json').write_text(json.dumps({'algorithm':'bounded-rows-m3-m4-v1','primitive_count':len(devices),'row_count':len(rows),'inter_row_nets':len(nets),'floorplan':result,'rows':reports,'matching_groups':[g for r in reports for g in r['matching_groups']],'scope':'PCell reference with bounded envelope; native DRC/LVS/PEX remain independent gates.'},indent=2)+'\n')
+    G.assign_ids(layout);return layout
 
 def gate_cases(kind):
     count=len(GATES[kind][1])-3

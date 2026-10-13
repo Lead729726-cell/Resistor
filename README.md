@@ -75,6 +75,12 @@ v0.16은 16비트 ACC/ALU, 4비트 PC, 16×18비트 ROM을 갖는 CPU와 16비�
 ngspice로 검사합니다. [직접 만든 CPU16과 검증 기록](examples/cpu16/README.md).
 16비트 가산기는 70개 지정 입력을 검사하며 2³³ 조합의 전수 검사는 아닙니다.
 
+## SAR ADC와 칩 영역 제한 · v0.22 개발
+
+8비트 SAR의 샘플링·256개 동일 단위 CDAC·비교기·합성 제어기를 편집 가능한 8개 블록으로 추가했습니다. 실제 ngspice 비교기 판단을 RTL·gate·CMOS graph로 대조합니다. 새 UI template는 기본 1 mm² 영역으로 여러 줄 배치하며, 영역을 넘는 도형·계층·파일 변경은 저장 전에 차단합니다. 기존 프로젝트는 보존됩니다.
+
+[사용법·공식·지원 범위](docs/sar-adc.md) · [실행 기록](examples/bounded-sar/evidence.json). 전체 ADC의 물리 제어기 타이밍, ENOB와 제조 승인은 별도입니다. v0.21 다운로드와 그 검증 기록은 그대로 유지합니다.
+
 ## 소스에서 시작하기
 
 Node.js 24와 Git이 필요합니다. 계산기 화면은 Docker 없이 실행할 수 있습니다.
