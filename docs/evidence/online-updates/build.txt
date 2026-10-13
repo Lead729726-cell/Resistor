@@ -1,0 +1,23 @@
+
+> resistor-eda@0.23.0 build
+> node scripts/appearance-assets.mjs && tsc --noEmit && vite build && node scripts/normalize-debug-maps.mjs && node scripts/process-engine-build.mjs
+
+Appearance assets: 4 skins, dark/light and early saved-theme restore.
+vite v7.3.6 building client environment for production...
+<script src="./appearance-init.js"> in "/index.html" can't be bundled without type="module" attribute
+transforming...
+✓ 1853 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                 0.85 kB │ gzip:   0.48 kB
+dist/assets/process-worker-lh5s54pi.js          9.47 kB
+dist/assets/process-run-worker-C94DPE8W.js     28.50 kB
+dist/assets/index-BLi1kbBB.css                171.97 kB │ gzip:  29.86 kB
+dist/assets/index-BKPvyFuE.js               1,872.41 kB │ gzip: 490.77 kB │ map: 6,134.65 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 4.71s
+Verified canonical debug maps: 3

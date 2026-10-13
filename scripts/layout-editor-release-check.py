@@ -26,6 +26,9 @@ if (ROOT / 'workers/eda/analog_soc.py').exists():
 if (ROOT / 'workers/eda/sar_adc.py').exists():
     resources += ['workers/eda/sar_adc.py','workers/eda/floorplan.py','docs/sar-adc.md',*[p.relative_to(ROOT).as_posix() for p in (ROOT/'workers/eda/rtl').glob('sar8*') if p.is_file()]]
     expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
+if (ROOT / 'apps/desktop/updates.mjs').exists():
+    resources += ['apps/desktop/main.cjs','apps/desktop/builder.json','apps/desktop/update-network.cjs','apps/desktop/update-feed.mjs','apps/desktop/updates.mjs','apps/desktop/update-install.mjs','apps/desktop/update-helper.mjs','docs/online-updates.md']
+    expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
 rows = []
 line_endings = {}
 def verify_resource(name, body, platform):

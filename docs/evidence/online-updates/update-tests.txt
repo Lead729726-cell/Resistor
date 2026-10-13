@@ -1,0 +1,35 @@
+
+> resistor-eda@0.23.0 test:updates
+> node --test --test-isolation=none tests/desktop-updates.test.mjs tests/update-network.test.cjs
+
+✔ versions compare numerically, never lexically; draft, same and older releases cannot update (1.2664ms)
+✔ unsupported architectures never receive an executable for another platform (0.1606ms)
+✔ only official repository URLs and actual bounded SHA-256 assets are accepted (0.332ms)
+✔ newest revision of the correct Mac architecture is selected (0.3163ms)
+✔ download bytes and SHA must both match before ready; verified cached file survives restart (24.5928ms)
+✔ corrupt and truncated downloads never enable installation (6.12ms)
+✔ an offsite redirect is rejected before any offsite request (2.1801ms)
+✔ network failure is offline, not current or success; retry recovers (1.695ms)
+✔ one download at a time and cancellation leave no ready file (3.2764ms)
+✔ file altered after download never reaches installer, including equal-length corruption (4.1387ms)
+✔ user cancels install: ready remains usable; development process cannot replace app (3.3283ms)
+✔ IPC never accepts arbitrary paths, URLs, commands or unknown actions (1.6361ms)
+✔ preferences persist; auto checks are opt-out and throttled (5.0866ms)
+✔ archive traversal, absolute paths and unrelated roots are rejected; normal framework links retained (0.447ms)
+✔ ZIP directory Unicode names do not depend on the native unzip locale; malformed directories fail (4.0384ms)
+✔ atomic Linux replacement preserves prior app and design data and updates launcher (11.7233ms)
+✔ post-swap launch failure restores old Mac app; failed replacement is retained (8.2321ms)
+✔ tree and install plan cannot target another directory (0.7796ms)
+✔ Electron manual redirect is returned to verifier without following it or emitting cancellation failure (0.7236ms)
+✔ metadata redirects fail instead of sending a follow-up request (0.117ms)
+✔ Electron IncomingMessage streams exact response bytes into a standard readable Response (1.1189ms)
+✔ already aborted requests never reach Electron network stack (0.1375ms)
+✔ bodyless HTTP responses remain controlled failures for the updater, not uncaught Response constructor errors (0.1406ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 104.8153

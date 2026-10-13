@@ -1,0 +1,11 @@
+{
+  "github_run_id": "38340255068",
+  "source_commit": "e1aaccbc7d9495de0d2d070a997282b4c2ed2c38",
+  "architectures": ["arm64", "x64"],
+  "desktop_tests_passed_per_architecture": 4,
+  "packaging_completed": true,
+  "failed_stage": "native update archive path inspection",
+  "error": "The native unzip file listing did not preserve the expected Korean filename representation.",
+  "published": false,
+  "fix": "Read UTF-8 entry names directly from a bounded ZIP central directory and validate paths before extraction. Verified against a real previously released archive and a Unicode regression fixture."
+}

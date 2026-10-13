@@ -1,0 +1,10 @@
+{
+  "github_run_id": "38339767134",
+  "source_commit": "db2c61201327d6abdba2f7948faa73c304247a90",
+  "architecture": "arm64",
+  "desktop_tests_passed": 4,
+  "failed_stage": "electron-builder DMG packaging",
+  "error": "ENOENT in electron-builder DMG tool cache while building both configured target architectures from one prepackaged native application",
+  "published": false,
+  "fix": "Each native matrix runner narrows target architectures to its own CPU before invoking electron-builder. Original source configuration is retained."
+}
