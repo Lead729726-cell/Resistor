@@ -21,7 +21,7 @@ The Windows runtime keeps Electron's LICENSE and LICENSES.chromium.html. Depende
 
 ## External engine and PDK source notices
 
-The following source notices were inspected on 2026-09-30. These binaries remain in the external pinned Docker image; they are not redistributed in our Windows package. ngspice has component-specific licenses, so its COPYING file must remain available rather than assigning one license to the whole executable.
+The following source notices were inspected on 2026-09-30. From v0.26, CPython 3.13.16, KLayout 0.30.5 and ngspice 47 are also redistributed in native packages; original license texts are included. Magic/Netgen/Xschem/Yosys/Icarus are separately installed public tools unless explicitly recorded in a future package. ngspice has component-specific licenses, so its COPYING file must remain available rather than assigning one license to the whole executable.
 
 | Component | Source notice / license | Inspected reference |
 | --- | --- | --- |
@@ -35,10 +35,10 @@ The following source notices were inspected on 2026-09-30. These binaries remain
 
 Model file headers and installed profile provenance govern the used subset. Additional image components, separately licensed generators and future profiles require their own notice inventory when distributed.
 
-EDA binaries, model files and rule decks are not bundled into the Windows application. The checked-in example GDS files include public SKY130 geometry; `examples/sky130/NOTICE.txt` identifies the sources and additions, and the Apache-2.0 license is preserved beside them. The Docker runner uses the externally maintained IIC-OSIC tools image locked by digest. Its tools include KLayout, Magic, Netgen, ngspice and Xschem; these retain their respective licenses, source references and image distribution notices. Upstream image: https://github.com/iic-jku/IIC-OSIC-TOOLS. Tool/PDK versions and installed file hashes are recorded by doctor/run manifests. The full SKY130 profile remains in the image and is not renamed or copied as a private PDK.
+The native bundle includes public SKY130A model/deck data only, Apache-2.0 notices and a provenance manifest. The original optional OSIC keyboard-hook source in the Magic RC is removed for portability; original and relocated hashes are recorded. Private PDKs and commercial binaries are never bundled.
 
-Using subprocesses does not waive the terms of any tool or PDK. This release ships our integration source and renderer. Rebundling EDA binaries, changing image distribution, including a PDK in project export, or adding a private/commercial profile requires a separate review of that component's actual terms. A local reference does not grant redistribution rights. Unsupported private and commercial backends are not represented by surrogate open models.
+CPython retains its PSF license in the interpreter distribution. The KLayout wheel retains its GPLv3 LICENSE and its corresponding source is freely available at https://github.com/KLayout/klayout/archive/refs/tags/v0.30.5.tar.gz. The MIT worker integration source is included and published at the release's exact Git revision. ngspice retains its component-specific COPYING and corresponding version-47 source is available at https://sourceforge.net/projects/ngspice/files/ng-spice-rework/47/ngspice-47.tar.gz/download. These source links accompany the native package download guide; MIT application licensing does not replace GPL or component-specific tool licenses.
 
-
+Pinned download URLs, hashes, versions and binary/file inventory are recorded in scripts/native-runtime-lock.json, scripts/native-pdk-lock.json and each packaged native-runtime/manifest.json. Mac/Linux CPython uses the 20261009 python-build-standalone redistribution (https://github.com/astral-sh/python-build-standalone); its notices remain in the Python tree. Native binaries run in the authoritative worker process, separate from the Electron renderer. The optional Docker runner still uses the pinned IIC-OSIC image and its upstream component notices: https://github.com/iic-jku/IIC-OSIC-TOOLS.
 
 Collaboration uses ws8.22.0 (MIT), Node24 built-in SQLite/crypto/HTTP, and no paid provider. The separate stdio agent adapter uses @modelcontextprotocol/sdk1.31.0 (MIT) and zod4.4.3 (MIT). Original installed license texts are copied into release/licenses. The cloud Node base image is fixed by digest; EDA tools remain in the separately maintained pinned upstream image.

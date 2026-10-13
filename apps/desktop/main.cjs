@@ -37,8 +37,7 @@ async function boot(){
   // A viewer session opens immediately and never starts Docker or a server.
   // Design transport starts the native runtime once, on the first design request.
   const ensureRuntime=()=>runtimePromise??=(async()=>{
-    const config=await runtimeConfig(workspace);
-    const {startWorker}=await import(pathToFileURL(path.join(root,'scripts/worker.mjs')));await startWorker(workspace,{resourcesRoot:root});
+    const {startWorker}=await import(pathToFileURL(path.join(root,'scripts/worker.mjs')));const config=await startWorker(workspace,{resourcesRoot:root});
     let present=false;try{const r=await fetch('http://127.0.0.1:18766/health',{signal:AbortSignal.timeout(1500)});if(r.ok){const body=await r.json();if(body.service!=='register-cloud')throw new Error('다른 서비스가 공동 작업 포트18766을 사용 중입니다.');present=true;}}catch(e){if(e.message.includes('다른 서비스'))throw e;}
     if(!present){const {startHub}=await import(pathToFileURL(path.join(root,'platform/cloud/hub.mjs')));ownedHub=await startHub({workspace,workerConfig:config,staticDirectory:path.join(root,'dist')});}
     return config;
@@ -68,6 +67,18 @@ async function boot(){
         if(Object.keys(payload.params??{}).length)return {ok:false,error:{code:'INVALID_PARAMETER',message:'환경 진단은 사용자 경로나 명령을 받지 않습니다.'}};
         const {desktopDiagnostics}=await import(pathToFileURL(path.join(root,'scripts/desktop-diagnostics.mjs')));
         return {ok:true,result:await desktopDiagnostics({workspace,resourcesRoot:root})};
+      }
+      if(['desktop.engine.settings','desktop.engine.configure','desktop.engine.migrate'].includes(payload.method)){
+        const {engineSettings,configureEngine}=await import(pathToFileURL(path.join(root,'scripts/engine-settings.mjs')));
+        if(payload.method==='desktop.engine.configure'){
+          const result=await configureEngine(workspace,payload.params??{});await ownedHub?.close();ownedHub=undefined;runtimePromise=undefined;return {ok:true,result};
+        }
+        if(Object.keys(payload.params??{}).length)throw Error('엔진 설정 조회·전환은 사용자 명령을 받지 않습니다.');
+        if(payload.method==='desktop.engine.migrate'){
+          const {stopDockerWorker}=await import(pathToFileURL(path.join(root,'scripts/worker.mjs')));await stopDockerWorker(workspace);await ownedHub?.close();ownedHub=undefined;runtimePromise=undefined;
+          return {ok:true,result:await configureEngine(workspace,{mode:'native'})};
+        }
+        return {ok:true,result:await engineSettings(workspace)};
       }
       const runtime=await ensureRuntime();
       if(typeof payload.method==='string'&&payload.method.startsWith('assistant.'))return await assistantRpc(runtime,payload.method,payload.params??{});

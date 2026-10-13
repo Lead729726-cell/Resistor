@@ -25,9 +25,9 @@ def configure(server):
     with S.LOCK:S.DB.execute('CREATE TABLE IF NOT EXISTS pdk_profiles(id TEXT PRIMARY KEY,data TEXT NOT NULL)');S.db_commit()
 def check(name,status,message):return {'name':name,'status':status,'message':message}
 def builtin_manifest():
-    return {'schema_version':1,'id':'sky130A','name':'Installed public SKY130A','version':'d400e26845538beaeb7cc5fdb9bfc06c30ea27cb','root':str(profile.ROOT),
-        'magic_rc':str(profile.MAGIC_RC),'magic_tech':str(profile.TECH),'netgen_setup':str(profile.SETUP),'model_file':str(profile.MODEL),
-        'model_mode':'sky130-subset','corners':['tt','ff','ss'],'spice_scale':1e-6,'layer_file':str(profile.ROOT/'libs.tech/klayout/tech/sky130A.lyp')}
+    return {'schema_version':1,'id':'sky130A','name':'Installed public SKY130A','version':'d400e26845538beaeb7cc5fdb9bfc06c30ea27cb','root':(profile.ROOT).as_posix(),
+        'magic_rc':(profile.MAGIC_RC).as_posix(),'magic_tech':(profile.TECH).as_posix(),'netgen_setup':(profile.SETUP).as_posix(),'model_file':(profile.MODEL).as_posix(),
+        'model_mode':'sky130-subset','corners':['tt','ff','ss'],'spice_scale':1e-6,'layer_file':(profile.ROOT/'libs.tech/klayout/tech/sky130A.lyp').as_posix()}
 def normalize(manifest):
     if not isinstance(manifest,dict) or set(manifest)-FIELDS:raise EDAError('INVALID_PDK_MANIFEST','Unknown PDK manifest fields.')
     m=copy.deepcopy(manifest)
@@ -46,26 +46,33 @@ def normalize(manifest):
     if not m.get('model_file'):raise EDAError('INVALID_PDK_MANIFEST','model_file is required.')
     if m['model_mode']=='sky130-subset' and m['id']!='sky130A':raise EDAError('UNSUPPORTED_MODEL_MODE','sky130-subset is reserved for the verified built-in adapter.')
     if m['model_mode']=='include' and len(corners)!=1:raise EDAError('UNSUPPORTED_CORNER_MAPPING','A plain include has one declared corner; use real .lib sections for multiple corners.')
+    # Resolve legacy installed/workspace aliases after validating their literal
+    # syntax. Historical manifests stay on disk; new resource hashes invalidate
+    # prior runs rather than making an old PASS current on another engine.
+    for key in ('root','magic_rc','magic_tech','netgen_setup','model_file','layer_file'):
+        value=m.get(key,'')
+        if value.startswith('/foss/pdks/'):m[key]=(profile.ROOT.parent/value[len('/foss/pdks/'):]).as_posix()
+        elif value.startswith('/workspace/'):m[key]=(S.WORKSPACE/value[len('/workspace/'):]).as_posix()
     return m
-def roots():return (Path('/foss/pdks'),S.STATE/'pdks')
+def roots():return (profile.ROOT.parent,S.STATE/'pdks')
 def safe_file(value,root,required=True):
     raw=Path(value);p=raw if raw.is_absolute() else root/raw
-    if any(c in str(p) for c in '\x00{}[];$`\\"\x27') or any(ord(c)<32 for c in str(p)):raise EDAError('INVALID_PDK_PATH','Native resource paths cannot contain executable interpolation or quote characters.')
+    if any(c in str(p) for c in '\x00{}[];$`\\"\x27') or any(ord(c)<32 for c in p.as_posix()):raise EDAError('INVALID_PDK_PATH','Native resource paths cannot contain executable interpolation or quote characters.')
     # Reject symlinks before resolution, including every parent directory.
     for part in (p,*p.parents):
-        if part.is_symlink() and not (part.is_relative_to(Path('/foss/pdks')) and part.resolve().is_relative_to(Path('/foss/pdks'))):raise EDAError('INVALID_PDK_PATH','Managed symlinks and installed aliases escaping /foss/pdks are forbidden.')
+        if part.is_symlink() and not (part.is_relative_to(profile.ROOT.parent) and part.resolve().is_relative_to(profile.ROOT.parent)):raise EDAError('INVALID_PDK_PATH','Managed symlinks and installed aliases escaping the installed PDK root are forbidden.')
     p=p.resolve()
-    if not any(p.is_relative_to(base.resolve()) for base in roots()):raise EDAError('INVALID_PDK_PATH','PDK resources must stay in installed /foss/pdks or the managed PDK directory.')
+    if not any(p.is_relative_to(base.resolve()) for base in roots()):raise EDAError('INVALID_PDK_PATH','PDK resources must stay in the configured installed PDK root or the managed PDK directory.')
     if required and not p.is_file():raise EDAError('PDK_FILE_MISSING',f'Required PDK resource is missing: {p.name}')
     if p.is_file() and p.stat().st_size>MAX_EXPANDED:raise EDAError('PDK_FILE_TOO_LARGE','Individual PDK resource exceeds the bounded package size.')
     return p
 def trusted_script(path,role):
-    if path.is_relative_to(Path('/foss/pdks')):return path
+    if path.is_relative_to(profile.ROOT.parent):return path
     # Do not execute arbitrary uploaded Tcl. Matching installed decks may be
     # packaged for portability, but arbitrary customization remains unsupported.
     pattern='*.magicrc' if role=='magic_rc' else '*setup*.tcl'
     digest=S.cached_sha(path)
-    canonical=next((p for p in Path('/foss/pdks').rglob(pattern) if p.is_file() and not p.is_symlink() and S.cached_sha(p)==digest),None)
+    canonical=next((p for p in profile.ROOT.parent.rglob(pattern) if p.is_file() and not p.is_symlink() and S.cached_sha(p)==digest),None)
     if canonical is None:raise EDAError('UNTRUSTED_EXECUTABLE_DECK',f'Uploaded {role} must exactly match a trusted installed deck; arbitrary Tcl is not executed.')
     return canonical
 def spice_files(path,root):
@@ -120,7 +127,7 @@ def tech_files(path,root):
             if not line or line.startswith('#'):continue
             first=line.split()[0].lower()
             static=line.replace('$SUB','VSUBS').replace('$VDD','VPWR').replace('$GND','VGND')
-            if not p.is_relative_to(Path('/foss/pdks')) and (first in {'source','exec','shell','system','load','tcl','proc','eval','uplevel','interp','file','open'} or any(c in static for c in '$[]`')):
+            if not p.is_relative_to(profile.ROOT.parent) and (first in {'source','exec','shell','system','load','tcl','proc','eval','uplevel','interp','file','open'} or any(c in static for c in '$[]`')):
                 raise EDAError('UNSAFE_TECHNOLOGY','Uploaded technology supports static data only; Tcl interpolation/executable commands are forbidden.')
             if first=='include':
                 fields=line.split()
@@ -151,7 +158,7 @@ def resolve(manifest):
     if not root.is_dir():raise EDAError('PDK_FILE_MISSING','Declared profile root does not exist.')
     resources={key:safe_file(m[key],root) for key in ('model_file','magic_rc','magic_tech','netgen_setup','layer_file') if m.get(key)}
     for key,p in resources.items():
-        if not p.is_relative_to(root) and not (key in {'magic_rc','magic_tech','netgen_setup'} and p.is_relative_to(Path('/foss/pdks'))):raise EDAError('INVALID_PDK_PATH','Model and display resources must remain inside the declared root; trusted installed native decks may be selected explicitly.')
+        if not p.is_relative_to(root) and not (key in {'magic_rc','magic_tech','netgen_setup'} and p.is_relative_to(profile.ROOT.parent)):raise EDAError('INVALID_PDK_PATH','Model and display resources must remain inside the declared root; trusted installed native decks may be selected explicitly.')
     supplied={str(p):S.cached_sha(p) for p in resources.values()}
     for role in ('magic_rc','netgen_setup'):
         if role in resources:resources[role]=trusted_script(resources[role],role)

@@ -116,7 +116,7 @@ def catalog():
     ready = profile.capabilities()['available']
     technologies = copy.deepcopy(TECHNOLOGIES)
     for technology in technologies:
-        root = Path('/foss/pdks') / technology['id']
+        root = profile.ROOT.parent / technology['id']
         technology.update(installed=root.is_dir(), execution_available=bool(technology['adapter'] and ready))
     presets = []
     for key, spec in PRESETS.items():

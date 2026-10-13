@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {desktopDiagnostics,normalizeMount} from '../scripts/desktop-diagnostics.mjs';
+import {dockerDiagnostics as desktopDiagnostics,normalizeMount} from '../scripts/desktop-diagnostics.mjs';
 const token='not-a-real-credential'.padEnd(40,'x');
 const base={workspace:'D:\\Design',platform:'win32',arch:'x64',check:async()=>{},read:async()=>JSON.stringify({url:'http://127.0.0.1:18765',token})};
 function runner({type='linux',mount='/run/desktop/mnt/host/d/Design',missing=false}={}){const calls=[];return {calls,run:async args=>{calls.push(args);return args[0]==='--version'?{ok:!missing,stdout:'Docker test version'}:args[0]==='info'?{ok:true,stdout:type}:{ok:true,stdout:mount};}};}

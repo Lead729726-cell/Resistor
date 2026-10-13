@@ -33,8 +33,9 @@ def spice_tb(p,folder,settings,netlist):
     if not any('0' in d['pins'].values() for d in sources):raise EDAError('EXPLICIT_GROUND_REQUIRED','GND(0)에 연결된 명시적 전원·입력 기준이 필요합니다.')
     nodes=extracted_terminal_nodes(netlist,p['ports']) if settings.get('post_layout') else sorted({n for d in p['schematic']['devices'] for n in d['pins'].values() if n!='0'})
     if not nodes or len(nodes)>256:raise EDAError('CUSTOM_ANALYSIS_LIMIT','Custom numerical trace supports 1..256 actual nets.')
-    deck=design_tools.supported_model_deck(folder,settings['corner'])
-    lines=['Resistor explicit custom flat circuit',f'.include "{deck}"','.options scale=1e-6',f'.include "{netlist}"',f'.temp {settings["temperature_C"]}', 'XU '+' '.join(p['ports'])+' '+p['cell']]
+    modeled=any(d.get('model') for d in p['schematic']['devices'])
+    deck=design_tools.supported_model_deck(folder,settings['corner']) if modeled else None
+    lines=['Resistor explicit custom flat circuit',*([f'.include "{deck.as_posix()}"'] if deck else []),'.options scale=1e-6',f'.include "{Path(netlist).as_posix()}"',f'.temp {settings["temperature_C"]}', 'XU '+' '.join(p['ports'])+' '+p['cell']]
     for i,d in enumerate(p.get('conversion',{}).get('external_sources',[])):
         lines.append(('V' if d['kind']=='voltage' else 'I')+f'EXTERNAL{i} {d["pins"]["+"]} {d["pins"]["-"]} {native.num(d["parameters"]["dc"]):.12g}')
     vectors=['v('+ (n if n in p['ports'] else 'xu.'+n)+')' for n in nodes]

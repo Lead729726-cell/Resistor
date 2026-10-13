@@ -62,7 +62,7 @@ def model_resources(corner):
     rc='res_typical__cap_typical'
     files += [root/'r+c'/f'{rc}.spice',root/'r+c'/f'{rc}__lin.spice',root/'r+c.mrp1monte.spice',base/'sky130_fd_pr__res_high_po_0p35.model.spice',base/'sky130_fd_pr__res_xhigh_po__base.model.spice',base/'sky130_fd_pr__res_xhigh_po_1p41.model.spice',base/'sky130_fd_pr__cap_mim_m3_1.model.spice']
     if not all(p.is_file() for p in files):raise EDAError('PDK_MISSING','Required actual supported SKY130 model resources are missing.')
-    return [{'path':str(p),'sha256':profile.sha(p)} for p in files]
+    return [{'path':p.as_posix(),'sha256':profile.sha(p)} for p in files]
 
 def supported_model_deck(folder,corner):
     resources=model_resources(corner);folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)

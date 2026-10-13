@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdtemp,readFile,readdir,writeFile,cp} from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
-import {startWorker,validateEngineResources,workspaceMount} from '../scripts/worker.mjs';
+import {startDockerWorker as startWorker,validateEngineResources,workspaceMount} from '../scripts/worker.mjs';
 import {runtimeConfig} from '../scripts/runtime.mjs';
 
 const resourcesRoot=process.cwd();

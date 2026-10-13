@@ -5,8 +5,8 @@ import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import os from 'node:os';
 const version=JSON.parse(await (await import('node:fs/promises')).readFile('package.json','utf8')).version;
-const release=path.resolve(process.platform==='darwin'?`release/${version}/Resistor-darwin-${process.arch}/Resistor.app/Contents/MacOS/Resistor`:`release/${version}/Resistor-win32-x64/Resistor.exe`);
-const evidenceOS=process.platform==='darwin'?'macos':'windows';
+const release=path.resolve(process.platform==='darwin'?`release/${version}/Resistor-darwin-${process.arch}/Resistor.app/Contents/MacOS/Resistor`:process.platform==='linux'?`release/${version}/Resistor-linux-x64/Resistor`:`release/${version}/Resistor-win32-x64/Resistor.exe`);
+const evidenceOS=process.platform==='darwin'?'macos':process.platform==='linux'?'linux':'windows';
 test('Packaged desktop loads real worker through sandbox IPC',async()=>{
   const app=await electron.launch({executablePath:release,env:{...process.env,MOS_WORKSPACE:process.cwd(),REGISTER_USER_DATA:path.resolve('.runtime/desktop-qa')},timeout:60000});
   try{
@@ -40,7 +40,7 @@ test('Packaged viewer opens GDS without Docker, credentials or native runtime in
 test('Missing Docker: actual packaged startup diagnostics, rejected path overrides, reconnect and offline viewer',async()=>{
   const workspace=await mkdtemp(path.join(os.tmpdir(),'register-startup-'));
   await mkdir(path.join(workspace,'.runtime'),{recursive:true});await writeFile(path.join(workspace,'.runtime/worker.json'),JSON.stringify({url:'http://127.0.0.1:19999',token:'isolated-test-not-credential'.padEnd(40,'x')}));
-  const app=await electron.launch({executablePath:release,env:{...process.env,MOS_WORKSPACE:workspace,REGISTER_USER_DATA:path.resolve('.runtime/startup-qa'),PATH:path.dirname(process.execPath),REGISTER_DOCKER_PATH:path.resolve(workspace,'intentionally-absent-docker')},timeout:60000});
+    const app=await electron.launch({executablePath:release,env:{...process.env,MOS_WORKSPACE:workspace,REGISTER_ENGINE_MODE:'docker',REGISTER_USER_DATA:path.resolve('.runtime/startup-qa'),PATH:path.dirname(process.execPath),REGISTER_DOCKER_PATH:path.resolve(workspace,'intentionally-absent-docker')},timeout:60000});
   try{
     const window=await app.firstWindow(),panel=window.getByTestId('runtime-diagnostics');await expect(panel).toBeVisible();await expect(panel.locator('[data-diagnostic="docker"]')).toHaveAttribute('data-status','missing');
     const rejected=await window.evaluate(()=>window.mos!.rpc('desktop.diagnostics',{workspace:'other',command:'docker stop'}));expect(rejected.ok).toBe(false);expect(rejected.error?.code).toBe('INVALID_PARAMETER');

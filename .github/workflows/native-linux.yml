@@ -1,0 +1,51 @@
+name: Docker-free Linux engine and installer
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['apps/**','packages/**','workers/**','adapters/**','platform/**','scripts/**','tests/**','package*.json','.github/workflows/native-linux.yml']
+permissions:
+  contents: read
+concurrency:
+  group: native-linux-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  linux-native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run test:core
+      - name: Prepare native runtime without containers
+        run: node scripts/prepare-native-runtime.mjs
+      - name: Build public Magic and Netgen in the operator's user prefix
+        run: sh scripts/native-tools-setup.sh
+      - name: Verify actual host DRC, LVS, PEX and post-layout RC simulation
+        run: node scripts/native-engine-qa.mjs
+        env:
+          REGISTER_NATIVE_PHYSICAL_QA: '1'
+      - run: npm run build
+      - run: node scripts/package.mjs --stage-only --linux
+      - run: node scripts/linux-cross-build.mjs
+      - name: Verify real packaged native IPC and offline viewer
+        run: xvfb-run -a npx --no-install playwright test tests/ui/native-desktop.spec.ts tests/ui/desktop.spec.ts --grep 'Bundled native desktop|Packaged viewer|Missing Docker'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Resistor-Linux-native-x64
+          path: |
+            release/installers/*.tar.gz
+            release/installers/linux-build-*.json
+            docs/evidence/native-runtime/*
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: Resistor-Linux-native-failed-QA
+          path: |
+            test-results/
+            docs/evidence/native-runtime/

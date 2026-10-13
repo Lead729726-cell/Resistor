@@ -5,13 +5,17 @@ import shutil
 import subprocess
 import threading
 import time
+import sys
 
 COMMANDS = (
     ('ngspice', ('ngspice', '--version')),
-    ('KLayout', ('python3', '-c', 'import klayout.db as k; print(k.__version__)')),
+    ('KLayout', (sys.executable, '-c', 'import klayout.db as k; print(k.__version__)')),
     ('Magic', ('magic', '--version')),
     ('Netgen', ('netgen', '-batch')),
     ('Xschem', ('xschem', '--version')),
+    ('Yosys', ('yosys', '-V')),
+    ('Icarus Verilog', ('iverilog', '-V')),
+    ('VVP', ('vvp', '-V')),
 )
 
 

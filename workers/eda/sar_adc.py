@@ -1,3 +1,4 @@
+import runtime_resources
 """Editable charge-redistribution SAR; real capacitor/MOS transient decisions.
 
 The ngspice continuation bridge retains charge between all bit decisions. RTL
@@ -233,7 +234,7 @@ def execute(server,run,p,folder,manifest,params):
     rows,frames,ambiguous=parse_decisions(folder/'decisions.csv',values,config['supply_V'],reference)
     replay(folder,rows,frames);runs=[]
     (folder/'ir-controller.v').write_text(controller_ir_verilog())
-    for name,sources in [('rtl',[RTL]),('gate',[Path('/foss/tools/yosys/share/yosys/simcells.v'),GATE]),('ir',[folder/'ir-controller.v'])]:
+    for name,sources in [('rtl',[RTL]),('gate',[runtime_resources.yosys_simcells(),GATE]),('ir',[folder/'ir-controller.v'])]:
         server.process(run,folder,['iverilog','-g2012','-s','replay','-o',str(folder/f'{name}.vvp'),*map(str,sources),str(folder/'replay.v')],name+'-compile',manifest)
         server.process(run,folder,['vvp',str(folder/f'{name}.vvp')],name+'-replay',manifest)
         path=folder/f'{name}-replay.csv';shutil.move(folder/'replay.csv',path);runs.append(path.read_text().splitlines());run['artifacts'][name+'_replay']=str(path)

@@ -6,9 +6,11 @@ import subprocess
 from pathlib import Path
 import native
 import profile
+import runtime_resources
 from geometry import EDAError
 
-DEVICES=Path('/foss/tools/xschem/share/xschem/xschem_library/devices')
+SHARE=runtime_resources.xschem_share()
+DEVICES=SHARE/'xschem_library/devices'
 SYMBOLS={'nmos':profile.ROOT/'libs.tech/xschem/sky130_fd_pr/nfet_01v8.sym','pmos':profile.ROOT/'libs.tech/xschem/sky130_fd_pr/pfet_01v8_hvt.sym','resistor':DEVICES/'res.sym','capacitor':DEVICES/'capa.sym','voltage':DEVICES/'vsource.sym','current':DEVICES/'isource.sym'}
 
 def pin_positions(symbol):
@@ -45,7 +47,7 @@ def netlist(p,folder):
             rows.append(f'C {{{lab}}} {x+px:.12g} {y+py:.12g} 0 0 {{name=lab_{i}_{j} lab={net}}}')
     for i,port in enumerate(p['ports']): rows.append(f'C {{{iopin}}} {i*100} 200 0 0 {{name=p{i} lab={port}}}')
     sch.write_text('\n'.join(rows)+'\n')
-    rc=folder/'xschemrc'; rc.write_text(f'source /foss/tools/xschem/share/xschem/xschemrc\nappend XSCHEM_LIBRARY_PATH :{profile.ROOT}/libs.tech/xschem\nset top_is_subckt 1\nset netlist_type spice\n')
+    rc=folder/'xschemrc'; rc.write_text(f'source {{{(SHARE/'xschemrc').as_posix()}}}\nappend XSCHEM_LIBRARY_PATH :{profile.ROOT.as_posix()}/libs.tech/xschem\nset top_is_subckt 1\nset netlist_type spice\n')
     dest=folder/(p['cell']+'.spice'); cmd=['xschem','-x','-q','-n','-s','-r','--rcfile',str(rc),'-o',str(folder),'-N',str(dest),str(sch)]
     try: result=subprocess.run(cmd,cwd=folder,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=45)
     except subprocess.TimeoutExpired: raise EDAError('TIMEOUT','Headless Xschem netlisting exceeded 45 seconds.')

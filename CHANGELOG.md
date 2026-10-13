@@ -2,7 +2,17 @@
 
 This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
-`docs/evidence/` and the example READMEs. Package version: 0.25.0.
+`docs/evidence/` and the example READMEs. Package version: 0.26.0.
+
+## 0.26.0 — Docker-free native execution (2026-10-13)
+
+- Default authenticated local Python/KLayout worker; Docker remains explicit optional mode.
+- Bundle pinned CPython, KLayout, ngspice and public SKY130 models/decks in each native OS/CPU package.
+- Same circuit/layout, SQLite history, units, formats and RPC; virtual artifact paths resolve inside the user workspace.
+- Model-free ideal circuits run without a PDK. Actual voltages and signed currents remain numerical results; missing functional criteria stay UNKNOWN.
+- Native process ownership, bounded startup, safe idle shutdown, busy-job refusal, persisted execution settings and explicit legacy Docker migration.
+- Windows independent WSL transport for Unix physical tools; native Mac/Linux setup for Magic/Netgen/Yosys/Icarus/Xschem. Missing tools block real runs.
+- Host and packaged-desktop QA plus platform-specific CI; retain original results as stale when engine resources change.
 
 ## 0.25.0 — Direct schematic creation and native GDS conversion (2026-10-13)
 

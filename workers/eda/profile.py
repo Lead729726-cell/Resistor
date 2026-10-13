@@ -38,7 +38,7 @@ def capabilities():
 
 def provenance():
     node = ROOT / '.config/nodeinfo.json'
-    return {'pdk_id':'sky130A','image':IMAGE,'nodeinfo':json.loads(node.read_text()) if node.is_file() else None,
+    return {'pdk_id':'sky130A','image':IMAGE if os.environ.get('MOS_RUNTIME_KIND','linux-docker')=='linux-docker' else None,'runtime_kind':os.environ.get('MOS_RUNTIME_KIND','linux-docker'),'nodeinfo':json.loads(node.read_text()) if node.is_file() else None,
             'files':{str(p):sha(p) for p in (MODEL,TECH,MAGIC_RC,SETUP,ROOT/'libs.tech/magic/sky130A.tcl')},
             'upstream_url':'https://github.com/RTimothyEdwards/open_pdks', 'variant':'sky130A'}
 

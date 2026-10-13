@@ -10,6 +10,7 @@ import klayout.db as k
 from geometry import EDAError
 import commercial_backend as C
 import commercial_results as R
+import profile
 
 S=None
 MAX_GRAPH=16*1024*1024
@@ -56,7 +57,7 @@ def normalize(raw):
     m['layer_map']=m.get('layer_map',[]);S.interchange.layout_map({'layer_map':m['layer_map']})
     if m['adapter']=='klayout-file':
         if m.get('backend_profile_id') or not isinstance(m.get('layout_file'),str):raise EDAError('INVALID_DATABASE_MANIFEST','KLayout calibration requires only an operator-owned layout_file.')
-        path=C.runner.operator_path(m['layout_file'],[S.WORKSPACE,Path('/foss/pdks')])
+        path=C.runner.operator_path(m['layout_file'],[S.WORKSPACE,profile.ROOT.parent])
         if path.suffix.lower() not in {'.gds','.oas','.oasis'}:raise EDAError('UNSUPPORTED_DATABASE_FORMAT','KLayout calibration reads actual GDS/OAS only, never OA/NDM binary guesses.')
         m['layout_file']=str(path)
     else:

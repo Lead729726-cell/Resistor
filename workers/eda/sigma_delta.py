@@ -1,3 +1,4 @@
+import runtime_resources
 """Editable SKY130 first-order ADC hierarchy and measured SPICE/RTL co-simulation.
 
 Eight output bits are an interface specification, not a claim of eight ENOB.
@@ -344,7 +345,7 @@ def execute_digital(server, run, p, folder, manifest):
     reference = cic_reference(bits,resets)
     results=[]
     (folder/'ir-replay.v').write_text(logic_ir_verilog(schematic('sdm8_filter')))
-    simcells=Path('/foss/tools/yosys/share/yosys/simcells.v')
+    simcells=runtime_resources.yosys_simcells()
     for name,sources in [('rtl',[RTL]),('gate',[simcells,GATE_RTL]),('ir',[folder/'ir-replay.v'])]:
         server.process(run,folder,['iverilog','-g2012','-s','replay','-o',str(folder/f'{name}.vvp'),*map(str,sources),str(folder/'replay.v')],f'{name}-compile',manifest)
         server.process(run,folder,['vvp',str(folder/f'{name}.vvp')],f'{name}-replay',manifest)
@@ -406,7 +407,7 @@ def execute(server, run, p, folder, manifest, params):
     ambiguous = sum(.3*vdd < v < .7*vdd for v, reset in zip(voltages, resets) if not reset)
     replay_files(folder, bits, resets)
     expected = cic_reference(bits, resets)
-    simcells = Path('/foss/tools/yosys/share/yosys/simcells.v')
+    simcells = runtime_resources.yosys_simcells()
     if not simcells.is_file():
         raise EDAError('TOOL_MISSING', 'Yosys standard gate simulation cells are required for gate replay.')
     replays = []

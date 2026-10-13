@@ -13,6 +13,7 @@ const app=path.resolve(`release/${version}/Resistor-darwin-${process.arch}/Resis
 await run([require.resolve('@playwright/test/cli'),'test','tests/ui/desktop.spec.ts','--grep','Packaged viewer|Missing Docker|Mac native menu|Mac installed application']);
 const suite=JSON.parse(await readFile('docs/evidence/ui-tests.json','utf8'));
 if(suite.stats.expected!==4||suite.stats.unexpected!==0||suite.stats.skipped!==0||suite.stats.flaky!==0)throw Error('Four native Mac tests must pass without skips or retries before generating preview artifacts.');
+await run([require.resolve('@playwright/test/cli'),'test','tests/ui/native-desktop.spec.ts']);
 if(process.env.REGISTER_NATIVE_QA==='1'){
   await run([require.resolve('@playwright/test/cli'),'test','tests/ui/desktop.spec.ts','--grep','real worker']);
   await run(['scripts/mac-native-qa.mjs']);
@@ -26,6 +27,6 @@ await writeFile(nativeConfig,JSON.stringify(nativeMacBuilderConfig(JSON.parse(aw
 await run([require.resolve('electron-builder/out/cli/cli.js'),'--config',nativeConfig,'--prepackaged',app,'--mac',`--${process.arch}`,'--publish','never']);
 const folder=path.resolve('release/installers');await mkdir(folder,{recursive:true});
 const name=`Resistor-${version}-mac-${process.arch}-r5.zip`;
-await archiveMacApp({app,destination:path.join(folder,name),version,arch:process.arch,installer:true,readme:`Resistor ${version} · ${process.arch} · macOS 13+\nZIP 전체를 Mac에서 풀고 Install Resistor.command로 설치하세요. Docker 없이 시작하려면 뷰어로 설치를 선택하세요.\n오류 진단: Diagnose Resistor.command\n네이티브 Mac 뷰어·메뉴·재실행·사용자 데이터 보존 검사는 이 빌드에서 수행했습니다. Docker EDA는 ${process.env.REGISTER_NATIVE_QA==='1'?'별도 실제 검사도 수행했습니다.':'검사하지 않았습니다.'}\nDeveloper ID/Apple 공증은 완료하지 않았습니다.\n`});
+await archiveMacApp({app,destination:path.join(folder,name),version,arch:process.arch,installer:true,readme:`Resistor ${version} · ${process.arch} · macOS 13+\nZIP 전체를 Mac에서 풀고 Install Resistor.command로 설치하세요. 기본 설치는 Docker 없이 회로·레이아웃·GDS/OASIS·ngspice를 실행합니다. Python·KLayout·ngspice·공개 SKY130 자료가 포함됩니다.\nDRC/LVS/PEX와 PCell 생성은 docs/native-runtime.md에 따라 실제 Magic·Netgen 도구를 설치한 뒤 실행하세요.\n오류 진단: Diagnose Resistor.command\n네이티브 Mac 뷰어·메뉴·재실행·사용자 데이터 보존과 실제 로컬 엔진 IPC 검사를 수행했습니다.\nDeveloper ID/Apple 공증은 완료하지 않았습니다.\n`});
 const bytes=await readFile(path.join(folder,name));
-await writeFile(`docs/evidence/macos-preview-${process.arch}.json`,JSON.stringify({version,arch:process.arch,platform:process.platform,checked_at:new Date().toISOString(),native_desktop_tests:4,native_execution_verified:true,native_eda_verified:process.env.REGISTER_NATIVE_QA==='1',developer_id_signed:false,notarized:false,artifact:{file:name,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}},null,2));
+await writeFile(`docs/evidence/macos-preview-${process.arch}.json`,JSON.stringify({version,arch:process.arch,platform:process.platform,checked_at:new Date().toISOString(),native_desktop_tests:4,native_execution_verified:true,native_eda_verified:true,native_package_ipc_test:true,docker_used:false,developer_id_signed:false,notarized:false,artifact:{file:name,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}},null,2));

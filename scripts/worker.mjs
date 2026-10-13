@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { runtimeConfig, workerRpc } from './runtime.mjs';
 import {dockerExecutable,dockerEnvironment} from './docker-cli.mjs';
 import {normalizeMount} from './desktop-diagnostics.mjs';
+import {startNativeWorker,stopNativeWorker,nativeSettings} from './native-worker.mjs';
 const CONTAINER='mos-studio-eda',OWNER='mos-studio-3d';
 const INSPECT='{{json .State}}\n{{json .Config.Labels}}\n{{json .Mounts}}';
 export const ENGINE_FILES=['workers/eda/Dockerfile','workers/eda/bootstrap.py','workers/eda/server.py','platform/commercial/runner.py','platform/commercial/agent.py','adapters/commercial/catalog.json'];
@@ -43,7 +44,7 @@ export async function probeWorkspaceMount(config,{run=exec,image='mos-studio-eda
   }catch{throw Error(`Docker가 설계 저장 폴더를 읽지 못했습니다: ${config.workspace}. Docker Desktop의 파일 공유 권한을 확인하고 설계 엔진 다시 연결을 누르세요.`);}
   finally{await unlink(marker);}
 }
-export async function startWorker(workspace=process.env.MOS_WORKSPACE??process.cwd(),{resourcesRoot=workspace,run=exec,fetchImpl=fetch,containerName=CONTAINER,image='mos-studio-eda:local',readinessMs=60000}={}){
+export async function startDockerWorker(workspace=process.env.MOS_WORKSPACE??process.cwd(),{resourcesRoot=workspace,run=exec,fetchImpl=fetch,containerName=CONTAINER,image='mos-studio-eda:local',readinessMs=60000}={}){
   const config=await runtimeConfig(workspace);
   if(await health(config,fetchImpl)){if(!await authenticated(config,fetchImpl))throw Error('Worker token differs. Stop this workspace worker before restarting.');return config;}
   const fingerprint=await validateEngineResources(resourcesRoot);
@@ -79,7 +80,27 @@ export async function startWorker(workspace=process.env.MOS_WORKSPACE??process.c
   }
   const logs=await run('docker',['logs','--tail','30',containerName],{capture:true});throw Error(`설계 엔진이 시작되지 않았습니다. ${logs.replaceAll(config.token,'[redacted]')}`);
 }
-export async function stopWorker(){await exec('docker',['stop',CONTAINER],{capture:true});}
+export async function startWorker(workspace=process.env.MOS_WORKSPACE??process.cwd(),options={}){
+  const settings=await nativeSettings(workspace),mode=options.mode??process.env.REGISTER_ENGINE_MODE??settings.mode??'native';
+  if(mode==='docker')return startDockerWorker(workspace,options);
+  if(mode==='wsl'){const {startWslWorker}=await import('./wsl-worker.mjs');return startWslWorker(workspace,options);}
+  if(mode!=='native')throw Error('Unknown EDA engine mode.');
+  return startNativeWorker(workspace,options);
+}
+export async function stopWorker(workspace=process.env.MOS_WORKSPACE??process.cwd()){
+  const settings=await nativeSettings(workspace),mode=process.env.REGISTER_ENGINE_MODE??settings.mode??'native';
+  if(mode==='docker')await stopDockerWorker(workspace);else await stopNativeWorker(workspace);
+}
+export async function stopDockerWorker(workspace,{run=exec,fetchImpl=fetch}={}){
+  const config=await runtimeConfig(workspace),current=await inspect(run,CONTAINER);
+  if(!current?.state.Running)return {stopped:true};
+  const mount=current.mounts.find(m=>m.Destination==='/workspace');
+  if(current.labels['com.mos-studio.owner']!==OWNER||!mount||normalizeMount(mount.Source)!==normalizeMount(workspace))throw Error('다른 설계 폴더나 도구의 엔진은 종료하지 않습니다.');
+  if(!await authenticated(config,fetchImpl))throw Error('현재 폴더의 엔진 인증이 일치하지 않습니다.');
+  const probe="import sqlite3; c=sqlite3.connect('file:/workspace/.runtime/eda/projects.sqlite3?mode=ro',uri=True); active=c.execute(\"SELECT count(*) FROM runs WHERE json_extract(data,'$.execution_status') IN ('queued','running')\").fetchone()[0]; active+=c.execute(\"SELECT count(*) FROM experiments WHERE json_extract(data,'$.execution_status')='running'\").fetchone()[0]; active+=c.execute(\"SELECT count(*) FROM pvt_studies WHERE json_extract(data,'$.execution_status') IN ('queued','running')\").fetchone()[0]; c.close(); print(active)";
+  if((await run('docker',['exec',CONTAINER,'python3','-c',probe],{capture:true})).trim()!=='0')throw Error('실행 중인 작업을 완료하거나 취소한 뒤 엔진을 전환하세요.');
+  await run('docker',['stop',CONTAINER],{capture:true});return {stopped:true,projects_preserved:true};
+}
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   const action=process.argv[2]??'start';
   try{if(action==='stop'){await stopWorker();console.log('MOS worker stopped. Projects and snapshots preserved.');}else{const config=await startWorker();if(action==='doctor'){const r=await workerRpc(config,'toolchain.doctor');console.log(JSON.stringify(r,null,2));}else console.log(`MOS worker ready at ${config.url}`);}}

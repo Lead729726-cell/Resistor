@@ -17,7 +17,7 @@ async function command(args){
 export function normalizeMount(value){const s=value.trim().replaceAll('\\','/'),windows=/^[A-Za-z]:\//.test(s)||/^\/(?:run\/desktop\/mnt\/host|mnt\/host)\/[A-Za-z]\//.test(s);const normalized=s.replace(/^\/(?:run\/desktop\/mnt\/host|mnt\/host)\//,'').replace(/^([A-Za-z]):\//,'$1/').replace(/\/$/,'');return windows?normalized.toLowerCase():normalized;}
 // The renderer supplies no paths, executables, command arguments or credentials.
 // Diagnostics inspect existing state and never create a session or start Docker.
-export async function desktopDiagnostics({workspace,resourcesRoot=workspace,platform=process.platform,arch=process.arch,run=command,read=readFile,check=access,fetchImpl=fetch}){
+export async function dockerDiagnostics({workspace,resourcesRoot=workspace,platform=process.platform,arch=process.arch,run=command,read=readFile,check=access,fetchImpl=fetch}){
   const items=[];const add=(id,status,message,action='')=>items.push({id,status,message,action});
   add('viewer','pass','GDS 뷰어는 Docker와 로그인 없이 사용할 수 있습니다.');
   if(platform==='darwin'&&arch==='arm64')add('architecture','pass','Apple Silicon용 뷰어입니다. 공개 EDA 엔진은 Linux amd64 에뮬레이션으로 실행합니다.','엔진 첫 준비에는 인터넷과 디스크 공간이 필요하며 해석 속도는 Mac 성능에 따라 달라집니다.');
@@ -51,4 +51,21 @@ export async function desktopDiagnostics({workspace,resourcesRoot=workspace,plat
     }catch{add('session','pending','설계 엔진이 아직 응답하지 않습니다.','설계 엔진 다시 연결을 누르세요.');}
   }
   return {schema_version:1,checked_at:new Date().toISOString(),platform,arch,workspace,engine_ready:connected&&!items.some(i=>i.status==='blocked'),items,read_only:true,credentials_included:false};
+}
+
+export async function desktopDiagnostics(options){
+  const {nativeSettings,nativeEnvironment,runtimeIdentity,workspaceId}=await import('./native-worker.mjs');
+  const settings=await nativeSettings(options.workspace),mode=process.env.REGISTER_ENGINE_MODE??settings.mode??'native';
+  if(mode==='docker')return dockerDiagnostics(options);
+  const items=[{id:'mode',status:'pass',message:mode==='wsl'?'Docker 없이 WSL 로컬 엔진을 사용합니다.':'Docker 없이 컴퓨터의 네이티브 엔진을 사용합니다.',action:''}];
+  let ready=false;
+  try{
+    const config=JSON.parse(await readFile(path.join(options.workspace,'.runtime/worker.json'),'utf8'));
+    const url=new URL(config.url);if(url.protocol!=='http:'||url.hostname!=='127.0.0.1'||url.username||url.password||url.pathname!=='/'||url.search||url.hash||typeof config.token!=='string'||config.token.length<32)throw Error('Invalid local session');
+    const identity=await runtimeIdentity(config);ready=!!identity&&identity.workspace_id===workspaceId(options.workspace)&&identity.runtime_kind.startsWith(mode==='wsl'?'wsl-':'native-');
+    if(identity&&!ready)throw Error('다른 폴더 또는 실행 방식의 엔진이 연결 포트를 사용 중입니다.');
+    if(!ready&&mode==='native')await nativeEnvironment(options.workspace,{resourcesRoot:options.resourcesRoot,prepare:false});
+    items.push({id:'engine',status:ready?'pass':'pending',message:ready?'로컬 설계 엔진에 연결했습니다.':'로컬 엔진은 준비되어 있습니다.',action:'설계 엔진 다시 연결을 누르세요.'});
+  }catch(e){items.push({id:'engine',status:'pending',message:'로컬 엔진 준비 또는 연결이 필요합니다.',action:e.code==='ENOENT'?'설계 엔진 다시 연결을 누르세요.':e.message});}
+  return {schema_version:1,checked_at:new Date().toISOString(),platform:process.platform,arch:process.arch,workspace:options.workspace,engine_ready:ready,engine_mode:mode,items,read_only:true,credentials_included:false};
 }

@@ -46,10 +46,16 @@ import hierarchy_transfer
 import conversion
 import custom_circuit
 import project_index
+import runtime_resources
 from toolchain_diagnostics import ToolchainDiagnostics
 from job_evidence import write_job_evidence
 
 WORKSPACE=Path(os.environ.get('MOS_WORKSPACE','/workspace')).resolve()
+RUNTIME_KIND=os.environ.get('MOS_RUNTIME_KIND','linux-docker')
+INSTANCE_ID=os.environ.get('MOS_INSTANCE_ID','')
+HTTP_SERVER=None
+STOPPING=False
+INFLIGHT=0
 STATE=Path(os.environ.get('MOS_STATE',str(WORKSPACE/'.runtime/eda'))).resolve()
 STATE.mkdir(parents=True,exist_ok=True)
 TOKEN=os.environ.get('MOS_TOKEN','')
@@ -74,8 +80,33 @@ PORTS={'inverter':['A','VGND','VPWR','Y'],'mosfet':['B','D','S','G'],'wire':['IN
 
 def now(): return datetime.now(timezone.utc).isoformat()
 def dump(path,value): Path(path).write_text(json.dumps(value,indent=2,ensure_ascii=False)+'\n')
+def terminate_process(proc,force=False):
+    if os.name=='nt':
+        if proc.poll() is not None:return
+        subprocess.run(['taskkill','/PID',str(proc.pid),'/T','/F'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=10,creationflags=subprocess.CREATE_NO_WINDOW)
+        if proc.poll() is None:proc.kill()
+    else:os.killpg(proc.pid,signal.SIGKILL if force else signal.SIGTERM)
+
+def transport_paths(value):
+    if RUNTIME_KIND=='linux-docker':return value
+    if isinstance(value,dict):return {k:transport_paths(v) for k,v in value.items()}
+    if isinstance(value,list):return [transport_paths(v) for v in value]
+    if isinstance(value,str):
+        for prefix in (str(WORKSPACE)+os.sep,WORKSPACE.as_posix()+'/'):
+            if value.startswith(prefix):return '/workspace/'+value[len(prefix):].replace('\\','/')
+    return value
+
+def local_paths(value):
+    """Resolve saved virtual artifact paths without rewriting historical files."""
+    if RUNTIME_KIND=='linux-docker':return value
+    if isinstance(value,dict):return {k:local_paths(v) for k,v in value.items()}
+    if isinstance(value,list):return [local_paths(v) for v in value]
+    if isinstance(value,str) and value.startswith('/workspace/'):return str(trusted(value))
+    return value
 def trusted(path):
-    p=Path(path).resolve()
+    # Keep the existing virtual artifact paths usable across native, Docker
+    # and WSL transports. Confinement is still checked after resolution.
+    p=(WORKSPACE/path[11:] if isinstance(path,str) and path.startswith('/workspace/') else Path(path)).resolve()
     if not p.is_relative_to(WORKSPACE): raise EDAError('UNTRUSTED_PATH','File access is restricted to the workspace.')
     return p
 def get_project(pid):
@@ -92,7 +123,7 @@ def db_commit():
 def runs_for(pid,rev):
     results=[]; signature=input_signature(); configured_signatures={};backend_signatures={}
     for row in DB.execute("SELECT data FROM runs WHERE json_extract(data,'$.project_id')=? ORDER BY rowid ASC",(pid,)):
-        r=json.loads(row[0])
+        r=local_paths(json.loads(row[0]))
         if r.get('backend_profile_id') and r['backend_profile_id'] not in backend_signatures:backend_signatures[r['backend_profile_id']]=commercial_backend.signature(r['backend_profile_id'])
         if r.get('profile_id') and r['profile_id'] not in configured_signatures:configured_signatures[r['profile_id']]=configured_analysis.signature(r['profile_id'])
         r['freshness']='current' if r['revision']==rev and r.get('input_signature')==(r.get('input_signature') if r.get('workflow')=='imported-results' else backend_signatures[r['backend_profile_id']] if r.get('backend_profile_id') else configured_signatures[r['profile_id']] if r.get('profile_id') else signature) else 'stale'; results.append(r)
@@ -101,7 +132,7 @@ def get_run(rid):
     with LOCK:
         row=DB.execute('SELECT data FROM runs WHERE id=?',(rid,)).fetchone()
         if not row: raise EDAError('NOT_FOUND','Run not found.')
-        r=json.loads(row[0]); row=DB.execute('SELECT data FROM projects WHERE id=?',(r['project_id'],)).fetchone(); p=json.loads(row[0]); r['freshness']='current' if r['revision']==p['revision'] and r.get('input_signature')==(r.get('input_signature') if r.get('workflow')=='imported-results' else commercial_backend.signature(r['backend_profile_id']) if r.get('backend_profile_id') else configured_analysis.signature(r['profile_id']) if r.get('profile_id') else input_signature()) else 'stale'; return r
+        r=local_paths(json.loads(row[0])); row=DB.execute('SELECT data FROM projects WHERE id=?',(r['project_id'],)).fetchone(); p=json.loads(row[0]); r['freshness']='current' if r['revision']==p['revision'] and r.get('input_signature')==(r.get('input_signature') if r.get('workflow')=='imported-results' else commercial_backend.signature(r['backend_profile_id']) if r.get('backend_profile_id') else configured_analysis.signature(r['profile_id']) if r.get('profile_id') else input_signature()) else 'stale'; return r
 def put_run(r):
     with LOCK: DB.execute('INSERT OR REPLACE INTO runs VALUES(?,?)',(r['id'],json.dumps(r))); db_commit()
 def snapshot_dir(p,revision=None): return STATE/'projects'/p['id']/'snapshots'/str(p['revision'] if revision is None else revision)
@@ -292,18 +323,14 @@ def input_signature():
     models=initial_models()
     decks={str(p):cached_sha(p) for p in (profile.TECH,profile.MAGIC_RC,profile.SETUP,profile.ROOT/'libs.tech/magic/sky130A.tcl',profile.ROOT/'.config/nodeinfo.json')}
     bins=tool_hashes()
-    adapters={str(p.relative_to(Path(__file__).parent)):cached_sha(p) for p in [*Path(__file__).parent.glob('*.py'), Path(__file__).parent/'literature.json', *Path(__file__).parent.glob('rtl/*')] if p.is_file() and not p.name.startswith('test_')}
+    adapters=ENGINE_ADAPTERS
     return hashlib.sha256(json.dumps({'models':models,'decks':decks,'tools':bins,'image':profile.IMAGE,'adapters':adapters},sort_keys=True).encode()).hexdigest()
 def tool_hashes():
-    paths=[Path(shutil.which(name)) for name in ('magic','ngspice','netgen','python3','iverilog','vvp') if shutil.which(name)]
-    paths += [Path('/foss/tools/yosys/share/yosys/simcells.v')]
-    paths += [Path('/foss/tools/magic/lib/magic/tcl/magicdnull'),Path('/foss/tools/magic/lib/magic/tcl/tclmagic.so'),Path('/foss/tools/netgen/lib/netgen/tcl/netgenexec'),Path('/foss/tools/netgen/lib/netgen/tcl/tclnetgen.so')]
-    for pattern in ('dbcore*.so','tlcore*.so','libcore*.so'): paths+=list(Path('/foss/tools/klayout/pymod/klayout').glob(pattern))
-    return {str(p):cached_sha(p) for p in paths if p.is_file()}
+    return {str(p):cached_sha(p) for p in runtime_resources.engine_files()}
 def doctor(refresh=False):
     global TOOLS
     TOOLS=TOOL_DIAGNOSTICS.inspect(refresh=refresh)
-    return {'protocol_version':1,'runner':'linux-docker','tools':TOOLS,'pdk':profile.capabilities(),'geometry':{'engine':'KLayout','coordinate_bits':32,'dbu_um':.001,'grid_dbu':5},'runtime_image':profile.IMAGE}
+    return {'protocol_version':1,'runner':RUNTIME_KIND,'tools':TOOLS,'pdk':profile.capabilities(),'geometry':{'engine':'KLayout','coordinate_bits':32,'dbu_um':.001,'grid_dbu':5},'runtime_image':profile.IMAGE if RUNTIME_KIND=='linux-docker' else None}
 
 def magic_generate(folder,cell,w=.65,l=.15):
     folder.mkdir(parents=True,exist_ok=True)
@@ -335,7 +362,7 @@ def create(params,starter=None):
     example=params.get('example','inverter')
     if example not in PORTS: raise EDAError('UNSUPPORTED','Unknown example.')
     fixture=example in {'fixture','performance'}
-    if not fixture and not profile.capabilities()['available']: raise EDAError('PDK_MISSING','Install the locked public SKY130A profile or open fixture geometry.')
+    if not fixture and example not in ('layout','schematic') and not profile.capabilities()['available']: raise EDAError('PDK_MISSING','Install the public SKY130A resources, or start an empty circuit/layout without a PDK.')
     pid=uuid.uuid4().hex; cell=example
     p={'schema_version':1,'id':pid,'name':str(params.get('name') or f'SKY130 {example}')[:128], 'pdk_id':'fixture' if fixture else 'sky130A', 'revision':1,'cell':cell,'dbu_um':.001,'grid_dbu':5,
        'source':'fixture' if fixture else 'pdk','example':example,'layers':[],'schematic':native.defaults(example),'testbench':native.testbench({}),'runs':[], 'ports':PORTS[example], 'redo_stack':[],'undo_stack':[],'next_revision':2}
@@ -531,6 +558,10 @@ def start_job(params,kind):
         if duration<=0 or duration>(.02 if adc else 1e-3) or step<1e-12 or step>duration or duration/step>200000:
             raise EDAError('TESTBENCH_RANGE','Transient duration/step must be positive, at most 1ms and at most 200000 nominal points, with step >=1ps.')
     if kind=='lvs' and p['example']=='wire': raise EDAError('UNSUPPORTED','Wire fixture demonstrates extraction; it has no reference devices for LVS.')
+    required=['ngspice'] if kind=='simulation' else ['magic']+(['netgen'] if kind=='lvs' else [])
+    if kind=='simulation' and params.get('post_layout'):required.append('magic')
+    missing=[name for name in required if not shutil.which(name)]
+    if missing:raise EDAError('TOOL_MISSING','Install/connect the actual local tools before running: '+', '.join(missing),{'required_tools':missing,'runtime_kind':RUNTIME_KIND})
     rid=uuid.uuid4().hex; folder=STATE/'runs'/rid; folder.mkdir(parents=True)
     shutil.copyfile(snapshot_dir(p)/'layout.oas',folder/'input.oas'); l=load_layout(p); l.write(str(folder/f"{p['cell']}.gds")); dump(folder/'project.json',p)
     run={'id':rid,'project_id':p['id'],'kind':kind,'revision':p['revision'],'execution_status':'queued','analysis_result':'unknown','freshness':'current','artifacts':{},'manifest_path':str(folder/'manifest.json'),'input_signature':input_signature()}
@@ -541,11 +572,11 @@ def process(run,folder,cmd,name,manifest,timeout=120):
     manifest['commands'].append({'argv':cmd,'cwd':str(folder),'timeout_s':timeout})
     if get_run(run['id'])['execution_status']=='canceled': raise EDAError('CANCELED','Job canceled.')
     with (folder/f'{name}.log').open('w') as f:
-        proc=subprocess.Popen(cmd,cwd=folder,stdout=f,stderr=subprocess.STDOUT,start_new_session=True)
+        proc=subprocess.Popen(cmd,cwd=folder,stdout=f,stderr=subprocess.STDOUT,start_new_session=os.name!='nt',creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
         with LOCK: PROCESSES[run['id']]=proc
         try: code=proc.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
-            os.killpg(proc.pid,signal.SIGKILL); proc.wait(); raise EDAError('TIMEOUT',f'{name} exceeded {timeout} seconds.')
+            terminate_process(proc,force=True); proc.wait(); raise EDAError('TIMEOUT',f'{name} exceeded {timeout} seconds.')
         finally:
             with LOCK: PROCESSES.pop(run['id'],None)
     manifest['commands'][-1]['returncode']=code
@@ -694,7 +725,7 @@ def spice_tb(p,folder,params,netlist):
         for suffix in (f'__{corner}.pm3.spice','__mismatch.corner.spice'):
             text+=f'\n.include "{profile.ROOT}/libs.ref/sky130_fd_pr/spice/{model}{suffix}"\n'
     modeldeck.write_text(text)
-    lines=['Register public SKY130 testbench',f'.include "{modeldeck}"','.option scale=1e-6',f'.include "{netlist}"',f'.temp {params.get("temperature_C",27):.12g}']
+    lines=['Resistor public SKY130 testbench',f'.include "{Path(modeldeck).as_posix()}"','.option scale=1e-6',f'.include "{Path(netlist).as_posix()}"',f'.temp {params.get("temperature_C",27):.12g}']
     if example=='inverter':
         stimulus=f'PULSE(0 {supply:.12g} 1n 100p 100p 5n 10n)' if analysis=='tran' else f'DC {supply/2:.12g} AC 1'
         lines += [f'VVDD VPWR 0 {supply:.12g}','VGND VGND 0 0',f'VIN A 0 {stimulus}','XU '+' '.join(actual_ports)+' '+p['cell'],f'CLOAD Y 0 {params.get("load_F",5e-15):.12g}']
@@ -779,6 +810,9 @@ def simulation(run,p,folder,manifest,params):
         voltage_probes=current_flow.voltage_probes(branches,folder)
         tb=current_flow.instrument_control(tb,branches,selected_vectors,voltage_probes)
         if selected_vectors is not None:manifest['settings']['trace_scope']={'waveforms':selected_vectors,'signed_current_branches':len(branches),'all_extracted_RC_elements_retained':True}
+    # Quoted paths are passed to SPICE rather than a shell. Forward slashes
+    # preserve spaces and prevent Windows backslashes becoming SPICE escapes.
+    tb=re.sub(r'(?mi)^(\s*\.(?:include|inc|lib)\s+")([^"\n]+)(")',lambda m:m[1]+m[2].replace('\\','/')+m[3],tb)
     deck=folder/'testbench.spice'; deck.write_text(tb); run['artifacts']['testbench']=str(deck)
     timeout=600 if p.get('digital_unit',{}).get('kind') in ('cpu4','cpu16') or p.get('design_template',{}).get('id')=='soc_sensor_afe' else 300 if p.get('design_template',{}).get('physical_adapter') and (p['example'] in ('chip_ldo','chip_pll') or p.get('design_template',{}).get('id') in design_tools.analog_soc.CATALOG or p.get('design_template',{}).get('id') in design_tools.physical_library.CATALOG) else 120
     log=process(run,folder,['ngspice','-b',str(deck)],'ngspice',manifest,timeout=timeout)
@@ -891,6 +925,8 @@ def execute_job(run,p,params,folder):
         put_run(run)
 
 def rpc(method,params):
+    with LOCK:
+        if STOPPING:raise EDAError('ENGINE_STOPPING','Local engine is shutting down; reconnect after it closes.')
     if any(str(key).startswith('_') for key in params):raise EDAError('PRIVATE_PARAMETER','Internal engine settings cannot be supplied through public RPC.')
     if method.startswith('conversion.'):return conversion.rpc(method,params)
     if method.startswith('pvt.'):return pvt.rpc(method,params)
@@ -974,7 +1010,7 @@ def rpc(method,params):
                 r.update(execution_status='canceled',analysis_result='unknown',message='Canceled by user.',ended_at=now()); put_run(r)
                 proc=PROCESSES.get(r['id'])
                 if proc:
-                    try: os.killpg(proc.pid,signal.SIGTERM)
+                    try: terminate_process(proc)
                     except ProcessLookupError: pass
             return r
     raise EDAError('UNSUPPORTED',f'Unsupported method: {method}')
@@ -988,6 +1024,7 @@ class Handler(BaseHTTPRequestHandler):
         if self.path=='/health': return self.send(200,{'service':'mos-eda','protocol_version':1})
         self.send(404,{'ok':False,'error':{'code':'NOT_FOUND','message':'Unknown endpoint.'}})
     def do_POST(self):
+        global STOPPING,INFLIGHT
         if self.path!='/rpc': return self.send(404,{'ok':False,'error':{'code':'NOT_FOUND','message':'Unknown endpoint.'}})
         supplied=self.headers.get('X-MOS-Token','')
         if not TOKEN or not hmac.compare_digest(supplied,TOKEN): return self.send(401,{'ok':False,'error':{'code':'UNAUTHORIZED','message':'Authenticated session required.'}})
@@ -996,10 +1033,34 @@ class Handler(BaseHTTPRequestHandler):
             if length<1 or length>48*1024*1024: raise EDAError('INVALID_REQUEST','RPC request limit is 48 MiB including inline project bundles.')
             body=json.loads(self.rfile.read(length)); method=body.get('method'); params=body.get('params',{})
             if not isinstance(method,str) or not isinstance(params,dict): raise EDAError('INVALID_REQUEST','Expected method string and params object.')
-            result=rpc(method,params); self.send(200,{'ok':True,'result':result})
+            if method=='runtime.identity':
+                if params:raise EDAError('INVALID_REQUEST','Identity has no input parameters.')
+                result={'runtime_kind':RUNTIME_KIND,'instance_id':INSTANCE_ID,'workspace_id':os.environ.get('MOS_WORKSPACE_ID'),'pid':os.getpid(),'engine_code_sha256':ENGINE_CODE_SIGNATURE}
+            elif method=='runtime.stop':
+                if set(params)!={'instance_id'} or not INSTANCE_ID or params['instance_id']!=INSTANCE_ID or not RUNTIME_KIND.startswith(('native-','wsl-')):raise EDAError('NOT_OWNER','This is not the owned native runtime.')
+                with LOCK:
+                    active=DB.execute("SELECT count(*) FROM runs WHERE json_extract(data,'$.execution_status') IN ('queued','running')").fetchone()[0]
+                    active+=DB.execute("SELECT count(*) FROM experiments WHERE json_extract(data,'$.execution_status')='running'").fetchone()[0]
+                    active+=DB.execute("SELECT count(*) FROM pvt_studies WHERE json_extract(data,'$.execution_status') IN ('queued','running')").fetchone()[0]
+                    if active or INFLIGHT:raise EDAError('ENGINE_BUSY','실행 중인 해석·조건표·요청을 완료하거나 취소한 뒤 엔진을 종료하세요.')
+                    STOPPING=True
+                result={'stopped':True};threading.Thread(target=HTTP_SERVER.shutdown,daemon=True).start()
+            else:
+                with LOCK:
+                    if STOPPING:raise EDAError('ENGINE_STOPPING','설계 엔진 종료 중입니다. 잠시 후 다시 연결하세요.')
+                    INFLIGHT+=1
+                try:result=rpc(method,params)
+                finally:
+                    with LOCK:INFLIGHT-=1
+            self.send(200,{'ok':True,'result':transport_paths(result)})
         except EDAError as e: self.send(200,{'ok':False,'error':{'code':e.code,'message':str(e),'details':e.details}})
         except (ValueError,KeyError,TypeError) as e: self.send(200,{'ok':False,'error':{'code':'INVALID_REQUEST','message':str(e)}})
         except Exception as e: self.send(200,{'ok':False,'error':{'code':'ENGINE_ERROR','message':str(e)}})
+
+_code_root=Path(__file__).resolve().parents[2]
+_code_files=[*(_code_root/'workers/eda').glob('*.py'),*(_code_root/'platform/commercial').glob('*.py'),_code_root/'workers/eda/literature.json',*(_code_root/'workers/eda/rtl').glob('*')]
+ENGINE_ADAPTERS={p.relative_to(_code_root).as_posix():profile.sha(p) for p in _code_files if p.is_file() and not p.name.startswith('test_')}
+ENGINE_CODE_SIGNATURE=hashlib.sha256(json.dumps(ENGINE_ADAPTERS,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
 experiments.configure(sys.modules[__name__])
 pdk_registry.configure(sys.modules[__name__])
@@ -1036,4 +1097,6 @@ if __name__=='__main__':
     pvt.recover_interrupted()
     # Containers must publish exclusively to 127.0.0.1; binding 0.0.0.0 here reaches the Docker bridge only.
     print('MOS EDA worker protocol 1 ready.',flush=True)
-    ThreadingHTTPServer((os.environ.get('MOS_BIND','127.0.0.1'),int(os.environ.get('MOS_PORT','8765'))),Handler).serve_forever()
+    HTTP_SERVER=ThreadingHTTPServer((os.environ.get('MOS_BIND','127.0.0.1'),int(os.environ.get('MOS_PORT','8765'))),Handler)
+    try:HTTP_SERVER.serve_forever()
+    finally:HTTP_SERVER.server_close();POOL.shutdown(wait=True);DB.close()

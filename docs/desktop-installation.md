@@ -1,76 +1,60 @@
-# Resistor 0.17 설치와 실행
+# Resistor 설치와 실행 · v0.26
 
-[운영체제별 다운로드](https://resistor-downloads.vercel.app)에서 현재 GitHub 릴리스의
-설치 파일·크기·SHA-256을 확인할 수 있습니다. 웹 페이지에는 엔진이나 사용자
-설계를 올리지 않습니다. 아래 경로는 소스에서 만든 로컬 패키지의 위치입니다.
+[다운로드 사이트](https://resistor-downloads.vercel.app/)에서 현재 설치 파일과 SHA-256을 확인하세요.
+기본 설치는 Docker 없이 회로·레이아웃·GDS/OASIS·ngspice를 실행합니다.
+Python·KLayout·공개 SKY130 자료를 포함하며 사용자 설계 폴더는 앱과 분리합니다.
 
-## Mac 설치
+- Windows x64: EXE 설치 파일. 사용자 계정에 설치하며 제거 시 설계 폴더를 삭제하지 않습니다.
+- M1 이후 Mac: arm64 ZIP. macOS 13 이상이 필요합니다.
+- Intel Mac: x64 ZIP. macOS 13 이상이 필요합니다.
+- Linux x64: tar.gz 전체를 풀고 `./install.sh`. GTK 3·NSS·Chromium sandbox가 필요합니다.
 
-- Apple Silicon(M1 이후): `release/installers/Resistor-0.17.0-mac-arm64-r5.zip`
-- Intel: `release/installers/Resistor-0.17.0-mac-x64-r5.zip`
+## Mac 설치와 Apple 경고
 
-0.17.0에는 8개 기본 CMOS 셀과 6개 물리 칩 코어의 실제 SKY130 PCell·R/C·배선 backend가 들어 있습니다. [물리 설계와 영상 실습](https://resistor-downloads.vercel.app/references/)의 프로젝트 ZIP을 가져온 뒤 자신의 엔진에서 DRC/LVS/PEX와 시뮬레이션을 실행하세요. 이전 버전·사용자 저장 데이터는 유지합니다. 패키지 구조·자체 서명 검사는 Mac 실기기 실행이나 Apple 공증을 증명하지 않습니다.
+ZIP 전체를 Mac에서 풀고 `Install Resistor.command`를 실행합니다. 도우미는
+파일 해시·앱 식별자·리소스 서명을 확인하고 설치 대상을 보여줍니다. 설치하면
+`~/Applications/Resistor.app`에 복사하며 기존 사용자 앱은 백업하고 설계 데이터를 유지합니다.
+설치 도우미가 차단되면 출처·다운로드 SHA-256을 확인한 뒤 터미널의 `/bin/zsh ` 뒤에
+도우미 파일을 끌어 넣어 실행합니다. 시스템 전체 Gatekeeper를 해제하지 않습니다.
 
-두 CPU 모두 **r5 ZIP 전체를 Mac에서 압축 해제**한 뒤 `Install Resistor.command`를 실행합니다. 도우미가 SHA-256, 앱 식별자, 하위 구성요소와 앱 리소스 서명을 확인하고 설치 내용을 보여줍니다. **설치**를 선택하면 `~/Applications/Resistor.app`에 복사하고 이 앱의 다운로드 차단 표시만 처리한 뒤 실행합니다. **뷰어로 설치**는 Docker 없이 GDS 로컬 뷰어부터 엽니다. 관리자 암호는 필요하지 않습니다. 기존 Resistor를 먼저 종료하세요. 기존 사용자 설치 앱은 같은 폴더에 백업하고 설계 데이터는 보존합니다. 복사·복사본 서명 검사·실행 요청이 실패하면 기존 앱을 유지하거나 복원하고 실패한 새 앱도 진단용으로 보관합니다. 실행 요청 성공은 앱 내부 실행 완료를 보장하지 않습니다. 기존 `/Applications/Resistor.app` 대신 도우미가 설치한 사용자 앱을 사용하세요.
+앱은 자체 서명되며 Apple Developer ID 서명·공증은 완료하지 않았습니다.
+“개발자를 확인할 수 없음”과 공증 경고는 이 상태에서 나타날 수 있습니다.
+진단은 `Diagnose Resistor.command`, 로그는 `~/Library/Logs/Register`에 있습니다.
+설치 도우미가 OS에 실행을 요청한 사실과 앱 내부 실행 검증을 구분합니다.
 
-r5에는 Docker 이미지 내부 엔진 실행 파일, 실제 설계 폴더 연결 검사, 누락된 backend 모듈 보완과 Precision Workbench의 최신 디자인·상태 표시·프로젝트 목록 개선이 들어 있습니다. `Diagnose Resistor.command`는 macOS 버전, CPU, 실제 앱 버전·최소 OS, 자체 서명, 다운로드 차단 표시와 Docker 설치 여부를 확인하고 `~/Library/Logs/Register`에 기록합니다. 앱이나 보안 설정을 변경하거나 로그를 외부로 보내지 않습니다. 지원 요청에는 필요한 오류 부분만 보내세요.
+## 엔진과 물리 검증
 
-도우미 자체가 차단되면 터미널을 열고 `/bin/zsh ` 뒤에 `Install Resistor.command` 파일을 끌어 넣은 뒤 Enter를 누릅니다. 직접 앱을 실행할 때의 “개발자를 확인할 수 없음” 경고는 Apple 공증을 완료하기 전까지 나타날 수 있습니다. 출처와 다운로드 SHA-256을 확인한 이 배포본에만 설치 도우미를 사용하세요. 설치 과정 기록은 `~/Library/Logs/Register/install-날짜.log`에 남습니다. 시스템 전체 Gatekeeper 설정은 변경하지 않습니다.
+첫 설계 요청 또는 **설계 엔진 다시 연결**에서 포함된 네이티브 엔진을 시작합니다.
+로그인·Docker·별도 Python은 필요하지 않습니다. 전류·전압은 실제 해석 결과가 있어야 표시합니다.
+독립 GDS 뷰어는 `Open Viewer.command` 또는 `--viewer`로 열며 서버를 시작하지 않습니다.
 
-앱에 Electron 런타임이 포함되어 있어 별도 Node.js가 필요하지 않습니다. **M1 CPU도 macOS 13 Ventura 이상이 필요합니다.** OS 하한은 ZIP 안 `Info.plist`의 `LSMinimumSystemVersion`에서 확인합니다. Intel도 현재 r5 설치 도우미를 사용합니다. 두 버전 모두 Developer ID 서명·Apple 공증을 완료하지 않았습니다.
+DRC/LVS/PEX·PCell·GDS 역추출은 실제 Magic/Netgen 도구를 추가로 준비합니다.
+Mac/Linux는 호스트에 설치하고 Windows는 Docker와 독립된 WSL을 선택합니다.
+[네이티브 엔진 준비·전환 가이드](native-runtime.md)의 절차를 사용하세요.
+도구가 없거나 미실행이면 PASS로 표시하지 않습니다.
 
-GDS 독립 뷰어는 Docker·로그인 없이 열 수 있습니다. OASIS 교환은 연결된 엔진을 사용합니다. 압축 해제한 폴더의 `Open Viewer.command`로 독립 뷰어를 실행하거나 연결 진단에서 **GDS 뷰어로 열기**를 선택합니다. PDK layer 설정·전류 방향과 수치·공정 3D 표시도 기존 뷰어 경로로 사용할 수 있습니다. 전류는 입력한 실제 해석 결과가 있어야 표시됩니다.
+환경 진단에서 로컬·WSL·선택 Docker를 지정합니다. 기존 Docker가 실행 중이면
+실행 중인 해석을 먼저 완료·취소하고 **기존 Docker 엔진에서 전환**을 누릅니다.
+현재 폴더·인증·소유권과 유휴 상태를 확인하며 컨테이너와 볼륨을 삭제하지 않습니다.
+이전 `/workspace/workers/eda/server.py` 누락 오류는 새 기본 실행 경로에서 사용하지 않습니다.
 
-회로 생성·ngspice·DRC·LVS·PEX에는 실행 중인 **Docker Linux 엔진**이 필요합니다. 엔진을 실행한 뒤 **설계 엔진 다시 연결**을 누릅니다. 최초 준비에는 인터넷과 큰 공개 EDA 이미지의 저장 공간이 필요합니다. 현재 고정 이미지의 압축 해제 크기는 이 Windows PC에서 약 21GB입니다. `linux/amd64`를 명시하므로 Apple Silicon에서는 엔진이 에뮬레이션으로 실행되고 앱/뷰어는 arm64로 실행됩니다. 실제 Mac 해석 속도는 아직 측정하지 않았습니다.
+## 데이터 보존과 결과 상태
 
-Finder/Dock 실행에서도 Docker Desktop 내부 CLI, 사용자 `~/.docker/bin`, `/opt/homebrew/bin`, `/usr/local/bin`을 직접 탐색합니다. 셸 초기화 파일을 실행하지 않습니다. 특수 설치 경로를 사용할 때만 터미널의 `REGISTER_DOCKER_PATH`에 절대 경로를 지정할 수 있으며 화면에서 임의 명령을 받지 않습니다.
+Mac 사용자 설계는 `~/Library/Application Support/레지스터/workspace`, Windows/Linux도
+기존 Electron 사용자 데이터 경로에 둡니다. 기존 제품명의 저장 위치를 유지합니다.
+앱 리소스는 실행 코드, 사용자 폴더는 설계·이력·로그 저장소로 사용합니다.
+앱 교체와 삭제가 자동 설계 삭제로 이어지지 않습니다. **워크스페이스 → ZIP 내보내기**로 백업할 수 있습니다.
 
-Mac 파일/편집/창 메뉴, ⌘S 저장, ⌘Z/⌘⇧Z 설계 취소/다시 실행, ⌘C/⌘V 텍스트 복사/붙여넣기, Mac Delete 키를 지원합니다. 입력란의 Delete·Backspace는 설계 객체를 삭제하지 않습니다. 창을 닫은 후 Dock으로 돌아오면 창을 다시 열고 기존 엔진 연결을 재사용합니다.
+다른 폴더의 엔진이 포트를 사용하면 연결 충돌을 표시합니다. 실행 중인 job·PVT·실험은
+엔진 전환 전에 완료·취소해야 합니다. 변경된 엔진·모델의 파일 해시는 기존 결과를 stale로
+만들며 원본 PASS/FAIL 보고서를 보존합니다. 재실행 없이 새 환경의 PASS로 바꾸지 않습니다.
 
-## 데이터 보존
+## 소스·패키지 검증
 
-Mac 설치본의 설계 폴더는 `~/Library/Application Support/레지스터/workspace`, Windows는 사용자 앱 데이터 아래입니다. 실행 파일 또는 `.app` 내부에 설계를 저장하지 않습니다. 첫 실행에 필요한 엔진·샘플·adapters를 복사하고 이미 존재하는 파일을 덮어쓰지 않습니다. 직접 수정한 엔진 파일도 보존되며 앱 교체가 자동으로 해당 엔진 파일을 교체하지 않습니다. 자동 엔진 마이그레이션은 제공하지 않습니다.
+Node.js 24에서 `npm ci`, `npm run native:prepare`, `npm run doctor`, `npm run dev` 순서로 시작합니다.
+Mac/Linux 네이티브 ngspice 빌드에는 컴파일러와 make가 필요합니다.
+패키지는 해당 운영체제·CPU에서 생성하며 다른 CPU의 엔진을 재사용하지 않습니다.
+Mac 자체 서명 검사는 포함된 Mach-O 실행 파일·모듈과 최종 `.app`을 검사합니다.
 
-소스 체크아웃 안의 개발 패키지는 기존 `.runtime/worker.json`이 있는 체크아웃을 재사용합니다. 앱 삭제가 설계 자동 삭제로 이어지지 않습니다. **워크스페이스 → ZIP 내보내기**로 설계를 별도 백업하세요. 다른 폴더가 고정 worker 이름/포트를 쓰고 있으면 다른 작업을 덮어쓰지 않고 연결 충돌을 표시합니다. Unix 경로는 대소문자를 구분합니다. Docker build context에서 설계 runtime과 인증 연결 파일을 제외하도록 `.dockerignore`도 준비합니다.
-
-## Mac 빌드와 실제 실행 검증
-
-Mac 소스 체크아웃에서 `npm ci` 후 `npm run package:mac:preview`를 실행하면 현재 Mac CPU용 자체 서명 `.app`를 만들고 실제 Electron으로 Docker 없는 GDS 52개 shape, 연결 진단/재시도, Mac 메뉴·Dock 재열기, 공백이 있는 설치 위치에서의 첫 실행·앱 교체·설계 보존을 검사한 뒤 DMG와 설치 도우미를 포함한 r5 ZIP을 만듭니다. 네 테스트가 모두 성공해야 결과 패키지 검증 기록을 생성합니다. Developer ID/공증은 별도이며 자동 업로드하지 않습니다.
-
-다른 CPU의 앱만 만들려면 `npm run package:mac:arm64` 또는 `npm run package:mac:x64`를 사용합니다. CPU가 다른 바이너리는 해당 CPU의 Mac에서 따로 검사해야 합니다. `.github/workflows/macos-preview.yml`은 관련 소스의 main push 또는 수동 실행 시 Apple Silicon `macos-15`와 Intel `macos-15-intel`에서 각각 네이티브 검사와 최종 ZIP 검증을 수행합니다. 실제 CPU를 먼저 확인하고 실패·스킵은 성공으로 기록하지 않습니다. GitHub의 v0.15 native preview 검사에서는 일부 뷰어 UI 검사가 실패했습니다. 실행한 CI와 완료된 검사 범위를 구분하며, 현재 공개 Mac ZIP은 교차 빌드 preview입니다.
-
-Docker가 준비된 실제 Mac에서는 `REGISTER_NATIVE_QA=1 npm run package:mac:preview`로 실제 패키지의 엔진 연결과 full adder의 pre → DRC → LVS → PEX → 실제 RC post, 각 8개 입력 조합을 추가 검사합니다. 별도로 `npm run test:mac:native`도 가능합니다. 실패한 단계/실제 run ID를 `docs/evidence/macos-native-<arch>.json`에 저장하고 합성 PASS로 대체하지 않습니다. 새 검증 프로젝트는 기존 프로젝트와 별도로 생성합니다.
-
-`npm run package:mac:zip`은 두 CPU용 ZIP을 생성합니다. Windows에서는 별도의 Linux Docker 빌드 컨테이너를 쓰며 기존 EDA 컨테이너를 변경하지 않습니다.
-
-최신 r5 두 CPU ZIP은 `npm run package:mac:release`, M1만 만들려면 `npm run package:mac:m1-repair`를 사용합니다. 기존 r3 및 이전 파일은 보존합니다. Windows/Linux 교차 빌드에는 네이티브 실행 성공 표시를 붙이지 않습니다.
-
-이 Windows PC에서는 Linux 컨테이너의 파일 시스템에서 두 CPU용 `.app`를 만들고 Unix 실행 권한·Framework 심볼릭 링크를 보존한 ZIP을 생성합니다. `scripts/verify-mac-archive.py`가 실제 Mach-O CPU, 앱 버전, 필수 리소스, ZIP CRC, 민감 runtime 제외를 검사합니다. **이 검사는 Mac에서 앱을 실행한 증거가 아닙니다.** DMG는 실제 Mac에서 electron-builder가 만듭니다.
-
-## 서명과 현재 한계
-
-현재 Mac ZIP과 Windows 설치본은 개발 미리보기입니다. Developer ID 서명, Apple 공증, Gatekeeper 설치 허용, Mac 실기기의 뷰어·GPU·전체 엔진 실행은 아직 검증되지 않았습니다. 시스템 전체 보안 설정을 해제하는 설치 스크립트는 제공하지 않습니다. 상용 배포 전 Developer ID와 공증 및 양쪽 Mac의 실행 검증이 필요합니다. [Electron 공식 서명 문서](https://www.electronjs.org/docs/latest/tutorial/code-signing), [Apple의 출처 확인 앱 열기 안내](https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unknown-developer-mh40616/mac)를 참고하세요.
-
-상용 EDA 실행 파일·SDK·라이선스는 포함하지 않습니다. 등록 가능한 backend/상용 데이터 어댑터와 실제 vendor 실행 검증은 구분합니다. 인터넷 서버 배포, 유료 서비스 생성, 인증서 구매와 자동 업데이트는 진행하지 않았습니다.
-
-이번 r5에는 레이아웃 직접 그리기와 회로도 소자 배치·회전·반전이 포함됩니다. [그리기 도구 사용법](drawing-tools.md)을 확인하세요.
-
-## Windows
-
-설치 파일은 `Resistor-0.16.0-win-x64.exe`입니다. 현재 사용자 계정에 설치하며 위치를 선택할 수 있습니다. 삭제 시 설계 데이터를 자동 삭제하지 않습니다. `npm run package:installer`로 빌드합니다. 실제 Windows에서 패키지의 GDS 뷰어를 실행하고 파일을 열었습니다. 이번 설치 EXE의 설치/삭제 UI는 별도 검사이며, Authenticode 서명은 없습니다.
-
-## Linux x64
-
-`Resistor-0.16.0-linux-x64.tar.gz` 전체를 압축 해제하고 폴더 안에서 `./install.sh`를 실행합니다. 별도 Node.js나 관리자 권한 없이 `~/.local/opt/register/0.16.0`에 설치하고 응용 프로그램 메뉴에 Resistor를 등록합니다. 같은 버전이 있으면 덮어쓰지 않고 종료합니다. 새 버전 설치는 사용자 설계 폴더를 삭제하지 않습니다. 설치하지 않고 `./Resistor/Resistor`로 실행하거나 `./Resistor/Resistor --viewer`로 GDS 로컬 뷰어만 열 수 있습니다.
-
-x86-64 Linux의 그래픽 세션, glibc, GTK 3, NSS와 활성화된 Chromium sandbox가 필요합니다. 루트 계정으로 앱을 실행하거나 시스템 sandbox를 해제하지 마세요. 실제 해석에는 Docker Linux 엔진과 해당 사용자 계정의 접근 권한이 필요합니다. OASIS 교환은 연결된 EDA 엔진을 사용합니다.
-
-Linux 컨테이너에서 ELF CPU·실행 권한·Electron Node 모드·사용자 설치·재설치 보존을 확인했습니다. 일반 Linux 데스크톱 GUI 실행은 아직 확인하지 않았습니다. `npm run package:linux`는 Windows/macOS에서 별도의 Linux 빌드 컨테이너를 사용하며, 기존 EDA 컨테이너를 변경하지 않습니다.
-
-## Docker에서 server.py를 찾지 못할 때
-
-`python3: can't open file /workspace/workers/eda/server.py`는 이전 이미지가 연결된 설계 폴더의 엔진 파일에 의존하여 발생합니다. r5는 `/opt/register-engine`에 엔진 코드를 포함하고 사용자 설계만 `/workspace`에 저장합니다. 앱의 설치 파일로 이미지를 만들므로 오래된 사용자 폴더의 Dockerfile을 사용하지 않습니다. 시작 전에 고유 파일을 써서 Docker가 같은 설계 폴더를 실제로 읽는지 검사하고 검사 파일만 지웁니다. 공백·한글·쉼표가 있는 경로도 지원합니다.
-
-새 r5 앱을 설치하고 Docker Desktop을 켠 뒤 **설계 엔진 다시 연결**을 누르세요. 현재 폴더에 연결된 Resistor 소유의 **중지된** 이전 컨테이너는 `mos-studio-eda-backup-...` 이름으로 보존하고 새 엔진을 만듭니다. 실행 중인 엔진과 다른 폴더/다른 도구의 컨테이너는 바꾸지 않습니다. 새 컨테이너 실행 요청이 실패하면 이전 이름을 복원합니다. 설계 데이터나 컨테이너 볼륨을 삭제하거나 Docker 초기화를 하지 마세요. 파일 공유 오류라면 앱 환경 진단의 저장 폴더를 Docker Desktop 파일 공유 설정에서 허용하세요.
-
-Windows의 별도 Linux amd64 Docker에서 동일 누락 오류 재현, 빈 설계 폴더 기동, 실제 KLayout 회로 생성, ngspice 전류·노드 전압 해석, 재시작 후 설계 보존을 검사했습니다. Apple Silicon에서의 실제 Docker 에뮬레이션과 앱 실행은 별도로 검증해야 합니다. [검증 기록](evidence/worker-startup-native.json).
+현재 실행 근거는 [플랫폼별 네이티브 검증 기록](evidence/native-runtime/)에 있습니다.
+CI의 실제 호스트 실행, 설치 파일 구조, Apple 공증, 제조 승인은 각각 별도 상태입니다.

@@ -180,7 +180,7 @@ function DesignWorkspace({onViewer}:{onViewer:()=>void}) {
       const nextDoctor = await rpc<Doctor>('toolchain.doctor'); if (canceled) return; setDoctor(nextDoctor);
       const last = localStorage.getItem('mos.last_project');
       if (last) { try { const previous = await rpc<Project>('project.open', { project_id: last }); if (!canceled) await load(previous); return; } catch { localStorage.removeItem('mos.last_project'); } }
-      const initial = await rpc<Project>('project.create', { name: 'CMOS inverter', example: 'inverter' }); if (!canceled) await load(initial);
+      const initial = await rpc<Project>('project.create', nextDoctor.pdk.available ? { name: 'CMOS inverter', example: 'inverter' } : {name:'새 회로 · 직접 설계',example:'schematic'}); if (!canceled) {await load(initial);if(!nextDoctor.pdk.available)setTab('schematic');}
     });
     return () => { canceled = true; mounted.current = false; };
   }, [action, load, remoteClient,bootAttempt]);
@@ -277,15 +277,16 @@ function DesignWorkspace({onViewer}:{onViewer:()=>void}) {
     if (project.analysis_setup) {
       if (kind === 'simulation') return !tool('ngspice')?.available ? 'ngspice 엔진 연결이 필요합니다.' : undefined;
       if (kind === 'lvs' && !project.analysis_setup.reference_spice?.trim()) return 'PDK·해석 설정에 실제 reference SPICE를 저장하세요.';
+      if (kind === 'lvs' && !tool('netgen')?.available) return 'Netgen 비교 도구를 설치하거나 WSL 엔진을 연결하세요.';
       return !tool('magic')?.available ? 'Magic 추출 엔진 연결이 필요합니다.' : undefined;
     }
     if (project.design_template) { if (kind !== 'simulation' && !scene?.shapes.length) return '회로 템플릿의 실제 레이아웃을 생성한 뒤 물리 검증을 실행하세요.'; return !tool(kind === 'simulation' ? 'ngspice' : kind === 'lvs' ? 'netgen' : 'magic')?.available ? '실제 해석·검증 엔진이 필요합니다.' : undefined; }
     if (project.example === 'layout' && kind !== 'drc' && !project.analysis_setup) return '파일·PDK → PDK·해석 설정에서 실제 회로와 해석 조건을 연결하세요.';
-    if (project.source === 'fixture') return '교육용 geometry fixture에는 검증된 회로 / PDK profile이 없습니다. 공개 PDK 예제를 열어 주세요.';
-    if (kind === 'simulation') return !tool('ngspice')?.available ? tool('ngspice')?.reason || 'ngspice를 찾을 수 없습니다.' : project.source === 'pdk' && !cap('simulation') ? '이 PDK의 SPICE model이 지원되지 않습니다.' : undefined;
-    if (kind === 'drc') return !tool('klayout')?.available ? 'KLayout worker를 찾을 수 없습니다.' : project.source === 'pdk' && !cap('drc') ? '등록된 PDK DRC deck이 없습니다.' : undefined;
-    if (kind === 'lvs') return !cap('lvs') ? doctor?.pdk.reason || '검증된 LVS profile이 없습니다.' : undefined;
-    return !cap('pex') ? doctor?.pdk.reason || '검증된 PEX profile이 없습니다.' : undefined;
+    if (project.source === 'fixture' && project.example !== 'schematic') return '교육용 geometry fixture에는 검증된 회로 / PDK profile이 없습니다. 공개 PDK 예제를 열어 주세요.';
+    if (kind === 'simulation') return !tool('ngspice')?.available ? tool('ngspice')?.reason || 'ngspice를 찾을 수 없습니다.' : project.source === 'pdk' && !cap('simulation') && !(project.example === 'schematic' && project.schematic.devices.every(d => !d.model) && !Object.keys(project.schematic.cells || {}).length) ? '이 PDK의 SPICE model이 지원되지 않습니다.' : undefined;
+    if (kind === 'drc') return !tool('magic')?.available ? 'Magic 검증 도구를 설치하거나 WSL 엔진을 연결하세요.' : !tool('klayout')?.available ? 'KLayout worker를 찾을 수 없습니다.' : project.source === 'pdk' && !cap('drc') ? '등록된 PDK DRC deck이 없습니다.' : undefined;
+    if (kind === 'lvs') return !tool('magic')?.available || !tool('netgen')?.available ? 'Magic·Netgen 검증 도구를 설치하거나 WSL 엔진을 연결하세요.' : !cap('lvs') ? doctor?.pdk.reason || '검증된 LVS profile이 없습니다.' : undefined;
+    return !tool('magic')?.available ? 'Magic 추출 도구를 설치하거나 WSL 엔진을 연결하세요.' : !cap('pex') ? doctor?.pdk.reason || '검증된 PEX profile이 없습니다.' : undefined;
   };
   const runJob = async (kind: string) => {
     if (!project) return;

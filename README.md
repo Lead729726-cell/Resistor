@@ -1,12 +1,14 @@
 # Resistor
 
+**v0.26 Docker 없는 로컬 엔진**: 설치 파일에 Python·KLayout·ngspice와 공개 SKY130 자료를 포함합니다. 회로·레이아웃 편집, GDS/OASIS 입출력과 실제 전압·전류 해석을 로컬에서 실행합니다. 전체 물리 도구는 Mac/Linux에 직접 설치하거나 Windows의 독립 WSL을 연결하며 Docker는 선택 방식으로 남습니다. [설치·전환·검증 안내](docs/native-runtime.md).
+
 **v0.25 회로 작성·GDS 변환**: [빈 회로에서 값 입력·핀 연결·실제 해석](docs/schematic-quickstart.md), [GDS/OASIS 회로 역추출과 영역·핀 채널 규격 레이아웃](docs/gds-schematic-conversion.md)을 제공합니다. 변환은 미리보기 확인 후 새 revision으로 적용하며 DRC/LVS/PEX는 실제 별도 실행 결과를 표시합니다. 지원 PDK·소자와 flat graph 범위는 가이드에 명시합니다.
 
 [2026 문헌 검토·셀/블록 업데이트](docs/literature-update-2026.md): 54개 회로 템플릿과 가산기·CPU 5종의 출처·적용·미재현 범위를 연결했습니다. 기본 셀 구동 크기·sensitized timing arc, OTA 보상 저항, LDO PSRR, SAR 리셋/변환 에너지와 ΣΔ CIC 응답을 실제 엔진 기록과 구분해서 제공합니다. 참고 문헌은 2025–2026년 자료를 중심으로 하며, 논문의 공정·칩 성능을 SKY130에서 재현했다고 표시하지 않습니다.
 
 **v0.23 인터넷 업데이트**: 앱의 **업데이트** 버튼에서 새 버전 확인, 실제 다운로드
 진행률, SHA-256 검사와 설치를 연결합니다. Mac·Linux는 기존 앱 백업·실패 복원을
-지원하고 Windows는 검증된 설치 안내를 엽니다. 기존 프로젝트와 Docker 해석은
+지원하고 Windows는 검증된 설치 안내를 엽니다. 기존 프로젝트와 실행 중인 해석은
 보존합니다. v0.22 이하에서는 새 설치 파일을 한 번 설치해야 합니다.
 [인터넷 업데이트 사용법과 검증 범위](docs/online-updates.md).
 
@@ -93,7 +95,7 @@ ngspice로 검사합니다. [직접 만든 CPU16과 검증 기록](examples/cpu1
 
 ## 소스에서 시작하기
 
-Node.js 24와 Git이 필요합니다. 계산기 화면은 Docker 없이 실행할 수 있습니다.
+Node.js 24와 Git이 필요합니다. 기본 앱과 EDA 엔진은 Docker 없이 실행합니다.
 
 ```sh
 git clone https://github.com/Lead729726-cell/Resistor.git
@@ -103,7 +105,7 @@ npm run dev:calculators
 ```
 
 브라우저에서 http://127.0.0.1:5173 을 여세요. EDA 설계·해석에는 Linux 컨테이너를
-실행하는 Docker가 필요합니다. `npm run doctor`로 설치를 확인하고
+사용하는 네이티브 엔진을 준비합니다. `npm run native:prepare` 후 `npm run doctor`로 설치를 확인하고
 `npm run dev:web`으로 웹 EDA, `npm run dev`로 Electron 앱을 실행합니다.
 첫 엔진 이미지 다운로드에는 시간과 저장 공간이 필요합니다.
 [설치 안내와 Mac 검증 범위](docs/desktop-installation.md)를 확인하세요.
@@ -283,7 +285,7 @@ pin/net 연결 탐색을 제공합니다. 회로 템플릿의 미생성 레이�
 
 ## 실행
 
-설계·해석에는 Docker Desktop을 Linux containers 모드로 실행한 뒤 **Start-Resistor.cmd** 또는 **release/0.13.0/Register-win32-x64/Register.exe**를 실행합니다. 기존 `.runtime/eda` 작업은 보존됩니다. 앱은 첫 설계 요청에서 전용 EDA worker와 공동 작업 허브를 시작합니다. 독립 뷰어는 해당 서비스를 시작하지 않습니다.
+현재 설치 파일은 Docker 없이 실행합니다. 소스에서는 `npm run native:prepare` 후 앱을 실행합니다. 전체 물리 도구와 기존 Docker 전환은 [네이티브 엔진 안내](docs/native-runtime.md)를 참조하세요. 기존 `.runtime/eda` 작업은 보존됩니다. 앱은 첫 설계 요청에서 전용 EDA worker와 공동 작업 허브를 시작합니다. 독립 뷰어는 해당 서비스를 시작하지 않습니다.
 
 ```powershell
 cd Resistor
