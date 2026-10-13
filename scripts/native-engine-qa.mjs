@@ -8,6 +8,7 @@ import path from 'node:path';
 import {startWorker} from './worker.mjs';
 import {stopNativeWorker,runtimeIdentity} from './native-worker.mjs';
 import {runtimeConfig,workerRpc} from './runtime.mjs';
+import {localEngineFetch} from './local-http.mjs';
 
 const root=process.cwd(),resources=path.resolve(process.env.REGISTER_QA_RESOURCES||root);
 await mkdir(path.join(root,'.runtime/native-qa'),{recursive:true});
@@ -26,7 +27,7 @@ try{
   await startWorker(workspace,{resourcesRoot:resources,mode:'native',prepare:false});started=true;
   const identity=await runtimeIdentity(config);assert.equal(identity.runtime_kind,'native-'+process.platform);check('authenticated native host process',{runtime_kind:identity.runtime_kind});
   const doctor=await api('toolchain.doctor');assert.equal(doctor.runtime_image,null);assert.equal(doctor.pdk.available,false);assert(doctor.tools.find(t=>t.name==='KLayout')?.available);assert(doctor.tools.find(t=>t.name==='ngspice')?.available);report.tools=doctor.tools.map(({name,available,version})=>({name,available,version}));check('KLayout and ngspice without a PDK or Docker');
-  const bad=await fetch(config.url+'/rpc',{method:'POST',headers:{'Content-Type':'application/json','X-MOS-Token':'untrusted'},body:JSON.stringify({method:'project.list',params:{}})});assert.equal(bad.status,401);check('unauthenticated requests rejected');
+  const bad=await localEngineFetch(config.url+'/rpc',{method:'POST',headers:{'Content-Type':'application/json','X-MOS-Token':'untrusted'},body:JSON.stringify({method:'project.list',params:{}})});assert.equal(bad.status,401);check('unauthenticated requests rejected');
   let circuit=await api('project.create',{example:'schematic',name:'Native 1.8V divider'});
   for(const device of [
     {id:'vdd',name:'SUPPLY',kind:'voltage',pins:{'+':'VDD','-':'0'},parameters:{dc:1.8},x:100,y:100},
@@ -39,7 +40,7 @@ try{
   const voltage=job.waveforms.find(w=>w.name==='OUT');assert(voltage&&Math.abs(voltage.y[0]-.9)<1e-8);assert(job.current_flow.branches.some(b=>b.values_A?.some(v=>Math.abs(Math.abs(v)-90e-6)<1e-10)));check('actual ideal-circuit OP: 0.9 V and 90 uA; functional verdict UNKNOWN',{run_id:job.id,voltage_V:voltage.y[0]});
   const long=await api('simulation.run',{project_id:circuit.id,analysis:'tran',duration_s:1e-3,step_s:5e-9});
   await assert.rejects(stopNativeWorker(workspace),/실행 중/);await api('job.cancel',{run_id:long.id});const canceled=await wait(await api('job.status',{run_id:long.id}));assert.equal(canceled.execution_status,'canceled');check('busy engine refuses shutdown and actual host job cancels');
-  const wrong=await fetch(config.url+'/rpc',{method:'POST',headers:{'Content-Type':'application/json','X-MOS-Token':config.token},body:JSON.stringify({method:'runtime.stop',params:{instance_id:'wrong-owner'}})});assert.equal((await wrong.json()).error.code,'NOT_OWNER');check('foreign runtime owner cannot stop the engine');
+  const wrong=await localEngineFetch(config.url+'/rpc',{method:'POST',headers:{'Content-Type':'application/json','X-MOS-Token':config.token},body:JSON.stringify({method:'runtime.stop',params:{instance_id:'wrong-owner'}})});assert.equal((await wrong.json()).error.code,'NOT_OWNER');check('foreign runtime owner cannot stop the engine');
   let layout=await api('project.create',{example:'layout',name:'Native geometry'});
   layout=await api('layout.apply_command',{project_id:layout.id,expected_revision:layout.revision,command:{type:'add_box',layer_id:'68/20',box:['0','0','1000','500']}});
   const scene=await api('view.get_scene',{project_id:layout.id});assert(scene.shapes.length>0);check('native rectangle editing without a PDK');

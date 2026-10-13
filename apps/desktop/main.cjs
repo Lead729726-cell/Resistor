@@ -10,6 +10,7 @@ let mainWindow,ownedHub;
 let runtimePromise;
 let windowBootPromise;
 let updater;
+let quitting=false,quitReady=false;
 configureAppIdentity(app,{userDataOverride:process.env.REGISTER_USER_DATA});
 async function boot(){
   const root=path.resolve(__dirname,'../..');
@@ -18,6 +19,13 @@ async function boot(){
     updater=new DesktopUpdater({version:app.isPackaged?app.getVersion():require(path.join(root,'package.json')).version,userData:app.getPath('userData'),packaged:app.isPackaged,fetchImpl:makeUpdateFetch(net),install:async({file,update,folder})=>{
       const choice=await dialog.showMessageBox(mainWindow,{type:'question',title:'Resistor 업데이트',message:`Resistor ${update.version}를 설치할까요?`,detail:'입력 중인 설정과 브라우저 로컬 뷰어 파일을 먼저 저장하세요. 기존 설계 저장 폴더와 실행 중인 Docker 해석은 보존됩니다. Windows는 설치 안내를 열고, Mac·Linux는 사용자 앱 폴더에 설치한 뒤 다시 시작합니다.',buttons:['취소','설치'],defaultId:0,cancelId:0});
       if(choice.response!==1)return false;
+      // Native interpreters and modules live in the installed app. Finish jobs
+      // before stopping this owned worker so the installer can replace them.
+      const {runtimeIdentity,stopNativeWorker}=await import(pathToFileURL(path.join(root,'scripts/native-worker.mjs')));
+      const {runtimeConfig}=await import(pathToFileURL(path.join(root,'scripts/runtime.mjs')));
+      const currentWorkspace=await prepareWorkspace({root,userData:app.getPath('userData'),executable:app.getPath('exe'),override:process.env.MOS_WORKSPACE,packaged:app.isPackaged});
+      const identity=await runtimeIdentity(await runtimeConfig(currentWorkspace));
+      if(identity?.runtime_kind.startsWith('native-')||identity?.runtime_kind.startsWith('wsl-'))await stopNativeWorker(currentWorkspace);
       if(process.platform==='win32'){
         const child=spawn(file,[],{detached:true,stdio:'ignore',windowsHide:false});
         await new Promise((resolve,reject)=>{child.once('spawn',resolve);child.once('error',reject);});child.unref();
@@ -33,12 +41,13 @@ async function boot(){
   }
   const workspace=await prepareWorkspace({root,userData:app.getPath('userData'),executable:app.getPath('exe'),override:process.env.MOS_WORKSPACE,packaged:app.isPackaged});
   const {runtimeConfig,workerRpc}=await import(pathToFileURL(path.join(root,'scripts/runtime.mjs')));
+  const {localEngineFetch}=await import(pathToFileURL(path.join(root,'scripts/local-http.mjs')));
   const {assistantRpc}=await import(pathToFileURL(path.join(root,'scripts/design-assistant.mjs')));
   // A viewer session opens immediately and never starts Docker or a server.
   // Design transport starts the native runtime once, on the first design request.
   const ensureRuntime=()=>runtimePromise??=(async()=>{
     const {startWorker}=await import(pathToFileURL(path.join(root,'scripts/worker.mjs')));const config=await startWorker(workspace,{resourcesRoot:root});
-    let present=false;try{const r=await fetch('http://127.0.0.1:18766/health',{signal:AbortSignal.timeout(1500)});if(r.ok){const body=await r.json();if(body.service!=='register-cloud')throw new Error('다른 서비스가 공동 작업 포트18766을 사용 중입니다.');present=true;}}catch(e){if(e.message.includes('다른 서비스'))throw e;}
+    let present=false;try{const r=await localEngineFetch('http://127.0.0.1:18766/health',{signal:AbortSignal.timeout(1500)});if(r.ok){const body=await r.json();if(body.service!=='register-cloud')throw new Error('다른 서비스가 공동 작업 포트18766을 사용 중입니다.');present=true;}}catch(e){if(e.message.includes('다른 서비스'))throw e;}
     if(!present){const {startHub}=await import(pathToFileURL(path.join(root,'platform/cloud/hub.mjs')));ownedHub=await startHub({workspace,workerConfig:config,staticDirectory:path.join(root,'dist')});}
     return config;
   })().catch(e=>{runtimePromise=undefined;throw e;});
@@ -93,6 +102,9 @@ async function boot(){
 }
 const ensureWindow=()=>windowBootPromise??=(boot().finally(()=>{windowBootPromise=undefined;}));
 app.whenReady().then(ensureWindow).catch(e=>{dialog.showErrorBox('Resistor',e.message);app.quit();});
-app.on('will-quit',()=>{void ownedHub?.close();});
-app.on('activate',()=>{if(BrowserWindow.getAllWindows().length===0)void ensureWindow().catch(e=>dialog.showErrorBox('Resistor',e.message));else{mainWindow?.show();mainWindow?.focus();}});
+app.on('before-quit',event=>{
+  quitting=true;
+  if(ownedHub&&!quitReady){event.preventDefault();const hub=ownedHub;ownedHub=undefined;void hub.close().catch(()=>{}).finally(()=>{quitReady=true;app.quit();});}
+});
+app.on('activate',()=>{if(quitting)return;if(BrowserWindow.getAllWindows().length===0)void ensureWindow().catch(e=>dialog.showErrorBox('Resistor',e.message));else{mainWindow?.show();mainWindow?.focus();}});
 app.on('window-all-closed',()=>{if(process.platform!=='darwin')app.quit();});

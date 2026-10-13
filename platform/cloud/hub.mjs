@@ -254,5 +254,10 @@ export async function startHub({workspace=process.cwd(),port=18766,host='127.0.0
   });
   const timer=setInterval(async()=>{if(polling||closing)return;polling=true;try{for(const id of new Set([...sockets].map(s=>s.roomId).filter(Boolean)))await serial(id,()=>snapshot(id));}catch(e){for(const s of sockets)if(s.readyState===1)s.send(JSON.stringify({type:'worker_error',error:{code:e.code||'WORKER_UNAVAILABLE',message:e.message}}));}finally{polling=false;}},1500);timer.unref();
   await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(port,host,resolve);});
-  return {server,db,port:server.address().port,dispatch,async close(){closing=true;clearInterval(timer);for(const s of sockets)s.close();await new Promise(r=>wss.close(r));await new Promise(r=>server.close(r));db.close();}};
+  let closePromise;
+  return {server,db,port:server.address().port,dispatch,close(){return closePromise??=(async()=>{
+    closing=true;clearInterval(timer);for(const s of sockets)s.close();
+    const force=setTimeout(()=>{for(const s of sockets)s.terminate();server.closeAllConnections();},1000);force.unref();
+    try{await new Promise(r=>wss.close(r));await new Promise(r=>server.close(r));db.close();}finally{clearTimeout(force);}
+  })();}};
 }

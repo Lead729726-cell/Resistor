@@ -1,6 +1,7 @@
 import { randomBytes, randomUUID } from 'node:crypto';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import {localEngineFetch} from './local-http.mjs';
 // Read-only preview and revision-bound envelope changes share the native engine.
 export const METHODS = new Set(['toolchain.doctor','project.create','project.list','project.open','project.save','project.snapshot','project.rename','project.clone','project.export_bundle','project.import_bundle','project.command_receipt','pdk.register','pdk.validate','pdk.list_devices','pdk.capabilities','layout.apply_command','layout.generate_pcell','layout.import','layout.export','schematic.apply_command','schematic.validate','schematic.export_spice','view.get_scene','view.set_display','view.pick','view.cross_probe','simulation.run','simulation.measure','simulation.compare','verification.run_drc','verification.run_lvs','extraction.run_pex','extraction.get_net_mapping','schematic.netlist_xschem','experiment.list','experiment.status','experiment.cancel','experiment.create','experiment.evaluate','experiment.compare','job.status','job.logs','job.cancel']);
 for (const method of ['pdk.list_profiles', 'analysis.inspect', 'analysis.configure', 'analysis.run', 'analysis.verify']) METHODS.add(method);
@@ -31,6 +32,6 @@ export async function workerRpc(config,method,params={}){
   }
   // Bounded large-file transfers can outlast ordinary interactive requests.
   const timeout=['project.import_bundle','project.export_bundle'].includes(method)?180000:65000;
-  const response=await fetch(`${config.url}/rpc`,{method:'POST',headers:{'Content-Type':'application/json','X-MOS-Token':config.token},body:JSON.stringify({method,params}),signal:AbortSignal.timeout(timeout)});
+  const response=await localEngineFetch(`${config.url}/rpc`,{method:'POST',headers:{'Content-Type':'application/json','X-MOS-Token':config.token},body:JSON.stringify({method,params}),signal:AbortSignal.timeout(timeout)});
   if(!response.ok)throw new Error(`Worker HTTP ${response.status}`);return response.json();
 }

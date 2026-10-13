@@ -3,6 +3,7 @@ import {readFile,writeFile,mkdir,access,open,readdir,realpath} from 'node:fs/pro
 import {createHash,randomUUID} from 'node:crypto';
 import path from 'node:path';
 import {runtimeConfig} from './runtime.mjs';
+import {localEngineFetch} from './local-http.mjs';
 
 export const runNative=(exe,args,options={})=>new Promise((resolve,reject)=>{
   const child=spawn(exe,args,{windowsHide:true,stdio:['ignore','pipe','pipe'],...options});let text='';
@@ -50,13 +51,13 @@ export async function nativeEnvironment(workspace,{resourcesRoot=workspace,prepa
   for(const [key,rel]of Object.entries(manifest?.environment||{})){if(!['SPICE_LIB_DIR','YOSYS_SIMCELLS','XSCHEM_SHARE','TCL_LIBRARY','LD_LIBRARY_PATH','DYLD_LIBRARY_PATH'].includes(key))throw Error('Unknown native bundle environment');environment[key]=safeRelative(rel);if(['YOSYS_SIMCELLS','XSCHEM_SHARE'].includes(key))extra[key]=safeRelative(rel);}
   return {python,environment,extra,manifest,settings};
 }
-export async function runtimeIdentity(config,fetchImpl=fetch){
+export async function runtimeIdentity(config,fetchImpl=localEngineFetch){
   try{const response=await fetchImpl(config.url+'/rpc',{method:'POST',headers:{'Content-Type':'application/json','X-MOS-Token':config.token},body:JSON.stringify({method:'runtime.identity',params:{}}),signal:AbortSignal.timeout(2000)});
     if(response.status===401||response.status===403)throw Error('The engine port belongs to another authenticated session.');
     const body=await response.json();return response.ok&&body.ok?body.result:null;
   }catch(e){if(e.message.includes('another authenticated'))throw e;return null;}
 }
-export async function startNativeWorker(workspace,{resourcesRoot=workspace,prepare=true,run=runNative,fetchImpl=fetch,launch,runtimeKind='native-'+process.platform}={}){
+export async function startNativeWorker(workspace,{resourcesRoot=workspace,prepare=true,run=runNative,fetchImpl=localEngineFetch,launch,runtimeKind='native-'+process.platform}={}){
   const config=await runtimeConfig(workspace),id=workspaceId(workspace),current=await runtimeIdentity(config,fetchImpl);
   if(current){if(current.workspace_id!==id||current.runtime_kind!==runtimeKind)throw Error('다른 경로 또는 실행 방식의 엔진이 이 포트를 사용 중입니다. 기존 작업을 보존하고 그 엔진을 종료한 뒤 다시 연결하세요.');
     if(current.engine_code_sha256===await nativeResourcesHash(resourcesRoot))return {...config,engine_mode:runtimeKind.startsWith('wsl-')?'wsl':'native'};
@@ -89,6 +90,6 @@ export async function startNativeWorker(workspace,{resourcesRoot=workspace,prepa
 export async function stopNativeWorker(workspace){
   const config=await runtimeConfig(workspace),owner=JSON.parse(await readFile(path.join(workspace,'.runtime/native-engine/owner.json'),'utf8')),current=await runtimeIdentity(config);
   if(!current)return {stopped:true};if(current.instance_id!==owner.instance_id||current.workspace_id!==workspaceId(workspace))throw Error('Refusing to stop another engine.');
-  const response=await fetch(config.url+'/rpc',{method:'POST',headers:{'Content-Type':'application/json','X-MOS-Token':config.token},body:JSON.stringify({method:'runtime.stop',params:{instance_id:owner.instance_id}}),signal:AbortSignal.timeout(5000)});const body=await response.json();if(!body.ok)throw Error(body.error.message);
+  const response=await localEngineFetch(config.url+'/rpc',{method:'POST',headers:{'Content-Type':'application/json','X-MOS-Token':config.token},body:JSON.stringify({method:'runtime.stop',params:{instance_id:owner.instance_id}}),signal:AbortSignal.timeout(5000)});const body=await response.json();if(!body.ok)throw Error(body.error.message);
   for(let i=0;i<40;i++){if(!await runtimeIdentity(config))return body.result;await new Promise(r=>setTimeout(r,250));}throw Error('로컬 엔진 종료가 완료되지 않았습니다. 실행 중인 작업을 확인하세요.');
 }

@@ -1,12 +1,13 @@
 import path from 'node:path';
 import {nativeSettings,startNativeWorker,runNative} from './native-worker.mjs';
 import {access,readFile} from 'node:fs/promises';
+import {localEngineFetch} from './local-http.mjs';
 
 export async function wslDistributions(run=runNative){
   if(process.platform!=='win32')return [];
   try{return (await run('wsl.exe',['--list','--quiet'],{encoding:'utf16le'})).replaceAll('\0','').split(/[\r\n]+/).map(v=>v.trim()).filter(v=>v&&!v.toLowerCase().startsWith('docker-desktop'));}catch{return [];}
 }
-export async function startWslWorker(workspace,{resourcesRoot=workspace,run=runNative,fetchImpl=fetch}={}){
+export async function startWslWorker(workspace,{resourcesRoot=workspace,run=runNative,fetchImpl=localEngineFetch}={}){
   if(process.platform!=='win32')throw Error('WSL mode is available on Windows only. Use native mode on Mac/Linux.');
   const settings=await nativeSettings(workspace),distributions=await wslDistributions(run),distribution=settings.wsl_distribution;
   if(!distribution||!distributions.includes(distribution))throw Error('Docker와 독립된 WSL 배포판을 선택하세요. Ubuntu에서 docs/native-runtime.md의 도구 준비를 완료한 뒤 다시 연결하세요.');
