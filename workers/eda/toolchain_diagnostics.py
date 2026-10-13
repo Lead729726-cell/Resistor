@@ -9,7 +9,7 @@ import sys
 
 COMMANDS = (
     ('ngspice', ('ngspice', '--version')),
-    ('KLayout', (sys.executable, '-c', 'import klayout.db as k; print(k.__version__)')),
+    ('KLayout', (sys.executable, '-B', '-c', 'import klayout.db as k; print(k.__version__)')),
     ('Magic', ('magic', '--version')),
     ('Netgen', ('netgen', '-batch')),
     ('Xschem', ('xschem', '--version')),

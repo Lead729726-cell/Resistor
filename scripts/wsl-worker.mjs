@@ -21,5 +21,5 @@ export async function startWslWorker(workspace,{resourcesRoot=workspace,run=runN
   await run('wsl.exe',[...prefix,python,'-c','import klayout.db']);
   const linuxPdk=await convert(pdk);
   // All paths are argv entries; no caller data is interpolated into shell code.
-  return startNativeWorker(workspace,{resourcesRoot,fetchImpl,runtimeKind:'wsl-linux',launch:{python:'wsl.exe',args:[...prefix,'env',`PATH=${(await run('wsl.exe',[...prefix,'python3','-c','import pathlib,os; print(str(pathlib.Path.home()/".local/share/resistor/tools/bin")+":"+os.environ["PATH"])'])).trim()}`, 'PYTHONUTF8=1',python,linuxRoot+'/workers/eda/native_entry.py','--detach','--stdin-config'],environment:process.env,extra:{PDK_ROOT:linuxPdk},workspace:linuxWorkspace}});
+  return startNativeWorker(workspace,{resourcesRoot,fetchImpl,runtimeKind:'wsl-linux',launch:{python:'wsl.exe',args:[...prefix,'env',`PATH=${(await run('wsl.exe',[...prefix,'python3','-c','import pathlib,os; print(str(pathlib.Path.home()/".local/share/resistor/tools/bin")+":"+os.environ["PATH"])'])).trim()}`, 'PYTHONUTF8=1',python,'-B',linuxRoot+'/workers/eda/native_entry.py','--detach','--stdin-config'],environment:process.env,extra:{PDK_ROOT:linuxPdk},workspace:linuxWorkspace}});
 }

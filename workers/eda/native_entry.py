@@ -14,7 +14,7 @@ if '--detach' in sys.argv:
     # WSL also gets local files rather than pipes tied to wsl.exe/Electron.
     with tempfile.TemporaryFile() as envelope,(logdir/'engine.log').open('ab') as log:
         envelope.write((json.dumps(config)+'\n').encode());envelope.seek(0)
-        subprocess.Popen([sys.executable,str(Path(__file__).resolve()),'--stdin-config'],stdin=envelope,stdout=log,stderr=log,close_fds=True,**options)
+        subprocess.Popen([sys.executable,'-B',str(Path(__file__).resolve()),'--stdin-config'],stdin=envelope,stdout=log,stderr=log,close_fds=True,**options)
     raise SystemExit(0)
 if '--stdin-config' in sys.argv:
     config=json.loads(sys.stdin.readline())
