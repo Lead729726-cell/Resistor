@@ -1,4 +1,4 @@
-import {useEffect,useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import {localRpc} from '@mos/contracts';
 import {selectRelease,RELEASES_URL,DOWNLOAD_SITE,type AvailableUpdate} from '../../../apps/desktop/update-feed.mjs';
 import metadata from '../../../package.json';
@@ -9,6 +9,21 @@ const size=(n:number)=>(n/1048576).toFixed(1)+' MiB';
 export default function DesktopUpdates(){
   const native=!!window.mos,[open,setOpen]=useState(false),[state,setState]=useState<UpdateState|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState('');
   const [browserPlatform,setBrowserPlatform]=useState('windows');
+  const dialogRef=useRef<HTMLElement>(null);
+  useEffect(()=>{
+    if(!open)return;const previous=document.activeElement as HTMLElement|null;dialogRef.current?.querySelector<HTMLButtonElement>('button')?.focus();
+    const guard=(event:KeyboardEvent)=>{
+      // Capture before schematic/layout shortcuts, including when focus escapes.
+      event.stopPropagation();
+      if(event.key==='Escape'){event.preventDefault();setOpen(false);return;}
+      if(event.key==='Tab'){
+        const controls=Array.from(dialogRef.current?.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled),select:not(:disabled),a[href]')??[]);
+        const first=controls[0],last=controls.at(-1);if(!first)return;
+        if(!dialogRef.current?.contains(document.activeElement)||(event.shiftKey&&document.activeElement===first)||(!event.shiftKey&&document.activeElement===last)){event.preventDefault();(event.shiftKey?last:first)?.focus();}
+      }
+    };
+    window.addEventListener('keydown',guard,true);return()=>{window.removeEventListener('keydown',guard,true);previous?.focus();};
+  },[open]);
   const refresh=async()=>{if(native)try{setState(await localRpc<UpdateState>('desktop.update.status'));}catch(e){setError((e as Error).message);}};
   const action=async(method:string,params:Record<string,unknown>={})=>{setBusy(true);setError('');try{setState(await localRpc<UpdateState>('desktop.update.'+method,params));}catch(e){setError((e as Error).message);}finally{setBusy(false);}};
   const checkBrowser=async()=>{
@@ -23,7 +38,7 @@ export default function DesktopUpdates(){
   const updating=busy||['checking','downloading','installing'].includes(state?.status??'');
   const available=['available','ready'].includes(state?.status??'');
   return <div className="desktop-updates"><button className={`button small update-toggle${available?' update-available':''}`} data-testid="app-updates" onClick={()=>{setOpen(true);if(native)void refresh();else void checkBrowser();}}>{available?'새 버전':'업데이트'}</button>
-    {open&&<div className="modal-overlay update-overlay" onPointerDown={e=>{if(e.target===e.currentTarget)setOpen(false);}}><section className="modal update-dialog" role="dialog" aria-modal="true" aria-labelledby="update-title"><div className="modal-header"><h2 id="update-title">Resistor 업데이트</h2><button className="icon-button" aria-label="업데이트 창 닫기" onClick={()=>setOpen(false)}>×</button></div><div className="update-body">
+    {open&&<div className="modal-overlay update-overlay" onPointerDown={e=>{if(e.target===e.currentTarget)setOpen(false);}}><section ref={dialogRef} data-update-dialog className="modal update-dialog" role="dialog" aria-modal="true" aria-labelledby="update-title"><div className="modal-header"><h2 id="update-title">Resistor 업데이트</h2><button className="icon-button" aria-label="업데이트 창 닫기" onClick={()=>setOpen(false)}>×</button></div><div className="update-body">
       <div className="update-summary"><span>현재 <code>v{state?.currentVersion??metadata.version}</code></span><strong role="status">{busy?'확인 중…':labels[state?.status??'idle']??state?.status}</strong></div>
       {!native&&<><p>브라우저에서는 버전 확인과 설치 파일 다운로드를 제공합니다. 설치 앱에서는 다운로드·검증·설치 절차를 바로 진행할 수 있습니다.</p><label>운영체제 <select aria-label="업데이트 운영체제" value={browserPlatform} disabled={busy} onChange={e=>{setBrowserPlatform(e.target.value);setState(null);}}><option value="windows">Windows x64</option><option value="macos">Mac M1 이후</option><option value="macos-intel">Mac Intel</option><option value="linux">Linux x64</option></select></label></>}
       {native&&state&&<div className="update-settings"><label><input type="checkbox" checked={state.settings.automatic} disabled={updating} onChange={e=>void action('preferences',{...state.settings,automatic:e.target.checked})}/>시작·인터넷 재연결 시 확인 (이후 6시간 간격)</label><label><input type="checkbox" checked={state.settings.channel==='preview'} disabled={updating} onChange={e=>void action('preferences',{...state.settings,channel:e.target.checked?'preview':'stable'})}/>미리보기 릴리스 포함</label></div>}

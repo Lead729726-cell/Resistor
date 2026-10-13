@@ -14,7 +14,7 @@ async function boot(){
   const root=path.resolve(__dirname,'../..');
   if(!updater){
     const {DesktopUpdater}=await import(pathToFileURL(path.join(__dirname,'updates.mjs')));
-    updater=new DesktopUpdater({version:app.getVersion(),userData:app.getPath('userData'),packaged:app.isPackaged,fetchImpl:(...args)=>net.fetch(...args),install:async({file,update,folder})=>{
+    updater=new DesktopUpdater({version:app.isPackaged?app.getVersion():require(path.join(root,'package.json')).version,userData:app.getPath('userData'),packaged:app.isPackaged,fetchImpl:(...args)=>net.fetch(...args),install:async({file,update,folder})=>{
       const choice=await dialog.showMessageBox(mainWindow,{type:'question',title:'Resistor 업데이트',message:`Resistor ${update.version}를 설치할까요?`,detail:'입력 중인 설정과 브라우저 로컬 뷰어 파일을 먼저 저장하세요. 기존 설계 저장 폴더와 실행 중인 Docker 해석은 보존됩니다. Windows는 설치 안내를 열고, Mac·Linux는 사용자 앱 폴더에 설치한 뒤 다시 시작합니다.',buttons:['취소','설치'],defaultId:0,cancelId:0});
       if(choice.response!==1)return false;
       if(process.platform==='win32'){

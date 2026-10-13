@@ -211,11 +211,13 @@ function DesignWorkspace({onViewer}:{onViewer:()=>void}) {
   const save = useCallback(async () => { const current = projectRef.current; if (!current) return; await action('save', async () => { await rpc('project.save', { project_id: current.id }); setNotice(`저장됨 / Saved · ${current.name} · revision ${current.revision}`); }); }, [action]);
   const undo = useCallback((redo = false) => { void (tab === 'schematic' ? schematicCommand({ type: redo ? 'redo' : 'undo' }) : layoutCommand({ type: redo ? 'redo' : 'undo' })).catch(() => {}); }, [tab, schematicCommand, layoutCommand]);
   useEffect(()=>window.mos?.onMenuCommand?.(command=>{
+    if(command==='updates'||document.querySelector('[data-update-dialog]'))return;
     if(command==='shortcuts'){if(!modal)setShortcutHelpOpen(true);return;}
     if(command==='new'||command==='open'){if(!modal&&!shortcutHelpOpen&&!editingText(document.activeElement)&&!collaboration?.room&&!remoteClient)setModal(command);return;}
     if(command==='save'){if(!modal&&!shortcutHelpOpen)void save();return;}
     if(editingText(document.activeElement)){document.execCommand(command);return;}
     if(modal||shortcutHelpOpen||readOnly||busy.includes('edit'))return;
+    if(command!=='undo'&&command!=='redo')return;
     undo(command==='redo');
   }),[save,undo,modal,shortcutHelpOpen,readOnly,busy,collaboration?.room,remoteClient]);
   useEffect(()=>{const guard=(event:KeyboardEvent)=>{
