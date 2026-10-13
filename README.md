@@ -1,5 +1,7 @@
 # Resistor
 
+**v0.25 회로 작성·GDS 변환**: [빈 회로에서 값 입력·핀 연결·실제 해석](docs/schematic-quickstart.md), [GDS/OASIS 회로 역추출과 영역·핀 채널 규격 레이아웃](docs/gds-schematic-conversion.md)을 제공합니다. 변환은 미리보기 확인 후 새 revision으로 적용하며 DRC/LVS/PEX는 실제 별도 실행 결과를 표시합니다. 지원 PDK·소자와 flat graph 범위는 가이드에 명시합니다.
+
 [2026 문헌 검토·셀/블록 업데이트](docs/literature-update-2026.md): 54개 회로 템플릿과 가산기·CPU 5종의 출처·적용·미재현 범위를 연결했습니다. 기본 셀 구동 크기·sensitized timing arc, OTA 보상 저항, LDO PSRR, SAR 리셋/변환 에너지와 ΣΔ CIC 응답을 실제 엔진 기록과 구분해서 제공합니다. 참고 문헌은 2025–2026년 자료를 중심으로 하며, 논문의 공정·칩 성능을 SKY130에서 재현했다고 표시하지 않습니다.
 
 **v0.23 인터넷 업데이트**: 앱의 **업데이트** 버튼에서 새 버전 확인, 실제 다운로드

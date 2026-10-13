@@ -2,7 +2,23 @@
 
 This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
-`docs/evidence/` and the example READMEs. Package version: 0.23.0.
+`docs/evidence/` and the example READMEs. Package version: 0.25.0.
+
+## 0.25.0 — Direct schematic creation and native GDS conversion (2026-10-13)
+
+- Empty schematic projects, engineering-unit value entry, repeated placement,
+  keyboard-accessible pin-to-pin connections and exact revision-bound undo.
+- No invented power/ground connections; reject ambiguous named nets and
+  unintended terminal contacts before changing pins or geometry.
+- Actual ngspice flat DC-source OP/static transient, signed terminal currents
+  and voltage drops. Missing functional criteria remain UNKNOWN.
+- Actual Magic GDS/OASIS mask extraction, conservative editable flat graph,
+  native Netgen parser comparison and explicit unsupported/loss reports.
+- SKY130 PCell placement and bounded M3/M4 routing within rectangular chip
+  limits, four pin-channel sides and three placement orders. Exact preview
+  hashes and source/PDK revisions gate application; physical checks are separate.
+- Original circuits, hierarchy history, models, file formats and user themes
+  remain preserved. Foundry signoff and Apple notarization are not certified.
 
 ## 0.23.0 — Online version checking and verified installation (2026-10-13)
 

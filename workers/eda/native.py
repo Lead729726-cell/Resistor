@@ -185,6 +185,44 @@ def apply(schematic,c,cell_name=None):
     elif ty=='set_pin':
         if not d or c.get('pin') not in d['pins']: raise EDAError('NOT_FOUND','No such device pin.')
         d['pins'][c['pin']]=c.get('net',''); validate_device(d)
+    elif ty=='connect_pins':
+        a=next((v for v in ir['devices'] if v['id']==c.get('from_device_id')),None)
+        b=next((v for v in ir['devices'] if v['id']==c.get('to_device_id')),None)
+        ap=c.get('from_pin');bp=c.get('to_pin')
+        if not a or not b or ap not in a['pins'] or bp not in b['pins'] or (a['id'],ap)==(b['id'],bp):raise EDAError('INVALID_CONNECTION','Choose two different actual terminals.')
+        points=c.get('points')
+        if not isinstance(points,list) or not 2<=len(points)<=1024 or any(not isinstance(v,list) or len(v)!=2 for v in points):raise EDAError('INVALID_GEOMETRY','Pin connection needs a bounded actual wire path.')
+        points=[[num(x),num(y)] for x,y in points]
+        start=[a['x']+pin_offsets(a)[ap][0],a['y']+pin_offsets(a)[ap][1]];end=[b['x']+pin_offsets(b)[bp][0],b['y']+pin_offsets(b)[bp][1]]
+        if points[0]!=start or points[-1]!=end or any(x==y or (x[0]!=y[0] and x[1]!=y[1]) for x,y in zip(points,points[1:])):raise EDAError('INVALID_GEOMETRY','Wire endpoints must match the selected terminals and segments must be orthogonal.')
+        existing={n for n in (a['pins'][ap],b['pins'][bp],c.get('net','')) if n}
+        if len(existing)>1:raise EDAError('NET_NAME_CONFLICT','서로 다른 이름의 노드는 바로 연결하지 않습니다. 연결할 핀의 노드 이름을 먼저 확인·수정하세요.',sorted(existing))
+        if ir.get('connectivity_mode','explicit')=='explicit':
+            if existing:net=next(iter(existing))
+            else:
+                names={v for d in ir['devices'] for v in d['pins'].values()};i=1
+                while 'N_'+str(i) in names:i+=1
+                net='N_'+str(i)
+        else:net=next(iter(existing),'')
+        # Validate the full command before changing pins. The outer project
+        # mutation provides a single undoable receipt and revision.
+        item={'id':c.get('id'),'points':points,**({'net':net} if net else {})}
+        apply(schematic,{'type':'add_wire','wire':item},cell_name)
+        if ir.get('connectivity_mode')=='geometric':
+            graph,_=connectivity(ir)
+            if graph['conflicts']:
+                ir['wires'].pop()
+                raise EDAError('NET_NAME_CONFLICT','새 배선이 서로 다른 이름의 노드를 연결합니다. 경로와 접점을 확인하세요.',graph['conflicts'])
+        if ir.get('connectivity_mode','explicit')=='explicit':
+            preview=copy.deepcopy(ir)
+            for node,pin in ((a,ap),(b,bp)):next(v for v in preview['devices'] if v['id']==node['id'])['pins'][pin]=net
+            graph,_=connectivity(preview)
+            component=next((n for n in graph['nets'] if item['id'] in n['wire_ids']),None)
+            unexpected=[entry for entry in (component or {}).get('pins',[]) if (entry['device_id'],entry['pin']) not in ((a['id'],ap),(b['id'],bp)) and next(v for v in ir['devices'] if v['id']==entry['device_id'])['pins'][entry['pin']]!=net]
+            if graph['conflicts'] or unexpected:
+                ir['wires'].pop()
+                raise EDAError('UNINTENDED_CONTACT','배선이 다른 핀이나 다른 이름의 선에 닿습니다. Space로 꺾임 방향을 바꾸거나 중간점을 추가하세요.',{'conflicts':graph['conflicts'],'pins':unexpected})
+            a['pins'][ap]=net;b['pins'][bp]=net
     elif ty=='set_connectivity_mode':
         if c.get('mode') not in {'explicit','geometric'}: raise EDAError('INVALID_COMMAND','Connectivity mode must be explicit or geometric.')
         ir['connectivity_mode']=c['mode']

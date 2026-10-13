@@ -51,7 +51,7 @@ def gate(kind,values=None):
 
 def quantize(v):return round(v/0.005)*0.005
 
-def materialize(ir):
+def materialize(ir,body_net='VGND'):
     """Return a new flat physical schematic and auditable nominal replacements."""
     flat=digital_units.flattened({**ir,'cells':ir.get('cells',{})});rows=[];result=[]
     for d in flat['devices']:
@@ -77,7 +77,7 @@ def materialize(ir):
         if len(pieces)>256 or len(result)+len(pieces)>512:raise EDAError('PHYSICAL_LIMIT','Physical reference is limited to 256 instances per passive and 512 primitives total; use a separate bounded custom implementation.')
         for i,(p,n,w,l) in enumerate(pieces):
             target=value/len(pieces) if d['kind']=='capacitor' else value*parallel/series
-            item=copy.deepcopy(d);item.update(id=d['id']+f':p{i}',name=d['name']+f'_P{i}',model=CAP if d['kind']=='capacitor' else RES,pins={'+':p,'-':n,**({'B':'VGND'} if d['kind']=='resistor' else {})},parameters={'value':target,'w_um':w,'l_um':l},x=d.get('x',0)+(i%4)*170,y=d.get('y',0)+(i//4)*160)
+            item=copy.deepcopy(d);item.update(id=d['id']+f':p{i}',name=d['name']+f'_P{i}',model=CAP if d['kind']=='capacitor' else RES,pins={'+':p,'-':n,**({'B':body_net} if d['kind']=='resistor' else {})},parameters={'value':target,'w_um':w,'l_um':l},x=d.get('x',0)+(i%4)*170,y=d.get('y',0)+(i//4)*160)
             result.append(item)
         rows.append({'source_device':d['name'],'kind':d['kind'],'requested_SI':value,'nominal_geometry_SI':nominal,'instances':len(pieces),'model':CAP if d['kind']=='capacitor' else RES,'w_um':w,'l_um':l,'value_scope':'PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative.'})
     flat['devices']=result
@@ -96,7 +96,7 @@ def _base(folder,d):
     if r.returncode or not (f/'primitive.gds').exists():raise EDAError('ENGINE_FAILED','Public PCell generation failed; native log retained.')
     src=k.Layout();src.read(str(f/'primitive.gds'));cell=src.cell('primitive')
     labels={s.text.string:(s.text.x,s.text.y) for li in src.layer_indices() for s in cell.shapes(li).each() if s.is_text()}
-    mapping={'C1':'+','C2':'-'} if model==CAP else {'R1':'+','R2':'-','B':'B'} if model==RES else {p:p for p in 'DGSB'}
+    mapping={'C1':'+','C2':'-'} if model==CAP else {'R1':'+','R2':'-','B':'B'} if d['kind']=='resistor' else {p:p for p in 'DGSB'}
     if src.dbu!=.001 or not set(mapping)<=set(labels):raise EDAError('PDK_MAPPING_FAILED','Public PCell terminal labels or DBU changed.')
     return src,cell,{mapping[p]:labels[p] for p in mapping},mapping
 
@@ -198,7 +198,7 @@ def _single_row(folder,ir,cell_name,ports,rail_width=400):
             net=pins[pin];x=cx+px;y=py
             if d['model']==CAP:
                 route((71,20),[(x,y),(x,rails[net])],500,net);via(v3,3,x,rails[net],net);continue
-            if pin in ('G','B') or d['model']==RES:
+            if pin in ('G','B') or d['kind']=='resistor':
                 if pin=='G':
                     y+=170;box((67,20),x,(py+y)//2,170,y-py+170,net)
                 box((67,44),x,y,170,170,net);box((68,20),x,y,400,400,net)

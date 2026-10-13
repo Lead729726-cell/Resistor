@@ -8,7 +8,8 @@ test('real MCP client handshake, native tool boundary, revision and job referenc
   const entryHash=createHash('sha256').update(await fs.readFile(entry)).digest('hex');
   const transport=new StdioClientTransport({command:process.execPath,args:[entry],env:{MOS_WORKSPACE:process.cwd()},stderr:'pipe'});
   const client=new Client({name:'register-verification',version:'1.0.0'});t.after(()=>client.close());await client.connect(transport);
-  const tools=await client.listTools();assert.equal(tools.tools.length,41);assert.equal(tools.tools.some(x=>/shell|exec|password|secret|pdk.modify|backend.register|database.register/.test(x.name)),false);
+  const tools=await client.listTools();assert.equal(tools.tools.length,47);assert.equal(tools.tools.some(x=>/shell|exec|password|secret|pdk.modify|backend.register|database.register/.test(x.name)),false);
+  for(const name of ['register_conversion_catalog','register_recover_schematic','register_generate_layout','register_conversion_result','register_conversion_apply','register_pin_connect'])assert(tools.tools.some(t=>t.name===name),name);
   const invoke=async(name,args={})=>{const r=await client.callTool({name,arguments:args});if(r.isError)throw Object.assign(new Error(r.content[0].text),{result:r});return r.structuredContent.result;};
   const doctor=await invoke('register_doctor');assert.equal(doctor.pdk.available,true);assert.equal(doctor.tools.every(t=>t.available),true);
   const digital=await invoke('register_digital_catalog');assert(digital.units.some(x=>x.id==='cpu16'));assert(digital.units.some(x=>x.id==='adder16'));

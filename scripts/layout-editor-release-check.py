@@ -34,6 +34,9 @@ if (ROOT / 'workers/eda/research.py').exists():
     resources += ['workers/eda/research.py','workers/eda/literature.json','docs/literature-update-2026.md']
     expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
 line_endings = {}
+if (ROOT / 'workers/eda/conversion.py').exists():
+    resources += ['workers/eda/conversion.py','workers/eda/custom_circuit.py','scripts/runtime.mjs','docs/gds-schematic-conversion.md','docs/schematic-quickstart.md']
+    expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
 def verify_resource(name, body, platform):
     if sha(body) == expected[name]:return
     original=(ROOT/name).read_bytes()

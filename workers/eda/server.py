@@ -43,6 +43,8 @@ import semiconductor_starters
 import digital_units
 import pex_reduce
 import hierarchy_transfer
+import conversion
+import custom_circuit
 import project_index
 from toolchain_diagnostics import ToolchainDiagnostics
 from job_evidence import write_job_evidence
@@ -68,7 +70,7 @@ TOOL_DIAGNOSTICS=ToolchainDiagnostics()
 MODEL_HASHES=None
 FILE_CACHE={}
 MUTATION_DEPTH=0
-PORTS={'inverter':['A','VGND','VPWR','Y'],'mosfet':['B','D','S','G'],'wire':['IN','OUT'],'fixture':[],'performance':[],'layout':[],'current_mirror':['REF','OUT','VGND'],'differential_pair':['INP','INN','OUTP','OUTN','BIAS','VGND']}
+PORTS={'inverter':['A','VGND','VPWR','Y'],'mosfet':['B','D','S','G'],'wire':['IN','OUT'],'fixture':[],'performance':[],'layout':[],'schematic':[],'current_mirror':['REF','OUT','VGND'],'differential_pair':['INP','INN','OUTP','OUTN','BIAS','VGND']}
 
 def now(): return datetime.now(timezone.utc).isoformat()
 def dump(path,value): Path(path).write_text(json.dumps(value,indent=2,ensure_ascii=False)+'\n')
@@ -340,10 +342,13 @@ def create(params,starter=None):
     l=k.Layout(); l.dbu=.001; top=l.create_cell(cell)
     if example in {'current_mirror','differential_pair'}:
         l,schematic,ports=templates.analog(sys.modules[__name__],STATE/'projects'/pid/'generator',example);p.update(schematic=schematic,ports=ports,layout_parameter_policy='verified_analog_core_fixed_routing')
-    elif example=='layout':
+    elif example in ('layout','schematic'):
         # Register known mask purposes without inserting fabricated geometry.
         for layer,purpose in [(64,20),(65,20),(65,44),(66,20),(66,44),(67,20),(67,44),(68,20),(68,44),(69,20),(69,44),(70,20),(70,44),(71,20),(71,44),(72,20),(93,44),(94,20),(95,20)]:l.layer(layer,purpose)
         p['layout_parameter_policy']='manual_layout'; p['user_cells']=[cell]
+        if example=='schematic':
+            p['schematic']={'ports':[],'devices':[],'wires':[],'junctions':[],'cells':{},'connectivity_mode':'explicit'}
+            p['testbench']=native.testbench({'analysis':'op'})
     elif example=='performance':
         count=params.get('count',100000)
         if isinstance(count,bool) or not isinstance(count,int) or not 1<=count<=100000: raise EDAError('ARRAY_LIMIT','Performance fixture count is 1..100000.')
@@ -410,6 +415,9 @@ def edit(pid,c,mode,cell_name=None):
             if c.get('type')=='update_testbench': p['testbench']=testbench_validator(p)({**p.get('testbench',{}),**c.get('settings',{})})
             elif c.get('type')=='add_cell' and c.get('name','').lower()==p['cell'].lower():raise EDAError('INVALID_NAME','A schematic child cell cannot shadow the root cell name.')
             else: native.apply(p['schematic'],copy.deepcopy(c),cell_name)
+            if p['example']=='schematic' and not cell_name:
+                ports=list(dict.fromkeys(d['pins']['P'] for d in p['schematic']['devices'] if d['kind']=='port' and d['pins'].get('P')))
+                p['ports']=ports;p['schematic']['ports']=ports
         elif c.get('type')=='update_device':
             if p['example']!='mosfet': raise EDAError('UNSUPPORTED','Inverter layout is a fixed public template. Edit schematic independently or modify actual geometry and rerun LVS.')
             if c.get('id')!='mn1': raise EDAError('UNSUPPORTED','Only the public mn1 MOS PCell is linked to layout regeneration.')
@@ -500,6 +508,7 @@ def start_job(params,kind):
     if not isinstance(p['cell'],str) or not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*',p['cell']): raise EDAError('UNSUPPORTED_NAME','Imported cell name is outside the supported engine identifier subset.')
     if not isinstance(p.get('ports'),list) or any(not isinstance(name,str) or not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*',name) for name in p['ports']): raise EDAError('UNSUPPORTED_NAME','Imported port metadata is outside the supported engine identifier subset.')
     template=bool(p.get('design_template'))
+    if kind!='simulation' and p['example'] in ('layout','schematic','converted') and not any(not cell.is_empty() for cell in load_layout(p).each_cell()):raise EDAError('NO_PHYSICAL_LAYOUT','Generate or draw actual layout geometry before physical verification.')
     if p['example']=='layout':
         if not any(not cell.is_empty() for cell in load_layout(p).each_cell()):raise EDAError('NO_PHYSICAL_LAYOUT','Draw actual geometry before checking the empty layout.')
         if kind!='drc':raise EDAError('REFERENCE_REQUIRED','Configure the actual reference SPICE and analysis setup for a manually drawn layout.')
@@ -516,7 +525,7 @@ def start_job(params,kind):
         adc=p.get('design_template',{}).get('id') in {**design_tools.sigma_delta.CATALOG,**design_tools.sar_adc.CATALOG}
         settings=testbench_validator(p)({**p.get('testbench',{}),**{key:params[key] for key in native.TESTBENCH if key in params}})
         params={**params,**settings}
-        if not template and not digital and p['example'] not in {'inverter','mosfet','wire','current_mirror','differential_pair'}: raise EDAError('UNSUPPORTED','No testbench for this cell.')
+        if not template and not digital and p['example'] not in {'inverter','mosfet','wire','current_mirror','differential_pair','schematic','converted'}: raise EDAError('UNSUPPORTED','No testbench for this cell.')
         native.validate(p['schematic'])
         duration=native.num(params.get('duration_s',30e-9)); step=native.num(params.get('step_s',20e-12))
         if duration<=0 or duration>(.02 if adc else 1e-3) or step<1e-12 or step>duration or duration/step>200000:
@@ -668,6 +677,7 @@ def spice_tb(p,folder,params,netlist):
     if p.get('design_template'):
         deck,names,units,xunit,xlabel=design_tools.spice_tb(p,folder,params,netlist)
         return Path(deck).read_text(),names,units,xunit,xlabel
+    if p['example'] in ('schematic','converted'):return custom_circuit.spice_tb(p,folder,params,netlist)
     analysis=params.get('analysis','tran'); example=p['example']; supply=params.get('supply_V',1.8); corner=params.get('corner','tt')
     match=re.search(r'^\.subckt\s+'+re.escape(p['cell'])+r'\s*([^\n]*)',Path(netlist).read_text(),re.M|re.I)
     if not match: raise EDAError('PARSER_FAILED','Top extracted subcircuit was not found.')
@@ -733,13 +743,15 @@ def spice_tb(p,folder,params,netlist):
     return '\n'.join(lines)+'\n',names,units,xunit,xlabel
 
 def simulation(run,p,folder,manifest,params):
+    custom=not p.get('design_template') and not p.get('digital_unit') and p['example'] in ('schematic','converted')
+    if custom:p=custom_circuit.prepare(p)
     if p.get('design_template',{}).get('id') in design_tools.sar_adc.CATALOG:
         return design_tools.sar_adc.execute(sys.modules[__name__],run,p,folder,manifest,params)
     if p.get('design_template',{}).get('id') in design_tools.sigma_delta.CATALOG:
         return design_tools.sigma_delta.execute(sys.modules[__name__],run,p,folder,manifest,params)
     manifest['settings']['ngspice_num_threads']=1
     if params.get('post_layout'):
-        if p.get('design_template') or p.get('digital_unit') or p['example'] in {'wire','mosfet','inverter','current_mirror','differential_pair'}: netlist=extract(run,p,folder,manifest,pex=True)
+        if p.get('design_template') or p.get('digital_unit') or p['example'] in {'wire','mosfet','inverter','current_mirror','differential_pair','schematic','converted'}: netlist=extract(run,p,folder,manifest,pex=True)
         else: raise EDAError('UNSUPPORTED','No post-layout testbench.')
         if p.get('design_template',{}).get('physical_adapter'):
             netlist,audit,reduction=pex_reduce.prepare(p,netlist,folder)
@@ -827,6 +839,7 @@ def simulation(run,p,folder,manifest,params):
         run['measurements']=measurements
         digital_units.verify(p,run,params)
         measurements=run['measurements']
+    if custom:run['reference_verification']={'schema_version':1,'kind':'custom-flat-numerical-analysis','source':'actual-ngspice-samples','checks':[],'pass':None,'scope':'Explicit DC sources; measured voltages/currents only. Functional constraints and transient excitation are not configured.'}
     reference=run.get('reference_verification')
     verdict=run.get('digital_verification') or run.get('unit_verification') or reference
     result='unknown' if verdict and verdict.get('pass') is None else 'fail' if verdict and not verdict['pass'] else 'pass'
@@ -850,7 +863,8 @@ def execute_job(run,p,params,folder):
     try:
         manifest.update(layout_hash=profile.sha(folder/'input.oas'),schematic_hash=hashlib.sha256(json.dumps(p['schematic'],sort_keys=True).encode()).hexdigest(),pdk=profile.provenance(),
                         toolchain=doctor(),tool_binaries=tool_hashes(),model_files=initial_models())
-        if params.get('_pvt'):pvt.execute(run,p,folder,manifest,params)
+        if params.get('_conversion'):conversion.execute(run,p,folder,manifest,params['_conversion'])
+        elif params.get('_pvt'):pvt.execute(run,p,folder,manifest,params)
         elif params.get('_configured'):configured_analysis.execute(run,p,folder,manifest,params)
         elif run['kind']=='simulation': run['tool']='ngspice'; simulation(run,p,folder,manifest,params)
         elif run['kind']=='drc': run['tool']='Magic'; drc(run,p,folder,manifest)
@@ -878,6 +892,7 @@ def execute_job(run,p,params,folder):
 
 def rpc(method,params):
     if any(str(key).startswith('_') for key in params):raise EDAError('PRIVATE_PARAMETER','Internal engine settings cannot be supplied through public RPC.')
+    if method.startswith('conversion.'):return conversion.rpc(method,params)
     if method.startswith('pvt.'):return pvt.rpc(method,params)
     if method.startswith('design.'):return design_tools.rpc(method,params)
     if method.startswith('starter.'):return semiconductor_starters.rpc(method,params)
@@ -997,6 +1012,7 @@ design_tools.configure(sys.modules[__name__])
 semiconductor_starters.configure(sys.modules[__name__])
 digital_units.configure(sys.modules[__name__])
 hierarchy_transfer.configure(sys.modules[__name__])
+conversion.configure(sys.modules[__name__])
 
 if __name__=='__main__':
     if not TOKEN: raise SystemExit('MOS_TOKEN must be provided by the local runner.')
