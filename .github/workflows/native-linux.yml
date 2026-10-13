@@ -21,8 +21,18 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run test:core
+      - uses: actions/cache/restore@v4
+        id: native-cache
+        with:
+          path: release/native-runtimes
+          key: native-${{ runner.os }}-x64-${{ hashFiles('scripts/native-runtime-lock.json','scripts/native-pdk-lock.json') }}
       - name: Prepare native runtime without containers
         run: node scripts/prepare-native-runtime.mjs
+      - uses: actions/cache/save@v4
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        with:
+          path: release/native-runtimes
+          key: ${{ steps.native-cache.outputs.cache-primary-key }}
       - name: Build public Magic and Netgen in the operator's user prefix
         run: sh scripts/native-tools-setup.sh
       - name: Verify actual host DRC, LVS, PEX and post-layout RC simulation

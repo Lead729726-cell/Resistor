@@ -43,8 +43,18 @@ jobs:
       - run: node --import tsx --test --test-isolation=none tests/shortcuts.test.ts
       - run: npm run build
       - run: npm run test:core
+      - uses: actions/cache/restore@v4
+        id: native-cache
+        with:
+          path: release/native-runtimes
+          key: native-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('scripts/native-runtime-lock.json','scripts/native-pdk-lock.json') }}
       - name: Prepare the Docker-free native Python, KLayout, ngspice and public PDK
         run: node scripts/prepare-native-runtime.mjs
+      - uses: actions/cache/save@v4
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        with:
+          path: release/native-runtimes
+          key: ${{ steps.native-cache.outputs.cache-primary-key }}
       - name: Verify actual native host editing, GDS/OASIS and ngspice before packaging
         run: node scripts/native-engine-qa.mjs
       - name: Install the video encoder required by the native recording test
