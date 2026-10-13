@@ -1,5 +1,5 @@
 import {spawn} from 'node:child_process';
-import {readFile,writeFile,mkdir,access,open,readdir} from 'node:fs/promises';
+import {readFile,writeFile,mkdir,access,open,readdir,realpath} from 'node:fs/promises';
 import {createHash,randomUUID} from 'node:crypto';
 import path from 'node:path';
 import {runtimeConfig} from './runtime.mjs';
@@ -32,6 +32,7 @@ export async function nativeEnvironment(workspace,{resourcesRoot=workspace,prepa
   if(manifest&&(manifest.platform!==platform||manifest.arch!==arch))throw Error('Bundled native engine CPU/OS differs from this application.');
   const safeRelative=rel=>{if(typeof rel!=='string'||path.isAbsolute(rel)||rel.split(/[\\/]/).includes('..'))throw Error('Invalid bundled engine resource path');return path.join(bundle,rel);};
   let python=manifest?safeRelative(manifest.python):settings.python||process.env.REGISTER_PYTHON;
+  if(manifest){const relative=path.relative(await realpath(bundle),await realpath(python));if(relative==='..'||relative.startsWith('..'+path.sep)||path.isAbsolute(relative))throw Error('Bundled Python symlink escapes the application resources.');}
   const privateRoot=path.join(workspace,'.runtime/native-python'),privatePython=path.join(privateRoot,platform==='win32'?'Scripts/python.exe':'bin/python3');
   if(!python&&await exists(privatePython))python=privatePython;
   if(!python){for(const candidate of platform==='win32'?['python']:['/opt/homebrew/bin/python3','/usr/local/bin/python3','python3']){try{const output=await run(candidate,['-c','import sys; assert sys.version_info >= (3,11); print(sys.executable)']);python=output.trim().split('\n').at(-1);break;}catch{}}}

@@ -20,7 +20,7 @@ for(const folder of ['dist','apps/desktop','workers/eda','adapters','docs','plat
 await cp('examples/sky130',path.join(stage,'examples/sky130'),{recursive:true});
 await cp('node_modules/ws',path.join(stage,'node_modules/ws'),{recursive:true});
 for(const name of ['README.md','LICENSE','.dockerignore'])await cp(name,path.join(stage,name));
-await cp(nativeRuntime,path.join(stage,'native-runtime'),{recursive:true});
+await cp(nativeRuntime,path.join(stage,'native-runtime'),{recursive:true,verbatimSymlinks:true});
 await mkdir(path.join(stage,'scripts'),{recursive:true});for(const name of ['runtime.mjs','worker.mjs','native-worker.mjs','wsl-worker.mjs','engine-settings.mjs','native-tools-setup.sh','docker-cli.mjs','desktop-diagnostics.mjs','cloud.mjs','cloud-backup.mjs','commercial-agent.mjs'])await cp(path.join('scripts',name),path.join(stage,'scripts',name));
 await build({entryPoints:['scripts/design-assistant.mjs'],outfile:path.join(stage,'scripts/design-assistant.mjs'),bundle:true,platform:'node',target:'node24',format:'esm',legalComments:'linked'});
 await build({entryPoints:['scripts/mcp.mjs'],outfile:path.join(stage,'scripts/mcp.mjs'),bundle:true,platform:'node',target:'node24',format:'esm',external:['ws'],legalComments:'linked',banner:{js:"import {createRequire as __registerCreateRequire} from 'node:module'; const require=__registerCreateRequire(import.meta.url);"}});

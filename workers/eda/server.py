@@ -1035,7 +1035,7 @@ class Handler(BaseHTTPRequestHandler):
             if not isinstance(method,str) or not isinstance(params,dict): raise EDAError('INVALID_REQUEST','Expected method string and params object.')
             if method=='runtime.identity':
                 if params:raise EDAError('INVALID_REQUEST','Identity has no input parameters.')
-                result={'runtime_kind':RUNTIME_KIND,'instance_id':INSTANCE_ID,'workspace_id':os.environ.get('MOS_WORKSPACE_ID'),'pid':os.getpid(),'engine_code_sha256':ENGINE_CODE_SIGNATURE}
+                result={'runtime_kind':RUNTIME_KIND,'instance_id':INSTANCE_ID,'workspace_id':os.environ.get('MOS_WORKSPACE_ID'),'pid':os.getpid(),'engine_code_sha256':ENGINE_CODE_SIGNATURE,'python_executable':Path(sys.executable).resolve().as_posix()}
             elif method=='runtime.stop':
                 if set(params)!={'instance_id'} or not INSTANCE_ID or params['instance_id']!=INSTANCE_ID or not RUNTIME_KIND.startswith(('native-','wsl-')):raise EDAError('NOT_OWNER','This is not the owned native runtime.')
                 with LOCK:

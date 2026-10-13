@@ -13,6 +13,8 @@ test('Bundled native desktop edits and simulates without Docker, system Python o
   const app=await electron.launch({executablePath:executable,env:{...process.env,MOS_WORKSPACE:workspace,REGISTER_ENGINE_MODE:'native',REGISTER_USER_DATA:path.resolve('.runtime/native-desktop-'+process.platform+'-'+process.arch),PATH:path.dirname(process.execPath),REGISTER_DOCKER_PATH:path.join(workspace,'absent-docker')},timeout:60000});
   try{
     const window=await app.firstWindow();await expect(window.getByTestId('app-ready')).toBeVisible({timeout:60000});
+    const session=JSON.parse(await readFile(path.join(workspace,'.runtime/worker.json'),'utf8'));const identity=await fetch(session.url+'/rpc',{method:'POST',headers:{'Content-Type':'application/json','X-MOS-Token':session.token},body:JSON.stringify({method:'runtime.identity',params:{}})}).then(r=>r.json());
+    expect(identity.ok).toBe(true);expect(path.relative(path.join(resources,'native-runtime'),identity.result.python_executable).startsWith('..')).toBe(false);
     const doctor=await window.evaluate(()=>window.mos!.rpc('toolchain.doctor',{}));expect(doctor.ok).toBe(true);expect(doctor.result.runner).toBe('native-'+process.platform);expect(doctor.result.runtime_image).toBe(null);expect(doctor.result.tools.find((t:any)=>t.name==='ngspice').available).toBe(true);
     const rpc=async(method:string,params:any={})=>{const r=await window.evaluate(({method,params})=>window.mos!.rpc(method,params),{method,params});expect(r.ok,r.error?.message).toBe(true);return r.result;};
     let project=await rpc('project.create',{example:'schematic',name:'Docker-free desktop divider'});
