@@ -71,7 +71,7 @@ export async function prepareInstallation({file,update,folder,platform=process.p
   const parent=platform==='darwin'?path.join(home,'Applications'):path.join(home,'.local/opt/resistor');await mkdir(parent,{recursive:true});
   if((await lstat(parent)).isSymbolicLink())throw Error('앱 설치 폴더가 심볼릭 링크입니다.');
   const target=path.join(parent,platform==='darwin'?'Resistor.app':update.version);
-  const staging=path.join(parent,'.resistor-update-'+randomUUID());assertInside(home,staging);await cp(source,staging,{recursive:true,errorOnExist:true,force:false});
+  const staging=path.join(parent,'.resistor-update-'+randomUUID()+(platform==='darwin'?'.app':''));assertInside(home,staging);await cp(source,staging,{recursive:true,errorOnExist:true,force:false,verbatimSymlinks:true});
   await validateTree(staging);if(platform==='darwin')await runImpl('/usr/bin/codesign',['--verify','--deep','--strict',staging]);
   return {schema:1,id:randomUUID(),version:update.version,platform,target,staging,home,folder,asset: update.asset,sha256:update.asset.sha256};
 }
