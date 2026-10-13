@@ -59,6 +59,11 @@ class DiagnosticTests(unittest.TestCase):
         self.assertFalse(row['available'])
         self.assertEqual(row['probe_status'], 'failed')
 
+    def test_integer_ngspice_release_skips_decorative_banner(self):
+        self.output.stdout='******\n** ngspice-47 : Circuit level simulation program\n******'
+        row=self.diagnostics.inspect()[0]
+        self.assertTrue(row['available']);self.assertIn('ngspice-47',row['version'])
+
 
 if __name__ == '__main__':
     unittest.main()

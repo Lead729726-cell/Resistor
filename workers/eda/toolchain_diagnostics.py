@@ -43,7 +43,7 @@ class ToolchainDiagnostics:
                         output = self.runner(list(command), text=True, stdout=subprocess.PIPE,
                                              stderr=subprocess.STDOUT, timeout=10)
                         lines = [line.strip() for line in output.stdout.splitlines() if line.strip()]
-                        version = next((line for line in lines if re.search(r'\d+\.\d+', line)),
+                        version = next((line for line in lines if re.search(r'\d+\.\d+|\b(?:ngspice|yosys|icarus|vvp)[- ]\d+', line, re.I)),
                                        lines[0] if lines else 'unknown')
                         if output.returncode == 0:
                             row.update(version=version, available=True, probe_status='ready')
