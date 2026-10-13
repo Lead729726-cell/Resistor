@@ -1,0 +1,75 @@
+* NGSPICE file created from cell_nand2.ext - technology: sky130A
+
+.subckt cell_nand2 Y VPWR VGND A1 A0
+X0 register_cf_node_142c8d7d64380b1c A0.t0 register_cf_node_142c8d7d64380b1c_source VGND.t2 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+Vregister_cf_142c8d7d64380b1c N1.t1 register_cf_node_142c8d7d64380b1c 0
+Vregister_cf_142c8d7d64380b1c_source Y.t1 register_cf_node_142c8d7d64380b1c_source 0
+X1 register_cf_node_fbf828f20dc297a4 A1.t0 register_cf_node_fbf828f20dc297a4_source VGND.t0 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+Vregister_cf_fbf828f20dc297a4 VGND.t1 register_cf_node_fbf828f20dc297a4 0
+Vregister_cf_fbf828f20dc297a4_source N1.t0 register_cf_node_fbf828f20dc297a4_source 0
+X2 register_cf_node_19c218fd0e6808d6 A1.t1 register_cf_node_19c218fd0e6808d6_source VPWR.t0 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+Vregister_cf_19c218fd0e6808d6 VPWR.t1 register_cf_node_19c218fd0e6808d6 0
+Vregister_cf_19c218fd0e6808d6_source Y.t0 register_cf_node_19c218fd0e6808d6_source 0
+X3 register_cf_node_b2d044cb9d8d8299 A0.t1 register_cf_node_b2d044cb9d8d8299_source VPWR.t2 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+Vregister_cf_b2d044cb9d8d8299 VPWR.t3 register_cf_node_b2d044cb9d8d8299 0
+Vregister_cf_b2d044cb9d8d8299_source Y.t2 register_cf_node_b2d044cb9d8d8299_source 0
+C0 A0 Y 1.71746f
+C1 N1 A1 2.6595f
+C2 VPWR A0 0.43986f
+C3 N1 Y 1.94216f
+C4 N1 VPWR 0.02126f
+C5 A1 Y 0.12228f
+C6 N1 A0 0.7039f
+C7 VPWR A1 0.42007f
+C8 VPWR Y 0.52747f
+C9 A1 A0 0.0325f
+C10 A1 VGND 4.38811f
+C11 Y VGND 1.962f
+C12 A0 VGND 2.46062f
+C13 VPWR VGND 6.78517f
+C14 N1 VGND 2.04611f $ **FLOATING
+C15 A1.t0 VGND 0.02192f $ **FLOATING
+C16 A1.t1 VGND 0.02278f $ **FLOATING
+C17 A1.n0 VGND 2.1849f $ **FLOATING
+C18 N1.n0 VGND 0.00702f $ **FLOATING
+C19 N1.n1 VGND 0.00702f $ **FLOATING
+C20 N1.t1 VGND 0.01706f $ **FLOATING
+C21 N1.n2 VGND 0.00702f $ **FLOATING
+C22 N1.n3 VGND 1.33892f $ **FLOATING
+C23 N1.n4 VGND 1.29234f $ **FLOATING
+C24 N1.t0 VGND 0.01706f $ **FLOATING
+C25 N1.n5 VGND 0.00702f $ **FLOATING
+rmesh_equiv_0 a0 a0.t0 315.88
+rmesh_equiv_1 a0 a0.t1 330.34100000000001
+rmesh_equiv_10 n1.n0 n1.t0 255.34500000000003
+rmesh_equiv_11 n1.n1 n1.n3 10.151300000000001
+rmesh_equiv_12 n1.n1 n1.t1 255.34500000000003
+rmesh_equiv_13 n1.n2 n1.n3 10.151300000000001
+rmesh_equiv_14 n1.n2 n1.t1 255.34500000000003
+rmesh_equiv_15 n1.n3 n1.n4 22.654299999999999
+rmesh_equiv_16 n1.n4 n1.n5 10.151300000000001
+rmesh_equiv_17 n1.n5 n1.t0 255.34500000000003
+rmesh_equiv_18 vgnd vgnd.t0 197.24486192307512
+rmesh_equiv_19 vgnd vgnd.t1 132.47365716075529
+rmesh_equiv_2 a1 a1.n0 4.3913906950034569
+rmesh_equiv_20 vgnd vgnd.t2 197.24486192307512
+rmesh_equiv_21 vgnd.t0 vgnd.t2 10737.447865498436
+rmesh_equiv_22 vpwr vpwr.t0 117.18187411979875
+rmesh_equiv_23 vpwr vpwr.t1 355.22791737760872
+rmesh_equiv_24 vpwr vpwr.t2 117.18187411979875
+rmesh_equiv_25 vpwr vpwr.t3 355.18041797039751
+rmesh_equiv_26 vpwr.t1 vpwr.t3 667242.02085962042
+rmesh_equiv_27 y y.t0 355.94553328053775
+rmesh_equiv_28 y y.t1 132.63460977614969
+rmesh_equiv_29 y y.t2 355.81265617407195
+rmesh_equiv_3 a1 a1.t0 315.88
+rmesh_equiv_30 y.t0 y.t1 189174.89268537858
+rmesh_equiv_31 y.t0 y.t2 586920.63619628316
+rmesh_equiv_32 y.t1 y.t2 213308.96312478662
+rmesh_equiv_4 a1 a1.t1 330.34100000000001
+rmesh_equiv_5 n1 n1.n0 12.8005
+rmesh_equiv_6 n1 n1.n1 12.8005
+rmesh_equiv_7 n1 n1.n2 12.8005
+rmesh_equiv_8 n1 n1.n5 12.8005
+rmesh_equiv_9 n1.n0 n1.n4 10.151300000000001
+.ends

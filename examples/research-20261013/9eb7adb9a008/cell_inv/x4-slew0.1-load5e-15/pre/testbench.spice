@@ -1,0 +1,36 @@
+Resistor public CMOS cell actual input truth matrix
+.include "/workspace/.runtime/eda/runs/79e99bf53ce34f698305787c79cc4c36/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/eda/runs/79e99bf53ce34f698305787c79cc4c36/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VA A VGND PWL(0 0 5e-08 0 5.01e-08 1.8 1e-07 1.8 1.001e-07 0 1.5e-07 0 1.501e-07 1.8 2e-07 1.8 2.001e-07 1.8 2.5e-07 1.8 2.501e-07 0 3e-07 0)
+CLOAD Y VGND 5e-15
+XU A Y VPWR VGND cell_inv
+.control
+save v(A) v(Y) i(VDD) i(v.xu.vregister_cf_5b95bc930a2384e5) i(v.xu.vregister_cf_76c207a29be41fc5) i(VGND) i(VA) v(VGND) v(VPWR)
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+tran 1e-11 3e-07 0 1e-11
+let mos_wave_0 = v(A)
+let mos_wave_1 = v(Y)
+let mos_wave_2 = -i(VDD)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_5b95bc930a2384e5)
+let register_flow_1 = i(v.xu.vregister_cf_76c207a29be41fc5)
+let register_flow_2 = i(VGND)
+let register_flow_3 = i(VDD)
+let register_flow_4 = i(VA)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4
+let register_voltage_0 = v(Y)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(A)
+let register_voltage_3 = v(VPWR)
+let register_voltage_4 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4
+quit
+.endc
+.end

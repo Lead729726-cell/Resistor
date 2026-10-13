@@ -1,0 +1,556 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "CLK",
+    "RESET",
+    "RESET_INTERNAL",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "G0",
+      "name": "G0",
+      "kind": "block",
+      "pins": {
+        "A": "N5",
+        "B": "RESET",
+        "Y": "N6",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 180,
+      "y": 170,
+      "cell_name": "OR2"
+    },
+    {
+      "id": "G1",
+      "name": "G1",
+      "kind": "block",
+      "pins": {
+        "D": "RESET",
+        "CLK": "CLK",
+        "Q": "N5",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 420,
+      "y": 170,
+      "cell_name": "DFF_N"
+    },
+    {
+      "id": "G2",
+      "name": "G2",
+      "kind": "block",
+      "pins": {
+        "D": "N6",
+        "CLK": "CLK",
+        "Q": "RESET_INTERNAL",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 660,
+      "y": 170,
+      "cell_name": "DFF_N"
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {
+    "OR2": {
+      "schema_version": 1,
+      "ports": [
+        "A",
+        "B",
+        "Y",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "NOR",
+          "name": "NOR",
+          "kind": "block",
+          "pins": {
+            "A": "A",
+            "B": "B",
+            "Y": "N",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 180,
+          "y": 170,
+          "cell_name": "NOR2"
+        },
+        {
+          "id": "INV",
+          "name": "INV",
+          "kind": "block",
+          "pins": {
+            "A": "N",
+            "Y": "Y",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 420,
+          "y": 170,
+          "cell_name": "INV"
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "NOR2": {
+      "schema_version": 1,
+      "ports": [
+        "A",
+        "B",
+        "Y",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "P0",
+          "name": "P0",
+          "kind": "pmos",
+          "pins": {
+            "D": "P",
+            "G": "A",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 170,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "P1",
+          "name": "P1",
+          "kind": "pmos",
+          "pins": {
+            "D": "Y",
+            "G": "B",
+            "S": "P",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 420,
+          "y": 170,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "N0",
+          "name": "N0",
+          "kind": "nmos",
+          "pins": {
+            "D": "Y",
+            "G": "A",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 660,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "N1",
+          "name": "N1",
+          "kind": "nmos",
+          "pins": {
+            "D": "Y",
+            "G": "B",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 900,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8"
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "INV": {
+      "schema_version": 1,
+      "connectivity_mode": "explicit",
+      "ports": [
+        "A",
+        "Y",
+        "VPWR",
+        "VGND"
+      ],
+      "devices": [
+        {
+          "id": "MP",
+          "name": "MP",
+          "kind": "pmos",
+          "model": "sky130_fd_pr__pfet_01v8_hvt",
+          "pins": {
+            "D": "Y",
+            "G": "A",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 160
+        },
+        {
+          "id": "MN",
+          "name": "MN",
+          "kind": "nmos",
+          "model": "sky130_fd_pr__nfet_01v8",
+          "pins": {
+            "D": "Y",
+            "G": "A",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 370,
+          "y": 160
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "DFF_N": {
+      "schema_version": 1,
+      "ports": [
+        "D",
+        "CLK",
+        "Q",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "CLOCK",
+          "name": "CLOCK",
+          "kind": "block",
+          "pins": {
+            "A": "CLK",
+            "Y": "CLKB",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 180,
+          "y": 170,
+          "cell_name": "INV"
+        },
+        {
+          "id": "LATCH",
+          "name": "LATCH",
+          "kind": "block",
+          "pins": {
+            "D": "D",
+            "CLK": "CLKB",
+            "Q": "Q",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 420,
+          "y": 170,
+          "cell_name": "DFF"
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "DFF": {
+      "schema_version": 1,
+      "connectivity_mode": "explicit",
+      "ports": [
+        "D",
+        "CLK",
+        "Q",
+        "VPWR",
+        "VGND"
+      ],
+      "devices": [
+        {
+          "id": "ICLK",
+          "name": "ICLK",
+          "kind": "block",
+          "cell_name": "INV",
+          "pins": {
+            "A": "CLK",
+            "Y": "CLKB",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 170
+        },
+        {
+          "id": "MNIN",
+          "name": "MNIN",
+          "kind": "nmos",
+          "model": "sky130_fd_pr__nfet_01v8",
+          "pins": {
+            "D": "M",
+            "G": "CLKB",
+            "S": "D",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 370,
+          "y": 160
+        },
+        {
+          "id": "MPIN",
+          "name": "MPIN",
+          "kind": "pmos",
+          "model": "sky130_fd_pr__pfet_01v8_hvt",
+          "pins": {
+            "D": "M",
+            "G": "CLK",
+            "S": "D",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 560,
+          "y": 160
+        },
+        {
+          "id": "MNMF",
+          "name": "MNMF",
+          "kind": "nmos",
+          "model": "sky130_fd_pr__nfet_01v8",
+          "pins": {
+            "D": "M",
+            "G": "CLK",
+            "S": "MF",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 750,
+          "y": 160
+        },
+        {
+          "id": "MPMF",
+          "name": "MPMF",
+          "kind": "pmos",
+          "model": "sky130_fd_pr__pfet_01v8_hvt",
+          "pins": {
+            "D": "M",
+            "G": "CLKB",
+            "S": "MF",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 320
+        },
+        {
+          "id": "MNOUT",
+          "name": "MNOUT",
+          "kind": "nmos",
+          "model": "sky130_fd_pr__nfet_01v8",
+          "pins": {
+            "D": "T",
+            "G": "CLK",
+            "S": "MF",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 370,
+          "y": 320
+        },
+        {
+          "id": "MPOUT",
+          "name": "MPOUT",
+          "kind": "pmos",
+          "model": "sky130_fd_pr__pfet_01v8_hvt",
+          "pins": {
+            "D": "T",
+            "G": "CLKB",
+            "S": "MF",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 560,
+          "y": 320
+        },
+        {
+          "id": "MNSF",
+          "name": "MNSF",
+          "kind": "nmos",
+          "model": "sky130_fd_pr__nfet_01v8",
+          "pins": {
+            "D": "T",
+            "G": "CLKB",
+            "S": "Q",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 750,
+          "y": 320
+        },
+        {
+          "id": "MPSF",
+          "name": "MPSF",
+          "kind": "pmos",
+          "model": "sky130_fd_pr__pfet_01v8_hvt",
+          "pins": {
+            "D": "T",
+            "G": "CLK",
+            "S": "Q",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 480
+        },
+        {
+          "id": "M1",
+          "name": "M1",
+          "kind": "block",
+          "cell_name": "INV",
+          "pins": {
+            "A": "M",
+            "Y": "MB",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 670
+        },
+        {
+          "id": "M2",
+          "name": "M2",
+          "kind": "block",
+          "cell_name": "INV",
+          "pins": {
+            "A": "MB",
+            "Y": "MF",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 670
+        },
+        {
+          "id": "S1",
+          "name": "S1",
+          "kind": "block",
+          "cell_name": "INV",
+          "pins": {
+            "A": "T",
+            "Y": "TB",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 670
+        },
+        {
+          "id": "S2",
+          "name": "S2",
+          "kind": "block",
+          "cell_name": "INV",
+          "pins": {
+            "A": "TB",
+            "Y": "Q",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 920
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    }
+  }
+}

@@ -1,0 +1,27 @@
+Resistor analog SoC soc_miller_ota
+.include "/workspace/.runtime/eda/runs/43d723dbeee147ab9f2861eec6bd140f/supported-tt.spice"
+.options method=gear maxord=2
+.include "/workspace/.runtime/eda/runs/43d723dbeee147ab9f2861eec6bd140f/reference.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VBIAS BIAS VGND 0.9
+VINP INP VGND DC 0.9 AC 1
+RSERVO OUT INN 1G
+CSERVO INN VGND 1
+CLOAD OUT VGND 1p
+XU INP INN BIAS OUT VPWR VGND soc_miller_ota
+.control
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+set noaskquit
+ac dec 60 10 1e9
+let mos_wave_0 = mag(v(OUT))
+let mos_wave_1 = 180/pi*ph(v(OUT))
+wrdata waveform.dat mos_wave_0 mos_wave_1
+write waveform.raw all
+quit
+.endc
+.end

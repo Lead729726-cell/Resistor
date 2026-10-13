@@ -1,0 +1,26 @@
+.subckt NOR2 A B Y VPWR VGND
+XMN0 register_cf_node_40f4e68d977a2d21 A register_cf_node_40f4e68d977a2d21_source VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_40f4e68d977a2d21 Y register_cf_node_40f4e68d977a2d21 0
+Vregister_cf_40f4e68d977a2d21_source VGND register_cf_node_40f4e68d977a2d21_source 0
+XMN1 register_cf_node_ceed8e7771b3bb8b B register_cf_node_ceed8e7771b3bb8b_source VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_ceed8e7771b3bb8b Y register_cf_node_ceed8e7771b3bb8b 0
+Vregister_cf_ceed8e7771b3bb8b_source VGND register_cf_node_ceed8e7771b3bb8b_source 0
+XMP0 register_cf_node_b7a54d16593fd7b2 A register_cf_node_b7a54d16593fd7b2_source VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_b7a54d16593fd7b2 N register_cf_node_b7a54d16593fd7b2 0
+Vregister_cf_b7a54d16593fd7b2_source VPWR register_cf_node_b7a54d16593fd7b2_source 0
+XMP1 register_cf_node_513ed0843ecfc45c B register_cf_node_513ed0843ecfc45c_source VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_513ed0843ecfc45c Y register_cf_node_513ed0843ecfc45c 0
+Vregister_cf_513ed0843ecfc45c_source N register_cf_node_513ed0843ecfc45c_source 0
+.ends NOR2
+.subckt INV A Y VPWR VGND
+XMN register_cf_node_37eac2f2e7d80b63 A register_cf_node_37eac2f2e7d80b63_source VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_37eac2f2e7d80b63 Y register_cf_node_37eac2f2e7d80b63 0
+Vregister_cf_37eac2f2e7d80b63_source VGND register_cf_node_37eac2f2e7d80b63_source 0
+XMP register_cf_node_684eb771bbecb33a A register_cf_node_684eb771bbecb33a_source VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_684eb771bbecb33a Y register_cf_node_684eb771bbecb33a 0
+Vregister_cf_684eb771bbecb33a_source VPWR register_cf_node_684eb771bbecb33a_source 0
+.ends INV
+.subckt cell_or2 A B Y VPWR VGND
+XBUF N Y VPWR VGND INV
+XCORE A B N VPWR VGND NOR2
+.ends cell_or2

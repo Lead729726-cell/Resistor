@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "RESET",
+    "RESETB",
+    "VCM",
+    "SUM",
+    "OUT",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "N_RESET0",
+      "name": "N_RESET0",
+      "kind": "nmos",
+      "pins": {
+        "D": "SUM",
+        "G": "RESET",
+        "S": "VCM",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 2,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "P_RESET0",
+      "name": "P_RESET0",
+      "kind": "pmos",
+      "pins": {
+        "D": "SUM",
+        "G": "RESETB",
+        "S": "VCM",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 4,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 420,
+      "y": 170,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "N_RESET1",
+      "name": "N_RESET1",
+      "kind": "nmos",
+      "pins": {
+        "D": "OUT",
+        "G": "RESET",
+        "S": "VCM",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 2,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 660,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "P_RESET1",
+      "name": "P_RESET1",
+      "kind": "pmos",
+      "pins": {
+        "D": "OUT",
+        "G": "RESETB",
+        "S": "VCM",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 4,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 900,
+      "y": 170,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

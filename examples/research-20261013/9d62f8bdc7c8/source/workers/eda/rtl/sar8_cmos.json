@@ -1,0 +1,3680 @@
+{
+  "schema_version": 1,
+  "rtl_sha256": "23111df558a25c974ca6884f1ec654357b427314dd9dc9cfa3a7a35d5e02b899",
+  "gate_rtl_sha256": "87a98f9a2f8f3d78b7ba37adbde5a8754c0c9064b7fc2b27c0f20983a7f8e662",
+  "synthesizer": "Yosys 0.60 (git sha1 5bafeb77d, g++ 13.3.0-6ubuntu2~24.04 -fPIC -O3)",
+  "gate_counts": {
+    "$_NOT_": 12,
+    "$_AND_": 74,
+    "$_OR_": 55,
+    "$_DFF_P_": 23
+  },
+  "port_alias_buffers": [],
+  "schematic": {
+    "schema_version": 1,
+    "ports": [
+      "CLK",
+      "RESET",
+      "START",
+      "COMPARATOR",
+      "SAMPLE",
+      "BUSY",
+      "VALID",
+      "TRIAL0",
+      "TRIAL1",
+      "TRIAL2",
+      "TRIAL3",
+      "TRIAL4",
+      "TRIAL5",
+      "TRIAL6",
+      "TRIAL7",
+      "CODE0",
+      "CODE1",
+      "CODE2",
+      "CODE3",
+      "CODE4",
+      "CODE5",
+      "CODE6",
+      "CODE7",
+      "VPWR",
+      "VGND"
+    ],
+    "connectivity_mode": "explicit",
+    "devices": [
+      {
+        "id": "G0",
+        "name": "G0",
+        "kind": "block",
+        "pins": {
+          "A": "N25",
+          "Y": "N26",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 170,
+        "cell_name": "INV"
+      },
+      {
+        "id": "G1",
+        "name": "G1",
+        "kind": "block",
+        "pins": {
+          "A": "N27",
+          "Y": "N28",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 170,
+        "cell_name": "INV"
+      },
+      {
+        "id": "G2",
+        "name": "G2",
+        "kind": "block",
+        "pins": {
+          "A": "N29",
+          "Y": "N30",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 170,
+        "cell_name": "INV"
+      },
+      {
+        "id": "G3",
+        "name": "G3",
+        "kind": "block",
+        "pins": {
+          "A": "N31",
+          "Y": "N32",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 170,
+        "cell_name": "INV"
+      },
+      {
+        "id": "G4",
+        "name": "G4",
+        "kind": "block",
+        "pins": {
+          "A": "RESET",
+          "Y": "N33",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 350,
+        "cell_name": "INV"
+      },
+      {
+        "id": "G5",
+        "name": "G5",
+        "kind": "block",
+        "pins": {
+          "A": "BUSY",
+          "Y": "N34",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 350,
+        "cell_name": "INV"
+      },
+      {
+        "id": "G6",
+        "name": "G6",
+        "kind": "block",
+        "pins": {
+          "A": "START",
+          "Y": "N35",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 350,
+        "cell_name": "INV"
+      },
+      {
+        "id": "G7",
+        "name": "G7",
+        "kind": "block",
+        "pins": {
+          "A": "N32",
+          "B": "BUSY",
+          "Y": "N36",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 350,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G8",
+        "name": "G8",
+        "kind": "block",
+        "pins": {
+          "A": "N31",
+          "B": "N34",
+          "Y": "N37",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 530,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G9",
+        "name": "G9",
+        "kind": "block",
+        "pins": {
+          "A": "N27",
+          "B": "N29",
+          "Y": "N38",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 530,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G10",
+        "name": "G10",
+        "kind": "block",
+        "pins": {
+          "A": "N25",
+          "B": "N38",
+          "Y": "N39",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 530,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G11",
+        "name": "G11",
+        "kind": "block",
+        "pins": {
+          "A": "N30",
+          "B": "N36",
+          "Y": "N40",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 530,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G12",
+        "name": "G12",
+        "kind": "block",
+        "pins": {
+          "A": "N29",
+          "B": "N37",
+          "Y": "N41",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 710,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G13",
+        "name": "G13",
+        "kind": "block",
+        "pins": {
+          "A": "N37",
+          "B": "N38",
+          "Y": "N42",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 710,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G14",
+        "name": "G14",
+        "kind": "block",
+        "pins": {
+          "A": "N42",
+          "Y": "N43",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 710,
+        "cell_name": "INV"
+      },
+      {
+        "id": "G15",
+        "name": "G15",
+        "kind": "block",
+        "pins": {
+          "A": "N26",
+          "B": "N43",
+          "Y": "N44",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 710,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G16",
+        "name": "G16",
+        "kind": "block",
+        "pins": {
+          "A": "N37",
+          "B": "N39",
+          "Y": "N45",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 890,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G17",
+        "name": "G17",
+        "kind": "block",
+        "pins": {
+          "A": "N33",
+          "B": "N45",
+          "Y": "N46",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 890,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G18",
+        "name": "G18",
+        "kind": "block",
+        "pins": {
+          "A": "CODE0",
+          "B": "N46",
+          "Y": "N47",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 890,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G19",
+        "name": "G19",
+        "kind": "block",
+        "pins": {
+          "A": "COMPARATOR",
+          "B": "N39",
+          "Y": "N48",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 890,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G20",
+        "name": "G20",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL0",
+          "B": "N48",
+          "Y": "N49",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 1070,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G21",
+        "name": "G21",
+        "kind": "block",
+        "pins": {
+          "A": "N33",
+          "B": "N44",
+          "Y": "N50",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 1070,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G22",
+        "name": "G22",
+        "kind": "block",
+        "pins": {
+          "A": "N49",
+          "B": "N50",
+          "Y": "N51",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 1070,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G23",
+        "name": "G23",
+        "kind": "block",
+        "pins": {
+          "A": "N47",
+          "B": "N51",
+          "Y": "N52",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 1070,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G24",
+        "name": "G24",
+        "kind": "block",
+        "pins": {
+          "A": "CODE1",
+          "B": "N46",
+          "Y": "N53",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 1250,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G25",
+        "name": "G25",
+        "kind": "block",
+        "pins": {
+          "A": "N28",
+          "B": "N29",
+          "Y": "N54",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 1250,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G26",
+        "name": "G26",
+        "kind": "block",
+        "pins": {
+          "A": "N27",
+          "B": "N30",
+          "Y": "N55",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 1250,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G27",
+        "name": "G27",
+        "kind": "block",
+        "pins": {
+          "A": "N26",
+          "B": "N54",
+          "Y": "N56",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 1250,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G28",
+        "name": "G28",
+        "kind": "block",
+        "pins": {
+          "A": "N25",
+          "B": "N55",
+          "Y": "N57",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 1430,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G29",
+        "name": "G29",
+        "kind": "block",
+        "pins": {
+          "A": "COMPARATOR",
+          "B": "N57",
+          "Y": "N58",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 1430,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G30",
+        "name": "G30",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL1",
+          "B": "N58",
+          "Y": "N59",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 1430,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G31",
+        "name": "G31",
+        "kind": "block",
+        "pins": {
+          "A": "N50",
+          "B": "N59",
+          "Y": "N60",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 1430,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G32",
+        "name": "G32",
+        "kind": "block",
+        "pins": {
+          "A": "N53",
+          "B": "N60",
+          "Y": "N61",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 1610,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G33",
+        "name": "G33",
+        "kind": "block",
+        "pins": {
+          "A": "CODE2",
+          "B": "N46",
+          "Y": "N62",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 1610,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G34",
+        "name": "G34",
+        "kind": "block",
+        "pins": {
+          "A": "N27",
+          "B": "N30",
+          "Y": "N63",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 1610,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G35",
+        "name": "G35",
+        "kind": "block",
+        "pins": {
+          "A": "N28",
+          "B": "N29",
+          "Y": "N64",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 1610,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G36",
+        "name": "G36",
+        "kind": "block",
+        "pins": {
+          "A": "N26",
+          "B": "N63",
+          "Y": "N65",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 1790,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G37",
+        "name": "G37",
+        "kind": "block",
+        "pins": {
+          "A": "N25",
+          "B": "N64",
+          "Y": "N66",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 1790,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G38",
+        "name": "G38",
+        "kind": "block",
+        "pins": {
+          "A": "COMPARATOR",
+          "B": "N66",
+          "Y": "N67",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 1790,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G39",
+        "name": "G39",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL2",
+          "B": "N67",
+          "Y": "N68",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 1790,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G40",
+        "name": "G40",
+        "kind": "block",
+        "pins": {
+          "A": "N50",
+          "B": "N68",
+          "Y": "N69",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 1970,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G41",
+        "name": "G41",
+        "kind": "block",
+        "pins": {
+          "A": "N62",
+          "B": "N69",
+          "Y": "N70",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 1970,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G42",
+        "name": "G42",
+        "kind": "block",
+        "pins": {
+          "A": "CODE3",
+          "B": "N46",
+          "Y": "N71",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 1970,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G43",
+        "name": "G43",
+        "kind": "block",
+        "pins": {
+          "A": "N27",
+          "B": "N29",
+          "Y": "N72",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 1970,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G44",
+        "name": "G44",
+        "kind": "block",
+        "pins": {
+          "A": "N72",
+          "Y": "N73",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 2150,
+        "cell_name": "INV"
+      },
+      {
+        "id": "G45",
+        "name": "G45",
+        "kind": "block",
+        "pins": {
+          "A": "N26",
+          "B": "N72",
+          "Y": "N74",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 2150,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G46",
+        "name": "G46",
+        "kind": "block",
+        "pins": {
+          "A": "N25",
+          "B": "N73",
+          "Y": "N75",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 2150,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G47",
+        "name": "G47",
+        "kind": "block",
+        "pins": {
+          "A": "COMPARATOR",
+          "B": "N75",
+          "Y": "N76",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 2150,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G48",
+        "name": "G48",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL3",
+          "B": "N76",
+          "Y": "N77",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 2330,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G49",
+        "name": "G49",
+        "kind": "block",
+        "pins": {
+          "A": "N50",
+          "B": "N77",
+          "Y": "N78",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 2330,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G50",
+        "name": "G50",
+        "kind": "block",
+        "pins": {
+          "A": "N71",
+          "B": "N78",
+          "Y": "N79",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 2330,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G51",
+        "name": "G51",
+        "kind": "block",
+        "pins": {
+          "A": "CODE4",
+          "B": "N46",
+          "Y": "N80",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 2330,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G52",
+        "name": "G52",
+        "kind": "block",
+        "pins": {
+          "A": "N26",
+          "B": "N38",
+          "Y": "N81",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 2510,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G53",
+        "name": "G53",
+        "kind": "block",
+        "pins": {
+          "A": "COMPARATOR",
+          "B": "N81",
+          "Y": "N82",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 2510,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G54",
+        "name": "G54",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL4",
+          "B": "N82",
+          "Y": "N83",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 2510,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G55",
+        "name": "G55",
+        "kind": "block",
+        "pins": {
+          "A": "N50",
+          "B": "N83",
+          "Y": "N84",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 2510,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G56",
+        "name": "G56",
+        "kind": "block",
+        "pins": {
+          "A": "N80",
+          "B": "N84",
+          "Y": "N85",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 2690,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G57",
+        "name": "G57",
+        "kind": "block",
+        "pins": {
+          "A": "CODE5",
+          "B": "N46",
+          "Y": "N86",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 2690,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G58",
+        "name": "G58",
+        "kind": "block",
+        "pins": {
+          "A": "N25",
+          "B": "N54",
+          "Y": "N87",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 2690,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G59",
+        "name": "G59",
+        "kind": "block",
+        "pins": {
+          "A": "N26",
+          "B": "N55",
+          "Y": "N88",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 2690,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G60",
+        "name": "G60",
+        "kind": "block",
+        "pins": {
+          "A": "COMPARATOR",
+          "B": "N88",
+          "Y": "N89",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 2870,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G61",
+        "name": "G61",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL5",
+          "B": "N89",
+          "Y": "N90",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 2870,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G62",
+        "name": "G62",
+        "kind": "block",
+        "pins": {
+          "A": "N50",
+          "B": "N90",
+          "Y": "N91",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 2870,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G63",
+        "name": "G63",
+        "kind": "block",
+        "pins": {
+          "A": "N86",
+          "B": "N91",
+          "Y": "N92",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 2870,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G64",
+        "name": "G64",
+        "kind": "block",
+        "pins": {
+          "A": "CODE6",
+          "B": "N46",
+          "Y": "N93",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 3050,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G65",
+        "name": "G65",
+        "kind": "block",
+        "pins": {
+          "A": "N25",
+          "B": "N63",
+          "Y": "N94",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 3050,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G66",
+        "name": "G66",
+        "kind": "block",
+        "pins": {
+          "A": "N26",
+          "B": "N64",
+          "Y": "N95",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 3050,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G67",
+        "name": "G67",
+        "kind": "block",
+        "pins": {
+          "A": "COMPARATOR",
+          "B": "N95",
+          "Y": "N96",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 3050,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G68",
+        "name": "G68",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL6",
+          "B": "N96",
+          "Y": "N97",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 3230,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G69",
+        "name": "G69",
+        "kind": "block",
+        "pins": {
+          "A": "N50",
+          "B": "N97",
+          "Y": "N98",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 3230,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G70",
+        "name": "G70",
+        "kind": "block",
+        "pins": {
+          "A": "N93",
+          "B": "N98",
+          "Y": "N99",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 3230,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G71",
+        "name": "G71",
+        "kind": "block",
+        "pins": {
+          "A": "CODE7",
+          "B": "N46",
+          "Y": "N100",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 3230,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G72",
+        "name": "G72",
+        "kind": "block",
+        "pins": {
+          "A": "N25",
+          "B": "N72",
+          "Y": "N101",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 3410,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G73",
+        "name": "G73",
+        "kind": "block",
+        "pins": {
+          "A": "N101",
+          "Y": "N102",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 3410,
+        "cell_name": "INV"
+      },
+      {
+        "id": "G74",
+        "name": "G74",
+        "kind": "block",
+        "pins": {
+          "A": "COMPARATOR",
+          "B": "N102",
+          "Y": "N103",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 3410,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G75",
+        "name": "G75",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL7",
+          "B": "N103",
+          "Y": "N104",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 3410,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G76",
+        "name": "G76",
+        "kind": "block",
+        "pins": {
+          "A": "N50",
+          "B": "N104",
+          "Y": "N105",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 3590,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G77",
+        "name": "G77",
+        "kind": "block",
+        "pins": {
+          "A": "N100",
+          "B": "N105",
+          "Y": "N106",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 3590,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G78",
+        "name": "G78",
+        "kind": "block",
+        "pins": {
+          "A": "N34",
+          "B": "N35",
+          "Y": "N107",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 3590,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G79",
+        "name": "G79",
+        "kind": "block",
+        "pins": {
+          "A": "N107",
+          "Y": "N108",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 3590,
+        "cell_name": "INV"
+      },
+      {
+        "id": "G80",
+        "name": "G80",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL0",
+          "B": "N107",
+          "Y": "N109",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 3770,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G81",
+        "name": "G81",
+        "kind": "block",
+        "pins": {
+          "A": "N49",
+          "B": "N56",
+          "Y": "N110",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 3770,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G82",
+        "name": "G82",
+        "kind": "block",
+        "pins": {
+          "A": "N36",
+          "B": "N110",
+          "Y": "N111",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 3770,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G83",
+        "name": "G83",
+        "kind": "block",
+        "pins": {
+          "A": "N109",
+          "B": "N111",
+          "Y": "N112",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 3770,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G84",
+        "name": "G84",
+        "kind": "block",
+        "pins": {
+          "A": "N33",
+          "B": "N112",
+          "Y": "N113",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 3950,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G85",
+        "name": "G85",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL1",
+          "B": "N107",
+          "Y": "N114",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 3950,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G86",
+        "name": "G86",
+        "kind": "block",
+        "pins": {
+          "A": "N59",
+          "B": "N65",
+          "Y": "N115",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 3950,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G87",
+        "name": "G87",
+        "kind": "block",
+        "pins": {
+          "A": "N36",
+          "B": "N115",
+          "Y": "N116",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 3950,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G88",
+        "name": "G88",
+        "kind": "block",
+        "pins": {
+          "A": "N114",
+          "B": "N116",
+          "Y": "N117",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 4130,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G89",
+        "name": "G89",
+        "kind": "block",
+        "pins": {
+          "A": "N33",
+          "B": "N117",
+          "Y": "N118",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 4130,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G90",
+        "name": "G90",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL2",
+          "B": "N107",
+          "Y": "N119",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 4130,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G91",
+        "name": "G91",
+        "kind": "block",
+        "pins": {
+          "A": "N68",
+          "B": "N74",
+          "Y": "N120",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 4130,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G92",
+        "name": "G92",
+        "kind": "block",
+        "pins": {
+          "A": "N36",
+          "B": "N120",
+          "Y": "N121",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 4310,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G93",
+        "name": "G93",
+        "kind": "block",
+        "pins": {
+          "A": "N119",
+          "B": "N121",
+          "Y": "N122",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 4310,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G94",
+        "name": "G94",
+        "kind": "block",
+        "pins": {
+          "A": "N33",
+          "B": "N122",
+          "Y": "N123",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 4310,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G95",
+        "name": "G95",
+        "kind": "block",
+        "pins": {
+          "A": "N36",
+          "B": "N77",
+          "Y": "N124",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 4310,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G96",
+        "name": "G96",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL3",
+          "B": "N107",
+          "Y": "N125",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 4490,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G97",
+        "name": "G97",
+        "kind": "block",
+        "pins": {
+          "A": "N25",
+          "B": "N43",
+          "Y": "N126",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 4490,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G98",
+        "name": "G98",
+        "kind": "block",
+        "pins": {
+          "A": "N125",
+          "B": "N126",
+          "Y": "N127",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 4490,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G99",
+        "name": "G99",
+        "kind": "block",
+        "pins": {
+          "A": "N124",
+          "B": "N127",
+          "Y": "N128",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 4490,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G100",
+        "name": "G100",
+        "kind": "block",
+        "pins": {
+          "A": "N33",
+          "B": "N128",
+          "Y": "N129",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 4670,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G101",
+        "name": "G101",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL4",
+          "B": "N107",
+          "Y": "N130",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 4670,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G102",
+        "name": "G102",
+        "kind": "block",
+        "pins": {
+          "A": "N83",
+          "B": "N87",
+          "Y": "N131",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 4670,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G103",
+        "name": "G103",
+        "kind": "block",
+        "pins": {
+          "A": "N36",
+          "B": "N131",
+          "Y": "N132",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 4670,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G104",
+        "name": "G104",
+        "kind": "block",
+        "pins": {
+          "A": "N130",
+          "B": "N132",
+          "Y": "N133",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 4850,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G105",
+        "name": "G105",
+        "kind": "block",
+        "pins": {
+          "A": "N33",
+          "B": "N133",
+          "Y": "N134",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 4850,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G106",
+        "name": "G106",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL5",
+          "B": "N107",
+          "Y": "N135",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 4850,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G107",
+        "name": "G107",
+        "kind": "block",
+        "pins": {
+          "A": "N90",
+          "B": "N94",
+          "Y": "N136",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 4850,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G108",
+        "name": "G108",
+        "kind": "block",
+        "pins": {
+          "A": "N36",
+          "B": "N136",
+          "Y": "N137",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 5030,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G109",
+        "name": "G109",
+        "kind": "block",
+        "pins": {
+          "A": "N135",
+          "B": "N137",
+          "Y": "N138",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 5030,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G110",
+        "name": "G110",
+        "kind": "block",
+        "pins": {
+          "A": "N33",
+          "B": "N138",
+          "Y": "N139",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 5030,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G111",
+        "name": "G111",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL6",
+          "B": "N107",
+          "Y": "N140",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 5030,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G112",
+        "name": "G112",
+        "kind": "block",
+        "pins": {
+          "A": "N97",
+          "B": "N101",
+          "Y": "N141",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 5210,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G113",
+        "name": "G113",
+        "kind": "block",
+        "pins": {
+          "A": "N36",
+          "B": "N141",
+          "Y": "N142",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 5210,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G114",
+        "name": "G114",
+        "kind": "block",
+        "pins": {
+          "A": "N140",
+          "B": "N142",
+          "Y": "N143",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 5210,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G115",
+        "name": "G115",
+        "kind": "block",
+        "pins": {
+          "A": "N33",
+          "B": "N143",
+          "Y": "N144",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 5210,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G116",
+        "name": "G116",
+        "kind": "block",
+        "pins": {
+          "A": "BUSY",
+          "B": "N104",
+          "Y": "N145",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 5390,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G117",
+        "name": "G117",
+        "kind": "block",
+        "pins": {
+          "A": "TRIAL7",
+          "B": "N107",
+          "Y": "N146",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 5390,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G118",
+        "name": "G118",
+        "kind": "block",
+        "pins": {
+          "A": "N31",
+          "B": "BUSY",
+          "Y": "N147",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 5390,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G119",
+        "name": "G119",
+        "kind": "block",
+        "pins": {
+          "A": "N146",
+          "B": "N147",
+          "Y": "N148",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 5390,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G120",
+        "name": "G120",
+        "kind": "block",
+        "pins": {
+          "A": "N145",
+          "B": "N148",
+          "Y": "N149",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 5570,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G121",
+        "name": "G121",
+        "kind": "block",
+        "pins": {
+          "A": "N33",
+          "B": "N149",
+          "Y": "N150",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 5570,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G122",
+        "name": "G122",
+        "kind": "block",
+        "pins": {
+          "A": "N46",
+          "B": "N108",
+          "Y": "N151",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 5570,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G123",
+        "name": "G123",
+        "kind": "block",
+        "pins": {
+          "A": "N34",
+          "B": "START",
+          "Y": "N152",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 5570,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G124",
+        "name": "G124",
+        "kind": "block",
+        "pins": {
+          "A": "SAMPLE",
+          "B": "N152",
+          "Y": "N153",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 5750,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G125",
+        "name": "G125",
+        "kind": "block",
+        "pins": {
+          "A": "RESET",
+          "B": "N147",
+          "Y": "N154",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 5750,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G126",
+        "name": "G126",
+        "kind": "block",
+        "pins": {
+          "A": "N154",
+          "Y": "N155",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 5750,
+        "cell_name": "INV"
+      },
+      {
+        "id": "G127",
+        "name": "G127",
+        "kind": "block",
+        "pins": {
+          "A": "N153",
+          "B": "N155",
+          "Y": "N156",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 5750,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G128",
+        "name": "G128",
+        "kind": "block",
+        "pins": {
+          "A": "N31",
+          "B": "START",
+          "Y": "N157",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 5930,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G129",
+        "name": "G129",
+        "kind": "block",
+        "pins": {
+          "A": "N33",
+          "B": "N157",
+          "Y": "N158",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 5930,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G130",
+        "name": "G130",
+        "kind": "block",
+        "pins": {
+          "A": "N34",
+          "B": "N158",
+          "Y": "N159",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 5930,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G131",
+        "name": "G131",
+        "kind": "block",
+        "pins": {
+          "A": "N39",
+          "B": "N40",
+          "Y": "N160",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 5930,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G132",
+        "name": "G132",
+        "kind": "block",
+        "pins": {
+          "A": "RESET",
+          "B": "N152",
+          "Y": "N161",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 6110,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G133",
+        "name": "G133",
+        "kind": "block",
+        "pins": {
+          "A": "N29",
+          "B": "N37",
+          "Y": "N162",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 6110,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G134",
+        "name": "G134",
+        "kind": "block",
+        "pins": {
+          "A": "N161",
+          "B": "N162",
+          "Y": "N163",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 6110,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G135",
+        "name": "G135",
+        "kind": "block",
+        "pins": {
+          "A": "N160",
+          "B": "N163",
+          "Y": "N164",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 6110,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G136",
+        "name": "G136",
+        "kind": "block",
+        "pins": {
+          "A": "N27",
+          "B": "N41",
+          "Y": "N165",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 6290,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G137",
+        "name": "G137",
+        "kind": "block",
+        "pins": {
+          "A": "N126",
+          "B": "N161",
+          "Y": "N166",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 6290,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G138",
+        "name": "G138",
+        "kind": "block",
+        "pins": {
+          "A": "N165",
+          "B": "N166",
+          "Y": "N167",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 6290,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G139",
+        "name": "G139",
+        "kind": "block",
+        "pins": {
+          "A": "N25",
+          "B": "N42",
+          "Y": "N168",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 6290,
+        "cell_name": "AND2"
+      },
+      {
+        "id": "G140",
+        "name": "G140",
+        "kind": "block",
+        "pins": {
+          "A": "N161",
+          "B": "N168",
+          "Y": "N169",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 6470,
+        "cell_name": "OR2"
+      },
+      {
+        "id": "G141",
+        "name": "G141",
+        "kind": "block",
+        "pins": {
+          "D": "N52",
+          "CLK": "CLK",
+          "Q": "CODE0",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 6470,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G142",
+        "name": "G142",
+        "kind": "block",
+        "pins": {
+          "D": "N61",
+          "CLK": "CLK",
+          "Q": "CODE1",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 6470,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G143",
+        "name": "G143",
+        "kind": "block",
+        "pins": {
+          "D": "N70",
+          "CLK": "CLK",
+          "Q": "CODE2",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 6470,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G144",
+        "name": "G144",
+        "kind": "block",
+        "pins": {
+          "D": "N79",
+          "CLK": "CLK",
+          "Q": "CODE3",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 6650,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G145",
+        "name": "G145",
+        "kind": "block",
+        "pins": {
+          "D": "N85",
+          "CLK": "CLK",
+          "Q": "CODE4",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 6650,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G146",
+        "name": "G146",
+        "kind": "block",
+        "pins": {
+          "D": "N92",
+          "CLK": "CLK",
+          "Q": "CODE5",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 6650,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G147",
+        "name": "G147",
+        "kind": "block",
+        "pins": {
+          "D": "N99",
+          "CLK": "CLK",
+          "Q": "CODE6",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 6650,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G148",
+        "name": "G148",
+        "kind": "block",
+        "pins": {
+          "D": "N106",
+          "CLK": "CLK",
+          "Q": "CODE7",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 6830,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G149",
+        "name": "G149",
+        "kind": "block",
+        "pins": {
+          "D": "N113",
+          "CLK": "CLK",
+          "Q": "TRIAL0",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 6830,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G150",
+        "name": "G150",
+        "kind": "block",
+        "pins": {
+          "D": "N118",
+          "CLK": "CLK",
+          "Q": "TRIAL1",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 6830,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G151",
+        "name": "G151",
+        "kind": "block",
+        "pins": {
+          "D": "N123",
+          "CLK": "CLK",
+          "Q": "TRIAL2",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 6830,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G152",
+        "name": "G152",
+        "kind": "block",
+        "pins": {
+          "D": "N129",
+          "CLK": "CLK",
+          "Q": "TRIAL3",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 7010,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G153",
+        "name": "G153",
+        "kind": "block",
+        "pins": {
+          "D": "N134",
+          "CLK": "CLK",
+          "Q": "TRIAL4",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 7010,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G154",
+        "name": "G154",
+        "kind": "block",
+        "pins": {
+          "D": "N139",
+          "CLK": "CLK",
+          "Q": "TRIAL5",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 7010,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G155",
+        "name": "G155",
+        "kind": "block",
+        "pins": {
+          "D": "N144",
+          "CLK": "CLK",
+          "Q": "TRIAL6",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 7010,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G156",
+        "name": "G156",
+        "kind": "block",
+        "pins": {
+          "D": "N150",
+          "CLK": "CLK",
+          "Q": "TRIAL7",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 7190,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G157",
+        "name": "G157",
+        "kind": "block",
+        "pins": {
+          "D": "N50",
+          "CLK": "CLK",
+          "Q": "VALID",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 7190,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G158",
+        "name": "G158",
+        "kind": "block",
+        "pins": {
+          "D": "N151",
+          "CLK": "CLK",
+          "Q": "BUSY",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 7190,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G159",
+        "name": "G159",
+        "kind": "block",
+        "pins": {
+          "D": "N156",
+          "CLK": "CLK",
+          "Q": "SAMPLE",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 7190,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G160",
+        "name": "G160",
+        "kind": "block",
+        "pins": {
+          "D": "N159",
+          "CLK": "CLK",
+          "Q": "N31",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 7370,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G161",
+        "name": "G161",
+        "kind": "block",
+        "pins": {
+          "D": "N164",
+          "CLK": "CLK",
+          "Q": "N29",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 420,
+        "y": 7370,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G162",
+        "name": "G162",
+        "kind": "block",
+        "pins": {
+          "D": "N167",
+          "CLK": "CLK",
+          "Q": "N27",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 7370,
+        "cell_name": "DFF"
+      },
+      {
+        "id": "G163",
+        "name": "G163",
+        "kind": "block",
+        "pins": {
+          "D": "N169",
+          "CLK": "CLK",
+          "Q": "N25",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 900,
+        "y": 7370,
+        "cell_name": "DFF"
+      }
+    ],
+    "wires": [],
+    "junctions": [],
+    "cells": {
+      "INV": {
+        "schema_version": 1,
+        "connectivity_mode": "explicit",
+        "ports": [
+          "A",
+          "Y",
+          "VPWR",
+          "VGND"
+        ],
+        "devices": [
+          {
+            "id": "MP",
+            "name": "MP",
+            "kind": "pmos",
+            "model": "sky130_fd_pr__pfet_01v8_hvt",
+            "pins": {
+              "D": "Y",
+              "G": "A",
+              "S": "VPWR",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 180,
+            "y": 160
+          },
+          {
+            "id": "MN",
+            "name": "MN",
+            "kind": "nmos",
+            "model": "sky130_fd_pr__nfet_01v8",
+            "pins": {
+              "D": "Y",
+              "G": "A",
+              "S": "VGND",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 370,
+            "y": 160
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "NAND2": {
+        "schema_version": 1,
+        "connectivity_mode": "explicit",
+        "ports": [
+          "A0",
+          "A1",
+          "Y",
+          "VPWR",
+          "VGND"
+        ],
+        "devices": [
+          {
+            "id": "MP0",
+            "name": "MP0",
+            "kind": "pmos",
+            "model": "sky130_fd_pr__pfet_01v8_hvt",
+            "pins": {
+              "D": "Y",
+              "G": "A0",
+              "S": "VPWR",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 180,
+            "y": 160
+          },
+          {
+            "id": "MN0",
+            "name": "MN0",
+            "kind": "nmos",
+            "model": "sky130_fd_pr__nfet_01v8",
+            "pins": {
+              "D": "Y",
+              "G": "A0",
+              "S": "N1",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 370,
+            "y": 160
+          },
+          {
+            "id": "MP1",
+            "name": "MP1",
+            "kind": "pmos",
+            "model": "sky130_fd_pr__pfet_01v8_hvt",
+            "pins": {
+              "D": "Y",
+              "G": "A1",
+              "S": "VPWR",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 560,
+            "y": 160
+          },
+          {
+            "id": "MN1",
+            "name": "MN1",
+            "kind": "nmos",
+            "model": "sky130_fd_pr__nfet_01v8",
+            "pins": {
+              "D": "N1",
+              "G": "A1",
+              "S": "VGND",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 750,
+            "y": 160
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "XOR2": {
+        "schema_version": 1,
+        "connectivity_mode": "explicit",
+        "ports": [
+          "A",
+          "B",
+          "Y",
+          "VPWR",
+          "VGND"
+        ],
+        "devices": [
+          {
+            "id": "N1",
+            "name": "N1",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "A",
+              "A1": "B",
+              "Y": "N1",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 170,
+            "y": 170
+          },
+          {
+            "id": "N2",
+            "name": "N2",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "A",
+              "A1": "N1",
+              "Y": "N2",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 400,
+            "y": 170
+          },
+          {
+            "id": "N3",
+            "name": "N3",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "B",
+              "A1": "N1",
+              "Y": "N3",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 630,
+            "y": 170
+          },
+          {
+            "id": "N4",
+            "name": "N4",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "N2",
+              "A1": "N3",
+              "Y": "Y",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 860,
+            "y": 170
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "AND2": {
+        "schema_version": 1,
+        "connectivity_mode": "explicit",
+        "ports": [
+          "A",
+          "B",
+          "Y",
+          "VPWR",
+          "VGND"
+        ],
+        "devices": [
+          {
+            "id": "N1",
+            "name": "N1",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "A",
+              "A1": "B",
+              "Y": "N",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 170,
+            "y": 170
+          },
+          {
+            "id": "I1",
+            "name": "I1",
+            "kind": "block",
+            "cell_name": "INV",
+            "pins": {
+              "A": "N",
+              "Y": "Y",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 400,
+            "y": 170
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "MUX2": {
+        "schema_version": 1,
+        "connectivity_mode": "explicit",
+        "ports": [
+          "A",
+          "B",
+          "S",
+          "Y",
+          "VPWR",
+          "VGND"
+        ],
+        "devices": [
+          {
+            "id": "IS",
+            "name": "IS",
+            "kind": "block",
+            "cell_name": "INV",
+            "pins": {
+              "A": "S",
+              "Y": "SB",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 170,
+            "y": 170
+          },
+          {
+            "id": "MNA",
+            "name": "MNA",
+            "kind": "nmos",
+            "model": "sky130_fd_pr__nfet_01v8",
+            "pins": {
+              "D": "Y",
+              "G": "SB",
+              "S": "A",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 370,
+            "y": 160
+          },
+          {
+            "id": "MPA",
+            "name": "MPA",
+            "kind": "pmos",
+            "model": "sky130_fd_pr__pfet_01v8_hvt",
+            "pins": {
+              "D": "Y",
+              "G": "S",
+              "S": "A",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 560,
+            "y": 160
+          },
+          {
+            "id": "MNB",
+            "name": "MNB",
+            "kind": "nmos",
+            "model": "sky130_fd_pr__nfet_01v8",
+            "pins": {
+              "D": "Y",
+              "G": "S",
+              "S": "B",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 750,
+            "y": 160
+          },
+          {
+            "id": "MPB",
+            "name": "MPB",
+            "kind": "pmos",
+            "model": "sky130_fd_pr__pfet_01v8_hvt",
+            "pins": {
+              "D": "Y",
+              "G": "SB",
+              "S": "B",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 180,
+            "y": 320
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "FA": {
+        "schema_version": 1,
+        "connectivity_mode": "explicit",
+        "ports": [
+          "A",
+          "B",
+          "CIN",
+          "SUM",
+          "COUT",
+          "VPWR",
+          "VGND"
+        ],
+        "devices": [
+          {
+            "id": "N1",
+            "name": "N1",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "A",
+              "A1": "B",
+              "Y": "N1",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 170,
+            "y": 170
+          },
+          {
+            "id": "N2",
+            "name": "N2",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "A",
+              "A1": "N1",
+              "Y": "N2",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 400,
+            "y": 170
+          },
+          {
+            "id": "N3",
+            "name": "N3",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "B",
+              "A1": "N1",
+              "Y": "N3",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 630,
+            "y": 170
+          },
+          {
+            "id": "N4",
+            "name": "N4",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "N2",
+              "A1": "N3",
+              "Y": "P",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 860,
+            "y": 170
+          },
+          {
+            "id": "N5",
+            "name": "N5",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "P",
+              "A1": "CIN",
+              "Y": "N5",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 170,
+            "y": 420
+          },
+          {
+            "id": "N6",
+            "name": "N6",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "P",
+              "A1": "N5",
+              "Y": "N6",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 400,
+            "y": 420
+          },
+          {
+            "id": "N7",
+            "name": "N7",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "CIN",
+              "A1": "N5",
+              "Y": "N7",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 630,
+            "y": 420
+          },
+          {
+            "id": "N8",
+            "name": "N8",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "N6",
+              "A1": "N7",
+              "Y": "SUM",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 860,
+            "y": 420
+          },
+          {
+            "id": "N9",
+            "name": "N9",
+            "kind": "block",
+            "cell_name": "NAND2",
+            "pins": {
+              "A0": "N1",
+              "A1": "N5",
+              "Y": "COUT",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 170,
+            "y": 670
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "ADD1": {
+        "schema_version": 1,
+        "connectivity_mode": "explicit",
+        "ports": [
+          "A0",
+          "B0",
+          "CIN",
+          "S0",
+          "COUT",
+          "VPWR",
+          "VGND"
+        ],
+        "devices": [
+          {
+            "id": "BIT0",
+            "name": "BIT0",
+            "kind": "block",
+            "cell_name": "FA",
+            "pins": {
+              "A": "A0",
+              "B": "B0",
+              "CIN": "CIN",
+              "SUM": "S0",
+              "COUT": "COUT",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 170,
+            "y": 170
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "DFF": {
+        "schema_version": 1,
+        "connectivity_mode": "explicit",
+        "ports": [
+          "D",
+          "CLK",
+          "Q",
+          "VPWR",
+          "VGND"
+        ],
+        "devices": [
+          {
+            "id": "ICLK",
+            "name": "ICLK",
+            "kind": "block",
+            "cell_name": "INV",
+            "pins": {
+              "A": "CLK",
+              "Y": "CLKB",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 170,
+            "y": 170
+          },
+          {
+            "id": "MNIN",
+            "name": "MNIN",
+            "kind": "nmos",
+            "model": "sky130_fd_pr__nfet_01v8",
+            "pins": {
+              "D": "M",
+              "G": "CLKB",
+              "S": "D",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 370,
+            "y": 160
+          },
+          {
+            "id": "MPIN",
+            "name": "MPIN",
+            "kind": "pmos",
+            "model": "sky130_fd_pr__pfet_01v8_hvt",
+            "pins": {
+              "D": "M",
+              "G": "CLK",
+              "S": "D",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 560,
+            "y": 160
+          },
+          {
+            "id": "MNMF",
+            "name": "MNMF",
+            "kind": "nmos",
+            "model": "sky130_fd_pr__nfet_01v8",
+            "pins": {
+              "D": "M",
+              "G": "CLK",
+              "S": "MF",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 750,
+            "y": 160
+          },
+          {
+            "id": "MPMF",
+            "name": "MPMF",
+            "kind": "pmos",
+            "model": "sky130_fd_pr__pfet_01v8_hvt",
+            "pins": {
+              "D": "M",
+              "G": "CLKB",
+              "S": "MF",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 180,
+            "y": 320
+          },
+          {
+            "id": "MNOUT",
+            "name": "MNOUT",
+            "kind": "nmos",
+            "model": "sky130_fd_pr__nfet_01v8",
+            "pins": {
+              "D": "T",
+              "G": "CLK",
+              "S": "MF",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 370,
+            "y": 320
+          },
+          {
+            "id": "MPOUT",
+            "name": "MPOUT",
+            "kind": "pmos",
+            "model": "sky130_fd_pr__pfet_01v8_hvt",
+            "pins": {
+              "D": "T",
+              "G": "CLKB",
+              "S": "MF",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 560,
+            "y": 320
+          },
+          {
+            "id": "MNSF",
+            "name": "MNSF",
+            "kind": "nmos",
+            "model": "sky130_fd_pr__nfet_01v8",
+            "pins": {
+              "D": "T",
+              "G": "CLKB",
+              "S": "Q",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 750,
+            "y": 320
+          },
+          {
+            "id": "MPSF",
+            "name": "MPSF",
+            "kind": "pmos",
+            "model": "sky130_fd_pr__pfet_01v8_hvt",
+            "pins": {
+              "D": "T",
+              "G": "CLK",
+              "S": "Q",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 180,
+            "y": 480
+          },
+          {
+            "id": "M1",
+            "name": "M1",
+            "kind": "block",
+            "cell_name": "INV",
+            "pins": {
+              "A": "M",
+              "Y": "MB",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 400,
+            "y": 670
+          },
+          {
+            "id": "M2",
+            "name": "M2",
+            "kind": "block",
+            "cell_name": "INV",
+            "pins": {
+              "A": "MB",
+              "Y": "MF",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 630,
+            "y": 670
+          },
+          {
+            "id": "S1",
+            "name": "S1",
+            "kind": "block",
+            "cell_name": "INV",
+            "pins": {
+              "A": "T",
+              "Y": "TB",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 860,
+            "y": 670
+          },
+          {
+            "id": "S2",
+            "name": "S2",
+            "kind": "block",
+            "cell_name": "INV",
+            "pins": {
+              "A": "TB",
+              "Y": "Q",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 170,
+            "y": 920
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "NOR2": {
+        "schema_version": 1,
+        "ports": [
+          "A",
+          "B",
+          "Y",
+          "VPWR",
+          "VGND"
+        ],
+        "connectivity_mode": "explicit",
+        "devices": [
+          {
+            "id": "P0",
+            "name": "P0",
+            "kind": "pmos",
+            "pins": {
+              "D": "P",
+              "G": "A",
+              "S": "VPWR",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 180,
+            "y": 170,
+            "model": "sky130_fd_pr__pfet_01v8_hvt"
+          },
+          {
+            "id": "P1",
+            "name": "P1",
+            "kind": "pmos",
+            "pins": {
+              "D": "Y",
+              "G": "B",
+              "S": "P",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 420,
+            "y": 170,
+            "model": "sky130_fd_pr__pfet_01v8_hvt"
+          },
+          {
+            "id": "N0",
+            "name": "N0",
+            "kind": "nmos",
+            "pins": {
+              "D": "Y",
+              "G": "A",
+              "S": "VGND",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 660,
+            "y": 170,
+            "model": "sky130_fd_pr__nfet_01v8"
+          },
+          {
+            "id": "N1",
+            "name": "N1",
+            "kind": "nmos",
+            "pins": {
+              "D": "Y",
+              "G": "B",
+              "S": "VGND",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 900,
+            "y": 170,
+            "model": "sky130_fd_pr__nfet_01v8"
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "OR2": {
+        "schema_version": 1,
+        "ports": [
+          "A",
+          "B",
+          "Y",
+          "VPWR",
+          "VGND"
+        ],
+        "connectivity_mode": "explicit",
+        "devices": [
+          {
+            "id": "NOR",
+            "name": "NOR",
+            "kind": "block",
+            "pins": {
+              "A": "A",
+              "B": "B",
+              "Y": "N",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 180,
+            "y": 170,
+            "cell_name": "NOR2"
+          },
+          {
+            "id": "INV",
+            "name": "INV",
+            "kind": "block",
+            "pins": {
+              "A": "N",
+              "Y": "Y",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 420,
+            "y": 170,
+            "cell_name": "INV"
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "DFF_N": {
+        "schema_version": 1,
+        "ports": [
+          "D",
+          "CLK",
+          "Q",
+          "VPWR",
+          "VGND"
+        ],
+        "connectivity_mode": "explicit",
+        "devices": [
+          {
+            "id": "CLOCK",
+            "name": "CLOCK",
+            "kind": "block",
+            "pins": {
+              "A": "CLK",
+              "Y": "CLKB",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 180,
+            "y": 170,
+            "cell_name": "INV"
+          },
+          {
+            "id": "LATCH",
+            "name": "LATCH",
+            "kind": "block",
+            "pins": {
+              "D": "D",
+              "CLK": "CLKB",
+              "Q": "Q",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 420,
+            "y": 170,
+            "cell_name": "DFF"
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      }
+    }
+  }
+}

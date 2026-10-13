@@ -1,0 +1,20 @@
+.subckt NAND2 A0 A1 Y VPWR VGND
+XMN0 register_cf_node_377cff7a8fc053f0 A0 register_cf_node_377cff7a8fc053f0_source VGND sky130_fd_pr__nfet_01v8 w=2.6 l=0.15 nf=1 m=1
+Vregister_cf_377cff7a8fc053f0 Y register_cf_node_377cff7a8fc053f0 0
+Vregister_cf_377cff7a8fc053f0_source N1 register_cf_node_377cff7a8fc053f0_source 0
+XMN1 register_cf_node_12c0ec391985518a A1 register_cf_node_12c0ec391985518a_source VGND sky130_fd_pr__nfet_01v8 w=2.6 l=0.15 nf=1 m=1
+Vregister_cf_12c0ec391985518a N1 register_cf_node_12c0ec391985518a 0
+Vregister_cf_12c0ec391985518a_source VGND register_cf_node_12c0ec391985518a_source 0
+XMP0 register_cf_node_1c0f6f4ae9f406c8 A0 register_cf_node_1c0f6f4ae9f406c8_source VPWR sky130_fd_pr__pfet_01v8_hvt w=2.6 l=0.15 nf=1 m=1
+Vregister_cf_1c0f6f4ae9f406c8 Y register_cf_node_1c0f6f4ae9f406c8 0
+Vregister_cf_1c0f6f4ae9f406c8_source VPWR register_cf_node_1c0f6f4ae9f406c8_source 0
+XMP1 register_cf_node_092f3ee2a80b5958 A1 register_cf_node_092f3ee2a80b5958_source VPWR sky130_fd_pr__pfet_01v8_hvt w=2.6 l=0.15 nf=1 m=1
+Vregister_cf_092f3ee2a80b5958 Y register_cf_node_092f3ee2a80b5958 0
+Vregister_cf_092f3ee2a80b5958_source VPWR register_cf_node_092f3ee2a80b5958_source 0
+.ends NAND2
+.subckt cell_xor2 A B Y VPWR VGND
+XN1 A B N1 VPWR VGND NAND2
+XN2 A N1 N2 VPWR VGND NAND2
+XN3 B N1 N3 VPWR VGND NAND2
+XN4 N2 N3 Y VPWR VGND NAND2
+.ends cell_xor2

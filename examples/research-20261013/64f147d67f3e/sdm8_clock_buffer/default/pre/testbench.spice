@@ -1,0 +1,24 @@
+SKY130 transistor sigma delta modulator; external clock and supply
+.options method=gear maxord=2 reltol=1e-4
+.include "/workspace/.runtime/eda/runs/32f41b88591a4a548355a8c09901e275/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/eda/runs/32f41b88591a4a548355a8c09901e275/analog.spice"
+.temp 27
+VDD VPWR 0 1.8
+VGND VGND 0 0
+VIN VIN 0 0.9
+VCLK CLK 0 PULSE(0 1.8 500n 10n 10n 480n 1u)
+VRESET RESET 0 PWL(0 1.8 7.99u 1.8 8u 0)
+XU VIN CLK RESET BITSTREAM VCM BIAS INT_OUT VPWR VGND sdm8_analog
+.ic v(VCM)=0.9 v(BIAS)=.75 v(INT_OUT)=0.9 v(xu.XINTEGRATOR.SUM)=0.9 v(xu.XINTEGRATOR.XAMP.PRE)=0.9
+.control
+set num_threads=1
+set numdgt=12
+set wr_vecnames
+set wr_singlescale
+tran 1.25e-07 0.00206 0 1.25e-07 uic
+linearize v(VIN) v(CLK) v(RESET) v(BITSTREAM) v(INT_OUT) v(VCM) v(BIAS) v(xu.XINTEGRATOR.SUM) i(VDD)
+wrdata waveform.dat v(VIN) v(CLK) v(RESET) v(BITSTREAM) v(INT_OUT) v(VCM) v(BIAS) v(xu.XINTEGRATOR.SUM) i(VDD)
+quit
+.endc
+.end

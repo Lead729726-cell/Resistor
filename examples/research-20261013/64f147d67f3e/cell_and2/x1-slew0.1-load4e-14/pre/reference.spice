@@ -1,0 +1,14 @@
+.subckt NAND2 A0 A1 Y VPWR VGND
+XMN0 Y A0 N1 VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMN1 N1 A1 VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMP0 Y A0 VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XMP1 Y A1 VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+.ends NAND2
+.subckt INV A Y VPWR VGND
+XMN Y A VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMP Y A VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+.ends INV
+.subckt cell_and2 A B Y VPWR VGND
+XI1 N Y VPWR VGND INV
+XN1 A B N VPWR VGND NAND2
+.ends cell_and2

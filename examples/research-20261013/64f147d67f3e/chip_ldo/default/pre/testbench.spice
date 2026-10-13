@@ -1,0 +1,62 @@
+Resistor actual SKY130 chip reference chip_ldo
+.options method=gear maxord=2
+.include "/workspace/.runtime/eda/runs/4843399453644140b7feffe6c3721d35/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/eda/runs/4843399453644140b7feffe6c3721d35/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VREF VREF VGND 0.6
+VBIAS BIAS VGND 0.9
+COUT OUT VGND 1e-09
+RLOAD OUT VGND 60000
+RSTEP OUT LOADSTEP 6666.66666667
+SLOAD LOADSTEP VGND LOADCTL VGND LOADSW
+VLOAD LOADCTL VGND PULSE(0 1.8 20u 100n 100n 40u 100u)
+.model LOADSW SW(Ron=0.1 Roff=1e12 Vt=0.9 Vh=0.01)
+XU VREF BIAS OUT VPWR VGND chip_ldo
+.control
+save v(OUT) i(VDD) v(xu.FB) v(xu.GATE) i(v.xu.vregister_cf_ad624a38a20f86e3) i(v.xu.vregister_cf_f14f8bdf50d5f8b0) i(v.xu.vregister_cf_a4f5d5cf8ab6ff8c) i(v.xu.vregister_cf_45738ee016e05868) i(v.xu.vregister_cf_fe2ae4d6dab922b1) i(v.xu.vregister_cf_d969221a365d2a95) i(v.xu.vregister_cf_6bad8ec437fcbab1) i(v.xu.vregister_cf_d33fcf75d0929dfd) i(v.xu.vregister_cf_6ce00279bd0a7baa) i(v.xu.vregister_cf_83563f53a4988147) i(VGND) i(VREF) i(VBIAS) i(VLOAD) v(XU.ERROR_AMP__MIR) v(XU.ERROR_AMP__TAIL) v(XU.FB) v(VGND) v(XU.GATE) v(VREF) v(BIAS) v(VPWR) v(LOADCTL)
+set num_threads=1
+set numdgt=17
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 5e-08 0.0001
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(xu.FB)
+let mos_wave_3 = v(xu.GATE)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_ad624a38a20f86e3)
+let register_flow_1 = i(v.xu.vregister_cf_f14f8bdf50d5f8b0)
+let register_flow_2 = i(v.xu.vregister_cf_a4f5d5cf8ab6ff8c)
+let register_flow_3 = i(v.xu.vregister_cf_45738ee016e05868)
+let register_flow_4 = i(v.xu.vregister_cf_fe2ae4d6dab922b1)
+let register_flow_5 = i(v.xu.vregister_cf_d969221a365d2a95)
+let register_flow_6 = i(v.xu.vregister_cf_6bad8ec437fcbab1)
+let register_flow_7 = i(v.xu.vregister_cf_d33fcf75d0929dfd)
+let register_flow_8 = i(v.xu.vregister_cf_6ce00279bd0a7baa)
+let register_flow_9 = i(v.xu.vregister_cf_83563f53a4988147)
+let register_flow_10 = i(VGND)
+let register_flow_11 = i(VDD)
+let register_flow_12 = i(VREF)
+let register_flow_13 = i(VBIAS)
+let register_flow_14 = i(VLOAD)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13 register_flow_14
+let register_voltage_0 = v(XU.ERROR_AMP__MIR)
+let register_voltage_1 = v(XU.ERROR_AMP__TAIL)
+let register_voltage_2 = v(XU.FB)
+let register_voltage_3 = v(VGND)
+let register_voltage_4 = v(XU.GATE)
+let register_voltage_5 = v(VREF)
+let register_voltage_6 = v(BIAS)
+let register_voltage_7 = v(VPWR)
+let register_voltage_8 = v(OUT)
+let register_voltage_9 = 0*register_flow_0
+let register_voltage_10 = v(LOADCTL)
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10
+quit
+.endc
+.end

@@ -1,0 +1,19 @@
+.subckt chip_vco CTRL OUT VPWR VGND
+CC_STAGE0 Q0 VGND 5e-13
+CC_STAGE1 Q1 VGND 5e-13
+CC_STAGE2 OUT VGND 5e-13
+XN_BIAS PBIAS CTRL VGND VGND sky130_fd_pr__nfet_01v8 w=5 l=0.5 nf=1 m=1
+XN_INV0 Q0 OUT N0 VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+XN_INV1 Q1 Q0 N1 VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+XN_INV2 OUT Q1 N2 VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+XN_LIMIT0 N0 CTRL VGND VGND sky130_fd_pr__nfet_01v8 w=5 l=0.5 nf=1 m=1
+XN_LIMIT1 N1 CTRL VGND VGND sky130_fd_pr__nfet_01v8 w=5 l=0.5 nf=1 m=1
+XN_LIMIT2 N2 CTRL VGND VGND sky130_fd_pr__nfet_01v8 w=5 l=0.5 nf=1 m=1
+XP_BIAS PBIAS PBIAS VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=10 l=0.5 nf=1 m=1
+XP_INV0 Q0 OUT P0 VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+XP_INV1 Q1 Q0 P1 VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+XP_INV2 OUT Q1 P2 VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+XP_LIMIT0 P0 PBIAS VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=10 l=0.5 nf=1 m=1
+XP_LIMIT1 P1 PBIAS VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=10 l=0.5 nf=1 m=1
+XP_LIMIT2 P2 PBIAS VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=10 l=0.5 nf=1 m=1
+.ends chip_vco

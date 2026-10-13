@@ -1,0 +1,182 @@
+.subckt SOC_OTA_FIRST INP INN BIAS OUT VPWR VGND
+XN_INN0 register_cf_node_44a7d6fa5e5059ca INN register_cf_node_44a7d6fa5e5059ca_source VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1
+Vregister_cf_44a7d6fa5e5059ca MIR register_cf_node_44a7d6fa5e5059ca 0
+Vregister_cf_44a7d6fa5e5059ca_source TAIL register_cf_node_44a7d6fa5e5059ca_source 0
+XN_INN1 register_cf_node_59dd6b01ffe7cfb0 INN register_cf_node_59dd6b01ffe7cfb0_source VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1
+Vregister_cf_59dd6b01ffe7cfb0 MIR register_cf_node_59dd6b01ffe7cfb0 0
+Vregister_cf_59dd6b01ffe7cfb0_source TAIL register_cf_node_59dd6b01ffe7cfb0_source 0
+XN_INP0 register_cf_node_65e04b8a37108d24 INP register_cf_node_65e04b8a37108d24_source VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1
+Vregister_cf_65e04b8a37108d24 OUT register_cf_node_65e04b8a37108d24 0
+Vregister_cf_65e04b8a37108d24_source TAIL register_cf_node_65e04b8a37108d24_source 0
+XN_INP1 register_cf_node_bbed48e6e9d221df INP register_cf_node_bbed48e6e9d221df_source VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1
+Vregister_cf_bbed48e6e9d221df OUT register_cf_node_bbed48e6e9d221df 0
+Vregister_cf_bbed48e6e9d221df_source TAIL register_cf_node_bbed48e6e9d221df_source 0
+XN_TAIL register_cf_node_0c41c8aa9e8c91bb BIAS register_cf_node_0c41c8aa9e8c91bb_source VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+Vregister_cf_0c41c8aa9e8c91bb TAIL register_cf_node_0c41c8aa9e8c91bb 0
+Vregister_cf_0c41c8aa9e8c91bb_source VGND register_cf_node_0c41c8aa9e8c91bb_source 0
+XP_DIODE register_cf_node_dee31e44c859f504 MIR register_cf_node_dee31e44c859f504_source VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+Vregister_cf_dee31e44c859f504 MIR register_cf_node_dee31e44c859f504 0
+Vregister_cf_dee31e44c859f504_source VPWR register_cf_node_dee31e44c859f504_source 0
+XP_MIRROR register_cf_node_76752659b10f5142 MIR register_cf_node_76752659b10f5142_source VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+Vregister_cf_76752659b10f5142 OUT register_cf_node_76752659b10f5142 0
+Vregister_cf_76752659b10f5142_source VPWR register_cf_node_76752659b10f5142_source 0
+.ends SOC_OTA_FIRST
+.subckt SOC_OTA INP INN BIAS OUT VPWR VGND
+CC_MILLER register_cf_node_54f0040858166f9d COMP 5e-12
+Vregister_cf_54f0040858166f9d PRE register_cf_node_54f0040858166f9d 0
+XFIRST INP INN BIAS PRE VPWR VGND SOC_OTA_FIRST
+XN_SECOND register_cf_node_9a9b80f42fc6e7ca BIAS register_cf_node_9a9b80f42fc6e7ca_source VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+Vregister_cf_9a9b80f42fc6e7ca OUT register_cf_node_9a9b80f42fc6e7ca 0
+Vregister_cf_9a9b80f42fc6e7ca_source VGND register_cf_node_9a9b80f42fc6e7ca_source 0
+XP_SECOND register_cf_node_5e86041922791634 PRE register_cf_node_5e86041922791634_source VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1
+Vregister_cf_5e86041922791634 OUT register_cf_node_5e86041922791634 0
+Vregister_cf_5e86041922791634_source VPWR register_cf_node_5e86041922791634_source 0
+RR_ZERO register_cf_node_a901034b015257ed OUT 5000
+Vregister_cf_a901034b015257ed COMP register_cf_node_a901034b015257ed 0
+.ends SOC_OTA
+.subckt SOC_BIAS BIAS VCM VPWR VGND
+CC_VCM register_cf_node_11c943ab1f38f9d8 VGND 2e-11
+Vregister_cf_11c943ab1f38f9d8 VCM_RAW register_cf_node_11c943ab1f38f9d8 0
+XN_DIODE register_cf_node_a977a4ed402b1f2c BIAS register_cf_node_a977a4ed402b1f2c_source VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+Vregister_cf_a977a4ed402b1f2c BIAS register_cf_node_a977a4ed402b1f2c 0
+Vregister_cf_a977a4ed402b1f2c_source VGND register_cf_node_a977a4ed402b1f2c_source 0
+RR_BIAS register_cf_node_2bb5df4ceb7170aa BIAS 30000
+Vregister_cf_2bb5df4ceb7170aa VPWR register_cf_node_2bb5df4ceb7170aa 0
+RR_VCM_BOTTOM register_cf_node_75cf7e6789df38e5 VGND 100000
+Vregister_cf_75cf7e6789df38e5 VCM_RAW register_cf_node_75cf7e6789df38e5 0
+RR_VCM_TOP register_cf_node_a7caf04976bf19e0 VCM_RAW 100000
+Vregister_cf_a7caf04976bf19e0 VPWR register_cf_node_a7caf04976bf19e0 0
+XVCM_BUFFER VCM_RAW VCM BIAS VCM VPWR VGND SOC_OTA
+.ends SOC_BIAS
+.subckt SOC_GAIN2 VIN VCM BIAS OUT VPWR VGND
+XAMP VIN FB BIAS OUT VPWR VGND SOC_OTA
+RR_FEEDBACK register_cf_node_c6be1d2e3dfe1517 FB 10000
+Vregister_cf_c6be1d2e3dfe1517 OUT register_cf_node_c6be1d2e3dfe1517 0
+RR_GROUND register_cf_node_338a38f16827216e VCM 10000
+Vregister_cf_338a38f16827216e FB register_cf_node_338a38f16827216e 0
+.ends SOC_GAIN2
+.subckt SOC_GAIN8 VIN VCM BIAS OUT VPWR VGND
+XAMP VIN FB BIAS OUT VPWR VGND SOC_OTA
+RR_FEEDBACK register_cf_node_9f8a3984448d2d66 FB 70000
+Vregister_cf_9f8a3984448d2d66 OUT register_cf_node_9f8a3984448d2d66 0
+RR_GROUND register_cf_node_5e783562404aefd9 VCM 10000
+Vregister_cf_5e783562404aefd9 FB register_cf_node_5e783562404aefd9 0
+.ends SOC_GAIN8
+.subckt INV A Y VPWR VGND
+XMN register_cf_node_37eac2f2e7d80b63 A register_cf_node_37eac2f2e7d80b63_source VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_37eac2f2e7d80b63 Y register_cf_node_37eac2f2e7d80b63 0
+Vregister_cf_37eac2f2e7d80b63_source VGND register_cf_node_37eac2f2e7d80b63_source 0
+XMP register_cf_node_684eb771bbecb33a A register_cf_node_684eb771bbecb33a_source VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_684eb771bbecb33a Y register_cf_node_684eb771bbecb33a 0
+Vregister_cf_684eb771bbecb33a_source VPWR register_cf_node_684eb771bbecb33a_source 0
+.ends INV
+.subckt SOC_PGA VIN GAIN VCM BIAS OUT VPWR VGND
+XGAIN2 VIN VCM BIAS V2 VPWR VGND SOC_GAIN2
+XGAIN8 VIN VCM BIAS V8 VPWR VGND SOC_GAIN8
+XGAIN_INVERTER GAIN GAINB VPWR VGND INV
+XN_HIGH register_cf_node_396c97f6815217b7 GAIN register_cf_node_396c97f6815217b7_source VGND sky130_fd_pr__nfet_01v8 w=20 l=0.15 nf=1 m=1
+Vregister_cf_396c97f6815217b7 V8 register_cf_node_396c97f6815217b7 0
+Vregister_cf_396c97f6815217b7_source SELECTED register_cf_node_396c97f6815217b7_source 0
+XN_LOW register_cf_node_58a90f8abcf17bdb GAINB register_cf_node_58a90f8abcf17bdb_source VGND sky130_fd_pr__nfet_01v8 w=20 l=0.15 nf=1 m=1
+Vregister_cf_58a90f8abcf17bdb V2 register_cf_node_58a90f8abcf17bdb 0
+Vregister_cf_58a90f8abcf17bdb_source SELECTED register_cf_node_58a90f8abcf17bdb_source 0
+XOUTPUT_BUFFER SELECTED OUT BIAS OUT VPWR VGND SOC_OTA
+XP_HIGH register_cf_node_59c8c4c927c8fe6a GAINB register_cf_node_59c8c4c927c8fe6a_source VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1
+Vregister_cf_59c8c4c927c8fe6a V8 register_cf_node_59c8c4c927c8fe6a 0
+Vregister_cf_59c8c4c927c8fe6a_source SELECTED register_cf_node_59c8c4c927c8fe6a_source 0
+XP_LOW register_cf_node_58071531a6efd575 GAIN register_cf_node_58071531a6efd575_source VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1
+Vregister_cf_58071531a6efd575 V2 register_cf_node_58071531a6efd575 0
+Vregister_cf_58071531a6efd575_source SELECTED register_cf_node_58071531a6efd575_source 0
+.ends SOC_PGA
+.subckt SOC_FILTER2 VIN BIAS OUT VPWR VGND
+XBUFFER0 FILTER0 MID BIAS MID VPWR VGND SOC_OTA
+XBUFFER1 FILTER1 OUT BIAS OUT VPWR VGND SOC_OTA
+CC_POLE0 register_cf_node_9374be5899781063 VGND 2e-11
+Vregister_cf_9374be5899781063 FILTER0 register_cf_node_9374be5899781063 0
+CC_POLE1 register_cf_node_39c04da5432ef959 VGND 2e-11
+Vregister_cf_39c04da5432ef959 FILTER1 register_cf_node_39c04da5432ef959 0
+RR_POLE0 register_cf_node_b36236e90435ccd8 FILTER0 40000
+Vregister_cf_b36236e90435ccd8 VIN register_cf_node_b36236e90435ccd8 0
+RR_POLE1 register_cf_node_903c32a535bb697f FILTER1 40000
+Vregister_cf_903c32a535bb697f MID register_cf_node_903c32a535bb697f 0
+.ends SOC_FILTER2
+.subckt PREAMP INP INN BIAS OUT VPWR VGND
+XN_INN register_cf_node_f5e6bb569eae4e57 INN register_cf_node_f5e6bb569eae4e57_source VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+Vregister_cf_f5e6bb569eae4e57 MIR register_cf_node_f5e6bb569eae4e57 0
+Vregister_cf_f5e6bb569eae4e57_source TAIL register_cf_node_f5e6bb569eae4e57_source 0
+XN_INP register_cf_node_8dfc281901a76fd7 INP register_cf_node_8dfc281901a76fd7_source VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+Vregister_cf_8dfc281901a76fd7 OUT register_cf_node_8dfc281901a76fd7 0
+Vregister_cf_8dfc281901a76fd7_source TAIL register_cf_node_8dfc281901a76fd7_source 0
+XN_TAIL register_cf_node_982336a84ede3d8c BIAS register_cf_node_982336a84ede3d8c_source VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+Vregister_cf_982336a84ede3d8c TAIL register_cf_node_982336a84ede3d8c 0
+Vregister_cf_982336a84ede3d8c_source VGND register_cf_node_982336a84ede3d8c_source 0
+XP_DIODE register_cf_node_fa301aca43866ffd MIR register_cf_node_fa301aca43866ffd_source VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+Vregister_cf_fa301aca43866ffd MIR register_cf_node_fa301aca43866ffd 0
+Vregister_cf_fa301aca43866ffd_source VPWR register_cf_node_fa301aca43866ffd_source 0
+XP_MIRROR register_cf_node_ba06122c33a0aac9 MIR register_cf_node_ba06122c33a0aac9_source VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+Vregister_cf_ba06122c33a0aac9 OUT register_cf_node_ba06122c33a0aac9 0
+Vregister_cf_ba06122c33a0aac9_source VPWR register_cf_node_ba06122c33a0aac9_source 0
+.ends PREAMP
+.subckt SOC_COMPARATOR INP INN BIAS OUT VPWR VGND
+XN_OUT register_cf_node_20dcc8d7af24a4f7 PRE register_cf_node_20dcc8d7af24a4f7_source VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+Vregister_cf_20dcc8d7af24a4f7 OUT register_cf_node_20dcc8d7af24a4f7 0
+Vregister_cf_20dcc8d7af24a4f7_source VGND register_cf_node_20dcc8d7af24a4f7_source 0
+XPREAMP INP INN BIAS PRE VPWR VGND PREAMP
+XP_OUT register_cf_node_b2327db240c1f8e8 PRE register_cf_node_b2327db240c1f8e8_source VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+Vregister_cf_b2327db240c1f8e8 OUT register_cf_node_b2327db240c1f8e8 0
+Vregister_cf_b2327db240c1f8e8_source VPWR register_cf_node_b2327db240c1f8e8_source 0
+.ends SOC_COMPARATOR
+.subckt MUX2 A B S Y VPWR VGND
+XIS S SB VPWR VGND INV
+XMNA register_cf_node_bbc0a6d3f4fd8c5e SB register_cf_node_bbc0a6d3f4fd8c5e_source VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_bbc0a6d3f4fd8c5e Y register_cf_node_bbc0a6d3f4fd8c5e 0
+Vregister_cf_bbc0a6d3f4fd8c5e_source A register_cf_node_bbc0a6d3f4fd8c5e_source 0
+XMNB register_cf_node_83cccc875ed4527b S register_cf_node_83cccc875ed4527b_source VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_83cccc875ed4527b Y register_cf_node_83cccc875ed4527b 0
+Vregister_cf_83cccc875ed4527b_source B register_cf_node_83cccc875ed4527b_source 0
+XMPA register_cf_node_7370e7e8c7f6aa5a S register_cf_node_7370e7e8c7f6aa5a_source VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_7370e7e8c7f6aa5a Y register_cf_node_7370e7e8c7f6aa5a 0
+Vregister_cf_7370e7e8c7f6aa5a_source A register_cf_node_7370e7e8c7f6aa5a_source 0
+XMPB register_cf_node_00d7986dfe60e3f6 SB register_cf_node_00d7986dfe60e3f6_source VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_00d7986dfe60e3f6 Y register_cf_node_00d7986dfe60e3f6 0
+Vregister_cf_00d7986dfe60e3f6_source B register_cf_node_00d7986dfe60e3f6_source 0
+.ends MUX2
+.subckt DFF D CLK Q VPWR VGND
+XICLK CLK CLKB VPWR VGND INV
+XM1 M MB VPWR VGND INV
+XM2 MB MF VPWR VGND INV
+XMNIN register_cf_node_1532470e8825cafa CLKB register_cf_node_1532470e8825cafa_source VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_1532470e8825cafa M register_cf_node_1532470e8825cafa 0
+Vregister_cf_1532470e8825cafa_source D register_cf_node_1532470e8825cafa_source 0
+XMNMF register_cf_node_ad50516e93123ce0 CLK register_cf_node_ad50516e93123ce0_source VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_ad50516e93123ce0 M register_cf_node_ad50516e93123ce0 0
+Vregister_cf_ad50516e93123ce0_source MF register_cf_node_ad50516e93123ce0_source 0
+XMNOUT register_cf_node_eeaa3872c2dd9f8d CLK register_cf_node_eeaa3872c2dd9f8d_source VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_eeaa3872c2dd9f8d T register_cf_node_eeaa3872c2dd9f8d 0
+Vregister_cf_eeaa3872c2dd9f8d_source MF register_cf_node_eeaa3872c2dd9f8d_source 0
+XMNSF register_cf_node_ef8ed4eded6c09f4 CLKB register_cf_node_ef8ed4eded6c09f4_source VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_ef8ed4eded6c09f4 T register_cf_node_ef8ed4eded6c09f4 0
+Vregister_cf_ef8ed4eded6c09f4_source Q register_cf_node_ef8ed4eded6c09f4_source 0
+XMPIN register_cf_node_8b0bc9693bb836e6 CLK register_cf_node_8b0bc9693bb836e6_source VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_8b0bc9693bb836e6 M register_cf_node_8b0bc9693bb836e6 0
+Vregister_cf_8b0bc9693bb836e6_source D register_cf_node_8b0bc9693bb836e6_source 0
+XMPMF register_cf_node_d0d00b0b897b56d6 CLKB register_cf_node_d0d00b0b897b56d6_source VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_d0d00b0b897b56d6 M register_cf_node_d0d00b0b897b56d6 0
+Vregister_cf_d0d00b0b897b56d6_source MF register_cf_node_d0d00b0b897b56d6_source 0
+XMPOUT register_cf_node_016ad729cc31b397 CLKB register_cf_node_016ad729cc31b397_source VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_016ad729cc31b397 T register_cf_node_016ad729cc31b397 0
+Vregister_cf_016ad729cc31b397_source MF register_cf_node_016ad729cc31b397_source 0
+XMPSF register_cf_node_f781dc7a86153e61 CLK register_cf_node_f781dc7a86153e61_source VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_f781dc7a86153e61 T register_cf_node_f781dc7a86153e61 0
+Vregister_cf_f781dc7a86153e61_source Q register_cf_node_f781dc7a86153e61_source 0
+XS1 T TB VPWR VGND INV
+XS2 TB Q VPWR VGND INV
+.ends DFF
+.subckt soc_sensor_afe VIN GAIN CLK RESET OUT DATA VCM BIAS VPWR VGND
+XBIAS_SOURCE BIAS VCM VPWR VGND SOC_BIAS
+XCOMPARATOR OUT VCM BIAS CMP VPWR VGND SOC_COMPARATOR
+XFILTER AMPLIFIED BIAS OUT VPWR VGND SOC_FILTER2
+XPGA VIN GAIN VCM BIAS AMPLIFIED VPWR VGND SOC_PGA
+XRESET_MUX CMP VGND RESET D VPWR VGND MUX2
+XSAMPLE D CLK DATA VPWR VGND DFF
+.ends soc_sensor_afe

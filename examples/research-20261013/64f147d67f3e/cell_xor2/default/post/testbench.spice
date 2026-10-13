@@ -1,0 +1,117 @@
+Resistor public CMOS cell actual input truth matrix
+.include "/workspace/.runtime/eda/runs/27d92d901f4d4b109ed59c7244fa90b4/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/eda/runs/27d92d901f4d4b109ed59c7244fa90b4/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VA A VGND PWL(0 0 5e-08 0 5.01e-08 1.8 1e-07 1.8 1.001e-07 0 1.5e-07 0 1.501e-07 1.8 2e-07 1.8 2.001e-07 0 2.5e-07 0 2.501e-07 1.8 3e-07 1.8 3.001e-07 0 3.5e-07 0 3.501e-07 0 4e-07 0 4.001e-07 1.8 4.5e-07 1.8 4.501e-07 0 5e-07 0 5.001e-07 1.8 5.5e-07 1.8 5.501e-07 1.8 6e-07 1.8 6.001e-07 0 6.5e-07 0 6.501e-07 1.8 7e-07 1.8 7.001e-07 0 7.5e-07 0 7.501e-07 0 8e-07 0 8.001e-07 1.8 8.5e-07 1.8 8.501e-07 0 9e-07 0 9.001e-07 1.8 9.5e-07 1.8 9.501e-07 1.8 1e-06 1.8)
+VB B VGND PWL(0 0 5e-08 0 5.01e-08 0 1e-07 0 1.001e-07 1.8 1.5e-07 1.8 1.501e-07 1.8 2e-07 1.8 2.001e-07 0 2.5e-07 0 2.501e-07 0 3e-07 0 3.001e-07 0 3.5e-07 0 3.501e-07 1.8 4e-07 1.8 4.001e-07 0 4.5e-07 0 4.501e-07 0 5e-07 0 5.001e-07 0 5.5e-07 0 5.501e-07 1.8 6e-07 1.8 6.001e-07 1.8 6.5e-07 1.8 6.501e-07 1.8 7e-07 1.8 7.001e-07 1.8 7.5e-07 1.8 7.501e-07 0 8e-07 0 8.001e-07 1.8 8.5e-07 1.8 8.501e-07 1.8 9e-07 1.8 9.001e-07 1.8 9.5e-07 1.8 9.501e-07 0 1e-06 0)
+CLOAD Y VGND 5e-15
+XU Y VPWR VGND B A cell_xor2
+.control
+save v(A) v(B) v(Y) i(VDD) i(v.xu.vregister_cf_683eb4d351eb8286) i(v.xu.vregister_cf_01dead019619b2b8) i(v.xu.vregister_cf_4ea80be5325e2b83) i(v.xu.vregister_cf_5a8cab2fb1531f55) i(v.xu.vregister_cf_7d87aa2c74760312) i(v.xu.vregister_cf_8b48dd30c91e4b3f) i(v.xu.vregister_cf_a5c0e43ae4e6aebc) i(v.xu.vregister_cf_5b6050caedbba198) i(v.xu.vregister_cf_10694f1af9a19748) i(v.xu.vregister_cf_c1972b280ed7cad0) i(v.xu.vregister_cf_5cebfddc1237d460) i(v.xu.vregister_cf_a53c911ea079998e) i(v.xu.vregister_cf_099b6d51416137cb) i(v.xu.vregister_cf_d002c0cfdff274bb) i(v.xu.vregister_cf_add0247286d98b0f) i(v.xu.vregister_cf_1458ae15465185b8) i(VGND) i(VA) i(VB) v(XU.N1__N1.t0) v(XU.N1.t1) v(XU.A.t0) v(XU.VGND.t1) v(XU.N2__N1.t0) v(XU.N2.t1) v(XU.A.t1) v(XU.VGND.t0) v(XU.VGND.t3) v(XU.N4__N1.t1) v(XU.N3.t3) v(XU.VGND.t2) v(XU.VGND.t9) v(XU.N2__N1.t1) v(XU.N1.t3) v(XU.VGND.t8) v(XU.N3__N1.t0) v(XU.N3.t0) v(XU.B.t0) v(XU.VGND.t5) v(XU.VPWR.t9) v(XU.Y.t1) v(XU.N2.t3) v(XU.VPWR.t8) v(XU.VPWR.t15) v(XU.N2.t2) v(XU.N1.t4) v(XU.VPWR.t14) v(XU.VPWR.t13) v(XU.N3.t2) v(XU.N1.t5) v(XU.VPWR.t12) v(XU.VPWR.t3) v(XU.N3.t1) v(XU.B.t1) v(XU.VPWR.t2) v(XU.VPWR.t7) v(XU.N1.t0) v(XU.A.t2) v(XU.VPWR.t6) v(XU.VPWR.t5) v(XU.N2.t0) v(XU.A.t3) v(XU.VPWR.t4) v(XU.VPWR.t1) v(XU.N1.t2) v(XU.B.t2) v(XU.VPWR.t0) v(XU.VPWR.t11) v(XU.Y.t2) v(XU.N3.t4) v(XU.VPWR.t10) v(XU.VGND.t11) v(XU.N1__N1.t1) v(XU.B.t3) v(XU.VGND.t10) v(XU.N4__N1.t0) v(XU.Y.t0) v(XU.N2.t4) v(XU.VGND.t4) v(XU.VGND.t7) v(XU.N3__N1.t1) v(XU.N1.t6) v(XU.VGND.t6) v(VGND) v(VPWR)
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+tran 1e-11 1e-06 0 1e-11
+let mos_wave_0 = v(A)
+let mos_wave_1 = v(B)
+let mos_wave_2 = v(Y)
+let mos_wave_3 = -i(VDD)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_683eb4d351eb8286)
+let register_flow_1 = i(v.xu.vregister_cf_01dead019619b2b8)
+let register_flow_2 = i(v.xu.vregister_cf_4ea80be5325e2b83)
+let register_flow_3 = i(v.xu.vregister_cf_5a8cab2fb1531f55)
+let register_flow_4 = i(v.xu.vregister_cf_7d87aa2c74760312)
+let register_flow_5 = i(v.xu.vregister_cf_8b48dd30c91e4b3f)
+let register_flow_6 = i(v.xu.vregister_cf_a5c0e43ae4e6aebc)
+let register_flow_7 = i(v.xu.vregister_cf_5b6050caedbba198)
+let register_flow_8 = i(v.xu.vregister_cf_10694f1af9a19748)
+let register_flow_9 = i(v.xu.vregister_cf_c1972b280ed7cad0)
+let register_flow_10 = i(v.xu.vregister_cf_5cebfddc1237d460)
+let register_flow_11 = i(v.xu.vregister_cf_a53c911ea079998e)
+let register_flow_12 = i(v.xu.vregister_cf_099b6d51416137cb)
+let register_flow_13 = i(v.xu.vregister_cf_d002c0cfdff274bb)
+let register_flow_14 = i(v.xu.vregister_cf_add0247286d98b0f)
+let register_flow_15 = i(v.xu.vregister_cf_1458ae15465185b8)
+let register_flow_16 = i(VGND)
+let register_flow_17 = i(VDD)
+let register_flow_18 = i(VA)
+let register_flow_19 = i(VB)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13 register_flow_14 register_flow_15 register_flow_16 register_flow_17 register_flow_18 register_flow_19
+let register_voltage_0 = v(XU.N1__N1.t0)
+let register_voltage_1 = v(XU.N1.t1)
+let register_voltage_2 = v(XU.A.t0)
+let register_voltage_3 = v(XU.VGND.t1)
+let register_voltage_4 = v(XU.N2__N1.t0)
+let register_voltage_5 = v(XU.N2.t1)
+let register_voltage_6 = v(XU.A.t1)
+let register_voltage_7 = v(XU.VGND.t0)
+let register_voltage_8 = v(XU.VGND.t3)
+let register_voltage_9 = v(XU.N4__N1.t1)
+let register_voltage_10 = v(XU.N3.t3)
+let register_voltage_11 = v(XU.VGND.t2)
+let register_voltage_12 = v(XU.VGND.t9)
+let register_voltage_13 = v(XU.N2__N1.t1)
+let register_voltage_14 = v(XU.N1.t3)
+let register_voltage_15 = v(XU.VGND.t8)
+let register_voltage_16 = v(XU.N3__N1.t0)
+let register_voltage_17 = v(XU.N3.t0)
+let register_voltage_18 = v(XU.B.t0)
+let register_voltage_19 = v(XU.VGND.t5)
+let register_voltage_20 = v(XU.VPWR.t9)
+let register_voltage_21 = v(XU.Y.t1)
+let register_voltage_22 = v(XU.N2.t3)
+let register_voltage_23 = v(XU.VPWR.t8)
+let register_voltage_24 = v(XU.VPWR.t15)
+let register_voltage_25 = v(XU.N2.t2)
+let register_voltage_26 = v(XU.N1.t4)
+let register_voltage_27 = v(XU.VPWR.t14)
+let register_voltage_28 = v(XU.VPWR.t13)
+let register_voltage_29 = v(XU.N3.t2)
+let register_voltage_30 = v(XU.N1.t5)
+let register_voltage_31 = v(XU.VPWR.t12)
+let register_voltage_32 = v(XU.VPWR.t3)
+let register_voltage_33 = v(XU.N3.t1)
+let register_voltage_34 = v(XU.B.t1)
+let register_voltage_35 = v(XU.VPWR.t2)
+let register_voltage_36 = v(XU.VPWR.t7)
+let register_voltage_37 = v(XU.N1.t0)
+let register_voltage_38 = v(XU.A.t2)
+let register_voltage_39 = v(XU.VPWR.t6)
+let register_voltage_40 = v(XU.VPWR.t5)
+let register_voltage_41 = v(XU.N2.t0)
+let register_voltage_42 = v(XU.A.t3)
+let register_voltage_43 = v(XU.VPWR.t4)
+let register_voltage_44 = v(XU.VPWR.t1)
+let register_voltage_45 = v(XU.N1.t2)
+let register_voltage_46 = v(XU.B.t2)
+let register_voltage_47 = v(XU.VPWR.t0)
+let register_voltage_48 = v(XU.VPWR.t11)
+let register_voltage_49 = v(XU.Y.t2)
+let register_voltage_50 = v(XU.N3.t4)
+let register_voltage_51 = v(XU.VPWR.t10)
+let register_voltage_52 = v(XU.VGND.t11)
+let register_voltage_53 = v(XU.N1__N1.t1)
+let register_voltage_54 = v(XU.B.t3)
+let register_voltage_55 = v(XU.VGND.t10)
+let register_voltage_56 = v(XU.N4__N1.t0)
+let register_voltage_57 = v(XU.Y.t0)
+let register_voltage_58 = v(XU.N2.t4)
+let register_voltage_59 = v(XU.VGND.t4)
+let register_voltage_60 = v(XU.VGND.t7)
+let register_voltage_61 = v(XU.N3__N1.t1)
+let register_voltage_62 = v(XU.N1.t6)
+let register_voltage_63 = v(XU.VGND.t6)
+let register_voltage_64 = v(VGND)
+let register_voltage_65 = 0*register_flow_0
+let register_voltage_66 = v(VPWR)
+let register_voltage_67 = v(A)
+let register_voltage_68 = v(B)
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11 register_voltage_12 register_voltage_13 register_voltage_14 register_voltage_15 register_voltage_16 register_voltage_17 register_voltage_18 register_voltage_19 register_voltage_20 register_voltage_21 register_voltage_22 register_voltage_23 register_voltage_24 register_voltage_25 register_voltage_26 register_voltage_27 register_voltage_28 register_voltage_29 register_voltage_30 register_voltage_31 register_voltage_32 register_voltage_33 register_voltage_34 register_voltage_35 register_voltage_36 register_voltage_37 register_voltage_38 register_voltage_39 register_voltage_40 register_voltage_41 register_voltage_42 register_voltage_43 register_voltage_44 register_voltage_45 register_voltage_46 register_voltage_47 register_voltage_48 register_voltage_49 register_voltage_50 register_voltage_51 register_voltage_52 register_voltage_53 register_voltage_54 register_voltage_55 register_voltage_56 register_voltage_57 register_voltage_58 register_voltage_59 register_voltage_60 register_voltage_61 register_voltage_62 register_voltage_63 register_voltage_64 register_voltage_65 register_voltage_66 register_voltage_67 register_voltage_68
+quit
+.endc
+.end

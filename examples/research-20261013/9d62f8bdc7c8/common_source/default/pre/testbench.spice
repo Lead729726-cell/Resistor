@@ -1,0 +1,38 @@
+Register actual native common_source
+.include "/workspace/.runtime/eda/runs/e6d4391e8d524f92ab54f4e12c124e3d/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/eda/runs/e6d4391e8d524f92ab54f4e12c124e3d/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VIN IN VGND 0.7 AC 1 PULSE(0.7 0.71 10e-9 1e-12 1e-12 20e-9 40e-9)
+XU IN OUT VPWR VGND common_source
+.control
+save v(IN) v(OUT) i(VDD) i(v.xu.vregister_cf_93d25bbc8eacc7ed) i(v.xu.vregister_cf_e15fad05f7a2876b) i(VGND) i(VIN) v(VGND) v(VPWR)
+set num_threads=1
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+op
+let mos_sample_index=0
+setscale mos_sample_index
+let mos_wave_0 = v(IN)
+let mos_wave_1 = v(OUT)
+let mos_wave_2 = -i(VDD)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_93d25bbc8eacc7ed)
+let register_flow_1 = i(v.xu.vregister_cf_e15fad05f7a2876b)
+let register_flow_2 = i(VGND)
+let register_flow_3 = i(VDD)
+let register_flow_4 = i(VIN)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4
+let register_voltage_0 = v(OUT)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(IN)
+let register_voltage_3 = v(VPWR)
+let register_voltage_4 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4
+quit
+.endc
+.end

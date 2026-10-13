@@ -1,0 +1,107 @@
+Resistor analog SoC soc_pga
+.include "/workspace/.runtime/eda/runs/3cbad2b34f60417e882fd843eb45dbd1/supported-tt.spice"
+.options method=gear maxord=2
+.include "/workspace/.runtime/eda/runs/3cbad2b34f60417e882fd843eb45dbd1/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VBIAS BIAS VGND 0.9
+VCM VCM VGND 0.9
+VIN VIN VGND DC 0.9 AC 1 SIN(0.9 0.025 5000)
+VGAIN GAIN VGND PULSE(0 1.8 100u 2n 2n 1 2)
+CLOAD OUT VGND 50f
+XU VIN GAIN VCM BIAS OUT VPWR VGND soc_pga
+.control
+save v(OUT) i(VDD) v(VIN) v(GAIN) i(v.xu.vregister_cf_396c97f6815217b7) i(v.xu.vregister_cf_58a90f8abcf17bdb) i(v.xu.vregister_cf_59c8c4c927c8fe6a) i(v.xu.vregister_cf_58071531a6efd575) i(v.xu.xgain2.vregister_cf_c6be1d2e3dfe1517) i(v.xu.xgain2.vregister_cf_338a38f16827216e) i(v.xu.xgain2.xamp.vregister_cf_54f0040858166f9d) i(v.xu.xgain2.xamp.vregister_cf_9a9b80f42fc6e7ca) i(v.xu.xgain2.xamp.vregister_cf_5e86041922791634) i(v.xu.xgain2.xamp.vregister_cf_a901034b015257ed) i(v.xu.xgain2.xamp.xfirst.vregister_cf_44a7d6fa5e5059ca) i(v.xu.xgain2.xamp.xfirst.vregister_cf_59dd6b01ffe7cfb0) i(v.xu.xgain2.xamp.xfirst.vregister_cf_65e04b8a37108d24) i(v.xu.xgain2.xamp.xfirst.vregister_cf_bbed48e6e9d221df) i(v.xu.xgain2.xamp.xfirst.vregister_cf_0c41c8aa9e8c91bb) i(v.xu.xgain2.xamp.xfirst.vregister_cf_dee31e44c859f504) i(v.xu.xgain2.xamp.xfirst.vregister_cf_76752659b10f5142) i(v.xu.xgain8.vregister_cf_9f8a3984448d2d66) i(v.xu.xgain8.vregister_cf_5e783562404aefd9) i(v.xu.xgain8.xamp.vregister_cf_54f0040858166f9d) i(v.xu.xgain8.xamp.vregister_cf_9a9b80f42fc6e7ca) i(v.xu.xgain8.xamp.vregister_cf_5e86041922791634) i(v.xu.xgain8.xamp.vregister_cf_a901034b015257ed) i(v.xu.xgain8.xamp.xfirst.vregister_cf_44a7d6fa5e5059ca) i(v.xu.xgain8.xamp.xfirst.vregister_cf_59dd6b01ffe7cfb0) i(v.xu.xgain8.xamp.xfirst.vregister_cf_65e04b8a37108d24) i(v.xu.xgain8.xamp.xfirst.vregister_cf_bbed48e6e9d221df) i(v.xu.xgain8.xamp.xfirst.vregister_cf_0c41c8aa9e8c91bb) i(v.xu.xgain8.xamp.xfirst.vregister_cf_dee31e44c859f504) i(v.xu.xgain8.xamp.xfirst.vregister_cf_76752659b10f5142) i(v.xu.xgain_inverter.vregister_cf_37eac2f2e7d80b63) i(v.xu.xgain_inverter.vregister_cf_684eb771bbecb33a) i(v.xu.xoutput_buffer.vregister_cf_54f0040858166f9d) i(v.xu.xoutput_buffer.vregister_cf_9a9b80f42fc6e7ca) i(v.xu.xoutput_buffer.vregister_cf_5e86041922791634) i(v.xu.xoutput_buffer.vregister_cf_a901034b015257ed) i(v.xu.xoutput_buffer.xfirst.vregister_cf_44a7d6fa5e5059ca) i(v.xu.xoutput_buffer.xfirst.vregister_cf_59dd6b01ffe7cfb0) i(v.xu.xoutput_buffer.xfirst.vregister_cf_65e04b8a37108d24) i(v.xu.xoutput_buffer.xfirst.vregister_cf_bbed48e6e9d221df) i(v.xu.xoutput_buffer.xfirst.vregister_cf_0c41c8aa9e8c91bb) i(v.xu.xoutput_buffer.xfirst.vregister_cf_dee31e44c859f504) i(v.xu.xoutput_buffer.xfirst.vregister_cf_76752659b10f5142) i(VGND) i(VBIAS) i(VCM) i(VIN) i(VGAIN) v(XU.V8) v(XU.SELECTED) v(VGND) v(XU.V2) v(XU.GAINB) v(VPWR) v(XU.XGAIN2.FB) v(VCM) v(XU.XGAIN2.XAMP.PRE) v(XU.XGAIN2.XAMP.COMP) v(BIAS) v(XU.XGAIN2.XAMP.XFIRST.MIR) v(XU.XGAIN2.XAMP.XFIRST.TAIL) v(XU.XGAIN8.FB) v(XU.XGAIN8.XAMP.PRE) v(XU.XGAIN8.XAMP.COMP) v(XU.XGAIN8.XAMP.XFIRST.MIR) v(XU.XGAIN8.XAMP.XFIRST.TAIL) v(XU.XOUTPUT_BUFFER.PRE) v(XU.XOUTPUT_BUFFER.COMP) v(XU.XOUTPUT_BUFFER.XFIRST.MIR) v(XU.XOUTPUT_BUFFER.XFIRST.TAIL)
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+set noaskquit
+tran 2e-08 0.0002
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(VIN)
+let mos_wave_3 = v(GAIN)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_396c97f6815217b7)
+let register_flow_1 = i(v.xu.vregister_cf_58a90f8abcf17bdb)
+let register_flow_2 = i(v.xu.vregister_cf_59c8c4c927c8fe6a)
+let register_flow_3 = i(v.xu.vregister_cf_58071531a6efd575)
+let register_flow_4 = i(v.xu.xgain2.vregister_cf_c6be1d2e3dfe1517)
+let register_flow_5 = i(v.xu.xgain2.vregister_cf_338a38f16827216e)
+let register_flow_6 = i(v.xu.xgain2.xamp.vregister_cf_54f0040858166f9d)
+let register_flow_7 = i(v.xu.xgain2.xamp.vregister_cf_9a9b80f42fc6e7ca)
+let register_flow_8 = i(v.xu.xgain2.xamp.vregister_cf_5e86041922791634)
+let register_flow_9 = i(v.xu.xgain2.xamp.vregister_cf_a901034b015257ed)
+let register_flow_10 = i(v.xu.xgain2.xamp.xfirst.vregister_cf_44a7d6fa5e5059ca)
+let register_flow_11 = i(v.xu.xgain2.xamp.xfirst.vregister_cf_59dd6b01ffe7cfb0)
+let register_flow_12 = i(v.xu.xgain2.xamp.xfirst.vregister_cf_65e04b8a37108d24)
+let register_flow_13 = i(v.xu.xgain2.xamp.xfirst.vregister_cf_bbed48e6e9d221df)
+let register_flow_14 = i(v.xu.xgain2.xamp.xfirst.vregister_cf_0c41c8aa9e8c91bb)
+let register_flow_15 = i(v.xu.xgain2.xamp.xfirst.vregister_cf_dee31e44c859f504)
+let register_flow_16 = i(v.xu.xgain2.xamp.xfirst.vregister_cf_76752659b10f5142)
+let register_flow_17 = i(v.xu.xgain8.vregister_cf_9f8a3984448d2d66)
+let register_flow_18 = i(v.xu.xgain8.vregister_cf_5e783562404aefd9)
+let register_flow_19 = i(v.xu.xgain8.xamp.vregister_cf_54f0040858166f9d)
+let register_flow_20 = i(v.xu.xgain8.xamp.vregister_cf_9a9b80f42fc6e7ca)
+let register_flow_21 = i(v.xu.xgain8.xamp.vregister_cf_5e86041922791634)
+let register_flow_22 = i(v.xu.xgain8.xamp.vregister_cf_a901034b015257ed)
+let register_flow_23 = i(v.xu.xgain8.xamp.xfirst.vregister_cf_44a7d6fa5e5059ca)
+let register_flow_24 = i(v.xu.xgain8.xamp.xfirst.vregister_cf_59dd6b01ffe7cfb0)
+let register_flow_25 = i(v.xu.xgain8.xamp.xfirst.vregister_cf_65e04b8a37108d24)
+let register_flow_26 = i(v.xu.xgain8.xamp.xfirst.vregister_cf_bbed48e6e9d221df)
+let register_flow_27 = i(v.xu.xgain8.xamp.xfirst.vregister_cf_0c41c8aa9e8c91bb)
+let register_flow_28 = i(v.xu.xgain8.xamp.xfirst.vregister_cf_dee31e44c859f504)
+let register_flow_29 = i(v.xu.xgain8.xamp.xfirst.vregister_cf_76752659b10f5142)
+let register_flow_30 = i(v.xu.xgain_inverter.vregister_cf_37eac2f2e7d80b63)
+let register_flow_31 = i(v.xu.xgain_inverter.vregister_cf_684eb771bbecb33a)
+let register_flow_32 = i(v.xu.xoutput_buffer.vregister_cf_54f0040858166f9d)
+let register_flow_33 = i(v.xu.xoutput_buffer.vregister_cf_9a9b80f42fc6e7ca)
+let register_flow_34 = i(v.xu.xoutput_buffer.vregister_cf_5e86041922791634)
+let register_flow_35 = i(v.xu.xoutput_buffer.vregister_cf_a901034b015257ed)
+let register_flow_36 = i(v.xu.xoutput_buffer.xfirst.vregister_cf_44a7d6fa5e5059ca)
+let register_flow_37 = i(v.xu.xoutput_buffer.xfirst.vregister_cf_59dd6b01ffe7cfb0)
+let register_flow_38 = i(v.xu.xoutput_buffer.xfirst.vregister_cf_65e04b8a37108d24)
+let register_flow_39 = i(v.xu.xoutput_buffer.xfirst.vregister_cf_bbed48e6e9d221df)
+let register_flow_40 = i(v.xu.xoutput_buffer.xfirst.vregister_cf_0c41c8aa9e8c91bb)
+let register_flow_41 = i(v.xu.xoutput_buffer.xfirst.vregister_cf_dee31e44c859f504)
+let register_flow_42 = i(v.xu.xoutput_buffer.xfirst.vregister_cf_76752659b10f5142)
+let register_flow_43 = i(VGND)
+let register_flow_44 = i(VDD)
+let register_flow_45 = i(VBIAS)
+let register_flow_46 = i(VCM)
+let register_flow_47 = i(VIN)
+let register_flow_48 = i(VGAIN)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13 register_flow_14 register_flow_15 register_flow_16 register_flow_17 register_flow_18 register_flow_19 register_flow_20 register_flow_21 register_flow_22 register_flow_23 register_flow_24 register_flow_25 register_flow_26 register_flow_27 register_flow_28 register_flow_29 register_flow_30 register_flow_31 register_flow_32 register_flow_33 register_flow_34 register_flow_35 register_flow_36 register_flow_37 register_flow_38 register_flow_39 register_flow_40 register_flow_41 register_flow_42 register_flow_43 register_flow_44 register_flow_45 register_flow_46 register_flow_47 register_flow_48
+let register_voltage_0 = v(XU.V8)
+let register_voltage_1 = v(XU.SELECTED)
+let register_voltage_2 = v(GAIN)
+let register_voltage_3 = v(VGND)
+let register_voltage_4 = v(XU.V2)
+let register_voltage_5 = v(XU.GAINB)
+let register_voltage_6 = v(VPWR)
+let register_voltage_7 = v(XU.XGAIN2.FB)
+let register_voltage_8 = v(VCM)
+let register_voltage_9 = v(XU.XGAIN2.XAMP.PRE)
+let register_voltage_10 = v(XU.XGAIN2.XAMP.COMP)
+let register_voltage_11 = v(BIAS)
+let register_voltage_12 = v(XU.XGAIN2.XAMP.XFIRST.MIR)
+let register_voltage_13 = v(XU.XGAIN2.XAMP.XFIRST.TAIL)
+let register_voltage_14 = v(VIN)
+let register_voltage_15 = v(XU.XGAIN8.FB)
+let register_voltage_16 = v(XU.XGAIN8.XAMP.PRE)
+let register_voltage_17 = v(XU.XGAIN8.XAMP.COMP)
+let register_voltage_18 = v(XU.XGAIN8.XAMP.XFIRST.MIR)
+let register_voltage_19 = v(XU.XGAIN8.XAMP.XFIRST.TAIL)
+let register_voltage_20 = v(XU.XOUTPUT_BUFFER.PRE)
+let register_voltage_21 = v(XU.XOUTPUT_BUFFER.COMP)
+let register_voltage_22 = v(OUT)
+let register_voltage_23 = v(XU.XOUTPUT_BUFFER.XFIRST.MIR)
+let register_voltage_24 = v(XU.XOUTPUT_BUFFER.XFIRST.TAIL)
+let register_voltage_25 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11 register_voltage_12 register_voltage_13 register_voltage_14 register_voltage_15 register_voltage_16 register_voltage_17 register_voltage_18 register_voltage_19 register_voltage_20 register_voltage_21 register_voltage_22 register_voltage_23 register_voltage_24 register_voltage_25
+quit
+.endc
+.end

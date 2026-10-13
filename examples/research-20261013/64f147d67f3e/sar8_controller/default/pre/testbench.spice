@@ -1,0 +1,2772 @@
+Actual SAR charge redistribution with continuous native comparator decisions
+.include "/workspace/.runtime/eda/runs/2b1fa93bf265404cb3fd33f130c0e7cd/supported-tt.spice"
+.option scale=1e-6 method=gear maxord=2
+.include "/workspace/.runtime/eda/runs/2b1fa93bf265404cb3fd33f130c0e7cd/analog.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VIN VIN VGND 0.6
+VREF VREF VGND 1.2
+VCM VCM VGND 0.9
+VBIAS BIAS VGND .9
+VSAMPLE SAR_DRV_SAMPLE VGND 1.8
+RDRV_SAMPLE SAR_DRV_SAMPLE SAMPLE 200
+CDRV_SAMPLE SAMPLE VGND .5p
+VB0 SAR_DRV_B0 VGND 0
+RDRV_B0 SAR_DRV_B0 B0 200
+CDRV_B0 B0 VGND .5p
+VB1 SAR_DRV_B1 VGND 0
+RDRV_B1 SAR_DRV_B1 B1 200
+CDRV_B1 B1 VGND .5p
+VB2 SAR_DRV_B2 VGND 0
+RDRV_B2 SAR_DRV_B2 B2 200
+CDRV_B2 B2 VGND .5p
+VB3 SAR_DRV_B3 VGND 0
+RDRV_B3 SAR_DRV_B3 B3 200
+CDRV_B3 B3 VGND .5p
+VB4 SAR_DRV_B4 VGND 0
+RDRV_B4 SAR_DRV_B4 B4 200
+CDRV_B4 B4 VGND .5p
+VB5 SAR_DRV_B5 VGND 0
+RDRV_B5 SAR_DRV_B5 B5 200
+CDRV_B5 B5 VGND .5p
+VB6 SAR_DRV_B6 VGND 0
+RDRV_B6 SAR_DRV_B6 B6 200
+CDRV_B6 B6 VGND .5p
+VB7 SAR_DRV_B7 VGND 0
+RDRV_B7 SAR_DRV_B7 B7 200
+CDRV_B7 B7 VGND .5p
+XU VIN VREF VCM BIAS SAMPLE TOP COMP B0 B1 B2 B3 B4 B5 B6 B7 VPWR VGND sar8_analog
+.tran 2e-08 0.0002 0 2e-08
+.control
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+save v(VIN) v(SAMPLE) v(TOP) v(COMP) v(VCM) i(VDD) i(VREF) v(B0) v(B1) v(B2) v(B3) v(B4) v(B5) v(B6) v(B7)
+echo frame bit trial comp top vin decision > decisions.csv
+alter VIN = 0.6
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let sar_code_word = 0
+stop when time = 2e-06
+run
+delete all
+alter VSAMPLE = 0
+let sar_trial_word = sar_code_word + 128
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 4e-06
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 0 7 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.6 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 64
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 6e-06
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 0 6 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.6 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 32
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 8e-06
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 0 5 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.6 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 16
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 1e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 0 4 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.6 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 8
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 1.2e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 0 3 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.6 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 4
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 1.4e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 0 2 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.6 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 2
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 1.6e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 0 1 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.6 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 1
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 1.8e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 0 0 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.6 $&sar_decision_bit >> decisions.csv
+alter VIN = 0
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let sar_code_word = 0
+stop when time = 2e-05
+resume
+delete all
+alter VSAMPLE = 0
+let sar_trial_word = sar_code_word + 128
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 2.2e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 1 7 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 64
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 2.4e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 1 6 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 32
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 2.6e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 1 5 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 16
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 2.8e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 1 4 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 8
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 3e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 1 3 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 4
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 3.2e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 1 2 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 2
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 3.4e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 1 1 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 1
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 3.6e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 1 0 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0 $&sar_decision_bit >> decisions.csv
+alter VIN = 1.2
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let sar_code_word = 0
+stop when time = 3.8e-05
+resume
+delete all
+alter VSAMPLE = 0
+let sar_trial_word = sar_code_word + 128
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 4e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 2 7 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.2 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 64
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 4.2e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 2 6 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.2 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 32
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 4.4e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 2 5 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.2 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 16
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 4.6e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 2 4 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.2 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 8
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 4.8e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 2 3 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.2 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 4
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 5e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 2 2 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.2 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 2
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 5.2e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 2 1 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.2 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 1
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 5.4e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 2 0 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.2 $&sar_decision_bit >> decisions.csv
+alter VIN = 0.00234375
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let sar_code_word = 0
+stop when time = 5.6e-05
+resume
+delete all
+alter VSAMPLE = 0
+let sar_trial_word = sar_code_word + 128
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 5.8e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 3 7 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 64
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 6e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 3 6 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 32
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 6.2e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 3 5 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 16
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 6.4e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 3 4 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 8
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 6.6e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 3 3 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 4
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 6.8e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 3 2 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 2
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 7e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 3 1 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 1
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 7.2e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 3 0 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00234375 $&sar_decision_bit >> decisions.csv
+alter VIN = 0.00703125
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let sar_code_word = 0
+stop when time = 7.4e-05
+resume
+delete all
+alter VSAMPLE = 0
+let sar_trial_word = sar_code_word + 128
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 7.6e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 4 7 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00703125 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 64
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 7.8e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 4 6 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00703125 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 32
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 8e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 4 5 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00703125 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 16
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 8.2e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 4 4 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00703125 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 8
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 8.4e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 4 3 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00703125 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 4
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 8.6e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 4 2 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00703125 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 2
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 8.8e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 4 1 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00703125 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 1
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 9e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 4 0 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.00703125 $&sar_decision_bit >> decisions.csv
+alter VIN = 0.29765625
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let sar_code_word = 0
+stop when time = 9.2e-05
+resume
+delete all
+alter VSAMPLE = 0
+let sar_trial_word = sar_code_word + 128
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 9.4e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 5 7 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.29765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 64
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 9.6e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 5 6 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.29765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 32
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 9.8e-05
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 5 5 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.29765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 16
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.0001
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 5 4 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.29765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 8
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000102
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 5 3 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.29765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 4
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000104
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 5 2 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.29765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 2
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000106
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 5 1 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.29765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 1
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000108
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 5 0 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.29765625 $&sar_decision_bit >> decisions.csv
+alter VIN = 0.59765625
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let sar_code_word = 0
+stop when time = 0.00011
+resume
+delete all
+alter VSAMPLE = 0
+let sar_trial_word = sar_code_word + 128
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000112
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 6 7 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.59765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 64
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000114
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 6 6 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.59765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 32
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000116
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 6 5 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.59765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 16
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000118
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 6 4 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.59765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 8
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.00012
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 6 3 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.59765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 4
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000122
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 6 2 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.59765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 2
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000124
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 6 1 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.59765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 1
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000126
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 6 0 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.59765625 $&sar_decision_bit >> decisions.csv
+alter VIN = 0.60234375
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let sar_code_word = 0
+stop when time = 0.000128
+resume
+delete all
+alter VSAMPLE = 0
+let sar_trial_word = sar_code_word + 128
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.00013
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 7 7 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.60234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 64
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000132
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 7 6 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.60234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 32
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000134
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 7 5 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.60234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 16
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000136
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 7 4 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.60234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 8
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000138
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 7 3 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.60234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 4
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.00014
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 7 2 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.60234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 2
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000142
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 7 1 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.60234375 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 1
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000144
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 7 0 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.60234375 $&sar_decision_bit >> decisions.csv
+alter VIN = 0.89765625
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let sar_code_word = 0
+stop when time = 0.000146
+resume
+delete all
+alter VSAMPLE = 0
+let sar_trial_word = sar_code_word + 128
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000148
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 8 7 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.89765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 64
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.00015
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 8 6 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.89765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 32
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000152
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 8 5 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.89765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 16
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000154
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 8 4 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.89765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 8
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000156
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 8 3 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.89765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 4
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000158
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 8 2 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.89765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 2
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.00016
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 8 1 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.89765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 1
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000162
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 8 0 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 0.89765625 $&sar_decision_bit >> decisions.csv
+alter VIN = 1.19296875
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let sar_code_word = 0
+stop when time = 0.000164
+resume
+delete all
+alter VSAMPLE = 0
+let sar_trial_word = sar_code_word + 128
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000166
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 9 7 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19296875 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 64
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000168
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 9 6 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19296875 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 32
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.00017
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 9 5 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19296875 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 16
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000172
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 9 4 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19296875 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 8
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000174
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 9 3 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19296875 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 4
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000176
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 9 2 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19296875 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 2
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000178
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 9 1 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19296875 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 1
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.00018
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 9 0 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19296875 $&sar_decision_bit >> decisions.csv
+alter VIN = 1.19765625
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let sar_code_word = 0
+stop when time = 0.000182
+resume
+delete all
+alter VSAMPLE = 0
+let sar_trial_word = sar_code_word + 128
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000184
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 10 7 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 64
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000186
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 10 6 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 32
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000188
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 10 5 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 16
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.00019
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 10 4 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 8
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000192
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 10 3 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 4
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000194
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 10 2 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 2
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000196
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 10 1 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19765625 $&sar_decision_bit >> decisions.csv
+let sar_trial_word = sar_code_word + 1
+let sar_drive_V = (floor(sar_trial_word / 1) - 2*floor(sar_trial_word / 2))*1.8
+alter VB0 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 2) - 2*floor(sar_trial_word / 4))*1.8
+alter VB1 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 4) - 2*floor(sar_trial_word / 8))*1.8
+alter VB2 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 8) - 2*floor(sar_trial_word / 16))*1.8
+alter VB3 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 16) - 2*floor(sar_trial_word / 32))*1.8
+alter VB4 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 32) - 2*floor(sar_trial_word / 64))*1.8
+alter VB5 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 64) - 2*floor(sar_trial_word / 128))*1.8
+alter VB6 = $&sar_drive_V
+let sar_drive_V = (floor(sar_trial_word / 128) - 2*floor(sar_trial_word / 256))*1.8
+alter VB7 = $&sar_drive_V
+stop when time = 0.000198
+resume
+delete all
+let sar_sample_index = length(time)-1
+let sar_cmp_voltage = v(COMP)[sar_sample_index]
+let sar_top_voltage = v(TOP)[sar_sample_index]
+let sar_decision_bit = 0
+if sar_cmp_voltage >= 0.9
+let sar_code_word = sar_trial_word
+let sar_decision_bit = 1
+end
+echo 10 0 $&sar_trial_word $&sar_cmp_voltage $&sar_top_voltage 1.19765625 $&sar_decision_bit >> decisions.csv
+resume
+let supply_current = -i(VDD)
+let reference_current = -i(VREF)
+wrdata waveform.dat v(VIN) v(SAMPLE) v(TOP) v(COMP) v(VCM) supply_current reference_current v(B0) v(B1) v(B2) v(B3) v(B4) v(B5) v(B6) v(B7)
+echo SAR_NATIVE_COMPLETE
+quit
+.endc
+.end

@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "mn1",
+      "name": "MN1",
+      "kind": "nmos",
+      "pins": {
+        "D": "OUT",
+        "G": "GATE",
+        "S": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 0.65,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 180,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "rd",
+      "name": "RD",
+      "kind": "resistor",
+      "pins": {
+        "+": "VPWR",
+        "-": "OUT"
+      },
+      "parameters": {
+        "value": 10000
+      },
+      "x": 400,
+      "y": 180
+    },
+    {
+      "id": "rb1",
+      "name": "RB1",
+      "kind": "resistor",
+      "pins": {
+        "+": "VPWR",
+        "-": "GATE"
+      },
+      "parameters": {
+        "value": 100000
+      },
+      "x": 620,
+      "y": 180
+    },
+    {
+      "id": "rb2",
+      "name": "RB2",
+      "kind": "resistor",
+      "pins": {
+        "+": "GATE",
+        "-": "VGND"
+      },
+      "parameters": {
+        "value": 60000
+      },
+      "x": 180,
+      "y": 380
+    },
+    {
+      "id": "cin",
+      "name": "CIN",
+      "kind": "capacitor",
+      "pins": {
+        "+": "IN",
+        "-": "GATE"
+      },
+      "parameters": {
+        "value": 1e-12
+      },
+      "x": 400,
+      "y": 380
+    },
+    {
+      "id": "port_IN",
+      "name": "PORT_IN",
+      "kind": "port",
+      "pins": {
+        "P": "IN"
+      },
+      "parameters": {},
+      "x": 620,
+      "y": 380
+    },
+    {
+      "id": "port_OUT",
+      "name": "PORT_OUT",
+      "kind": "port",
+      "pins": {
+        "P": "OUT"
+      },
+      "parameters": {},
+      "x": 180,
+      "y": 580
+    },
+    {
+      "id": "port_VPWR",
+      "name": "PORT_VPWR",
+      "kind": "port",
+      "pins": {
+        "P": "VPWR"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 580
+    },
+    {
+      "id": "port_VGND",
+      "name": "PORT_VGND",
+      "kind": "port",
+      "pins": {
+        "P": "VGND"
+      },
+      "parameters": {},
+      "x": 620,
+      "y": 580
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

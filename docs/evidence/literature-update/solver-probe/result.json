@@ -1,0 +1,240 @@
+{
+  "elapsed_s": 38.27340807998553,
+  "returncode": 0,
+  "source_run_id": "0609d045c71b4d7fa31beaea47301782",
+  "original_testbench_sha256": "48f6b454ffc86546011f48e3f48c48c7fd469c4175101989109a6912687efc37",
+  "change": "KLU linear solver only; source netlist/models/steps/tolerances/criteria preserved",
+  "verification": {
+    "schema_version": 1,
+    "kind": "cell_xor2",
+    "source": "actual-ngspice-input-and-output-samples",
+    "pass": true,
+    "checks": [
+      {
+        "name": "input [0, 0] \u2192 0",
+        "pass": true,
+        "observed": [
+          1.3665032131310616e-08,
+          1.366503444026803e-08
+        ]
+      },
+      {
+        "name": "input [1, 0] \u2192 1",
+        "pass": true,
+        "observed": [
+          1.7999999885773503,
+          1.7999999891642147
+        ]
+      },
+      {
+        "name": "input [0, 1] \u2192 1",
+        "pass": true,
+        "observed": [
+          1.7997762070129073,
+          1.7998413691660267
+        ]
+      },
+      {
+        "name": "input [1, 1] \u2192 0",
+        "pass": true,
+        "observed": [
+          1.328497398859324e-07,
+          2.4126564185593675e-07
+        ]
+      },
+      {
+        "name": "Every sensitized timing arc observed and settles",
+        "pass": true,
+        "observed": 8
+      }
+    ],
+    "scope": "Exhaustive input combinations at configured load/PVT; not Liberty/STA characterization."
+  },
+  "measurements": {
+    "truth_cases": 4,
+    "truth_passed": 4,
+    "timing_characterization": {
+      "arcs": [
+        {
+          "input": "A",
+          "before": [
+            0,
+            0
+          ],
+          "after": [
+            1,
+            0
+          ],
+          "output_before": 0,
+          "output_after": 1,
+          "available": true,
+          "propagation_s": 1.0951466036530625e-09,
+          "transition_10_90_s": 1.0782782574898177e-09,
+          "stable_output": true,
+          "valid_before_state": true,
+          "valid_sensitizing_inputs": true,
+          "source": "Actual input/output half-supply crossings and output 10\u201390% crossings. Negative delay is retained, never clamped.",
+          "pass": true
+        },
+        {
+          "input": "B",
+          "before": [
+            0,
+            0
+          ],
+          "after": [
+            0,
+            1
+          ],
+          "output_before": 0,
+          "output_after": 1,
+          "available": true,
+          "propagation_s": 1.2565544212346126e-09,
+          "transition_10_90_s": 1.2868291696830054e-09,
+          "stable_output": true,
+          "valid_before_state": true,
+          "valid_sensitizing_inputs": true,
+          "source": "Actual input/output half-supply crossings and output 10\u201390% crossings. Negative delay is retained, never clamped.",
+          "pass": true
+        },
+        {
+          "input": "A",
+          "before": [
+            1,
+            0
+          ],
+          "after": [
+            0,
+            0
+          ],
+          "output_before": 1,
+          "output_after": 0,
+          "available": true,
+          "propagation_s": 1.0816931573920698e-09,
+          "transition_10_90_s": 6.26709318219584e-10,
+          "stable_output": true,
+          "valid_before_state": true,
+          "valid_sensitizing_inputs": true,
+          "source": "Actual input/output half-supply crossings and output 10\u201390% crossings. Negative delay is retained, never clamped.",
+          "pass": true
+        },
+        {
+          "input": "B",
+          "before": [
+            1,
+            0
+          ],
+          "after": [
+            1,
+            1
+          ],
+          "output_before": 1,
+          "output_after": 0,
+          "available": true,
+          "propagation_s": 1.9560216824234937e-09,
+          "transition_10_90_s": 6.587480305175567e-10,
+          "stable_output": true,
+          "valid_before_state": true,
+          "valid_sensitizing_inputs": true,
+          "source": "Actual input/output half-supply crossings and output 10\u201390% crossings. Negative delay is retained, never clamped.",
+          "pass": true
+        },
+        {
+          "input": "A",
+          "before": [
+            0,
+            1
+          ],
+          "after": [
+            1,
+            1
+          ],
+          "output_before": 1,
+          "output_after": 0,
+          "available": true,
+          "propagation_s": 1.983634455261861e-09,
+          "transition_10_90_s": 5.613428980083403e-10,
+          "stable_output": true,
+          "valid_before_state": true,
+          "valid_sensitizing_inputs": true,
+          "source": "Actual input/output half-supply crossings and output 10\u201390% crossings. Negative delay is retained, never clamped.",
+          "pass": true
+        },
+        {
+          "input": "B",
+          "before": [
+            0,
+            1
+          ],
+          "after": [
+            0,
+            0
+          ],
+          "output_before": 1,
+          "output_after": 0,
+          "available": true,
+          "propagation_s": 1.0817647159158471e-09,
+          "transition_10_90_s": 5.590499137430827e-10,
+          "stable_output": true,
+          "valid_before_state": true,
+          "valid_sensitizing_inputs": true,
+          "source": "Actual input/output half-supply crossings and output 10\u201390% crossings. Negative delay is retained, never clamped.",
+          "pass": true
+        },
+        {
+          "input": "A",
+          "before": [
+            1,
+            1
+          ],
+          "after": [
+            0,
+            1
+          ],
+          "output_before": 0,
+          "output_after": 1,
+          "available": true,
+          "propagation_s": 2.248007596382379e-09,
+          "transition_10_90_s": 1.2956137769954585e-09,
+          "stable_output": true,
+          "valid_before_state": true,
+          "valid_sensitizing_inputs": true,
+          "source": "Actual input/output half-supply crossings and output 10\u201390% crossings. Negative delay is retained, never clamped.",
+          "pass": true
+        },
+        {
+          "input": "B",
+          "before": [
+            1,
+            1
+          ],
+          "after": [
+            1,
+            0
+          ],
+          "output_before": 0,
+          "output_after": 1,
+          "available": true,
+          "propagation_s": 2.1830078267515235e-09,
+          "transition_10_90_s": 1.0877785964251257e-09,
+          "stable_output": true,
+          "valid_before_state": true,
+          "valid_sensitizing_inputs": true,
+          "source": "Actual input/output half-supply crossings and output 10\u201390% crossings. Negative delay is retained, never clamped.",
+          "pass": true
+        }
+      ],
+      "expected_arcs": 8,
+      "observed_arcs": 8,
+      "pass": true,
+      "max_propagation_s": 2.248007596382379e-09,
+      "max_transition_s": 1.2956137769954585e-09,
+      "input_slew_ns": 0.1,
+      "load_F": 5e-15,
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "scope": "Combinational sensitized arcs at this load/PVT. Not complete Liberty, sequential setup/hold, STA or hidden/internal power characterization."
+    }
+  }
+}

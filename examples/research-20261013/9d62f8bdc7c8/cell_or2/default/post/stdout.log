@@ -1,0 +1,230 @@
+
+--- magic-pex ---
+
+Magic 8.3 revision 582 - Compiled on Sun Dec 21 08:00:31 PM CET 2025.
+Starting magic under Tcl interpreter
+Using the terminal as the console.
+WARNING: RLIMIT_NOFILE is above 1024 and Tcl_Version<9 this may cause runtime issues [rlim_cur=1048576]
+Using NULL graphics device.
+Processing system .magicrc file
+Switching to WIRING tool.
+Switching to NETLIST tool.
+Switching to PICK tool.
+Switching to BOX tool.
+Sourcing design .magicrc for technology sky130A ...
+2 Magic internal units = 1 Lambda
+Input style sky130(): scaleFactor=2, multiplier=2
+The following types are not handled by extraction and will be treated as non-electrical types:
+    ubm 
+Scaled tech values by 2 / 1 to match internal grid scaling
+Loading sky130A Device Generator Menu ...
+Loading "/workspace/.runtime/eda/runs/ce70039daec643f4ae8cde3dc9df1443/pex.tcl" from command line.
+Warning: Calma reading is not undoable!  I hope that's OK.
+Library written using GDS-II Release 6.0
+Library name: LIB
+Reading "cell_or2".
+Error while reading cell "cell_or2" (byte position 74498): Warning:  Cell cell_or2 boundary was redefined.
+Error while reading cell "cell_or2" (byte position 74498): Warning:  Cell cell_or2 boundary was redefined.
+Error while reading cell "cell_or2" (byte position 74498): Warning:  Cell cell_or2 boundary was redefined.
+Error while reading cell "cell_or2" (byte position 74498): Warning:  Cell cell_or2 boundary was redefined.
+Error while reading cell "cell_or2" (byte position 74498): Warning:  Cell cell_or2 boundary was redefined.
+Extracting cell_or2 into cell_or2.ext:
+exttosim finished.
+Port: name = Y exists, forcing drivepoint
+Location is (3510, 4798); drivepoint (3510, 4798)
+Port: name = VPWR exists, forcing drivepoint
+Location is (3270, 2010); drivepoint (3270, 2010)
+Port: name = VGND exists, forcing drivepoint
+Location is (3030, 2310); drivepoint (3030, 2310)
+Port: name = B exists, forcing drivepoint
+Location is (2310, 4558); drivepoint (2310, 4558)
+Port: name = A exists, forcing drivepoint
+Location is (2070, 4318); drivepoint (2070, 4318)
+Adding  B; Tnew = 0.02ns, Told = 0.00ns
+Adding  A; Tnew = 0.01ns, Told = 0.00ns
+Total Nets: 15
+Nets extracted: 7 (0.466667)
+Nets output: 7 (0.466667)
+exttospice finished.
+
+--- ngspice ---
+Warning: redefinition of .subckt sky130_fd_pr__res_generic_po, ignored
+
+Note: No compatibility mode selected!
+
+
+Circuit: resistor public cmos cell actual input truth matrix
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+vgnd                                         0
+vpwr                                       1.8
+a                                            0
+b                                            0
+y                                   3.4159e-09
+xu.register_cf_node_2b122a6f7f82f560             1.8
+xu.a.t0                                      0
+xu.register_cf_node_2b122a6f7f82f560_source             1.8
+xu.vpwr.t3                                 1.8
+xu.vpwr.t4                                 1.8
+xu.core__n.t1                              1.8
+xu.register_cf_node_8c583d31427f256c      1.5816e-11
+xu.b.t0                                      0
+xu.register_cf_node_8c583d31427f256c_source             1.8
+xu.vgnd.t2                         3.41693e-10
+xu.vgnd.t3                          1.5816e-11
+xu.n.t0                                    1.8
+xu.register_cf_node_249141d83865e09b     1.57481e-11
+xu.a.t1                                      0
+xu.register_cf_node_249141d83865e09b_source             1.8
+xu.vgnd.t4                         3.47993e-10
+xu.vgnd.t5                         1.57481e-11
+xu.n.t2                                    1.8
+xu.register_cf_node_cabbfab547caa85d     3.51235e-10
+xu.n.t3                                    1.8
+xu.register_cf_node_cabbfab547caa85d_source     3.06502e-09
+xu.vgnd.t0                         6.91502e-12
+xu.vgnd.t1                         3.51235e-10
+xu.y.t0                            3.06502e-09
+xu.register_cf_node_4e37f7a32a0c67b5             1.8
+xu.n.t4                                    1.8
+xu.register_cf_node_4e37f7a32a0c67b5_source     4.35696e-09
+xu.vpwr.t1                                 1.8
+xu.vpwr.t2                                 1.8
+xu.y.t1                            4.35696e-09
+xu.register_cf_node_4b5e4d58f46be776             1.8
+xu.b.t1                                      0
+xu.register_cf_node_4b5e4d58f46be776_source             1.8
+xu.vpwr.t0                                 1.8
+xu.core__n.t0                              1.8
+xu.n.t1                                    1.8
+xu.n                                       1.8
+xu.core__n                                 1.8
+xu.y.n0                             3.4036e-09
+xu.y.n1                             3.4036e-09
+xu.y.n2                            3.40732e-09
+xu.y.n3                            3.42812e-09
+xu.y.n4                            3.42812e-09
+xu.y.n5                            3.42435e-09
+xu.y.n6                            3.41597e-09
+xu.n.n0                                    1.8
+xu.n.n1                                    1.8
+xu.n.n2                                    1.8
+xu.n.n3                                    1.8
+xu.n.n4                                    1.8
+xu.n.n5                                    1.8
+xu.n.n6                                    1.8
+xu.n.n7                                    1.8
+xu.n.n8                                    1.8
+xu.n.n9                                    1.8
+xu.n.n10                                   1.8
+xu.n.n11                                   1.8
+xu.b.n0                                      0
+xu.a.n0                                      0
+v.xu.vregister_cf_4b5e4d58f46be776_source#branch    -3.83318e-12
+v.xu.vregister_cf_4b5e4d58f46be776#branch     3.83318e-12
+v.xu.vregister_cf_4e37f7a32a0c67b5_source#branch    -2.65198e-12
+v.xu.vregister_cf_4e37f7a32a0c67b5#branch     4.34615e-14
+v.xu.vregister_cf_cabbfab547caa85d_source#branch     2.65198e-12
+v.xu.vregister_cf_cabbfab547caa85d#branch    -2.65198e-12
+v.xu.vregister_cf_249141d83865e09b_source#branch     1.91651e-12
+v.xu.vregister_cf_249141d83865e09b#branch    -1.15555e-13
+v.xu.vregister_cf_8c583d31427f256c_source#branch     1.91651e-12
+v.xu.vregister_cf_8c583d31427f256c#branch    -1.15555e-13
+v.xu.vregister_cf_2b122a6f7f82f560_source#branch    -3.83318e-12
+v.xu.vregister_cf_2b122a6f7f82f560#branch     3.83318e-12
+vb#branch                                    0
+va#branch                                    0
+vdd#branch                        -6.48521e-12
+vgnd#branch                       -2.13331e-16
+
+ Reference value :  0.00000e+00
+ Reference value :  7.50280e-09
+ Reference value :  1.67928e-08
+ Reference value :  2.41728e-08
+ Reference value :  3.37428e-08
+ Reference value :  4.38628e-08
+ Reference value :  5.33250e-08
+ Reference value :  6.45750e-08
+ Reference value :  7.52750e-08
+ Reference value :  8.58250e-08
+ Reference value :  9.72050e-08
+ Reference value :  1.05875e-07
+ Reference value :  1.13445e-07
+ Reference value :  1.20985e-07
+ Reference value :  1.32475e-07
+ Reference value :  1.43645e-07
+ Reference value :  1.53755e-07
+ Reference value :  1.64725e-07
+ Reference value :  1.75205e-07
+ Reference value :  1.85545e-07
+ Reference value :  1.97855e-07
+ Reference value :  2.06395e-07
+ Reference value :  2.14145e-07
+ Reference value :  2.24325e-07
+ Reference value :  2.34145e-07
+ Reference value :  2.42555e-07
+ Reference value :  2.50265e-07
+ Reference value :  2.59075e-07
+ Reference value :  2.65475e-07
+ Reference value :  2.68155e-07
+ Reference value :  2.76535e-07
+ Reference value :  2.85885e-07
+ Reference value :  2.93455e-07
+ Reference value :  2.98975e-07
+ Reference value :  3.06945e-07
+ Reference value :  3.12275e-07
+ Reference value :  3.16675e-07
+ Reference value :  3.24575e-07
+ Reference value :  3.34545e-07
+ Reference value :  3.43785e-07
+ Reference value :  3.50545e-07
+ Reference value :  3.54495e-07
+ Reference value :  3.59145e-07
+ Reference value :  3.63395e-07
+ Reference value :  3.67365e-07
+ Reference value :  3.72135e-07
+ Reference value :  3.79585e-07
+ Reference value :  3.87515e-07
+ Reference value :  3.93745e-07
+ Reference value :  3.99945e-07
+ Reference value :  4.04435e-07
+ Reference value :  4.11175e-07
+ Reference value :  4.17095e-07
+ Reference value :  4.22585e-07
+ Reference value :  4.25705e-07
+ Reference value :  4.32475e-07
+ Reference value :  4.39965e-07
+ Reference value :  4.49335e-07
+ Reference value :  4.58045e-07
+ Reference value :  4.65855e-07
+ Reference value :  4.73915e-07
+ Reference value :  4.83105e-07
+ Reference value :  4.91255e-07
+ Reference value :  5.00245e-07
+ Reference value :  5.08025e-07
+ Reference value :  5.14195e-07
+ Reference value :  5.20955e-07
+ Reference value :  5.26205e-07
+ Reference value :  5.30065e-07
+ Reference value :  5.34555e-07
+ Reference value :  5.41495e-07
+ Reference value :  5.49215e-07
+ Reference value :  5.56625e-07
+ Reference value :  5.60265e-07
+ Reference value :  5.65345e-07
+ Reference value :  5.69875e-07
+ Reference value :  5.76915e-07
+ Reference value :  5.84825e-07
+ Reference value :  5.89195e-07
+ Reference value :  5.93535e-07
+No. of Data Rows : 60074
+binary raw file "waveform.raw"
+ngspice-45.2 done

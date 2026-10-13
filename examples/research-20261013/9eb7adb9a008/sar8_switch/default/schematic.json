@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "A",
+    "Y",
+    "EN",
+    "ENB",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "N",
+      "name": "N",
+      "kind": "nmos",
+      "pins": {
+        "D": "Y",
+        "G": "EN",
+        "S": "A",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 4,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "P",
+      "name": "P",
+      "kind": "pmos",
+      "pins": {
+        "D": "Y",
+        "G": "ENB",
+        "S": "A",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 8,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 420,
+      "y": 170,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

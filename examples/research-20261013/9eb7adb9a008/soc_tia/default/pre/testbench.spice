@@ -1,0 +1,62 @@
+Resistor analog SoC soc_tia
+.include "/workspace/.runtime/eda/runs/44a017b75a5d42f8a273463c71dbc1cf/supported-tt.spice"
+.options method=gear maxord=2
+.include "/workspace/.runtime/eda/runs/44a017b75a5d42f8a273463c71dbc1cf/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VBIAS BIAS VGND 0.9
+VCM VCM VGND 0.9
+VSENSOR IIN SENSOR 0
+ISENSOR SENSOR VGND DC 0 AC 1 SIN(0 1u 5000)
+CLOAD OUT VGND 50f
+XU IIN VCM BIAS OUT VPWR VGND soc_tia
+.control
+save v(OUT) i(VDD) i(VSENSOR) v(IIN) i(v.xu.vregister_cf_f32b84a4cada83e7) i(v.xu.vregister_cf_3229d4b321b024e6) i(v.xu.xamp.vregister_cf_54f0040858166f9d) i(v.xu.xamp.vregister_cf_9a9b80f42fc6e7ca) i(v.xu.xamp.vregister_cf_5e86041922791634) i(v.xu.xamp.vregister_cf_a901034b015257ed) i(v.xu.xamp.xfirst.vregister_cf_44a7d6fa5e5059ca) i(v.xu.xamp.xfirst.vregister_cf_59dd6b01ffe7cfb0) i(v.xu.xamp.xfirst.vregister_cf_65e04b8a37108d24) i(v.xu.xamp.xfirst.vregister_cf_bbed48e6e9d221df) i(v.xu.xamp.xfirst.vregister_cf_0c41c8aa9e8c91bb) i(v.xu.xamp.xfirst.vregister_cf_dee31e44c859f504) i(v.xu.xamp.xfirst.vregister_cf_76752659b10f5142) i(VGND) i(VBIAS) i(VCM) v(XU.XAMP.PRE) v(XU.XAMP.COMP) v(VGND) v(BIAS) v(VPWR) v(XU.XAMP.XFIRST.MIR) v(XU.XAMP.XFIRST.TAIL) v(VCM) v(SENSOR)
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+set noaskquit
+tran 2e-08 0.0002
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = i(VSENSOR)
+let mos_wave_3 = v(IIN)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_f32b84a4cada83e7)
+let register_flow_1 = i(v.xu.vregister_cf_3229d4b321b024e6)
+let register_flow_2 = i(v.xu.xamp.vregister_cf_54f0040858166f9d)
+let register_flow_3 = i(v.xu.xamp.vregister_cf_9a9b80f42fc6e7ca)
+let register_flow_4 = i(v.xu.xamp.vregister_cf_5e86041922791634)
+let register_flow_5 = i(v.xu.xamp.vregister_cf_a901034b015257ed)
+let register_flow_6 = i(v.xu.xamp.xfirst.vregister_cf_44a7d6fa5e5059ca)
+let register_flow_7 = i(v.xu.xamp.xfirst.vregister_cf_59dd6b01ffe7cfb0)
+let register_flow_8 = i(v.xu.xamp.xfirst.vregister_cf_65e04b8a37108d24)
+let register_flow_9 = i(v.xu.xamp.xfirst.vregister_cf_bbed48e6e9d221df)
+let register_flow_10 = i(v.xu.xamp.xfirst.vregister_cf_0c41c8aa9e8c91bb)
+let register_flow_11 = i(v.xu.xamp.xfirst.vregister_cf_dee31e44c859f504)
+let register_flow_12 = i(v.xu.xamp.xfirst.vregister_cf_76752659b10f5142)
+let register_flow_13 = i(VGND)
+let register_flow_14 = i(VDD)
+let register_flow_15 = i(VBIAS)
+let register_flow_16 = i(VCM)
+let register_flow_17 = i(VSENSOR)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13 register_flow_14 register_flow_15 register_flow_16 register_flow_17
+let register_voltage_0 = v(OUT)
+let register_voltage_1 = v(IIN)
+let register_voltage_2 = v(XU.XAMP.PRE)
+let register_voltage_3 = v(XU.XAMP.COMP)
+let register_voltage_4 = v(VGND)
+let register_voltage_5 = v(BIAS)
+let register_voltage_6 = v(VPWR)
+let register_voltage_7 = v(XU.XAMP.XFIRST.MIR)
+let register_voltage_8 = v(XU.XAMP.XFIRST.TAIL)
+let register_voltage_9 = v(VCM)
+let register_voltage_10 = 0*register_flow_0
+let register_voltage_11 = v(SENSOR)
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11
+quit
+.endc
+.end

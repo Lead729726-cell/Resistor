@@ -1,0 +1,27 @@
+Resistor actual SKY130 chip reference chip_ldo
+.options method=gear maxord=2
+.include "/workspace/.runtime/eda/runs/10aa97da02af4af9aead774c10a3aefe/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/eda/runs/10aa97da02af4af9aead774c10a3aefe/reference.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8 AC 1
+VREF VREF VGND 0.6
+VBIAS BIAS VGND 0.9
+COUT OUT VGND 1e-09
+RLOAD OUT VGND 60000
+XU VREF BIAS OUT VPWR VGND chip_ldo
+.control
+set num_threads=1
+set numdgt=17
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+ac dec 40 10 1e9
+let mos_wave_0 = mag(v(OUT))
+let mos_wave_1 = 180/pi*ph(v(OUT))
+wrdata waveform.dat mos_wave_0 mos_wave_1
+write waveform.raw all
+quit
+.endc
+.end

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "VCM",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "R_TOP",
+      "name": "R_TOP",
+      "kind": "resistor",
+      "pins": {
+        "+": "VPWR",
+        "-": "VCM"
+      },
+      "parameters": {
+        "value": 100000
+      },
+      "x": 180,
+      "y": 170
+    },
+    {
+      "id": "R_BOTTOM",
+      "name": "R_BOTTOM",
+      "kind": "resistor",
+      "pins": {
+        "+": "VCM",
+        "-": "VGND"
+      },
+      "parameters": {
+        "value": 100000
+      },
+      "x": 420,
+      "y": 170
+    },
+    {
+      "id": "C_DECAP",
+      "name": "C_DECAP",
+      "kind": "capacitor",
+      "pins": {
+        "+": "VCM",
+        "-": "VGND"
+      },
+      "parameters": {
+        "value": 2e-11
+      },
+      "x": 660,
+      "y": 170
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

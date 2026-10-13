@@ -1,0 +1,618 @@
+{
+  "schema_version": 1,
+  "connectivity_mode": "explicit",
+  "ports": [
+    "VREF",
+    "BIAS",
+    "OUT",
+    "VPWR",
+    "VGND"
+  ],
+  "devices": [
+    {
+      "id": "ERROR_AMP.N_INP",
+      "name": "ERROR_AMP_N_INP",
+      "kind": "nmos",
+      "pins": {
+        "D": "GATE",
+        "G": "VREF",
+        "S": "ERROR_AMP__TAIL",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 10,
+        "l_um": 1,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "ERROR_AMP.N_INN",
+      "name": "ERROR_AMP_N_INN",
+      "kind": "nmos",
+      "pins": {
+        "D": "ERROR_AMP__MIR",
+        "G": "FB",
+        "S": "ERROR_AMP__TAIL",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 10,
+        "l_um": 1,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 440,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "ERROR_AMP.P_DIODE",
+      "name": "ERROR_AMP_P_DIODE",
+      "kind": "pmos",
+      "pins": {
+        "D": "ERROR_AMP__MIR",
+        "G": "ERROR_AMP__MIR",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 1,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 700,
+      "y": 170,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "ERROR_AMP.P_MIRROR",
+      "name": "ERROR_AMP_P_MIRROR",
+      "kind": "pmos",
+      "pins": {
+        "D": "GATE",
+        "G": "ERROR_AMP__MIR",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 1,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 960,
+      "y": 170,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "ERROR_AMP.N_TAIL",
+      "name": "ERROR_AMP_N_TAIL",
+      "kind": "nmos",
+      "pins": {
+        "D": "ERROR_AMP__TAIL",
+        "G": "BIAS",
+        "S": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 2,
+        "l_um": 1,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 1220,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "PASS0",
+      "name": "PASS0",
+      "kind": "pmos",
+      "pins": {
+        "D": "OUT",
+        "G": "GATE",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 360,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "PASS1",
+      "name": "PASS1",
+      "kind": "pmos",
+      "pins": {
+        "D": "OUT",
+        "G": "GATE",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 440,
+      "y": 360,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "PASS2",
+      "name": "PASS2",
+      "kind": "pmos",
+      "pins": {
+        "D": "OUT",
+        "G": "GATE",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 700,
+      "y": 360,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "PASS3",
+      "name": "PASS3",
+      "kind": "pmos",
+      "pins": {
+        "D": "OUT",
+        "G": "GATE",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 960,
+      "y": 360,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "PASS4",
+      "name": "PASS4",
+      "kind": "pmos",
+      "pins": {
+        "D": "OUT",
+        "G": "GATE",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 1220,
+      "y": 360,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "R_FB_TOP:p0",
+      "name": "R_FB_TOP_P0",
+      "kind": "resistor",
+      "pins": {
+        "+": "OUT",
+        "-": "R_FB_TOP_R0_N0",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 40000,
+        "w_um": 1.41,
+        "l_um": 28.035
+      },
+      "x": 180,
+      "y": 550,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    },
+    {
+      "id": "R_FB_TOP:p1",
+      "name": "R_FB_TOP_P1",
+      "kind": "resistor",
+      "pins": {
+        "+": "R_FB_TOP_R0_N0",
+        "-": "R_FB_TOP_R0_N1",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 40000,
+        "w_um": 1.41,
+        "l_um": 28.035
+      },
+      "x": 440,
+      "y": 550,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    },
+    {
+      "id": "R_FB_TOP:p2",
+      "name": "R_FB_TOP_P2",
+      "kind": "resistor",
+      "pins": {
+        "+": "R_FB_TOP_R0_N1",
+        "-": "R_FB_TOP_R0_N2",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 40000,
+        "w_um": 1.41,
+        "l_um": 28.035
+      },
+      "x": 700,
+      "y": 550,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    },
+    {
+      "id": "R_FB_TOP:p3",
+      "name": "R_FB_TOP_P3",
+      "kind": "resistor",
+      "pins": {
+        "+": "R_FB_TOP_R0_N2",
+        "-": "R_FB_TOP_R0_N3",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 40000,
+        "w_um": 1.41,
+        "l_um": 28.035
+      },
+      "x": 960,
+      "y": 550,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    },
+    {
+      "id": "R_FB_TOP:p4",
+      "name": "R_FB_TOP_P4",
+      "kind": "resistor",
+      "pins": {
+        "+": "R_FB_TOP_R0_N3",
+        "-": "FB",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 40000,
+        "w_um": 1.41,
+        "l_um": 28.035
+      },
+      "x": 1220,
+      "y": 550,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    },
+    {
+      "id": "R_FB_BOTTOM:p0",
+      "name": "R_FB_BOTTOM_P0",
+      "kind": "resistor",
+      "pins": {
+        "+": "FB",
+        "-": "R_FB_BOTTOM_R0_N0",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 40000,
+        "w_um": 1.41,
+        "l_um": 28.035
+      },
+      "x": 180,
+      "y": 740,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    },
+    {
+      "id": "R_FB_BOTTOM:p1",
+      "name": "R_FB_BOTTOM_P1",
+      "kind": "resistor",
+      "pins": {
+        "+": "R_FB_BOTTOM_R0_N0",
+        "-": "R_FB_BOTTOM_R0_N1",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 40000,
+        "w_um": 1.41,
+        "l_um": 28.035
+      },
+      "x": 440,
+      "y": 740,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    },
+    {
+      "id": "R_FB_BOTTOM:p2",
+      "name": "R_FB_BOTTOM_P2",
+      "kind": "resistor",
+      "pins": {
+        "+": "R_FB_BOTTOM_R0_N1",
+        "-": "R_FB_BOTTOM_R0_N2",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 40000,
+        "w_um": 1.41,
+        "l_um": 28.035
+      },
+      "x": 700,
+      "y": 740,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    },
+    {
+      "id": "R_FB_BOTTOM:p3",
+      "name": "R_FB_BOTTOM_P3",
+      "kind": "resistor",
+      "pins": {
+        "+": "R_FB_BOTTOM_R0_N2",
+        "-": "R_FB_BOTTOM_R0_N3",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 40000,
+        "w_um": 1.41,
+        "l_um": 28.035
+      },
+      "x": 960,
+      "y": 740,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    },
+    {
+      "id": "R_FB_BOTTOM:p4",
+      "name": "R_FB_BOTTOM_P4",
+      "kind": "resistor",
+      "pins": {
+        "+": "R_FB_BOTTOM_R0_N3",
+        "-": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 40000,
+        "w_um": 1.41,
+        "l_um": 28.035
+      },
+      "x": 1220,
+      "y": 740,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    },
+    {
+      "id": "C_COMP:p0",
+      "name": "C_COMP_P0",
+      "kind": "capacitor",
+      "pins": {
+        "+": "GATE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 180,
+      "y": 930,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_COMP:p1",
+      "name": "C_COMP_P1",
+      "kind": "capacitor",
+      "pins": {
+        "+": "GATE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 440,
+      "y": 930,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_COMP:p2",
+      "name": "C_COMP_P2",
+      "kind": "capacitor",
+      "pins": {
+        "+": "GATE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 700,
+      "y": 930,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_COMP:p3",
+      "name": "C_COMP_P3",
+      "kind": "capacitor",
+      "pins": {
+        "+": "GATE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 960,
+      "y": 930,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_COMP:p4",
+      "name": "C_COMP_P4",
+      "kind": "capacitor",
+      "pins": {
+        "+": "GATE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 1220,
+      "y": 930,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_COMP:p5",
+      "name": "C_COMP_P5",
+      "kind": "capacitor",
+      "pins": {
+        "+": "GATE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 180,
+      "y": 1120,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_COMP:p6",
+      "name": "C_COMP_P6",
+      "kind": "capacitor",
+      "pins": {
+        "+": "GATE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 440,
+      "y": 1120,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_COMP:p7",
+      "name": "C_COMP_P7",
+      "kind": "capacitor",
+      "pins": {
+        "+": "GATE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 700,
+      "y": 1120,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_COMP:p8",
+      "name": "C_COMP_P8",
+      "kind": "capacitor",
+      "pins": {
+        "+": "GATE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 960,
+      "y": 1120,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_COMP:p9",
+      "name": "C_COMP_P9",
+      "kind": "capacitor",
+      "pins": {
+        "+": "GATE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 1220,
+      "y": 1120,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_COMP:p10",
+      "name": "C_COMP_P10",
+      "kind": "capacitor",
+      "pins": {
+        "+": "GATE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 180,
+      "y": 1310,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_COMP:p11",
+      "name": "C_COMP_P11",
+      "kind": "capacitor",
+      "pins": {
+        "+": "GATE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 440,
+      "y": 1310,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "R_ZERO:p0",
+      "name": "R_ZERO_P0",
+      "kind": "resistor",
+      "pins": {
+        "+": "COMP",
+        "-": "OUT",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 1000,
+        "w_um": 1.41,
+        "l_um": 0.54
+      },
+      "x": 700,
+      "y": 1310,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

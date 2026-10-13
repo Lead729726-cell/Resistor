@@ -1,0 +1,43 @@
+Resistor public CMOS cell actual input truth matrix
+.include "/workspace/.runtime/eda/runs/5836b49d471f4b6a98b4e7fe9eb6ed3a/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/eda/runs/5836b49d471f4b6a98b4e7fe9eb6ed3a/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VA0 A0 VGND PWL(0 0 5e-08 0 5.01e-08 1.8 1e-07 1.8 1.001e-07 0 1.5e-07 0 1.501e-07 1.8 2e-07 1.8 2.001e-07 1.8 2.5e-07 1.8 2.501e-07 1.8 3e-07 1.8 3.001e-07 0 3.5e-07 0 3.501e-07 1.8 4e-07 1.8 4.001e-07 1.8 4.5e-07 1.8 4.501e-07 0 5e-07 0 5.001e-07 1.8 5.5e-07 1.8 5.501e-07 1.8 6e-07 1.8)
+VA1 A1 VGND PWL(0 0 5e-08 0 5.01e-08 0 1e-07 0 1.001e-07 1.8 1.5e-07 1.8 1.501e-07 1.8 2e-07 1.8 2.001e-07 0 2.5e-07 0 2.501e-07 1.8 3e-07 1.8 3.001e-07 1.8 3.5e-07 1.8 3.501e-07 1.8 4e-07 1.8 4.001e-07 1.8 4.5e-07 1.8 4.501e-07 1.8 5e-07 1.8 5.001e-07 1.8 5.5e-07 1.8 5.501e-07 0 6e-07 0)
+CLOAD Y VGND 5e-15
+XU A0 A1 Y VPWR VGND cell_nand2
+.control
+save v(A0) v(A1) v(Y) i(VDD) i(v.xu.vregister_cf_8dd6ddba12b4ea2a) i(v.xu.vregister_cf_b3aaab7e90eeda51) i(v.xu.vregister_cf_1081c1c6d1534062) i(v.xu.vregister_cf_f486d5533d96e09c) i(VGND) i(VA0) i(VA1) v(XU.N1) v(VGND) v(VPWR)
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+tran 1e-11 6e-07 0 1e-11
+let mos_wave_0 = v(A0)
+let mos_wave_1 = v(A1)
+let mos_wave_2 = v(Y)
+let mos_wave_3 = -i(VDD)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_8dd6ddba12b4ea2a)
+let register_flow_1 = i(v.xu.vregister_cf_b3aaab7e90eeda51)
+let register_flow_2 = i(v.xu.vregister_cf_1081c1c6d1534062)
+let register_flow_3 = i(v.xu.vregister_cf_f486d5533d96e09c)
+let register_flow_4 = i(VGND)
+let register_flow_5 = i(VDD)
+let register_flow_6 = i(VA0)
+let register_flow_7 = i(VA1)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7
+let register_voltage_0 = v(Y)
+let register_voltage_1 = v(XU.N1)
+let register_voltage_2 = v(A0)
+let register_voltage_3 = v(VGND)
+let register_voltage_4 = v(A1)
+let register_voltage_5 = v(VPWR)
+let register_voltage_6 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6
+quit
+.endc
+.end

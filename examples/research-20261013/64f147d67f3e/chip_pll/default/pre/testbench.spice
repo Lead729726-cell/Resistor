@@ -1,0 +1,97 @@
+Resistor actual SKY130 chip reference chip_pll
+.options method=gear maxord=2
+.include "/workspace/.runtime/eda/runs/6419e398b7c246e4a970d78a4b9854df/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/eda/runs/6419e398b7c246e4a970d78a4b9854df/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VREF REF VGND PULSE(0 1.8 1n 100p 100p 1.65666666667e-08 3.33333333333e-08)
+.ic v(xu.OSCILLATOR.Q0)=0.1 v(xu.OSCILLATOR.Q1)=1.5 v(OUT)=0.2 v(CTRL)=0.9 v(xu.TUNE)=0.9
+XU REF CTRL OUT VPWR VGND chip_pll
+.control
+save v(OUT) i(VDD) v(REF) v(xu.PD) v(xu.TUNE) v(CTRL) i(v.xu.vregister_cf_4fcb2be9b20c435a) i(v.xu.vregister_cf_e67a5633d425e43b) i(v.xu.vregister_cf_240b9376c2a3871b) i(v.xu.vregister_cf_26e5afaf70deff77) i(v.xu.vregister_cf_092bb5fb2878d2b0) i(v.xu.xoscillator.vregister_cf_3867cc6f76c40144) i(v.xu.xoscillator.vregister_cf_5a84de89dae31852) i(v.xu.xoscillator.vregister_cf_227b8b9b1329e08e) i(v.xu.xoscillator.vregister_cf_bd942ff9c2bcdf87) i(v.xu.xoscillator.vregister_cf_33531960e1bd1e76) i(v.xu.xoscillator.vregister_cf_fd2a22b5393e7cb3) i(v.xu.xoscillator.vregister_cf_471fd7a674828182) i(v.xu.xoscillator.vregister_cf_ffa878ddc9944e75) i(v.xu.xoscillator.vregister_cf_b9a0d36ba731cb04) i(v.xu.xoscillator.vregister_cf_e270ea1b4cc1b8cf) i(v.xu.xoscillator.vregister_cf_3b2e3853737c9d43) i(v.xu.xoscillator.vregister_cf_39cbcce4e5591b8b) i(v.xu.xoscillator.vregister_cf_e154dcb4d988e5be) i(v.xu.xoscillator.vregister_cf_5d2140eee831956c) i(v.xu.xoscillator.vregister_cf_ce582c4bc1041629) i(v.xu.xoscillator.vregister_cf_745d62d3ac19bbd9) i(v.xu.xoscillator.vregister_cf_3ea8acbf3ce3dd23) i(v.xu.xphase_detector.xn1.vregister_cf_377cff7a8fc053f0) i(v.xu.xphase_detector.xn1.vregister_cf_12c0ec391985518a) i(v.xu.xphase_detector.xn1.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xphase_detector.xn1.vregister_cf_092f3ee2a80b5958) i(v.xu.xphase_detector.xn2.vregister_cf_377cff7a8fc053f0) i(v.xu.xphase_detector.xn2.vregister_cf_12c0ec391985518a) i(v.xu.xphase_detector.xn2.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xphase_detector.xn2.vregister_cf_092f3ee2a80b5958) i(v.xu.xphase_detector.xn3.vregister_cf_377cff7a8fc053f0) i(v.xu.xphase_detector.xn3.vregister_cf_12c0ec391985518a) i(v.xu.xphase_detector.xn3.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xphase_detector.xn3.vregister_cf_092f3ee2a80b5958) i(v.xu.xphase_detector.xn4.vregister_cf_377cff7a8fc053f0) i(v.xu.xphase_detector.xn4.vregister_cf_12c0ec391985518a) i(v.xu.xphase_detector.xn4.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xphase_detector.xn4.vregister_cf_092f3ee2a80b5958) i(VGND) i(VREF) v(VGND) v(XU.TUNE) v(VPWR) v(XU.PD) v(XU.XOSCILLATOR.Q0) v(XU.XOSCILLATOR.Q1) v(XU.XOSCILLATOR.PBIAS) v(XU.XOSCILLATOR.N0) v(XU.XOSCILLATOR.N1) v(XU.XOSCILLATOR.N2) v(XU.XOSCILLATOR.P0) v(XU.XOSCILLATOR.P1) v(XU.XOSCILLATOR.P2) v(XU.XPHASE_DETECTOR.N1) v(XU.XPHASE_DETECTOR.XN1.N1) v(XU.XPHASE_DETECTOR.N2) v(XU.XPHASE_DETECTOR.XN2.N1) v(XU.XPHASE_DETECTOR.N3) v(XU.XPHASE_DETECTOR.XN3.N1) v(XU.XPHASE_DETECTOR.XN4.N1)
+set num_threads=1
+set numdgt=17
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 1e-09 1.5e-05 uic
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(REF)
+let mos_wave_3 = v(xu.PD)
+let mos_wave_4 = v(xu.TUNE)
+let mos_wave_5 = v(CTRL)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3 mos_wave_4 mos_wave_5
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_4fcb2be9b20c435a)
+let register_flow_1 = i(v.xu.vregister_cf_e67a5633d425e43b)
+let register_flow_2 = i(v.xu.vregister_cf_240b9376c2a3871b)
+let register_flow_3 = i(v.xu.vregister_cf_26e5afaf70deff77)
+let register_flow_4 = i(v.xu.vregister_cf_092bb5fb2878d2b0)
+let register_flow_5 = i(v.xu.xoscillator.vregister_cf_3867cc6f76c40144)
+let register_flow_6 = i(v.xu.xoscillator.vregister_cf_5a84de89dae31852)
+let register_flow_7 = i(v.xu.xoscillator.vregister_cf_227b8b9b1329e08e)
+let register_flow_8 = i(v.xu.xoscillator.vregister_cf_bd942ff9c2bcdf87)
+let register_flow_9 = i(v.xu.xoscillator.vregister_cf_33531960e1bd1e76)
+let register_flow_10 = i(v.xu.xoscillator.vregister_cf_fd2a22b5393e7cb3)
+let register_flow_11 = i(v.xu.xoscillator.vregister_cf_471fd7a674828182)
+let register_flow_12 = i(v.xu.xoscillator.vregister_cf_ffa878ddc9944e75)
+let register_flow_13 = i(v.xu.xoscillator.vregister_cf_b9a0d36ba731cb04)
+let register_flow_14 = i(v.xu.xoscillator.vregister_cf_e270ea1b4cc1b8cf)
+let register_flow_15 = i(v.xu.xoscillator.vregister_cf_3b2e3853737c9d43)
+let register_flow_16 = i(v.xu.xoscillator.vregister_cf_39cbcce4e5591b8b)
+let register_flow_17 = i(v.xu.xoscillator.vregister_cf_e154dcb4d988e5be)
+let register_flow_18 = i(v.xu.xoscillator.vregister_cf_5d2140eee831956c)
+let register_flow_19 = i(v.xu.xoscillator.vregister_cf_ce582c4bc1041629)
+let register_flow_20 = i(v.xu.xoscillator.vregister_cf_745d62d3ac19bbd9)
+let register_flow_21 = i(v.xu.xoscillator.vregister_cf_3ea8acbf3ce3dd23)
+let register_flow_22 = i(v.xu.xphase_detector.xn1.vregister_cf_377cff7a8fc053f0)
+let register_flow_23 = i(v.xu.xphase_detector.xn1.vregister_cf_12c0ec391985518a)
+let register_flow_24 = i(v.xu.xphase_detector.xn1.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_25 = i(v.xu.xphase_detector.xn1.vregister_cf_092f3ee2a80b5958)
+let register_flow_26 = i(v.xu.xphase_detector.xn2.vregister_cf_377cff7a8fc053f0)
+let register_flow_27 = i(v.xu.xphase_detector.xn2.vregister_cf_12c0ec391985518a)
+let register_flow_28 = i(v.xu.xphase_detector.xn2.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_29 = i(v.xu.xphase_detector.xn2.vregister_cf_092f3ee2a80b5958)
+let register_flow_30 = i(v.xu.xphase_detector.xn3.vregister_cf_377cff7a8fc053f0)
+let register_flow_31 = i(v.xu.xphase_detector.xn3.vregister_cf_12c0ec391985518a)
+let register_flow_32 = i(v.xu.xphase_detector.xn3.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_33 = i(v.xu.xphase_detector.xn3.vregister_cf_092f3ee2a80b5958)
+let register_flow_34 = i(v.xu.xphase_detector.xn4.vregister_cf_377cff7a8fc053f0)
+let register_flow_35 = i(v.xu.xphase_detector.xn4.vregister_cf_12c0ec391985518a)
+let register_flow_36 = i(v.xu.xphase_detector.xn4.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_37 = i(v.xu.xphase_detector.xn4.vregister_cf_092f3ee2a80b5958)
+let register_flow_38 = i(VGND)
+let register_flow_39 = i(VDD)
+let register_flow_40 = i(VREF)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13 register_flow_14 register_flow_15 register_flow_16 register_flow_17 register_flow_18 register_flow_19 register_flow_20 register_flow_21 register_flow_22 register_flow_23 register_flow_24 register_flow_25 register_flow_26 register_flow_27 register_flow_28 register_flow_29 register_flow_30 register_flow_31 register_flow_32 register_flow_33 register_flow_34 register_flow_35 register_flow_36 register_flow_37 register_flow_38 register_flow_39 register_flow_40
+let register_voltage_0 = v(CTRL)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(XU.TUNE)
+let register_voltage_3 = v(VPWR)
+let register_voltage_4 = v(XU.PD)
+let register_voltage_5 = v(XU.XOSCILLATOR.Q0)
+let register_voltage_6 = v(XU.XOSCILLATOR.Q1)
+let register_voltage_7 = v(OUT)
+let register_voltage_8 = v(XU.XOSCILLATOR.PBIAS)
+let register_voltage_9 = v(XU.XOSCILLATOR.N0)
+let register_voltage_10 = v(XU.XOSCILLATOR.N1)
+let register_voltage_11 = v(XU.XOSCILLATOR.N2)
+let register_voltage_12 = v(XU.XOSCILLATOR.P0)
+let register_voltage_13 = v(XU.XOSCILLATOR.P1)
+let register_voltage_14 = v(XU.XOSCILLATOR.P2)
+let register_voltage_15 = v(XU.XPHASE_DETECTOR.N1)
+let register_voltage_16 = v(XU.XPHASE_DETECTOR.XN1.N1)
+let register_voltage_17 = v(REF)
+let register_voltage_18 = v(XU.XPHASE_DETECTOR.N2)
+let register_voltage_19 = v(XU.XPHASE_DETECTOR.XN2.N1)
+let register_voltage_20 = v(XU.XPHASE_DETECTOR.N3)
+let register_voltage_21 = v(XU.XPHASE_DETECTOR.XN3.N1)
+let register_voltage_22 = v(XU.XPHASE_DETECTOR.XN4.N1)
+let register_voltage_23 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11 register_voltage_12 register_voltage_13 register_voltage_14 register_voltage_15 register_voltage_16 register_voltage_17 register_voltage_18 register_voltage_19 register_voltage_20 register_voltage_21 register_voltage_22 register_voltage_23
+quit
+.endc
+.end

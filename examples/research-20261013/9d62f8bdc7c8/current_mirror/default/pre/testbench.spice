@@ -1,0 +1,37 @@
+Register actual native current_mirror
+.include "/workspace/.runtime/eda/runs/f2ba255751e543f1a7b3c60c6c1bc34b/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/eda/runs/f2ba255751e543f1a7b3c60c6c1bc34b/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+IREF 0 REF 0.0001
+VDOUT OUT VGND 1.8
+XU REF OUT VGND current_mirror
+.control
+save v(REF) v(OUT) i(VGND) i(VDOUT) i(v.xu.vregister_cf_608b00de935f2f3c) i(v.xu.vregister_cf_28153a61bb2a3581) v(VGND)
+set num_threads=1
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+op
+let mos_sample_index=0
+setscale mos_sample_index
+let mos_wave_0 = v(REF)
+let mos_wave_1 = v(OUT)
+let mos_wave_2 = i(VGND)
+let mos_wave_3 = -i(VDOUT)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_608b00de935f2f3c)
+let register_flow_1 = i(v.xu.vregister_cf_28153a61bb2a3581)
+let register_flow_2 = i(VGND)
+let register_flow_3 = i(VDOUT)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3
+let register_voltage_0 = v(REF)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(OUT)
+let register_voltage_3 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3
+quit
+.endc
+.end

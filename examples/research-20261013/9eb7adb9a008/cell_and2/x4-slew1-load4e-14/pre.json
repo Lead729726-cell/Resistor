@@ -1,0 +1,252 @@
+{
+  "id": "cell_and2",
+  "key": "cell_and2/x4-slew1-load4e-14",
+  "stage": "pre",
+  "project_id": "6bf802bdc42449e7a1bd3157bf43dc99",
+  "run_id": "e88732d436b04409add4310e9c9a86a1",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "freshness": "current",
+  "message": "Actual ngspice tran: 6082 samples.; reference criteria 5/5",
+  "elapsed_s": 2.8200456799240783,
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "false",
+    "samples": 6082,
+    "solver": "SPARSE 1.3",
+    "A_min": 0,
+    "A_max": 1.8,
+    "B_min": 0,
+    "B_max": 1.8,
+    "Y_min": -0.08641533480631103,
+    "Y_max": 1.8162168613138108,
+    "supply_current_min": -0.000010305377514209513,
+    "supply_current_max": 0.0003401274770801141,
+    "current_flow_status": "available",
+    "template_id": "cell_and2",
+    "layout_status": "not-generated",
+    "metric_source": "actual-ngspice-samples",
+    "truth_cases": 4,
+    "truth_passed": 4,
+    "timing_characterization": {
+      "arcs": [
+        {
+          "input": "B",
+          "before": [
+            1,
+            0
+          ],
+          "after": [
+            1,
+            1
+          ],
+          "output_before": 0,
+          "output_after": 1,
+          "available": true,
+          "propagation_s": 2.0652190941047112e-10,
+          "transition_10_90_s": 2.530393569209747e-10,
+          "stable_output": true,
+          "valid_before_state": true,
+          "valid_sensitizing_inputs": true,
+          "source": "Actual input/output half-supply crossings and output 10–90% crossings. Negative delay is retained, never clamped.",
+          "pass": true
+        },
+        {
+          "input": "A",
+          "before": [
+            0,
+            1
+          ],
+          "after": [
+            1,
+            1
+          ],
+          "output_before": 0,
+          "output_after": 1,
+          "available": true,
+          "propagation_s": 1.9342566939429634e-10,
+          "transition_10_90_s": 2.6082952034252365e-10,
+          "stable_output": true,
+          "valid_before_state": true,
+          "valid_sensitizing_inputs": true,
+          "source": "Actual input/output half-supply crossings and output 10–90% crossings. Negative delay is retained, never clamped.",
+          "pass": true
+        },
+        {
+          "input": "A",
+          "before": [
+            1,
+            1
+          ],
+          "after": [
+            0,
+            1
+          ],
+          "output_before": 1,
+          "output_after": 0,
+          "available": true,
+          "propagation_s": 2.754236483228493e-10,
+          "transition_10_90_s": 1.6175678144473773e-10,
+          "stable_output": true,
+          "valid_before_state": true,
+          "valid_sensitizing_inputs": true,
+          "source": "Actual input/output half-supply crossings and output 10–90% crossings. Negative delay is retained, never clamped.",
+          "pass": true
+        },
+        {
+          "input": "B",
+          "before": [
+            1,
+            1
+          ],
+          "after": [
+            1,
+            0
+          ],
+          "output_before": 1,
+          "output_after": 0,
+          "available": true,
+          "propagation_s": 3.0877903112316555e-10,
+          "transition_10_90_s": 1.3255722928117764e-10,
+          "stable_output": true,
+          "valid_before_state": true,
+          "valid_sensitizing_inputs": true,
+          "source": "Actual input/output half-supply crossings and output 10–90% crossings. Negative delay is retained, never clamped.",
+          "pass": true
+        }
+      ],
+      "expected_arcs": 4,
+      "observed_arcs": 4,
+      "pass": true,
+      "max_propagation_s": 3.0877903112316555e-10,
+      "max_transition_s": 2.6082952034252365e-10,
+      "input_slew_ns": 1,
+      "load_F": 4e-14,
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "scope": "Combinational sensitized arcs at this load/PVT. Not complete Liberty, sequential setup/hold, STA or hidden/internal power characterization."
+    },
+    "research_metrics": {
+      "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+      "input_drivers_power": "not measured",
+      "external_bias_power": "not measured",
+      "complete_system_power_available": false,
+      "supply": {
+        "available": true,
+        "start_s": 0,
+        "end_s": 6e-7,
+        "energy_J": 7.392699099570859e-13,
+        "average_current_A": 6.845091758861908e-7,
+        "peak_current_A": 0.0003401274770801141,
+        "minimum_current_A": -0.000010305377514209513,
+        "average_power_W": 0.0000012321165165951434,
+        "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+        "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+      },
+      "Y_tail": {
+        "available": true,
+        "start": 4.5e-7,
+        "end": 6e-7,
+        "integral": 9.158264894208378e-8,
+        "mean": 0.6105509929472253,
+        "rms": 1.047098953580991,
+        "ac_rms": 0.8506725007907353,
+        "minimum": -0.08641533480631103,
+        "maximum": 1.8162168613138108,
+        "peak_to_peak": 1.9026321961201218,
+        "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+      }
+    }
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "cell_and2",
+    "source": "actual-ngspice-input-and-output-samples",
+    "pass": true,
+    "checks": [
+      {
+        "name": "input [0, 0] → 0",
+        "pass": true,
+        "observed": [
+          5.760472376881154e-10,
+          5.760472376881154e-10
+        ]
+      },
+      {
+        "name": "input [1, 0] → 0",
+        "pass": true,
+        "observed": [
+          -4.467996493617843e-10,
+          1.7147439128339936e-9
+        ]
+      },
+      {
+        "name": "input [0, 1] → 0",
+        "pass": true,
+        "observed": [
+          -5.043221274619869e-9,
+          6.369052989868562e-9
+        ]
+      },
+      {
+        "name": "input [1, 1] → 1",
+        "pass": true,
+        "observed": [
+          1.7999999918982155,
+          1.7999999960197532
+        ]
+      },
+      {
+        "name": "Every sensitized timing arc observed and settles",
+        "pass": true,
+        "observed": 4
+      }
+    ],
+    "scope": "Exhaustive input combinations at configured load/PVT; not Liberty/STA characterization."
+  },
+  "source": {
+    "sigma_delta.py": "ff054d8bc4e66a4a5c240d3208d7298589c0b48f378ede389d4734aaa933d300",
+    "native.py": "561f9f8ad914e438c04d4e57946cc093dd9c5f22a8be7b661d1c6bcc16fc1136",
+    "analog_soc.py": "7c33ca0ba1b9d0a0e0d05a7b9ecc4a68ce3a05998bd977923c2939c7778be68e",
+    "bootstrap.py": "88e9e525d4868e34b18f9dd6b953ac2b745d8ff739716a24079018c99b8b3c17",
+    "digital_units.py": "1e5a533849152f6209bfd7c5cac402c8de7c5f99be1863534fe2e7b9ca10ea4e",
+    "characterization.py": "6b0a9feb9acaff73a7675835748bdc3ec98c0d12cbafec3b7085f98249920349",
+    "signal_metrics.py": "0ed481b9bbf111b1e954cdfbcd386d82b21c7cbb64e5ca20674da935eb279d29",
+    "native_database.py": "267705c19667526ff2557a4d9f13f19320b8f18c9d5c52cde83355181f8fdb81",
+    "profile.py": "bba5cf8d5ad36e776ff2f0511141573072ef1171244d7b87b178de258e63b5d8",
+    "design_probe.py": "03ebd4bb99a83013231456a952bbc650242c456627577daedef254c9fc46bdda",
+    "pvt.py": "91d7e022bef73ad39adb270c2b33abd0860a7277169bc493291befe2ed8c2562",
+    "chip_references.py": "32fdbbaece49e868c942f7e72825721208aec2e85b95018d3e78e1945b2866c1",
+    "current_flow.py": "ab7df3aa85fb958c6903255441426dd466c1207810efd6076cae1f8b30d20941",
+    "design_tools.py": "36162156b95a607775e0a6f0c2ed99d529f983ef09874142e5802f9f396f25af",
+    "digital_mux.py": "ed6d729e43bb260190f15563da9691e1efa517fe6a88181e06d1c158a557a377",
+    "interchange.py": "c310a3f0963bfe596c2a2c35474d6d6be8f5b463a338ec915efcd3ca892ce7e8",
+    "xschem_bridge.py": "dcc3816848f47ebff83d66fe1561cca69e09e0004017d86467f3cc58e99bbe6e",
+    "research.py": "a2f183c696314b5fd63ae4c46c4e2f2169ab24c7c0e9ea85d7c2b5d33b77cdaa",
+    "pex_reduce.py": "d84adb5f857a8f6887f4621a07008b2a4526763dd214477d1df4a06e71caf7ba",
+    "server.py": "0f67e56d70b28a20bd2c95fd02adb277f6b4413bda2c36ce2ad71dfa2b33a925",
+    "configured_analysis.py": "c5a2e0b4f96eb6d2eb3796b3bc5b84e09f6fee6978354e1229fdf82c98d49df0",
+    "geometry.py": "50defdd0615c2dabbaa2adbb6c89f3276370e79d1a723011adc0ebdac1694506",
+    "sar_adc.py": "b20e27e054da2efb3951c0122d101c763a05596a3cdfdbf195493080e7eacf8d",
+    "build_current_example.py": "23bc6dd70e109e13e494a434463457c0f5888499a3a50a910c20a4ad22b766ce",
+    "templates.py": "78d98e3340ad823b7353744bc7cce546081ded2a3faa27232527c381a11f53fe",
+    "experiments.py": "569057559a6b813ae8c356d9935db078d524cb8ae28e666460e5ba869442cd87",
+    "floorplan.py": "e4c4fea450460b84903444f7cba03cd5af9cd3db85e1711f38ce544deef08e14",
+    "job_evidence.py": "fcbdfcee94bc4d7090f7b6fec438b85d0ccc6057613de9729d74203fd793047f",
+    "physical_library.py": "476faa4dee3ea5284056a4adb501dad13ee73d3698eadc4a22773b0d30c5433c",
+    "toolchain_diagnostics.py": "f8d439cfe011351152b8c6b8147195e22f41c40c4c2de15e1a3b36cd11ddb382",
+    "commercial_backend.py": "34e4c2eafdc90ade1dacc9957d369553c76e6d1f41bb3ae594c947cda2805e09",
+    "hierarchy_transfer.py": "f79af0f29314c9f11bd7d7ad426b9aa9b1d832c4554c8a31393346439723bcf4",
+    "semiconductor_starters.py": "3375bea66fb32180fccbaaa8f8c0a37ae51c4a88261ab0dee748ff6fd44a2784",
+    "pdk_registry.py": "cb87b5ee86b5e72ddd2c65b2eca109bd982cf303ba79ceae5b589d57c186b726",
+    "project_index.py": "3b9a1606eca2ea951617b2735c63d2470d6f7d04c299aefc9451c839cd8576f9",
+    "commercial_results.py": "8d417102a078b3e0969becd3f48a87759fc27341288e2a991d8e1f2a2db01a56"
+  }
+}

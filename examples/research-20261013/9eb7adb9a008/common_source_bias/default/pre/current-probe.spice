@@ -1,0 +1,13 @@
+.subckt common_source_bias IN OUT VPWR VGND
+CCIN register_cf_node_4fd70e60ff15b77d GATE 1e-12
+Vregister_cf_4fd70e60ff15b77d IN register_cf_node_4fd70e60ff15b77d 0
+XMN1 register_cf_node_ec959fe42841a287 GATE register_cf_node_ec959fe42841a287_source VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+Vregister_cf_ec959fe42841a287 OUT register_cf_node_ec959fe42841a287 0
+Vregister_cf_ec959fe42841a287_source VGND register_cf_node_ec959fe42841a287_source 0
+RRB1 register_cf_node_3bb4d08f2366a390 GATE 100000
+Vregister_cf_3bb4d08f2366a390 VPWR register_cf_node_3bb4d08f2366a390 0
+RRB2 register_cf_node_79ef0548dcece81a VGND 60000
+Vregister_cf_79ef0548dcece81a GATE register_cf_node_79ef0548dcece81a 0
+RRD register_cf_node_7f32bd107c40da34 OUT 10000
+Vregister_cf_7f32bd107c40da34 VPWR register_cf_node_7f32bd107c40da34 0
+.ends common_source_bias

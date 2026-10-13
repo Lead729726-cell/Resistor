@@ -1,0 +1,88 @@
+
+--- magic-pex ---
+
+Magic 8.3 revision 582 - Compiled on Sun Dec 21 08:00:31 PM CET 2025.
+Starting magic under Tcl interpreter
+Using the terminal as the console.
+WARNING: RLIMIT_NOFILE is above 1024 and Tcl_Version<9 this may cause runtime issues [rlim_cur=1048576]
+Using NULL graphics device.
+Processing system .magicrc file
+Switching to WIRING tool.
+Switching to NETLIST tool.
+Switching to PICK tool.
+Switching to BOX tool.
+Sourcing design .magicrc for technology sky130A ...
+2 Magic internal units = 1 Lambda
+Input style sky130(): scaleFactor=2, multiplier=2
+The following types are not handled by extraction and will be treated as non-electrical types:
+    ubm 
+Scaled tech values by 2 / 1 to match internal grid scaling
+Loading sky130A Device Generator Menu ...
+Loading "/workspace/.runtime/eda/runs/a1963fbf330e4f99a8fb4ac483768cb2/pex.tcl" from command line.
+Warning: Calma reading is not undoable!  I hope that's OK.
+Library written using GDS-II Release 6.0
+Library name: LIB
+Reading "cell_inv".
+Error while reading cell "cell_inv" (byte position 34162): Warning:  Cell cell_inv boundary was redefined.
+Extracting cell_inv into cell_inv.ext:
+exttosim finished.
+Port: name = Y exists, forcing drivepoint
+Location is (2790, 4468); drivepoint (2790, 4468)
+Port: name = VPWR exists, forcing drivepoint
+Location is (2550, 2010); drivepoint (2550, 2010)
+Port: name = VGND exists, forcing drivepoint
+Location is (2310, 2310); drivepoint (2310, 2310)
+Port: name = A exists, forcing drivepoint
+Location is (2070, 4708); drivepoint (2070, 4708)
+Total Nets: 10
+Nets extracted: 4 (0.400000)
+Nets output: 4 (0.400000)
+exttospice finished.
+
+--- ngspice ---
+Warning: redefinition of .subckt sky130_fd_pr__res_generic_po, ignored
+
+Note: No compatibility mode selected!
+
+
+Circuit: resistor public cmos cell actual input truth matrix
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+vgnd                                         0
+vpwr                                       1.8
+a                                            0
+y                                          1.8
+xu.register_cf_node_7adb841a49f0dda5             1.8
+xu.a.t0                                      0
+xu.register_cf_node_7adb841a49f0dda5_source             1.8
+xu.vpwr.t0                                 1.8
+xu.vpwr.t1                                 1.8
+xu.y.t0                                    1.8
+xu.register_cf_node_ba560d203ed006ef     4.61702e-11
+xu.a.t1                                      0
+xu.register_cf_node_ba560d203ed006ef_source             1.8
+xu.vgnd.t0                         3.29467e-10
+xu.vgnd.t1                         4.61702e-11
+xu.y.t1                                    1.8
+v.xu.vregister_cf_ba560d203ed006ef_source#branch     3.05615e-12
+v.xu.vregister_cf_ba560d203ed006ef#branch    -1.25249e-12
+v.xu.vregister_cf_7adb841a49f0dda5_source#branch    -3.05614e-12
+v.xu.vregister_cf_7adb841a49f0dda5#branch     3.05614e-12
+va#branch                                    0
+vdd#branch                        -3.05614e-12
+vgnd#branch                        4.33839e-18
+
+ Reference value :  0.00000e+00
+ Reference value :  1.27350e-07
+ Reference value :  2.17450e-07
+No. of Data Rows : 3046
+binary raw file "waveform.raw"
+ngspice-45.2 done

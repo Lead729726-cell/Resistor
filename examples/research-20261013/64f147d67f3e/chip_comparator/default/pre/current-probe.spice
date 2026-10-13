@@ -1,0 +1,26 @@
+.subckt PREAMP INP INN BIAS OUT VPWR VGND
+XN_INN register_cf_node_f5e6bb569eae4e57 INN register_cf_node_f5e6bb569eae4e57_source VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+Vregister_cf_f5e6bb569eae4e57 MIR register_cf_node_f5e6bb569eae4e57 0
+Vregister_cf_f5e6bb569eae4e57_source TAIL register_cf_node_f5e6bb569eae4e57_source 0
+XN_INP register_cf_node_8dfc281901a76fd7 INP register_cf_node_8dfc281901a76fd7_source VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+Vregister_cf_8dfc281901a76fd7 OUT register_cf_node_8dfc281901a76fd7 0
+Vregister_cf_8dfc281901a76fd7_source TAIL register_cf_node_8dfc281901a76fd7_source 0
+XN_TAIL register_cf_node_982336a84ede3d8c BIAS register_cf_node_982336a84ede3d8c_source VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+Vregister_cf_982336a84ede3d8c TAIL register_cf_node_982336a84ede3d8c 0
+Vregister_cf_982336a84ede3d8c_source VGND register_cf_node_982336a84ede3d8c_source 0
+XP_DIODE register_cf_node_fa301aca43866ffd MIR register_cf_node_fa301aca43866ffd_source VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+Vregister_cf_fa301aca43866ffd MIR register_cf_node_fa301aca43866ffd 0
+Vregister_cf_fa301aca43866ffd_source VPWR register_cf_node_fa301aca43866ffd_source 0
+XP_MIRROR register_cf_node_ba06122c33a0aac9 MIR register_cf_node_ba06122c33a0aac9_source VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+Vregister_cf_ba06122c33a0aac9 OUT register_cf_node_ba06122c33a0aac9 0
+Vregister_cf_ba06122c33a0aac9_source VPWR register_cf_node_ba06122c33a0aac9_source 0
+.ends PREAMP
+.subckt chip_comparator INP INN BIAS OUT VPWR VGND
+XN_OUT register_cf_node_11c997d2fb65d3f3 PRE register_cf_node_11c997d2fb65d3f3_source VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+Vregister_cf_11c997d2fb65d3f3 OUT register_cf_node_11c997d2fb65d3f3 0
+Vregister_cf_11c997d2fb65d3f3_source VGND register_cf_node_11c997d2fb65d3f3_source 0
+XPREAMP INP INN BIAS PRE VPWR VGND PREAMP
+XP_OUT register_cf_node_7c299422efe0f5e4 PRE register_cf_node_7c299422efe0f5e4_source VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+Vregister_cf_7c299422efe0f5e4 OUT register_cf_node_7c299422efe0f5e4 0
+Vregister_cf_7c299422efe0f5e4_source VPWR register_cf_node_7c299422efe0f5e4_source 0
+.ends chip_comparator

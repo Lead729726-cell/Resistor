@@ -1,0 +1,61 @@
+Resistor public CMOS cell actual input truth matrix
+.include "/workspace/.runtime/eda/runs/8b4a04d4f076479482e15926702b7786/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/eda/runs/8b4a04d4f076479482e15926702b7786/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VA A VGND PWL(0 0 5e-08 0 5.1e-08 1.8 1e-07 1.8 1.01e-07 0 1.5e-07 0 1.51e-07 1.8 2e-07 1.8 2.01e-07 0 2.5e-07 0 2.51e-07 1.8 3e-07 1.8 3.01e-07 0 3.5e-07 0 3.51e-07 0 4e-07 0 4.01e-07 1.8 4.5e-07 1.8 4.51e-07 0 5e-07 0 5.01e-07 1.8 5.5e-07 1.8 5.51e-07 1.8 6e-07 1.8 6.01e-07 0 6.5e-07 0 6.51e-07 1.8 7e-07 1.8 7.01e-07 0 7.5e-07 0 7.51e-07 0 8e-07 0 8.01e-07 1.8 8.5e-07 1.8 8.51e-07 0 9e-07 0 9.01e-07 1.8 9.5e-07 1.8 9.51e-07 1.8 1e-06 1.8)
+VB B VGND PWL(0 0 5e-08 0 5.1e-08 0 1e-07 0 1.01e-07 1.8 1.5e-07 1.8 1.51e-07 1.8 2e-07 1.8 2.01e-07 0 2.5e-07 0 2.51e-07 0 3e-07 0 3.01e-07 0 3.5e-07 0 3.51e-07 1.8 4e-07 1.8 4.01e-07 0 4.5e-07 0 4.51e-07 0 5e-07 0 5.01e-07 0 5.5e-07 0 5.51e-07 1.8 6e-07 1.8 6.01e-07 1.8 6.5e-07 1.8 6.51e-07 1.8 7e-07 1.8 7.01e-07 1.8 7.5e-07 1.8 7.51e-07 0 8e-07 0 8.01e-07 1.8 8.5e-07 1.8 8.51e-07 1.8 9e-07 1.8 9.01e-07 1.8 9.5e-07 1.8 9.51e-07 0 1e-06 0)
+CLOAD Y VGND 4e-14
+XU A B Y VPWR VGND cell_xor2
+.control
+save v(A) v(B) v(Y) i(VDD) i(v.xu.xn1.vregister_cf_377cff7a8fc053f0) i(v.xu.xn1.vregister_cf_12c0ec391985518a) i(v.xu.xn1.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xn1.vregister_cf_092f3ee2a80b5958) i(v.xu.xn2.vregister_cf_377cff7a8fc053f0) i(v.xu.xn2.vregister_cf_12c0ec391985518a) i(v.xu.xn2.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xn2.vregister_cf_092f3ee2a80b5958) i(v.xu.xn3.vregister_cf_377cff7a8fc053f0) i(v.xu.xn3.vregister_cf_12c0ec391985518a) i(v.xu.xn3.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xn3.vregister_cf_092f3ee2a80b5958) i(v.xu.xn4.vregister_cf_377cff7a8fc053f0) i(v.xu.xn4.vregister_cf_12c0ec391985518a) i(v.xu.xn4.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xn4.vregister_cf_092f3ee2a80b5958) i(VGND) i(VA) i(VB) v(XU.N1) v(XU.XN1.N1) v(VGND) v(VPWR) v(XU.N2) v(XU.XN2.N1) v(XU.N3) v(XU.XN3.N1) v(XU.XN4.N1)
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+tran 1e-10 1e-06 0 1e-10
+let mos_wave_0 = v(A)
+let mos_wave_1 = v(B)
+let mos_wave_2 = v(Y)
+let mos_wave_3 = -i(VDD)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3
+write waveform.raw all
+let register_flow_0 = i(v.xu.xn1.vregister_cf_377cff7a8fc053f0)
+let register_flow_1 = i(v.xu.xn1.vregister_cf_12c0ec391985518a)
+let register_flow_2 = i(v.xu.xn1.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_3 = i(v.xu.xn1.vregister_cf_092f3ee2a80b5958)
+let register_flow_4 = i(v.xu.xn2.vregister_cf_377cff7a8fc053f0)
+let register_flow_5 = i(v.xu.xn2.vregister_cf_12c0ec391985518a)
+let register_flow_6 = i(v.xu.xn2.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_7 = i(v.xu.xn2.vregister_cf_092f3ee2a80b5958)
+let register_flow_8 = i(v.xu.xn3.vregister_cf_377cff7a8fc053f0)
+let register_flow_9 = i(v.xu.xn3.vregister_cf_12c0ec391985518a)
+let register_flow_10 = i(v.xu.xn3.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_11 = i(v.xu.xn3.vregister_cf_092f3ee2a80b5958)
+let register_flow_12 = i(v.xu.xn4.vregister_cf_377cff7a8fc053f0)
+let register_flow_13 = i(v.xu.xn4.vregister_cf_12c0ec391985518a)
+let register_flow_14 = i(v.xu.xn4.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_15 = i(v.xu.xn4.vregister_cf_092f3ee2a80b5958)
+let register_flow_16 = i(VGND)
+let register_flow_17 = i(VDD)
+let register_flow_18 = i(VA)
+let register_flow_19 = i(VB)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13 register_flow_14 register_flow_15 register_flow_16 register_flow_17 register_flow_18 register_flow_19
+let register_voltage_0 = v(XU.N1)
+let register_voltage_1 = v(XU.XN1.N1)
+let register_voltage_2 = v(A)
+let register_voltage_3 = v(VGND)
+let register_voltage_4 = v(B)
+let register_voltage_5 = v(VPWR)
+let register_voltage_6 = v(XU.N2)
+let register_voltage_7 = v(XU.XN2.N1)
+let register_voltage_8 = v(XU.N3)
+let register_voltage_9 = v(XU.XN3.N1)
+let register_voltage_10 = v(Y)
+let register_voltage_11 = v(XU.XN4.N1)
+let register_voltage_12 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11 register_voltage_12
+quit
+.endc
+.end

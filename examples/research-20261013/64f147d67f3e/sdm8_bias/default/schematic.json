@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "BIAS",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "R_BIAS",
+      "name": "R_BIAS",
+      "kind": "resistor",
+      "pins": {
+        "+": "VPWR",
+        "-": "BIAS"
+      },
+      "parameters": {
+        "value": 200000
+      },
+      "x": 180,
+      "y": 170
+    },
+    {
+      "id": "N_DIODE",
+      "name": "N_DIODE",
+      "kind": "nmos",
+      "pins": {
+        "D": "BIAS",
+        "G": "BIAS",
+        "S": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 2,
+        "l_um": 1,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 420,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8"
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

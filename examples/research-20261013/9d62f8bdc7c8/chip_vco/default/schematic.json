@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "CTRL",
+    "OUT",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "P_BIAS",
+      "name": "P_BIAS",
+      "kind": "pmos",
+      "pins": {
+        "D": "PBIAS",
+        "G": "PBIAS",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 10,
+        "l_um": 0.5,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 170,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "N_BIAS",
+      "name": "N_BIAS",
+      "kind": "nmos",
+      "pins": {
+        "D": "PBIAS",
+        "G": "CTRL",
+        "S": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 5,
+        "l_um": 0.5,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 420,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "P_LIMIT0",
+      "name": "P_LIMIT0",
+      "kind": "pmos",
+      "pins": {
+        "D": "P0",
+        "G": "PBIAS",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 10,
+        "l_um": 0.5,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 660,
+      "y": 170,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "P_INV0",
+      "name": "P_INV0",
+      "kind": "pmos",
+      "pins": {
+        "D": "Q0",
+        "G": "OUT",
+        "S": "P0",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 8,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 900,
+      "y": 170,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "N_INV0",
+      "name": "N_INV0",
+      "kind": "nmos",
+      "pins": {
+        "D": "Q0",
+        "G": "OUT",
+        "S": "N0",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 4,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 350,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "N_LIMIT0",
+      "name": "N_LIMIT0",
+      "kind": "nmos",
+      "pins": {
+        "D": "N0",
+        "G": "CTRL",
+        "S": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 5,
+        "l_um": 0.5,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 420,
+      "y": 350,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "C_STAGE0",
+      "name": "C_STAGE0",
+      "kind": "capacitor",
+      "pins": {
+        "+": "Q0",
+        "-": "VGND"
+      },
+      "parameters": {
+        "value": 5e-13
+      },
+      "x": 660,
+      "y": 350
+    },
+    {
+      "id": "P_LIMIT1",
+      "name": "P_LIMIT1",
+      "kind": "pmos",
+      "pins": {
+        "D": "P1",
+        "G": "PBIAS",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 10,
+        "l_um": 0.5,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 900,
+      "y": 350,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "P_INV1",
+      "name": "P_INV1",
+      "kind": "pmos",
+      "pins": {
+        "D": "Q1",
+        "G": "Q0",
+        "S": "P1",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 8,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 530,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "N_INV1",
+      "name": "N_INV1",
+      "kind": "nmos",
+      "pins": {
+        "D": "Q1",
+        "G": "Q0",
+        "S": "N1",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 4,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 420,
+      "y": 530,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "N_LIMIT1",
+      "name": "N_LIMIT1",
+      "kind": "nmos",
+      "pins": {
+        "D": "N1",
+        "G": "CTRL",
+        "S": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 5,
+        "l_um": 0.5,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 660,
+      "y": 530,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "C_STAGE1",
+      "name": "C_STAGE1",
+      "kind": "capacitor",
+      "pins": {
+        "+": "Q1",
+        "-": "VGND"
+      },
+      "parameters": {
+        "value": 5e-13
+      },
+      "x": 900,
+      "y": 530
+    },
+    {
+      "id": "P_LIMIT2",
+      "name": "P_LIMIT2",
+      "kind": "pmos",
+      "pins": {
+        "D": "P2",
+        "G": "PBIAS",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 10,
+        "l_um": 0.5,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 710,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "P_INV2",
+      "name": "P_INV2",
+      "kind": "pmos",
+      "pins": {
+        "D": "OUT",
+        "G": "Q1",
+        "S": "P2",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 8,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 420,
+      "y": 710,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "N_INV2",
+      "name": "N_INV2",
+      "kind": "nmos",
+      "pins": {
+        "D": "OUT",
+        "G": "Q1",
+        "S": "N2",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 4,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 660,
+      "y": 710,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "N_LIMIT2",
+      "name": "N_LIMIT2",
+      "kind": "nmos",
+      "pins": {
+        "D": "N2",
+        "G": "CTRL",
+        "S": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 5,
+        "l_um": 0.5,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 900,
+      "y": 710,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "C_STAGE2",
+      "name": "C_STAGE2",
+      "kind": "capacitor",
+      "pins": {
+        "+": "OUT",
+        "-": "VGND"
+      },
+      "parameters": {
+        "value": 5e-13
+      },
+      "x": 180,
+      "y": 890
+    },
+    {
+      "id": "PORT_CTRL",
+      "name": "PORT_CTRL",
+      "kind": "port",
+      "pins": {
+        "P": "CTRL"
+      },
+      "parameters": {},
+      "x": 420,
+      "y": 890
+    },
+    {
+      "id": "PORT_OUT",
+      "name": "PORT_OUT",
+      "kind": "port",
+      "pins": {
+        "P": "OUT"
+      },
+      "parameters": {},
+      "x": 660,
+      "y": 890
+    },
+    {
+      "id": "PORT_VPWR",
+      "name": "PORT_VPWR",
+      "kind": "port",
+      "pins": {
+        "P": "VPWR"
+      },
+      "parameters": {},
+      "x": 900,
+      "y": 890
+    },
+    {
+      "id": "PORT_VGND",
+      "name": "PORT_VGND",
+      "kind": "port",
+      "pins": {
+        "P": "VGND"
+      },
+      "parameters": {},
+      "x": 180,
+      "y": 1070
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

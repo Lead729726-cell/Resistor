@@ -1,0 +1,50 @@
+Register actual native differential_pair
+.include "/workspace/.runtime/eda/runs/81a118995c1741e29915b50b5d504253/supported-tt.spice"
+.option scale=1e-6
+.include "/workspace/.runtime/eda/runs/81a118995c1741e29915b50b5d504253/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VINP INP VGND 0.905
+VINN INN VGND 0.895
+VBIAS BIAS VGND 0.7
+VOP OUTP VGND 1.8
+VON OUTN VGND 1.8
+XU INP INN OUTP OUTN BIAS VGND differential_pair
+.control
+save v(INP) v(INN) i(VOP) i(VON) v(xu.TAIL) i(v.xu.vregister_cf_6ca64884186f2241) i(v.xu.vregister_cf_f741058f08906de2) i(v.xu.vregister_cf_78ccf72aa40b6097) i(VGND) i(VINP) i(VINN) i(VBIAS) v(OUTP) v(XU.TAIL) v(VGND) v(OUTN) v(BIAS)
+set num_threads=1
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+op
+let mos_sample_index=0
+setscale mos_sample_index
+let mos_wave_0 = v(INP)
+let mos_wave_1 = v(INN)
+let mos_wave_2 = -i(VOP)
+let mos_wave_3 = -i(VON)
+let mos_wave_4 = v(xu.TAIL)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3 mos_wave_4
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_6ca64884186f2241)
+let register_flow_1 = i(v.xu.vregister_cf_f741058f08906de2)
+let register_flow_2 = i(v.xu.vregister_cf_78ccf72aa40b6097)
+let register_flow_3 = i(VGND)
+let register_flow_4 = i(VINP)
+let register_flow_5 = i(VINN)
+let register_flow_6 = i(VBIAS)
+let register_flow_7 = i(VOP)
+let register_flow_8 = i(VON)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8
+let register_voltage_0 = v(OUTP)
+let register_voltage_1 = v(XU.TAIL)
+let register_voltage_2 = v(INP)
+let register_voltage_3 = v(VGND)
+let register_voltage_4 = v(OUTN)
+let register_voltage_5 = v(INN)
+let register_voltage_6 = v(BIAS)
+let register_voltage_7 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7
+quit
+.endc
+.end

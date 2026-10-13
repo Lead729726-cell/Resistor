@@ -1,0 +1,149 @@
+* NGSPICE file created from cell_and2.ext - technology: sky130A
+
+.subckt cell_and2 Y VPWR VGND B A
+X0 VPWR.t5 A.t0 N.t1 VPWR.t4 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X1 VPWR.t1 B.t0 N.t0 VPWR.t0 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X2 VGND.t3 B.t1 N1__N1.t0 VGND.t2 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X3 N1__N1.t1 A.t1 N.t2 VGND.t4 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X4 VGND.t1 N.t3 Y.t1 VGND.t0 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X5 VPWR.t3 N.t4 Y.t0 VPWR.t2 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+C0 A Y 0.00236f
+C1 B Y 2.40762f
+C2 VPWR N1__N1 0.02656f
+C3 A N1__N1 2.0926f
+C4 N Y 3.94724f
+C5 B N1__N1 2.61478f
+C6 A VPWR 0.43986f
+C7 N N1__N1 0.55834f
+C8 B VPWR 0.42216f
+C9 A B 0.08432f
+C10 VPWR N 0.94533f
+C11 Y N1__N1 0.00592f
+C12 A N 0.43522f
+C13 VPWR Y 0.2734f
+C14 B N 0.5757f
+C15 Y VGND 3.32835f
+C16 B VGND 3.23854f
+C17 A VGND 2.82485f
+C18 VPWR VGND 10.2701f
+C19 N1__N1 VGND 2.00033f $ **FLOATING
+C20 N VGND 7.0136f $ **FLOATING
+C21 Y.n0 VGND 0.01202f $ **FLOATING
+C22 Y.t1 VGND 0.02922f $ **FLOATING
+C23 Y.n1 VGND 0.01202f $ **FLOATING
+C24 Y.n2 VGND 0.34253f $ **FLOATING
+C25 Y.n3 VGND 0.01052f $ **FLOATING
+C26 Y.t0 VGND 0.03221f $ **FLOATING
+C27 Y.n4 VGND 0.01052f $ **FLOATING
+C28 Y.n5 VGND 0.30639f $ **FLOATING
+C29 Y.n6 VGND 4.61991f $ **FLOATING
+C30 N1__N1.n0 VGND 0.01267f $ **FLOATING
+C31 N1__N1.n1 VGND 0.01267f $ **FLOATING
+C32 N1__N1.t1 VGND 0.03081f $ **FLOATING
+C33 N1__N1.n2 VGND 0.01267f $ **FLOATING
+C34 N1__N1.n3 VGND 2.33159f $ **FLOATING
+C35 N1__N1.n4 VGND 2.24423f $ **FLOATING
+C36 N1__N1.t0 VGND 0.03081f $ **FLOATING
+C37 N1__N1.n5 VGND 0.01267f $ **FLOATING
+C38 B.t1 VGND 0.04117f $ **FLOATING
+C39 B.t0 VGND 0.04279f $ **FLOATING
+C40 B.n0 VGND 4.03483f $ **FLOATING
+C41 N.n0 VGND 0.00438f $ **FLOATING
+C42 N.t3 VGND 0.01811f $ **FLOATING
+C43 N.t4 VGND 0.01882f $ **FLOATING
+C44 N.n1 VGND 1.23609f $ **FLOATING
+C45 N.n2 VGND 0.00438f $ **FLOATING
+C46 N.t1 VGND 0.01343f $ **FLOATING
+C47 N.n3 VGND 0.00438f $ **FLOATING
+C48 N.n4 VGND 0.17671f $ **FLOATING
+C49 N.n5 VGND 0.00501f $ **FLOATING
+C50 N.t2 VGND 0.01218f $ **FLOATING
+C51 N.n6 VGND 0.00501f $ **FLOATING
+C52 N.n7 VGND 0.14323f $ **FLOATING
+C53 N.n8 VGND 1.20795f $ **FLOATING
+C54 N.n9 VGND 0.74433f $ **FLOATING
+C55 N.n10 VGND 0.14323f $ **FLOATING
+C56 N.t0 VGND 0.01343f $ **FLOATING
+C57 N.n11 VGND 0.00438f $ **FLOATING
+C58 A.t1 VGND 0.02694f $ **FLOATING
+C59 A.t0 VGND 0.028f $ **FLOATING
+C60 A.n0 VGND 1.7192f $ **FLOATING
+rmesh_equiv_0 a a.n0 3.9107002085411517
+rmesh_equiv_1 a a.t0 330.34100000000001
+rmesh_equiv_10 n n.n3 12.8005
+rmesh_equiv_11 n n.n5 12.8005
+rmesh_equiv_12 n n.n6 12.8005
+rmesh_equiv_13 n n.t3 315.88
+rmesh_equiv_14 n n.t4 330.34100000000001
+rmesh_equiv_15 n.n0 n.n10 10.151300000000001
+rmesh_equiv_16 n.n0 n.t0 700.48400000000004
+rmesh_equiv_17 n.n1 n.n9 1.3423499999999999
+rmesh_equiv_18 n.n10 n.n11 10.151300000000001
+rmesh_equiv_19 n.n10 n.n9 11.7021
+rmesh_equiv_2 a a.t1 315.88
+rmesh_equiv_20 n.n11 n.t0 700.48400000000004
+rmesh_equiv_21 n.n2 n.n4 10.151300000000001
+rmesh_equiv_22 n.n2 n.t1 700.48400000000004
+rmesh_equiv_23 n.n3 n.n4 10.151300000000001
+rmesh_equiv_24 n.n3 n.t1 700.48400000000004
+rmesh_equiv_25 n.n4 n.n8 12.254699999999998
+rmesh_equiv_26 n.n5 n.n7 10.151300000000001
+rmesh_equiv_27 n.n5 n.t2 255.34500000000003
+rmesh_equiv_28 n.n6 n.n7 10.151300000000001
+rmesh_equiv_29 n.n6 n.t2 255.34500000000003
+rmesh_equiv_3 b b.n0 4.4456006056394548
+rmesh_equiv_30 n.n7 n.n8 11.7021
+rmesh_equiv_31 n.n8 n.n9 0.55314200000000002
+rmesh_equiv_32 n1__n1 n1__n1.n0 12.8005
+rmesh_equiv_33 n1__n1 n1__n1.n1 12.8005
+rmesh_equiv_34 n1__n1 n1__n1.n2 12.8005
+rmesh_equiv_35 n1__n1 n1__n1.n5 12.8005
+rmesh_equiv_36 n1__n1.n0 n1__n1.n4 10.151300000000001
+rmesh_equiv_37 n1__n1.n0 n1__n1.t0 255.34500000000003
+rmesh_equiv_38 n1__n1.n1 n1__n1.n3 10.151300000000001
+rmesh_equiv_39 n1__n1.n1 n1__n1.t1 255.34500000000003
+rmesh_equiv_4 b b.t0 330.34100000000001
+rmesh_equiv_40 n1__n1.n2 n1__n1.n3 10.151300000000001
+rmesh_equiv_41 n1__n1.n2 n1__n1.t1 255.34500000000003
+rmesh_equiv_42 n1__n1.n3 n1__n1.n4 21.821000000000002
+rmesh_equiv_43 n1__n1.n4 n1__n1.n5 10.151300000000001
+rmesh_equiv_44 n1__n1.n5 n1__n1.t0 255.34500000000003
+rmesh_equiv_45 vgnd vgnd.t0 193.39787368183519
+rmesh_equiv_46 vgnd vgnd.t1 132.65653566349923
+rmesh_equiv_47 vgnd vgnd.t2 193.39787368183516
+rmesh_equiv_48 vgnd vgnd.t3 132.61013581507856
+rmesh_equiv_49 vgnd vgnd.t4 193.39787368183516
+rmesh_equiv_5 b b.t1 315.88
+rmesh_equiv_50 vgnd.t0 vgnd.t2 9377.7028945551338
+rmesh_equiv_51 vgnd.t0 vgnd.t4 6225290.1311330153
+rmesh_equiv_52 vgnd.t1 vgnd.t3 83636.042888128955
+rmesh_equiv_53 vgnd.t2 vgnd.t4 9377.7028945551319
+rmesh_equiv_54 vpwr vpwr.t0 117.18187411979875
+rmesh_equiv_55 vpwr vpwr.t1 355.31551417077043
+rmesh_equiv_56 vpwr vpwr.t2 117.18187411979875
+rmesh_equiv_57 vpwr vpwr.t3 355.35028055523594
+rmesh_equiv_58 vpwr vpwr.t4 117.18187411979875
+rmesh_equiv_59 vpwr vpwr.t5 355.24498625126347
+rmesh_equiv_6 n n.n0 12.8005
+rmesh_equiv_60 vpwr.t1 vpwr.t3 690985.27556286741
+rmesh_equiv_61 vpwr.t1 vpwr.t5 848283.71784934052
+rmesh_equiv_62 vpwr.t3 vpwr.t5 936772.40043546015
+rmesh_equiv_63 y y.n0 12.8005
+rmesh_equiv_64 y y.n1 12.8005
+rmesh_equiv_65 y y.n3 12.8005
+rmesh_equiv_66 y y.n4 12.8005
+rmesh_equiv_67 y y.n6 6.4400400000000007
+rmesh_equiv_68 y.n0 y.n2 10.151300000000001
+rmesh_equiv_69 y.n0 y.t1 255.34500000000003
+rmesh_equiv_7 n n.n1 15.657635939248701
+rmesh_equiv_70 y.n1 y.n2 10.151300000000001
+rmesh_equiv_71 y.n1 y.t1 255.34500000000003
+rmesh_equiv_72 y.n2 y.n6 11.838100000000003
+rmesh_equiv_73 y.n3 y.n5 10.151300000000001
+rmesh_equiv_74 y.n3 y.t0 700.48400000000004
+rmesh_equiv_75 y.n4 y.n5 10.151300000000001
+rmesh_equiv_76 y.n4 y.t0 700.48400000000004
+rmesh_equiv_77 y.n5 y.n6 11.285399999999999
+rmesh_equiv_8 n n.n11 12.8005
+rmesh_equiv_9 n n.n2 12.8005
+.ends

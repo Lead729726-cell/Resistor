@@ -1,0 +1,255 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "PHI1",
+    "PHI1B",
+    "PHI2",
+    "PHI2B",
+    "OUT",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "N_TOP_CHARGE",
+      "name": "N_TOP_CHARGE",
+      "kind": "nmos",
+      "pins": {
+        "D": "VPWR",
+        "G": "PHI1",
+        "S": "FLYTOP",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "P_TOP_CHARGE",
+      "name": "P_TOP_CHARGE",
+      "kind": "pmos",
+      "pins": {
+        "D": "VPWR",
+        "G": "PHI1B",
+        "S": "FLYTOP",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 420,
+      "y": 170,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "N_BOTTOM_CHARGE",
+      "name": "N_BOTTOM_CHARGE",
+      "kind": "nmos",
+      "pins": {
+        "D": "OUT",
+        "G": "PHI1",
+        "S": "FLYBOTTOM",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 660,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "P_BOTTOM_CHARGE",
+      "name": "P_BOTTOM_CHARGE",
+      "kind": "pmos",
+      "pins": {
+        "D": "OUT",
+        "G": "PHI1B",
+        "S": "FLYBOTTOM",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 900,
+      "y": 170,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "N_TOP_TRANSFER",
+      "name": "N_TOP_TRANSFER",
+      "kind": "nmos",
+      "pins": {
+        "D": "FLYTOP",
+        "G": "PHI2",
+        "S": "OUT",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 350,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "P_TOP_TRANSFER",
+      "name": "P_TOP_TRANSFER",
+      "kind": "pmos",
+      "pins": {
+        "D": "FLYTOP",
+        "G": "PHI2B",
+        "S": "OUT",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 420,
+      "y": 350,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "N_BOTTOM_TRANSFER",
+      "name": "N_BOTTOM_TRANSFER",
+      "kind": "nmos",
+      "pins": {
+        "D": "FLYBOTTOM",
+        "G": "PHI2",
+        "S": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 660,
+      "y": 350,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "P_BOTTOM_TRANSFER",
+      "name": "P_BOTTOM_TRANSFER",
+      "kind": "pmos",
+      "pins": {
+        "D": "FLYBOTTOM",
+        "G": "PHI2B",
+        "S": "VGND",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 900,
+      "y": 350,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "PORT_PHI1",
+      "name": "PORT_PHI1",
+      "kind": "port",
+      "pins": {
+        "P": "PHI1"
+      },
+      "parameters": {},
+      "x": 180,
+      "y": 530
+    },
+    {
+      "id": "PORT_PHI1B",
+      "name": "PORT_PHI1B",
+      "kind": "port",
+      "pins": {
+        "P": "PHI1B"
+      },
+      "parameters": {},
+      "x": 420,
+      "y": 530
+    },
+    {
+      "id": "PORT_PHI2",
+      "name": "PORT_PHI2",
+      "kind": "port",
+      "pins": {
+        "P": "PHI2"
+      },
+      "parameters": {},
+      "x": 660,
+      "y": 530
+    },
+    {
+      "id": "PORT_PHI2B",
+      "name": "PORT_PHI2B",
+      "kind": "port",
+      "pins": {
+        "P": "PHI2B"
+      },
+      "parameters": {},
+      "x": 900,
+      "y": 530
+    },
+    {
+      "id": "PORT_OUT",
+      "name": "PORT_OUT",
+      "kind": "port",
+      "pins": {
+        "P": "OUT"
+      },
+      "parameters": {},
+      "x": 180,
+      "y": 710
+    },
+    {
+      "id": "PORT_VPWR",
+      "name": "PORT_VPWR",
+      "kind": "port",
+      "pins": {
+        "P": "VPWR"
+      },
+      "parameters": {},
+      "x": 420,
+      "y": 710
+    },
+    {
+      "id": "PORT_VGND",
+      "name": "PORT_VGND",
+      "kind": "port",
+      "pins": {
+        "P": "VGND"
+      },
+      "parameters": {},
+      "x": 660,
+      "y": 710
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

@@ -1,0 +1,25 @@
+* NGSPICE file created from cell_inv.ext - technology: sky130A
+
+.subckt cell_inv Y VPWR VGND A
+X0 register_cf_node_7adb841a49f0dda5 A.t0 register_cf_node_7adb841a49f0dda5_source VPWR.t0 sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+Vregister_cf_7adb841a49f0dda5 VPWR.t1 register_cf_node_7adb841a49f0dda5 0
+Vregister_cf_7adb841a49f0dda5_source Y.t0 register_cf_node_7adb841a49f0dda5_source 0
+X1 register_cf_node_ba560d203ed006ef A.t1 register_cf_node_ba560d203ed006ef_source VGND.t0 sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+Vregister_cf_ba560d203ed006ef VGND.t1 register_cf_node_ba560d203ed006ef 0
+Vregister_cf_ba560d203ed006ef_source Y.t1 register_cf_node_ba560d203ed006ef_source 0
+C0 Y VPWR 0.28701f
+C1 Y A 1.41228f
+C2 A VPWR 0.42022f
+C3 Y VGND 1.84472f
+C4 A VGND 2.96549f
+C5 VPWR VGND 3.30035f
+rmesh_equiv_0 a a.t0 330.34100000000001
+rmesh_equiv_1 a a.t1 315.88
+rmesh_equiv_2 vgnd vgnd.t0 206.95540124910605
+rmesh_equiv_3 vgnd vgnd.t1 132.47462913370336
+rmesh_equiv_4 vpwr vpwr.t0 117.18187411979875
+rmesh_equiv_5 vpwr vpwr.t1 355.05060063784913
+rmesh_equiv_6 y y.t0 355.71317382896041
+rmesh_equiv_7 y y.t1 132.57052535253496
+rmesh_equiv_8 y.t0 y.t1 178862.31867814893
+.ends

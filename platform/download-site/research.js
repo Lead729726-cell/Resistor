@@ -1,0 +1,1 @@
+document.getElementById('block-search').addEventListener('input',e=>{const q=e.target.value.toLowerCase();for(const r of document.querySelectorAll('#blocks tbody tr'))r.hidden=!r.textContent.toLowerCase().includes(q);});
