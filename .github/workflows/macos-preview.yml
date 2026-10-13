@@ -50,6 +50,8 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
       - name: Verify final signed installer ZIP and its checksum
         run: python3 scripts/verify-mac-archive.py release/installers/Resistor-*-mac-${{ matrix.arch }}-r5.zip --require-bundle-signature --output docs/evidence/macos-archive-${{ matrix.arch }}.json
+      - name: Verify online update archive replacement and user data preservation
+        run: node scripts/update-native-qa.mjs
       - uses: actions/upload-artifact@v4
         with:
           name: Resistor-macOS-${{ matrix.arch }}-adhoc-preview
@@ -59,6 +61,7 @@ jobs:
             docs/evidence/macos-*.json
             docs/evidence/macos-*.png
             docs/evidence/macos-recording/*.webm
+            docs/evidence/update-native-*.json
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: failure()

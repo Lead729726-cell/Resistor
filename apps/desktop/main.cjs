@@ -1,4 +1,5 @@
-const {app,BrowserWindow,ipcMain,dialog,Menu}=require('electron');
+const {app,BrowserWindow,ipcMain,dialog,Menu,net,shell}=require('electron');
+const {spawn}=require('node:child_process');
 const path=require('node:path');
 const {pathToFileURL}=require('node:url');
 const {prepareWorkspace}=require('./workspace.cjs');
@@ -7,9 +8,28 @@ const {configureAppIdentity}=require('./identity.cjs');
 let mainWindow,ownedHub;
 let runtimePromise;
 let windowBootPromise;
+let updater;
 configureAppIdentity(app,{userDataOverride:process.env.REGISTER_USER_DATA});
 async function boot(){
   const root=path.resolve(__dirname,'../..');
+  if(!updater){
+    const {DesktopUpdater}=await import(pathToFileURL(path.join(__dirname,'updates.mjs')));
+    updater=new DesktopUpdater({version:app.getVersion(),userData:app.getPath('userData'),packaged:app.isPackaged,fetchImpl:(...args)=>net.fetch(...args),install:async({file,update,folder})=>{
+      const choice=await dialog.showMessageBox(mainWindow,{type:'question',title:'Resistor 업데이트',message:`Resistor ${update.version}를 설치할까요?`,detail:'입력 중인 설정과 브라우저 로컬 뷰어 파일을 먼저 저장하세요. 기존 설계 저장 폴더와 실행 중인 Docker 해석은 보존됩니다. Windows는 설치 안내를 열고, Mac·Linux는 사용자 앱 폴더에 설치한 뒤 다시 시작합니다.',buttons:['취소','설치'],defaultId:0,cancelId:0});
+      if(choice.response!==1)return false;
+      if(process.platform==='win32'){
+        const child=spawn(file,[],{detached:true,stdio:'ignore',windowsHide:false});
+        await new Promise((resolve,reject)=>{child.once('spawn',resolve);child.once('error',reject);});child.unref();
+      }else{
+        const {prepareInstallation,startInstallHelper}=await import(pathToFileURL(path.join(__dirname,'update-install.mjs')));
+        const plan=await prepareInstallation({file,update,folder});plan.viewer=process.argv.includes('--viewer');await startInstallHelper(plan);
+      }
+      await ownedHub?.close();ownedHub=undefined;app.quit();return true;
+    }});
+    await updater.initialize();
+    const initial=setTimeout(()=>void updater.check({automatic:true}),10000);initial.unref();
+    const periodic=setInterval(()=>void updater.check({automatic:true}),6*60*60*1000);periodic.unref();
+  }
   const workspace=await prepareWorkspace({root,userData:app.getPath('userData'),executable:app.getPath('exe'),override:process.env.MOS_WORKSPACE,packaged:app.isPackaged});
   const {runtimeConfig,workerRpc}=await import(pathToFileURL(path.join(root,'scripts/runtime.mjs')));
   const {assistantRpc}=await import(pathToFileURL(path.join(root,'scripts/design-assistant.mjs')));
@@ -34,6 +54,15 @@ async function boot(){
     if(event.sender!==mainWindow.webContents||event.senderFrame!==mainWindow.webContents.mainFrame||event.senderFrame.url.split(/[?#]/)[0]!==expected)throw new Error('Untrusted IPC sender');
     if(JSON.stringify(payload).length>32*1024*1024)throw new Error('IPC request too large');
     try{
+      if(typeof payload.method==='string'&&payload.method.startsWith('desktop.update.')){
+        if(['desktop.update.website','desktop.update.notes'].includes(payload.method)){
+          if(Object.keys(payload.params??{}).length)return {ok:false,error:{code:'UPDATE_ERROR',message:'업데이트 링크는 주소를 받지 않습니다.'}};
+          const url=payload.method==='desktop.update.website'?'https://resistor-downloads.vercel.app/':updater.status().update?.releaseUrl;
+          if(!url)return {ok:false,error:{code:'UPDATE_ERROR',message:'확인된 릴리스가 없습니다.'}};
+          await shell.openExternal(url);return {ok:true,result:updater.status()};
+        }
+        try{return {ok:true,result:await updater.rpc(payload.method,payload.params??{})};}catch(e){return {ok:false,error:{code:'UPDATE_ERROR',message:e.message}};}
+      }
       if(payload.method==='desktop.diagnostics'){
         if(Object.keys(payload.params??{}).length)return {ok:false,error:{code:'INVALID_PARAMETER',message:'환경 진단은 사용자 경로나 명령을 받지 않습니다.'}};
         const {desktopDiagnostics}=await import(pathToFileURL(path.join(root,'scripts/desktop-diagnostics.mjs')));

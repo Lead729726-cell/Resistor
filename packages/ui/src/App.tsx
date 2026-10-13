@@ -28,6 +28,7 @@ import SemiconductorStarters from './SemiconductorStarters';
 import DigitalWorkbench, {UnitResults} from './DigitalWorkbench';
 import HierarchyTransfer, {copyHierarchy} from './HierarchyTransfer';
 import RuntimeDiagnostics from './RuntimeDiagnostics';
+import DesktopUpdates from './DesktopUpdates';
 import Brand from './Brand';
 import AppearanceControl from './AppearanceControl';
 import CalculatorHub from './CalculatorHub';
@@ -82,8 +83,7 @@ export default function App() {
   const calculatorMode = location.pathname === '/' || calculatorPaths.includes(location.pathname);
   const [viewerOnly,setViewerOnly]=useState(()=>new URLSearchParams(location.search).get('mode')==='viewer');
   useEffect(()=>viewerOnly?window.mos?.onMenuCommand?.(command=>{if(command!=='save'&&editingText(document.activeElement))document.execCommand(command);}):undefined,[viewerOnly]);
-  if (calculatorMode && !viewerOnly) return <CalculatorHub/>;
-  return viewerOnly ? <StandaloneViewer onExit={()=>setViewerOnly(false)}/> : <DesignWorkspace onViewer={()=>setViewerOnly(true)}/>;
+  return <><DesktopUpdates/>{calculatorMode && !viewerOnly ? <CalculatorHub/> : viewerOnly ? <StandaloneViewer onExit={()=>setViewerOnly(false)}/> : <DesignWorkspace onViewer={()=>setViewerOnly(true)}/>}</>;
 }
 function DesignWorkspace({onViewer}:{onViewer:()=>void}) {
   const { status: collaboration, error: collaborationError, refresh: refreshCollaboration } = useCollaborationStatus();

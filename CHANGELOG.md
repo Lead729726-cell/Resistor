@@ -2,7 +2,23 @@
 
 This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
-`docs/evidence/` and the example READMEs. Package version: 0.18.1.
+`docs/evidence/` and the example READMEs. Package version: 0.23.0.
+
+## 0.23.0 — Online version checking and verified installation (2026-10-13)
+
+- Check public GitHub releases at startup, reconnect and six-hour intervals;
+  opt out or restrict to stable releases. Never downgrade or use draft assets.
+- Show release notes, platform, byte progress and SHA-256; cancel and retry,
+  and reuse a fully verified cache after restart.
+- Restrict release/download addresses and asset architectures in the main
+  process. Arbitrary renderer paths, URLs and executable commands are rejected.
+- Windows opens the verified NSIS installation wizard. Mac and Linux validate
+  archives, preserve a backup, replace the user application and request relaunch,
+  restoring the prior target on replacement/launch-request failure.
+- Preserve the historic user-data directory, designs and running Docker jobs.
+  Previous versions need one manual install to acquire the updater.
+- Code signing/notarization and native GUI update qualification remain separate
+  from HTTP, file integrity and atomic-install tests. See the actual evidence.
 
 ## 0.18.1 — Keyboard workbench and searchable guide (2026-10-12)
 
