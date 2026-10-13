@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "version": "0.26.0",
+  "checked_at": "2026-10-13T11:55:39.938Z",
+  "platform": "darwin",
+  "arch": "arm64",
+  "docker_used": false,
+  "cases": [
+    {
+      "name": "authenticated native host process",
+      "passed": true,
+      "runtime_kind": "native-darwin"
+    },
+    {
+      "name": "KLayout and ngspice without a PDK or Docker",
+      "passed": true
+    },
+    {
+      "name": "unauthenticated requests rejected",
+      "passed": true
+    },
+    {
+      "name": "circuit edits, exact SPICE and virtual artifact paths",
+      "passed": true
+    },
+    {
+      "name": "actual ideal-circuit OP: 0.9 V and 90 uA; functional verdict UNKNOWN",
+      "passed": true,
+      "run_id": "af5868ec437142a9a077c2bd460e7008",
+      "voltage_V": 0.9
+    },
+    {
+      "name": "busy engine refuses shutdown and actual host job cancels",
+      "passed": true
+    },
+    {
+      "name": "foreign runtime owner cannot stop the engine",
+      "passed": true
+    },
+    {
+      "name": "native rectangle editing without a PDK",
+      "passed": true
+    },
+    {
+      "name": "GDSII and OASIS actual engine round trips",
+      "passed": true
+    },
+    {
+      "name": "workspace traversal rejected",
+      "passed": true
+    },
+    {
+      "name": "native engine survives launcher process exit",
+      "passed": true
+    },
+    {
+      "name": "restart preserves designs and actual result history",
+      "passed": true
+    },
+    {
+      "name": "actual SKY130 inverter model transient with signed currents",
+      "passed": true,
+      "run_id": "fbb1843454654384bef486e3cfa2a684",
+      "analysis_result": "pass"
+    }
+  ],
+  "physical_signoff": false,
+  "tools": [
+    {
+      "name": "ngspice",
+      "available": true,
+      "version": "** ngspice-47 : Circuit level simulation program"
+    },
+    {
+      "name": "KLayout",
+      "available": true,
+      "version": "0.30.5"
+    },
+    {
+      "name": "Magic",
+      "available": false,
+      "version": "unknown"
+    },
+    {
+      "name": "Netgen",
+      "available": false,
+      "version": "unknown"
+    },
+    {
+      "name": "Xschem",
+      "available": false,
+      "version": "unknown"
+    },
+    {
+      "name": "Yosys",
+      "available": false,
+      "version": "unknown"
+    },
+    {
+      "name": "Icarus Verilog",
+      "available": false,
+      "version": "unknown"
+    },
+    {
+      "name": "VVP",
+      "available": false,
+      "version": "unknown"
+    }
+  ],
+  "public_pdk_available": true,
+  "source_sha256": {
+    "workers/eda/server.py": "e6a6c5f19f0460aa17418d52f02fad8f2c679b1176ba5cbf7514c0f5b2a524a2",
+    "workers/eda/native_entry.py": "7aec6c21dcb95ce4665871197c7303cf5660d88526d1b2acf3ba2c9e8ffdef88",
+    "scripts/native-worker.mjs": "958ca6e6febdea58673319e6624886169c8a5a3400c98525323426548c384281",
+    "scripts/native-engine-qa.mjs": "fcf62768e4d7414ec4997e729e67a4b2d5ae8b0328f47481a551895226caea62"
+  }
+}

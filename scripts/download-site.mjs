@@ -37,9 +37,19 @@ const platforms={
   linux:{label:'Linux · x64',title:'Linux 데스크톱',format:'x86-64 · tar.gz · 설치 도우미 포함',button:'Linux tar.gz',scope:'Linux에서 빌드한 실행 패키지. GTK 3·NSS와 Chromium sandbox가 필요합니다. 일반 Linux 데스크톱 실기기 실행은 미확인입니다.'}
 };
 const downloads=files.map(a=>({name:a.name,platform:a.name.includes('-mac-arm64-')?'macos':a.name.includes('-mac-x64-')?'macos-intel':a.name.includes('-linux-')?'linux':'windows',bytes:a.size,sha256:a.digest.slice(7),url:a.browser_download_url+'?download=1'})).sort((a,b)=>Object.keys(platforms).indexOf(a.platform)-Object.keys(platforms).indexOf(b.platform));
+if(Number(tag.split('.')[1])>=26){
+ const evidence=JSON.parse(await readFile(path.join(root,'docs/evidence/native-runtime/release-assets.json'),'utf8'));
+ for(const item of downloads){
+  const proof=evidence.version===tag.slice(1)?evidence.files.find(p=>p.name===item.name&&p.bytes===item.bytes&&p.sha256===item.sha256):null;
+  if(!proof?.native_eda_verified||!proof?.native_package_ipc_test)throw Error('Current package requires matching native EDA evidence: '+item.name);
+  item.native_eda_verified=true;item.native_package_ipc_test=true;item.native_core_checks=proof.native_core_checks;item.native_physical_tools_verified=proof.native_physical_tools_verified;
+  if(item.platform==='windows')platforms.windows.scope='현재 Windows x64 패키지의 실제 로컬 엔진 IPC·분압 해석과 독립 GDS 뷰어 검사를 통과했습니다. 설치·삭제 UI는 미확인이며 Authenticode 서명은 없습니다. Magic/Netgen은 독립 WSL로 추가 준비합니다.';
+  if(item.platform==='linux')platforms.linux.scope='Ubuntu 24.04 CI에서 현재 패키지의 로컬 엔진 IPC·GDS 뷰어와 별도 설치한 Magic/Netgen의 DRC/LVS/PEX·추출 후 해석을 확인했습니다. GTK 3·NSS·Chromium sandbox가 필요합니다. 다른 배포판과 실기기 검증은 별도입니다.';
+ }
+}
 let nativeMac;try{nativeMac=JSON.parse(await readFile(path.join(root,Number(tag.split('.')[1])>=26?'docs/evidence/native-runtime/mac-native.json':Number(tag.split('.')[1])>=25?'docs/evidence/conversion/mac-native.json':Number(tag.split('.')[1])>=24?'docs/evidence/literature-update/mac-native.json':(Number(tag.slice(1).split('.')[0])>0||Number(tag.split('.')[1])>=23)?'docs/evidence/online-updates/mac-native.json':Number(tag.split('.')[1])>=22?'docs/evidence/bounded-sar/mac-native.json':'docs/evidence/analog-soc/mac-native.json'),'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;}
 for(const item of downloads){if(!item.platform.startsWith('macos'))continue;const proof=nativeMac?.version===tag.slice(1)?nativeMac.architectures?.find(p=>p.artifact.file===item.name&&p.artifact.sha256===item.sha256&&p.artifact.bytes===item.bytes&&p.native_execution_verified===true&&p.native_desktop_tests===4):null;
- item.native_viewer_tested=!!proof;item.native_eda_verified=false;item.notarized=false;
+ item.native_viewer_tested=!!proof;item.native_eda_verified=Number(tag.split('.')[1])>=26&&proof?.native_eda_verified===true&&proof?.native_package_ipc_test===true;item.notarized=false;
  if(proof)platforms[item.platform].scope=Number(tag.split('.')[1])>=26?'현재 ZIP의 Mac 네이티브 뷰어·설치·메뉴 4개 검사와 실제 로컬 엔진 IPC 검사를 통과했습니다. Python·KLayout·ngspice·공개 SKY130 자료 포함. Developer ID·Apple 공증은 별도입니다.':'현재 ZIP의 네이티브 Mac CI 검사 4/4 통과: 실제 GDS·CPU 뷰어, 설치·데이터 보존, 메뉴·창 재열기와 녹화. 자체 서명 검증 완료. Docker EDA의 Mac 실기기 실행과 Developer ID·Apple 공증은 별도입니다.';
 }
 const cards=downloads.map(a=>{const p=platforms[a.platform];return `<article class="download"><div class="platform">${p.label}</div><h2>${p.title}</h2><p>${p.format}</p><a class="button" href="/download/${a.platform}">${p.button} 다운로드 <span aria-hidden="true">↓</span></a><div class="file">${escape(a.name)}<br>${(a.bytes/1048576).toFixed(1)} MiB</div><details><summary>SHA-256 확인</summary><code>${a.sha256}</code></details><p class="scope">${p.scope}</p></article>`}).join('');
