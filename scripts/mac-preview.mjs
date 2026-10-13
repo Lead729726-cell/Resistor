@@ -4,6 +4,7 @@ import {createHash} from 'node:crypto';
 import path from 'node:path';
 import {createRequire} from 'node:module';
 import {archiveMacApp} from './mac-archive.mjs';
+import {nativeMacBuilderConfig} from './mac-build-options.mjs';
 if(process.platform!=='darwin'||!['arm64','x64'].includes(process.arch))throw Error('Build and run the Mac preview on an arm64 or x64 Mac.');
 const require=createRequire(import.meta.url),version=JSON.parse(await readFile('package.json','utf8')).version;
 const run=args=>new Promise((resolve,reject)=>{const child=spawn(process.execPath,args,{stdio:'inherit'});child.once('error',reject);child.once('exit',code=>code===0?resolve():reject(Error('Mac preview stage failed: '+code)));});
@@ -16,7 +17,13 @@ if(process.env.REGISTER_NATIVE_QA==='1'){
   await run([require.resolve('@playwright/test/cli'),'test','tests/ui/desktop.spec.ts','--grep','real worker']);
   await run(['scripts/mac-native-qa.mjs']);
 }
-await run([require.resolve('electron-builder/out/cli/cli.js'),'--config','apps/desktop/builder.json','--prepackaged',app,'--mac',`--${process.arch}`,'--publish','never']);
+// A prepackaged app has one architecture. Explicit target architectures override
+// CLI flags; narrowing them prevents mislabeled artifacts and concurrent DMG
+// tool-cache extraction for an unnecessary second architecture.
+await mkdir('.runtime',{recursive:true});
+const nativeConfig=`.runtime/mac-builder-native-${process.arch}.json`;
+await writeFile(nativeConfig,JSON.stringify(nativeMacBuilderConfig(JSON.parse(await readFile('apps/desktop/builder.json','utf8')),process.arch)));
+await run([require.resolve('electron-builder/out/cli/cli.js'),'--config',nativeConfig,'--prepackaged',app,'--mac',`--${process.arch}`,'--publish','never']);
 const folder=path.resolve('release/installers');await mkdir(folder,{recursive:true});
 const name=`Resistor-${version}-mac-${process.arch}-r5.zip`;
 await archiveMacApp({app,destination:path.join(folder,name),version,arch:process.arch,installer:true,readme:`Resistor ${version} · ${process.arch} · macOS 13+\nZIP 전체를 Mac에서 풀고 Install Resistor.command로 설치하세요. Docker 없이 시작하려면 뷰어로 설치를 선택하세요.\n오류 진단: Diagnose Resistor.command\n네이티브 Mac 뷰어·메뉴·재실행·사용자 데이터 보존 검사는 이 빌드에서 수행했습니다. Docker EDA는 ${process.env.REGISTER_NATIVE_QA==='1'?'별도 실제 검사도 수행했습니다.':'검사하지 않았습니다.'}\nDeveloper ID/Apple 공증은 완료하지 않았습니다.\n`});

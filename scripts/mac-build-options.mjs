@@ -6,3 +6,7 @@ export function macBuildOptions(args=[]) {
   if(!Number.isSafeInteger(revision)||revision<1||revision>999)throw Error('Mac build revision must be an integer from 1 to 999.');
   return {architectures:args.includes('--arm64')?['arm64']:args.includes('--x64')?['x64']:['arm64','x64'],revision,suffix:revision===1?'':`-r${revision}`};
 }
+export function nativeMacBuilderConfig(config,arch){
+  if(!['arm64','x64'].includes(arch)||!Array.isArray(config.mac?.target))throw Error('Native Mac build requires a supported architecture and explicit targets.');
+  const result=structuredClone(config);result.mac.target=result.mac.target.map(target=>typeof target==='string'?{target,arch:[arch]}:{...target,arch:[arch]});return result;
+}
