@@ -7,6 +7,7 @@ import path from 'node:path';
 const tracked = new Set(execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard', '-z'], { encoding: 'utf8' }).split('\0').filter(Boolean));
 const documents = ['README.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'SECURITY.md', 'docs/open-source.md', 'docs/precision-workbench.md','docs/online-updates.md','docs/analog-soc.md','docs/sar-adc.md','examples/bounded-sar/README.md','examples/analog-soc/README.md',...Array.from(tracked).filter(f=>/^examples\/(?:analog-soc\/soc_[^/]+|bounded-sar\/(?:soc_[^/]+|sar8_analog))\/README\.md$/.test(f))];
 const missing = [];
+documents.push('docs/literature-update-2026.md');
 let checked = 0;
 for (const document of documents) {
   const source = readFileSync(document, 'utf8').replace(/```[\s\S]*?```/g, '');

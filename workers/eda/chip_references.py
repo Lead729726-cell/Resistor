@@ -12,7 +12,7 @@ from geometry import EDAError
 
 COMMON = ['VPWR', 'VGND']
 CATALOG = {
- 'chip_ldo': {'name':'LDO · 1.8V → 1.2V PMOS 레귤레이터', 'ports':['VREF','BIAS','OUT',*COMMON], 'parameter_defaults':{'pass_width_um':20.,'compensation_F':20e-12,'output_F':1e-9,'load_low_A':20e-6,'load_high_A':200e-6}, 'analyses':['tran','op'], 'category':'전원', 'scope':'병렬 PMOS 5개 · 외부 0.6V 기준·바이어스, 이상적 출력 C, 1.2V 기준 20→200µA 저항 부하', 'targets':['출력 1.2V','부하 과도 응답','실제 공급 전류']},
+ 'chip_ldo': {'name':'LDO · 1.8V → 1.2V PMOS 레귤레이터', 'ports':['VREF','BIAS','OUT',*COMMON], 'parameter_defaults':{'pass_width_um':20.,'compensation_F':20e-12,'output_F':1e-9,'load_low_A':20e-6,'load_high_A':200e-6}, 'analyses':['tran','op','ac'], 'category':'전원', 'scope':'병렬 PMOS 5개 · 외부 0.6V 기준·바이어스, 이상적 출력 C, 1.2V 기준 20→200µA 저항 부하; AC는 light-load 공급 리플 응답', 'targets':['출력 1.2V','부하 과도 응답','실제 공급 전류','PSRR 주파수 응답']},
  'chip_sc_dcdc': {'name':'DC-DC · 2:1 스위치드 커패시터 코어', 'ports':['PHI1','PHI1B','PHI2','PHI2B','OUT',*COMMON], 'parameter_defaults':{'switch_width_um':20.,'flying_F':1e-9,'output_F':1e-9,'load_Ohm':50000.}, 'analyses':['tran'], 'category':'전원', 'scope':'외부 비중첩 5MHz 클록, 이상적 1nF flying/output C · 개방루프', 'targets':['Vin/2 변환','출력 리플','입·출력 전력과 효율']},
  'chip_vco': {'name':'VCO · 전류 제한 3단 링 발진기', 'ports':['CTRL','OUT',*COMMON], 'parameter_defaults':{'stage_F':500e-15,'control_V':.9}, 'analyses':['tran'], 'category':'클록', 'scope':'SKY130 MOS 14개 · 초기 조건으로 발진 시작', 'targets':['CTRL에 따른 실제 주파수','듀티','소비 전력']},
  'chip_pll': {'name':'PLL · XOR 위상 검출 1:1 루프', 'ports':['REF','CTRL','OUT',*COMMON], 'parameter_defaults':{'stage_F':500e-15,'reference_Hz':30e6,'filter_Ohm':20000.,'filter_F':10e-12}, 'analyses':['tran'], 'category':'클록', 'scope':'실제 CMOS XOR + RC + 저항 바이어스 VCO · Type-I, N=1 · CP/PFD 아님', 'targets':['기준과 출력 주파수 비교','위상 오차 안정','제어 전압과 lock 판정']},
@@ -118,7 +118,9 @@ def spice_tb(p,folder,settings,netlist,model_deck,sub=None):
     if kind=='chip_ldo':
         low=v['load_low_A'];extra=v['load_high_A']-low
         rows += ['VREF VREF VGND 0.6','VBIAS BIAS VGND 0.9',f'COUT OUT VGND {v["output_F"]:.12g}',f'RLOAD OUT VGND {1.2/low:.12g}']
-        if extra>0:rows += [f'RSTEP OUT LOADSTEP {1.2/extra:.12g}','SLOAD LOADSTEP VGND LOADCTL VGND LOADSW',f'VLOAD LOADCTL VGND PULSE(0 {s:.12g} 20u 100n 100n 40u 100u)','.model LOADSW SW(Ron=0.1 Roff=1e12 Vt=0.9 Vh=0.01)']
+        if analysis=='ac':
+            rows=[line+' AC 1' if line.startswith('VDD ') else line for line in rows]
+        elif extra>0:rows += [f'RSTEP OUT LOADSTEP {1.2/extra:.12g}','SLOAD LOADSTEP VGND LOADCTL VGND LOADSW',f'VLOAD LOADCTL VGND PULSE(0 {s:.12g} 20u 100n 100n 40u 100u)','.model LOADSW SW(Ron=0.1 Roff=1e12 Vt=0.9 Vh=0.01)']
         probe('FB','v(xu.FB)');probe('GATE','v(xu.GATE)')
     elif kind=='chip_sc_dcdc':
         for name,delay in [('PHI1',100e-9),('PHI2',200e-9)]:
@@ -141,6 +143,8 @@ def spice_tb(p,folder,settings,netlist,model_deck,sub=None):
     elif analysis=='op':rows += ['op','let mos_sample_index=0','setscale mos_sample_index'];xunit,xlabel='point','operating point'
     elif analysis=='ac':
         rows += ['ac dec 40 10 1e9'];names=['OUT_gain','OUT_phase'];vectors=['mag(v(OUT))','180/pi*ph(v(OUT))'];units=['V/V','deg'];xunit,xlabel='Hz','frequency'
+        if kind=='chip_ldo':
+            names=['supply_to_output_gain','supply_to_output_phase'];vectors=['mag(v(OUT))','180/pi*ph(v(OUT))'];units=['V/V','deg']
     else:raise EDAError('UNSUPPORTED_ANALYSIS','Analysis has no owned chip-reference testbench.')
     for i,vector in enumerate(vectors):rows += [f'let mos_wave_{i} = {vector}']
     rows += ['wrdata waveform.dat '+' '.join(f'mos_wave_{i}' for i in range(len(vectors))),'write waveform.raw all','quit','.endc','.end']
@@ -156,9 +160,9 @@ def crossings(wave,threshold,start=0):
 def window(w,start,end):return [y for x,y in zip(w['x'],w['y']) if start<=x<=end]
 def average(values):return sum(values)/len(values) if values else None
 def integrate(x,y,start):
-    pairs=[(t,v) for t,v in zip(x,y) if t>=start]
-    if len(pairs)<2:return None
-    return sum((b[0]-a[0])*(a[1]+b[1])/2 for a,b in zip(pairs,pairs[1:]))/(pairs[-1][0]-pairs[0][0])
+    import research
+    result=research.statistics({'x':x,'y':y},start,x[-1])
+    return result['mean'] if result['available'] else None
 
 def mean_square(x,y,start):
     """Exact integral of the squared piecewise-linear sampled voltage."""
@@ -195,17 +199,31 @@ def measurements(p,run,params):
             check('power-stage efficiency within physical bounds',m['power_stage_efficiency'] is not None and 0<m['power_stage_efficiency']<=1.001,m['power_stage_efficiency'])
         elif kind in ('chip_vco','chip_pll'):
             edges=crossings(out,s/2,end*.6);f=(len(edges)-1)/(edges[-1]-edges[0]) if len(edges)>2 else None;m['output_frequency_Hz']=f
+            periods=[b-a for a,b in zip(edges,edges[1:])]
+            m['period_variation_s']={'minimum':min(periods) if periods else None,'maximum':max(periods) if periods else None,'rms_about_mean':math.sqrt(sum((t-sum(periods)/len(periods))**2 for t in periods)/len(periods)) if periods else None,'scope':'Deterministic transient crossing-period variation; not stochastic jitter or phase-noise simulation.'}
             check('oscillation crosses both logic rails',min(tail)<s*.3 and max(tail)>s*.7,[min(tail),max(tail)]);check('at least 3 complete output periods measured',len(edges)>3,len(edges))
             if kind=='chip_pll':
                 refs=crossings(waves['REF'],s/2,end*.6);fr=(len(refs)-1)/(refs[-1]-refs[0]) if len(refs)>2 else None;m['reference_frequency_Hz']=fr;m['relative_frequency_error']=abs(f-fr)/fr if f and fr else None
                 phases=[min(abs(e-r) for r in refs)*fr*360 for e in edges[1:-1]] if fr else []
                 m['phase_error_span_deg']=max(phases)-min(phases) if phases else None
+                import signal_metrics as M
+                reference_phase={'x':refs,'y':list(range(len(refs)))}
+                unwrapped=[(r-i)*360 for i,e in enumerate(edges) for r in [M.value_at(reference_phase,e)] if r is not None] if refs else []
+                m['unwrapped_phase_span_deg']=max(unwrapped)-min(unwrapped) if len(unwrapped)>3 else None
+                check('unwrapped phase drift remains within 15 degrees',m['unwrapped_phase_span_deg'] is not None and m['unwrapped_phase_span_deg']<15,m['unwrapped_phase_span_deg'])
                 check('frequency error under 1%',m['relative_frequency_error'] is not None and m['relative_frequency_error']<.01,m['relative_frequency_error']);check('phase error remains bounded within 15 degrees',len(phases)>3 and m['phase_error_span_deg']<15,m['phase_error_span_deg'])
                 m['lock_scope']='Last 40% of simulated interval; deterministic frequency/phase-window criterion, not jitter/phase-noise characterization.'
         elif kind=='chip_comparator':
             for label,a,b,high in [('negative input',.6e-6,.9e-6,False),('positive input',1.6e-6,1.9e-6,True),('negative recovery',2.6e-6,2.9e-6,False)]:
                 ys=window(out,a,b);check(label+' logic level',bool(ys) and (min(ys)>s*.7 if high else max(ys)<s*.3),[min(ys),max(ys)] if ys else None)
     elif params['analysis']=='ac':
+        if kind=='chip_ldo':
+            gain=waves['supply_to_output_gain'];psrr=[-20*math.log10(g) for g in gain['y']] if gain['y'] and all(math.isfinite(g) and g>0 for g in gain['y']) else []
+            if psrr:run['waveforms'].append({'name':'PSRR_rejection_dB','unit':'dB','x':gain['x'].copy(),'y':psrr})
+            if not psrr:m['PSRR_status']='Unavailable: non-positive/invalid supply-to-output gain; no infinite rejection claim.'
+            m.update(psrr_rejection_at_10Hz_dB=psrr[0] if psrr else None,psrr_min_rejection_dB=min(psrr,default=None),psrr_load_A=v['load_low_A'],psrr_convention='Positive rejection = -20*log10(|VOUT/VDD|), VDD AC=1, VREF/BIAS AC=0. Ideal external output capacitor; this is not loop phase margin.')
+            run['reference_verification']={'schema_version':1,'kind':kind,'source':'actual-ngspice-supply-to-output-AC','checks':[],'pass':None,'scope':'Measured PSRR curve only; no PSRR specification or complete LDO qualification has been asserted.'}
+            return run['reference_verification']
         gain=waves['OUT_gain'];g=gain['y'][0];m['low_frequency_gain_V_per_V']=g;m['low_frequency_gain_dB']=20*math.log10(g) if g>0 else None
         m['bandwidth_3dB_Hz']=None
         for i in range(1,len(gain['x'])):

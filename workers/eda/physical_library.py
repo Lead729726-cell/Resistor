@@ -23,9 +23,16 @@ GATES={'cell_inv':('INV',['A','Y','VPWR','VGND']),
  'cell_xor2':('XOR2',['A','B','Y','VPWR','VGND']),
  'cell_xnor2':('XNOR2',['A','B','Y','VPWR','VGND']),
  'cell_mux2':('MUX2',['A','B','S','Y','VPWR','VGND'])}
-CATALOG={key:dict(name=name+' · 직접 만든 CMOS 기본 셀',ports=ports,parameter_defaults={},analyses=['tran'],physical_status='public-pcell-reference',scope='실제 SKY130 MOS · 모든 논리 입력 조합 · 독립 DRC/LVS/PEX 필요',targets=['입력 진리표','물리 연결','기생 성분 후 동작']) for key,(name,ports) in GATES.items()}
+CATALOG={key:dict(name=name+' · 직접 만든 CMOS 기본 셀',ports=ports,parameter_defaults={'drive_scale':1.,'input_slew_ns':.1},analyses=['tran'],physical_status='public-pcell-reference',scope='실제 SKY130 MOS · 진리표 및 단일 입력 sensitized arc · 독립 DRC/LVS/PEX 필요',targets=['입력 진리표','지연·에너지·전이시간','기생 성분 후 동작']) for key,(name,ports) in GATES.items()}
 
-def gate(kind):
+def parameters(values):
+    scale=native.num(values.get('drive_scale',1));slew=native.num(values.get('input_slew_ns',.1))
+    if scale not in (1,2,4):raise EDAError('PARAMETER_RANGE','Supported drive scales are 1, 2 and 4; arbitrary off-grid widths are rejected.')
+    if not .02<=slew<=5:raise EDAError('PARAMETER_RANGE','Input full-swing slew must be 0.02..5ns.')
+    return {**values,'drive_scale':scale,'input_slew_ns':slew}
+
+def gate(kind,values=None):
+    values=parameters(values or {})
     lib=digital_units.make_library(1)
     nor=digital_units.cell(['A','B','Y','VPWR','VGND'])
     for name,kind_,d,g,s in [('MP0','pmos','N','A','VPWR'),('MP1','pmos','Y','B','N'),('MN0','nmos','Y','A','VGND'),('MN1','nmos','Y','B','VGND')]:
@@ -36,6 +43,9 @@ def gate(kind):
         digital_units.block(ir,lib,base,'CORE',{'A':'A','B':'B','Y':'N'})
         digital_units.block(ir,lib,'INV','BUF',{'A':'N','Y':'Y'});lib[name]=ir
     ir=copy.deepcopy(lib[GATES[kind][0]]);ir['cells']=lib
+    for node in [ir,*lib.values()]:
+        for d in node['devices']:
+            if d['kind'] in ('nmos','pmos'):d['parameters']['w_um']*=values['drive_scale']
     # Retain hierarchy for reusable electrical cells; layout flattens separately.
     return ir
 
@@ -295,15 +305,41 @@ def gate_cases(kind):
         rows.append({'index':pattern,'inputs':bits,'expected':expected})
     return rows
 
+def gate_arcs(kind):
+    """Every sensitized single-input transition, including MUX data/select arcs."""
+    rows=gate_cases(kind);by_pattern={tuple(r['inputs']):r['expected'] for r in rows};arcs=[]
+    for row in rows:
+        for i,pin in enumerate(GATES[kind][1][:-3]):
+            changed=row['inputs'].copy();changed[i]=1-changed[i]
+            expected=by_pattern[tuple(changed)]
+            if expected!=row['expected']:
+                arcs.append(dict(input=pin,before=row['inputs'],after=changed,output_before=row['expected'],output_after=expected))
+    return arcs
+
+def stimulus_rows(kind):
+    rows=copy.deepcopy(gate_cases(kind))
+    for arc in gate_arcs(kind):
+        rows.append(dict(index=len(rows),inputs=arc['before'],expected=arc['output_before']))
+        rows.append(dict(index=len(rows),inputs=arc['after'],expected=arc['output_after'],arc=arc))
+    return rows
+
+def gate_step(slew_ns):
+    # The longest 32-slot MUX fixture must remain below the public 200k nominal
+    # point limit at the supported minimum slew. SPICE still refines its actual
+    # time steps around PWL breakpoints; it never fabricates transition samples.
+    return max(10e-12,min(100e-12,slew_ns*1e-9/10))
+
 def spice_tb(p,folder,settings,netlist,deck,sub):
-    kind=p['design_template']['id'];ports=p['ports'];inputs=ports[:-3];s=settings['supply_V'];slot=50e-9;rows=gate_cases(kind)
+    kind=p['design_template']['id'];ports=p['ports'];inputs=ports[:-3];s=settings['supply_V'];slot=50e-9;rows=stimulus_rows(kind)
+    slew=parameters(p['design_template'].get('parameters',{}))['input_slew_ns']*1e-9
     lines=['Resistor public CMOS cell actual input truth matrix',f'.include "{deck}"','.option scale=1e-6',f'.include "{netlist}"',f'.temp {settings["temperature_C"]}','VGND VGND 0 0',f'VDD VPWR VGND {s:.12g}']
     for i,pin in enumerate(inputs):
         points=[(0,rows[0]['inputs'][i]*s)]
-        for row in rows[1:]:points.extend([(row['index']*slot,rows[row['index']-1]['inputs'][i]*s),(row['index']*slot+100e-12,row['inputs'][i]*s)])
+        for row in rows[1:]:points.extend([(row['index']*slot,rows[row['index']-1]['inputs'][i]*s),(row['index']*slot+slew,row['inputs'][i]*s)])
         points.append((len(rows)*slot,rows[-1]['inputs'][i]*s))
         lines.append('V'+pin+' '+pin+' VGND PWL('+' '.join(f'{t:.12g} {v:.12g}' for t,v in points)+')')
-    lines += [f'CLOAD Y VGND {settings["load_F"]:.12g}','XU '+' '.join(sub)+' '+p['cell'],'.control','set numdgt=17','set wr_singlescale','set wr_vecnames',f'tran 100p {len(rows)*slot:.12g}']
+    step=gate_step(slew*1e9)
+    lines += [f'CLOAD Y VGND {settings["load_F"]:.12g}','XU '+' '.join(sub)+' '+p['cell'],'.control','set numdgt=17','set wr_singlescale','set wr_vecnames',f'tran {step:.12g} {len(rows)*slot:.12g} 0 {step:.12g}']
     names=[*inputs,'Y','supply_current'];vectors=[f'v({n})' for n in names[:-1]]+['-i(VDD)']
     for i,v in enumerate(vectors):lines.append(f'let mos_wave_{i} = {v}')
     lines += ['wrdata waveform.dat '+' '.join(f'mos_wave_{i}' for i in range(len(names))),'write waveform.raw all','quit','.endc','.end']
@@ -320,4 +356,41 @@ def measurements(p,run,settings):
         out=[v for t,v in zip(waves['Y']['x'],waves['Y']['y']) if lo<=t<=hi]
         checks.append({'name':'input '+str(row['inputs'])+' → '+str(row['expected']),'pass':passed,'observed':[min(out),max(out)] if out else None})
     r={'schema_version':1,'kind':kind,'source':'actual-ngspice-input-and-output-samples','pass':all(c['pass'] for c in checks),'checks':checks,'scope':'Exhaustive input combinations at configured load/PVT; not Liberty/STA characterization.'}
-    run['reference_verification']=r;run['measurements'].update(truth_cases=len(checks),truth_passed=sum(c['pass'] for c in checks));return r
+    if any(not w.get('x') or len(w['x'])!=len(w.get('y',[])) for w in waves.values()):
+        run['reference_verification']=r;run['measurements'].update(truth_cases=len(checks),truth_passed=sum(c['pass'] for c in checks),timing_characterization={'pass':None,'observed_arcs':0,'reason':'Missing actual waveform samples.'})
+        return r
+    import research as R
+    import signal_metrics as M
+    arcs=[]
+    for row in stimulus_rows(kind):
+        if 'arc' not in row:continue
+        arc=row['arc'];pin=arc['input'];edge=row['index']*50e-9;end=edge+35e-9
+        rising=bool(arc['output_after']);input_rising=arc['after'][p['ports'].index(pin)]==1
+        input_edges=R.crossings(waves[pin],s/2,edge,end,input_rising)
+        output_edges=R.crossings(waves['Y'],s/2,edge,end,rising)
+        early=R.crossings(waves['Y'],s*(.1 if rising else .9),edge,end,rising)
+        late=R.crossings(waves['Y'],s*(.9 if rising else .1),edge,end,rising)
+        # A single observed transition prevents selecting a convenient edge from a glitch.
+        available=len(input_edges)==len(output_edges)==len(early)==len(late)==1
+        delay=output_edges[0]-input_edges[0] if available else None
+        transition=late[0]-early[0] if available else None
+        stable=M.stable(waves['Y'],arc['output_after'],end,edge+47.5e-9,s)
+        arcs.append(dict(**arc,available=available,propagation_s=delay,transition_10_90_s=transition,
+                         stable_output=stable,pass_=available and delay is not None and transition>=0 and stable,
+                         source='Actual input/output half-supply crossings and output 10–90% crossings. Negative delay is retained, never clamped.'))
+    normalized=[{**{k:v for k,v in a.items() if k!='pass_'},'pass':a['pass_']} for a in arcs]
+    observed=[a for a in normalized if a['available']]
+    run['measurements'].update(truth_cases=len(checks),truth_passed=sum(c['pass'] for c in checks),
+        timing_characterization={'arcs':normalized,'expected_arcs':len(arcs),'observed_arcs':len(observed),
+        'pass':all(a['pass'] for a in normalized) if observed else None,
+        'max_propagation_s':max((a['propagation_s'] for a in observed),default=None),
+        'max_transition_s':max((a['transition_10_90_s'] for a in observed),default=None),
+        'input_slew_ns':p['design_template'].get('parameters',{}).get('input_slew_ns',.1),
+        'load_F':settings.get('load_F'), 'corner':settings.get('corner'),
+        'temperature_C':settings.get('temperature_C'), 'supply_V':s,
+        'scope':'Combinational sensitized arcs at this load/PVT. Not complete Liberty, sequential setup/hold, STA or hidden/internal power characterization.'})
+    if observed:
+        r['checks'].append({'name':'Every sensitized timing arc observed and settles','pass':all(a['pass'] for a in normalized),'observed':len(observed)})
+        r['pass']=all(c['pass'] for c in r['checks'])
+    run['reference_verification']=r
+    return r

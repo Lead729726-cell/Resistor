@@ -208,7 +208,8 @@ def cpu_trace(program,cycles=16,bits=4):
     return rows
 
 def catalog():
-    return {'schema_version':1,'units':CATALOG,'default_program':DEFAULT_PROGRAM,'default_program16':DEFAULT_PROGRAM16,'operations':OPS,'execution_available':profile.capabilities()['available']}
+    import research
+    return {'schema_version':1,'units':[{**t,'research':research.record(t['id'])} for t in CATALOG],'default_program':DEFAULT_PROGRAM,'default_program16':DEFAULT_PROGRAM16,'operations':OPS,'execution_available':profile.capabilities()['available']}
 
 def validate_project(p):
     meta=p.get('digital_unit');spec=next((v for v in CATALOG if isinstance(meta,dict) and v['id']==meta.get('kind')),None)

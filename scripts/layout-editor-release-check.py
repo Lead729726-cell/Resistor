@@ -30,6 +30,9 @@ if (ROOT / 'apps/desktop/updates.mjs').exists():
     resources += ['apps/desktop/main.cjs','apps/desktop/builder.json','apps/desktop/update-network.cjs','apps/desktop/update-feed.mjs','apps/desktop/updates.mjs','apps/desktop/update-install.mjs','apps/desktop/update-helper.mjs','docs/online-updates.md']
     expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
 rows = []
+if (ROOT / 'workers/eda/research.py').exists():
+    resources += ['workers/eda/research.py','workers/eda/literature.json','docs/literature-update-2026.md']
+    expected = {name: sha((ROOT / name).read_bytes()) for name in resources}
 line_endings = {}
 def verify_resource(name, body, platform):
     if sha(body) == expected[name]:return

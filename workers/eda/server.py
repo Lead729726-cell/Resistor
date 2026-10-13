@@ -290,7 +290,7 @@ def input_signature():
     models=initial_models()
     decks={str(p):cached_sha(p) for p in (profile.TECH,profile.MAGIC_RC,profile.SETUP,profile.ROOT/'libs.tech/magic/sky130A.tcl',profile.ROOT/'.config/nodeinfo.json')}
     bins=tool_hashes()
-    adapters={str(p.relative_to(Path(__file__).parent)):cached_sha(p) for p in [*Path(__file__).parent.glob('*.py'), *Path(__file__).parent.glob('rtl/*')] if p.is_file() and not p.name.startswith('test_')}
+    adapters={str(p.relative_to(Path(__file__).parent)):cached_sha(p) for p in [*Path(__file__).parent.glob('*.py'), Path(__file__).parent/'literature.json', *Path(__file__).parent.glob('rtl/*')] if p.is_file() and not p.name.startswith('test_')}
     return hashlib.sha256(json.dumps({'models':models,'decks':decks,'tools':bins,'image':profile.IMAGE,'adapters':adapters},sort_keys=True).encode()).hexdigest()
 def tool_hashes():
     paths=[Path(shutil.which(name)) for name in ('magic','ngspice','netgen','python3','iverilog','vvp') if shutil.which(name)]
@@ -856,6 +856,8 @@ def execute_job(run,p,params,folder):
         elif run['kind']=='drc': run['tool']='Magic'; drc(run,p,folder,manifest)
         elif run['kind']=='lvs': run['tool']='Magic + Netgen'; lvs(run,p,folder,manifest)
         elif run['kind']=='pex': run['tool']='Magic'; extract(run,p,folder,manifest,pex=True)
+        if run['kind']=='simulation':
+            design_tools.research.annotate(p,run,params)
         run['execution_status']='completed'
     except Exception as e:
         run.update(execution_status='canceled' if isinstance(e,EDAError) and e.code=='CANCELED' else 'failed',analysis_result='unknown',message=str(e))

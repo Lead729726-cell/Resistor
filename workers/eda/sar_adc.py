@@ -259,5 +259,7 @@ def execute(server,run,p,folder,manifest,params):
     report['pass']=report.pop('pass_');path=folder/'sar-verification.json';path.write_text(json.dumps(report,indent=2)+'\n')
     run.update(tool='ngspice + Icarus Verilog',reference_verification=report,analysis_result='pass' if passed else 'fail',message='Actual charge-retaining SAR comparator decisions and RTL/gate replay completed.')
     run.setdefault('measurements',{}).update(analysis='tran',x_unit='s',x_label='time',output_bits=8,frames=len(frames),max_code_error=max(abs(f['error_codes']) for f in frames),ambiguous_decisions=ambiguous,rtl_gate_replay_match=matched,lsb_V=reference/256,conversion_s=frame_period,effective_resolution='not measured')
+    import research
+    run['measurements']['source_energy'] = research.sar_energy(run['waveforms'],frames,v,config['supply_V'])
     run['artifacts'].update(testbench=str(tb),native_decisions=str(folder/'decisions.csv'),waveform_data=str(folder/'waveform.dat'),sar_verification=str(path))
     manifest['settings'].update(sar_cosimulation='retained-charge ngspice continuation → actual RTL and synthesized-gate replay',sar_ideal_sources='External reference, VCM, bias and control bridge only; no behavioral ADC quantizer in the DUT.',sar_external_control_driver={'series_R_Ohm':200,'load_C_F':.5e-12,'nominal_RC_s':100e-12,'scope':'External driver assumption, not synthesized-controller transistor timing. Actual loaded gate voltages are saved.'},sar_scope=report['scope'])

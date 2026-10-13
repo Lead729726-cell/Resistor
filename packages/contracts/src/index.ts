@@ -85,7 +85,10 @@ export interface RoutingRules { project_id?:string;profile_id:string;fingerprint
 export interface RouteInput { layer_id:string;start:[Decimal,Decimal];end:[Decimal,Decimal];width?:Decimal;net?:string;order?:'x-first'|'y-first';points?:[Decimal,Decimal][];rule_fingerprint?:string }
 export interface RoutePreview { project_id:string;revision:number;rule_fingerprint:string;preview_hash:string;valid:boolean;points:[Decimal,Decimal][];width:Decimal;length_dbu:Decimal;collisions:{shape_id:string;layer_id:string;reason:string}[];limits:string[];[key:string]:unknown }
 export interface DesignTemplate { id:string;name:string;parameter_defaults:Record<string,number>;ports:string[];analyses:string[];physical_status:string;limits:string[];[key:string]:unknown }
-export interface DesignCatalog { templates:DesignTemplate[];[key:string]:unknown }
+export interface ResearchPaper {id:string;title:string;authors:string;date:string;venue:string;doi:string|null;url:string;read_scope:string;technology:string;adopted:string;not_reproduced:string}
+export interface LiteratureReview {schema_version:number;review_version:string;reviewed_at:string;reference_ids:string[];references:ResearchPaper[];relationship:string;paper_performance_reproduced:false;qualification:string;pending:string[]}
+export interface ResearchInventory {schema_version:number;reviewed_at:string;review_version:string;scope:string;papers:ResearchPaper[];coverage:(LiteratureReview & {id:string;name:string})[]}
+export interface DesignCatalog { templates:DesignTemplate[];literature?:ResearchInventory;[key:string]:unknown }
 export interface ChipLimits {width_um:number;height_um:number;max_area_um2:number;edge_um:number}
 export interface ChipEnvelope {fits:boolean;used_width_um:number;used_height_um:number;used_area_um2:number;chip_area_um2:number;minimum_envelope_um:number[];bbox_dbu:string[]|null;policy:ChipLimits}
 export type StarterMode = 'nominal' | 'slow_hot' | 'fast_cold';

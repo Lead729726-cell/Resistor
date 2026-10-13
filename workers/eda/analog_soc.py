@@ -22,7 +22,7 @@ PARTS = {
     'soc_sensor_afe': ('SOC_SENSOR_AFE', 'SoC · 센서 AFE·클록 동기 판정', ['VIN', 'GAIN', 'CLK', 'RESET', 'OUT', 'DATA', 'VCM', 'BIAS', *SUPPLY]),
 }
 DEFAULTS = dict(compensation_F=5e-12, filter_Ohm=40000., filter_F=20e-12,
-                feedback_Ohm=100000., feedback_F=1e-12, reference_current_A=10e-6)
+                feedback_Ohm=100000., feedback_F=1e-12, reference_current_A=10e-6, nulling_Ohm=5000.)
 CATALOG = {key: dict(name=name, ports=ports, parameter_defaults=dict(DEFAULTS),
     analyses=['op', 'ac', 'tran'] if key not in ('soc_cascode_mirror', 'soc_sensor_afe') else
              ['dc', 'op'] if key == 'soc_cascode_mirror' else ['tran'],
@@ -42,9 +42,14 @@ for kind, keys in {
     'soc_tia':['compensation_F','feedback_Ohm','feedback_F'],
     'soc_sensor_afe':['compensation_F','filter_Ohm','filter_F'],
 }.items(): CATALOG[kind]['parameter_defaults']={key:DEFAULTS[key] for key in keys}
+for kind in PARTS:
+    if kind != 'soc_cascode_mirror':
+        CATALOG[kind]['parameter_defaults']['nulling_Ohm'] = DEFAULTS['nulling_Ohm']
 
 def parameters(kind, values):
     raw=values;values={**DEFAULTS,**values}
+    if not 500 <= values['nulling_Ohm'] <= 50000:
+        raise EDAError('PARAMETER_RANGE', 'OTA nulling resistance must be 500..50000 ohm; phase margin must be measured.')
     if not .2e-12 <= values['compensation_F'] <= 20e-12:
         raise EDAError('PARAMETER_RANGE', 'Miller compensation must be 0.2..20pF.')
     if not 1000 <= values['filter_Ohm'] <= 100000 or not 1e-12 <= values['filter_F'] <= 100e-12:
@@ -71,7 +76,7 @@ def library(v):
     C.mos(ota, 'P_SECOND', 'pmos', 'OUT', 'PRE', 'VPWR', 40, 1)
     C.mos(ota, 'N_SECOND', 'nmos', 'OUT', 'BIAS', 'VGND', 2, 1)
     C.passive(ota, 'C_MILLER', 'capacitor', 'PRE', 'COMP', v['compensation_F'])
-    C.passive(ota, 'R_ZERO', 'resistor', 'COMP', 'OUT', 5000)
+    C.passive(ota, 'R_ZERO', 'resistor', 'COMP', 'OUT', v['nulling_Ohm'])
     lib['SOC_OTA'] = ota
     bias = C.cell(PARTS['soc_bias'][2])
     C.mos(bias, 'N_DIODE', 'nmos', 'BIAS', 'BIAS', 'VGND', 2, 1)

@@ -25,6 +25,7 @@ import sigma_delta
 import analog_soc
 import floorplan
 import sar_adc
+import research
 
 S = None
 VERSION = 'register-design-tools-2'
@@ -242,7 +243,7 @@ sar_adc.populate_catalog()
 CATALOG.update(sar_adc.CATALOG)
 
 def catalog():
-    return {'schema_version':1,'templates':[{'id':key,**copy.deepcopy(value),'limits':['Actual native schematic and public ngspice models; no commercial execution claim.','Empty layout is not physically verified.','Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library.']} for key,value in CATALOG.items()]}
+    return {'schema_version':1,'literature':research.inventory([dict(id=k,**v) for k,v in CATALOG.items()],digital_units.CATALOG),'templates':[{'id':key,**copy.deepcopy(value),'research':research.record(key),'limits':['Actual native schematic and public ngspice models; no commercial execution claim.','Empty layout is not physically verified.','Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library.']} for key,value in CATALOG.items()]}
 
 def _parameters(template,raw):
     if not isinstance(raw,dict) or set(raw)-set(CATALOG[template]['parameter_defaults']):raise EDAError('UNSUPPORTED_PARAMETER','Unknown template parameter.')
@@ -260,13 +261,14 @@ def _parameters(template,raw):
     if template in sigma_delta.CATALOG:return sigma_delta.parameters(template,values)
     if template in analog_soc.CATALOG:return analog_soc.parameters(template,values)
     if template in sar_adc.CATALOG:return sar_adc.parameters(template,values)
+    if template in physical_library.CATALOG:return physical_library.parameters(values)
     return chip_references.parameters(template,values) if template in chip_references.CATALOG else values
 
 def _schematic(template,params):
     if template in sar_adc.CATALOG:return sar_adc.schematic(template,params)
     if template in analog_soc.CATALOG:return analog_soc.schematic(template,params)
     if template in sigma_delta.CATALOG:return sigma_delta.schematic(template,params)
-    if template in physical_library.CATALOG:return physical_library.gate(template)
+    if template in physical_library.CATALOG:return physical_library.gate(template,params)
     if template in chip_references.CATALOG:return chip_references.schematic(template,params)
     if template=='mux4':return digital_mux.schematic(params['w_um'],params['l_um'])
     devices=[]
@@ -349,11 +351,11 @@ def create_template(params):
             validation=native.validate(schematic)
             if not validation['valid']:raise EDAError('INVALID_SCHEMATIC','Generated template is invalid; project is not committed.',validation['issues'])
             duration=64*values['slot_ns']*1e-9 if template=='mux4' else 200e-9 if template=='rc_lowpass' else 100e-9
-            meta={'schema_version':1,'id':template,'parameters':values,'layout_status':'generated-public-core' if physical else 'not-generated','physical_verification':'not-run','stimulus_source':'owned-template','ground_port':'VGND','generated_by':VERSION}
+            meta={'schema_version':1,'id':template,'parameters':values,'layout_status':'generated-public-core' if physical else 'not-generated','physical_verification':'not-run','stimulus_source':'owned-template','ground_port':'VGND','generated_by':VERSION,'literature_review':research.record(template)}
             p={'schema_version':1,'id':pid,'name':name,'cell':cell,'pdk_id':'sky130A','revision':1,'dbu_um':layout.dbu,'grid_dbu':5,'source':'pdk' if physical else 'fixture','example':template,'layers':[],'schematic':schematic,'testbench':native.testbench({'duration_s':duration,'step_s':100e-12,'analysis':'tran' if template in ('rc_lowpass','mux4') else 'op'}),'runs':[],'ports':ports,'redo_stack':[],'undo_stack':[],'next_revision':2,'design_template':meta,'layout_parameter_policy':'reference-layout-independent-edit' if physical else 'schematic-only-no-generated-layout'}
             if envelope:p['chip_limits']=envelope
             if physical and new_physical:meta.update(physical_adapter='sky130-pcell-library-v1',passive_replacements=replacements,rc_corner='typical',manufacturing_signoff=False)
-            if template in physical_library.CATALOG:p['testbench']=native.testbench({'analysis':'tran','duration_s':400e-9,'step_s':100e-12})
+            if template in physical_library.CATALOG:p['testbench']=native.testbench({'analysis':'tran','duration_s':len(physical_library.stimulus_rows(template))*50e-9,'step_s':physical_library.gate_step(values['input_slew_ns'])})
             if template in chip_references.CATALOG:
                 p['testbench']=native.testbench(chip_references.SETTINGS[template])
                 meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True)

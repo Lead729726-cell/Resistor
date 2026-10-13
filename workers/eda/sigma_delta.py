@@ -448,6 +448,11 @@ def execute(server, run, p, folder, manifest, params):
     if v['sine_amplitude_V']:
         run['measurements'].update(spectrum(codes,v['sine_frequency_Hz'],1e6/R))
     run['measurements']['block_context']=original_kind
+    import research
+    run['measurements']['cic_response'] = research.cic_response(v['sine_frequency_Hz'] if v['sine_amplitude_V'] else 0)
+    import signal_metrics
+    run['measurements']['analog_supply_energy'] = signal_metrics.supply_metrics({'x':[r[0] for r in rows],'y':[-r[9] for r in rows]},rows[0][0],rows[-1][0],vdd)
+    run['measurements']['analog_supply_energy']['scope']='All raw analog samples before display thinning; excludes digital RTL and external input/clock/reset power.'
     provenance = dict(schema_version=1, analog='actual SKY130 MOS, ideal reference resistors/capacitors', rtl_sha256=hashlib.sha256(RTL.read_bytes()).hexdigest(), gate_rtl_sha256=hashlib.sha256(GATE_RTL.read_bytes()).hexdigest(), simcells_sha256=hashlib.sha256(simcells.read_bytes()).hexdigest(), analog_netlist_sha256=hashlib.sha256(core.read_bytes()).hexdigest(), reference='independent modulo-17-bit CIC2 Python oracle', matches=same, analog_samples=len(rows), display_samples=len(display), bit_sample_phase=.875, full_transistor_digital_timing=False, thermal_flicker_noise=False, foundry_signoff=False)
     (folder/'adc-verification.json').write_text(json.dumps(provenance, indent=2) + '\n')
     (folder/'adc-codes.csv').write_text('time_s,code,decoded_V\n' + ''.join(f'{t:.12g},{code},{code*vdd/256:.12g}\n' for t,(i,code) in zip(frame_times, frames)))
