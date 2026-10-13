@@ -6,11 +6,13 @@ import {randomUUID} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {verifiedFile} from './updates.mjs';
 import {versionParts} from './update-feed.mjs';
-export const run=(exe,args,options={})=>new Promise((resolve,reject)=>{
-  const child=spawn(exe,args,{windowsHide:true,stdio:'pipe',...options});let output='';
+export const run=(exe,args,{spawnImpl=spawn,...options}={})=>new Promise((resolve,reject)=>{
+  const child=spawnImpl(exe,args,{windowsHide:true,stdio:'pipe',...options});let output='';
   child.stdout?.on('data',b=>{output+=b;if(output.length>4*1024*1024){child.kill();reject(Error('설치 파일 목록이 너무 큽니다.'));}});child.stderr?.on('data',()=>{});
   const timer=setTimeout(()=>{child.kill();reject(Error('업데이트 설치 시간이 초과되었습니다.'));},120000);
-  child.once('error',e=>{clearTimeout(timer);reject(e);});child.once('exit',code=>{clearTimeout(timer);code===0?resolve(output):reject(Error(`업데이트 설치 단계 실패 (${path.basename(exe)} / ${code})`));});
+  // exit may precede stdout drainage. A fast PlistBuddy can otherwise return
+  // an empty identifier intermittently even for a correct signed bundle.
+  child.once('error',e=>{clearTimeout(timer);reject(e);});child.once('close',code=>{clearTimeout(timer);code===0?resolve(output):reject(Error(`업데이트 설치 단계 실패 (${path.basename(exe)} / ${code})`));});
 });
 export function assertInside(root,target){const relative=path.relative(path.resolve(root),path.resolve(target));if(!relative||relative==='..'||relative.startsWith('..'+path.sep)||path.isAbsolute(relative))throw Error('설치 경로가 허용 범위를 벗어났습니다.');}
 export function safeArchiveEntries(list,prefix,{mac=false}={}){
