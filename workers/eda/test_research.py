@@ -41,6 +41,19 @@ class ResearchQA(unittest.TestCase):
             for slew in (.02,.1,1,5):
                 settings=native.testbench(dict(duration_s=len(P.stimulus_rows(kind))*50e-9,step_s=P.gate_step(slew)))
                 self.assertLessEqual(settings['duration_s']/settings['step_s'],200000)
+    def test_half_supply_crossing_without_valid_high_input_cannot_pass_arc(self):
+        rows=P.stimulus_rows('cell_inv');x=[0];a=[0];y=[1.8]
+        for row in rows[1:]:
+            edge=row['index']*50e-9;x.extend([edge,edge+1e-9]);a.extend([a[-1],1.08 if row['index']==3 else row['inputs'][0]*1.8]);y.extend([y[-1],row['expected']*1.8])
+        x.append(len(rows)*50e-9);a.append(a[-1]);y.append(y[-1])
+        points=sorted([*zip(x,a,y),*[(r['index']*50e-9+40e-9,1.08 if r['index']==3 else r['inputs'][0]*1.8,r['expected']*1.8) for r in rows]])
+        x,a,y=map(list,zip(*points))
+        run=dict(waveforms=[dict(name='A',x=x,y=a),dict(name='Y',x=x,y=y)],measurements={})
+        p=dict(ports=P.GATES['cell_inv'][1],design_template=dict(id='cell_inv',parameters={}))
+        result=P.measurements(p,run,dict(supply_V=1.8))
+        self.assertEqual(run['measurements']['truth_passed'],2)
+        self.assertEqual(run['measurements']['timing_characterization']['observed_arcs'],2)
+        self.assertFalse(result['pass'])
     def test_compensation_is_applied_through_reused_ota_and_default_preserved(self):
         for kind in A.PARTS:
             ir=A.schematic(kind,{})

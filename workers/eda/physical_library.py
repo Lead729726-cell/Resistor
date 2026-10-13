@@ -375,8 +375,10 @@ def measurements(p,run,settings):
         delay=output_edges[0]-input_edges[0] if available else None
         transition=late[0]-early[0] if available else None
         stable=M.stable(waves['Y'],arc['output_after'],end,edge+47.5e-9,s)
+        before_valid=M.stable(waves['Y'],arc['output_before'],edge-15e-9,edge-2.5e-9,s) and all(M.stable(waves[n],b,edge-15e-9,edge-2.5e-9,s) for n,b in zip(p['ports'][:-3],arc['before']))
+        inputs_valid=all(M.stable(waves[n],b,end,edge+47.5e-9,s) for n,b in zip(p['ports'][:-3],arc['after'])) and all(M.stable(waves[n],b,edge,end,s) for n,b in zip(p['ports'][:-3],arc['before']) if n!=pin)
         arcs.append(dict(**arc,available=available,propagation_s=delay,transition_10_90_s=transition,
-                         stable_output=stable,pass_=available and delay is not None and transition>=0 and stable,
+                         stable_output=stable,valid_before_state=before_valid,valid_sensitizing_inputs=inputs_valid,pass_=available and delay is not None and transition>=0 and stable and before_valid and inputs_valid,
                          source='Actual input/output half-supply crossings and output 10–90% crossings. Negative delay is retained, never clamped.'))
     normalized=[{**{k:v for k,v in a.items() if k!='pass_'},'pass':a['pass_']} for a in arcs]
     observed=[a for a in normalized if a['available']]
