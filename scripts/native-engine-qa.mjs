@@ -19,7 +19,7 @@ const emptyPdk=path.join(workspace,'empty-pdks');await mkdir(emptyPdk);await wri
 const report={schema_version:1,version:JSON.parse(await readFile(path.join(root,'package.json'),'utf8')).version,checked_at:new Date().toISOString(),platform:process.platform,arch:process.arch,docker_used:false,cases:[],physical_signoff:false};
 const check=(name,details={})=>{report.cases.push({name,passed:true,...details});console.log('PASS '+name);};
 const api=async(method,params={})=>{const body=await workerRpc(config,method,params);assert(body.ok,`${method}: ${body.error?.code}: ${body.error?.message}`);return body.result;};
-const wait=async job=>{const deadline=Date.now()+120000;while(['queued','running'].includes(job.execution_status)&&Date.now()<deadline){await new Promise(r=>setTimeout(r,100));job=await api('job.status',{run_id:job.id});}return job;};
+const wait=async job=>{const deadline=Date.now()+120000;while(['queued','running'].includes(job.execution_status)&&Date.now()<deadline){await new Promise(r=>setTimeout(r,100));job=await api('job.status',{run_id:job.id});}if(job.execution_status==='failed'){const logs=await api('job.logs',{run_id:job.id});console.error(logs.text.slice(-8000));report.failed_job={id:job.id,message:job.message,log:logs.text.slice(-8000)};}return job;};
 const localFile=value=>path.join(workspace,value.replace(/^\/workspace\//,''));
 let started=false;
 try{

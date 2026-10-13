@@ -693,7 +693,7 @@ ext2spice merge none
 
 def lvs(run,p,folder,manifest):
     layout=extract(run,p,folder,manifest); reference=folder/'reference.spice'; reference.write_text(native.emit(p['schematic'],p['cell'],p['ports']))
-    report=folder/'lvs.log'; cmd=['netgen','-batch','lvs',f'{layout} {p["cell"]}',f'{reference} {p["cell"]}',str(profile.SETUP),str(report),'-json']
+    report=folder/'lvs.log'; cmd=['netgen','-batch','lvs',native.netgen_circuit(layout,p['cell']),native.netgen_circuit(reference,p['cell']),str(profile.SETUP),str(report),'-json']
     process(run,folder,cmd,'netgen-lvs',manifest,timeout=600 if p.get('digital_unit',{}).get('kind')=='cpu16' else 120)
     if not report.is_file(): raise EDAError('PARSER_FAILED','Netgen did not produce comparison report.')
     content=report.read_text(errors='replace')

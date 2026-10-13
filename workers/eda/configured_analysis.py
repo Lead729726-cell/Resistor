@@ -250,7 +250,7 @@ def execute(run,p,folder,manifest,params):
     elif run['kind']=='pex':run['tool']='Magic';S.extract(run,p,folder,manifest,pex=True,resources=r)
     elif run['kind']=='lvs':
         run['tool']='Magic + Netgen';layout=S.extract(run,p,folder,manifest,resources=r);ref=folder/'reference.spice';ref.write_text(reference(params.get('reference_spice'),p['cell'],p['ports'],Path(m['root'])));report=folder/'lvs.log'
-        S.process(run,folder,['netgen','-batch','lvs',f'{layout} {p["cell"]}',f'{ref} {p["cell"]}',str(r['netgen_setup']),str(report),'-json'],'netgen-lvs',manifest)
+        S.process(run,folder,['netgen','-batch','lvs',S.native.netgen_circuit(layout,p['cell']),S.native.netgen_circuit(ref,p['cell']),str(r['netgen_setup']),str(report),'-json'],'netgen-lvs',manifest)
         if not report.is_file():raise EDAError('PARSER_FAILED','Configured Netgen produced no report.')
         text=report.read_text()
         if 'Circuits match uniquely.' in text and 'Property errors were found.' not in text:result='pass'

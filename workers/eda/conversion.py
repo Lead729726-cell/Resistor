@@ -200,7 +200,7 @@ def execute(run,p,folder,manifest,request):
         run['artifacts']['extracted_netlist']=str(dest)
         if recovered['ready'] and pid=='sky130A':
             typed=folder/'editable.spice';typed.write_text(native.emit(recovered['schematic'],top,recovered['ports']));log=folder/'parser-equivalence.log'
-            S.process(run,folder,['netgen','-batch','lvs',f'{dest} {top}',f'{typed} {top}',str(resources['netgen_setup']),str(log),'-json'],'netgen-recovery',manifest,timeout=120)
+            S.process(run,folder,['netgen','-batch','lvs',native.netgen_circuit(dest,top),native.netgen_circuit(typed,top),str(resources['netgen_setup']),str(log),'-json'],'netgen-recovery',manifest,timeout=120)
             content=log.read_text(errors='replace');same='Circuits match uniquely.' in content and 'Property errors were found.' not in content
             report.update(ready=same,parser_equivalence='pass' if same else 'fail');run['artifacts'].update(editable_netlist=str(typed),parser_equivalence_log=str(log))
         else:report['ready']=False

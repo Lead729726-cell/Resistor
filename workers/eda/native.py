@@ -4,11 +4,18 @@ import re
 import copy
 import hashlib
 import uuid
+from pathlib import Path
 from geometry import EDAError
 
 NET = re.compile(r'(?:0|[A-Za-z_][A-Za-z0-9_.$!:/-]*)$')
 MODEL_KIND={'sky130_fd_pr__nfet_01v8':'nmos','sky130_fd_pr__pfet_01v8_hvt':'pmos'}
 PASSIVE_MODELS={'sky130_fd_pr__res_high_po_0p35':'resistor','sky130_fd_pr__res_xhigh_po_1p41':'resistor','sky130_fd_pr__cap_mim_m3_1':'capacitor'}
+
+def netgen_circuit(path,cell):
+    """A filename/cell pair is a Tcl list inside one argv entry."""
+    name=Path(path).as_posix()
+    if any(c in name for c in '{}\r\n\0') or not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*',cell):raise EDAError('UNSUPPORTED_NETGEN_PATH','Netgen paths need literal filenames without Tcl braces or control characters, and an identifier cell.')
+    return '{'+name+'} '+cell
 
 def num(value):
     if isinstance(value,bool): raise EDAError('INVALID_PARAMETER','Boolean is not a circuit parameter.')
