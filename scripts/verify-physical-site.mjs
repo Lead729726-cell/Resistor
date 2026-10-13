@@ -20,6 +20,7 @@ if(deployment.inventory.some(e=>e.file==='analog-soc.html'))routes.push('/tutori
 if(deployment.inventory.some(e=>e.file==='sar-adc8.html'))routes.push('/tutorial/sar-adc8/');
 if(deployment.inventory.some(e=>e.file==='updates.html'))routes.push('/updates/');
 if(deployment.inventory.some(e=>e.file==='research.html'))routes.push('/research/');
+if(deployment.inventory.some(e=>e.file==='schematic-guide.html'))routes.push('/tutorial/schematic/');
 for(const route of routes){const r=await fetch(base+route,{signal:AbortSignal.timeout(15000)});if(r.status!==200)throw Error('Route unavailable: '+route);checks.push({route,http_status:200});}
 const downloads=JSON.parse(await readFile(folder+'/downloads.json','utf8'));
 for(const file of downloads.files){const r=await fetch(base+'/download/'+file.platform,{redirect:'manual',signal:AbortSignal.timeout(15000)});if(![302,307].includes(r.status)||r.headers.get('location')!==file.url)throw Error('OS redirect differs');const target=await fetch(file.url,{headers:{Range:'bytes=0-1023'},signal:AbortSignal.timeout(30000)});if(target.status!==206||target.headers.get('content-range')!==`bytes 0-1023/${file.bytes}`)throw Error('OS asset range unavailable');await target.arrayBuffer();checks.push({platform:file.platform,redirect:r.status,asset_range_status:206,bytes:file.bytes});}

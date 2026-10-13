@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "connectivity_mode": "explicit",
+  "ports": [
+    "INP",
+    "INN",
+    "BIAS",
+    "OUT",
+    "VPWR",
+    "VGND"
+  ],
+  "devices": [
+    {
+      "id": "C_MILLER:p0",
+      "name": "C_MILLER_P0",
+      "kind": "capacitor",
+      "pins": {
+        "+": "PRE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 1220,
+      "y": 360,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_MILLER:p1",
+      "name": "C_MILLER_P1",
+      "kind": "capacitor",
+      "pins": {
+        "+": "PRE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 180,
+      "y": 550,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "C_MILLER:p2",
+      "name": "C_MILLER_P2",
+      "kind": "capacitor",
+      "pins": {
+        "+": "PRE",
+        "-": "COMP"
+      },
+      "parameters": {
+        "value": 1.6666666666666666e-12,
+        "w_um": 28.68,
+        "l_um": 28.68
+      },
+      "x": 440,
+      "y": 550,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    },
+    {
+      "id": "FIRST.N_INP0",
+      "name": "FIRST_N_INP0",
+      "kind": "nmos",
+      "pins": {
+        "D": "PRE",
+        "G": "INP",
+        "S": "FIRST__TAIL",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 5.0,
+        "l_um": 1.0,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8",
+      "matching_group": "INPUT_PAIR_ABBA",
+      "matching_role": "A"
+    },
+    {
+      "id": "FIRST.N_INN0",
+      "name": "FIRST_N_INN0",
+      "kind": "nmos",
+      "pins": {
+        "D": "FIRST__MIR",
+        "G": "INN",
+        "S": "FIRST__TAIL",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 5.0,
+        "l_um": 1.0,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 440,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8",
+      "matching_group": "INPUT_PAIR_ABBA",
+      "matching_role": "B"
+    },
+    {
+      "id": "FIRST.N_INN1",
+      "name": "FIRST_N_INN1",
+      "kind": "nmos",
+      "pins": {
+        "D": "FIRST__MIR",
+        "G": "INN",
+        "S": "FIRST__TAIL",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 5.0,
+        "l_um": 1.0,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 700,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8",
+      "matching_group": "INPUT_PAIR_ABBA",
+      "matching_role": "B"
+    },
+    {
+      "id": "FIRST.N_INP1",
+      "name": "FIRST_N_INP1",
+      "kind": "nmos",
+      "pins": {
+        "D": "PRE",
+        "G": "INP",
+        "S": "FIRST__TAIL",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 5.0,
+        "l_um": 1.0,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 960,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8",
+      "matching_group": "INPUT_PAIR_ABBA",
+      "matching_role": "A"
+    },
+    {
+      "id": "FIRST.N_TAIL",
+      "name": "FIRST_N_TAIL",
+      "kind": "nmos",
+      "pins": {
+        "D": "FIRST__TAIL",
+        "G": "BIAS",
+        "S": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 2.0,
+        "l_um": 1.0,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 440,
+      "y": 360,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "N_SECOND",
+      "name": "N_SECOND",
+      "kind": "nmos",
+      "pins": {
+        "D": "OUT",
+        "G": "BIAS",
+        "S": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 2,
+        "l_um": 1,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 960,
+      "y": 360,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "FIRST.P_DIODE",
+      "name": "FIRST_P_DIODE",
+      "kind": "pmos",
+      "pins": {
+        "D": "FIRST__MIR",
+        "G": "FIRST__MIR",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20.0,
+        "l_um": 1.0,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 1220,
+      "y": 170,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "FIRST.P_MIRROR",
+      "name": "FIRST_P_MIRROR",
+      "kind": "pmos",
+      "pins": {
+        "D": "PRE",
+        "G": "FIRST__MIR",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 20.0,
+        "l_um": 1.0,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 360,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "P_SECOND",
+      "name": "P_SECOND",
+      "kind": "pmos",
+      "pins": {
+        "D": "OUT",
+        "G": "PRE",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 40,
+        "l_um": 1,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 700,
+      "y": 360,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "R_ZERO:p0",
+      "name": "R_ZERO_P0",
+      "kind": "resistor",
+      "pins": {
+        "+": "COMP",
+        "-": "OUT",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 5000.0,
+        "w_um": 1.41,
+        "l_um": 3.36
+      },
+      "x": 700,
+      "y": 550,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

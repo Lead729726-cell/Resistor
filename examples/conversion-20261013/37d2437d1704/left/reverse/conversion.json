@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "direction": "reverse",
+  "project_id": "c38d0b75211946208572f59dfd2f40ff",
+  "revision": 2,
+  "run_id": "93ee91ba75b64ee2b7b7005c32148b60",
+  "source_layout_sha256": "27b7bde05d7c03984758983241b584646bda53251fb5637f970be5cba5d5db2a",
+  "source_schematic_sha256": "44d065030c81f6130ca92c9e270761b3fa8fddc8fedc79e9dbedf96cd6b7acb2",
+  "profile_id": "sky130A",
+  "profile_hash": "b9b091e9ab51e3442db83f5d666da6dcb4a430d8237799b0cb4c18e38d6d067e",
+  "settings": {},
+  "limits": [
+    "PDK extraction recovers the transistor/passive net graph, not the original symbol placement, design intent or lost hierarchy.",
+    "Unsupported models/parameters and extraction errors are retained; partial graphs cannot replace a schematic.",
+    "Exact device-terminal-to-polygon mapping is unavailable in this adapter.",
+    "Forward layout supports up to 512 SKY130 MOS/poly/MIM primitives; rectangular chip envelopes and four whole-layout orientations.",
+    "Ideal passive replacement is an explicit nominal geometry estimate. DRC/LVS/PEX, noise/yield/STA and manufacturing approval remain independent."
+  ],
+  "verification": {
+    "drc": "not-run",
+    "lvs": "not-run",
+    "pex": "not-run"
+  },
+  "foundry_signoff": false,
+  "schematic": {
+    "ports": [
+      "Y",
+      "VPWR",
+      "VGND",
+      "A"
+    ],
+    "devices": [
+      {
+        "id": "extract:4",
+        "name": "E_4",
+        "x": 180,
+        "y": 150,
+        "pins": {
+          "D": "VPWR",
+          "G": "A",
+          "S": "Y",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1.0,
+          "m": 1.0
+        },
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt"
+      },
+      {
+        "id": "extract:5",
+        "name": "E_5",
+        "x": 440,
+        "y": 150,
+        "pins": {
+          "D": "VGND",
+          "G": "A",
+          "S": "Y",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1.0,
+          "m": 1.0
+        },
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8"
+      }
+    ],
+    "wires": [],
+    "junctions": [],
+    "cells": {},
+    "connectivity_mode": "explicit"
+  },
+  "ports": [
+    "Y",
+    "VPWR",
+    "VGND",
+    "A"
+  ],
+  "global_nodes": [],
+  "issues": [],
+  "losses": [
+    {
+      "device": "X0",
+      "parameters": [
+        "ad",
+        "as",
+        "pd",
+        "ps"
+      ],
+      "scope": "Native extracted SPICE retains junction geometry. Editable symbol retains W/L/nf/m; no exact simulation equivalence claim."
+    },
+    {
+      "device": "X1",
+      "parameters": [
+        "ad",
+        "as",
+        "pd",
+        "ps"
+      ],
+      "scope": "Native extracted SPICE retains junction geometry. Editable symbol retains W/L/nf/m; no exact simulation equivalence claim."
+    }
+  ],
+  "ready": true,
+  "device_count": 2,
+  "raw_device_names": {
+    "extract:4": "X0",
+    "extract:5": "X1"
+  },
+  "cell": "cell_inv",
+  "source": "actual-mask-geometry-and-Magic-PDK",
+  "parser_equivalence": "pass",
+  "device_polygon_mapping": "unavailable; native netlist only",
+  "preview_layout_sha256": "8d41808eadfa16dae14496556076e807c421ce941b65029fc2fdff947ccff99e",
+  "schematic_sha256": "b1c26662dd3c4b6d2b44afc0930326a939f5e075b252faa791bfb7993ec41ac7",
+  "preview_hash": "b051799bdf942466d7c9289a2f6d9b8f42cf96078fd99240a8f9dee40fc159ad"
+}

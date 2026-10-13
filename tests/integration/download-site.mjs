@@ -18,7 +18,10 @@ if(!base){
     try{
       const body=await readFile(path.join(folder,file));
       const types={'.html':'text/html; charset=utf-8','.js':'text/javascript','.json':'application/json','.svg':'image/svg+xml','.png':'image/png'};
-      res.writeHead(200,{'Content-Type':types[path.extname(file)]||'text/plain',...Object.fromEntries(config.headers[0].headers.map(h=>[h.key,h.value]))});res.end(body);
+      // The first rule now belongs to VTT subtitles; apply only global rules
+      // to ordinary files, preserving their actual MIME types.
+      const globalHeaders=config.headers.find(h=>h.source==='/(.*)')?.headers||[];
+      res.writeHead(200,{'Content-Type':types[path.extname(file)]||'text/plain',...Object.fromEntries(globalHeaders.map(h=>[h.key,h.value]))});res.end(body);
     }catch{res.writeHead(404);res.end();}
   });
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));

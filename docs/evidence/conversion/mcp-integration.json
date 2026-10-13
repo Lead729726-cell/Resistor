@@ -1,0 +1,150 @@
+{
+  "checked_at": "2026-10-13T07:39:37.106Z",
+  "entry_path": "D:\\Coldbrew\\Resistor\\scripts\\mcp.mjs",
+  "entry_sha256": "31f64823e732a3537434cdb6d6aadd70f6a19f08933c95ec5774b589ead685d4",
+  "tools": [
+    "register_doctor",
+    "register_projects",
+    "register_snapshot",
+    "register_create",
+    "register_layout_command",
+    "register_simulate",
+    "register_verify",
+    "register_job",
+    "register_cancel",
+    "register_design_catalog",
+    "register_semiconductor_catalog",
+    "register_semiconductor_start",
+    "register_design_template",
+    "register_route_rules",
+    "register_route_preview",
+    "register_route_search",
+    "register_route_apply",
+    "register_connectivity",
+    "register_pvt_sources",
+    "register_pvt_create",
+    "register_pvt_start",
+    "register_pvt_study",
+    "register_pvt_list",
+    "register_pvt_cancel",
+    "register_database_sources",
+    "register_database_probe",
+    "register_database_cells",
+    "register_database_read",
+    "register_database_import",
+    "register_backend_catalog",
+    "register_backend_validate",
+    "register_backend_configure",
+    "register_backend_run",
+    "register_optimize",
+    "register_experiment",
+    "register_experiment_cancel",
+    "register_digital_catalog",
+    "register_digital_create",
+    "register_hierarchy_sources",
+    "register_hierarchy_preview",
+    "register_hierarchy_apply",
+    "register_conversion_catalog",
+    "register_pin_connect",
+    "register_recover_schematic",
+    "register_generate_layout",
+    "register_conversion_result",
+    "register_conversion_apply"
+  ],
+  "actual_worker": true,
+  "project_id": "6a4a0da4033f453da38b322561aee50d",
+  "revision": 4,
+  "checks": 21,
+  "actual_pvt": {
+    "study_id": "63839cf7e168434d8b67ea5431e83cd9",
+    "run_id": "2349d753e1fa407281a9b0ca9290ca1e",
+    "metrics": {
+      "Id": 0.00033464188
+    },
+    "parent_immutable": true,
+    "stale_after_edit": true
+  },
+  "actual_route": {
+    "revision": 2,
+    "rule_fingerprint": "750a4b6c7ae16c7cf09f97f09e16233011a161ceeb939b519738d5ce420b8b4c",
+    "preview_hash": "b05e686dbf47fa2bc643803bcec0c011fccd40f9b3d63659e387232da3649055"
+  },
+  "actual_template": {
+    "project_id": "ae8ee67b0e2d4caba5e014a8952a1f92",
+    "template": {
+      "schema_version": 1,
+      "id": "mux4",
+      "parameters": {
+        "w_um": 0.65,
+        "l_um": 0.15,
+        "slot_ns": 5,
+        "rise_ns": 0.1
+      },
+      "layout_status": "not-generated",
+      "physical_verification": "not-run",
+      "stimulus_source": "owned-template",
+      "ground_port": "VGND",
+      "generated_by": "register-design-tools-2",
+      "literature_review": {
+        "schema_version": 1,
+        "review_version": "literature-review-20261013-v1",
+        "reviewed_at": "2026-10-13",
+        "reference_ids": [
+          "ez130-2026",
+          "zlibboost-2026"
+        ],
+        "references": [
+          {
+            "id": "ez130-2026",
+            "title": "An Open-Source Standard-Cell Library for IHP 130 nm Developed by Students",
+            "authors": "Oscar Castañeda et al.",
+            "date": "2026-09-24",
+            "venue": "arXiv preprint v1",
+            "doi": "10.48550/arXiv.2609.29965",
+            "url": "https://arxiv.org/abs/2609.29965",
+            "read_scope": "Full HTML, sections II-C, III-A–III-D",
+            "technology": "IHP SG13G2, not SKY130",
+            "adopted": "Drive-strength exploration and separate functional, timing, energy and physical evidence.",
+            "not_reproduced": "EZ130 cells, LEF/Liberty interfaces, published PPA and silicon results."
+          },
+          {
+            "id": "zlibboost-2026",
+            "title": "ZlibBoost: An Efficient and Flexible Open-Source Framework for Standard Cell Characterization",
+            "authors": "Zhengrui Chen et al.",
+            "date": "2026-03-19",
+            "venue": "ACM TODAES 31(4), article 74; accepted manuscript online 2025-07-02",
+            "doi": "10.1145/3747182",
+            "url": "https://doi.org/10.1145/3747182",
+            "read_scope": "Publisher indexed abstract and NLDM section; author repository README. Full publisher page access failed.",
+            "technology": "Characterization methodology; paper benchmarks include commercial 65 nm",
+            "adopted": "Sensitized single-input timing arcs, explicit slew/load conditions and measured tables.",
+            "not_reproduced": "ZlibBoost implementation, ML interpolation, complete NLDM/Liberty, hidden power and sequential timing models."
+          }
+        ],
+        "relationship": "method-inspired review; existing owned circuits, not a reproduction of the cited chips",
+        "paper_performance_reproduced": false,
+        "qualification": "not-run; actual revision-bound engine results are required",
+        "pending": [
+          "Thermal/flicker noise and mismatch yield except explicitly executed studies.",
+          "Full PVT/RC, EM/IR, ESD, antenna/density, foundry signoff.",
+          "Complete sequential timing, STA/Liberty and physical CPU/ADC-controller closure."
+        ]
+      }
+    }
+  },
+  "actual_native_database": {
+    "adapter": "klayout-file",
+    "read_id": "0aaef83c3dfe4604b7c9a28d277d3b78",
+    "graph_sha256": "0cc4d103b948acb6d014c7bc5d818214b15fe60c996c8183c6054dd6aa292f40",
+    "vendor_execution_verified": false
+  },
+  "actual_native_backend_calibration": {
+    "run_id": "ecb59fabb0ba4238852749f9a04f82ec",
+    "source": "ngspice",
+    "signed_A": [
+      -0.001,
+      0.001
+    ],
+    "vendor_execution_verified": false
+  }
+}

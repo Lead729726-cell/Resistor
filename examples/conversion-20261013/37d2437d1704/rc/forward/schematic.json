@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "connectivity_mode": "explicit",
+  "ports": [
+    "IN",
+    "OUT",
+    "VGND"
+  ],
+  "devices": [
+    {
+      "id": "r1:p0",
+      "name": "R1_P0",
+      "kind": "resistor",
+      "pins": {
+        "+": "IN",
+        "-": "OUT",
+        "B": "VGND"
+      },
+      "parameters": {
+        "value": 10000.0,
+        "w_um": 1.41,
+        "l_um": 6.885
+      },
+      "x": 180,
+      "y": 170,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    },
+    {
+      "id": "c1:p0",
+      "name": "C1_P0",
+      "kind": "capacitor",
+      "pins": {
+        "+": "OUT",
+        "-": "VGND"
+      },
+      "parameters": {
+        "value": 1e-12,
+        "w_um": 22.17,
+        "l_um": 22.17
+      },
+      "x": 440,
+      "y": 170,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

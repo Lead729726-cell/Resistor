@@ -1,0 +1,416 @@
+{
+  "schema_version": 1,
+  "direction": "reverse",
+  "project_id": "f8722715132f4a6681ab97ca367e2bcf",
+  "revision": 2,
+  "run_id": "b0e5dd86ebd746739686790dd9c72c93",
+  "source_layout_sha256": "1a92605c25b3629fe4e9aec0d6ff547fed8296a903e2826ae78d9dbeda8c5f05",
+  "source_schematic_sha256": "44d065030c81f6130ca92c9e270761b3fa8fddc8fedc79e9dbedf96cd6b7acb2",
+  "profile_id": "sky130A",
+  "profile_hash": "b9b091e9ab51e3442db83f5d666da6dcb4a430d8237799b0cb4c18e38d6d067e",
+  "settings": {},
+  "limits": [
+    "PDK extraction recovers the transistor/passive net graph, not the original symbol placement, design intent or lost hierarchy.",
+    "Unsupported models/parameters and extraction errors are retained; partial graphs cannot replace a schematic.",
+    "Exact device-terminal-to-polygon mapping is unavailable in this adapter.",
+    "Forward layout supports up to 512 SKY130 MOS/poly/MIM primitives; rectangular chip envelopes and four whole-layout orientations.",
+    "Ideal passive replacement is an explicit nominal geometry estimate. DRC/LVS/PEX, noise/yield/STA and manufacturing approval remain independent."
+  ],
+  "verification": {
+    "drc": "not-run",
+    "lvs": "not-run",
+    "pex": "not-run"
+  },
+  "foundry_signoff": false,
+  "schematic": {
+    "ports": [
+      "VPWR",
+      "VGND",
+      "INP",
+      "INN",
+      "OUT",
+      "BIAS"
+    ],
+    "devices": [
+      {
+        "id": "extract:4",
+        "name": "E_4",
+        "x": 180,
+        "y": 150,
+        "pins": {
+          "+": "COMP",
+          "-": "OUT",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 1.41,
+          "l_um": 3.36,
+          "value": 4998.353425682813
+        },
+        "kind": "resistor",
+        "model": "sky130_fd_pr__res_xhigh_po_1p41"
+      },
+      {
+        "id": "extract:5",
+        "name": "E_5",
+        "x": 440,
+        "y": 150,
+        "pins": {
+          "D": "FIRST__TAIL",
+          "G": "INN",
+          "S": "FIRST__MIR",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 5.0,
+          "l_um": 1.0,
+          "nf": 1.0,
+          "m": 1.0
+        },
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8"
+      },
+      {
+        "id": "extract:6",
+        "name": "E_6",
+        "x": 700,
+        "y": 150,
+        "pins": {
+          "D": "VPWR",
+          "G": "FIRST__MIR",
+          "S": "PRE",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 20.0,
+          "l_um": 1.0,
+          "nf": 1.0,
+          "m": 1.0
+        },
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt"
+      },
+      {
+        "id": "extract:7",
+        "name": "E_7",
+        "x": 960,
+        "y": 150,
+        "pins": {
+          "D": "VGND",
+          "G": "BIAS",
+          "S": "OUT",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 2.0,
+          "l_um": 1.0,
+          "nf": 1.0,
+          "m": 1.0
+        },
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8"
+      },
+      {
+        "id": "extract:8",
+        "name": "E_8",
+        "x": 1220,
+        "y": 150,
+        "pins": {
+          "+": "PRE",
+          "-": "COMP"
+        },
+        "parameters": {
+          "w_um": 28.68,
+          "l_um": 28.68,
+          "value": 1.6668816e-12
+        },
+        "kind": "capacitor",
+        "model": "sky130_fd_pr__cap_mim_m3_1"
+      },
+      {
+        "id": "extract:9",
+        "name": "E_9",
+        "x": 180,
+        "y": 340,
+        "pins": {
+          "D": "FIRST__TAIL",
+          "G": "INN",
+          "S": "FIRST__MIR",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 5.0,
+          "l_um": 1.0,
+          "nf": 1.0,
+          "m": 1.0
+        },
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8"
+      },
+      {
+        "id": "extract:10",
+        "name": "E_10",
+        "x": 440,
+        "y": 340,
+        "pins": {
+          "D": "VGND",
+          "G": "BIAS",
+          "S": "FIRST__TAIL",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 2.0,
+          "l_um": 1.0,
+          "nf": 1.0,
+          "m": 1.0
+        },
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8"
+      },
+      {
+        "id": "extract:11",
+        "name": "E_11",
+        "x": 700,
+        "y": 340,
+        "pins": {
+          "+": "PRE",
+          "-": "COMP"
+        },
+        "parameters": {
+          "w_um": 28.68,
+          "l_um": 28.68,
+          "value": 1.6668816e-12
+        },
+        "kind": "capacitor",
+        "model": "sky130_fd_pr__cap_mim_m3_1"
+      },
+      {
+        "id": "extract:12",
+        "name": "E_12",
+        "x": 960,
+        "y": 340,
+        "pins": {
+          "D": "FIRST__TAIL",
+          "G": "INP",
+          "S": "PRE",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 5.0,
+          "l_um": 1.0,
+          "nf": 1.0,
+          "m": 1.0
+        },
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8"
+      },
+      {
+        "id": "extract:13",
+        "name": "E_13",
+        "x": 1220,
+        "y": 340,
+        "pins": {
+          "D": "VPWR",
+          "G": "PRE",
+          "S": "OUT",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 40.0,
+          "l_um": 1.0,
+          "nf": 1.0,
+          "m": 1.0
+        },
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt"
+      },
+      {
+        "id": "extract:14",
+        "name": "E_14",
+        "x": 180,
+        "y": 530,
+        "pins": {
+          "D": "VPWR",
+          "G": "FIRST__MIR",
+          "S": "FIRST__MIR",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 20.0,
+          "l_um": 1.0,
+          "nf": 1.0,
+          "m": 1.0
+        },
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt"
+      },
+      {
+        "id": "extract:15",
+        "name": "E_15",
+        "x": 440,
+        "y": 530,
+        "pins": {
+          "+": "PRE",
+          "-": "COMP"
+        },
+        "parameters": {
+          "w_um": 28.68,
+          "l_um": 28.68,
+          "value": 1.6668816e-12
+        },
+        "kind": "capacitor",
+        "model": "sky130_fd_pr__cap_mim_m3_1"
+      },
+      {
+        "id": "extract:16",
+        "name": "E_16",
+        "x": 700,
+        "y": 530,
+        "pins": {
+          "D": "FIRST__TAIL",
+          "G": "INP",
+          "S": "PRE",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 5.0,
+          "l_um": 1.0,
+          "nf": 1.0,
+          "m": 1.0
+        },
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8"
+      }
+    ],
+    "wires": [],
+    "junctions": [],
+    "cells": {},
+    "connectivity_mode": "explicit"
+  },
+  "ports": [
+    "VPWR",
+    "VGND",
+    "INP",
+    "INN",
+    "OUT",
+    "BIAS"
+  ],
+  "global_nodes": [],
+  "issues": [],
+  "losses": [
+    {
+      "device": "X1",
+      "parameters": [
+        "ad",
+        "as",
+        "pd",
+        "ps"
+      ],
+      "scope": "Native extracted SPICE retains junction geometry. Editable symbol retains W/L/nf/m; no exact simulation equivalence claim."
+    },
+    {
+      "device": "X2",
+      "parameters": [
+        "ad",
+        "as",
+        "pd",
+        "ps"
+      ],
+      "scope": "Native extracted SPICE retains junction geometry. Editable symbol retains W/L/nf/m; no exact simulation equivalence claim."
+    },
+    {
+      "device": "X3",
+      "parameters": [
+        "ad",
+        "as",
+        "pd",
+        "ps"
+      ],
+      "scope": "Native extracted SPICE retains junction geometry. Editable symbol retains W/L/nf/m; no exact simulation equivalence claim."
+    },
+    {
+      "device": "X5",
+      "parameters": [
+        "ad",
+        "as",
+        "pd",
+        "ps"
+      ],
+      "scope": "Native extracted SPICE retains junction geometry. Editable symbol retains W/L/nf/m; no exact simulation equivalence claim."
+    },
+    {
+      "device": "X6",
+      "parameters": [
+        "ad",
+        "as",
+        "pd",
+        "ps"
+      ],
+      "scope": "Native extracted SPICE retains junction geometry. Editable symbol retains W/L/nf/m; no exact simulation equivalence claim."
+    },
+    {
+      "device": "X8",
+      "parameters": [
+        "ad",
+        "as",
+        "pd",
+        "ps"
+      ],
+      "scope": "Native extracted SPICE retains junction geometry. Editable symbol retains W/L/nf/m; no exact simulation equivalence claim."
+    },
+    {
+      "device": "X9",
+      "parameters": [
+        "ad",
+        "as",
+        "pd",
+        "ps"
+      ],
+      "scope": "Native extracted SPICE retains junction geometry. Editable symbol retains W/L/nf/m; no exact simulation equivalence claim."
+    },
+    {
+      "device": "X10",
+      "parameters": [
+        "ad",
+        "as",
+        "pd",
+        "ps"
+      ],
+      "scope": "Native extracted SPICE retains junction geometry. Editable symbol retains W/L/nf/m; no exact simulation equivalence claim."
+    },
+    {
+      "device": "X12",
+      "parameters": [
+        "ad",
+        "as",
+        "pd",
+        "ps"
+      ],
+      "scope": "Native extracted SPICE retains junction geometry. Editable symbol retains W/L/nf/m; no exact simulation equivalence claim."
+    }
+  ],
+  "ready": true,
+  "device_count": 13,
+  "raw_device_names": {
+    "extract:4": "X0",
+    "extract:5": "X1",
+    "extract:6": "X2",
+    "extract:7": "X3",
+    "extract:8": "X4",
+    "extract:9": "X5",
+    "extract:10": "X6",
+    "extract:11": "X7",
+    "extract:12": "X8",
+    "extract:13": "X9",
+    "extract:14": "X10",
+    "extract:15": "X11",
+    "extract:16": "X12"
+  },
+  "cell": "soc_miller_ota",
+  "source": "actual-mask-geometry-and-Magic-PDK",
+  "parser_equivalence": "pass",
+  "device_polygon_mapping": "unavailable; native netlist only",
+  "preview_layout_sha256": "c07f1219f2f75865fa57b15a6cc495c54303c8b34c231f0c704b44a52bc95b43",
+  "schematic_sha256": "44db2f95e2245dfe82cab603262ab2e5a85f4673cfde3bfdc77e9ffb73aec4b3",
+  "preview_hash": "5260e8e49756e2c93f72ff4ff8610c8affee961a81e884b5f278e7af00b173bf"
+}

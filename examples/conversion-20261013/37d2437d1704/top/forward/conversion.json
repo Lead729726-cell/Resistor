@@ -1,0 +1,290 @@
+{
+  "schema_version": 1,
+  "direction": "forward",
+  "project_id": "8e1fb83679454c72a3012161812cb6dc",
+  "revision": 1,
+  "run_id": "55e38e6edf1140b4948ff2f74c588146",
+  "source_layout_sha256": "c260761cb59039c9d32f636200c8f760f76b5d3054aebd0b8ef66768bac5370a",
+  "source_schematic_sha256": "7fcccb88d278825e6e42727403286876c44bf60c4e728bf79853cec23f39c3d3",
+  "profile_id": "sky130A",
+  "profile_hash": "b9b091e9ab51e3442db83f5d666da6dcb4a430d8237799b0cb4c18e38d6d067e",
+  "settings": {
+    "chip_limits": {
+      "width_um": 600,
+      "height_um": 300,
+      "max_area_um2": 180000,
+      "edge_um": 10
+    },
+    "pin_side": "top",
+    "order": "source",
+    "body_net": "VGND"
+  },
+  "limits": [
+    "PDK extraction recovers the transistor/passive net graph, not the original symbol placement, design intent or lost hierarchy.",
+    "Unsupported models/parameters and extraction errors are retained; partial graphs cannot replace a schematic.",
+    "Exact device-terminal-to-polygon mapping is unavailable in this adapter.",
+    "Forward layout supports up to 512 SKY130 MOS/poly/MIM primitives; rectangular chip envelopes and four whole-layout orientations.",
+    "Ideal passive replacement is an explicit nominal geometry estimate. DRC/LVS/PEX, noise/yield/STA and manufacturing approval remain independent."
+  ],
+  "verification": {
+    "drc": "not-run",
+    "lvs": "not-run",
+    "pex": "not-run"
+  },
+  "foundry_signoff": false,
+  "schematic": {
+    "schema_version": 1,
+    "connectivity_mode": "explicit",
+    "ports": [
+      "A",
+      "B",
+      "S",
+      "Y",
+      "VPWR",
+      "VGND"
+    ],
+    "devices": [
+      {
+        "id": "IS.MP",
+        "name": "IS_MP",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "SB",
+          "G": "S",
+          "S": "VPWR",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 180,
+        "y": 170
+      },
+      {
+        "id": "IS.MN",
+        "name": "IS_MN",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "SB",
+          "G": "S",
+          "S": "VGND",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 440,
+        "y": 170
+      },
+      {
+        "id": "MNA",
+        "name": "MNA",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "Y",
+          "G": "SB",
+          "S": "A",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 700,
+        "y": 170
+      },
+      {
+        "id": "MPA",
+        "name": "MPA",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "Y",
+          "G": "S",
+          "S": "A",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 960,
+        "y": 170
+      },
+      {
+        "id": "MNB",
+        "name": "MNB",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "pins": {
+          "D": "Y",
+          "G": "S",
+          "S": "B",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 1220,
+        "y": 170
+      },
+      {
+        "id": "MPB",
+        "name": "MPB",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "pins": {
+          "D": "Y",
+          "G": "SB",
+          "S": "B",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 0.65,
+          "l_um": 0.15,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 180,
+        "y": 360
+      }
+    ],
+    "wires": [],
+    "junctions": [],
+    "cells": {}
+  },
+  "ports": [
+    "A",
+    "B",
+    "S",
+    "Y",
+    "VPWR",
+    "VGND"
+  ],
+  "cell": "cell_mux2",
+  "ready": true,
+  "device_count": 6,
+  "passive_replacements": [],
+  "external_sources": [],
+  "envelope": {
+    "policy": {
+      "schema_version": 1,
+      "width_um": 600,
+      "height_um": 300,
+      "max_area_um2": 180000,
+      "edge_um": 10,
+      "origin_um": [
+        0.0,
+        0.0
+      ],
+      "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+    },
+    "fits": true,
+    "bbox_dbu": [
+      "10000",
+      "10000",
+      "25740",
+      "63495"
+    ],
+    "used_width_um": 15.74,
+    "used_height_um": 53.495000000000005,
+    "used_area_um2": 842.0113000000001,
+    "chip_area_um2": 180000,
+    "minimum_envelope_um": [
+      35.74,
+      73.495
+    ],
+    "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+  },
+  "placement_order": [
+    "IS_MP",
+    "IS_MN",
+    "MNA",
+    "MPA",
+    "MNB",
+    "MPB"
+  ],
+  "source": "actual-SKY130-PCells-and-bounded-routing",
+  "hierarchy": "flattened physical graph; original source remains in project history",
+  "issues": [],
+  "losses": [],
+  "routing": {
+    "algorithm": "bounded-rows-m3-m4-v1",
+    "primitive_count": 6,
+    "row_count": 1,
+    "inter_row_nets": 7,
+    "floorplan": {
+      "policy": {
+        "schema_version": 1,
+        "width_um": 300,
+        "height_um": 600,
+        "max_area_um2": 180000,
+        "edge_um": 10,
+        "origin_um": [
+          0.0,
+          0.0
+        ],
+        "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+      },
+      "fits": true,
+      "bbox_dbu": [
+        "10300",
+        "10000",
+        "63795",
+        "25740"
+      ],
+      "used_width_um": 53.495000000000005,
+      "used_height_um": 15.74,
+      "used_area_um2": 842.0113000000001,
+      "chip_area_um2": 180000,
+      "minimum_envelope_um": [
+        73.495,
+        35.74
+      ],
+      "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+    },
+    "rows": [
+      {
+        "row": 0,
+        "translation_dbu": [
+          25400,
+          16220
+        ],
+        "algorithm": "interval-heap-v2",
+        "matching_groups": [],
+        "primitive_count": 6,
+        "scope": "single-row PCell reference; no full-chip density/antenna/foundry signoff",
+        "signal_track_count": 5,
+        "track_clearance_dbu": 800,
+        "tracks": {
+          "A": 0,
+          "B": 3,
+          "S": 1,
+          "SB": 4,
+          "Y": 2
+        }
+      }
+    ],
+    "matching_groups": [],
+    "scope": "PCell reference with bounded envelope; native DRC/LVS/PEX remain independent gates."
+  },
+  "preview_layout_sha256": "c3e11d0600436d8820904a53aa3249dc629c6b5fa73c0cb036b20ad979c2a7ea",
+  "schematic_sha256": "3a18805ddb9aa39c5c3324b8d1e4515661afc7b9dd87b31d3ab943660e7a02ae",
+  "preview_hash": "f6e023b84a7d27e2f9280c99a8b9a3f49cd57eefe1f4678213dfe2510a574dd0"
+}

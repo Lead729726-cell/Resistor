@@ -41,7 +41,7 @@ def job(p,kind='simulation.run',**params):
 
 def helpers():
     resources=D.model_resources('tt');deck=D.supported_model_deck(OUT/'model-probe','tt')
-    assert len(resources)==6 and all(Path(r['path']).is_file() and r['sha256'] for r in resources)
+    assert len(resources)==13 and all(Path(r['path']).is_file() and r['sha256'] for r in resources)
     assert 'sky130_fd_pr__nfet_01v8__tt.pm3.spice' in deck.read_text()
     failure(lambda:D.supported_model_deck(OUT/'model-probe','tt\n.control'),'INVALID_CORNER')
     return {'model_resources':resources,'deck_sha256':S.profile.sha(deck)}

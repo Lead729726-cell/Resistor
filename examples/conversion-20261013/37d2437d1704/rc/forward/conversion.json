@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "direction": "forward",
+  "project_id": "1a3ca71004f6489ab76a89202fcef399",
+  "revision": 1,
+  "run_id": "9ee2b1923bdb4ba595733545437b9030",
+  "source_layout_sha256": "3b99706d31c5bf5a25ad9246b8d2d0dabd05bfa4aecf4827c08267c208cf3085",
+  "source_schematic_sha256": "083c60eac6b8e9760e4a3b447b9418963e7523afad8d123e5f6a30fd3815dbcb",
+  "profile_id": "sky130A",
+  "profile_hash": "b9b091e9ab51e3442db83f5d666da6dcb4a430d8237799b0cb4c18e38d6d067e",
+  "settings": {
+    "chip_limits": {
+      "width_um": 600,
+      "height_um": 300,
+      "max_area_um2": 180000,
+      "edge_um": 10
+    },
+    "pin_side": "left",
+    "order": "source",
+    "body_net": "VGND"
+  },
+  "limits": [
+    "PDK extraction recovers the transistor/passive net graph, not the original symbol placement, design intent or lost hierarchy.",
+    "Unsupported models/parameters and extraction errors are retained; partial graphs cannot replace a schematic.",
+    "Exact device-terminal-to-polygon mapping is unavailable in this adapter.",
+    "Forward layout supports up to 512 SKY130 MOS/poly/MIM primitives; rectangular chip envelopes and four whole-layout orientations.",
+    "Ideal passive replacement is an explicit nominal geometry estimate. DRC/LVS/PEX, noise/yield/STA and manufacturing approval remain independent."
+  ],
+  "verification": {
+    "drc": "not-run",
+    "lvs": "not-run",
+    "pex": "not-run"
+  },
+  "foundry_signoff": false,
+  "schematic": {
+    "schema_version": 1,
+    "connectivity_mode": "explicit",
+    "ports": [
+      "IN",
+      "OUT",
+      "VGND"
+    ],
+    "devices": [
+      {
+        "id": "r1:p0",
+        "name": "R1_P0",
+        "kind": "resistor",
+        "pins": {
+          "+": "IN",
+          "-": "OUT",
+          "B": "VGND"
+        },
+        "parameters": {
+          "value": 10000.0,
+          "w_um": 1.41,
+          "l_um": 6.885
+        },
+        "x": 180,
+        "y": 170,
+        "model": "sky130_fd_pr__res_xhigh_po_1p41"
+      },
+      {
+        "id": "c1:p0",
+        "name": "C1_P0",
+        "kind": "capacitor",
+        "pins": {
+          "+": "OUT",
+          "-": "VGND"
+        },
+        "parameters": {
+          "value": 1e-12,
+          "w_um": 22.17,
+          "l_um": 22.17
+        },
+        "x": 440,
+        "y": 170,
+        "model": "sky130_fd_pr__cap_mim_m3_1"
+      }
+    ],
+    "wires": [],
+    "junctions": [],
+    "cells": {}
+  },
+  "ports": [
+    "IN",
+    "OUT",
+    "VGND"
+  ],
+  "cell": "rc_lowpass",
+  "ready": true,
+  "device_count": 2,
+  "passive_replacements": [
+    {
+      "source_device": "R1",
+      "kind": "resistor",
+      "requested_SI": 10000.0,
+      "nominal_geometry_SI": 9998.353425682812,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 6.885,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "C1",
+      "kind": "capacitor",
+      "requested_SI": 1e-12,
+      "nominal_geometry_SI": 9.998670000000003e-13,
+      "instances": 1,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 22.17,
+      "l_um": 22.17,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    }
+  ],
+  "external_sources": [],
+  "envelope": {
+    "policy": {
+      "schema_version": 1,
+      "width_um": 600,
+      "height_um": 300,
+      "max_area_um2": 180000,
+      "edge_um": 10,
+      "origin_um": [
+        0.0,
+        0.0
+      ],
+      "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+    },
+    "fits": true,
+    "bbox_dbu": [
+      "10000",
+      "10000",
+      "52330",
+      "38270"
+    ],
+    "used_width_um": 42.33,
+    "used_height_um": 28.27,
+    "used_area_um2": 1196.6690999999998,
+    "chip_area_um2": 180000,
+    "minimum_envelope_um": [
+      62.33,
+      48.269999999999996
+    ],
+    "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+  },
+  "placement_order": [
+    "R1_P0",
+    "C1_P0"
+  ],
+  "source": "actual-SKY130-PCells-and-bounded-routing",
+  "hierarchy": "flattened physical graph; original source remains in project history",
+  "issues": [],
+  "losses": [],
+  "routing": {
+    "algorithm": "bounded-rows-m3-m4-v1",
+    "primitive_count": 2,
+    "row_count": 1,
+    "inter_row_nets": 3,
+    "floorplan": {
+      "policy": {
+        "schema_version": 1,
+        "width_um": 600,
+        "height_um": 300,
+        "max_area_um2": 180000,
+        "edge_um": 10,
+        "origin_um": [
+          0.0,
+          0.0
+        ],
+        "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+      },
+      "fits": true,
+      "bbox_dbu": [
+        "10300",
+        "10000",
+        "52630",
+        "38270"
+      ],
+      "used_width_um": 42.33,
+      "used_height_um": 28.27,
+      "used_area_um2": 1196.6690999999998,
+      "chip_area_um2": 180000,
+      "minimum_envelope_um": [
+        62.33,
+        48.269999999999996
+      ],
+      "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+    },
+    "rows": [
+      {
+        "row": 0,
+        "translation_dbu": [
+          20600,
+          21285
+        ],
+        "algorithm": "interval-heap-v2",
+        "matching_groups": [],
+        "primitive_count": 2,
+        "scope": "single-row PCell reference; no full-chip density/antenna/foundry signoff",
+        "signal_track_count": 2,
+        "track_clearance_dbu": 800,
+        "tracks": {
+          "IN": 0,
+          "OUT": 1
+        }
+      }
+    ],
+    "matching_groups": [],
+    "scope": "PCell reference with bounded envelope; native DRC/LVS/PEX remain independent gates."
+  },
+  "preview_layout_sha256": "73761e6c21c3cce4b21e73ed3fcbbb84de7bd0a648d915e7adfe4f2c47a7d48a",
+  "schematic_sha256": "4878ed2b52ddcb8f41c72cd46b1a87d5d1bee81afe8ef2277c0a9fb35964c6f0",
+  "preview_hash": "cc3e33dad59a224ca81a2f99027ac21efa2acf41a405fefd15995bd31cfe7f78"
+}

@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "id": "6a4509811217443dacc0e9a93bb2ad9d",
+  "name": "직접 회로 QA · 1.8V / 10kΩ ×2",
+  "pdk_id": "sky130A",
+  "revision": 9,
+  "cell": "schematic",
+  "dbu_um": 0.001,
+  "grid_dbu": 5,
+  "source": "pdk",
+  "example": "schematic",
+  "layers": [],
+  "schematic": {
+    "ports": [],
+    "devices": [
+      {
+        "id": "v1",
+        "name": "V1",
+        "kind": "voltage",
+        "x": 100,
+        "y": 100,
+        "parameters": {
+          "dc": 1.8
+        },
+        "pins": {
+          "+": "N_1",
+          "-": "0"
+        }
+      },
+      {
+        "id": "r1",
+        "name": "R1",
+        "kind": "resistor",
+        "x": 300,
+        "y": 100,
+        "parameters": {
+          "value": 10000
+        },
+        "pins": {
+          "+": "N_1",
+          "-": "N_2"
+        }
+      },
+      {
+        "id": "r2",
+        "name": "R2",
+        "kind": "resistor",
+        "x": 500,
+        "y": 220,
+        "parameters": {
+          "value": 10000
+        },
+        "pins": {
+          "+": "N_2",
+          "-": "0"
+        }
+      },
+      {
+        "id": "g1",
+        "name": "G1",
+        "kind": "ground",
+        "x": 100,
+        "y": 300,
+        "parameters": {},
+        "pins": {
+          "G": "0"
+        }
+      }
+    ],
+    "wires": [
+      {
+        "id": "2f1ca6db-9012-475e-ad34-1568996a2cfd",
+        "points": [
+          [
+            100.0,
+            56.0
+          ],
+          [
+            300.0,
+            56.0
+          ]
+        ],
+        "net": "N_1"
+      },
+      {
+        "id": "1626a86c-fccd-4d2c-a4b9-a55ba718bb46",
+        "points": [
+          [
+            300.0,
+            144.0
+          ],
+          [
+            400.0,
+            144.0
+          ],
+          [
+            400.0,
+            176.0
+          ],
+          [
+            500.0,
+            176.0
+          ]
+        ],
+        "net": "N_2"
+      },
+      {
+        "id": "0fab86af-c791-4243-bb62-22a84f46c2b9",
+        "points": [
+          [
+            100.0,
+            144.0
+          ],
+          [
+            100.0,
+            270.0
+          ]
+        ],
+        "net": "0"
+      },
+      {
+        "id": "640c50c7-913b-4f9d-ad19-ea9b5da23cbc",
+        "points": [
+          [
+            500.0,
+            264.0
+          ],
+          [
+            600.0,
+            264.0
+          ],
+          [
+            600.0,
+            350.0
+          ],
+          [
+            50.0,
+            350.0
+          ],
+          [
+            50.0,
+            270.0
+          ],
+          [
+            100.0,
+            270.0
+          ]
+        ],
+        "net": "0"
+      }
+    ],
+    "junctions": [],
+    "cells": {},
+    "connectivity_mode": "explicit"
+  },
+  "testbench": {
+    "analysis": "op",
+    "corner": "tt",
+    "temperature_C": 27.0,
+    "supply_V": 1.8,
+    "duration_s": 3e-08,
+    "step_s": 2e-11,
+    "load_F": 5e-15,
+    "vds_V": 1.8,
+    "vbs_V": 0.0
+  },
+  "runs": [],
+  "ports": [],
+  "redo_stack": [],
+  "undo_stack": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "next_revision": 10,
+  "layout_parameter_policy": "manual_layout",
+  "user_cells": [
+    "schematic"
+  ]
+}

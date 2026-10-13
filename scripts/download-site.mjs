@@ -9,6 +9,7 @@ import {prepareSigmaDeltaSite} from './download-sigma-delta.mjs';
 import {prepareAnalogSocSite} from './download-analog-soc.mjs';
 import {prepareSarSite} from './download-sar-adc.mjs';
 import {prepareUpdateSite} from './download-updates.mjs';
+import {prepareSchematicSite} from './download-schematic.mjs';
 const root=process.cwd(),folder=path.join(root,'platform/download-site');
 const current=JSON.parse(await readFile(path.join(root,'package.json'),'utf8')).version;
 const tag=process.argv.find(a=>a.startsWith('--release='))?.slice(10)||'v'+current;
@@ -35,7 +36,7 @@ const platforms={
   linux:{label:'Linux · x64',title:'Linux 데스크톱',format:'x86-64 · tar.gz · 설치 도우미 포함',button:'Linux tar.gz',scope:'Linux에서 빌드한 실행 패키지. GTK 3·NSS와 Chromium sandbox가 필요합니다. 일반 Linux 데스크톱 실기기 실행은 미확인입니다.'}
 };
 const downloads=files.map(a=>({name:a.name,platform:a.name.includes('-mac-arm64-')?'macos':a.name.includes('-mac-x64-')?'macos-intel':a.name.includes('-linux-')?'linux':'windows',bytes:a.size,sha256:a.digest.slice(7),url:a.browser_download_url+'?download=1'})).sort((a,b)=>Object.keys(platforms).indexOf(a.platform)-Object.keys(platforms).indexOf(b.platform));
-let nativeMac;try{nativeMac=JSON.parse(await readFile(path.join(root,Number(tag.split('.')[1])>=24?'docs/evidence/literature-update/mac-native.json':(Number(tag.slice(1).split('.')[0])>0||Number(tag.split('.')[1])>=23)?'docs/evidence/online-updates/mac-native.json':Number(tag.split('.')[1])>=22?'docs/evidence/bounded-sar/mac-native.json':'docs/evidence/analog-soc/mac-native.json'),'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;}
+let nativeMac;try{nativeMac=JSON.parse(await readFile(path.join(root,Number(tag.split('.')[1])>=25?'docs/evidence/conversion/mac-native.json':Number(tag.split('.')[1])>=24?'docs/evidence/literature-update/mac-native.json':(Number(tag.slice(1).split('.')[0])>0||Number(tag.split('.')[1])>=23)?'docs/evidence/online-updates/mac-native.json':Number(tag.split('.')[1])>=22?'docs/evidence/bounded-sar/mac-native.json':'docs/evidence/analog-soc/mac-native.json'),'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;}
 for(const item of downloads){if(!item.platform.startsWith('macos'))continue;const proof=nativeMac?.version===tag.slice(1)?nativeMac.architectures?.find(p=>p.artifact.file===item.name&&p.artifact.sha256===item.sha256&&p.artifact.bytes===item.bytes&&p.native_execution_verified===true&&p.native_desktop_tests===4):null;
  item.native_viewer_tested=!!proof;item.native_eda_verified=false;item.notarized=false;
  if(proof)platforms[item.platform].scope='현재 ZIP의 네이티브 Mac CI 검사 4/4 통과: 실제 GDS·CPU 뷰어, 설치·데이터 보존, 메뉴·창 재열기와 녹화. 자체 서명 검증 완료. Docker EDA의 Mac 실기기 실행과 Developer ID·Apple 공증은 별도입니다.';
@@ -63,4 +64,5 @@ await prepareSigmaDeltaSite(root,tag);
 await prepareAnalogSocSite(root,tag);
 if((Number(tag.slice(1).split('.')[0])>0||Number(tag.split('.')[1])>=22)){await prepareSarSite(folder);const file=folder+'/vercel.json',v=JSON.parse(await readFile(file,'utf8'));v.rewrites.push({source:'/tutorial/sar-adc8',destination:'/sar-adc8.html'},{source:'/tutorial/sar-adc8/',destination:'/sar-adc8.html'});await writeFile(file,JSON.stringify(v,null,2)+'\n');}
 if((Number(tag.slice(1).split('.')[0])>0||Number(tag.split('.')[1])>=23))await prepareUpdateSite(folder,tag);
+if(Number(tag.split('.')[1])>=25)await prepareSchematicSite();
 console.log(JSON.stringify({directory:'platform/download-site',release:tag,files:downloads.map(a=>({name:a.name,bytes:a.bytes,sha256:a.sha256})),static_only:true,credentials_included:false},null,2));

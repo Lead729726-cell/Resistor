@@ -1,0 +1,24 @@
+Resistor explicit custom flat circuit
+.include "/workspace/.runtime/eda/runs/dcca86f059f5484bb1b210e227bb24bc/supported-tt.spice"
+.options scale=1e-6
+.include "/workspace/.runtime/eda/runs/dcca86f059f5484bb1b210e227bb24bc/current-probe.spice"
+.temp 27.0
+XU N_1 schematic
+VEXTERNAL0 N_1 0 1.8
+.control
+save all i(VEXTERNAL0) v(N_1)
+set wr_singlescale
+set wr_vecnames
+op
+let resistor_op_index = 0
+setscale resistor_op_index
+wrdata waveform.dat v(N_1) v(xu.N_2)
+write waveform.raw
+let register_flow_0 = i(VEXTERNAL0)
+wrdata current-flow.dat register_flow_0
+let register_voltage_0 = v(N_1)
+let register_voltage_1 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1
+quit
+.endc
+.end

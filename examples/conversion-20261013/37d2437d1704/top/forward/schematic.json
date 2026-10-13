@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "connectivity_mode": "explicit",
+  "ports": [
+    "A",
+    "B",
+    "S",
+    "Y",
+    "VPWR",
+    "VGND"
+  ],
+  "devices": [
+    {
+      "id": "IS.MP",
+      "name": "IS_MP",
+      "kind": "pmos",
+      "model": "sky130_fd_pr__pfet_01v8_hvt",
+      "pins": {
+        "D": "SB",
+        "G": "S",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 0.65,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 170
+    },
+    {
+      "id": "IS.MN",
+      "name": "IS_MN",
+      "kind": "nmos",
+      "model": "sky130_fd_pr__nfet_01v8",
+      "pins": {
+        "D": "SB",
+        "G": "S",
+        "S": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 0.65,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 440,
+      "y": 170
+    },
+    {
+      "id": "MNA",
+      "name": "MNA",
+      "kind": "nmos",
+      "model": "sky130_fd_pr__nfet_01v8",
+      "pins": {
+        "D": "Y",
+        "G": "SB",
+        "S": "A",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 0.65,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 700,
+      "y": 170
+    },
+    {
+      "id": "MPA",
+      "name": "MPA",
+      "kind": "pmos",
+      "model": "sky130_fd_pr__pfet_01v8_hvt",
+      "pins": {
+        "D": "Y",
+        "G": "S",
+        "S": "A",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 0.65,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 960,
+      "y": 170
+    },
+    {
+      "id": "MNB",
+      "name": "MNB",
+      "kind": "nmos",
+      "model": "sky130_fd_pr__nfet_01v8",
+      "pins": {
+        "D": "Y",
+        "G": "S",
+        "S": "B",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 0.65,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 1220,
+      "y": 170
+    },
+    {
+      "id": "MPB",
+      "name": "MPB",
+      "kind": "pmos",
+      "model": "sky130_fd_pr__pfet_01v8_hvt",
+      "pins": {
+        "D": "Y",
+        "G": "SB",
+        "S": "B",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 0.65,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 360
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

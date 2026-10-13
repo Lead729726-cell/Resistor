@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "direction": "reverse",
+  "project_id": "d26eb67c78a14cc398d84ae4d8ef3c48",
+  "revision": 2,
+  "run_id": "a2b5b699f5934203ad9e5ae0ca7e835d",
+  "source_layout_sha256": "4458dd1138b9094ba3b485bf5a445d51c2263a8283d95248adaf0088e688abb2",
+  "source_schematic_sha256": "44d065030c81f6130ca92c9e270761b3fa8fddc8fedc79e9dbedf96cd6b7acb2",
+  "profile_id": "sky130A",
+  "profile_hash": "b9b091e9ab51e3442db83f5d666da6dcb4a430d8237799b0cb4c18e38d6d067e",
+  "settings": {},
+  "limits": [
+    "PDK extraction recovers the transistor/passive net graph, not the original symbol placement, design intent or lost hierarchy.",
+    "Unsupported models/parameters and extraction errors are retained; partial graphs cannot replace a schematic.",
+    "Exact device-terminal-to-polygon mapping is unavailable in this adapter.",
+    "Forward layout supports up to 512 SKY130 MOS/poly/MIM primitives; rectangular chip envelopes and four whole-layout orientations.",
+    "Ideal passive replacement is an explicit nominal geometry estimate. DRC/LVS/PEX, noise/yield/STA and manufacturing approval remain independent."
+  ],
+  "verification": {
+    "drc": "not-run",
+    "lvs": "not-run",
+    "pex": "not-run"
+  },
+  "foundry_signoff": false,
+  "schematic": {
+    "ports": [
+      "VGND",
+      "OUT",
+      "IN"
+    ],
+    "devices": [
+      {
+        "id": "extract:4",
+        "name": "E_4",
+        "x": 180,
+        "y": 150,
+        "pins": {
+          "+": "OUT",
+          "-": "VGND"
+        },
+        "parameters": {
+          "w_um": 22.17,
+          "l_um": 22.17,
+          "value": 9.998670000000003e-13
+        },
+        "kind": "capacitor",
+        "model": "sky130_fd_pr__cap_mim_m3_1"
+      },
+      {
+        "id": "extract:5",
+        "name": "E_5",
+        "x": 440,
+        "y": 150,
+        "pins": {
+          "+": "IN",
+          "-": "OUT",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 1.41,
+          "l_um": 6.89,
+          "value": 10005.445624264372
+        },
+        "kind": "resistor",
+        "model": "sky130_fd_pr__res_xhigh_po_1p41"
+      }
+    ],
+    "wires": [],
+    "junctions": [],
+    "cells": {},
+    "connectivity_mode": "explicit"
+  },
+  "ports": [
+    "VGND",
+    "OUT",
+    "IN"
+  ],
+  "global_nodes": [],
+  "issues": [],
+  "losses": [],
+  "ready": true,
+  "device_count": 2,
+  "raw_device_names": {
+    "extract:4": "X0",
+    "extract:5": "X1"
+  },
+  "cell": "rc_lowpass",
+  "source": "actual-mask-geometry-and-Magic-PDK",
+  "parser_equivalence": "pass",
+  "device_polygon_mapping": "unavailable; native netlist only",
+  "preview_layout_sha256": "76c01de8afdc76c38873fd246e628c9512470575c26fdb16dacdb4aacbd33a7a",
+  "schematic_sha256": "ffb31e1fcf59d33fa2bb0a32348df798ce945e356dd7e609d18bc091f352e7e0",
+  "preview_hash": "ac3331e080874e075857826809875d980d0afdd5cf2eaa796bad7da764ffc902"
+}

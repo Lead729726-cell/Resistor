@@ -1,0 +1,588 @@
+{
+  "schema_version": 1,
+  "direction": "forward",
+  "project_id": "36d54a8aa08841dab37f3987de00dc79",
+  "revision": 1,
+  "run_id": "d68cef756acf4563a140495359a8ff56",
+  "source_layout_sha256": "d7adaae05fc6fc8c7181840e9f74eecb0a64d149f7c3777da09e37123e020b44",
+  "source_schematic_sha256": "961aa32773e650c9118de23ad40c6706dcfd432ff1af263747fb5c8b8d583ef4",
+  "profile_id": "sky130A",
+  "profile_hash": "b9b091e9ab51e3442db83f5d666da6dcb4a430d8237799b0cb4c18e38d6d067e",
+  "settings": {
+    "chip_limits": {
+      "width_um": 600,
+      "height_um": 300,
+      "max_area_um2": 180000,
+      "edge_um": 10
+    },
+    "pin_side": "left",
+    "order": "kind",
+    "body_net": "VGND"
+  },
+  "limits": [
+    "PDK extraction recovers the transistor/passive net graph, not the original symbol placement, design intent or lost hierarchy.",
+    "Unsupported models/parameters and extraction errors are retained; partial graphs cannot replace a schematic.",
+    "Exact device-terminal-to-polygon mapping is unavailable in this adapter.",
+    "Forward layout supports up to 512 SKY130 MOS/poly/MIM primitives; rectangular chip envelopes and four whole-layout orientations.",
+    "Ideal passive replacement is an explicit nominal geometry estimate. DRC/LVS/PEX, noise/yield/STA and manufacturing approval remain independent."
+  ],
+  "verification": {
+    "drc": "not-run",
+    "lvs": "not-run",
+    "pex": "not-run"
+  },
+  "foundry_signoff": false,
+  "schematic": {
+    "schema_version": 1,
+    "connectivity_mode": "explicit",
+    "ports": [
+      "INP",
+      "INN",
+      "BIAS",
+      "OUT",
+      "VPWR",
+      "VGND"
+    ],
+    "devices": [
+      {
+        "id": "C_MILLER:p0",
+        "name": "C_MILLER_P0",
+        "kind": "capacitor",
+        "pins": {
+          "+": "PRE",
+          "-": "COMP"
+        },
+        "parameters": {
+          "value": 1.6666666666666666e-12,
+          "w_um": 28.68,
+          "l_um": 28.68
+        },
+        "x": 1220,
+        "y": 360,
+        "model": "sky130_fd_pr__cap_mim_m3_1"
+      },
+      {
+        "id": "C_MILLER:p1",
+        "name": "C_MILLER_P1",
+        "kind": "capacitor",
+        "pins": {
+          "+": "PRE",
+          "-": "COMP"
+        },
+        "parameters": {
+          "value": 1.6666666666666666e-12,
+          "w_um": 28.68,
+          "l_um": 28.68
+        },
+        "x": 180,
+        "y": 550,
+        "model": "sky130_fd_pr__cap_mim_m3_1"
+      },
+      {
+        "id": "C_MILLER:p2",
+        "name": "C_MILLER_P2",
+        "kind": "capacitor",
+        "pins": {
+          "+": "PRE",
+          "-": "COMP"
+        },
+        "parameters": {
+          "value": 1.6666666666666666e-12,
+          "w_um": 28.68,
+          "l_um": 28.68
+        },
+        "x": 440,
+        "y": 550,
+        "model": "sky130_fd_pr__cap_mim_m3_1"
+      },
+      {
+        "id": "FIRST.N_INP0",
+        "name": "FIRST_N_INP0",
+        "kind": "nmos",
+        "pins": {
+          "D": "PRE",
+          "G": "INP",
+          "S": "FIRST__TAIL",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 5.0,
+          "l_um": 1.0,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 180,
+        "y": 170,
+        "model": "sky130_fd_pr__nfet_01v8",
+        "matching_group": "INPUT_PAIR_ABBA",
+        "matching_role": "A"
+      },
+      {
+        "id": "FIRST.N_INN0",
+        "name": "FIRST_N_INN0",
+        "kind": "nmos",
+        "pins": {
+          "D": "FIRST__MIR",
+          "G": "INN",
+          "S": "FIRST__TAIL",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 5.0,
+          "l_um": 1.0,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 440,
+        "y": 170,
+        "model": "sky130_fd_pr__nfet_01v8",
+        "matching_group": "INPUT_PAIR_ABBA",
+        "matching_role": "B"
+      },
+      {
+        "id": "FIRST.N_INN1",
+        "name": "FIRST_N_INN1",
+        "kind": "nmos",
+        "pins": {
+          "D": "FIRST__MIR",
+          "G": "INN",
+          "S": "FIRST__TAIL",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 5.0,
+          "l_um": 1.0,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 700,
+        "y": 170,
+        "model": "sky130_fd_pr__nfet_01v8",
+        "matching_group": "INPUT_PAIR_ABBA",
+        "matching_role": "B"
+      },
+      {
+        "id": "FIRST.N_INP1",
+        "name": "FIRST_N_INP1",
+        "kind": "nmos",
+        "pins": {
+          "D": "PRE",
+          "G": "INP",
+          "S": "FIRST__TAIL",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 5.0,
+          "l_um": 1.0,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 960,
+        "y": 170,
+        "model": "sky130_fd_pr__nfet_01v8",
+        "matching_group": "INPUT_PAIR_ABBA",
+        "matching_role": "A"
+      },
+      {
+        "id": "FIRST.N_TAIL",
+        "name": "FIRST_N_TAIL",
+        "kind": "nmos",
+        "pins": {
+          "D": "FIRST__TAIL",
+          "G": "BIAS",
+          "S": "VGND",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 2.0,
+          "l_um": 1.0,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 440,
+        "y": 360,
+        "model": "sky130_fd_pr__nfet_01v8"
+      },
+      {
+        "id": "N_SECOND",
+        "name": "N_SECOND",
+        "kind": "nmos",
+        "pins": {
+          "D": "OUT",
+          "G": "BIAS",
+          "S": "VGND",
+          "B": "VGND"
+        },
+        "parameters": {
+          "w_um": 2,
+          "l_um": 1,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 960,
+        "y": 360,
+        "model": "sky130_fd_pr__nfet_01v8"
+      },
+      {
+        "id": "FIRST.P_DIODE",
+        "name": "FIRST_P_DIODE",
+        "kind": "pmos",
+        "pins": {
+          "D": "FIRST__MIR",
+          "G": "FIRST__MIR",
+          "S": "VPWR",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 20.0,
+          "l_um": 1.0,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 1220,
+        "y": 170,
+        "model": "sky130_fd_pr__pfet_01v8_hvt"
+      },
+      {
+        "id": "FIRST.P_MIRROR",
+        "name": "FIRST_P_MIRROR",
+        "kind": "pmos",
+        "pins": {
+          "D": "PRE",
+          "G": "FIRST__MIR",
+          "S": "VPWR",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 20.0,
+          "l_um": 1.0,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 180,
+        "y": 360,
+        "model": "sky130_fd_pr__pfet_01v8_hvt"
+      },
+      {
+        "id": "P_SECOND",
+        "name": "P_SECOND",
+        "kind": "pmos",
+        "pins": {
+          "D": "OUT",
+          "G": "PRE",
+          "S": "VPWR",
+          "B": "VPWR"
+        },
+        "parameters": {
+          "w_um": 40,
+          "l_um": 1,
+          "nf": 1,
+          "m": 1
+        },
+        "x": 700,
+        "y": 360,
+        "model": "sky130_fd_pr__pfet_01v8_hvt"
+      },
+      {
+        "id": "R_ZERO:p0",
+        "name": "R_ZERO_P0",
+        "kind": "resistor",
+        "pins": {
+          "+": "COMP",
+          "-": "OUT",
+          "B": "VGND"
+        },
+        "parameters": {
+          "value": 5000.0,
+          "w_um": 1.41,
+          "l_um": 3.36
+        },
+        "x": 700,
+        "y": 550,
+        "model": "sky130_fd_pr__res_xhigh_po_1p41"
+      }
+    ],
+    "wires": [],
+    "junctions": [],
+    "cells": {}
+  },
+  "ports": [
+    "INP",
+    "INN",
+    "BIAS",
+    "OUT",
+    "VPWR",
+    "VGND"
+  ],
+  "cell": "soc_miller_ota",
+  "ready": true,
+  "device_count": 13,
+  "passive_replacements": [
+    {
+      "source_device": "C_MILLER",
+      "kind": "capacitor",
+      "requested_SI": 5e-12,
+      "nominal_geometry_SI": 5.0006448e-12,
+      "instances": 3,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 28.68,
+      "l_um": 28.68,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "R_ZERO",
+      "kind": "resistor",
+      "requested_SI": 5000.0,
+      "nominal_geometry_SI": 4998.353425682813,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 3.36,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    }
+  ],
+  "external_sources": [],
+  "envelope": {
+    "policy": {
+      "schema_version": 1,
+      "width_um": 600,
+      "height_um": 300,
+      "max_area_um2": 180000,
+      "edge_um": 10,
+      "origin_um": [
+        0.0,
+        0.0
+      ],
+      "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+    },
+    "fits": true,
+    "bbox_dbu": [
+      "10000",
+      "10000",
+      "209280",
+      "66590"
+    ],
+    "used_width_um": 199.28,
+    "used_height_um": 56.59,
+    "used_area_um2": 11277.255200000001,
+    "chip_area_um2": 180000,
+    "minimum_envelope_um": [
+      219.28,
+      76.59
+    ],
+    "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+  },
+  "placement_order": [
+    "C_MILLER_P0",
+    "C_MILLER_P1",
+    "C_MILLER_P2",
+    "FIRST_N_INP0",
+    "FIRST_N_INN0",
+    "FIRST_N_INN1",
+    "FIRST_N_INP1",
+    "FIRST_N_TAIL",
+    "N_SECOND",
+    "FIRST_P_DIODE",
+    "FIRST_P_MIRROR",
+    "P_SECOND",
+    "R_ZERO_P0"
+  ],
+  "source": "actual-SKY130-PCells-and-bounded-routing",
+  "hierarchy": "flattened physical graph; original source remains in project history",
+  "issues": [],
+  "losses": [],
+  "routing": {
+    "algorithm": "bounded-rows-m3-m4-v1",
+    "primitive_count": 13,
+    "row_count": 1,
+    "inter_row_nets": 10,
+    "floorplan": {
+      "policy": {
+        "schema_version": 1,
+        "width_um": 600,
+        "height_um": 300,
+        "max_area_um2": 180000,
+        "edge_um": 10,
+        "origin_um": [
+          0.0,
+          0.0
+        ],
+        "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+      },
+      "fits": true,
+      "bbox_dbu": [
+        "10300",
+        "10000",
+        "209580",
+        "66590"
+      ],
+      "used_width_um": 199.28,
+      "used_height_um": 56.59,
+      "used_area_um2": 11277.255200000001,
+      "chip_area_um2": 180000,
+      "minimum_envelope_um": [
+        219.28,
+        76.59
+      ],
+      "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+    },
+    "rows": [
+      {
+        "row": 0,
+        "translation_dbu": [
+          29000,
+          31095
+        ],
+        "algorithm": "interval-heap-v2",
+        "matching_groups": [
+          {
+            "centroids_dbu": {
+              "A": [
+                148820.0,
+                33870.0
+              ],
+              "B": [
+                148820.0,
+                33870.0
+              ]
+            },
+            "equal_unit_geometry": true,
+            "group": "FIRST::INPUT_PAIR_ABBA",
+            "max_centroid_delta_dbu": 0.0,
+            "nominal_centroid_match": true,
+            "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+            "units": [
+              {
+                "device": "FIRST_N_INP0",
+                "gate_center_dbu": [
+                  137045,
+                  33870
+                ],
+                "l_um": 1.0,
+                "model": "sky130_fd_pr__nfet_01v8",
+                "role": "A",
+                "w_um": 5.0
+              },
+              {
+                "device": "FIRST_N_INN0",
+                "gate_center_dbu": [
+                  144895,
+                  33870
+                ],
+                "l_um": 1.0,
+                "model": "sky130_fd_pr__nfet_01v8",
+                "role": "B",
+                "w_um": 5.0
+              },
+              {
+                "device": "FIRST_N_INN1",
+                "gate_center_dbu": [
+                  152745,
+                  33870
+                ],
+                "l_um": 1.0,
+                "model": "sky130_fd_pr__nfet_01v8",
+                "role": "B",
+                "w_um": 5.0
+              },
+              {
+                "device": "FIRST_N_INP1",
+                "gate_center_dbu": [
+                  160595,
+                  33870
+                ],
+                "l_um": 1.0,
+                "model": "sky130_fd_pr__nfet_01v8",
+                "role": "A",
+                "w_um": 5.0
+              }
+            ]
+          }
+        ],
+        "primitive_count": 13,
+        "scope": "single-row PCell reference; no full-chip density/antenna/foundry signoff",
+        "signal_track_count": 8,
+        "track_clearance_dbu": 800,
+        "tracks": {
+          "BIAS": 3,
+          "COMP": 6,
+          "FIRST__MIR": 4,
+          "FIRST__TAIL": 2,
+          "INN": 0,
+          "INP": 1,
+          "OUT": 7,
+          "PRE": 5
+        }
+      }
+    ],
+    "matching_groups": [
+      {
+        "centroids_dbu": {
+          "A": [
+            148820.0,
+            33870.0
+          ],
+          "B": [
+            148820.0,
+            33870.0
+          ]
+        },
+        "equal_unit_geometry": true,
+        "group": "FIRST::INPUT_PAIR_ABBA",
+        "max_centroid_delta_dbu": 0.0,
+        "nominal_centroid_match": true,
+        "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+        "units": [
+          {
+            "device": "FIRST_N_INP0",
+            "gate_center_dbu": [
+              137045,
+              33870
+            ],
+            "l_um": 1.0,
+            "model": "sky130_fd_pr__nfet_01v8",
+            "role": "A",
+            "w_um": 5.0
+          },
+          {
+            "device": "FIRST_N_INN0",
+            "gate_center_dbu": [
+              144895,
+              33870
+            ],
+            "l_um": 1.0,
+            "model": "sky130_fd_pr__nfet_01v8",
+            "role": "B",
+            "w_um": 5.0
+          },
+          {
+            "device": "FIRST_N_INN1",
+            "gate_center_dbu": [
+              152745,
+              33870
+            ],
+            "l_um": 1.0,
+            "model": "sky130_fd_pr__nfet_01v8",
+            "role": "B",
+            "w_um": 5.0
+          },
+          {
+            "device": "FIRST_N_INP1",
+            "gate_center_dbu": [
+              160595,
+              33870
+            ],
+            "l_um": 1.0,
+            "model": "sky130_fd_pr__nfet_01v8",
+            "role": "A",
+            "w_um": 5.0
+          }
+        ]
+      }
+    ],
+    "scope": "PCell reference with bounded envelope; native DRC/LVS/PEX remain independent gates."
+  },
+  "preview_layout_sha256": "539f2dd8fa62d616d96a5be4be381f02c0a4772945ed770a8fb3ae8329f0d152",
+  "schematic_sha256": "4e93f18f7118965cce269accdcac069cafe84e2f7b5ac93ab6de0e1df5d6c169",
+  "preview_hash": "0dc961abff78dd6e6a71d9a2853753ae4e29bfa0516e6f1aafdc3159bb4211af"
+}

@@ -1,0 +1,173 @@
+{
+  "checked_at": "2026-10-13T08:17:33.325Z",
+  "project_id": "7adb79fe03964e07a2b2e09b99d48f7d",
+  "revision": 15,
+  "created_empty_in_actual_ui": true,
+  "unit_entry": "10kΩ / 1.8V",
+  "parts_placed": 4,
+  "pin_connections": 4,
+  "keyboard_pin_activation": true,
+  "wrong_unit_rejected": true,
+  "consecutive_value_edits": true,
+  "undo_redo_value_restored": true,
+  "preview_created_in_actual_ui": true,
+  "preview_source_unchanged_revision": 13,
+  "preview_applied_revision": 14,
+  "actual_drc_revision": 14,
+  "conversion_undo_restored_original": true,
+  "current_OP_run": {
+    "id": "8b7540ac30704572bf715fb4a29b81dd",
+    "project_id": "7adb79fe03964e07a2b2e09b99d48f7d",
+    "kind": "simulation",
+    "revision": 15,
+    "execution_status": "completed",
+    "analysis_result": "unknown",
+    "freshness": "current",
+    "artifacts": {
+      "testbench": "/workspace/.runtime/eda/runs/8b7540ac30704572bf715fb4a29b81dd/testbench.spice",
+      "current_flow_data": "/workspace/.runtime/eda/runs/8b7540ac30704572bf715fb4a29b81dd/current-flow.dat",
+      "current_probe_netlist": "/workspace/.runtime/eda/runs/8b7540ac30704572bf715fb4a29b81dd/current-probe.spice",
+      "node_voltage_data": "/workspace/.runtime/eda/runs/8b7540ac30704572bf715fb4a29b81dd/node-voltages.dat",
+      "node_voltage_probes": "/workspace/.runtime/eda/runs/8b7540ac30704572bf715fb4a29b81dd/voltage-probes.json",
+      "waveform_data": "/workspace/.runtime/eda/runs/8b7540ac30704572bf715fb4a29b81dd/waveform.dat",
+      "waveform_raw": "/workspace/.runtime/eda/runs/8b7540ac30704572bf715fb4a29b81dd/waveform.raw",
+      "reference_netlist": "/workspace/.runtime/eda/runs/8b7540ac30704572bf715fb4a29b81dd/reference.spice",
+      "stdout": "/workspace/.runtime/eda/runs/8b7540ac30704572bf715fb4a29b81dd/stdout.log"
+    },
+    "manifest_path": "/workspace/.runtime/eda/runs/8b7540ac30704572bf715fb4a29b81dd/manifest.json",
+    "input_signature": "55cc3455070bd287e23ebcc6d132530d146e1b3568572aa56134951b05ebbc02",
+    "analysis_stage": "pre-layout",
+    "started_at": "2026-10-13T08:14:59.980487+00:00",
+    "tool": "ngspice",
+    "waveforms": [
+      {
+        "name": "N_1",
+        "unit": "V",
+        "x": [
+          0
+        ],
+        "y": [
+          1.8
+        ]
+      },
+      {
+        "name": "N_2",
+        "unit": "V",
+        "x": [
+          0
+        ],
+        "y": [
+          0.9
+        ]
+      }
+    ],
+    "current_flow": {
+      "schema_version": 1,
+      "source": "ngspice",
+      "analysis": "op",
+      "x": [
+        0
+      ],
+      "x_unit": "point",
+      "branches": [
+        {
+          "id": "XU/RR2",
+          "name": "R2 terminal 1→2",
+          "from_net": "XU.N_2",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_08c2727c53dd9cbc)",
+          "device_id": "device-009c3d8b-d10e-4bfa-afde-15649e24427d",
+          "values_A": [
+            0.00009
+          ]
+        },
+        {
+          "id": "XU/VV1",
+          "name": "V1 terminal 1→2",
+          "from_net": "XU.N_1",
+          "to_net": "0",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_f4715a27313a7f7f)",
+          "device_id": "device-115a1ad1-24bf-442b-bab6-5786074a182a",
+          "values_A": [
+            -0.00009
+          ]
+        },
+        {
+          "id": "XU/RR1",
+          "name": "R1 terminal 1→2",
+          "from_net": "XU.N_1",
+          "to_net": "XU.N_2",
+          "mapping": "unmapped",
+          "source_vector": "i(v.xu.vregister_cf_eaac70311f533dbd)",
+          "device_id": "device-f766eafa-30d8-437f-b3cd-473b87dd1acf",
+          "values_A": [
+            0.00009
+          ]
+        }
+      ],
+      "convention": "conventional",
+      "revision": 15,
+      "node_voltages": [
+        {
+          "net": "XU.N_2",
+          "source_vector": "v(XU.N_2)",
+          "values_V": [
+            0.9
+          ]
+        },
+        {
+          "net": "0",
+          "source_vector": "defined-ground-reference",
+          "values_V": [
+            0
+          ]
+        },
+        {
+          "net": "XU.N_1",
+          "source_vector": "v(XU.N_1)",
+          "values_V": [
+            1.8
+          ]
+        }
+      ],
+      "voltage_probe_scope": "Voltage at instrumented native branch endpoints and MOS gate/body nodes, maximum 256 unique nodes; not all extracted RC nodes.",
+      "omitted_voltage_nets": [],
+      "project_id": "7adb79fe03964e07a2b2e09b99d48f7d",
+      "run_id": "8b7540ac30704572bf715fb4a29b81dd",
+      "layout_sha256": "85f81a56a53340cccfe4692dd53513fabf24e4439dd87beec733757749da3529",
+      "notes": [
+        "Actual zero-volt series sense-source current into each component first terminal; MOS arrows use D→S as drain-terminal reference, including transient displacement current. For extracted symmetric MOS D/S exchanges, the native resistor graph must prove correspondence before selecting the sense source at the logical D terminal; source terminal current is never approximated by negating a different terminal current. Testbench i(V) is positive +→− without negation. Negative samples reverse the reference direction. Paths connect verified named contact anchors and are not reconstructed conductor streamlines."
+      ]
+    },
+    "reference_verification": {
+      "schema_version": 1,
+      "kind": "custom-flat-numerical-analysis",
+      "source": "actual-ngspice-samples",
+      "checks": [],
+      "pass": null,
+      "scope": "Explicit DC sources; measured voltages/currents only. Functional constraints and transient excitation are not configured."
+    },
+    "measurements": {
+      "analysis": "op",
+      "x_unit": "point",
+      "x_label": "operating point",
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "post_layout": "false",
+      "samples": 1,
+      "solver": "SPARSE 1.3",
+      "N_1_min": 1.8,
+      "N_1_max": 1.8,
+      "N_2_min": 0.9,
+      "N_2_max": 0.9,
+      "current_flow_status": "available"
+    },
+    "message": "Actual ngspice op: 1 samples.; reference criteria 0/0",
+    "ended_at": "2026-10-13T08:15:01.080446+00:00",
+    "elapsed_s": 1.108389085973613
+  },
+  "engine_checks_not_fabricated": true
+}
