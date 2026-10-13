@@ -3,6 +3,14 @@ import argparse,hashlib,json,plistlib,posixpath,stat,struct,sys,zipfile
 from pathlib import Path
 from datetime import datetime,timezone
 
+def verify_macho_mode(header,mode,name):
+    # MH_EXECUTE is a program; MH_DYLIB/MH_BUNDLE are loadable images and
+    # legitimately ship with 0644. Keep architecture and signature checks
+    # identical for every image instead of treating libraries as commands.
+    filetype=struct.unpack_from('<I',header,12)[0]
+    assert mode&0o444,('Mach-O not readable',name)
+    if filetype==2:assert mode&0o111,('Mach-O program not executable',name)
+
 def verify_macho_pages(data,special_files=None):
     offset=32;signature=None
     for _ in range(struct.unpack_from('<I',data,16)[0]):
@@ -89,7 +97,7 @@ def verify(archive,require_bundle_signature=False):
                 with z.open(entry) as stream:header=stream.read(32)
                 if len(header)>=8 and struct.unpack('<I',header[:4])[0]==0xfeedfacf:
                     cpu=struct.unpack('<I',header[4:8])[0];assert cpu==expected_cpu,(name,hex(cpu),expected_arch)
-                    assert mode&0o111,('Mach-O not executable',name)
+                    verify_macho_mode(header,mode,name)
                     signatures[name]=verify_macho_pages(z.read(name))
                     if expected_arch=='arm64':assert all(s.get('present',True) for s in signatures[name]),('Apple Silicon binary lacks its original ad-hoc code signature',name)
                     mach.append(name)
