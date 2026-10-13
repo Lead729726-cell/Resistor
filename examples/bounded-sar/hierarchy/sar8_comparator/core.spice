@@ -1,0 +1,18 @@
+.subckt PREAMP INP INN BIAS OUT VPWR VGND
+XN_INN MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+XN_INP OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+XN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1
+XP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+XP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1
+.ends PREAMP
+.subckt INV A Y VPWR VGND
+XMN Y A VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMP Y A VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+.ends INV
+.subckt sar8_comparator INP INN BIAS OUT VPWR VGND
+XN_OUT DECISION_RAW PRE VGND VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+XPREAMP INP INN BIAS PRE VPWR VGND PREAMP
+XP_OUT DECISION_RAW PRE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+XRESTORE0 DECISION_RAW DECISION_B VPWR VGND INV
+XRESTORE1 DECISION_B OUT VPWR VGND INV
+.ends sar8_comparator

@@ -1,0 +1,607 @@
+* NGSPICE file created from soc_bias.ext - technology: sky130A
+
+.subckt soc_bias VPWR VGND VCM BIAS
+X0 VCM_RAW.t2 VGND.t30 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X1 VPWR BIAS.t2 VGND.t15 sky130_fd_pr__res_xhigh_po_1p41 l=20.99
+X2 VPWR VCM_BUFFER__PRE.t3 VCM.t1 VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X3 VCM_RAW.t3 VGND.t29 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X4 VPWR R_VCM_TOP_R0_N0.t0 VGND.t1 sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X5 VCM_BUFFER__PRE.t4 VCM_BUFFER__COMP.t3 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X6 VCM_RAW.t4 VGND.t28 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X7 R_VCM_BOTTOM_R0_N0.t0 R_VCM_BOTTOM_R0_N1.t1 VGND.t13 sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X8 VCM_BUFFER__FIRST__TAIL.t2 VCM.t3 VCM_BUFFER__FIRST__MIR.t1 VGND.t16 sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X9 VCM_BUFFER__PRE.t5 VCM_BUFFER__COMP.t2 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X10 VGND.t10 BIAS.t0 BIAS.t1 VGND.t9 sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X11 VCM_RAW.t5 VGND.t27 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X12 VCM_RAW.t6 VGND.t26 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X13 R_VCM_TOP_R0_N1.t0 VCM_RAW.t0 VGND.t0 sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X14 VPWR VCM_BUFFER__FIRST__MIR.t2 VCM_BUFFER__FIRST__MIR.t3 VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X15 VCM_RAW.t7 VGND.t25 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X16 VCM_RAW.t8 VGND.t24 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X17 VCM_RAW.t9 VGND.t23 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X18 R_VCM_TOP_R0_N0.t1 R_VCM_TOP_R0_N1.t1 VGND.t5 sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X19 VCM_RAW.t10 VGND.t22 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X20 VCM_RAW.t1 R_VCM_BOTTOM_R0_N0.t1 VGND.t14 sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X21 R_VCM_BOTTOM_R0_N1.t0 VGND.t4 VGND.t3 sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X22 VGND.t12 BIAS.t3 VCM_BUFFER__FIRST__TAIL.t0 VGND.t11 sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X23 VCM_BUFFER__PRE.t6 VCM_BUFFER__COMP.t1 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X24 VCM_RAW.t11 VGND.t21 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X25 VPWR VCM_BUFFER__FIRST__MIR.t4 VCM_BUFFER__PRE.t0 VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X26 VGND.t7 BIAS.t4 VCM.t2 VGND.t6 sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X27 VCM_BUFFER__COMP.t0 VCM.t0 VGND.t8 sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X28 VCM_BUFFER__FIRST__TAIL.t1 VCM.t4 VCM_BUFFER__FIRST__MIR.t0 VGND.t2 sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X29 VCM_RAW.t12 VGND.t20 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X30 VCM_BUFFER__FIRST__TAIL.t4 VCM_RAW.t13 VCM_BUFFER__PRE.t1 VGND.t19 sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X31 VCM_RAW.t14 VGND.t18 sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X32 VCM_BUFFER__FIRST__TAIL.t3 VCM_RAW.t15 VCM_BUFFER__PRE.t2 VGND.t17 sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+C0 BIAS VCM 0.82434f
+C1 VCM_BUFFER__FIRST__MIR VCM_BUFFER__FIRST__TAIL 41.613f
+C2 VCM_RAW BIAS 0.26568f
+C3 VCM_RAW VCM 0.20181f
+C4 BIAS VCM_BUFFER__FIRST__MIR 0.29621f
+C5 VCM VCM_BUFFER__FIRST__MIR 0.83521f
+C6 VPWR VCM_BUFFER__PRE 8.86362f
+C7 VCM_RAW VCM_BUFFER__FIRST__MIR 39.8805f
+C8 VCM_BUFFER__PRE VCM_BUFFER__FIRST__TAIL 0.87685f
+C9 VPWR VCM_BUFFER__FIRST__TAIL 0.64714f
+C10 BIAS VCM_BUFFER__PRE 42.3496f
+C11 VPWR BIAS 1.16666f
+C12 VCM VCM_BUFFER__PRE 2.17526f
+C13 VPWR VCM 8.53432f
+C14 BIAS VCM_BUFFER__FIRST__TAIL 40.9459f
+C15 VCM_RAW VCM_BUFFER__PRE 0.55104f
+C16 VPWR VCM_RAW 0.17644f
+C17 VCM VCM_BUFFER__FIRST__TAIL 3.60594f
+C18 VCM_BUFFER__PRE VCM_BUFFER__FIRST__MIR 1.15117f
+C19 VCM_RAW VCM_BUFFER__FIRST__TAIL 3.56898f
+C20 VPWR VCM_BUFFER__FIRST__MIR 10.3469f
+C21 VCM VGND 98.94383f
+C22 BIAS VGND 36.69448f
+C23 VPWR VGND 0.11498p
+C24 VCM_BUFFER__FIRST__TAIL VGND 25.49272f $ **FLOATING
+C25 VCM_BUFFER__FIRST__MIR VGND 24.80844f $ **FLOATING
+C26 VCM_RAW VGND 0.98006p $ **FLOATING
+C27 VCM_BUFFER__PRE VGND 0.18391p $ **FLOATING
+C28 R_VCM_TOP_R0_N1.t1 VGND 3.08942f $ **FLOATING
+C29 R_VCM_TOP_R0_N1.t0 VGND 3.41058f $ **FLOATING
+C30 VCM_BUFFER__FIRST__TAIL.n0 VGND 0.03175f $ **FLOATING
+C31 VCM_BUFFER__FIRST__TAIL.t0 VGND 0.05174f $ **FLOATING
+C32 VCM_BUFFER__FIRST__TAIL.n1 VGND 0.04291f $ **FLOATING
+C33 VCM_BUFFER__FIRST__TAIL.t3 VGND 0.05239f $ **FLOATING
+C34 VCM_BUFFER__FIRST__TAIL.n2 VGND 0.04291f $ **FLOATING
+C35 VCM_BUFFER__FIRST__TAIL.n3 VGND 3.98992f $ **FLOATING
+C36 VCM_BUFFER__FIRST__TAIL.n4 VGND 0.04291f $ **FLOATING
+C37 VCM_BUFFER__FIRST__TAIL.t1 VGND 0.05239f $ **FLOATING
+C38 VCM_BUFFER__FIRST__TAIL.n5 VGND 0.04291f $ **FLOATING
+C39 VCM_BUFFER__FIRST__TAIL.n6 VGND 1.82307f $ **FLOATING
+C40 VCM_BUFFER__FIRST__TAIL.n7 VGND 69.55939f $ **FLOATING
+C41 VCM_BUFFER__FIRST__TAIL.n8 VGND 0.04291f $ **FLOATING
+C42 VCM_BUFFER__FIRST__TAIL.t2 VGND 0.05239f $ **FLOATING
+C43 VCM_BUFFER__FIRST__TAIL.n9 VGND 0.04291f $ **FLOATING
+C44 VCM_BUFFER__FIRST__TAIL.n10 VGND 1.82307f $ **FLOATING
+C45 VCM_BUFFER__FIRST__TAIL.n11 VGND 2.41638f $ **FLOATING
+C46 VCM_BUFFER__FIRST__TAIL.n12 VGND 0.04291f $ **FLOATING
+C47 VCM_BUFFER__FIRST__TAIL.t4 VGND 0.05239f $ **FLOATING
+C48 VCM_BUFFER__FIRST__TAIL.n13 VGND 0.04291f $ **FLOATING
+C49 VCM_BUFFER__FIRST__TAIL.n14 VGND 1.82307f $ **FLOATING
+C50 VCM_BUFFER__FIRST__TAIL.n15 VGND 5.93427f $ **FLOATING
+C51 VCM_BUFFER__FIRST__TAIL.n16 VGND 1.61016f $ **FLOATING
+C52 VCM_BUFFER__FIRST__TAIL.n17 VGND 0.03061f $ **FLOATING
+C53 VCM_BUFFER__FIRST__MIR.n0 VGND 0.04019f $ **FLOATING
+C54 VCM_BUFFER__FIRST__MIR.t4 VGND 3.46771f $ **FLOATING
+C55 VCM_BUFFER__FIRST__MIR.t2 VGND 3.46771f $ **FLOATING
+C56 VCM_BUFFER__FIRST__MIR.n1 VGND 3.68529f $ **FLOATING
+C57 VCM_BUFFER__FIRST__MIR.n2 VGND 0.05602f $ **FLOATING
+C58 VCM_BUFFER__FIRST__MIR.t3 VGND 0.06816f $ **FLOATING
+C59 VCM_BUFFER__FIRST__MIR.n3 VGND 0.0569f $ **FLOATING
+C60 VCM_BUFFER__FIRST__MIR.n4 VGND 3.78f $ **FLOATING
+C61 VCM_BUFFER__FIRST__MIR.n5 VGND 2.43648f $ **FLOATING
+C62 VCM_BUFFER__FIRST__MIR.n6 VGND 0.04019f $ **FLOATING
+C63 VCM_BUFFER__FIRST__MIR.t1 VGND 0.04907f $ **FLOATING
+C64 VCM_BUFFER__FIRST__MIR.n7 VGND 0.04019f $ **FLOATING
+C65 VCM_BUFFER__FIRST__MIR.n8 VGND 1.66348f $ **FLOATING
+C66 VCM_BUFFER__FIRST__MIR.n9 VGND 66.2659f $ **FLOATING
+C67 VCM_BUFFER__FIRST__MIR.n10 VGND 3.7603f $ **FLOATING
+C68 VCM_BUFFER__FIRST__MIR.t0 VGND 0.04907f $ **FLOATING
+C69 VCM_BUFFER__FIRST__MIR.n11 VGND 0.04019f $ **FLOATING
+C70 R_VCM_BOTTOM_R0_N1.t1 VGND 4.61374f $ **FLOATING
+C71 R_VCM_BOTTOM_R0_N1.t0 VGND 5.28626f $ **FLOATING
+C72 R_VCM_BOTTOM_R0_N0.t1 VGND 3.92913f $ **FLOATING
+C73 R_VCM_BOTTOM_R0_N0.t0 VGND 4.47087f $ **FLOATING
+C74 VCM_BUFFER__COMP.t3 VGND 0.10364p $ **FLOATING
+C75 VCM_BUFFER__COMP.t1 VGND 91.31129f $ **FLOATING
+C76 VCM_BUFFER__COMP.n0 VGND 27.9038f $ **FLOATING
+C77 VCM_BUFFER__COMP.t2 VGND 91.31129f $ **FLOATING
+C78 VCM_BUFFER__COMP.n1 VGND 2.86443f $ **FLOATING
+C79 VCM_BUFFER__COMP.t0 VGND 0.97217f $ **FLOATING
+C80 R_VCM_TOP_R0_N0.t1 VGND 1.25941f $ **FLOATING
+C81 R_VCM_TOP_R0_N0.t0 VGND 1.74059f $ **FLOATING
+C82 VCM.t0 VGND 2.64333f $ **FLOATING
+C83 VCM.n0 VGND 0.01757f $ **FLOATING
+C84 VCM.t2 VGND 0.02862f $ **FLOATING
+C85 VCM.n1 VGND 0.01694f $ **FLOATING
+C86 VCM.n2 VGND 0.86791f $ **FLOATING
+C87 VCM.n3 VGND 10.1215f $ **FLOATING
+C88 VCM.n4 VGND 0.362f $ **FLOATING
+C89 VCM.t1 VGND 0.3596f $ **FLOATING
+C90 VCM.n5 VGND 1.5657f $ **FLOATING
+C91 VCM.n6 VGND 0.14085f $ **FLOATING
+C92 VCM.n7 VGND 1.74966f $ **FLOATING
+C93 VCM.n8 VGND 2.49942f $ **FLOATING
+C94 VCM.t3 VGND 0.62975f $ **FLOATING
+C95 VCM.n9 VGND 2.7785f $ **FLOATING
+C96 VCM.n10 VGND 22.3709f $ **FLOATING
+C97 VCM.t4 VGND 0.62975f $ **FLOATING
+C98 VCM_BUFFER__PRE.n0 VGND 0.0161f $ **FLOATING
+C99 VCM_BUFFER__PRE.t0 VGND 0.01929f $ **FLOATING
+C100 VCM_BUFFER__PRE.t5 VGND 48.8587f $ **FLOATING
+C101 VCM_BUFFER__PRE.t6 VGND 48.8587f $ **FLOATING
+C102 VCM_BUFFER__PRE.n1 VGND 1.95478f $ **FLOATING
+C103 VCM_BUFFER__PRE.t4 VGND 48.8587f $ **FLOATING
+C104 VCM_BUFFER__PRE.n2 VGND 1.26909f $ **FLOATING
+C105 VCM_BUFFER__PRE.t3 VGND 1.87439f $ **FLOATING
+C106 VCM_BUFFER__PRE.n3 VGND 1.06547f $ **FLOATING
+C107 VCM_BUFFER__PRE.n4 VGND 0.01137f $ **FLOATING
+C108 VCM_BUFFER__PRE.t2 VGND 0.01388f $ **FLOATING
+C109 VCM_BUFFER__PRE.n5 VGND 0.01137f $ **FLOATING
+C110 VCM_BUFFER__PRE.n6 VGND 2.08351f $ **FLOATING
+C111 VCM_BUFFER__PRE.n7 VGND 0.01137f $ **FLOATING
+C112 VCM_BUFFER__PRE.t1 VGND 0.01388f $ **FLOATING
+C113 VCM_BUFFER__PRE.n8 VGND 0.01137f $ **FLOATING
+C114 VCM_BUFFER__PRE.n9 VGND 0.50799f $ **FLOATING
+C115 VCM_BUFFER__PRE.n10 VGND 18.0743f $ **FLOATING
+C116 VCM_BUFFER__PRE.n11 VGND 1.01291f $ **FLOATING
+C117 VCM_BUFFER__PRE.n12 VGND 1.10694f $ **FLOATING
+C118 VCM_BUFFER__PRE.n13 VGND 0.01585f $ **FLOATING
+C119 BIAS.t4 VGND 0.52716f $ **FLOATING
+C120 BIAS.t3 VGND 0.52716f $ **FLOATING
+C121 BIAS.n0 VGND 36.167f $ **FLOATING
+C122 BIAS.t2 VGND 2.2907f $ **FLOATING
+C123 BIAS.n1 VGND 33.984f $ **FLOATING
+C124 BIAS.t0 VGND 0.52716f $ **FLOATING
+C125 BIAS.n2 VGND 2.29954f $ **FLOATING
+C126 BIAS.n3 VGND 0.02659f $ **FLOATING
+C127 BIAS.t1 VGND 0.04493f $ **FLOATING
+C128 BIAS.n4 VGND 0.02757f $ **FLOATING
+C129 BIAS.n5 VGND 1.23997f $ **FLOATING
+C130 BIAS.n6 VGND 2.90383f $ **FLOATING
+C131 VCM_RAW.t13 VGND 0.01235f $ **FLOATING
+C132 VCM_RAW.t15 VGND 0.01235f $ **FLOATING
+C133 VCM_RAW.n0 VGND 0.08727f $ **FLOATING
+C134 VCM_RAW.t7 VGND 1.99953f $ **FLOATING
+C135 VCM_RAW.n1 VGND 0.0491f $ **FLOATING
+C136 VCM_RAW.t5 VGND 1.99953f $ **FLOATING
+C137 VCM_RAW.n2 VGND 0.05703f $ **FLOATING
+C138 VCM_RAW.t11 VGND 1.99953f $ **FLOATING
+C139 VCM_RAW.n3 VGND 0.05703f $ **FLOATING
+C140 VCM_RAW.t4 VGND 1.99953f $ **FLOATING
+C141 VCM_RAW.n4 VGND 0.05703f $ **FLOATING
+C142 VCM_RAW.t9 VGND 1.99953f $ **FLOATING
+C143 VCM_RAW.n5 VGND 0.05703f $ **FLOATING
+C144 VCM_RAW.t8 VGND 1.99953f $ **FLOATING
+C145 VCM_RAW.n6 VGND 0.05703f $ **FLOATING
+C146 VCM_RAW.t12 VGND 1.99953f $ **FLOATING
+C147 VCM_RAW.n7 VGND 0.05703f $ **FLOATING
+C148 VCM_RAW.t6 VGND 1.99953f $ **FLOATING
+C149 VCM_RAW.n8 VGND 0.05703f $ **FLOATING
+C150 VCM_RAW.t14 VGND 1.99953f $ **FLOATING
+C151 VCM_RAW.n9 VGND 0.05703f $ **FLOATING
+C152 VCM_RAW.t3 VGND 1.99953f $ **FLOATING
+C153 VCM_RAW.n10 VGND 0.05703f $ **FLOATING
+C154 VCM_RAW.t10 VGND 1.99953f $ **FLOATING
+C155 VCM_RAW.n11 VGND 0.05703f $ **FLOATING
+C156 VCM_RAW.t0 VGND 0.03977f $ **FLOATING
+C157 VCM_RAW.t1 VGND 0.01674f $ **FLOATING
+C158 VCM_RAW.n12 VGND 0.13419f $ **FLOATING
+C159 VCM_RAW.n13 VGND 0.05892f $ **FLOATING
+C160 VCM_RAW.t2 VGND 1.99953f $ **FLOATING
+rmesh_equiv_0 bias bias.n0 18.260426486565649
+rmesh_equiv_1 bias bias.n2 35.912100000000002
+rmesh_equiv_10 bias.n1 bias.t2 34.487900000000003
+rmesh_equiv_100 vcm_buffer__first__tail.n16 vcm_buffer__first__tail.n17 3.0467200000000001
+rmesh_equiv_101 vcm_buffer__first__tail.n17 vcm_buffer__first__tail.t0 181.41
+rmesh_equiv_102 vcm_buffer__first__tail.n2 vcm_buffer__first__tail.n3 5.2415200000000004
+rmesh_equiv_103 vcm_buffer__first__tail.n2 vcm_buffer__first__tail.t3 174.857
+rmesh_equiv_104 vcm_buffer__first__tail.n3 vcm_buffer__first__tail.n7 19.669499999999999
+rmesh_equiv_105 vcm_buffer__first__tail.n4 vcm_buffer__first__tail.n6 5.2415200000000004
+rmesh_equiv_106 vcm_buffer__first__tail.n4 vcm_buffer__first__tail.t1 174.857
+rmesh_equiv_107 vcm_buffer__first__tail.n5 vcm_buffer__first__tail.n6 5.2415200000000004
+rmesh_equiv_108 vcm_buffer__first__tail.n5 vcm_buffer__first__tail.t1 174.857
+rmesh_equiv_109 vcm_buffer__first__tail.n6 vcm_buffer__first__tail.n7 19.054500000000001
+rmesh_equiv_11 bias.n2 bias.n6 0.27035799999999999
+rmesh_equiv_110 vcm_buffer__first__tail.n8 vcm_buffer__first__tail.t2 174.857
+rmesh_equiv_111 vcm_buffer__first__tail.n9 vcm_buffer__first__tail.t2 174.857
+rmesh_equiv_112 vcm_buffer__pre vcm_buffer__pre.n0 22.8553
+rmesh_equiv_113 vcm_buffer__pre vcm_buffer__pre.n1 3.184003191927899
+rmesh_equiv_114 vcm_buffer__pre vcm_buffer__pre.n13 4.8770699999999998
+rmesh_equiv_115 vcm_buffer__pre vcm_buffer__pre.n2 5.2670000000000003
+rmesh_equiv_116 vcm_buffer__pre vcm_buffer__pre.n3 29.715900000000001
+rmesh_equiv_117 vcm_buffer__pre vcm_buffer__pre.n4 15.6333
+rmesh_equiv_118 vcm_buffer__pre vcm_buffer__pre.n5 15.6333
+rmesh_equiv_119 vcm_buffer__pre vcm_buffer__pre.n7 15.6333
+rmesh_equiv_12 bias.n3 bias.n5 3.0467200000000001
+rmesh_equiv_120 vcm_buffer__pre vcm_buffer__pre.n8 15.6333
+rmesh_equiv_121 vcm_buffer__pre vcm_buffer__pre.t3 1054.8499999999999
+rmesh_equiv_122 vcm_buffer__pre vcm_buffer__pre.t4 0.00141837
+rmesh_equiv_123 vcm_buffer__pre vcm_buffer__pre.t5 0.00141837
+rmesh_equiv_124 vcm_buffer__pre vcm_buffer__pre.t6 0.00141837
+rmesh_equiv_125 vcm_buffer__pre.n0 vcm_buffer__pre.n12 11.4361
+rmesh_equiv_126 vcm_buffer__pre.n0 vcm_buffer__pre.t0 381.113
+rmesh_equiv_127 vcm_buffer__pre.n1 vcm_buffer__pre.n2 2.7844699999999998
+rmesh_equiv_128 vcm_buffer__pre.n10 vcm_buffer__pre.n11 1.24326
+rmesh_equiv_129 vcm_buffer__pre.n10 vcm_buffer__pre.n6 21.732600000000001
+rmesh_equiv_13 bias.n3 bias.t1 181.41
+rmesh_equiv_130 vcm_buffer__pre.n10 vcm_buffer__pre.n9 19.887899999999998
+rmesh_equiv_131 vcm_buffer__pre.n11 vcm_buffer__pre.n12 19.887899999999998
+rmesh_equiv_132 vcm_buffer__pre.n11 vcm_buffer__pre.n3 1.50881
+rmesh_equiv_133 vcm_buffer__pre.n12 vcm_buffer__pre.n13 2.4407800000000002
+rmesh_equiv_134 vcm_buffer__pre.n13 vcm_buffer__pre.t0 387.11000000000001
+rmesh_equiv_135 vcm_buffer__pre.n2 vcm_buffer__pre.n3 2.0861200000000002
+rmesh_equiv_136 vcm_buffer__pre.n4 vcm_buffer__pre.n6 5.2415200000000004
+rmesh_equiv_137 vcm_buffer__pre.n4 vcm_buffer__pre.t2 174.857
+rmesh_equiv_138 vcm_buffer__pre.n5 vcm_buffer__pre.n6 5.2415200000000004
+rmesh_equiv_139 vcm_buffer__pre.n5 vcm_buffer__pre.t2 174.857
+rmesh_equiv_14 bias.n4 bias.n5 14.189499999999999
+rmesh_equiv_140 vcm_buffer__pre.n7 vcm_buffer__pre.n9 5.2415200000000004
+rmesh_equiv_141 vcm_buffer__pre.n7 vcm_buffer__pre.t1 174.857
+rmesh_equiv_142 vcm_buffer__pre.n8 vcm_buffer__pre.n9 5.2415200000000004
+rmesh_equiv_143 vcm_buffer__pre.n8 vcm_buffer__pre.t1 174.857
+rmesh_equiv_144 vcm_raw vcm_raw.n0 17.519693782592512
+rmesh_equiv_145 vcm_raw vcm_raw.n1 4.8158000000000003
+rmesh_equiv_146 vcm_raw vcm_raw.n10 4.8158000000000003
+rmesh_equiv_147 vcm_raw vcm_raw.n11 4.8158000000000003
+rmesh_equiv_148 vcm_raw vcm_raw.n13 4.8158000000000003
+rmesh_equiv_149 vcm_raw vcm_raw.n2 4.8158000000000003
+rmesh_equiv_15 bias.n4 bias.t1 174.91200000000001
+rmesh_equiv_150 vcm_raw vcm_raw.n3 4.8158000000000003
+rmesh_equiv_151 vcm_raw vcm_raw.n4 4.8158000000000003
+rmesh_equiv_152 vcm_raw vcm_raw.n5 4.8158000000000003
+rmesh_equiv_153 vcm_raw vcm_raw.n6 4.8158000000000003
+rmesh_equiv_154 vcm_raw vcm_raw.n7 4.8158000000000003
+rmesh_equiv_155 vcm_raw vcm_raw.n8 4.8158000000000003
+rmesh_equiv_156 vcm_raw vcm_raw.n9 4.8158000000000003
+rmesh_equiv_157 vcm_raw vcm_raw.t10 0.00141837
+rmesh_equiv_158 vcm_raw vcm_raw.t11 0.00141837
+rmesh_equiv_159 vcm_raw vcm_raw.t12 0.00141837
+rmesh_equiv_16 bias.n5 bias.n6 19.4712
+rmesh_equiv_160 vcm_raw vcm_raw.t13 212.21199999999999
+rmesh_equiv_161 vcm_raw vcm_raw.t14 0.00141837
+rmesh_equiv_162 vcm_raw vcm_raw.t15 212.21199999999999
+rmesh_equiv_163 vcm_raw vcm_raw.t2 0.00141837
+rmesh_equiv_164 vcm_raw vcm_raw.t3 0.00141837
+rmesh_equiv_165 vcm_raw vcm_raw.t4 0.00141837
+rmesh_equiv_166 vcm_raw vcm_raw.t5 0.00141837
+rmesh_equiv_167 vcm_raw vcm_raw.t6 0.00141837
+rmesh_equiv_168 vcm_raw vcm_raw.t7 0.00141837
+rmesh_equiv_169 vcm_raw vcm_raw.t8 0.00141837
+rmesh_equiv_17 r_vcm_bottom_r0_n0.t0 r_vcm_bottom_r0_n0.t1 56.58809999999999
+rmesh_equiv_170 vcm_raw vcm_raw.t9 0.00141837
+rmesh_equiv_171 vcm_raw.n0 vcm_raw.n1 1.9329800000000001
+rmesh_equiv_172 vcm_raw.n1 vcm_raw.n2 2.7844699999999998
+rmesh_equiv_173 vcm_raw.n10 vcm_raw.n11 2.7844699999999998
+rmesh_equiv_174 vcm_raw.n10 vcm_raw.n9 2.7844699999999998
+rmesh_equiv_175 vcm_raw.n11 vcm_raw.n13 2.7844699999999998
+rmesh_equiv_176 vcm_raw.n12 vcm_raw.n13 2.98813
+rmesh_equiv_177 vcm_raw.n12 vcm_raw.t0 24.2681
+rmesh_equiv_178 vcm_raw.n12 vcm_raw.t1 24.1739
+rmesh_equiv_179 vcm_raw.n2 vcm_raw.n3 2.7844699999999998
+rmesh_equiv_18 r_vcm_bottom_r0_n1.t0 r_vcm_bottom_r0_n1.t1 57.421400000000006
+rmesh_equiv_180 vcm_raw.n3 vcm_raw.n4 2.7844699999999998
+rmesh_equiv_181 vcm_raw.n4 vcm_raw.n5 2.7844699999999998
+rmesh_equiv_182 vcm_raw.n5 vcm_raw.n6 2.7844699999999998
+rmesh_equiv_183 vcm_raw.n6 vcm_raw.n7 2.7844699999999998
+rmesh_equiv_184 vcm_raw.n7 vcm_raw.n8 2.7844699999999998
+rmesh_equiv_185 vcm_raw.n8 vcm_raw.n9 2.7844699999999998
+rmesh_equiv_186 vgnd vgnd.n1219 4571.5101247230932
+rmesh_equiv_187 vgnd vgnd.n1221 634.0524424236072
+rmesh_equiv_188 vgnd vgnd.n1230 82.646205564866577
+rmesh_equiv_189 vgnd vgnd.n1234 53.026217235149495
+rmesh_equiv_19 r_vcm_top_r0_n0.t0 r_vcm_top_r0_n0.t1 45.108199999999997
+rmesh_equiv_190 vgnd vgnd.n1797 207.94647832059192
+rmesh_equiv_191 vgnd vgnd.n304 340.35060791231859
+rmesh_equiv_192 vgnd vgnd.n306 462.34502620044407
+rmesh_equiv_193 vgnd vgnd.n588 2424.2850663563167
+rmesh_equiv_194 vgnd vgnd.n599 19631.580270356942
+rmesh_equiv_195 vgnd vgnd.n627 244.12207082854025
+rmesh_equiv_196 vgnd vgnd.n631 3347.276593170428
+rmesh_equiv_197 vgnd vgnd.n633 9676.5824806788187
+rmesh_equiv_198 vgnd vgnd.n635 51.356746910853694
+rmesh_equiv_199 vgnd vgnd.n642 385.8306890602048
+rmesh_equiv_2 bias bias.n3 4.2590000000000003
+rmesh_equiv_20 r_vcm_top_r0_n1.t0 r_vcm_top_r0_n1.t1 55.754800000000003
+rmesh_equiv_200 vgnd vgnd.n743 213.63125769407742
+rmesh_equiv_201 vgnd vgnd.n919 218.23649041153035
+rmesh_equiv_202 vgnd vgnd.t0 121.90244095765388
+rmesh_equiv_203 vgnd vgnd.t1 121.43561378689832
+rmesh_equiv_204 vgnd vgnd.t10 95.240043715455784
+rmesh_equiv_205 vgnd vgnd.t12 97.576742693285055
+rmesh_equiv_206 vgnd vgnd.t13 127.78923485889706
+rmesh_equiv_207 vgnd vgnd.t14 196.3510544354767
+rmesh_equiv_208 vgnd vgnd.t15 122.1563544975611
+rmesh_equiv_209 vgnd vgnd.t16 191.53544925996832
+rmesh_equiv_21 vcm vcm.n0 19.837
+rmesh_equiv_210 vgnd vgnd.t17 313.22659007163793
+rmesh_equiv_211 vgnd vgnd.t19 126.40530926264262
+rmesh_equiv_212 vgnd vgnd.t2 191.53544761403447
+rmesh_equiv_213 vgnd vgnd.t21 71.690990819114646
+rmesh_equiv_214 vgnd vgnd.t22 45.997296875218233
+rmesh_equiv_215 vgnd vgnd.t25 17.539920856023802
+rmesh_equiv_216 vgnd vgnd.t27 34.768774372004756
+rmesh_equiv_217 vgnd vgnd.t28 176.87932918897337
+rmesh_equiv_218 vgnd vgnd.t29 113.48665882332043
+rmesh_equiv_219 vgnd vgnd.t3 121.52458478885323
+rmesh_equiv_22 vcm vcm.n1 4.2590000000000003
+rmesh_equiv_220 vgnd vgnd.t30 22.311324128351949
+rmesh_equiv_221 vgnd vgnd.t4 69.028759678917282
+rmesh_equiv_222 vgnd vgnd.t5 121.42295570838364
+rmesh_equiv_223 vgnd vgnd.t6 121.11143560459257
+rmesh_equiv_224 vgnd vgnd.t7 97.129004878825469
+rmesh_equiv_225 vgnd vgnd.t8 121.64236007280066
+rmesh_equiv_226 vgnd vgnd.t9 120.24245361052856
+rmesh_equiv_227 vgnd.n1219 vgnd.n1221 375.24652218699993
+rmesh_equiv_228 vgnd.n1219 vgnd.n1797 4677259019.1584435
+rmesh_equiv_229 vgnd.n1219 vgnd.n304 17374.87531795038
+rmesh_equiv_23 vcm vcm.n10 20.098610042903541
+rmesh_equiv_230 vgnd.n1219 vgnd.n306 416.73131268920758
+rmesh_equiv_231 vgnd.n1219 vgnd.n919 119263.87390093438
+rmesh_equiv_232 vgnd.n1219 vgnd.t13 74660338.563188285
+rmesh_equiv_233 vgnd.n1219 vgnd.t17 3462.120057881149
+rmesh_equiv_234 vgnd.n1219 vgnd.t3 776813.19657218456
+rmesh_equiv_235 vgnd.n1221 vgnd.n1797 1884129005.4177434
+rmesh_equiv_236 vgnd.n1221 vgnd.n304 6504.9430406514803
+rmesh_equiv_237 vgnd.n1221 vgnd.n306 382.3979727456998
+rmesh_equiv_238 vgnd.n1221 vgnd.n919 2594.1076397784409
+rmesh_equiv_239 vgnd.n1221 vgnd.t13 30075244.681771323
+rmesh_equiv_24 vcm vcm.n4 33.9895
+rmesh_equiv_240 vgnd.n1221 vgnd.t17 330.84343449595139
+rmesh_equiv_241 vgnd.n1221 vgnd.t3 312921.79232705169
+rmesh_equiv_242 vgnd.n1230 vgnd.n1234 28.079669788115055
+rmesh_equiv_243 vgnd.n1230 vgnd.t12 20563.238546005548
+rmesh_equiv_244 vgnd.n1230 vgnd.t20 24.357553201925725
+rmesh_equiv_245 vgnd.n1230 vgnd.t21 22.81232796733023
+rmesh_equiv_246 vgnd.n1230 vgnd.t23 5.95932
+rmesh_equiv_247 vgnd.n1230 vgnd.t24 11.812952532189819
+rmesh_equiv_248 vgnd.n1230 vgnd.t25 87.978088409782984
+rmesh_equiv_249 vgnd.n1230 vgnd.t26 60.096082113188437
+rmesh_equiv_25 vcm vcm.n6 6.9688099999999995
+rmesh_equiv_250 vgnd.n1230 vgnd.t27 44.694536041105202
+rmesh_equiv_251 vgnd.n1230 vgnd.t28 11.657732217514555
+rmesh_equiv_252 vgnd.n1230 vgnd.t7 22904.546798782489
+rmesh_equiv_253 vgnd.n1234 vgnd.t10 25310.549883840889
+rmesh_equiv_254 vgnd.n1234 vgnd.t18 5.95932
+rmesh_equiv_255 vgnd.n1234 vgnd.t20 24.357553201925725
+rmesh_equiv_256 vgnd.n1234 vgnd.t22 22.523342200273412
+rmesh_equiv_257 vgnd.n1234 vgnd.t24 60.096082113188437
+rmesh_equiv_258 vgnd.n1234 vgnd.t26 11.812952532189819
+rmesh_equiv_259 vgnd.n1234 vgnd.t29 11.626833742215398
+rmesh_equiv_26 vcm vcm.n9 36.641300000000001
+rmesh_equiv_260 vgnd.n1234 vgnd.t30 42.498735708849722
+rmesh_equiv_261 vgnd.n1234 vgnd.t4 449.21073922290947
+rmesh_equiv_262 vgnd.n1797 vgnd.n304 8929085069.7392216
+rmesh_equiv_263 vgnd.n1797 vgnd.n306 396547817.55173683
+rmesh_equiv_264 vgnd.n1797 vgnd.t0 7732.9838196471519
+rmesh_equiv_265 vgnd.n1797 vgnd.t1 71237760.350173801
+rmesh_equiv_266 vgnd.n1797 vgnd.t13 616.72557084493224
+rmesh_equiv_267 vgnd.n1797 vgnd.t14 80.568485333356719
+rmesh_equiv_268 vgnd.n1797 vgnd.t15 6832501752.8632402
+rmesh_equiv_269 vgnd.n1797 vgnd.t3 58593.005419214023
+rmesh_equiv_27 vcm vcm.t3 212.21199999999999
+rmesh_equiv_270 vgnd.n1797 vgnd.t5 742213.76382842497
+rmesh_equiv_271 vgnd.n1797 vgnd.t9 632921825944.93018
+rmesh_equiv_272 vgnd.n304 vgnd.n306 393.23718756165084
+rmesh_equiv_273 vgnd.n304 vgnd.n919 57048.748397538897
+rmesh_equiv_274 vgnd.n304 vgnd.t13 142529740.5244379
+rmesh_equiv_275 vgnd.n304 vgnd.t17 1230.0969763418034
+rmesh_equiv_276 vgnd.n304 vgnd.t3 1482969.210616241
+rmesh_equiv_277 vgnd.n306 vgnd.n919 177079.60972600663
+rmesh_equiv_278 vgnd.n306 vgnd.t13 6329859.901629529
+rmesh_equiv_279 vgnd.n306 vgnd.t17 24.735499106449623
+rmesh_equiv_28 vcm vcm.t4 212.21199999999999
+rmesh_equiv_280 vgnd.n306 vgnd.t3 65859.850071231005
+rmesh_equiv_281 vgnd.n588 vgnd.n591 36870.206915880037
+rmesh_equiv_282 vgnd.n588 vgnd.n596 11173.245309151118
+rmesh_equiv_283 vgnd.n588 vgnd.n614 14366.402634930102
+rmesh_equiv_284 vgnd.n588 vgnd.n618 8745.4253067387654
+rmesh_equiv_285 vgnd.n588 vgnd.n623 22049.879582249647
+rmesh_equiv_286 vgnd.n588 vgnd.n625 765.53251583084466
+rmesh_equiv_287 vgnd.n588 vgnd.n627 376.96929454884679
+rmesh_equiv_288 vgnd.n588 vgnd.n631 675.30260888780015
+rmesh_equiv_289 vgnd.n588 vgnd.n633 22499.855453217071
+rmesh_equiv_29 vcm.n0 vcm.n2 14.189499999999999
+rmesh_equiv_290 vgnd.n588 vgnd.n635 98034.100930047367
+rmesh_equiv_291 vgnd.n588 vgnd.n642 6485.0408608297357
+rmesh_equiv_292 vgnd.n588 vgnd.t11 8909.6924593396452
+rmesh_equiv_293 vgnd.n591 vgnd.n596 16857.861329605537
+rmesh_equiv_294 vgnd.n591 vgnd.n599 4722.8111619899537
+rmesh_equiv_295 vgnd.n591 vgnd.n614 5188.2654481749705
+rmesh_equiv_296 vgnd.n591 vgnd.n618 773.54943618508287
+rmesh_equiv_297 vgnd.n591 vgnd.n623 357.95467880612762
+rmesh_equiv_298 vgnd.n591 vgnd.n625 1524.7383058356354
+rmesh_equiv_299 vgnd.n591 vgnd.n627 34447.386852490345
+rmesh_equiv_3 bias bias.n4 19.837
+rmesh_equiv_30 vcm.n0 vcm.t2 174.91200000000001
+rmesh_equiv_300 vgnd.n591 vgnd.n631 7181.8664804807859
+rmesh_equiv_301 vgnd.n591 vgnd.n633 10678.102486853031
+rmesh_equiv_302 vgnd.n591 vgnd.n635 22644.642795916465
+rmesh_equiv_303 vgnd.n591 vgnd.t11 979.49592683769617
+rmesh_equiv_304 vgnd.n596 vgnd.n599 1293.3480619752336
+rmesh_equiv_305 vgnd.n596 vgnd.n614 423.84777783973362
+rmesh_equiv_306 vgnd.n596 vgnd.n618 545.56825289647372
+rmesh_equiv_307 vgnd.n596 vgnd.n623 7270.5544276860801
+rmesh_equiv_308 vgnd.n596 vgnd.n625 16589.717019932497
+rmesh_equiv_309 vgnd.n596 vgnd.n627 1167.3973084086754
+rmesh_equiv_31 vcm.n1 vcm.n2 3.0467200000000001
+rmesh_equiv_310 vgnd.n596 vgnd.t11 8421.2869173765612
+rmesh_equiv_311 vgnd.n599 vgnd.n614 418.81095235442848
+rmesh_equiv_312 vgnd.n599 vgnd.n618 564.64279412857195
+rmesh_equiv_313 vgnd.n599 vgnd.n623 772.78642150706173
+rmesh_equiv_314 vgnd.n599 vgnd.n642 202139.53225468544
+rmesh_equiv_315 vgnd.n599 vgnd.n743 1140404.0188567599
+rmesh_equiv_316 vgnd.n599 vgnd.t19 15316.752702498803
+rmesh_equiv_317 vgnd.n599 vgnd.t6 9829.1286559348791
+rmesh_equiv_318 vgnd.n599 vgnd.t8 26786271.124377251
+rmesh_equiv_319 vgnd.n614 vgnd.n618 1688.7542589498369
+rmesh_equiv_32 vcm.n1 vcm.t2 181.41
+rmesh_equiv_320 vgnd.n614 vgnd.n623 578.08879387674335
+rmesh_equiv_321 vgnd.n614 vgnd.n625 21330.826247294695
+rmesh_equiv_322 vgnd.n614 vgnd.n627 110.69741612476514
+rmesh_equiv_323 vgnd.n614 vgnd.t11 10827.973002634515
+rmesh_equiv_324 vgnd.n618 vgnd.n623 1242.4574872579303
+rmesh_equiv_325 vgnd.n618 vgnd.n625 12984.958894523295
+rmesh_equiv_326 vgnd.n618 vgnd.n627 2190.3633693131251
+rmesh_equiv_327 vgnd.n618 vgnd.t11 192.0378029286808
+rmesh_equiv_328 vgnd.n623 vgnd.n625 1360.2943953347958
+rmesh_equiv_329 vgnd.n623 vgnd.n631 1660.4328877655012
+rmesh_equiv_33 vcm.n10 vcm.n9 0.61541699999999999
+rmesh_equiv_330 vgnd.n623 vgnd.n633 756.39626287053704
+rmesh_equiv_331 vgnd.n623 vgnd.n635 175.54023166265264
+rmesh_equiv_332 vgnd.n625 vgnd.n627 2032.233396872499
+rmesh_equiv_333 vgnd.n625 vgnd.n631 262.70246824174558
+rmesh_equiv_334 vgnd.n625 vgnd.n633 6617.8115058109506
+rmesh_equiv_335 vgnd.n625 vgnd.n635 14034.139288726758
+rmesh_equiv_336 vgnd.n625 vgnd.t11 57.955579571446137
+rmesh_equiv_337 vgnd.n627 vgnd.n631 1803.4281700240495
+rmesh_equiv_338 vgnd.n627 vgnd.n633 23582.568770369326
+rmesh_equiv_339 vgnd.n627 vgnd.n635 105218.46212865133
+rmesh_equiv_34 vcm.n2 vcm.n3 20.7212
+rmesh_equiv_340 vgnd.n627 vgnd.n642 2285.9076179467384
+rmesh_equiv_341 vgnd.n627 vgnd.t11 3427.697533530898
+rmesh_equiv_342 vgnd.n631 vgnd.n633 627.0095784982999
+rmesh_equiv_343 vgnd.n631 vgnd.n635 5719.3005474907086
+rmesh_equiv_344 vgnd.n631 vgnd.n642 367.05457163549693
+rmesh_equiv_345 vgnd.n633 vgnd.n635 803.60933813001327
+rmesh_equiv_346 vgnd.n633 vgnd.n642 1135.9697952690883
+rmesh_equiv_347 vgnd.n635 vgnd.n642 878.51314191516531
+rmesh_equiv_348 vgnd.n642 vgnd.n743 1111866.5555677519
+rmesh_equiv_349 vgnd.n642 vgnd.t19 14933.466375261405
+rmesh_equiv_35 vcm.n3 vcm.n8 0.61972499999999997
+rmesh_equiv_350 vgnd.n642 vgnd.t6 178546.8325045146
+rmesh_equiv_351 vgnd.n642 vgnd.t8 486574551.14059776
+rmesh_equiv_352 vgnd.n743 vgnd.n919 85719.48617680122
+rmesh_equiv_353 vgnd.n743 vgnd.t16 78.848622322870426
+rmesh_equiv_354 vgnd.n743 vgnd.t19 603.63927313029274
+rmesh_equiv_355 vgnd.n743 vgnd.t2 9522.6910368059434
+rmesh_equiv_356 vgnd.n743 vgnd.t6 1007301.8526912795
+rmesh_equiv_357 vgnd.n743 vgnd.t8 2745091805.6692991
+rmesh_equiv_358 vgnd.n919 vgnd.t16 9522.6912765040706
+rmesh_equiv_359 vgnd.n919 vgnd.t17 736.13909350931965
+rmesh_equiv_36 vcm.n3 vcm.t0 41.836199999999998
+rmesh_equiv_360 vgnd.n919 vgnd.t2 78.848624138681544
+rmesh_equiv_361 vgnd.t0 vgnd.t1 90566.245818206735
+rmesh_equiv_362 vgnd.t0 vgnd.t14 1025.3610014701399
+rmesh_equiv_363 vgnd.t0 vgnd.t15 8686320.7133607063
+rmesh_equiv_364 vgnd.t0 vgnd.t5 943.59387288594917
+rmesh_equiv_365 vgnd.t0 vgnd.t9 804648453.15840924
+rmesh_equiv_366 vgnd.t1 vgnd.t14 9445826.2164677586
+rmesh_equiv_367 vgnd.t1 vgnd.t15 942.90577491865747
+rmesh_equiv_368 vgnd.t1 vgnd.t5 943.58429483542966
+rmesh_equiv_369 vgnd.t1 vgnd.t9 87345.114036077051
+rmesh_equiv_37 vcm.n4 vcm.n5 13.2728
+rmesh_equiv_370 vgnd.t10 vgnd.t22 21955.495560228748
+rmesh_equiv_371 vgnd.t10 vgnd.t29 54169.614373209508
+rmesh_equiv_372 vgnd.t10 vgnd.t30 10649.673157354027
+rmesh_equiv_373 vgnd.t10 vgnd.t4 32948.90634051797
+rmesh_equiv_374 vgnd.t12 vgnd.t21 17837.466774634839
+rmesh_equiv_375 vgnd.t12 vgnd.t25 4364.1153780180512
+rmesh_equiv_376 vgnd.t12 vgnd.t27 8650.8339551369736
+rmesh_equiv_377 vgnd.t12 vgnd.t28 44009.423241041128
+rmesh_equiv_378 vgnd.t12 vgnd.t7 192664.15696646081
+rmesh_equiv_379 vgnd.t13 vgnd.t3 935.28573126154129
+rmesh_equiv_38 vcm.n4 vcm.n7 0.51338700000000004
+rmesh_equiv_380 vgnd.t14 vgnd.t15 905960881.75728357
+rmesh_equiv_381 vgnd.t14 vgnd.t5 98414.411038915307
+rmesh_equiv_382 vgnd.t14 vgnd.t9 83922761567.709503
+rmesh_equiv_383 vgnd.t15 vgnd.t5 90500.337415809423
+rmesh_equiv_384 vgnd.t15 vgnd.t9 907.67313392746905
+rmesh_equiv_385 vgnd.t16 vgnd.t2 1057.8883624897087
+rmesh_equiv_386 vgnd.t19 vgnd.t6 13529.059104779521
+rmesh_equiv_387 vgnd.t19 vgnd.t8 36869295.125111021
+rmesh_equiv_388 vgnd.t20 vgnd.t24 52.130011796607612
+rmesh_equiv_389 vgnd.t20 vgnd.t26 52.130011796607612
+rmesh_equiv_39 vcm.n5 vcm.n6 13.200100000000001
+rmesh_equiv_390 vgnd.t21 vgnd.t25 76.31610290346174
+rmesh_equiv_391 vgnd.t21 vgnd.t27 38.77002641667054
+rmesh_equiv_392 vgnd.t21 vgnd.t28 48.822922244545772
+rmesh_equiv_393 vgnd.t21 vgnd.t7 19868.421581420349
+rmesh_equiv_394 vgnd.t22 vgnd.t29 48.204435185487128
+rmesh_equiv_395 vgnd.t22 vgnd.t30 36.865291645310933
+rmesh_equiv_396 vgnd.t22 vgnd.t4 389.66535440276266
+rmesh_equiv_397 vgnd.t24 vgnd.t26 128.61757679514096
+rmesh_equiv_398 vgnd.t25 vgnd.t27 37.01186623987472
+rmesh_equiv_399 vgnd.t25 vgnd.t28 188.29061969501845
+rmesh_equiv_4 bias bias.n6 5.9504599999999988
+rmesh_equiv_40 vcm.n5 vcm.t1 0.71462499999999995
+rmesh_equiv_400 vgnd.t25 vgnd.t7 4861.0088672301017
+rmesh_equiv_401 vgnd.t27 vgnd.t28 95.655202792804019
+rmesh_equiv_402 vgnd.t27 vgnd.t7 9635.8086169467315
+rmesh_equiv_403 vgnd.t28 vgnd.t7 49020.288898397353
+rmesh_equiv_404 vgnd.t29 vgnd.t30 90.955753046167615
+rmesh_equiv_405 vgnd.t29 vgnd.t4 961.40038946940308
+rmesh_equiv_406 vgnd.t30 vgnd.t4 189.01002046390198
+rmesh_equiv_407 vgnd.t5 vgnd.t9 8383406.3828586172
+rmesh_equiv_408 vgnd.t6 vgnd.t8 14349.080698227604
+rmesh_equiv_41 vcm.n6 vcm.n7 0.27270899999999998
+rmesh_equiv_42 vcm.n7 vcm.n8 20.7212
+rmesh_equiv_43 vcm.n8 vcm.n9 2.8267699999999998
+rmesh_equiv_44 vcm_buffer__comp.n0 vcm_buffer__comp.n1 2.7844699999999998
+rmesh_equiv_45 vcm_buffer__comp.n0 vcm_buffer__comp.t1 5.7337199999999999
+rmesh_equiv_46 vcm_buffer__comp.n0 vcm_buffer__comp.t3 8.5176800000000004
+rmesh_equiv_47 vcm_buffer__comp.n1 vcm_buffer__comp.t0 30.1599
+rmesh_equiv_48 vcm_buffer__comp.n1 vcm_buffer__comp.t2 5.7337199999999999
+rmesh_equiv_49 vcm_buffer__first__mir vcm_buffer__first__mir.n0 15.6333
+rmesh_equiv_5 bias bias.t0 139.911
+rmesh_equiv_50 vcm_buffer__first__mir vcm_buffer__first__mir.n1 16.123468205997217
+rmesh_equiv_51 vcm_buffer__first__mir vcm_buffer__first__mir.n11 15.6333
+rmesh_equiv_52 vcm_buffer__first__mir vcm_buffer__first__mir.n2 4.8770699999999998
+rmesh_equiv_53 vcm_buffer__first__mir vcm_buffer__first__mir.n3 22.8553
+rmesh_equiv_54 vcm_buffer__first__mir vcm_buffer__first__mir.n6 15.6333
+rmesh_equiv_55 vcm_buffer__first__mir vcm_buffer__first__mir.n7 15.6333
+rmesh_equiv_56 vcm_buffer__first__mir vcm_buffer__first__mir.t2 572.84699999999998
+rmesh_equiv_57 vcm_buffer__first__mir vcm_buffer__first__mir.t4 572.84699999999998
+rmesh_equiv_58 vcm_buffer__first__mir.n0 vcm_buffer__first__mir.n10 5.2415200000000004
+rmesh_equiv_59 vcm_buffer__first__mir.n0 vcm_buffer__first__mir.t0 174.857
+rmesh_equiv_6 bias bias.t3 139.911
+rmesh_equiv_60 vcm_buffer__first__mir.n1 vcm_buffer__first__mir.n5 0.27035799999999999
+rmesh_equiv_61 vcm_buffer__first__mir.n10 vcm_buffer__first__mir.n11 5.2415200000000004
+rmesh_equiv_62 vcm_buffer__first__mir.n10 vcm_buffer__first__mir.n9 19.252800000000001
+rmesh_equiv_63 vcm_buffer__first__mir.n11 vcm_buffer__first__mir.t0 174.857
+rmesh_equiv_64 vcm_buffer__first__mir.n2 vcm_buffer__first__mir.n4 2.4407800000000002
+rmesh_equiv_65 vcm_buffer__first__mir.n2 vcm_buffer__first__mir.t3 387.11000000000001
+rmesh_equiv_66 vcm_buffer__first__mir.n3 vcm_buffer__first__mir.n4 11.4361
+rmesh_equiv_67 vcm_buffer__first__mir.n3 vcm_buffer__first__mir.t3 381.113
+rmesh_equiv_68 vcm_buffer__first__mir.n4 vcm_buffer__first__mir.n5 18.637899999999998
+rmesh_equiv_69 vcm_buffer__first__mir.n5 vcm_buffer__first__mir.n9 1.23464
+rmesh_equiv_7 bias bias.t4 139.911
+rmesh_equiv_70 vcm_buffer__first__mir.n6 vcm_buffer__first__mir.n8 5.2415200000000004
+rmesh_equiv_71 vcm_buffer__first__mir.n6 vcm_buffer__first__mir.t1 174.857
+rmesh_equiv_72 vcm_buffer__first__mir.n7 vcm_buffer__first__mir.n8 5.2415200000000004
+rmesh_equiv_73 vcm_buffer__first__mir.n7 vcm_buffer__first__mir.t1 174.857
+rmesh_equiv_74 vcm_buffer__first__mir.n8 vcm_buffer__first__mir.n9 18.637899999999998
+rmesh_equiv_75 vcm_buffer__first__tail vcm_buffer__first__tail.n0 19.837
+rmesh_equiv_76 vcm_buffer__first__tail vcm_buffer__first__tail.n1 15.6333
+rmesh_equiv_77 vcm_buffer__first__tail vcm_buffer__first__tail.n12 15.6333
+rmesh_equiv_78 vcm_buffer__first__tail vcm_buffer__first__tail.n13 15.6333
+rmesh_equiv_79 vcm_buffer__first__tail vcm_buffer__first__tail.n17 4.2590000000000003
+rmesh_equiv_8 bias.n0 bias.n1 41.557099999999998
+rmesh_equiv_80 vcm_buffer__first__tail vcm_buffer__first__tail.n2 15.6333
+rmesh_equiv_81 vcm_buffer__first__tail vcm_buffer__first__tail.n4 15.6333
+rmesh_equiv_82 vcm_buffer__first__tail vcm_buffer__first__tail.n5 15.6333
+rmesh_equiv_83 vcm_buffer__first__tail vcm_buffer__first__tail.n8 15.6333
+rmesh_equiv_84 vcm_buffer__first__tail vcm_buffer__first__tail.n9 15.6333
+rmesh_equiv_85 vcm_buffer__first__tail.n0 vcm_buffer__first__tail.n16 14.189499999999999
+rmesh_equiv_86 vcm_buffer__first__tail.n0 vcm_buffer__first__tail.t0 174.91200000000001
+rmesh_equiv_87 vcm_buffer__first__tail.n1 vcm_buffer__first__tail.n3 5.2415200000000004
+rmesh_equiv_88 vcm_buffer__first__tail.n1 vcm_buffer__first__tail.t3 174.857
+rmesh_equiv_89 vcm_buffer__first__tail.n10 vcm_buffer__first__tail.n11 19.054500000000001
+rmesh_equiv_9 bias.n1 bias.n2 0.53786699999999998
+rmesh_equiv_90 vcm_buffer__first__tail.n10 vcm_buffer__first__tail.n8 5.2415200000000004
+rmesh_equiv_91 vcm_buffer__first__tail.n10 vcm_buffer__first__tail.n9 5.2415200000000004
+rmesh_equiv_92 vcm_buffer__first__tail.n11 vcm_buffer__first__tail.n15 0.61541699999999999
+rmesh_equiv_93 vcm_buffer__first__tail.n11 vcm_buffer__first__tail.n7 0.61541699999999999
+rmesh_equiv_94 vcm_buffer__first__tail.n12 vcm_buffer__first__tail.n14 5.2415200000000004
+rmesh_equiv_95 vcm_buffer__first__tail.n12 vcm_buffer__first__tail.t4 174.857
+rmesh_equiv_96 vcm_buffer__first__tail.n13 vcm_buffer__first__tail.n14 5.2415200000000004
+rmesh_equiv_97 vcm_buffer__first__tail.n13 vcm_buffer__first__tail.t4 174.857
+rmesh_equiv_98 vcm_buffer__first__tail.n14 vcm_buffer__first__tail.n15 19.054500000000001
+rmesh_equiv_99 vcm_buffer__first__tail.n15 vcm_buffer__first__tail.n16 20.7285
+.ends

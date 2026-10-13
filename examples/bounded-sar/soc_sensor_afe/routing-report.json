@@ -1,0 +1,935 @@
+{
+  "algorithm": "bounded-rows-m3-m4-v1",
+  "primitive_count": 166,
+  "row_count": 4,
+  "inter_row_nets": 62,
+  "floorplan": {
+    "policy": {
+      "schema_version": 1,
+      "width_um": 1000,
+      "height_um": 1000,
+      "max_area_um2": 1000000,
+      "edge_um": 10,
+      "origin_um": [
+        0.0,
+        0.0
+      ],
+      "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+    },
+    "fits": true,
+    "bbox_dbu": [
+      "10300",
+      "10000",
+      "916620",
+      "305960"
+    ],
+    "used_width_um": 906.32,
+    "used_height_um": 295.96,
+    "used_area_um2": 268234.4672,
+    "chip_area_um2": 1000000,
+    "minimum_envelope_um": [
+      926.32,
+      315.96
+    ],
+    "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+  },
+  "rows": [
+    {
+      "row": 0,
+      "translation_dbu": [
+        91400,
+        31095
+      ],
+      "algorithm": "interval-heap-v2",
+      "matching_groups": [
+        {
+          "centroids_dbu": {
+            "A": [
+              594650.0,
+              33870.0
+            ],
+            "B": [
+              594650.0,
+              33870.0
+            ]
+          },
+          "equal_unit_geometry": true,
+          "group": "BIAS_SOURCE.VCM_BUFFER.FIRST::INPUT_PAIR_ABBA",
+          "max_centroid_delta_dbu": 0.0,
+          "nominal_centroid_match": true,
+          "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+          "units": [
+            {
+              "device": "BIAS_SOURCE_VCM_BUFFER_FIRST_N_INP0",
+              "gate_center_dbu": [
+                582875,
+                33870
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            },
+            {
+              "device": "BIAS_SOURCE_VCM_BUFFER_FIRST_N_INN0",
+              "gate_center_dbu": [
+                590725,
+                33870
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "BIAS_SOURCE_VCM_BUFFER_FIRST_N_INN1",
+              "gate_center_dbu": [
+                598575,
+                33870
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "BIAS_SOURCE_VCM_BUFFER_FIRST_N_INP1",
+              "gate_center_dbu": [
+                606425,
+                33870
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            }
+          ]
+        },
+        {
+          "centroids_dbu": {
+            "A": [
+              780210.0,
+              33870.0
+            ],
+            "B": [
+              780210.0,
+              33870.0
+            ]
+          },
+          "equal_unit_geometry": true,
+          "group": "PGA.GAIN2.AMP.FIRST::INPUT_PAIR_ABBA",
+          "max_centroid_delta_dbu": 0.0,
+          "nominal_centroid_match": true,
+          "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+          "units": [
+            {
+              "device": "PGA_GAIN2_AMP_FIRST_N_INP0",
+              "gate_center_dbu": [
+                768435,
+                33870
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            },
+            {
+              "device": "PGA_GAIN2_AMP_FIRST_N_INN0",
+              "gate_center_dbu": [
+                776285,
+                33870
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "PGA_GAIN2_AMP_FIRST_N_INN1",
+              "gate_center_dbu": [
+                784135,
+                33870
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "PGA_GAIN2_AMP_FIRST_N_INP1",
+              "gate_center_dbu": [
+                791985,
+                33870
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            }
+          ]
+        }
+      ],
+      "primitive_count": 43,
+      "scope": "single-row PCell reference; no full-chip density/antenna/foundry signoff",
+      "signal_track_count": 18,
+      "track_clearance_dbu": 800,
+      "tracks": {
+        "BIAS": 15,
+        "BIAS_SOURCE_R_VCM_BOTTOM_R0_N0": 2,
+        "BIAS_SOURCE_R_VCM_BOTTOM_R0_N1": 3,
+        "BIAS_SOURCE_R_VCM_TOP_R0_N0": 0,
+        "BIAS_SOURCE_R_VCM_TOP_R0_N1": 1,
+        "BIAS_SOURCE__VCM_BUFFER__COMP": 8,
+        "BIAS_SOURCE__VCM_BUFFER__FIRST__MIR": 5,
+        "BIAS_SOURCE__VCM_BUFFER__FIRST__TAIL": 6,
+        "BIAS_SOURCE__VCM_BUFFER__PRE": 7,
+        "BIAS_SOURCE__VCM_RAW": 4,
+        "PGA__GAIN2__AMP__COMP": 17,
+        "PGA__GAIN2__AMP__FIRST__MIR": 12,
+        "PGA__GAIN2__AMP__FIRST__TAIL": 13,
+        "PGA__GAIN2__AMP__PRE": 16,
+        "PGA__GAIN2__FB": 10,
+        "PGA__V2": 14,
+        "VCM": 9,
+        "VIN": 11
+      }
+    },
+    {
+      "row": 1,
+      "translation_dbu": [
+        91400,
+        105685
+      ],
+      "algorithm": "interval-heap-v2",
+      "matching_groups": [
+        {
+          "centroids_dbu": {
+            "A": [
+              199560.0,
+              108460.0
+            ],
+            "B": [
+              199560.0,
+              108460.0
+            ]
+          },
+          "equal_unit_geometry": true,
+          "group": "PGA.GAIN8.AMP.FIRST::INPUT_PAIR_ABBA",
+          "max_centroid_delta_dbu": 0.0,
+          "nominal_centroid_match": true,
+          "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+          "units": [
+            {
+              "device": "PGA_GAIN8_AMP_FIRST_N_INP0",
+              "gate_center_dbu": [
+                187785,
+                108460
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            },
+            {
+              "device": "PGA_GAIN8_AMP_FIRST_N_INN0",
+              "gate_center_dbu": [
+                195635,
+                108460
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "PGA_GAIN8_AMP_FIRST_N_INN1",
+              "gate_center_dbu": [
+                203485,
+                108460
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "PGA_GAIN8_AMP_FIRST_N_INP1",
+              "gate_center_dbu": [
+                211335,
+                108460
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            }
+          ]
+        },
+        {
+          "centroids_dbu": {
+            "A": [
+              451330.0,
+              108460.0
+            ],
+            "B": [
+              451330.0,
+              108460.0
+            ]
+          },
+          "equal_unit_geometry": true,
+          "group": "PGA.OUTPUT_BUFFER.FIRST::INPUT_PAIR_ABBA",
+          "max_centroid_delta_dbu": 0.0,
+          "nominal_centroid_match": true,
+          "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+          "units": [
+            {
+              "device": "PGA_OUTPUT_BUFFER_FIRST_N_INP0",
+              "gate_center_dbu": [
+                439555,
+                108460
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            },
+            {
+              "device": "PGA_OUTPUT_BUFFER_FIRST_N_INN0",
+              "gate_center_dbu": [
+                447405,
+                108460
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "PGA_OUTPUT_BUFFER_FIRST_N_INN1",
+              "gate_center_dbu": [
+                455255,
+                108460
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "PGA_OUTPUT_BUFFER_FIRST_N_INP1",
+              "gate_center_dbu": [
+                463105,
+                108460
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            }
+          ]
+        }
+      ],
+      "primitive_count": 48,
+      "scope": "single-row PCell reference; no full-chip density/antenna/foundry signoff",
+      "signal_track_count": 23,
+      "track_clearance_dbu": 800,
+      "tracks": {
+        "AMPLIFIED": 21,
+        "BIAS": 18,
+        "FILTER__FILTER0": 22,
+        "GAIN": 12,
+        "PGA_GAIN8_R_FEEDBACK_R0_N0": 9,
+        "PGA__GAIN2__AMP__COMP": 1,
+        "PGA__GAIN2__AMP__PRE": 0,
+        "PGA__GAIN2__FB": 2,
+        "PGA__GAIN8__AMP__COMP": 7,
+        "PGA__GAIN8__AMP__FIRST__MIR": 4,
+        "PGA__GAIN8__AMP__FIRST__TAIL": 5,
+        "PGA__GAIN8__AMP__PRE": 6,
+        "PGA__GAIN8__FB": 10,
+        "PGA__GAINB": 14,
+        "PGA__OUTPUT_BUFFER__COMP": 20,
+        "PGA__OUTPUT_BUFFER__FIRST__MIR": 16,
+        "PGA__OUTPUT_BUFFER__FIRST__TAIL": 17,
+        "PGA__OUTPUT_BUFFER__PRE": 19,
+        "PGA__SELECTED": 15,
+        "PGA__V2": 11,
+        "PGA__V8": 13,
+        "VCM": 8,
+        "VIN": 3
+      }
+    },
+    {
+      "row": 2,
+      "translation_dbu": [
+        91400,
+        186275
+      ],
+      "algorithm": "interval-heap-v2",
+      "matching_groups": [
+        {
+          "centroids_dbu": {
+            "A": [
+              282300.0,
+              189050.0
+            ],
+            "B": [
+              282300.0,
+              189050.0
+            ]
+          },
+          "equal_unit_geometry": true,
+          "group": "FILTER.BUFFER0.FIRST::INPUT_PAIR_ABBA",
+          "max_centroid_delta_dbu": 0.0,
+          "nominal_centroid_match": true,
+          "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+          "units": [
+            {
+              "device": "FILTER_BUFFER0_FIRST_N_INP0",
+              "gate_center_dbu": [
+                270525,
+                189050
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            },
+            {
+              "device": "FILTER_BUFFER0_FIRST_N_INN0",
+              "gate_center_dbu": [
+                278375,
+                189050
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "FILTER_BUFFER0_FIRST_N_INN1",
+              "gate_center_dbu": [
+                286225,
+                189050
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "FILTER_BUFFER0_FIRST_N_INP1",
+              "gate_center_dbu": [
+                294075,
+                189050
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            }
+          ]
+        },
+        {
+          "centroids_dbu": {
+            "A": [
+              902300.0,
+              189050.0
+            ],
+            "B": [
+              902300.0,
+              189050.0
+            ]
+          },
+          "equal_unit_geometry": true,
+          "group": "FILTER.BUFFER1.FIRST::INPUT_PAIR_ABBA",
+          "max_centroid_delta_dbu": 0.0,
+          "nominal_centroid_match": true,
+          "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+          "units": [
+            {
+              "device": "FILTER_BUFFER1_FIRST_N_INP0",
+              "gate_center_dbu": [
+                890525,
+                189050
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            },
+            {
+              "device": "FILTER_BUFFER1_FIRST_N_INN0",
+              "gate_center_dbu": [
+                898375,
+                189050
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "FILTER_BUFFER1_FIRST_N_INN1",
+              "gate_center_dbu": [
+                906225,
+                189050
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "FILTER_BUFFER1_FIRST_N_INP1",
+              "gate_center_dbu": [
+                914075,
+                189050
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            }
+          ]
+        }
+      ],
+      "primitive_count": 35,
+      "scope": "single-row PCell reference; no full-chip density/antenna/foundry signoff",
+      "signal_track_count": 12,
+      "track_clearance_dbu": 800,
+      "tracks": {
+        "BIAS": 3,
+        "FILTER__BUFFER0__COMP": 5,
+        "FILTER__BUFFER0__FIRST__MIR": 1,
+        "FILTER__BUFFER0__FIRST__TAIL": 2,
+        "FILTER__BUFFER0__PRE": 4,
+        "FILTER__BUFFER1__FIRST__MIR": 7,
+        "FILTER__BUFFER1__FIRST__TAIL": 10,
+        "FILTER__BUFFER1__PRE": 9,
+        "FILTER__FILTER0": 0,
+        "FILTER__FILTER1": 11,
+        "FILTER__MID": 6,
+        "OUT": 8
+      }
+    },
+    {
+      "row": 3,
+      "translation_dbu": [
+        91400,
+        253665
+      ],
+      "algorithm": "interval-heap-v2",
+      "matching_groups": [],
+      "primitive_count": 40,
+      "scope": "single-row PCell reference; no full-chip density/antenna/foundry signoff",
+      "signal_track_count": 22,
+      "track_clearance_dbu": 800,
+      "tracks": {
+        "BIAS": 8,
+        "CLK": 15,
+        "CMP": 10,
+        "COMPARATOR__PRE": 9,
+        "COMPARATOR__PREAMP__MIR": 6,
+        "COMPARATOR__PREAMP__TAIL": 7,
+        "D": 13,
+        "DATA": 20,
+        "FILTER__BUFFER1__COMP": 3,
+        "FILTER__BUFFER1__FIRST__MIR": 0,
+        "FILTER__BUFFER1__FIRST__TAIL": 1,
+        "FILTER__BUFFER1__PRE": 2,
+        "OUT": 4,
+        "RESET": 11,
+        "RESET_MUX__SB": 12,
+        "SAMPLE__CLKB": 14,
+        "SAMPLE__M": 16,
+        "SAMPLE__MB": 18,
+        "SAMPLE__MF": 17,
+        "SAMPLE__T": 19,
+        "SAMPLE__TB": 21,
+        "VCM": 5
+      }
+    }
+  ],
+  "matching_groups": [
+    {
+      "centroids_dbu": {
+        "A": [
+          594650.0,
+          33870.0
+        ],
+        "B": [
+          594650.0,
+          33870.0
+        ]
+      },
+      "equal_unit_geometry": true,
+      "group": "BIAS_SOURCE.VCM_BUFFER.FIRST::INPUT_PAIR_ABBA",
+      "max_centroid_delta_dbu": 0.0,
+      "nominal_centroid_match": true,
+      "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+      "units": [
+        {
+          "device": "BIAS_SOURCE_VCM_BUFFER_FIRST_N_INP0",
+          "gate_center_dbu": [
+            582875,
+            33870
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        },
+        {
+          "device": "BIAS_SOURCE_VCM_BUFFER_FIRST_N_INN0",
+          "gate_center_dbu": [
+            590725,
+            33870
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "BIAS_SOURCE_VCM_BUFFER_FIRST_N_INN1",
+          "gate_center_dbu": [
+            598575,
+            33870
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "BIAS_SOURCE_VCM_BUFFER_FIRST_N_INP1",
+          "gate_center_dbu": [
+            606425,
+            33870
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        }
+      ]
+    },
+    {
+      "centroids_dbu": {
+        "A": [
+          780210.0,
+          33870.0
+        ],
+        "B": [
+          780210.0,
+          33870.0
+        ]
+      },
+      "equal_unit_geometry": true,
+      "group": "PGA.GAIN2.AMP.FIRST::INPUT_PAIR_ABBA",
+      "max_centroid_delta_dbu": 0.0,
+      "nominal_centroid_match": true,
+      "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+      "units": [
+        {
+          "device": "PGA_GAIN2_AMP_FIRST_N_INP0",
+          "gate_center_dbu": [
+            768435,
+            33870
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        },
+        {
+          "device": "PGA_GAIN2_AMP_FIRST_N_INN0",
+          "gate_center_dbu": [
+            776285,
+            33870
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "PGA_GAIN2_AMP_FIRST_N_INN1",
+          "gate_center_dbu": [
+            784135,
+            33870
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "PGA_GAIN2_AMP_FIRST_N_INP1",
+          "gate_center_dbu": [
+            791985,
+            33870
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        }
+      ]
+    },
+    {
+      "centroids_dbu": {
+        "A": [
+          199560.0,
+          108460.0
+        ],
+        "B": [
+          199560.0,
+          108460.0
+        ]
+      },
+      "equal_unit_geometry": true,
+      "group": "PGA.GAIN8.AMP.FIRST::INPUT_PAIR_ABBA",
+      "max_centroid_delta_dbu": 0.0,
+      "nominal_centroid_match": true,
+      "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+      "units": [
+        {
+          "device": "PGA_GAIN8_AMP_FIRST_N_INP0",
+          "gate_center_dbu": [
+            187785,
+            108460
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        },
+        {
+          "device": "PGA_GAIN8_AMP_FIRST_N_INN0",
+          "gate_center_dbu": [
+            195635,
+            108460
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "PGA_GAIN8_AMP_FIRST_N_INN1",
+          "gate_center_dbu": [
+            203485,
+            108460
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "PGA_GAIN8_AMP_FIRST_N_INP1",
+          "gate_center_dbu": [
+            211335,
+            108460
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        }
+      ]
+    },
+    {
+      "centroids_dbu": {
+        "A": [
+          451330.0,
+          108460.0
+        ],
+        "B": [
+          451330.0,
+          108460.0
+        ]
+      },
+      "equal_unit_geometry": true,
+      "group": "PGA.OUTPUT_BUFFER.FIRST::INPUT_PAIR_ABBA",
+      "max_centroid_delta_dbu": 0.0,
+      "nominal_centroid_match": true,
+      "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+      "units": [
+        {
+          "device": "PGA_OUTPUT_BUFFER_FIRST_N_INP0",
+          "gate_center_dbu": [
+            439555,
+            108460
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        },
+        {
+          "device": "PGA_OUTPUT_BUFFER_FIRST_N_INN0",
+          "gate_center_dbu": [
+            447405,
+            108460
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "PGA_OUTPUT_BUFFER_FIRST_N_INN1",
+          "gate_center_dbu": [
+            455255,
+            108460
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "PGA_OUTPUT_BUFFER_FIRST_N_INP1",
+          "gate_center_dbu": [
+            463105,
+            108460
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        }
+      ]
+    },
+    {
+      "centroids_dbu": {
+        "A": [
+          282300.0,
+          189050.0
+        ],
+        "B": [
+          282300.0,
+          189050.0
+        ]
+      },
+      "equal_unit_geometry": true,
+      "group": "FILTER.BUFFER0.FIRST::INPUT_PAIR_ABBA",
+      "max_centroid_delta_dbu": 0.0,
+      "nominal_centroid_match": true,
+      "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+      "units": [
+        {
+          "device": "FILTER_BUFFER0_FIRST_N_INP0",
+          "gate_center_dbu": [
+            270525,
+            189050
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        },
+        {
+          "device": "FILTER_BUFFER0_FIRST_N_INN0",
+          "gate_center_dbu": [
+            278375,
+            189050
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "FILTER_BUFFER0_FIRST_N_INN1",
+          "gate_center_dbu": [
+            286225,
+            189050
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "FILTER_BUFFER0_FIRST_N_INP1",
+          "gate_center_dbu": [
+            294075,
+            189050
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        }
+      ]
+    },
+    {
+      "centroids_dbu": {
+        "A": [
+          902300.0,
+          189050.0
+        ],
+        "B": [
+          902300.0,
+          189050.0
+        ]
+      },
+      "equal_unit_geometry": true,
+      "group": "FILTER.BUFFER1.FIRST::INPUT_PAIR_ABBA",
+      "max_centroid_delta_dbu": 0.0,
+      "nominal_centroid_match": true,
+      "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+      "units": [
+        {
+          "device": "FILTER_BUFFER1_FIRST_N_INP0",
+          "gate_center_dbu": [
+            890525,
+            189050
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        },
+        {
+          "device": "FILTER_BUFFER1_FIRST_N_INN0",
+          "gate_center_dbu": [
+            898375,
+            189050
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "FILTER_BUFFER1_FIRST_N_INN1",
+          "gate_center_dbu": [
+            906225,
+            189050
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "FILTER_BUFFER1_FIRST_N_INP1",
+          "gate_center_dbu": [
+            914075,
+            189050
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        }
+      ]
+    }
+  ],
+  "scope": "PCell reference with bounded envelope; native DRC/LVS/PEX remain independent gates."
+}

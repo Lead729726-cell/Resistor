@@ -1,0 +1,57 @@
+Resistor analog SoC soc_tia
+.include "/workspace/.runtime/eda/runs/2778062cd5284f06bda444a89b5210ba/supported-tt.spice"
+.options method=gear maxord=2
+.include "/workspace/.runtime/eda/runs/2778062cd5284f06bda444a89b5210ba/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VBIAS BIAS VGND 0.9
+VCM VCM VGND 0.9
+VSENSOR IIN SENSOR 0
+ISENSOR SENSOR VGND DC 0 AC 1 SIN(0 1u 5000)
+CLOAD OUT VGND 50f
+XU IIN VCM BIAS OUT VPWR VGND soc_tia
+.control
+save v(OUT) i(VDD) i(VSENSOR) v(IIN) i(v.xu.vregister_cf_d6f90f75490fea4a) i(v.xu.vregister_cf_bd31542253e56214) i(v.xu.vregister_cf_7e25c59bcd3edfc6) i(v.xu.vregister_cf_070984e441913c39) i(v.xu.vregister_cf_f9a25b45702385e2) i(v.xu.vregister_cf_d68525ab798b50da) i(v.xu.vregister_cf_50c72756537eac7b) i(v.xu.vregister_cf_3f5de34c96f32878) i(v.xu.vregister_cf_f6a8771ad017e01c) i(VGND) i(VBIAS) i(VCM) v(XU.AMP__FIRST__MIR) v(XU.AMP__FIRST__TAIL) v(VGND) v(XU.AMP__PRE) v(VCM) v(BIAS) v(VPWR) v(SENSOR)
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+set noaskquit
+tran 2e-08 0.0002
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = i(VSENSOR)
+let mos_wave_3 = v(IIN)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_d6f90f75490fea4a)
+let register_flow_1 = i(v.xu.vregister_cf_bd31542253e56214)
+let register_flow_2 = i(v.xu.vregister_cf_7e25c59bcd3edfc6)
+let register_flow_3 = i(v.xu.vregister_cf_070984e441913c39)
+let register_flow_4 = i(v.xu.vregister_cf_f9a25b45702385e2)
+let register_flow_5 = i(v.xu.vregister_cf_d68525ab798b50da)
+let register_flow_6 = i(v.xu.vregister_cf_50c72756537eac7b)
+let register_flow_7 = i(v.xu.vregister_cf_3f5de34c96f32878)
+let register_flow_8 = i(v.xu.vregister_cf_f6a8771ad017e01c)
+let register_flow_9 = i(VGND)
+let register_flow_10 = i(VDD)
+let register_flow_11 = i(VBIAS)
+let register_flow_12 = i(VCM)
+let register_flow_13 = i(VSENSOR)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13
+let register_voltage_0 = v(XU.AMP__FIRST__MIR)
+let register_voltage_1 = v(XU.AMP__FIRST__TAIL)
+let register_voltage_2 = v(IIN)
+let register_voltage_3 = v(VGND)
+let register_voltage_4 = v(XU.AMP__PRE)
+let register_voltage_5 = v(VCM)
+let register_voltage_6 = v(BIAS)
+let register_voltage_7 = v(VPWR)
+let register_voltage_8 = v(OUT)
+let register_voltage_9 = 0*register_flow_0
+let register_voltage_10 = v(SENSOR)
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10
+quit
+.endc
+.end

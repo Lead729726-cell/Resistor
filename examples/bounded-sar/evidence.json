@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "source_version": "825ac1c914c6",
+  "source_version": "67254722d7c3",
   "source_sha256": {
     "workers/eda/analog_soc.py": "011bcd40f404d9d0139bdc8c75b678050a00968873c62cccf6b9838676ed64a9",
     "workers/eda/bootstrap.py": "88e9e525d4868e34b18f9dd6b953ac2b745d8ff739716a24079018c99b8b3c17",
@@ -29,7 +29,7 @@
     "workers/eda/profile.py": "bba5cf8d5ad36e776ff2f0511141573072ef1171244d7b87b178de258e63b5d8",
     "workers/eda/project_index.py": "3b9a1606eca2ea951617b2735c63d2470d6f7d04c299aefc9451c839cd8576f9",
     "workers/eda/pvt.py": "91d7e022bef73ad39adb270c2b33abd0860a7277169bc493291befe2ed8c2562",
-    "workers/eda/sar_adc.py": "be5f1f0425eac1cbfe3faa936baf835baf7adb52e830777471ef1ebc45c40f3a",
+    "workers/eda/sar_adc.py": "c4ccd6d9e33b94be26a4b6a6a434d1e144e1032e30ca6ab52a26ec55021960b9",
     "workers/eda/semiconductor_starters.py": "3375bea66fb32180fccbaaa8f8c0a37ae51c4a88261ab0dee748ff6fd44a2784",
     "workers/eda/server.py": "e67eb7cb6256ebc8cd13aa7704053e200aaabd69165744135b89b05dd56f5668",
     "workers/eda/sigma_delta.py": "f093720df75b1223fbadeb1d7b71c4a41087bc271fc03c5f59d94cb290d3d8a7",
@@ -51,6 +51,4070 @@
     "edge_um": 10
   },
   "rows": [
+    {
+      "reference": "soc_bias",
+      "name": "SoC · 바이어스·공통모드 기준",
+      "project_id": "30c43310f30d4968ace3cd37f9aef0c4",
+      "revision": 1,
+      "envelope": {
+        "policy": {
+          "schema_version": 1,
+          "width_um": 1000,
+          "height_um": 1000,
+          "max_area_um2": 1000000,
+          "edge_um": 10,
+          "origin_um": [
+            0,
+            0
+          ],
+          "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+        },
+        "fits": true,
+        "bbox_dbu": [
+          "10300",
+          "10000",
+          "703230",
+          "70190"
+        ],
+        "used_width_um": 692.9300000000001,
+        "used_height_um": 60.19,
+        "used_area_um2": 41707.4567,
+        "chip_area_um2": 1000000,
+        "minimum_envelope_um": [
+          712.9300000000001,
+          80.19
+        ],
+        "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+      },
+      "jobs": [
+        {
+          "reference": "soc_bias",
+          "stage": "drc",
+          "project_id": "30c43310f30d4968ace3cd37f9aef0c4",
+          "run_id": "c701f43a293e4d31934052569287666d",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+          "elapsed_s": 1.5675407490925863,
+          "marker_count": 0,
+          "artifacts": {
+            "markers": "/workspace/.runtime/eda/runs/c701f43a293e4d31934052569287666d/markers.tsv",
+            "stdout": "/workspace/.runtime/eda/runs/c701f43a293e4d31934052569287666d/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_bias",
+          "stage": "lvs",
+          "project_id": "30c43310f30d4968ace3cd37f9aef0c4",
+          "run_id": "1ac5ae02eaaa4e59ba0fde5507ae443e",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Netgen comparison: circuits match uniquely.",
+          "elapsed_s": 1.205505782039836,
+          "artifacts": {
+            "layout_netlist": "/workspace/.runtime/eda/runs/1ac5ae02eaaa4e59ba0fde5507ae443e/layout.spice",
+            "reference_netlist": "/workspace/.runtime/eda/runs/1ac5ae02eaaa4e59ba0fde5507ae443e/reference.spice",
+            "lvs_report": "/workspace/.runtime/eda/runs/1ac5ae02eaaa4e59ba0fde5507ae443e/lvs.log",
+            "stdout": "/workspace/.runtime/eda/runs/1ac5ae02eaaa4e59ba0fde5507ae443e/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_bias",
+          "stage": "pex",
+          "project_id": "30c43310f30d4968ace3cd37f9aef0c4",
+          "run_id": "09392937d3bd4070b9b5fa80c8388a03",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Magic RC extraction: 6441 resistors, 162 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+          "elapsed_s": 1.4383299510227516,
+          "parasitics": {
+            "resistors": 6441,
+            "capacitors": 162
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/09392937d3bd4070b9b5fa80c8388a03/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/09392937d3bd4070b9b5fa80c8388a03/pex-quality.json",
+            "stdout": "/workspace/.runtime/eda/runs/09392937d3bd4070b9b5fa80c8388a03/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_bias",
+          "stage": "pre",
+          "project_id": "30c43310f30d4968ace3cd37f9aef0c4",
+          "run_id": "adc2f7da61f14d2fbf8ee8efe0f5d51f",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice tran: 10008 samples.; reference criteria 3/3",
+          "elapsed_s": 3.749635187909007,
+          "measurements": {
+            "analysis": "tran",
+            "x_unit": "s",
+            "x_label": "time",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 10008,
+            "solver": "SPARSE 1.3",
+            "VCM_min": 0.8997097272830539,
+            "VCM_max": 0.899806300672465,
+            "supply_current_min": 0.00008875856504576607,
+            "supply_current_max": 0.00008876999277870133,
+            "BIAS_min": 0.929442968381337,
+            "BIAS_max": 0.9294448889288898,
+            "current_flow_status": "available",
+            "template_id": "soc_bias",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "average_supply_current_A": 0.00008875947033099695,
+            "average_supply_power_W": 0.0001597670465957945,
+            "common_mode_V": 0.8997102265980885,
+            "bias_V": 0.9294435369304106
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_bias",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "passive sensor macro draws nonnegative mean supply current",
+                "pass": true,
+                "observed": 0.00008875947033099695
+              },
+              {
+                "name": "VCM within 1% of VDD/2",
+                "pass": true,
+                "observed": 0.8997102265980885
+              },
+              {
+                "name": "NMOS bias within 0.5..1.1V",
+                "pass": true,
+                "observed": 0.9294435369304106
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "testbench": "/workspace/.runtime/eda/runs/adc2f7da61f14d2fbf8ee8efe0f5d51f/testbench.spice",
+            "current_flow_data": "/workspace/.runtime/eda/runs/adc2f7da61f14d2fbf8ee8efe0f5d51f/current-flow.dat",
+            "current_probe_netlist": "/workspace/.runtime/eda/runs/adc2f7da61f14d2fbf8ee8efe0f5d51f/current-probe.spice",
+            "node_voltage_data": "/workspace/.runtime/eda/runs/adc2f7da61f14d2fbf8ee8efe0f5d51f/node-voltages.dat",
+            "node_voltage_probes": "/workspace/.runtime/eda/runs/adc2f7da61f14d2fbf8ee8efe0f5d51f/voltage-probes.json",
+            "waveform_data": "/workspace/.runtime/eda/runs/adc2f7da61f14d2fbf8ee8efe0f5d51f/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/adc2f7da61f14d2fbf8ee8efe0f5d51f/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/adc2f7da61f14d2fbf8ee8efe0f5d51f/reference.spice",
+            "stdout": "/workspace/.runtime/eda/runs/adc2f7da61f14d2fbf8ee8efe0f5d51f/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_bias",
+          "stage": "post",
+          "project_id": "30c43310f30d4968ace3cd37f9aef0c4",
+          "run_id": "9df90f59c3974d75b37777333b8f7372",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice tran: 10008 samples.; reference criteria 3/3",
+          "elapsed_s": 7.14177343994379,
+          "parasitics": {
+            "resistors": 6439,
+            "capacitors": 161
+          },
+          "measurements": {
+            "analysis": "tran",
+            "x_unit": "s",
+            "x_label": "time",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "true",
+            "samples": 10008,
+            "solver": "SPARSE 1.3",
+            "VCM_min": 0.899948129145275,
+            "VCM_max": 0.9001031826303357,
+            "supply_current_min": 0.00008824805624902725,
+            "supply_current_max": 0.00008828609278072217,
+            "BIAS_min": 0.9319667792196531,
+            "BIAS_max": 0.9319779349268796,
+            "current_flow_status": "available_partial",
+            "template_id": "soc_bias",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "average_supply_current_A": 0.00008825425833687401,
+            "average_supply_power_W": 0.00015885766500637322,
+            "common_mode_V": 0.8999491603408326,
+            "bias_V": 0.9319689816189111
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_bias",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "passive sensor macro draws nonnegative mean supply current",
+                "pass": true,
+                "observed": 0.00008825425833687401
+              },
+              {
+                "name": "VCM within 1% of VDD/2",
+                "pass": true,
+                "observed": 0.8999491603408326
+              },
+              {
+                "name": "NMOS bias within 0.5..1.1V",
+                "pass": true,
+                "observed": 0.9319689816189111
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/pex-quality.json",
+            "pex_simulation_netlist": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/pex-simulation.spice",
+            "pex_reduction": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/pex-reduction.json",
+            "testbench": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/testbench.spice",
+            "current_flow_data": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/current-flow.dat",
+            "current_probe_netlist": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/current-probe.spice",
+            "node_voltage_data": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/node-voltages.dat",
+            "node_voltage_probes": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/voltage-probes.json",
+            "waveform_data": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/pex-simulation.spice",
+            "stdout": "/workspace/.runtime/eda/runs/9df90f59c3974d75b37777333b8f7372/stdout.log"
+          }
+        }
+      ],
+      "all_executed_pass": true,
+      "foundry_signoff": false
+    },
+    {
+      "reference": "soc_cascode_mirror",
+      "name": "SoC · 4-MOS 캐스코드 전류 미러",
+      "project_id": "59f0156062f74b30ab5f87468b3aa063",
+      "revision": 1,
+      "envelope": {
+        "policy": {
+          "schema_version": 1,
+          "width_um": 1000,
+          "height_um": 1000,
+          "max_area_um2": 1000000,
+          "edge_um": 10,
+          "origin_um": [
+            0,
+            0
+          ],
+          "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+        },
+        "fits": true,
+        "bbox_dbu": [
+          "10300",
+          "10000",
+          "50520",
+          "24190"
+        ],
+        "used_width_um": 40.22,
+        "used_height_um": 14.19,
+        "used_area_um2": 570.7217999999999,
+        "chip_area_um2": 1000000,
+        "minimum_envelope_um": [
+          60.22,
+          34.19
+        ],
+        "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+      },
+      "jobs": [
+        {
+          "reference": "soc_cascode_mirror",
+          "stage": "drc",
+          "project_id": "59f0156062f74b30ab5f87468b3aa063",
+          "run_id": "a73a2861d0b2489e9e882abee0d042bb",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+          "elapsed_s": 1.1137773570371792,
+          "marker_count": 0,
+          "artifacts": {
+            "markers": "/workspace/.runtime/eda/runs/a73a2861d0b2489e9e882abee0d042bb/markers.tsv",
+            "stdout": "/workspace/.runtime/eda/runs/a73a2861d0b2489e9e882abee0d042bb/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_cascode_mirror",
+          "stage": "lvs",
+          "project_id": "59f0156062f74b30ab5f87468b3aa063",
+          "run_id": "303934d9ef1042778164ec826eded881",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Netgen comparison: circuits match uniquely.",
+          "elapsed_s": 0.6352998510701582,
+          "artifacts": {
+            "layout_netlist": "/workspace/.runtime/eda/runs/303934d9ef1042778164ec826eded881/layout.spice",
+            "reference_netlist": "/workspace/.runtime/eda/runs/303934d9ef1042778164ec826eded881/reference.spice",
+            "lvs_report": "/workspace/.runtime/eda/runs/303934d9ef1042778164ec826eded881/lvs.log",
+            "stdout": "/workspace/.runtime/eda/runs/303934d9ef1042778164ec826eded881/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_cascode_mirror",
+          "stage": "pex",
+          "project_id": "59f0156062f74b30ab5f87468b3aa063",
+          "run_id": "38438e6205514e25a138e5f85e46123f",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Magic RC extraction: 518 resistors, 42 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+          "elapsed_s": 0.5669232009677216,
+          "parasitics": {
+            "resistors": 518,
+            "capacitors": 42
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/38438e6205514e25a138e5f85e46123f/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/38438e6205514e25a138e5f85e46123f/pex-quality.json",
+            "stdout": "/workspace/.runtime/eda/runs/38438e6205514e25a138e5f85e46123f/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_cascode_mirror",
+          "stage": "pre",
+          "project_id": "59f0156062f74b30ab5f87468b3aa063",
+          "run_id": "57156376ba2e463f8a8c79a76f39aa71",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice dc: 181 samples.; reference criteria 1/1",
+          "elapsed_s": 1.6205034940503538,
+          "measurements": {
+            "analysis": "dc",
+            "x_unit": "V",
+            "x_label": "output compliance",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 181,
+            "solver": "SPARSE 1.3",
+            "OUT_min": 0,
+            "OUT_max": 1.8000000000000014,
+            "supply_current_min": 0.00001,
+            "supply_current_max": 0.00001,
+            "REF_min": 1.7122762765253001,
+            "REF_max": 1.7122762765253001,
+            "output_current_min": 5.2693324021961856e-21,
+            "output_current_max": 0.000010000470348952683,
+            "current_flow_status": "available",
+            "template_id": "soc_cascode_mirror",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "compliance_min_V": 0.4100000000000002,
+            "compliant_current_mean_A": 0.000009999620848976101
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_cascode_mirror",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "1.5V..VDD current error <5%",
+                "pass": true,
+                "observed": 0.000009999620848976101
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "testbench": "/workspace/.runtime/eda/runs/57156376ba2e463f8a8c79a76f39aa71/testbench.spice",
+            "current_flow_data": "/workspace/.runtime/eda/runs/57156376ba2e463f8a8c79a76f39aa71/current-flow.dat",
+            "current_probe_netlist": "/workspace/.runtime/eda/runs/57156376ba2e463f8a8c79a76f39aa71/current-probe.spice",
+            "node_voltage_data": "/workspace/.runtime/eda/runs/57156376ba2e463f8a8c79a76f39aa71/node-voltages.dat",
+            "node_voltage_probes": "/workspace/.runtime/eda/runs/57156376ba2e463f8a8c79a76f39aa71/voltage-probes.json",
+            "waveform_data": "/workspace/.runtime/eda/runs/57156376ba2e463f8a8c79a76f39aa71/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/57156376ba2e463f8a8c79a76f39aa71/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/57156376ba2e463f8a8c79a76f39aa71/reference.spice",
+            "stdout": "/workspace/.runtime/eda/runs/57156376ba2e463f8a8c79a76f39aa71/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_cascode_mirror",
+          "stage": "post",
+          "project_id": "59f0156062f74b30ab5f87468b3aa063",
+          "run_id": "57aa73ca66a24834a2b27badbfa46973",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice dc: 181 samples.; reference criteria 1/1",
+          "elapsed_s": 1.6649627779843286,
+          "parasitics": {
+            "resistors": 518,
+            "capacitors": 42
+          },
+          "measurements": {
+            "analysis": "dc",
+            "x_unit": "V",
+            "x_label": "output compliance",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "true",
+            "samples": 181,
+            "solver": "SPARSE 1.3",
+            "OUT_min": 0,
+            "OUT_max": 1.8000000000000014,
+            "supply_current_min": 0.00001,
+            "supply_current_max": 0.00001,
+            "REF_min": 1.7146884879246078,
+            "REF_max": 1.7146895407718203,
+            "output_current_min": -5.5501220746856666e-11,
+            "output_current_max": 0.000010000432829213035,
+            "current_flow_status": "available_partial",
+            "template_id": "soc_cascode_mirror",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "compliance_min_V": 0.4100000000000002,
+            "compliant_current_mean_A": 0.000009999589466132498
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_cascode_mirror",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "1.5V..VDD current error <5%",
+                "pass": true,
+                "observed": 0.000009999589466132498
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/pex-quality.json",
+            "pex_simulation_netlist": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/pex-simulation.spice",
+            "pex_reduction": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/pex-reduction.json",
+            "testbench": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/testbench.spice",
+            "current_flow_data": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/current-flow.dat",
+            "current_probe_netlist": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/current-probe.spice",
+            "node_voltage_data": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/node-voltages.dat",
+            "node_voltage_probes": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/voltage-probes.json",
+            "waveform_data": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/pex-simulation.spice",
+            "stdout": "/workspace/.runtime/eda/runs/57aa73ca66a24834a2b27badbfa46973/stdout.log"
+          }
+        }
+      ],
+      "all_executed_pass": true,
+      "foundry_signoff": false
+    },
+    {
+      "reference": "soc_miller_ota",
+      "name": "SoC · 2단 Miller 보상 OTA",
+      "project_id": "e3482fe27ccf40e4b0c8d102f06451d6",
+      "revision": 1,
+      "envelope": {
+        "policy": {
+          "schema_version": 1,
+          "width_um": 1000,
+          "height_um": 1000,
+          "max_area_um2": 1000000,
+          "edge_um": 10,
+          "origin_um": [
+            0,
+            0
+          ],
+          "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+        },
+        "fits": true,
+        "bbox_dbu": [
+          "10300",
+          "10000",
+          "209580",
+          "66590"
+        ],
+        "used_width_um": 199.28,
+        "used_height_um": 56.59,
+        "used_area_um2": 11277.255200000001,
+        "chip_area_um2": 1000000,
+        "minimum_envelope_um": [
+          219.28,
+          76.59
+        ],
+        "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+      },
+      "jobs": [
+        {
+          "reference": "soc_miller_ota",
+          "stage": "drc",
+          "project_id": "e3482fe27ccf40e4b0c8d102f06451d6",
+          "run_id": "12dedda2aad84bea99f43b375e1434b7",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+          "elapsed_s": 1.0593979570548981,
+          "marker_count": 0,
+          "artifacts": {
+            "markers": "/workspace/.runtime/eda/runs/12dedda2aad84bea99f43b375e1434b7/markers.tsv",
+            "stdout": "/workspace/.runtime/eda/runs/12dedda2aad84bea99f43b375e1434b7/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_miller_ota",
+          "stage": "lvs",
+          "project_id": "e3482fe27ccf40e4b0c8d102f06451d6",
+          "run_id": "5152e40ffd0647b79105231f548fbf43",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Netgen comparison: circuits match uniquely.",
+          "elapsed_s": 0.8245504079386592,
+          "artifacts": {
+            "layout_netlist": "/workspace/.runtime/eda/runs/5152e40ffd0647b79105231f548fbf43/layout.spice",
+            "reference_netlist": "/workspace/.runtime/eda/runs/5152e40ffd0647b79105231f548fbf43/reference.spice",
+            "lvs_report": "/workspace/.runtime/eda/runs/5152e40ffd0647b79105231f548fbf43/lvs.log",
+            "stdout": "/workspace/.runtime/eda/runs/5152e40ffd0647b79105231f548fbf43/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_miller_ota",
+          "stage": "pex",
+          "project_id": "e3482fe27ccf40e4b0c8d102f06451d6",
+          "run_id": "dac6045847914e25b3e6cff80f500e8d",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Magic RC extraction: 3577 resistors, 1304 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+          "elapsed_s": 0.7921270130900666,
+          "parasitics": {
+            "resistors": 3577,
+            "capacitors": 1304
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/dac6045847914e25b3e6cff80f500e8d/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/dac6045847914e25b3e6cff80f500e8d/pex-quality.json",
+            "stdout": "/workspace/.runtime/eda/runs/dac6045847914e25b3e6cff80f500e8d/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_miller_ota",
+          "stage": "pre",
+          "project_id": "e3482fe27ccf40e4b0c8d102f06451d6",
+          "run_id": "f1b797ef0e514c478f7dab3d8421fac0",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice ac: 481 samples.; reference criteria 2/2",
+          "elapsed_s": 1.4643143109278753,
+          "measurements": {
+            "analysis": "ac",
+            "x_unit": "Hz",
+            "x_label": "frequency",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 481,
+            "solver": "SPARSE 1.3",
+            "OUT_gain_min": 0.005105939271615753,
+            "OUT_gain_max": 12025.491436243832,
+            "OUT_phase_min": -178.2793353597602,
+            "OUT_phase_max": 178.835952919146,
+            "current_flow_status": "unsupported_complex_ac",
+            "template_id": "soc_miller_ota",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "low_frequency_gain": 12025.491436243832,
+            "gain_unit": "V/V",
+            "bandwidth_3dB_Hz": 428.40193085048026,
+            "open_loop_gain_dB": 81.60205666754997,
+            "unity_gain_Hz": 5309998.549595132,
+            "phase_margin_deg": 94.49803876957736
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_miller_ota",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "open-loop gain >40dB",
+                "pass": true,
+                "observed": 12025.491436243832
+              },
+              {
+                "name": "unity-loop phase margin 45..180deg",
+                "pass": true,
+                "observed": 94.49803876957736
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "testbench": "/workspace/.runtime/eda/runs/f1b797ef0e514c478f7dab3d8421fac0/testbench.spice",
+            "waveform_data": "/workspace/.runtime/eda/runs/f1b797ef0e514c478f7dab3d8421fac0/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/f1b797ef0e514c478f7dab3d8421fac0/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/f1b797ef0e514c478f7dab3d8421fac0/reference.spice",
+            "stdout": "/workspace/.runtime/eda/runs/f1b797ef0e514c478f7dab3d8421fac0/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_miller_ota",
+          "stage": "post",
+          "project_id": "e3482fe27ccf40e4b0c8d102f06451d6",
+          "run_id": "3dd3095eb7334e9d84c865ca86cf6179",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice ac: 481 samples.; reference criteria 2/2",
+          "elapsed_s": 3.5735595939913765,
+          "parasitics": {
+            "resistors": 3577,
+            "capacitors": 1304
+          },
+          "measurements": {
+            "analysis": "ac",
+            "x_unit": "Hz",
+            "x_label": "frequency",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "true",
+            "samples": 481,
+            "solver": "SPARSE 1.3",
+            "OUT_gain_min": 0.0018472632605972697,
+            "OUT_gain_max": 12198.775578931003,
+            "OUT_phase_min": -179.2959133442737,
+            "OUT_phase_max": 177.80159131806042,
+            "current_flow_status": "unsupported_complex_ac",
+            "template_id": "soc_miller_ota",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "low_frequency_gain": 12198.775578931003,
+            "gain_unit": "V/V",
+            "bandwidth_3dB_Hz": 412.22879198458327,
+            "open_loop_gain_dB": 81.72632483316727,
+            "unity_gain_Hz": 5270031.976009293,
+            "phase_margin_deg": 91.61974731173314
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_miller_ota",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "open-loop gain >40dB",
+                "pass": true,
+                "observed": 12198.775578931003
+              },
+              {
+                "name": "unity-loop phase margin 45..180deg",
+                "pass": true,
+                "observed": 91.61974731173314
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/3dd3095eb7334e9d84c865ca86cf6179/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/3dd3095eb7334e9d84c865ca86cf6179/pex-quality.json",
+            "pex_simulation_netlist": "/workspace/.runtime/eda/runs/3dd3095eb7334e9d84c865ca86cf6179/pex-simulation.spice",
+            "pex_reduction": "/workspace/.runtime/eda/runs/3dd3095eb7334e9d84c865ca86cf6179/pex-reduction.json",
+            "testbench": "/workspace/.runtime/eda/runs/3dd3095eb7334e9d84c865ca86cf6179/testbench.spice",
+            "waveform_data": "/workspace/.runtime/eda/runs/3dd3095eb7334e9d84c865ca86cf6179/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/3dd3095eb7334e9d84c865ca86cf6179/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/3dd3095eb7334e9d84c865ca86cf6179/pex-simulation.spice",
+            "stdout": "/workspace/.runtime/eda/runs/3dd3095eb7334e9d84c865ca86cf6179/stdout.log"
+          }
+        }
+      ],
+      "all_executed_pass": true,
+      "foundry_signoff": false
+    },
+    {
+      "reference": "soc_pga",
+      "name": "SoC · ×2/×8 가변 이득 증폭기",
+      "project_id": "4382cfcb7fe9484f8650d86bcf4710ac",
+      "revision": 1,
+      "envelope": {
+        "policy": {
+          "schema_version": 1,
+          "width_um": 1000,
+          "height_um": 1000,
+          "max_area_um2": 1000000,
+          "edge_um": 10,
+          "origin_um": [
+            0,
+            0
+          ],
+          "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+        },
+        "fits": true,
+        "bbox_dbu": [
+          "10300",
+          "10000",
+          "682030",
+          "85790"
+        ],
+        "used_width_um": 671.73,
+        "used_height_um": 75.79,
+        "used_area_um2": 50910.41670000001,
+        "chip_area_um2": 1000000,
+        "minimum_envelope_um": [
+          691.73,
+          95.79
+        ],
+        "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+      },
+      "jobs": [
+        {
+          "reference": "soc_pga",
+          "stage": "drc",
+          "project_id": "4382cfcb7fe9484f8650d86bcf4710ac",
+          "run_id": "ec4dbbc32d1d40e5be983d3430f7e930",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+          "elapsed_s": 1.5973422789247707,
+          "marker_count": 0,
+          "artifacts": {
+            "markers": "/workspace/.runtime/eda/runs/ec4dbbc32d1d40e5be983d3430f7e930/markers.tsv",
+            "stdout": "/workspace/.runtime/eda/runs/ec4dbbc32d1d40e5be983d3430f7e930/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_pga",
+          "stage": "lvs",
+          "project_id": "4382cfcb7fe9484f8650d86bcf4710ac",
+          "run_id": "64188a04efb340bba36b0ffce69ebe65",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Netgen comparison: circuits match uniquely.",
+          "elapsed_s": 1.8554901800816879,
+          "artifacts": {
+            "layout_netlist": "/workspace/.runtime/eda/runs/64188a04efb340bba36b0ffce69ebe65/layout.spice",
+            "reference_netlist": "/workspace/.runtime/eda/runs/64188a04efb340bba36b0ffce69ebe65/reference.spice",
+            "lvs_report": "/workspace/.runtime/eda/runs/64188a04efb340bba36b0ffce69ebe65/lvs.log",
+            "stdout": "/workspace/.runtime/eda/runs/64188a04efb340bba36b0ffce69ebe65/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_pga",
+          "stage": "pex",
+          "project_id": "4382cfcb7fe9484f8650d86bcf4710ac",
+          "run_id": "d1d88a5966be4a1592ddee74e8ea6a96",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Magic RC extraction: 15487 resistors, 4581 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+          "elapsed_s": 1.937351842992939,
+          "parasitics": {
+            "resistors": 15487,
+            "capacitors": 4581
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/d1d88a5966be4a1592ddee74e8ea6a96/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/d1d88a5966be4a1592ddee74e8ea6a96/pex-quality.json",
+            "stdout": "/workspace/.runtime/eda/runs/d1d88a5966be4a1592ddee74e8ea6a96/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_pga",
+          "stage": "pre",
+          "project_id": "4382cfcb7fe9484f8650d86bcf4710ac",
+          "run_id": "35f3831865354726a5bc9a33484be47c",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice tran: 10081 samples.; reference criteria 5/5",
+          "elapsed_s": 6.383858321001753,
+          "measurements": {
+            "analysis": "tran",
+            "x_unit": "s",
+            "x_label": "time",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 10081,
+            "solver": "SPARSE 1.3",
+            "OUT_min": 0.6980764398516708,
+            "OUT_max": 0.9491988420012468,
+            "supply_current_min": 0.00011195990004395778,
+            "supply_current_max": 0.00017243348132363334,
+            "VIN_min": 0.875000000039907,
+            "VIN_max": 0.9249999999955587,
+            "GAIN_min": 0,
+            "GAIN_max": 1.8,
+            "current_flow_status": "available",
+            "template_id": "soc_pga",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "average_supply_current_A": 0.00012007737398910852,
+            "average_supply_power_W": 0.00021613927318039534,
+            "low_gain": 1.9957331846687731,
+            "low_output_fit": {
+              "amplitude": 0.049893327974295555,
+              "mean": 0.8993058698471187,
+              "residual_rms": 4.204705247236674e-7
+            },
+            "high_gain": 7.999893636854983,
+            "high_output_fit": {
+              "amplitude": 0.19999733433826744,
+              "mean": 0.8980763419286727,
+              "residual_rms": 0.000017241489690855207
+            }
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_pga",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "passive sensor macro draws nonnegative mean supply current",
+                "pass": true,
+                "observed": 0.00012007737398910852
+              },
+              {
+                "name": "low measured gain within 3%",
+                "pass": true,
+                "observed": 1.9957331846687731
+              },
+              {
+                "name": "low settled sine residual <5mV",
+                "pass": true,
+                "observed": 4.204705247236674e-7
+              },
+              {
+                "name": "high measured gain within 3%",
+                "pass": true,
+                "observed": 7.999893636854983
+              },
+              {
+                "name": "high settled sine residual <5mV",
+                "pass": true,
+                "observed": 0.000017241489690855207
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "testbench": "/workspace/.runtime/eda/runs/35f3831865354726a5bc9a33484be47c/testbench.spice",
+            "current_flow_data": "/workspace/.runtime/eda/runs/35f3831865354726a5bc9a33484be47c/current-flow.dat",
+            "current_probe_netlist": "/workspace/.runtime/eda/runs/35f3831865354726a5bc9a33484be47c/current-probe.spice",
+            "node_voltage_data": "/workspace/.runtime/eda/runs/35f3831865354726a5bc9a33484be47c/node-voltages.dat",
+            "node_voltage_probes": "/workspace/.runtime/eda/runs/35f3831865354726a5bc9a33484be47c/voltage-probes.json",
+            "waveform_data": "/workspace/.runtime/eda/runs/35f3831865354726a5bc9a33484be47c/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/35f3831865354726a5bc9a33484be47c/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/35f3831865354726a5bc9a33484be47c/reference.spice",
+            "stdout": "/workspace/.runtime/eda/runs/35f3831865354726a5bc9a33484be47c/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_pga",
+          "stage": "post",
+          "project_id": "4382cfcb7fe9484f8650d86bcf4710ac",
+          "run_id": "d360856f295d4edd91168a698c3569d6",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice tran: 10032 samples.; reference criteria 5/5",
+          "elapsed_s": 36.44497119600419,
+          "parasitics": {
+            "resistors": 15487,
+            "capacitors": 4581
+          },
+          "measurements": {
+            "analysis": "tran",
+            "x_unit": "s",
+            "x_label": "time",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "true",
+            "samples": 10032,
+            "solver": "SPARSE 1.3",
+            "OUT_min": 0.6985571664189503,
+            "OUT_max": 0.9493652119476456,
+            "supply_current_min": 0.00010125063784569858,
+            "supply_current_max": 0.00015405259174349286,
+            "VIN_min": 0.8750000007143609,
+            "VIN_max": 0.9249999996131115,
+            "GAIN_min": 0,
+            "GAIN_max": 1.8,
+            "current_flow_status": "available_partial",
+            "template_id": "soc_pga",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "average_supply_current_A": 0.0001179727606900684,
+            "average_supply_power_W": 0.00021235096924212312,
+            "low_gain": 2.0006240491333256,
+            "low_output_fit": {
+              "amplitude": 0.05001559958473302,
+              "mean": 0.8993499600975167,
+              "residual_rms": 4.1450400060076576e-7
+            },
+            "high_gain": 7.987368745090393,
+            "high_output_fit": {
+              "amplitude": 0.1996842120563518,
+              "mean": 0.8982438313080283,
+              "residual_rms": 0.00001693784648171512
+            }
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_pga",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "passive sensor macro draws nonnegative mean supply current",
+                "pass": true,
+                "observed": 0.0001179727606900684
+              },
+              {
+                "name": "low measured gain within 3%",
+                "pass": true,
+                "observed": 2.0006240491333256
+              },
+              {
+                "name": "low settled sine residual <5mV",
+                "pass": true,
+                "observed": 4.1450400060076576e-7
+              },
+              {
+                "name": "high measured gain within 3%",
+                "pass": true,
+                "observed": 7.987368745090393
+              },
+              {
+                "name": "high settled sine residual <5mV",
+                "pass": true,
+                "observed": 0.00001693784648171512
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/pex-quality.json",
+            "pex_simulation_netlist": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/pex-simulation.spice",
+            "pex_reduction": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/pex-reduction.json",
+            "testbench": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/testbench.spice",
+            "current_flow_data": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/current-flow.dat",
+            "current_probe_netlist": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/current-probe.spice",
+            "node_voltage_data": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/node-voltages.dat",
+            "node_voltage_probes": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/voltage-probes.json",
+            "waveform_data": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/pex-simulation.spice",
+            "stdout": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/stdout.log"
+          }
+        }
+      ],
+      "all_executed_pass": true,
+      "foundry_signoff": false
+    },
+    {
+      "reference": "soc_filter2",
+      "name": "SoC · 버퍼형 2극 active RC 필터",
+      "project_id": "5f57ec48516948a098346705b31acc23",
+      "revision": 1,
+      "envelope": {
+        "policy": {
+          "schema_version": 1,
+          "width_um": 1000,
+          "height_um": 1000,
+          "max_area_um2": 1000000,
+          "edge_um": 10,
+          "origin_um": [
+            0,
+            0
+          ],
+          "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+        },
+        "fits": true,
+        "bbox_dbu": [
+          "10300",
+          "10000",
+          "907980",
+          "129180"
+        ],
+        "used_width_um": 897.6800000000001,
+        "used_height_um": 119.18,
+        "used_area_um2": 106985.50240000001,
+        "chip_area_um2": 1000000,
+        "minimum_envelope_um": [
+          917.6800000000001,
+          139.18
+        ],
+        "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+      },
+      "jobs": [
+        {
+          "reference": "soc_filter2",
+          "stage": "drc",
+          "project_id": "5f57ec48516948a098346705b31acc23",
+          "run_id": "f0ce76eacf4c46b9b878bd82ecac3159",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+          "elapsed_s": 2.1685330270556733,
+          "marker_count": 0,
+          "artifacts": {
+            "markers": "/workspace/.runtime/eda/runs/f0ce76eacf4c46b9b878bd82ecac3159/markers.tsv",
+            "stdout": "/workspace/.runtime/eda/runs/f0ce76eacf4c46b9b878bd82ecac3159/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_filter2",
+          "stage": "lvs",
+          "project_id": "5f57ec48516948a098346705b31acc23",
+          "run_id": "fe3d1a3fed6b4e5b86bc84fc7dd8054a",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Netgen comparison: circuits match uniquely.",
+          "elapsed_s": 2.0643095690757036,
+          "artifacts": {
+            "layout_netlist": "/workspace/.runtime/eda/runs/fe3d1a3fed6b4e5b86bc84fc7dd8054a/layout.spice",
+            "reference_netlist": "/workspace/.runtime/eda/runs/fe3d1a3fed6b4e5b86bc84fc7dd8054a/reference.spice",
+            "lvs_report": "/workspace/.runtime/eda/runs/fe3d1a3fed6b4e5b86bc84fc7dd8054a/lvs.log",
+            "stdout": "/workspace/.runtime/eda/runs/fe3d1a3fed6b4e5b86bc84fc7dd8054a/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_filter2",
+          "stage": "pex",
+          "project_id": "5f57ec48516948a098346705b31acc23",
+          "run_id": "4e594f7468854442b650c66df93d93dc",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Magic RC extraction: 9004 resistors, 2658 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+          "elapsed_s": 2.278535844059661,
+          "parasitics": {
+            "resistors": 9004,
+            "capacitors": 2658
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/4e594f7468854442b650c66df93d93dc/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/4e594f7468854442b650c66df93d93dc/pex-quality.json",
+            "stdout": "/workspace/.runtime/eda/runs/4e594f7468854442b650c66df93d93dc/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_filter2",
+          "stage": "pre",
+          "project_id": "5f57ec48516948a098346705b31acc23",
+          "run_id": "197f392e202f41ed9d6a4040d45d1124",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice ac: 481 samples.; reference criteria 2/2",
+          "elapsed_s": 1.4255105219781399,
+          "measurements": {
+            "analysis": "ac",
+            "x_unit": "Hz",
+            "x_label": "frequency",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 481,
+            "solver": "SPARSE 1.3",
+            "OUT_gain_min": 2.65606324629644e-9,
+            "OUT_gain_max": 1.001806756250203,
+            "OUT_phase_min": -178.43953724657663,
+            "OUT_phase_max": 179.88516665831358,
+            "current_flow_status": "unsupported_complex_ac",
+            "template_id": "soc_filter2",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "low_frequency_gain": 1.001806756250203,
+            "gain_unit": "V/V",
+            "bandwidth_3dB_Hz": 128047.99357002
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_filter2",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "low-frequency transfer within 5%",
+                "pass": true,
+                "observed": 1.001806756250203
+              },
+              {
+                "name": "measured finite bandwidth",
+                "pass": true,
+                "observed": 128047.99357002
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "testbench": "/workspace/.runtime/eda/runs/197f392e202f41ed9d6a4040d45d1124/testbench.spice",
+            "waveform_data": "/workspace/.runtime/eda/runs/197f392e202f41ed9d6a4040d45d1124/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/197f392e202f41ed9d6a4040d45d1124/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/197f392e202f41ed9d6a4040d45d1124/reference.spice",
+            "stdout": "/workspace/.runtime/eda/runs/197f392e202f41ed9d6a4040d45d1124/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_filter2",
+          "stage": "post",
+          "project_id": "5f57ec48516948a098346705b31acc23",
+          "run_id": "9817c0eee8d24ff687d78a840522bc69",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice ac: 481 samples.; reference criteria 2/2",
+          "elapsed_s": 6.929104904062115,
+          "parasitics": {
+            "resistors": 9004,
+            "capacitors": 2658
+          },
+          "measurements": {
+            "analysis": "ac",
+            "x_unit": "Hz",
+            "x_label": "frequency",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "true",
+            "samples": 481,
+            "solver": "SPARSE 1.3",
+            "OUT_gain_min": 0.0000033938975179229856,
+            "OUT_gain_max": 1.0019397691929732,
+            "OUT_phase_min": -179.54097838130468,
+            "OUT_phase_max": 179.08404213429964,
+            "current_flow_status": "unsupported_complex_ac",
+            "template_id": "soc_filter2",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "low_frequency_gain": 1.0019397691929732,
+            "gain_unit": "V/V",
+            "bandwidth_3dB_Hz": 121234.059003795
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_filter2",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "low-frequency transfer within 5%",
+                "pass": true,
+                "observed": 1.0019397691929732
+              },
+              {
+                "name": "measured finite bandwidth",
+                "pass": true,
+                "observed": 121234.059003795
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/9817c0eee8d24ff687d78a840522bc69/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/9817c0eee8d24ff687d78a840522bc69/pex-quality.json",
+            "pex_simulation_netlist": "/workspace/.runtime/eda/runs/9817c0eee8d24ff687d78a840522bc69/pex-simulation.spice",
+            "pex_reduction": "/workspace/.runtime/eda/runs/9817c0eee8d24ff687d78a840522bc69/pex-reduction.json",
+            "testbench": "/workspace/.runtime/eda/runs/9817c0eee8d24ff687d78a840522bc69/testbench.spice",
+            "waveform_data": "/workspace/.runtime/eda/runs/9817c0eee8d24ff687d78a840522bc69/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/9817c0eee8d24ff687d78a840522bc69/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/9817c0eee8d24ff687d78a840522bc69/pex-simulation.spice",
+            "stdout": "/workspace/.runtime/eda/runs/9817c0eee8d24ff687d78a840522bc69/stdout.log"
+          }
+        }
+      ],
+      "all_executed_pass": true,
+      "foundry_signoff": false
+    },
+    {
+      "reference": "soc_tia",
+      "name": "SoC · 보상형 전류 입력 증폭기",
+      "project_id": "44d6452383e742428b832de6aed34799",
+      "revision": 1,
+      "envelope": {
+        "policy": {
+          "schema_version": 1,
+          "width_um": 1000,
+          "height_um": 1000,
+          "max_area_um2": 1000000,
+          "edge_um": 10,
+          "origin_um": [
+            0,
+            0
+          ],
+          "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+        },
+        "fits": true,
+        "bbox_dbu": [
+          "10300",
+          "10000",
+          "264910",
+          "68990"
+        ],
+        "used_width_um": 254.61,
+        "used_height_um": 58.99,
+        "used_area_um2": 15019.443900000002,
+        "chip_area_um2": 1000000,
+        "minimum_envelope_um": [
+          274.61,
+          78.99000000000001
+        ],
+        "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+      },
+      "jobs": [
+        {
+          "reference": "soc_tia",
+          "stage": "drc",
+          "project_id": "44d6452383e742428b832de6aed34799",
+          "run_id": "6aa6f0b5f33a41f1835a5817d7539349",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+          "elapsed_s": 0.9069664520211518,
+          "marker_count": 0,
+          "artifacts": {
+            "markers": "/workspace/.runtime/eda/runs/6aa6f0b5f33a41f1835a5817d7539349/markers.tsv",
+            "stdout": "/workspace/.runtime/eda/runs/6aa6f0b5f33a41f1835a5817d7539349/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_tia",
+          "stage": "lvs",
+          "project_id": "44d6452383e742428b832de6aed34799",
+          "run_id": "e7e2535cc78449cc9d16abb4ccb42949",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Netgen comparison: circuits match uniquely.",
+          "elapsed_s": 0.7530679389601573,
+          "artifacts": {
+            "layout_netlist": "/workspace/.runtime/eda/runs/e7e2535cc78449cc9d16abb4ccb42949/layout.spice",
+            "reference_netlist": "/workspace/.runtime/eda/runs/e7e2535cc78449cc9d16abb4ccb42949/reference.spice",
+            "lvs_report": "/workspace/.runtime/eda/runs/e7e2535cc78449cc9d16abb4ccb42949/lvs.log",
+            "stdout": "/workspace/.runtime/eda/runs/e7e2535cc78449cc9d16abb4ccb42949/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_tia",
+          "stage": "pex",
+          "project_id": "44d6452383e742428b832de6aed34799",
+          "run_id": "2d8140744e9541e99818172e5b671840",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Magic RC extraction: 5669 resistors, 1292 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+          "elapsed_s": 0.831183010013774,
+          "parasitics": {
+            "resistors": 5669,
+            "capacitors": 1292
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/2d8140744e9541e99818172e5b671840/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/2d8140744e9541e99818172e5b671840/pex-quality.json",
+            "stdout": "/workspace/.runtime/eda/runs/2d8140744e9541e99818172e5b671840/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_tia",
+          "stage": "pre",
+          "project_id": "44d6452383e742428b832de6aed34799",
+          "run_id": "2778062cd5284f06bda444a89b5210ba",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice tran: 10008 samples.; reference criteria 3/3",
+          "elapsed_s": 2.7494621709920466,
+          "measurements": {
+            "analysis": "tran",
+            "x_unit": "s",
+            "x_label": "time",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 10008,
+            "solver": "SPARSE 1.3",
+            "OUT_min": 0.799816010469415,
+            "OUT_max": 0.9997147378718642,
+            "supply_current_min": 0.00004255723348832452,
+            "supply_current_max": 0.00004490822085240209,
+            "input_current_min": -9.999999845244603e-7,
+            "input_current_max": 9.999999845244603e-7,
+            "IIN_min": 0.8996559888675723,
+            "IIN_max": 0.8998736464704022,
+            "current_flow_status": "available",
+            "template_id": "soc_tia",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "average_supply_current_A": 0.000042988291715411195,
+            "average_supply_power_W": 0.00007737892508774015,
+            "transfer_gain": 99949.89162423048,
+            "transfer_output_fit": {
+              "amplitude": 0.09994988833598194,
+              "mean": 0.8997649847687732,
+              "residual_rms": 5.330302698921237e-7
+            }
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_tia",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "passive sensor macro draws nonnegative mean supply current",
+                "pass": true,
+                "observed": 0.000042988291715411195
+              },
+              {
+                "name": "transfer measured gain within 3%",
+                "pass": true,
+                "observed": 99949.89162423048
+              },
+              {
+                "name": "transfer settled sine residual <5mV",
+                "pass": true,
+                "observed": 5.330302698921237e-7
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "testbench": "/workspace/.runtime/eda/runs/2778062cd5284f06bda444a89b5210ba/testbench.spice",
+            "current_flow_data": "/workspace/.runtime/eda/runs/2778062cd5284f06bda444a89b5210ba/current-flow.dat",
+            "current_probe_netlist": "/workspace/.runtime/eda/runs/2778062cd5284f06bda444a89b5210ba/current-probe.spice",
+            "node_voltage_data": "/workspace/.runtime/eda/runs/2778062cd5284f06bda444a89b5210ba/node-voltages.dat",
+            "node_voltage_probes": "/workspace/.runtime/eda/runs/2778062cd5284f06bda444a89b5210ba/voltage-probes.json",
+            "waveform_data": "/workspace/.runtime/eda/runs/2778062cd5284f06bda444a89b5210ba/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/2778062cd5284f06bda444a89b5210ba/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/2778062cd5284f06bda444a89b5210ba/reference.spice",
+            "stdout": "/workspace/.runtime/eda/runs/2778062cd5284f06bda444a89b5210ba/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_tia",
+          "stage": "post",
+          "project_id": "44d6452383e742428b832de6aed34799",
+          "run_id": "f4e316604f654255bc94b85bd4a5b758",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice tran: 10008 samples.; reference criteria 3/3",
+          "elapsed_s": 8.77231000806205,
+          "parasitics": {
+            "resistors": 5669,
+            "capacitors": 1292
+          },
+          "measurements": {
+            "analysis": "tran",
+            "x_unit": "s",
+            "x_label": "time",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "true",
+            "samples": 10008,
+            "solver": "SPARSE 1.3",
+            "OUT_min": 0.7997040986440229,
+            "OUT_max": 0.9998665365819128,
+            "supply_current_min": 0.000041808265314676353,
+            "supply_current_max": 0.000044148981894117,
+            "input_current_min": -9.999999845244603e-7,
+            "input_current_max": 9.999999845244603e-7,
+            "IIN_min": 0.8996731903919304,
+            "IIN_max": 0.899896328252121,
+            "current_flow_status": "available_partial",
+            "template_id": "soc_tia",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "average_supply_current_A": 0.00004223785471825724,
+            "average_supply_power_W": 0.00007602813849286304,
+            "transfer_gain": 100081.74884121123,
+            "transfer_output_fit": {
+              "amplitude": 0.10008174554862471,
+              "mean": 0.8997849268697451,
+              "residual_rms": 5.346896175888769e-7
+            }
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_tia",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "passive sensor macro draws nonnegative mean supply current",
+                "pass": true,
+                "observed": 0.00004223785471825724
+              },
+              {
+                "name": "transfer measured gain within 3%",
+                "pass": true,
+                "observed": 100081.74884121123
+              },
+              {
+                "name": "transfer settled sine residual <5mV",
+                "pass": true,
+                "observed": 5.346896175888769e-7
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/pex-quality.json",
+            "pex_simulation_netlist": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/pex-simulation.spice",
+            "pex_reduction": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/pex-reduction.json",
+            "testbench": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/testbench.spice",
+            "current_flow_data": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/current-flow.dat",
+            "current_probe_netlist": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/current-probe.spice",
+            "node_voltage_data": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/node-voltages.dat",
+            "node_voltage_probes": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/voltage-probes.json",
+            "waveform_data": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/pex-simulation.spice",
+            "stdout": "/workspace/.runtime/eda/runs/f4e316604f654255bc94b85bd4a5b758/stdout.log"
+          }
+        }
+      ],
+      "all_executed_pass": true,
+      "foundry_signoff": false
+    },
+    {
+      "reference": "soc_sensor_afe",
+      "name": "SoC · 센서 AFE·클록 동기 판정",
+      "project_id": "9d6e5c8b3d0246e19ebaeb891f0613f0",
+      "revision": 1,
+      "envelope": {
+        "policy": {
+          "schema_version": 1,
+          "width_um": 1000,
+          "height_um": 1000,
+          "max_area_um2": 1000000,
+          "edge_um": 10,
+          "origin_um": [
+            0,
+            0
+          ],
+          "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+        },
+        "fits": true,
+        "bbox_dbu": [
+          "10300",
+          "10000",
+          "916620",
+          "305960"
+        ],
+        "used_width_um": 906.32,
+        "used_height_um": 295.96,
+        "used_area_um2": 268234.4672,
+        "chip_area_um2": 1000000,
+        "minimum_envelope_um": [
+          926.32,
+          315.96
+        ],
+        "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+      },
+      "jobs": [
+        {
+          "reference": "soc_sensor_afe",
+          "stage": "drc",
+          "project_id": "9d6e5c8b3d0246e19ebaeb891f0613f0",
+          "run_id": "023db06359fa44418f174709d25b3e37",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+          "elapsed_s": 4.344371526967734,
+          "marker_count": 0,
+          "artifacts": {
+            "markers": "/workspace/.runtime/eda/runs/023db06359fa44418f174709d25b3e37/markers.tsv",
+            "stdout": "/workspace/.runtime/eda/runs/023db06359fa44418f174709d25b3e37/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_sensor_afe",
+          "stage": "lvs",
+          "project_id": "9d6e5c8b3d0246e19ebaeb891f0613f0",
+          "run_id": "cfc92b0f0b084b4b88261248adc5bad2",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Netgen comparison: circuits match uniquely.",
+          "elapsed_s": 3.4882794859586284,
+          "artifacts": {
+            "layout_netlist": "/workspace/.runtime/eda/runs/cfc92b0f0b084b4b88261248adc5bad2/layout.spice",
+            "reference_netlist": "/workspace/.runtime/eda/runs/cfc92b0f0b084b4b88261248adc5bad2/reference.spice",
+            "lvs_report": "/workspace/.runtime/eda/runs/cfc92b0f0b084b4b88261248adc5bad2/lvs.log",
+            "stdout": "/workspace/.runtime/eda/runs/cfc92b0f0b084b4b88261248adc5bad2/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_sensor_afe",
+          "stage": "pex",
+          "project_id": "9d6e5c8b3d0246e19ebaeb891f0613f0",
+          "run_id": "666a817ae1974e3a9fca3655d2ae317b",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual Magic RC extraction: 20804 resistors, 1367 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+          "elapsed_s": 5.7603655139682814,
+          "parasitics": {
+            "resistors": 20804,
+            "capacitors": 1367
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/666a817ae1974e3a9fca3655d2ae317b/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/666a817ae1974e3a9fca3655d2ae317b/pex-quality.json",
+            "stdout": "/workspace/.runtime/eda/runs/666a817ae1974e3a9fca3655d2ae317b/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_sensor_afe",
+          "stage": "pre",
+          "project_id": "9d6e5c8b3d0246e19ebaeb891f0613f0",
+          "run_id": "407d981857554744ab8f82a8df639657",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice tran: 15640 samples.; reference criteria 9/9",
+          "elapsed_s": 24.081916579976678,
+          "measurements": {
+            "analysis": "tran",
+            "x_unit": "s",
+            "x_label": "time",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 15640,
+            "solver": "SPARSE 1.3",
+            "OUT_min": 0.6992141110857479,
+            "OUT_max": 0.9486710124809697,
+            "supply_current_min": 0.00032055469013828004,
+            "supply_current_max": 0.00041554321851310343,
+            "VIN_min": 0.8750000002598108,
+            "VIN_max": 0.924999999770742,
+            "GAIN_min": 0,
+            "GAIN_max": 1.8,
+            "CLK_min": 0,
+            "CLK_max": 1.8,
+            "RESET_min": 0,
+            "RESET_max": 1.8,
+            "DATA_min": -0.002275740784411856,
+            "DATA_max": 1.81460992163417,
+            "VCM_min": 0.8943695871555876,
+            "VCM_max": 0.9027891004804273,
+            "BIAS_min": 0.9281845307229679,
+            "BIAS_max": 0.9299112673263931,
+            "current_flow_status": "available_partial",
+            "template_id": "soc_sensor_afe",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "average_supply_current_A": 0.00033780749511771644,
+            "average_supply_power_W": 0.0006080534912118896,
+            "low_gain": 1.992029639646639,
+            "low_output_fit": {
+              "amplitude": 0.04980073944407455,
+              "mean": 0.8988667316239807,
+              "residual_rms": 0.0000012163516378650105
+            },
+            "high_gain": 8.004094111148161,
+            "high_output_fit": {
+              "amplitude": 0.20010234657916684,
+              "mean": 0.8993367610905448,
+              "residual_rms": 0.00004614321032761633
+            },
+            "common_mode_V": 0.8996254598682243,
+            "bias_V": 0.9294438236924586,
+            "sampled_interface_cases": 157,
+            "sampled_interface_failures": 0,
+            "sampled_interface_rows": [
+              {
+                "time_s": 0.000020250999999999996,
+                "input_difference_V": 0.026384812465333862,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000021250999999999997,
+                "input_difference_V": 0.027675852668142653,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000022250999999999998,
+                "input_difference_V": 0.028938646258309997,
+                "output_V": 1.7999999793626296,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000023250999999999998,
+                "input_difference_V": 0.03017195063856004,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000024251,
+                "input_difference_V": 0.03137455649313137,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000025250999999999996,
+                "input_difference_V": 0.03254527862239709,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000026250999999999997,
+                "input_difference_V": 0.03368296951559735,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000027250999999999997,
+                "input_difference_V": 0.0347865100231064,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000028250999999999998,
+                "input_difference_V": 0.03585481766385301,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000029250999999999998,
+                "input_difference_V": 0.0368868441954977,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000030250999999999995,
+                "input_difference_V": 0.03788157482145338,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000031251,
+                "input_difference_V": 0.03884283787888143,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000032251,
+                "input_difference_V": 0.039755287406936235,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000033251,
+                "input_difference_V": 0.04063242944402823,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000034251,
+                "input_difference_V": 0.041473346764739016,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000035251,
+                "input_difference_V": 0.04226299062609529,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000036251,
+                "input_difference_V": 0.04301999976356141,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000037251,
+                "input_difference_V": 0.04372332271970503,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000038251,
+                "input_difference_V": 0.044387838834469284,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000039251,
+                "input_difference_V": 0.04501236955788346,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000040251,
+                "input_difference_V": 0.045582314578687555,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000041251,
+                "input_difference_V": 0.04611574501421967,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000042251,
+                "input_difference_V": 0.0465935577232528,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000043250999999999996,
+                "input_difference_V": 0.04702920159244517,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000044251,
+                "input_difference_V": 0.04742222021612785,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000045251,
+                "input_difference_V": 0.047758399788568995,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000046251,
+                "input_difference_V": 0.04805195402863571,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000047251,
+                "input_difference_V": 0.048295843096893165,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000048251,
+                "input_difference_V": 0.04849197350517376,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000049251,
+                "input_difference_V": 0.04863943526452408,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000050251,
+                "input_difference_V": 0.048738087545660114,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000051251,
+                "input_difference_V": 0.04878348236387808,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000052251,
+                "input_difference_V": 0.048788617619932584,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000053251,
+                "input_difference_V": 0.0487450327706499,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000054251,
+                "input_difference_V": 0.04864337226873572,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000055251,
+                "input_difference_V": 0.04849748155534139,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000056251,
+                "input_difference_V": 0.048305945920319115,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000057251,
+                "input_difference_V": 0.04805988165973252,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000058251,
+                "input_difference_V": 0.04777367471291416,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000059251,
+                "input_difference_V": 0.047429366140970375,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000060250999999999996,
+                "input_difference_V": 0.0470425092484511,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000061251,
+                "input_difference_V": 0.04660841000410154,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00006225100000000001,
+                "input_difference_V": 0.04612749396852389,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00006325100000000001,
+                "input_difference_V": 0.04560023202865571,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000064251,
+                "input_difference_V": 0.04502714374275174,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000065251,
+                "input_difference_V": 0.04440878845211149,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000066251,
+                "input_difference_V": 0.043745774345033905,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00006725100000000001,
+                "input_difference_V": 0.043041410129831204,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00006825100000000001,
+                "input_difference_V": 0.04228841431033903,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000069251,
+                "input_difference_V": 0.04149549876605019,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000070251,
+                "input_difference_V": 0.04066078304848231,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000071251,
+                "input_difference_V": 0.03978508575873507,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00007225100000000001,
+                "input_difference_V": 0.0388740681123394,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00007325100000000001,
+                "input_difference_V": 0.037914228267161176,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000074251,
+                "input_difference_V": 0.03692090445830809,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000075251,
+                "input_difference_V": 0.03589027119131716,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000076251,
+                "input_difference_V": 0.03482334145880628,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00007725100000000001,
+                "input_difference_V": 0.03371644526930406,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00007825100000000001,
+                "input_difference_V": 0.03258481983683292,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000079251,
+                "input_difference_V": 0.0314154290841423,
+                "output_V": 1.7999999793626298,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000080251,
+                "input_difference_V": 0.03021413869711076,
+                "output_V": 1.7999999793626296,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000081251,
+                "input_difference_V": 0.028982131369093223,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00008225100000000001,
+                "input_difference_V": 0.02772621761792804,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000083251,
+                "input_difference_V": 0.02643083797535506,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000084251,
+                "input_difference_V": 0.025114060945238714,
+                "output_V": 1.7999999793626291,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00010625100000000001,
+                "input_difference_V": -0.027738655752817087,
+                "output_V": 5.402138251362727e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00010725100000000001,
+                "input_difference_V": -0.03389583837172072,
+                "output_V": 5.402138238195009e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000108251,
+                "input_difference_V": -0.04003123282065624,
+                "output_V": 5.4021382469376355e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000109251,
+                "input_difference_V": -0.04613213033718111,
+                "output_V": 5.402138239896642e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000110251,
+                "input_difference_V": -0.05219029545435805,
+                "output_V": 5.402138238201905e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00011125100000000001,
+                "input_difference_V": -0.05819898175873395,
+                "output_V": 5.402138244707477e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000112251,
+                "input_difference_V": -0.06415220981893532,
+                "output_V": 5.402138239799823e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000113251,
+                "input_difference_V": -0.07004386979569655,
+                "output_V": 5.402138245324566e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000114251,
+                "input_difference_V": -0.07586819203113959,
+                "output_V": 5.402138246944362e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000115251,
+                "input_difference_V": -0.08161943341984612,
+                "output_V": 5.402138246944421e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00011625100000000001,
+                "input_difference_V": -0.08729189599195619,
+                "output_V": 5.402138251345098e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000117251,
+                "input_difference_V": -0.09288009265305242,
+                "output_V": 5.402138245844048e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000118251,
+                "input_difference_V": -0.09837841720865337,
+                "output_V": 5.402138238185237e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000119251,
+                "input_difference_V": -0.10378149561000216,
+                "output_V": 5.402138246944571e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000120251,
+                "input_difference_V": -0.10908400363419402,
+                "output_V": 5.402138238185271e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00012125100000000001,
+                "input_difference_V": -0.11428069347672232,
+                "output_V": 5.4021382513632445e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000122251,
+                "input_difference_V": -0.11936653567195254,
+                "output_V": 5.402138246944651e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00012325099999999998,
+                "input_difference_V": -0.12433643249089366,
+                "output_V": 5.4021382469446574e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000124251,
+                "input_difference_V": -0.12918547038292516,
+                "output_V": 5.402138245670428e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000125251,
+                "input_difference_V": -0.1339090119726748,
+                "output_V": 5.402138246944687e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000126251,
+                "input_difference_V": -0.13850226033941926,
+                "output_V": 5.4021382469447e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000127251,
+                "input_difference_V": -0.14296073011679278,
+                "output_V": 5.40213824694471e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000128251,
+                "input_difference_V": -0.14728002044411526,
+                "output_V": 5.4021382397942386e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00012925099999999999,
+                "input_difference_V": -0.15145586036438075,
+                "output_V": 5.402138238185384e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00013025099999999998,
+                "input_difference_V": -0.15548412419132518,
+                "output_V": 5.4021382469447484e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00013125099999999998,
+                "input_difference_V": -0.1593608179713215,
+                "output_V": 5.402138259565698e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00013225099999999998,
+                "input_difference_V": -0.1630820926898906,
+                "output_V": 5.402138238196884e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000133251,
+                "input_difference_V": -0.1666442596130282,
+                "output_V": 5.40213824692914e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000134251,
+                "input_difference_V": -0.17004376205595828,
+                "output_V": 5.402138239794267e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000135251,
+                "input_difference_V": -0.17327720320491846,
+                "output_V": 5.40213824692915e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000136251,
+                "input_difference_V": -0.17634134676702495,
+                "output_V": 5.4021382469447765e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000137251,
+                "input_difference_V": -0.17923311045653056,
+                "output_V": 5.40213824694478e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000138251,
+                "input_difference_V": -0.1819495768326439,
+                "output_V": 5.402138246944774e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00013925099999999999,
+                "input_difference_V": -0.1844879891455099,
+                "output_V": 5.402138238185424e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00014025099999999998,
+                "input_difference_V": -0.1868457630646363,
+                "output_V": 5.402138246944777e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00014125099999999998,
+                "input_difference_V": -0.18902047890861873,
+                "output_V": 5.402138246944781e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00014225099999999998,
+                "input_difference_V": -0.1910098940489885,
+                "output_V": 5.4021382381854285e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000143251,
+                "input_difference_V": -0.19281193712141464,
+                "output_V": 5.402138246944782e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000144251,
+                "input_difference_V": -0.19442471790217075,
+                "output_V": 5.402138246952602e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000145251,
+                "input_difference_V": -0.19584652564170568,
+                "output_V": 5.402138246944786e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000146251,
+                "input_difference_V": -0.19707583104629278,
+                "output_V": 5.402138246944786e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000147251,
+                "input_difference_V": -0.19811129704582375,
+                "output_V": 5.402138238202638e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000148251,
+                "input_difference_V": -0.19895177365016148,
+                "output_V": 5.402138246944791e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00014925099999999998,
+                "input_difference_V": -0.19959629978786408,
+                "output_V": 5.402138238185446e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00015025099999999998,
+                "input_difference_V": -0.20004410930874028,
+                "output_V": 5.402138246944801e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00015125099999999998,
+                "input_difference_V": -0.20029463886380183,
+                "output_V": 5.402138246944789e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00015225099999999998,
+                "input_difference_V": -0.20034752005614986,
+                "output_V": 5.402138246944789e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000153251,
+                "input_difference_V": -0.20020255914327523,
+                "output_V": 5.402138251363723e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000154251,
+                "input_difference_V": -0.19985988016359946,
+                "output_V": 5.4021382397943056e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000155251,
+                "input_difference_V": -0.1993196385863365,
+                "output_V": 5.402138246944788e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000156251,
+                "input_difference_V": -0.19858232225847638,
+                "output_V": 5.402138246944788e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000157251,
+                "input_difference_V": -0.1976485885239354,
+                "output_V": 5.4021382469447865e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00015825099999999999,
+                "input_difference_V": -0.19651933285991163,
+                "output_V": 5.4021382189963305e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00015925099999999998,
+                "input_difference_V": -0.19519554165559916,
+                "output_V": 5.402138246944786e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00016025099999999998,
+                "input_difference_V": -0.19367858658872572,
+                "output_V": 5.402138238185451e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00016125099999999998,
+                "input_difference_V": -0.19196992935444646,
+                "output_V": 5.4021382381969114e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00016225099999999998,
+                "input_difference_V": -0.1900712644618321,
+                "output_V": 5.402138238185428e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000163251,
+                "input_difference_V": -0.18798446195624885,
+                "output_V": 5.402138251363692e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000164251,
+                "input_difference_V": -0.18571170531702097,
+                "output_V": 5.402138239768511e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000165251,
+                "input_difference_V": -0.18325520240554616,
+                "output_V": 5.402138238196906e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000166251,
+                "input_difference_V": -0.18061747444085618,
+                "output_V": 5.402138246944773e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000167251,
+                "input_difference_V": -0.1778012106384853,
+                "output_V": 5.402138246944769e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00016825099999999999,
+                "input_difference_V": -0.17480927004489755,
+                "output_V": 5.402138246944787e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00016925099999999998,
+                "input_difference_V": -0.17164470178562474,
+                "output_V": 5.402138246944774e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00017025099999999998,
+                "input_difference_V": -0.16831073399921126,
+                "output_V": 5.402138238185417e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00017125099999999998,
+                "input_difference_V": -0.16481076734097833,
+                "output_V": 5.4021382190870044e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00017225099999999997,
+                "input_difference_V": -0.1611483702560551,
+                "output_V": 5.402138246944747e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000173251,
+                "input_difference_V": -0.1573272294530912,
+                "output_V": 5.402138245670944e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000174251,
+                "input_difference_V": -0.1533513702943503,
+                "output_V": 5.4021382381853855e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000175251,
+                "input_difference_V": -0.14922470289604706,
+                "output_V": 5.402138245314144e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000176251,
+                "input_difference_V": -0.14495145998695014,
+                "output_V": 5.402138246944715e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000177251,
+                "input_difference_V": -0.14053597630497117,
+                "output_V": 5.4021382381853615e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00017825099999999998,
+                "input_difference_V": -0.13598272592523486,
+                "output_V": 5.402138246944691e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00017925099999999998,
+                "input_difference_V": -0.13129631018095034,
+                "output_V": 5.402138245314125e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00018025099999999998,
+                "input_difference_V": -0.12648145908932817,
+                "output_V": 5.40213823819681e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00018125099999999998,
+                "input_difference_V": -0.12154303135499023,
+                "output_V": 5.402138239794163e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00018225099999999997,
+                "input_difference_V": -0.11648599235787449,
+                "output_V": 5.402138238185296e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000183251,
+                "input_difference_V": -0.11131540122922101,
+                "output_V": 5.402138251363236e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000184251,
+                "input_difference_V": -0.10603653549829795,
+                "output_V": 5.402138246944579e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000185251,
+                "input_difference_V": -0.10065459480568728,
+                "output_V": 5.402138245313995e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000186251,
+                "input_difference_V": -0.09517499571324839,
+                "output_V": 5.402138246944518e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000187251,
+                "input_difference_V": -0.08960322184098812,
+                "output_V": 5.4021382274757036e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00018825099999999998,
+                "input_difference_V": -0.08394483220637827,
+                "output_V": 5.402138246944435e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00018925099999999998,
+                "input_difference_V": -0.07820547721746751,
+                "output_V": 5.402138271094862e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00019025099999999998,
+                "input_difference_V": -0.07239087279096046,
+                "output_V": 5.402138251703305e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00019125099999999998,
+                "input_difference_V": -0.06650680886902416,
+                "output_V": 5.402138246944219e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000192251,
+                "input_difference_V": -0.060559142205703465,
+                "output_V": 5.402138246944103e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000193251,
+                "input_difference_V": -0.0545537821111981,
+                "output_V": 5.4021382469439965e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000194251,
+                "input_difference_V": -0.04849669256458933,
+                "output_V": 5.402138238184539e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000195251,
+                "input_difference_V": -0.04239388783739906,
+                "output_V": 5.402138233418788e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000196251,
+                "input_difference_V": -0.03625141972976764,
+                "output_V": 5.402138238195047e-9,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00019725099999999999,
+                "input_difference_V": -0.030075377659980473,
+                "output_V": 5.402138270309208e-9,
+                "expected": 0,
+                "passed": true
+              }
+            ]
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_sensor_afe",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "passive sensor macro draws nonnegative mean supply current",
+                "pass": true,
+                "observed": 0.00033780749511771644
+              },
+              {
+                "name": "low measured gain within 3%",
+                "pass": true,
+                "observed": 1.992029639646639
+              },
+              {
+                "name": "low settled sine residual <5mV",
+                "pass": true,
+                "observed": 0.0000012163516378650105
+              },
+              {
+                "name": "high measured gain within 3%",
+                "pass": true,
+                "observed": 8.004094111148161
+              },
+              {
+                "name": "high settled sine residual <5mV",
+                "pass": true,
+                "observed": 0.00004614321032761633
+              },
+              {
+                "name": "self-biased VCM within 1% of VDD/2",
+                "pass": true,
+                "observed": 0.8996254598682243
+              },
+              {
+                "name": "self-generated bias within 0.5..1.1V",
+                "pass": true,
+                "observed": 0.9294438236924586
+              },
+              {
+                "name": "settled analog output stays within supply rails plus 50mV",
+                "pass": true,
+                "observed": [
+                  0.6992141110857479,
+                  0.9486710124809697
+                ]
+              },
+              {
+                "name": "clocked interface: >=50 unambiguous samples all match",
+                "pass": true,
+                "observed": 0
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "testbench": "/workspace/.runtime/eda/runs/407d981857554744ab8f82a8df639657/testbench.spice",
+            "current_flow_data": "/workspace/.runtime/eda/runs/407d981857554744ab8f82a8df639657/current-flow.dat",
+            "current_probe_netlist": "/workspace/.runtime/eda/runs/407d981857554744ab8f82a8df639657/current-probe.spice",
+            "node_voltage_data": "/workspace/.runtime/eda/runs/407d981857554744ab8f82a8df639657/node-voltages.dat",
+            "node_voltage_probes": "/workspace/.runtime/eda/runs/407d981857554744ab8f82a8df639657/voltage-probes.json",
+            "waveform_data": "/workspace/.runtime/eda/runs/407d981857554744ab8f82a8df639657/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/407d981857554744ab8f82a8df639657/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/407d981857554744ab8f82a8df639657/reference.spice",
+            "stdout": "/workspace/.runtime/eda/runs/407d981857554744ab8f82a8df639657/stdout.log"
+          }
+        },
+        {
+          "reference": "soc_sensor_afe",
+          "stage": "post",
+          "project_id": "9d6e5c8b3d0246e19ebaeb891f0613f0",
+          "run_id": "38d88b5616884e67a480243852ce4468",
+          "revision": 1,
+          "freshness": "current",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual ngspice tran: 18733 samples.; reference criteria 9/9",
+          "elapsed_s": 72.98132057697512,
+          "parasitics": {
+            "resistors": 20804,
+            "capacitors": 1367
+          },
+          "measurements": {
+            "analysis": "tran",
+            "x_unit": "s",
+            "x_label": "time",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "true",
+            "samples": 18733,
+            "solver": "SPARSE 1.3",
+            "OUT_min": 0.6994659302235192,
+            "OUT_max": 0.948486092231865,
+            "supply_current_min": 0.00030333103887412695,
+            "supply_current_max": 0.0005369262290243834,
+            "VIN_min": 0.8750000009954172,
+            "VIN_max": 0.9249999998308231,
+            "GAIN_min": 0,
+            "GAIN_max": 1.8,
+            "CLK_min": 0,
+            "CLK_max": 1.8,
+            "RESET_min": 0,
+            "RESET_max": 1.8,
+            "DATA_min": -0.03176019468201524,
+            "DATA_max": 1.8448690973657207,
+            "VCM_min": 0.8981527620006476,
+            "VCM_max": 0.9032402524285085,
+            "BIAS_min": 0.9312943992864575,
+            "BIAS_max": 0.9355522142168127,
+            "current_flow_status": "available_partial",
+            "template_id": "soc_sensor_afe",
+            "layout_status": "generated-public-core",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "average_supply_current_A": 0.00033553978715728606,
+            "average_supply_power_W": 0.0006039716168831149,
+            "low_gain": 1.9911164395650185,
+            "low_output_fit": {
+              "amplitude": 0.04977790947116989,
+              "mean": 0.8986653610410629,
+              "residual_rms": 0.000004098428083627991
+            },
+            "high_gain": 7.934879391845867,
+            "high_output_fit": {
+              "amplitude": 0.19837197865678705,
+              "mean": 0.8978622062617067,
+              "residual_rms": 0.00004526046282457199
+            },
+            "common_mode_V": 0.8998340741459934,
+            "bias_V": 0.9319439128902667,
+            "sampled_interface_cases": 157,
+            "sampled_interface_failures": 0,
+            "sampled_interface_rows": [
+              {
+                "time_s": 0.000020250999999999996,
+                "input_difference_V": 0.02585847179388301,
+                "output_V": 1.799999977656371,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000021250999999999997,
+                "input_difference_V": 0.027151473637058388,
+                "output_V": 1.7999999776568407,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000022250999999999998,
+                "input_difference_V": 0.028416368222453303,
+                "output_V": 1.7999999776566238,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000023250999999999998,
+                "input_difference_V": 0.029651907261452393,
+                "output_V": 1.7999999776560587,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000024251,
+                "input_difference_V": 0.030856875795632455,
+                "output_V": 1.7999999776559632,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000025250999999999996,
+                "input_difference_V": 0.03203009306145732,
+                "output_V": 1.7999999776560907,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000026250999999999997,
+                "input_difference_V": 0.03317040859863629,
+                "output_V": 1.799999977656752,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000027250999999999997,
+                "input_difference_V": 0.03427669461218341,
+                "output_V": 1.7999999776561795,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000028250999999999998,
+                "input_difference_V": 0.035347870162627526,
+                "output_V": 1.7999999776563411,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000029250999999999998,
+                "input_difference_V": 0.03638288205864604,
+                "output_V": 1.7999999776561089,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000030250999999999995,
+                "input_difference_V": 0.03738071758243122,
+                "output_V": 1.7999999776559588,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000031251,
+                "input_difference_V": 0.03834049813118301,
+                "output_V": 1.7999999776305196,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000032251,
+                "input_difference_V": 0.03926049386110275,
+                "output_V": 1.7999999776259334,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000033251,
+                "input_difference_V": 0.04014192960881835,
+                "output_V": 1.7999999776440916,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000034251,
+                "input_difference_V": 0.04098133459473807,
+                "output_V": 1.7999999776183475,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000035251,
+                "input_difference_V": 0.041779298422289335,
+                "output_V": 1.79999997765568,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000036251,
+                "input_difference_V": 0.042534964787891094,
+                "output_V": 1.7999999776306506,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000037251,
+                "input_difference_V": 0.04324662102719412,
+                "output_V": 1.799999977687394,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000038251,
+                "input_difference_V": 0.043915639316538746,
+                "output_V": 1.7999999776555697,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000039251,
+                "input_difference_V": 0.04453962383087784,
+                "output_V": 1.7999999776309707,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000040251,
+                "input_difference_V": 0.045117599749637805,
+                "output_V": 1.7999999776448499,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000041251,
+                "input_difference_V": 0.04565041533849867,
+                "output_V": 1.7999999776157085,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000042251,
+                "input_difference_V": 0.04613784113790809,
+                "output_V": 1.7999999776557885,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000043250999999999996,
+                "input_difference_V": 0.046577785666018445,
+                "output_V": 1.7999999776552404,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000044251,
+                "input_difference_V": 0.04697068375665692,
+                "output_V": 1.7999999776311044,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000045251,
+                "input_difference_V": 0.04731517594127577,
+                "output_V": 1.7999999776388103,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000046251,
+                "input_difference_V": 0.047611189926640485,
+                "output_V": 1.7999999776179427,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000047251,
+                "input_difference_V": 0.04786224554248153,
+                "output_V": 1.7999999776561602,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000048251,
+                "input_difference_V": 0.048062950537061666,
+                "output_V": 1.7999999776554652,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000049251,
+                "input_difference_V": 0.04821502989459914,
+                "output_V": 1.7999999776561557,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000050251,
+                "input_difference_V": 0.04831833669904129,
+                "output_V": 1.799999977656529,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000051251,
+                "input_difference_V": 0.048372889873590896,
+                "output_V": 1.7999999776310487,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000052251,
+                "input_difference_V": 0.04837769203544062,
+                "output_V": 1.7999999776326419,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000053251,
+                "input_difference_V": 0.048334634832139955,
+                "output_V": 1.7999999777129612,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000054251,
+                "input_difference_V": 0.04824253145730306,
+                "output_V": 1.7999999776552709,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000055251,
+                "input_difference_V": 0.048101413379642466,
+                "output_V": 1.799999977655784,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000056251,
+                "input_difference_V": 0.047911751926172585,
+                "output_V": 1.7999999776298747,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000057251,
+                "input_difference_V": 0.047672765289465846,
+                "output_V": 1.7999999776325835,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000058251,
+                "input_difference_V": 0.047386904318302725,
+                "output_V": 1.7999999776182236,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000059251,
+                "input_difference_V": 0.04705192530762636,
+                "output_V": 1.7999999776210638,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000060250999999999996,
+                "input_difference_V": 0.04667009920589993,
+                "output_V": 1.799999977633949,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000061251,
+                "input_difference_V": 0.046240489862520495,
+                "output_V": 1.7999999776338518,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00006225100000000001,
+                "input_difference_V": 0.045765604196447596,
+                "output_V": 1.7999999776203734,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00006325100000000001,
+                "input_difference_V": 0.045242435498842326,
+                "output_V": 1.7999999776302797,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000064251,
+                "input_difference_V": 0.04467331013115061,
+                "output_V": 1.7999999776362248,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000065251,
+                "input_difference_V": 0.04406120404633129,
+                "output_V": 1.7999999776268385,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000066251,
+                "input_difference_V": 0.04340121970063415,
+                "output_V": 1.7999999777027547,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00006725100000000001,
+                "input_difference_V": 0.04269943367269624,
+                "output_V": 1.7999999776306093,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00006825100000000001,
+                "input_difference_V": 0.04195291222737174,
+                "output_V": 1.799999977714034,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000069251,
+                "input_difference_V": 0.0411650707650002,
+                "output_V": 1.7999999776560294,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000070251,
+                "input_difference_V": 0.04033477446520917,
+                "output_V": 1.7999999776558395,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000071251,
+                "input_difference_V": 0.039463441966365864,
+                "output_V": 1.7999999776554698,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00007225100000000001,
+                "input_difference_V": 0.038552029444371305,
+                "output_V": 1.7999999776304811,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00007325100000000001,
+                "input_difference_V": 0.03760061744465926,
+                "output_V": 1.799999977624272,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000074251,
+                "input_difference_V": 0.036611614943261594,
+                "output_V": 1.7999999776347717,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000075251,
+                "input_difference_V": 0.03558540122066811,
+                "output_V": 1.7999999776205768,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000076251,
+                "input_difference_V": 0.034521848975077485,
+                "output_V": 1.7999999777208961,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00007725100000000001,
+                "input_difference_V": 0.03342434449653009,
+                "output_V": 1.7999999776303592,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00007825100000000001,
+                "input_difference_V": 0.03229141365468524,
+                "output_V": 1.799999977701092,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000079251,
+                "input_difference_V": 0.031126098367827315,
+                "output_V": 1.7999999776563826,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000080251,
+                "input_difference_V": 0.029928466789818864,
+                "output_V": 1.7999999776562956,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000081251,
+                "input_difference_V": 0.028700016434317965,
+                "output_V": 1.7999999776566342,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00008225100000000001,
+                "input_difference_V": 0.027442031610078743,
+                "output_V": 1.799999977630964,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.000083251,
+                "input_difference_V": 0.026155436374397434,
+                "output_V": 1.799999977614543,
+                "expected": 1,
+                "passed": true
+              },
+              {
+                "time_s": 0.00010625100000000001,
+                "input_difference_V": -0.02857810583313647,
+                "output_V": 1.8458970358874922e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00010725100000000001,
+                "input_difference_V": -0.03468298797420055,
+                "output_V": 1.8359744689593015e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000108251,
+                "input_difference_V": -0.04076809760801192,
+                "output_V": 1.8262020857304443e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000109251,
+                "input_difference_V": -0.0468201777329208,
+                "output_V": 1.8166099010091812e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000110251,
+                "input_difference_V": -0.05283073765414592,
+                "output_V": 1.807219560072147e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00011125100000000001,
+                "input_difference_V": -0.05879305794975331,
+                "output_V": 1.7980482835188104e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000112251,
+                "input_difference_V": -0.06470072236841784,
+                "output_V": 1.789109934957313e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000113251,
+                "input_difference_V": -0.07054804853087604,
+                "output_V": 1.7804160784753717e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000114251,
+                "input_difference_V": -0.07632916789296451,
+                "output_V": 1.7719755170157673e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000115251,
+                "input_difference_V": -0.08203838680205922,
+                "output_V": 1.7637947768866272e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00011625100000000001,
+                "input_difference_V": -0.08767015242283105,
+                "output_V": 1.7558782422599508e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000117251,
+                "input_difference_V": -0.0932186785616953,
+                "output_V": 1.7482280779808854e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000118251,
+                "input_difference_V": -0.09867874692650946,
+                "output_V": 1.740844862319198e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000119251,
+                "input_difference_V": -0.10404490253198095,
+                "output_V": 1.733727479032181e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000120251,
+                "input_difference_V": -0.10931185884758787,
+                "output_V": 1.7268735219286207e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00012125100000000001,
+                "input_difference_V": -0.11447450750069932,
+                "output_V": 1.7202796353688258e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000122251,
+                "input_difference_V": -0.11952752891769602,
+                "output_V": 1.7139414846737376e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00012325099999999998,
+                "input_difference_V": -0.12446618208619331,
+                "output_V": 1.707854611818571e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000124251,
+                "input_difference_V": -0.12928561064458588,
+                "output_V": 1.7020140719464602e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000125251,
+                "input_difference_V": -0.13398082861685434,
+                "output_V": 1.6964147236251525e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000126251,
+                "input_difference_V": -0.13854744501522165,
+                "output_V": 1.6910518933227057e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000127251,
+                "input_difference_V": -0.14298087296879758,
+                "output_V": 1.6859208727089623e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000128251,
+                "input_difference_V": -0.14727673595749435,
+                "output_V": 1.6810173534881568e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00012925099999999999,
+                "input_difference_V": -0.15143078178820046,
+                "output_V": 1.676337349177262e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00013025099999999998,
+                "input_difference_V": -0.15543890613464795,
+                "output_V": 1.6718773795272355e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00013125099999999998,
+                "input_difference_V": -0.1592971334697496,
+                "output_V": 1.6676342592289364e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00013225099999999998,
+                "input_difference_V": -0.16300163648795807,
+                "output_V": 1.6636052886182227e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000133251,
+                "input_difference_V": -0.16654874201883596,
+                "output_V": 1.6597880602638928e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000134251,
+                "input_difference_V": -0.16993491640417757,
+                "output_V": 1.6561805372734762e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000135251,
+                "input_difference_V": -0.173156760332003,
+                "output_V": 1.6527810128174042e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000136251,
+                "input_difference_V": -0.1762110470647471,
+                "output_V": 1.6495880241020494e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000137251,
+                "input_difference_V": -0.179094726028019,
+                "output_V": 1.6466003311006484e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000138251,
+                "input_difference_V": -0.1818048801526806,
+                "output_V": 1.6438168349424246e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00013925099999999999,
+                "input_difference_V": -0.18433876465894272,
+                "output_V": 1.6412366720542773e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00014025099999999998,
+                "input_difference_V": -0.18669378587037344,
+                "output_V": 1.638859071703293e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00014125099999999998,
+                "input_difference_V": -0.1888675382651226,
+                "output_V": 1.6366833677391453e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00014225099999999998,
+                "input_difference_V": -0.19085778540321785,
+                "output_V": 1.6347089966260867e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000143251,
+                "input_difference_V": -0.19266246262547937,
+                "output_V": 1.6329354404140963e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000144251,
+                "input_difference_V": -0.19427967687367154,
+                "output_V": 1.6313622628794285e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000145251,
+                "input_difference_V": -0.19570771425267985,
+                "output_V": 1.629989092724035e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000146251,
+                "input_difference_V": -0.19694503701496702,
+                "output_V": 1.628815648584237e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000147251,
+                "input_difference_V": -0.19799030808586426,
+                "output_V": 1.6278416116141148e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000148251,
+                "input_difference_V": -0.19884236625405804,
+                "output_V": 1.627066781520836e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00014925099999999998,
+                "input_difference_V": -0.19950024719586357,
+                "output_V": 1.6264909863037836e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00015025099999999998,
+                "input_difference_V": -0.1999631765308093,
+                "output_V": 1.6261140971249585e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00015125099999999998,
+                "input_difference_V": -0.20023057616947493,
+                "output_V": 1.625936069391294e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00015225099999999998,
+                "input_difference_V": -0.20030206804267536,
+                "output_V": 1.6259568649193186e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000153251,
+                "input_difference_V": -0.2001775672814604,
+                "output_V": 1.6261765789532617e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000154251,
+                "input_difference_V": -0.1998568302101711,
+                "output_V": 1.6265951271873954e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000155251,
+                "input_difference_V": -0.19934034415702706,
+                "output_V": 1.6272128088652864e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000156251,
+                "input_difference_V": -0.1986284544291781,
+                "output_V": 1.6280297134684875e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000157251,
+                "input_difference_V": -0.19772178831147547,
+                "output_V": 1.6290461104220692e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00015825099999999999,
+                "input_difference_V": -0.19662118598197464,
+                "output_V": 1.6302622542003468e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00015925099999999998,
+                "input_difference_V": -0.19532769824575347,
+                "output_V": 1.6316784066172689e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00016025099999999998,
+                "input_difference_V": -0.19384257436137298,
+                "output_V": 1.6332949187940139e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00016125099999999998,
+                "input_difference_V": -0.19216727375880738,
+                "output_V": 1.6351121870215954e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00016225099999999998,
+                "input_difference_V": -0.19030346002196807,
+                "output_V": 1.6371305973702317e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000163251,
+                "input_difference_V": -0.18825307985421813,
+                "output_V": 1.63935066619461e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000164251,
+                "input_difference_V": -0.18601792776270165,
+                "output_V": 1.6417727395774302e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000165251,
+                "input_difference_V": -0.18360051733210447,
+                "output_V": 1.6443976083439425e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000166251,
+                "input_difference_V": -0.1810032194871538,
+                "output_V": 1.6472258321047586e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000167251,
+                "input_difference_V": -0.1782286676302388,
+                "output_V": 1.650258205682835e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00016825099999999999,
+                "input_difference_V": -0.17527969656739772,
+                "output_V": 1.6534956339701542e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00016925099999999998,
+                "input_difference_V": -0.1721592929727377,
+                "output_V": 1.6569392134900368e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00017025099999999998,
+                "input_difference_V": -0.1688706375791018,
+                "output_V": 1.6605902371538732e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00017125099999999998,
+                "input_difference_V": -0.1654170803239572,
+                "output_V": 1.6644502208016815e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00017225099999999997,
+                "input_difference_V": -0.1618021342541981,
+                "output_V": 1.668521006079626e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000173251,
+                "input_difference_V": -0.15802956209593866,
+                "output_V": 1.6728047904398856e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000174251,
+                "input_difference_V": -0.1541029601202828,
+                "output_V": 1.6773038987323235e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000175251,
+                "input_difference_V": -0.15002656760462207,
+                "output_V": 1.6820214251220638e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000176251,
+                "input_difference_V": -0.14580445035632672,
+                "output_V": 1.6869605901593536e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000177251,
+                "input_difference_V": -0.1414408797478227,
+                "output_V": 1.6921251227011166e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00017825099999999998,
+                "input_difference_V": -0.13694026918975177,
+                "output_V": 1.697519179728401e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00017925099999999998,
+                "input_difference_V": -0.13230716951423827,
+                "output_V": 1.703147153525781e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00018025099999999998,
+                "input_difference_V": -0.12754625354633653,
+                "output_V": 1.709013786818044e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00018125099999999998,
+                "input_difference_V": -0.1226623089468627,
+                "output_V": 1.7151239357027478e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00018225099999999997,
+                "input_difference_V": -0.11766026180068989,
+                "output_V": 1.72148243859926e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000183251,
+                "input_difference_V": -0.11254522565772229,
+                "output_V": 1.728093903008445e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000184251,
+                "input_difference_V": -0.10732209771132573,
+                "output_V": 1.7349623897271773e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000185251,
+                "input_difference_V": -0.10199635193745404,
+                "output_V": 1.7420915427322326e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000186251,
+                "input_difference_V": -0.09657322917175537,
+                "output_V": 1.7494838116929446e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000187251,
+                "input_difference_V": -0.09105815711792631,
+                "output_V": 1.757140471844871e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00018825099999999998,
+                "input_difference_V": -0.08545663497863465,
+                "output_V": 1.7650612297619184e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00018925099999999998,
+                "input_difference_V": -0.07977425315058528,
+                "output_V": 1.7732440442937491e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00019025099999999998,
+                "input_difference_V": -0.07401667557329905,
+                "output_V": 1.781684811718974e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00019125099999999998,
+                "input_difference_V": -0.06818964277947559,
+                "output_V": 1.790377221687785e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000192251,
+                "input_difference_V": -0.06229894238963318,
+                "output_V": 1.799312654778543e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000193251,
+                "input_difference_V": -0.05635042776723531,
+                "output_V": 1.8084800185172925e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000194251,
+                "input_difference_V": -0.05035001344821377,
+                "output_V": 1.8178656982102367e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000195251,
+                "input_difference_V": -0.04430363890996525,
+                "output_V": 1.8274535366644809e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.000196251,
+                "input_difference_V": -0.03821730396542444,
+                "output_V": 1.837224614466569e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00019725099999999999,
+                "input_difference_V": -0.03209703038223244,
+                "output_V": 1.8471568754950161e-7,
+                "expected": 0,
+                "passed": true
+              },
+              {
+                "time_s": 0.00019825099999999998,
+                "input_difference_V": -0.02594886706917321,
+                "output_V": 1.8572235733372367e-7,
+                "expected": 0,
+                "passed": true
+              }
+            ]
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "soc_sensor_afe",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "passive sensor macro draws nonnegative mean supply current",
+                "pass": true,
+                "observed": 0.00033553978715728606
+              },
+              {
+                "name": "low measured gain within 3%",
+                "pass": true,
+                "observed": 1.9911164395650185
+              },
+              {
+                "name": "low settled sine residual <5mV",
+                "pass": true,
+                "observed": 0.000004098428083627991
+              },
+              {
+                "name": "high measured gain within 3%",
+                "pass": true,
+                "observed": 7.934879391845867
+              },
+              {
+                "name": "high settled sine residual <5mV",
+                "pass": true,
+                "observed": 0.00004526046282457199
+              },
+              {
+                "name": "self-biased VCM within 1% of VDD/2",
+                "pass": true,
+                "observed": 0.8998340741459934
+              },
+              {
+                "name": "self-generated bias within 0.5..1.1V",
+                "pass": true,
+                "observed": 0.9319439128902667
+              },
+              {
+                "name": "settled analog output stays within supply rails plus 50mV",
+                "pass": true,
+                "observed": [
+                  0.6994659302235192,
+                  0.948486092231865
+                ]
+              },
+              {
+                "name": "clocked interface: >=50 unambiguous samples all match",
+                "pass": true,
+                "observed": 0
+              }
+            ],
+            "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+            "pass": true
+          },
+          "artifacts": {
+            "pex_netlist": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/pex-quality.json",
+            "pex_simulation_netlist": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/pex-simulation.spice",
+            "pex_reduction": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/pex-reduction.json",
+            "testbench": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/testbench.spice",
+            "current_flow_data": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/current-flow.dat",
+            "current_probe_netlist": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/current-probe.spice",
+            "node_voltage_data": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/node-voltages.dat",
+            "node_voltage_probes": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/voltage-probes.json",
+            "waveform_data": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/waveform.dat",
+            "waveform_raw": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/waveform.raw",
+            "reference_netlist": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/pex-simulation.spice",
+            "stdout": "/workspace/.runtime/eda/runs/38d88b5616884e67a480243852ce4468/stdout.log"
+          }
+        }
+      ],
+      "all_executed_pass": true,
+      "foundry_signoff": false
+    },
     {
       "reference": "sar8_analog",
       "name": "SAR · 샘플링 + CDAC + 비교기 코어",
@@ -91,87 +4155,210 @@
           "reference": "sar8_analog",
           "stage": "drc",
           "project_id": "3a7822bb68c94dc6ad5f64af22dc4b55",
-          "run_id": "3d9e233676f746ac937c3c76dab3f583",
+          "run_id": "33eb0a1402ce402594402b87ad5d4936",
           "revision": 1,
           "freshness": "current",
           "execution_status": "completed",
           "analysis_result": "pass",
           "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
-          "elapsed_s": 3.8174041479360312,
+          "elapsed_s": 4.063027570024133,
           "marker_count": 0,
           "artifacts": {
-            "markers": "/workspace/.runtime/eda/runs/3d9e233676f746ac937c3c76dab3f583/markers.tsv",
-            "stdout": "/workspace/.runtime/eda/runs/3d9e233676f746ac937c3c76dab3f583/stdout.log"
+            "markers": "/workspace/.runtime/eda/runs/33eb0a1402ce402594402b87ad5d4936/markers.tsv",
+            "stdout": "/workspace/.runtime/eda/runs/33eb0a1402ce402594402b87ad5d4936/stdout.log"
           }
         },
         {
           "reference": "sar8_analog",
           "stage": "lvs",
           "project_id": "3a7822bb68c94dc6ad5f64af22dc4b55",
-          "run_id": "f2c48cfece074c5f86a2049705c84a77",
+          "run_id": "90a154b5c5e34f55b605149020a1492a",
           "revision": 1,
           "freshness": "current",
           "execution_status": "completed",
           "analysis_result": "pass",
           "message": "Actual Netgen comparison: circuits match uniquely.",
-          "elapsed_s": 3.20712039002683,
+          "elapsed_s": 3.0850278330035508,
           "artifacts": {
-            "layout_netlist": "/workspace/.runtime/eda/runs/f2c48cfece074c5f86a2049705c84a77/layout.spice",
-            "reference_netlist": "/workspace/.runtime/eda/runs/f2c48cfece074c5f86a2049705c84a77/reference.spice",
-            "lvs_report": "/workspace/.runtime/eda/runs/f2c48cfece074c5f86a2049705c84a77/lvs.log",
-            "stdout": "/workspace/.runtime/eda/runs/f2c48cfece074c5f86a2049705c84a77/stdout.log"
+            "layout_netlist": "/workspace/.runtime/eda/runs/90a154b5c5e34f55b605149020a1492a/layout.spice",
+            "reference_netlist": "/workspace/.runtime/eda/runs/90a154b5c5e34f55b605149020a1492a/reference.spice",
+            "lvs_report": "/workspace/.runtime/eda/runs/90a154b5c5e34f55b605149020a1492a/lvs.log",
+            "stdout": "/workspace/.runtime/eda/runs/90a154b5c5e34f55b605149020a1492a/stdout.log"
           }
         },
         {
           "reference": "sar8_analog",
           "stage": "pex",
           "project_id": "3a7822bb68c94dc6ad5f64af22dc4b55",
-          "run_id": "1332ba5659bb477d9f0d18a1dcae0a60",
+          "run_id": "da7ecb99687342aa8060b870884e91d8",
           "revision": 1,
           "freshness": "current",
           "execution_status": "completed",
           "analysis_result": "pass",
-          "message": "Actual Magic RC extraction: 20872 resistors, 8068 capacitors. Zero counts reflect native thresholds, not inserted elements.",
-          "elapsed_s": 5.440976904006675,
+          "message": "Actual Magic RC extraction: 20869 resistors, 8066 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+          "elapsed_s": 5.3829984000185505,
           "parasitics": {
-            "resistors": 20872,
-            "capacitors": 8068
+            "resistors": 20869,
+            "capacitors": 8066
           },
           "artifacts": {
-            "pex_netlist": "/workspace/.runtime/eda/runs/1332ba5659bb477d9f0d18a1dcae0a60/pex.spice",
-            "pex_quality": "/workspace/.runtime/eda/runs/1332ba5659bb477d9f0d18a1dcae0a60/pex-quality.json",
-            "stdout": "/workspace/.runtime/eda/runs/1332ba5659bb477d9f0d18a1dcae0a60/stdout.log"
+            "pex_netlist": "/workspace/.runtime/eda/runs/da7ecb99687342aa8060b870884e91d8/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/da7ecb99687342aa8060b870884e91d8/pex-quality.json",
+            "stdout": "/workspace/.runtime/eda/runs/da7ecb99687342aa8060b870884e91d8/stdout.log"
           }
         },
         {
           "reference": "sar8_analog",
           "stage": "pre",
           "project_id": "3a7822bb68c94dc6ad5f64af22dc4b55",
-          "run_id": "00e83693d1304031a08d41ccd7bdea67",
+          "run_id": "754be8f8291a49fbb1c896f94c9b4909",
           "revision": 1,
           "freshness": "current",
-          "execution_status": "failed",
-          "analysis_result": "unknown",
-          "message": "SAR continuous native simulation failed; actual log retained.",
-          "elapsed_s": 19.297881692065857,
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "message": "Actual charge-retaining SAR comparator decisions and RTL/gate replay completed.",
+          "elapsed_s": 17.761863103020005,
+          "measurements": {
+            "analysis": "tran",
+            "x_unit": "s",
+            "x_label": "time",
+            "output_bits": 8,
+            "frames": 11,
+            "max_code_error": 0,
+            "ambiguous_decisions": 0,
+            "rtl_gate_replay_match": true,
+            "lsb_V": 0.0046875,
+            "conversion_s": 0.000018,
+            "effective_resolution": "not measured"
+          },
+          "verification": {
+            "schema_version": 1,
+            "kind": "sar8_analog",
+            "source": "continuous ngspice MOS/capacitor decisions + actual Icarus RTL/gate/CMOS replay",
+            "checks": [
+              {
+                "name": "RTL / synthesized gates / CMOS schematic reproduce every native comparator decision and trial",
+                "pass": true
+              },
+              {
+                "name": "Comparator logic levels unambiguous at decision edges",
+                "pass": true
+              },
+              {
+                "name": "Directed input codes within one LSB",
+                "pass": true
+              }
+            ],
+            "frames": [
+              {
+                "frame": 0,
+                "input_V": 0.6,
+                "code": 128,
+                "expected_code": 128,
+                "error_codes": 0
+              },
+              {
+                "frame": 1,
+                "input_V": 0,
+                "code": 0,
+                "expected_code": 0,
+                "error_codes": 0
+              },
+              {
+                "frame": 2,
+                "input_V": 1.2,
+                "code": 255,
+                "expected_code": 255,
+                "error_codes": 0
+              },
+              {
+                "frame": 3,
+                "input_V": 0.00234375,
+                "code": 0,
+                "expected_code": 0,
+                "error_codes": 0
+              },
+              {
+                "frame": 4,
+                "input_V": 0.007031249999999999,
+                "code": 1,
+                "expected_code": 1,
+                "error_codes": 0
+              },
+              {
+                "frame": 5,
+                "input_V": 0.29765625,
+                "code": 63,
+                "expected_code": 63,
+                "error_codes": 0
+              },
+              {
+                "frame": 6,
+                "input_V": 0.59765625,
+                "code": 127,
+                "expected_code": 127,
+                "error_codes": 0
+              },
+              {
+                "frame": 7,
+                "input_V": 0.60234375,
+                "code": 128,
+                "expected_code": 128,
+                "error_codes": 0
+              },
+              {
+                "frame": 8,
+                "input_V": 0.8976562499999999,
+                "code": 191,
+                "expected_code": 191,
+                "error_codes": 0
+              },
+              {
+                "frame": 9,
+                "input_V": 1.19296875,
+                "code": 254,
+                "expected_code": 254,
+                "error_codes": 0
+              },
+              {
+                "frame": 10,
+                "input_V": 1.1976562499999999,
+                "code": 255,
+                "expected_code": 255,
+                "error_codes": 0
+              }
+            ],
+            "ambiguous_decisions": 0,
+            "rtl_sha256": "23111df558a25c974ca6884f1ec654357b427314dd9dc9cfa3a7a35d5e02b899",
+            "gate_sha256": "87a98f9a2f8f3d78b7ba37adbde5a8754c0c9064b7fc2b27c0f20983a7f8e662",
+            "scope": "Static directed inputs / optional all 256 bin centers; ±1 code criterion. Not full INL/DNL, noise, ENOB, yield, digital transistor timing or manufacturing signoff.",
+            "pass": true
+          },
           "artifacts": {
-            "stdout": "/workspace/.runtime/eda/runs/00e83693d1304031a08d41ccd7bdea67/stdout.log"
+            "rtl_replay": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/rtl-replay.csv",
+            "gate_replay": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/gate-replay.csv",
+            "ir_replay": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/ir-replay.csv",
+            "testbench": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/testbench.spice",
+            "native_decisions": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/decisions.csv",
+            "waveform_data": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/waveform.dat",
+            "sar_verification": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/sar-verification.json",
+            "stdout": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/stdout.log"
           }
         },
         {
           "reference": "sar8_analog",
           "stage": "post",
           "project_id": "3a7822bb68c94dc6ad5f64af22dc4b55",
-          "run_id": "9f022f3d865741c795dc555a358dab3f",
+          "run_id": "3668c453c28846e69f9f067c53db0f55",
           "revision": 1,
           "freshness": "current",
           "execution_status": "completed",
           "analysis_result": "pass",
           "message": "Actual charge-retaining SAR comparator decisions and RTL/gate replay completed.",
-          "elapsed_s": 134.07530945003964,
+          "elapsed_s": 126.32152898097411,
           "parasitics": {
-            "resistors": 20869,
-            "capacitors": 8066
+            "resistors": 20871,
+            "capacitors": 8067
           },
           "measurements": {
             "analysis": "tran",
@@ -290,22 +4477,22 @@
             "pass": true
           },
           "artifacts": {
-            "pex_netlist": "/workspace/.runtime/eda/runs/9f022f3d865741c795dc555a358dab3f/pex.spice",
-            "pex_quality": "/workspace/.runtime/eda/runs/9f022f3d865741c795dc555a358dab3f/pex-quality.json",
-            "pex_reduced_netlist": "/workspace/.runtime/eda/runs/9f022f3d865741c795dc555a358dab3f/pex-simulation.spice",
-            "pex_reduction": "/workspace/.runtime/eda/runs/9f022f3d865741c795dc555a358dab3f/pex-reduction.json",
-            "rtl_replay": "/workspace/.runtime/eda/runs/9f022f3d865741c795dc555a358dab3f/rtl-replay.csv",
-            "gate_replay": "/workspace/.runtime/eda/runs/9f022f3d865741c795dc555a358dab3f/gate-replay.csv",
-            "ir_replay": "/workspace/.runtime/eda/runs/9f022f3d865741c795dc555a358dab3f/ir-replay.csv",
-            "testbench": "/workspace/.runtime/eda/runs/9f022f3d865741c795dc555a358dab3f/testbench.spice",
-            "native_decisions": "/workspace/.runtime/eda/runs/9f022f3d865741c795dc555a358dab3f/decisions.csv",
-            "waveform_data": "/workspace/.runtime/eda/runs/9f022f3d865741c795dc555a358dab3f/waveform.dat",
-            "sar_verification": "/workspace/.runtime/eda/runs/9f022f3d865741c795dc555a358dab3f/sar-verification.json",
-            "stdout": "/workspace/.runtime/eda/runs/9f022f3d865741c795dc555a358dab3f/stdout.log"
+            "pex_netlist": "/workspace/.runtime/eda/runs/3668c453c28846e69f9f067c53db0f55/pex.spice",
+            "pex_quality": "/workspace/.runtime/eda/runs/3668c453c28846e69f9f067c53db0f55/pex-quality.json",
+            "pex_reduced_netlist": "/workspace/.runtime/eda/runs/3668c453c28846e69f9f067c53db0f55/pex-simulation.spice",
+            "pex_reduction": "/workspace/.runtime/eda/runs/3668c453c28846e69f9f067c53db0f55/pex-reduction.json",
+            "rtl_replay": "/workspace/.runtime/eda/runs/3668c453c28846e69f9f067c53db0f55/rtl-replay.csv",
+            "gate_replay": "/workspace/.runtime/eda/runs/3668c453c28846e69f9f067c53db0f55/gate-replay.csv",
+            "ir_replay": "/workspace/.runtime/eda/runs/3668c453c28846e69f9f067c53db0f55/ir-replay.csv",
+            "testbench": "/workspace/.runtime/eda/runs/3668c453c28846e69f9f067c53db0f55/testbench.spice",
+            "native_decisions": "/workspace/.runtime/eda/runs/3668c453c28846e69f9f067c53db0f55/decisions.csv",
+            "waveform_data": "/workspace/.runtime/eda/runs/3668c453c28846e69f9f067c53db0f55/waveform.dat",
+            "sar_verification": "/workspace/.runtime/eda/runs/3668c453c28846e69f9f067c53db0f55/sar-verification.json",
+            "stdout": "/workspace/.runtime/eda/runs/3668c453c28846e69f9f067c53db0f55/stdout.log"
           }
         }
       ],
-      "all_executed_pass": false,
+      "all_executed_pass": true,
       "foundry_signoff": false
     }
   ]

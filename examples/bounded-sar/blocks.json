@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "blocks": [
+    {
+      "id": "sar8_switch",
+      "name": "SAR · CMOS 전송 스위치",
+      "project_id": "a8789707945a452fa407a000f32477d9",
+      "ports": [
+        "A",
+        "Y",
+        "EN",
+        "ENB",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [],
+      "physical_supported": true
+    },
+    {
+      "id": "sar8_bottom_switch",
+      "name": "SAR · VIN / 기준 / GND bottom-plate 선택",
+      "project_id": "220d39c19f1242ba9c89649f058463f4",
+      "ports": [
+        "VIN",
+        "VREF",
+        "BIT",
+        "SAMPLE",
+        "SAMPLEB",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "INV",
+        "SAR8_TG"
+      ],
+      "physical_supported": true
+    },
+    {
+      "id": "sar8_unit_cap",
+      "name": "SAR · 동일한 400fF 단위 커패시터",
+      "project_id": "b9f501c55ccc4cd1aefc4ca894bceac4",
+      "ports": [
+        "TOP",
+        "BOTTOM"
+      ],
+      "dependencies": [],
+      "physical_supported": true
+    },
+    {
+      "id": "sar8_cdac",
+      "name": "SAR · 128:64:32:16:8:4:2:1 + dummy CDAC",
+      "project_id": "51dd05b8d27247bc8d97762e850e3bac",
+      "ports": [
+        "VIN",
+        "VREF",
+        "VCM",
+        "SAMPLE",
+        "TOP",
+        "B0",
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6",
+        "B7",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "INV",
+        "SAR8_TG",
+        "SAR8_BOTTOM",
+        "SAR8_UNIT"
+      ],
+      "physical_supported": true
+    },
+    {
+      "id": "sar8_comparator",
+      "name": "SAR · 차동 비교기 · 실제 CMOS 출력",
+      "project_id": "606f163241844c84b42ecc8627474f60",
+      "ports": [
+        "INP",
+        "INN",
+        "BIAS",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "PREAMP",
+        "INV"
+      ],
+      "physical_supported": true
+    },
+    {
+      "id": "sar8_analog",
+      "name": "SAR · 샘플링 + CDAC + 비교기 코어",
+      "project_id": "bd4d061a01f5452498f51c8ae33111f8",
+      "ports": [
+        "VIN",
+        "VREF",
+        "VCM",
+        "BIAS",
+        "SAMPLE",
+        "TOP",
+        "COMP",
+        "B0",
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6",
+        "B7",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "SAR8_CDAC",
+        "INV",
+        "SAR8_TG",
+        "SAR8_BOTTOM",
+        "SAR8_UNIT",
+        "SAR8_COMPARATOR",
+        "PREAMP"
+      ],
+      "physical_supported": true
+    },
+    {
+      "id": "sar8_controller",
+      "name": "SAR · 합성 SAR 제어·code/valid 레지스터",
+      "project_id": "aed8eff146544146b4d98b591b62b606",
+      "ports": [
+        "CLK",
+        "RESET",
+        "START",
+        "COMPARATOR",
+        "SAMPLE",
+        "BUSY",
+        "VALID",
+        "TRIAL0",
+        "TRIAL1",
+        "TRIAL2",
+        "TRIAL3",
+        "TRIAL4",
+        "TRIAL5",
+        "TRIAL6",
+        "TRIAL7",
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "INV",
+        "AND2",
+        "NAND2",
+        "OR2",
+        "NOR2",
+        "DFF"
+      ],
+      "physical_supported": false
+    },
+    {
+      "id": "sar_adc8",
+      "name": "SAR · 8비트 SAR · 전체 계층",
+      "project_id": "2a8a169fdf504e1eaceb09e7c7179be9",
+      "ports": [
+        "VIN",
+        "VREF",
+        "VCM",
+        "BIAS",
+        "CLK",
+        "RESET",
+        "START",
+        "TOP",
+        "COMP",
+        "SAMPLE",
+        "BUSY",
+        "VALID",
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "SAR8_ANALOG",
+        "SAR8_CDAC",
+        "INV",
+        "SAR8_TG",
+        "SAR8_BOTTOM",
+        "SAR8_UNIT",
+        "SAR8_COMPARATOR",
+        "PREAMP",
+        "SAR8_CONTROLLER",
+        "AND2",
+        "NAND2",
+        "OR2",
+        "NOR2",
+        "DFF"
+      ],
+      "physical_supported": false
+    }
+  ]
+}

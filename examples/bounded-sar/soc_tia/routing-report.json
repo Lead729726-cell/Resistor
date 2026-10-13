@@ -1,0 +1,193 @@
+{
+  "algorithm": "bounded-rows-m3-m4-v1",
+  "primitive_count": 17,
+  "row_count": 1,
+  "inter_row_nets": 12,
+  "floorplan": {
+    "policy": {
+      "schema_version": 1,
+      "width_um": 1000,
+      "height_um": 1000,
+      "max_area_um2": 1000000,
+      "edge_um": 10,
+      "origin_um": [
+        0.0,
+        0.0
+      ],
+      "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+    },
+    "fits": true,
+    "bbox_dbu": [
+      "10300",
+      "10000",
+      "264910",
+      "68990"
+    ],
+    "used_width_um": 254.61,
+    "used_height_um": 58.99,
+    "used_area_um2": 15019.443900000002,
+    "chip_area_um2": 1000000,
+    "minimum_envelope_um": [
+      274.61,
+      78.99000000000001
+    ],
+    "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+  },
+  "rows": [
+    {
+      "row": 0,
+      "translation_dbu": [
+        31400,
+        31095
+      ],
+      "algorithm": "interval-heap-v2",
+      "matching_groups": [
+        {
+          "centroids_dbu": {
+            "A": [
+              44600.0,
+              33870.0
+            ],
+            "B": [
+              44600.0,
+              33870.0
+            ]
+          },
+          "equal_unit_geometry": true,
+          "group": "AMP.FIRST::INPUT_PAIR_ABBA",
+          "max_centroid_delta_dbu": 0.0,
+          "nominal_centroid_match": true,
+          "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+          "units": [
+            {
+              "device": "AMP_FIRST_N_INP0",
+              "gate_center_dbu": [
+                32825,
+                33870
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            },
+            {
+              "device": "AMP_FIRST_N_INN0",
+              "gate_center_dbu": [
+                40675,
+                33870
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "AMP_FIRST_N_INN1",
+              "gate_center_dbu": [
+                48525,
+                33870
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "B",
+              "w_um": 5.0
+            },
+            {
+              "device": "AMP_FIRST_N_INP1",
+              "gate_center_dbu": [
+                56375,
+                33870
+              ],
+              "l_um": 1.0,
+              "model": "sky130_fd_pr__nfet_01v8",
+              "role": "A",
+              "w_um": 5.0
+            }
+          ]
+        }
+      ],
+      "primitive_count": 17,
+      "scope": "single-row PCell reference; no full-chip density/antenna/foundry signoff",
+      "signal_track_count": 10,
+      "track_clearance_dbu": 800,
+      "tracks": {
+        "AMP__COMP": 5,
+        "AMP__FIRST__MIR": 1,
+        "AMP__FIRST__TAIL": 2,
+        "AMP__PRE": 4,
+        "BIAS": 3,
+        "IIN": 9,
+        "OUT": 8,
+        "R_FEEDBACK_R0_N0": 6,
+        "R_FEEDBACK_R0_N1": 7,
+        "VCM": 0
+      }
+    }
+  ],
+  "matching_groups": [
+    {
+      "centroids_dbu": {
+        "A": [
+          44600.0,
+          33870.0
+        ],
+        "B": [
+          44600.0,
+          33870.0
+        ]
+      },
+      "equal_unit_geometry": true,
+      "group": "AMP.FIRST::INPUT_PAIR_ABBA",
+      "max_centroid_delta_dbu": 0.0,
+      "nominal_centroid_match": true,
+      "scope": "ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff",
+      "units": [
+        {
+          "device": "AMP_FIRST_N_INP0",
+          "gate_center_dbu": [
+            32825,
+            33870
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        },
+        {
+          "device": "AMP_FIRST_N_INN0",
+          "gate_center_dbu": [
+            40675,
+            33870
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "AMP_FIRST_N_INN1",
+          "gate_center_dbu": [
+            48525,
+            33870
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "B",
+          "w_um": 5.0
+        },
+        {
+          "device": "AMP_FIRST_N_INP1",
+          "gate_center_dbu": [
+            56375,
+            33870
+          ],
+          "l_um": 1.0,
+          "model": "sky130_fd_pr__nfet_01v8",
+          "role": "A",
+          "w_um": 5.0
+        }
+      ]
+    }
+  ],
+  "scope": "PCell reference with bounded envelope; native DRC/LVS/PEX remain independent gates."
+}

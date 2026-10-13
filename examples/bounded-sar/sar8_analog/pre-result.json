@@ -1,0 +1,138 @@
+{
+  "reference": "sar8_analog",
+  "stage": "pre",
+  "project_id": "3a7822bb68c94dc6ad5f64af22dc4b55",
+  "run_id": "754be8f8291a49fbb1c896f94c9b4909",
+  "revision": 1,
+  "freshness": "current",
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "message": "Actual charge-retaining SAR comparator decisions and RTL/gate replay completed.",
+  "elapsed_s": 17.761863103020005,
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "output_bits": 8,
+    "frames": 11,
+    "max_code_error": 0,
+    "ambiguous_decisions": 0,
+    "rtl_gate_replay_match": true,
+    "lsb_V": 0.0046875,
+    "conversion_s": 0.000018,
+    "effective_resolution": "not measured"
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "sar8_analog",
+    "source": "continuous ngspice MOS/capacitor decisions + actual Icarus RTL/gate/CMOS replay",
+    "checks": [
+      {
+        "name": "RTL / synthesized gates / CMOS schematic reproduce every native comparator decision and trial",
+        "pass": true
+      },
+      {
+        "name": "Comparator logic levels unambiguous at decision edges",
+        "pass": true
+      },
+      {
+        "name": "Directed input codes within one LSB",
+        "pass": true
+      }
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "input_V": 0.6,
+        "code": 128,
+        "expected_code": 128,
+        "error_codes": 0
+      },
+      {
+        "frame": 1,
+        "input_V": 0,
+        "code": 0,
+        "expected_code": 0,
+        "error_codes": 0
+      },
+      {
+        "frame": 2,
+        "input_V": 1.2,
+        "code": 255,
+        "expected_code": 255,
+        "error_codes": 0
+      },
+      {
+        "frame": 3,
+        "input_V": 0.00234375,
+        "code": 0,
+        "expected_code": 0,
+        "error_codes": 0
+      },
+      {
+        "frame": 4,
+        "input_V": 0.007031249999999999,
+        "code": 1,
+        "expected_code": 1,
+        "error_codes": 0
+      },
+      {
+        "frame": 5,
+        "input_V": 0.29765625,
+        "code": 63,
+        "expected_code": 63,
+        "error_codes": 0
+      },
+      {
+        "frame": 6,
+        "input_V": 0.59765625,
+        "code": 127,
+        "expected_code": 127,
+        "error_codes": 0
+      },
+      {
+        "frame": 7,
+        "input_V": 0.60234375,
+        "code": 128,
+        "expected_code": 128,
+        "error_codes": 0
+      },
+      {
+        "frame": 8,
+        "input_V": 0.8976562499999999,
+        "code": 191,
+        "expected_code": 191,
+        "error_codes": 0
+      },
+      {
+        "frame": 9,
+        "input_V": 1.19296875,
+        "code": 254,
+        "expected_code": 254,
+        "error_codes": 0
+      },
+      {
+        "frame": 10,
+        "input_V": 1.1976562499999999,
+        "code": 255,
+        "expected_code": 255,
+        "error_codes": 0
+      }
+    ],
+    "ambiguous_decisions": 0,
+    "rtl_sha256": "23111df558a25c974ca6884f1ec654357b427314dd9dc9cfa3a7a35d5e02b899",
+    "gate_sha256": "87a98f9a2f8f3d78b7ba37adbde5a8754c0c9064b7fc2b27c0f20983a7f8e662",
+    "scope": "Static directed inputs / optional all 256 bin centers; ±1 code criterion. Not full INL/DNL, noise, ENOB, yield, digital transistor timing or manufacturing signoff.",
+    "pass": true
+  },
+  "artifacts": {
+    "rtl_replay": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/rtl-replay.csv",
+    "gate_replay": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/gate-replay.csv",
+    "ir_replay": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/ir-replay.csv",
+    "testbench": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/testbench.spice",
+    "native_decisions": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/decisions.csv",
+    "waveform_data": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/waveform.dat",
+    "sar_verification": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/sar-verification.json",
+    "stdout": "/workspace/.runtime/eda/runs/754be8f8291a49fbb1c896f94c9b4909/stdout.log"
+  }
+}

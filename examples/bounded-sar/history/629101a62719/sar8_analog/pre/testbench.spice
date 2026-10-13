@@ -1,0 +1,2754 @@
+Actual SAR charge redistribution with continuous native comparator decisions
+.include "/workspace/.runtime/eda/runs/50ba4ad9f7204226a0a048a30ef5689d/supported-tt.spice"
+.option scale=1e-6 method=gear
+.include "/workspace/.runtime/eda/runs/50ba4ad9f7204226a0a048a30ef5689d/analog.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+VIN VIN VGND 0.6
+VREF VREF VGND 1.2
+VCM VCM VGND 0.9
+VBIAS BIAS VGND .9
+VSAMPLE SAMPLE VGND 1.8
+VB0 B0 VGND 0
+VB1 B1 VGND 0
+VB2 B2 VGND 0
+VB3 B3 VGND 0
+VB4 B4 VGND 0
+VB5 B5 VGND 0
+VB6 B6 VGND 0
+VB7 B7 VGND 0
+XU VIN VREF VCM BIAS SAMPLE TOP COMP B0 B1 B2 B3 B4 B5 B6 B7 VPWR VGND sar8_analog
+.tran 2e-08 0.0002 0 2e-08
+.control
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+save v(VIN) v(SAMPLE) v(TOP) v(COMP) v(VCM) i(VDD) i(VREF) v(B0) v(B1) v(B2) v(B3) v(B4) v(B5) v(B6) v(B7)
+echo frame bit trial comp top vin decision > decisions.csv
+alter VIN = 0.6
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let code = 0
+stop when time = 2e-06
+run
+delete all
+alter VSAMPLE = 0
+let trial = code + 128
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 4e-06
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 0 7 $&trial $&cmp $&top 0.6 $&decision >> decisions.csv
+let trial = code + 64
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 6e-06
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 0 6 $&trial $&cmp $&top 0.6 $&decision >> decisions.csv
+let trial = code + 32
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 8e-06
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 0 5 $&trial $&cmp $&top 0.6 $&decision >> decisions.csv
+let trial = code + 16
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 1e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 0 4 $&trial $&cmp $&top 0.6 $&decision >> decisions.csv
+let trial = code + 8
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 1.2e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 0 3 $&trial $&cmp $&top 0.6 $&decision >> decisions.csv
+let trial = code + 4
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 1.4e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 0 2 $&trial $&cmp $&top 0.6 $&decision >> decisions.csv
+let trial = code + 2
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 1.6e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 0 1 $&trial $&cmp $&top 0.6 $&decision >> decisions.csv
+let trial = code + 1
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 1.8e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 0 0 $&trial $&cmp $&top 0.6 $&decision >> decisions.csv
+alter VIN = 0
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let code = 0
+stop when time = 2e-05
+resume
+delete all
+alter VSAMPLE = 0
+let trial = code + 128
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 2.2e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 1 7 $&trial $&cmp $&top 0 $&decision >> decisions.csv
+let trial = code + 64
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 2.4e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 1 6 $&trial $&cmp $&top 0 $&decision >> decisions.csv
+let trial = code + 32
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 2.6e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 1 5 $&trial $&cmp $&top 0 $&decision >> decisions.csv
+let trial = code + 16
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 2.8e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 1 4 $&trial $&cmp $&top 0 $&decision >> decisions.csv
+let trial = code + 8
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 3e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 1 3 $&trial $&cmp $&top 0 $&decision >> decisions.csv
+let trial = code + 4
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 3.2e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 1 2 $&trial $&cmp $&top 0 $&decision >> decisions.csv
+let trial = code + 2
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 3.4e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 1 1 $&trial $&cmp $&top 0 $&decision >> decisions.csv
+let trial = code + 1
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 3.6e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 1 0 $&trial $&cmp $&top 0 $&decision >> decisions.csv
+alter VIN = 1.2
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let code = 0
+stop when time = 3.8e-05
+resume
+delete all
+alter VSAMPLE = 0
+let trial = code + 128
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 4e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 2 7 $&trial $&cmp $&top 1.2 $&decision >> decisions.csv
+let trial = code + 64
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 4.2e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 2 6 $&trial $&cmp $&top 1.2 $&decision >> decisions.csv
+let trial = code + 32
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 4.4e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 2 5 $&trial $&cmp $&top 1.2 $&decision >> decisions.csv
+let trial = code + 16
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 4.6e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 2 4 $&trial $&cmp $&top 1.2 $&decision >> decisions.csv
+let trial = code + 8
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 4.8e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 2 3 $&trial $&cmp $&top 1.2 $&decision >> decisions.csv
+let trial = code + 4
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 5e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 2 2 $&trial $&cmp $&top 1.2 $&decision >> decisions.csv
+let trial = code + 2
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 5.2e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 2 1 $&trial $&cmp $&top 1.2 $&decision >> decisions.csv
+let trial = code + 1
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 5.4e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 2 0 $&trial $&cmp $&top 1.2 $&decision >> decisions.csv
+alter VIN = 0.00234375
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let code = 0
+stop when time = 5.6e-05
+resume
+delete all
+alter VSAMPLE = 0
+let trial = code + 128
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 5.8e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 3 7 $&trial $&cmp $&top 0.00234375 $&decision >> decisions.csv
+let trial = code + 64
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 6e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 3 6 $&trial $&cmp $&top 0.00234375 $&decision >> decisions.csv
+let trial = code + 32
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 6.2e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 3 5 $&trial $&cmp $&top 0.00234375 $&decision >> decisions.csv
+let trial = code + 16
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 6.4e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 3 4 $&trial $&cmp $&top 0.00234375 $&decision >> decisions.csv
+let trial = code + 8
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 6.6e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 3 3 $&trial $&cmp $&top 0.00234375 $&decision >> decisions.csv
+let trial = code + 4
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 6.8e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 3 2 $&trial $&cmp $&top 0.00234375 $&decision >> decisions.csv
+let trial = code + 2
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 7e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 3 1 $&trial $&cmp $&top 0.00234375 $&decision >> decisions.csv
+let trial = code + 1
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 7.2e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 3 0 $&trial $&cmp $&top 0.00234375 $&decision >> decisions.csv
+alter VIN = 0.00703125
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let code = 0
+stop when time = 7.4e-05
+resume
+delete all
+alter VSAMPLE = 0
+let trial = code + 128
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 7.6e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 4 7 $&trial $&cmp $&top 0.00703125 $&decision >> decisions.csv
+let trial = code + 64
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 7.8e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 4 6 $&trial $&cmp $&top 0.00703125 $&decision >> decisions.csv
+let trial = code + 32
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 8e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 4 5 $&trial $&cmp $&top 0.00703125 $&decision >> decisions.csv
+let trial = code + 16
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 8.2e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 4 4 $&trial $&cmp $&top 0.00703125 $&decision >> decisions.csv
+let trial = code + 8
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 8.4e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 4 3 $&trial $&cmp $&top 0.00703125 $&decision >> decisions.csv
+let trial = code + 4
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 8.6e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 4 2 $&trial $&cmp $&top 0.00703125 $&decision >> decisions.csv
+let trial = code + 2
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 8.8e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 4 1 $&trial $&cmp $&top 0.00703125 $&decision >> decisions.csv
+let trial = code + 1
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 9e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 4 0 $&trial $&cmp $&top 0.00703125 $&decision >> decisions.csv
+alter VIN = 0.29765625
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let code = 0
+stop when time = 9.2e-05
+resume
+delete all
+alter VSAMPLE = 0
+let trial = code + 128
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 9.4e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 5 7 $&trial $&cmp $&top 0.29765625 $&decision >> decisions.csv
+let trial = code + 64
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 9.6e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 5 6 $&trial $&cmp $&top 0.29765625 $&decision >> decisions.csv
+let trial = code + 32
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 9.8e-05
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 5 5 $&trial $&cmp $&top 0.29765625 $&decision >> decisions.csv
+let trial = code + 16
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.0001
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 5 4 $&trial $&cmp $&top 0.29765625 $&decision >> decisions.csv
+let trial = code + 8
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000102
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 5 3 $&trial $&cmp $&top 0.29765625 $&decision >> decisions.csv
+let trial = code + 4
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000104
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 5 2 $&trial $&cmp $&top 0.29765625 $&decision >> decisions.csv
+let trial = code + 2
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000106
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 5 1 $&trial $&cmp $&top 0.29765625 $&decision >> decisions.csv
+let trial = code + 1
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000108
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 5 0 $&trial $&cmp $&top 0.29765625 $&decision >> decisions.csv
+alter VIN = 0.59765625
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let code = 0
+stop when time = 0.00011
+resume
+delete all
+alter VSAMPLE = 0
+let trial = code + 128
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000112
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 6 7 $&trial $&cmp $&top 0.59765625 $&decision >> decisions.csv
+let trial = code + 64
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000114
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 6 6 $&trial $&cmp $&top 0.59765625 $&decision >> decisions.csv
+let trial = code + 32
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000116
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 6 5 $&trial $&cmp $&top 0.59765625 $&decision >> decisions.csv
+let trial = code + 16
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000118
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 6 4 $&trial $&cmp $&top 0.59765625 $&decision >> decisions.csv
+let trial = code + 8
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.00012
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 6 3 $&trial $&cmp $&top 0.59765625 $&decision >> decisions.csv
+let trial = code + 4
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000122
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 6 2 $&trial $&cmp $&top 0.59765625 $&decision >> decisions.csv
+let trial = code + 2
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000124
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 6 1 $&trial $&cmp $&top 0.59765625 $&decision >> decisions.csv
+let trial = code + 1
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000126
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 6 0 $&trial $&cmp $&top 0.59765625 $&decision >> decisions.csv
+alter VIN = 0.60234375
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let code = 0
+stop when time = 0.000128
+resume
+delete all
+alter VSAMPLE = 0
+let trial = code + 128
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.00013
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 7 7 $&trial $&cmp $&top 0.60234375 $&decision >> decisions.csv
+let trial = code + 64
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000132
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 7 6 $&trial $&cmp $&top 0.60234375 $&decision >> decisions.csv
+let trial = code + 32
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000134
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 7 5 $&trial $&cmp $&top 0.60234375 $&decision >> decisions.csv
+let trial = code + 16
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000136
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 7 4 $&trial $&cmp $&top 0.60234375 $&decision >> decisions.csv
+let trial = code + 8
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000138
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 7 3 $&trial $&cmp $&top 0.60234375 $&decision >> decisions.csv
+let trial = code + 4
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.00014
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 7 2 $&trial $&cmp $&top 0.60234375 $&decision >> decisions.csv
+let trial = code + 2
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000142
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 7 1 $&trial $&cmp $&top 0.60234375 $&decision >> decisions.csv
+let trial = code + 1
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000144
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 7 0 $&trial $&cmp $&top 0.60234375 $&decision >> decisions.csv
+alter VIN = 0.89765625
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let code = 0
+stop when time = 0.000146
+resume
+delete all
+alter VSAMPLE = 0
+let trial = code + 128
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000148
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 8 7 $&trial $&cmp $&top 0.89765625 $&decision >> decisions.csv
+let trial = code + 64
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.00015
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 8 6 $&trial $&cmp $&top 0.89765625 $&decision >> decisions.csv
+let trial = code + 32
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000152
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 8 5 $&trial $&cmp $&top 0.89765625 $&decision >> decisions.csv
+let trial = code + 16
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000154
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 8 4 $&trial $&cmp $&top 0.89765625 $&decision >> decisions.csv
+let trial = code + 8
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000156
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 8 3 $&trial $&cmp $&top 0.89765625 $&decision >> decisions.csv
+let trial = code + 4
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000158
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 8 2 $&trial $&cmp $&top 0.89765625 $&decision >> decisions.csv
+let trial = code + 2
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.00016
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 8 1 $&trial $&cmp $&top 0.89765625 $&decision >> decisions.csv
+let trial = code + 1
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000162
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 8 0 $&trial $&cmp $&top 0.89765625 $&decision >> decisions.csv
+alter VIN = 1.19296875
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let code = 0
+stop when time = 0.000164
+resume
+delete all
+alter VSAMPLE = 0
+let trial = code + 128
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000166
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 9 7 $&trial $&cmp $&top 1.19296875 $&decision >> decisions.csv
+let trial = code + 64
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000168
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 9 6 $&trial $&cmp $&top 1.19296875 $&decision >> decisions.csv
+let trial = code + 32
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.00017
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 9 5 $&trial $&cmp $&top 1.19296875 $&decision >> decisions.csv
+let trial = code + 16
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000172
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 9 4 $&trial $&cmp $&top 1.19296875 $&decision >> decisions.csv
+let trial = code + 8
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000174
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 9 3 $&trial $&cmp $&top 1.19296875 $&decision >> decisions.csv
+let trial = code + 4
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000176
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 9 2 $&trial $&cmp $&top 1.19296875 $&decision >> decisions.csv
+let trial = code + 2
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000178
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 9 1 $&trial $&cmp $&top 1.19296875 $&decision >> decisions.csv
+let trial = code + 1
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.00018
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 9 0 $&trial $&cmp $&top 1.19296875 $&decision >> decisions.csv
+alter VIN = 1.19765625
+alter VSAMPLE = 1.8
+alter VB0 = 0
+alter VB1 = 0
+alter VB2 = 0
+alter VB3 = 0
+alter VB4 = 0
+alter VB5 = 0
+alter VB6 = 0
+alter VB7 = 0
+let code = 0
+stop when time = 0.000182
+resume
+delete all
+alter VSAMPLE = 0
+let trial = code + 128
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000184
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 10 7 $&trial $&cmp $&top 1.19765625 $&decision >> decisions.csv
+let trial = code + 64
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000186
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 10 6 $&trial $&cmp $&top 1.19765625 $&decision >> decisions.csv
+let trial = code + 32
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000188
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 10 5 $&trial $&cmp $&top 1.19765625 $&decision >> decisions.csv
+let trial = code + 16
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.00019
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 10 4 $&trial $&cmp $&top 1.19765625 $&decision >> decisions.csv
+let trial = code + 8
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000192
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 10 3 $&trial $&cmp $&top 1.19765625 $&decision >> decisions.csv
+let trial = code + 4
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000194
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 10 2 $&trial $&cmp $&top 1.19765625 $&decision >> decisions.csv
+let trial = code + 2
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000196
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 10 1 $&trial $&cmp $&top 1.19765625 $&decision >> decisions.csv
+let trial = code + 1
+let drive = (floor(trial / 1) - 2*floor(trial / 2))*1.8
+alter VB0 = $&drive
+let drive = (floor(trial / 2) - 2*floor(trial / 4))*1.8
+alter VB1 = $&drive
+let drive = (floor(trial / 4) - 2*floor(trial / 8))*1.8
+alter VB2 = $&drive
+let drive = (floor(trial / 8) - 2*floor(trial / 16))*1.8
+alter VB3 = $&drive
+let drive = (floor(trial / 16) - 2*floor(trial / 32))*1.8
+alter VB4 = $&drive
+let drive = (floor(trial / 32) - 2*floor(trial / 64))*1.8
+alter VB5 = $&drive
+let drive = (floor(trial / 64) - 2*floor(trial / 128))*1.8
+alter VB6 = $&drive
+let drive = (floor(trial / 128) - 2*floor(trial / 256))*1.8
+alter VB7 = $&drive
+stop when time = 0.000198
+resume
+delete all
+let endpoint = length(time)-1
+let cmp = v(COMP)[endpoint]
+let top = v(TOP)[endpoint]
+let decision = 0
+if cmp >= 0.9
+let code = trial
+let decision = 1
+end
+echo 10 0 $&trial $&cmp $&top 1.19765625 $&decision >> decisions.csv
+resume
+let supply_current = -i(VDD)
+let reference_current = -i(VREF)
+wrdata waveform.dat v(VIN) v(SAMPLE) v(TOP) v(COMP) v(VCM) supply_current reference_current v(B0) v(B1) v(B2) v(B3) v(B4) v(B5) v(B6) v(B7)
+echo SAR_NATIVE_COMPLETE
+quit
+.endc
+.end

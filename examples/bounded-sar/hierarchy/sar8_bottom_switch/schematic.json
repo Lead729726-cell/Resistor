@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "VIN",
+    "VREF",
+    "BIT",
+    "SAMPLE",
+    "SAMPLEB",
+    "OUT",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "BIT_INV",
+      "name": "BIT_INV",
+      "kind": "block",
+      "cell_name": "INV",
+      "pins": {
+        "A": "BIT",
+        "Y": "BITB",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 170
+    },
+    {
+      "id": "HIGH",
+      "name": "HIGH",
+      "kind": "block",
+      "cell_name": "SAR8_TG",
+      "pins": {
+        "A": "VREF",
+        "Y": "REFSEL",
+        "EN": "BIT",
+        "ENB": "BITB",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 170
+    },
+    {
+      "id": "LOW",
+      "name": "LOW",
+      "kind": "block",
+      "cell_name": "SAR8_TG",
+      "pins": {
+        "A": "VGND",
+        "Y": "REFSEL",
+        "EN": "BITB",
+        "ENB": "BIT",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 170
+    },
+    {
+      "id": "ACQUIRE",
+      "name": "ACQUIRE",
+      "kind": "block",
+      "cell_name": "SAR8_TG",
+      "pins": {
+        "A": "VIN",
+        "Y": "OUT",
+        "EN": "SAMPLE",
+        "ENB": "SAMPLEB",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 170
+    },
+    {
+      "id": "CONVERT",
+      "name": "CONVERT",
+      "kind": "block",
+      "cell_name": "SAR8_TG",
+      "pins": {
+        "A": "REFSEL",
+        "Y": "OUT",
+        "EN": "SAMPLEB",
+        "ENB": "SAMPLE",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 420
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {
+    "INV": {
+      "schema_version": 1,
+      "connectivity_mode": "explicit",
+      "ports": [
+        "A",
+        "Y",
+        "VPWR",
+        "VGND"
+      ],
+      "devices": [
+        {
+          "id": "MP",
+          "name": "MP",
+          "kind": "pmos",
+          "model": "sky130_fd_pr__pfet_01v8_hvt",
+          "pins": {
+            "D": "Y",
+            "G": "A",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 160
+        },
+        {
+          "id": "MN",
+          "name": "MN",
+          "kind": "nmos",
+          "model": "sky130_fd_pr__nfet_01v8",
+          "pins": {
+            "D": "Y",
+            "G": "A",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 370,
+          "y": 160
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "SAR8_TG": {
+      "schema_version": 1,
+      "ports": [
+        "A",
+        "Y",
+        "EN",
+        "ENB",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "N",
+          "name": "N",
+          "kind": "nmos",
+          "pins": {
+            "D": "Y",
+            "G": "EN",
+            "S": "A",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 4,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "P",
+          "name": "P",
+          "kind": "pmos",
+          "pins": {
+            "D": "Y",
+            "G": "ENB",
+            "S": "A",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 8,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 420,
+          "y": 170,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    }
+  }
+}

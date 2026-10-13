@@ -1,0 +1,103 @@
+{
+  "reference": "soc_pga",
+  "stage": "post",
+  "project_id": "4382cfcb7fe9484f8650d86bcf4710ac",
+  "run_id": "d360856f295d4edd91168a698c3569d6",
+  "revision": 1,
+  "freshness": "current",
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "message": "Actual ngspice tran: 10032 samples.; reference criteria 5/5",
+  "elapsed_s": 36.44497119600419,
+  "parasitics": {
+    "resistors": 15487,
+    "capacitors": 4581
+  },
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "true",
+    "samples": 10032,
+    "solver": "SPARSE 1.3",
+    "OUT_min": 0.6985571664189503,
+    "OUT_max": 0.9493652119476456,
+    "supply_current_min": 0.00010125063784569858,
+    "supply_current_max": 0.00015405259174349286,
+    "VIN_min": 0.8750000007143609,
+    "VIN_max": 0.9249999996131115,
+    "GAIN_min": 0,
+    "GAIN_max": 1.8,
+    "current_flow_status": "available_partial",
+    "template_id": "soc_pga",
+    "layout_status": "generated-public-core",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+    "average_supply_current_A": 0.0001179727606900684,
+    "average_supply_power_W": 0.00021235096924212312,
+    "low_gain": 2.0006240491333256,
+    "low_output_fit": {
+      "amplitude": 0.05001559958473302,
+      "mean": 0.8993499600975167,
+      "residual_rms": 4.1450400060076576e-7
+    },
+    "high_gain": 7.987368745090393,
+    "high_output_fit": {
+      "amplitude": 0.1996842120563518,
+      "mean": 0.8982438313080283,
+      "residual_rms": 0.00001693784648171512
+    }
+  },
+  "verification": {
+    "schema_version": 1,
+    "kind": "soc_pga",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "passive sensor macro draws nonnegative mean supply current",
+        "pass": true,
+        "observed": 0.0001179727606900684
+      },
+      {
+        "name": "low measured gain within 3%",
+        "pass": true,
+        "observed": 2.0006240491333256
+      },
+      {
+        "name": "low settled sine residual <5mV",
+        "pass": true,
+        "observed": 4.1450400060076576e-7
+      },
+      {
+        "name": "high measured gain within 3%",
+        "pass": true,
+        "observed": 7.987368745090393
+      },
+      {
+        "name": "high settled sine residual <5mV",
+        "pass": true,
+        "observed": 0.00001693784648171512
+      }
+    ],
+    "scope": "Actual SKY130 analog macro; nominal directed criteria only; no noise/mismatch/ESD/EM/IR/foundry signoff.",
+    "pass": true
+  },
+  "artifacts": {
+    "pex_netlist": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/pex.spice",
+    "pex_quality": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/pex-quality.json",
+    "pex_simulation_netlist": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/pex-simulation.spice",
+    "pex_reduction": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/pex-reduction.json",
+    "testbench": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/testbench.spice",
+    "current_flow_data": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/current-flow.dat",
+    "current_probe_netlist": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/current-probe.spice",
+    "node_voltage_data": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/node-voltages.dat",
+    "node_voltage_probes": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/voltage-probes.json",
+    "waveform_data": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/waveform.dat",
+    "waveform_raw": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/waveform.raw",
+    "reference_netlist": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/pex-simulation.spice",
+    "stdout": "/workspace/.runtime/eda/runs/d360856f295d4edd91168a698c3569d6/stdout.log"
+  }
+}

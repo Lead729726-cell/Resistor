@@ -1,0 +1,48 @@
+Resistor analog SoC soc_bias
+.include "/workspace/.runtime/eda/runs/adc2f7da61f14d2fbf8ee8efe0f5d51f/supported-tt.spice"
+.options method=gear maxord=2
+.include "/workspace/.runtime/eda/runs/adc2f7da61f14d2fbf8ee8efe0f5d51f/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+.nodeset v(VCM)=0.9
+XU BIAS VCM VPWR VGND soc_bias
+.control
+save v(VCM) i(VDD) v(BIAS) i(v.xu.vregister_cf_a977a4ed402b1f2c) i(v.xu.vregister_cf_69342855ba0445e2) i(v.xu.vregister_cf_0d6f797e8c61b080) i(v.xu.vregister_cf_58c8ce7f8f03221e) i(v.xu.vregister_cf_7ce6359e676873b0) i(v.xu.vregister_cf_3446b483d676b311) i(v.xu.vregister_cf_738fcc80be1c3ee5) i(v.xu.vregister_cf_2cec6438f9e41c8a) i(v.xu.vregister_cf_5a299b0d3d0ff56d) i(v.xu.vregister_cf_4a24a9e0429e257f) i(VGND) v(VGND) v(XU.VCM_BUFFER__FIRST__MIR) v(XU.VCM_BUFFER__FIRST__TAIL) v(XU.VCM_BUFFER__PRE) v(XU.VCM_RAW) v(VPWR)
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+set noaskquit
+tran 2e-08 0.0002
+let mos_wave_0 = v(VCM)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(BIAS)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_a977a4ed402b1f2c)
+let register_flow_1 = i(v.xu.vregister_cf_69342855ba0445e2)
+let register_flow_2 = i(v.xu.vregister_cf_0d6f797e8c61b080)
+let register_flow_3 = i(v.xu.vregister_cf_58c8ce7f8f03221e)
+let register_flow_4 = i(v.xu.vregister_cf_7ce6359e676873b0)
+let register_flow_5 = i(v.xu.vregister_cf_3446b483d676b311)
+let register_flow_6 = i(v.xu.vregister_cf_738fcc80be1c3ee5)
+let register_flow_7 = i(v.xu.vregister_cf_2cec6438f9e41c8a)
+let register_flow_8 = i(v.xu.vregister_cf_5a299b0d3d0ff56d)
+let register_flow_9 = i(v.xu.vregister_cf_4a24a9e0429e257f)
+let register_flow_10 = i(VGND)
+let register_flow_11 = i(VDD)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11
+let register_voltage_0 = v(BIAS)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(XU.VCM_BUFFER__FIRST__MIR)
+let register_voltage_3 = v(XU.VCM_BUFFER__FIRST__TAIL)
+let register_voltage_4 = v(VCM)
+let register_voltage_5 = v(XU.VCM_BUFFER__PRE)
+let register_voltage_6 = v(XU.VCM_RAW)
+let register_voltage_7 = v(VPWR)
+let register_voltage_8 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8
+quit
+.endc
+.end

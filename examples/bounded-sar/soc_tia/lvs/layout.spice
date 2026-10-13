@@ -1,0 +1,22 @@
+* NGSPICE file created from soc_tia.ext - technology: sky130A
+
+.subckt soc_tia VGND OUT VCM IIN VPWR BIAS
+X0 AMP__PRE AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X1 R_FEEDBACK_R0_N1 IIN VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X2 AMP__FIRST__TAIL VCM AMP__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X3 VPWR AMP__FIRST__MIR AMP__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X4 AMP__FIRST__TAIL IIN AMP__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X5 VGND BIAS AMP__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X6 AMP__PRE AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X7 R_FEEDBACK_R0_N0 R_FEEDBACK_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X8 AMP__COMP OUT VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X9 VPWR AMP__FIRST__MIR AMP__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X10 AMP__PRE AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X11 OUT IIN sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X12 AMP__FIRST__TAIL IIN AMP__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X13 AMP__FIRST__TAIL VCM AMP__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X14 VPWR AMP__PRE OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X15 VGND BIAS OUT VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X16 OUT R_FEEDBACK_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+.ends
+

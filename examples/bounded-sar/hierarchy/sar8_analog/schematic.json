@@ -1,0 +1,4084 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "VIN",
+    "VREF",
+    "VCM",
+    "BIAS",
+    "SAMPLE",
+    "TOP",
+    "COMP",
+    "B0",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B7",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "DAC",
+      "name": "DAC",
+      "kind": "block",
+      "cell_name": "SAR8_CDAC",
+      "pins": {
+        "VIN": "VIN",
+        "VREF": "VREF",
+        "VCM": "VCM",
+        "SAMPLE": "SAMPLE",
+        "TOP": "TOP",
+        "B0": "B0",
+        "B1": "B1",
+        "B2": "B2",
+        "B3": "B3",
+        "B4": "B4",
+        "B5": "B5",
+        "B6": "B6",
+        "B7": "B7",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 170
+    },
+    {
+      "id": "COMPARE",
+      "name": "COMPARE",
+      "kind": "block",
+      "cell_name": "SAR8_COMPARATOR",
+      "pins": {
+        "INP": "VCM",
+        "INN": "TOP",
+        "BIAS": "BIAS",
+        "OUT": "COMP",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 170
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {
+    "SAR8_CDAC": {
+      "schema_version": 1,
+      "ports": [
+        "VIN",
+        "VREF",
+        "VCM",
+        "SAMPLE",
+        "TOP",
+        "B0",
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6",
+        "B7",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "SAMPLE_INV",
+          "name": "SAMPLE_INV",
+          "kind": "block",
+          "cell_name": "INV",
+          "pins": {
+            "A": "SAMPLE",
+            "Y": "SAMPLEB",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 170
+        },
+        {
+          "id": "TOP_RESET",
+          "name": "TOP_RESET",
+          "kind": "block",
+          "cell_name": "SAR8_TG",
+          "pins": {
+            "A": "VCM",
+            "Y": "TOP",
+            "EN": "SAMPLE",
+            "ENB": "SAMPLEB",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 170
+        },
+        {
+          "id": "BIT0",
+          "name": "BIT0",
+          "kind": "block",
+          "cell_name": "SAR8_BOTTOM",
+          "pins": {
+            "VIN": "VIN",
+            "VREF": "VREF",
+            "BIT": "B0",
+            "SAMPLE": "SAMPLE",
+            "SAMPLEB": "SAMPLEB",
+            "OUT": "BOTTOM0",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 170
+        },
+        {
+          "id": "C0_0",
+          "name": "C0_0",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM0"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 170
+        },
+        {
+          "id": "BIT1",
+          "name": "BIT1",
+          "kind": "block",
+          "cell_name": "SAR8_BOTTOM",
+          "pins": {
+            "VIN": "VIN",
+            "VREF": "VREF",
+            "BIT": "B1",
+            "SAMPLE": "SAMPLE",
+            "SAMPLEB": "SAMPLEB",
+            "OUT": "BOTTOM1",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 420
+        },
+        {
+          "id": "C1_0",
+          "name": "C1_0",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM1"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 420
+        },
+        {
+          "id": "C1_1",
+          "name": "C1_1",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM1"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 420
+        },
+        {
+          "id": "BIT2",
+          "name": "BIT2",
+          "kind": "block",
+          "cell_name": "SAR8_BOTTOM",
+          "pins": {
+            "VIN": "VIN",
+            "VREF": "VREF",
+            "BIT": "B2",
+            "SAMPLE": "SAMPLE",
+            "SAMPLEB": "SAMPLEB",
+            "OUT": "BOTTOM2",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 420
+        },
+        {
+          "id": "C2_0",
+          "name": "C2_0",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM2"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 670
+        },
+        {
+          "id": "C2_1",
+          "name": "C2_1",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM2"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 670
+        },
+        {
+          "id": "C2_2",
+          "name": "C2_2",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM2"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 670
+        },
+        {
+          "id": "C2_3",
+          "name": "C2_3",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM2"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 670
+        },
+        {
+          "id": "BIT3",
+          "name": "BIT3",
+          "kind": "block",
+          "cell_name": "SAR8_BOTTOM",
+          "pins": {
+            "VIN": "VIN",
+            "VREF": "VREF",
+            "BIT": "B3",
+            "SAMPLE": "SAMPLE",
+            "SAMPLEB": "SAMPLEB",
+            "OUT": "BOTTOM3",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 920
+        },
+        {
+          "id": "C3_0",
+          "name": "C3_0",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM3"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 920
+        },
+        {
+          "id": "C3_1",
+          "name": "C3_1",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM3"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 920
+        },
+        {
+          "id": "C3_2",
+          "name": "C3_2",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM3"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 920
+        },
+        {
+          "id": "C3_3",
+          "name": "C3_3",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM3"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 1170
+        },
+        {
+          "id": "C3_4",
+          "name": "C3_4",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM3"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 1170
+        },
+        {
+          "id": "C3_5",
+          "name": "C3_5",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM3"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 1170
+        },
+        {
+          "id": "C3_6",
+          "name": "C3_6",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM3"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 1170
+        },
+        {
+          "id": "C3_7",
+          "name": "C3_7",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM3"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 1420
+        },
+        {
+          "id": "BIT4",
+          "name": "BIT4",
+          "kind": "block",
+          "cell_name": "SAR8_BOTTOM",
+          "pins": {
+            "VIN": "VIN",
+            "VREF": "VREF",
+            "BIT": "B4",
+            "SAMPLE": "SAMPLE",
+            "SAMPLEB": "SAMPLEB",
+            "OUT": "BOTTOM4",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 1420
+        },
+        {
+          "id": "C4_0",
+          "name": "C4_0",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 1420
+        },
+        {
+          "id": "C4_1",
+          "name": "C4_1",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 1420
+        },
+        {
+          "id": "C4_2",
+          "name": "C4_2",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 1670
+        },
+        {
+          "id": "C4_3",
+          "name": "C4_3",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 1670
+        },
+        {
+          "id": "C4_4",
+          "name": "C4_4",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 1670
+        },
+        {
+          "id": "C4_5",
+          "name": "C4_5",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 1670
+        },
+        {
+          "id": "C4_6",
+          "name": "C4_6",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 1920
+        },
+        {
+          "id": "C4_7",
+          "name": "C4_7",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 1920
+        },
+        {
+          "id": "C4_8",
+          "name": "C4_8",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 1920
+        },
+        {
+          "id": "C4_9",
+          "name": "C4_9",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 1920
+        },
+        {
+          "id": "C4_10",
+          "name": "C4_10",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 2170
+        },
+        {
+          "id": "C4_11",
+          "name": "C4_11",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 2170
+        },
+        {
+          "id": "C4_12",
+          "name": "C4_12",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 2170
+        },
+        {
+          "id": "C4_13",
+          "name": "C4_13",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 2170
+        },
+        {
+          "id": "C4_14",
+          "name": "C4_14",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 2420
+        },
+        {
+          "id": "C4_15",
+          "name": "C4_15",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM4"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 2420
+        },
+        {
+          "id": "BIT5",
+          "name": "BIT5",
+          "kind": "block",
+          "cell_name": "SAR8_BOTTOM",
+          "pins": {
+            "VIN": "VIN",
+            "VREF": "VREF",
+            "BIT": "B5",
+            "SAMPLE": "SAMPLE",
+            "SAMPLEB": "SAMPLEB",
+            "OUT": "BOTTOM5",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 2420
+        },
+        {
+          "id": "C5_0",
+          "name": "C5_0",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 2420
+        },
+        {
+          "id": "C5_1",
+          "name": "C5_1",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 2670
+        },
+        {
+          "id": "C5_2",
+          "name": "C5_2",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 2670
+        },
+        {
+          "id": "C5_3",
+          "name": "C5_3",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 2670
+        },
+        {
+          "id": "C5_4",
+          "name": "C5_4",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 2670
+        },
+        {
+          "id": "C5_5",
+          "name": "C5_5",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 2920
+        },
+        {
+          "id": "C5_6",
+          "name": "C5_6",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 2920
+        },
+        {
+          "id": "C5_7",
+          "name": "C5_7",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 2920
+        },
+        {
+          "id": "C5_8",
+          "name": "C5_8",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 2920
+        },
+        {
+          "id": "C5_9",
+          "name": "C5_9",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 3170
+        },
+        {
+          "id": "C5_10",
+          "name": "C5_10",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 3170
+        },
+        {
+          "id": "C5_11",
+          "name": "C5_11",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 3170
+        },
+        {
+          "id": "C5_12",
+          "name": "C5_12",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 3170
+        },
+        {
+          "id": "C5_13",
+          "name": "C5_13",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 3420
+        },
+        {
+          "id": "C5_14",
+          "name": "C5_14",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 3420
+        },
+        {
+          "id": "C5_15",
+          "name": "C5_15",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 3420
+        },
+        {
+          "id": "C5_16",
+          "name": "C5_16",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 3420
+        },
+        {
+          "id": "C5_17",
+          "name": "C5_17",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 3670
+        },
+        {
+          "id": "C5_18",
+          "name": "C5_18",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 3670
+        },
+        {
+          "id": "C5_19",
+          "name": "C5_19",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 3670
+        },
+        {
+          "id": "C5_20",
+          "name": "C5_20",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 3670
+        },
+        {
+          "id": "C5_21",
+          "name": "C5_21",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 3920
+        },
+        {
+          "id": "C5_22",
+          "name": "C5_22",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 3920
+        },
+        {
+          "id": "C5_23",
+          "name": "C5_23",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 3920
+        },
+        {
+          "id": "C5_24",
+          "name": "C5_24",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 3920
+        },
+        {
+          "id": "C5_25",
+          "name": "C5_25",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 4170
+        },
+        {
+          "id": "C5_26",
+          "name": "C5_26",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 4170
+        },
+        {
+          "id": "C5_27",
+          "name": "C5_27",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 4170
+        },
+        {
+          "id": "C5_28",
+          "name": "C5_28",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 4170
+        },
+        {
+          "id": "C5_29",
+          "name": "C5_29",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 4420
+        },
+        {
+          "id": "C5_30",
+          "name": "C5_30",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 4420
+        },
+        {
+          "id": "C5_31",
+          "name": "C5_31",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM5"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 4420
+        },
+        {
+          "id": "BIT6",
+          "name": "BIT6",
+          "kind": "block",
+          "cell_name": "SAR8_BOTTOM",
+          "pins": {
+            "VIN": "VIN",
+            "VREF": "VREF",
+            "BIT": "B6",
+            "SAMPLE": "SAMPLE",
+            "SAMPLEB": "SAMPLEB",
+            "OUT": "BOTTOM6",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 4420
+        },
+        {
+          "id": "C6_0",
+          "name": "C6_0",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 4670
+        },
+        {
+          "id": "C6_1",
+          "name": "C6_1",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 4670
+        },
+        {
+          "id": "C6_2",
+          "name": "C6_2",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 4670
+        },
+        {
+          "id": "C6_3",
+          "name": "C6_3",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 4670
+        },
+        {
+          "id": "C6_4",
+          "name": "C6_4",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 4920
+        },
+        {
+          "id": "C6_5",
+          "name": "C6_5",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 4920
+        },
+        {
+          "id": "C6_6",
+          "name": "C6_6",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 4920
+        },
+        {
+          "id": "C6_7",
+          "name": "C6_7",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 4920
+        },
+        {
+          "id": "C6_8",
+          "name": "C6_8",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 5170
+        },
+        {
+          "id": "C6_9",
+          "name": "C6_9",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 5170
+        },
+        {
+          "id": "C6_10",
+          "name": "C6_10",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 5170
+        },
+        {
+          "id": "C6_11",
+          "name": "C6_11",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 5170
+        },
+        {
+          "id": "C6_12",
+          "name": "C6_12",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 5420
+        },
+        {
+          "id": "C6_13",
+          "name": "C6_13",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 5420
+        },
+        {
+          "id": "C6_14",
+          "name": "C6_14",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 5420
+        },
+        {
+          "id": "C6_15",
+          "name": "C6_15",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 5420
+        },
+        {
+          "id": "C6_16",
+          "name": "C6_16",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 5670
+        },
+        {
+          "id": "C6_17",
+          "name": "C6_17",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 5670
+        },
+        {
+          "id": "C6_18",
+          "name": "C6_18",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 5670
+        },
+        {
+          "id": "C6_19",
+          "name": "C6_19",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 5670
+        },
+        {
+          "id": "C6_20",
+          "name": "C6_20",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 5920
+        },
+        {
+          "id": "C6_21",
+          "name": "C6_21",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 5920
+        },
+        {
+          "id": "C6_22",
+          "name": "C6_22",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 5920
+        },
+        {
+          "id": "C6_23",
+          "name": "C6_23",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 5920
+        },
+        {
+          "id": "C6_24",
+          "name": "C6_24",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 6170
+        },
+        {
+          "id": "C6_25",
+          "name": "C6_25",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 6170
+        },
+        {
+          "id": "C6_26",
+          "name": "C6_26",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 6170
+        },
+        {
+          "id": "C6_27",
+          "name": "C6_27",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 6170
+        },
+        {
+          "id": "C6_28",
+          "name": "C6_28",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 6420
+        },
+        {
+          "id": "C6_29",
+          "name": "C6_29",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 6420
+        },
+        {
+          "id": "C6_30",
+          "name": "C6_30",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 6420
+        },
+        {
+          "id": "C6_31",
+          "name": "C6_31",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 6420
+        },
+        {
+          "id": "C6_32",
+          "name": "C6_32",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 6670
+        },
+        {
+          "id": "C6_33",
+          "name": "C6_33",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 6670
+        },
+        {
+          "id": "C6_34",
+          "name": "C6_34",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 6670
+        },
+        {
+          "id": "C6_35",
+          "name": "C6_35",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 6670
+        },
+        {
+          "id": "C6_36",
+          "name": "C6_36",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 6920
+        },
+        {
+          "id": "C6_37",
+          "name": "C6_37",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 6920
+        },
+        {
+          "id": "C6_38",
+          "name": "C6_38",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 6920
+        },
+        {
+          "id": "C6_39",
+          "name": "C6_39",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 6920
+        },
+        {
+          "id": "C6_40",
+          "name": "C6_40",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 7170
+        },
+        {
+          "id": "C6_41",
+          "name": "C6_41",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 7170
+        },
+        {
+          "id": "C6_42",
+          "name": "C6_42",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 7170
+        },
+        {
+          "id": "C6_43",
+          "name": "C6_43",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 7170
+        },
+        {
+          "id": "C6_44",
+          "name": "C6_44",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 7420
+        },
+        {
+          "id": "C6_45",
+          "name": "C6_45",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 7420
+        },
+        {
+          "id": "C6_46",
+          "name": "C6_46",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 7420
+        },
+        {
+          "id": "C6_47",
+          "name": "C6_47",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 7420
+        },
+        {
+          "id": "C6_48",
+          "name": "C6_48",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 7670
+        },
+        {
+          "id": "C6_49",
+          "name": "C6_49",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 7670
+        },
+        {
+          "id": "C6_50",
+          "name": "C6_50",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 7670
+        },
+        {
+          "id": "C6_51",
+          "name": "C6_51",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 7670
+        },
+        {
+          "id": "C6_52",
+          "name": "C6_52",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 7920
+        },
+        {
+          "id": "C6_53",
+          "name": "C6_53",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 7920
+        },
+        {
+          "id": "C6_54",
+          "name": "C6_54",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 7920
+        },
+        {
+          "id": "C6_55",
+          "name": "C6_55",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 7920
+        },
+        {
+          "id": "C6_56",
+          "name": "C6_56",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 8170
+        },
+        {
+          "id": "C6_57",
+          "name": "C6_57",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 8170
+        },
+        {
+          "id": "C6_58",
+          "name": "C6_58",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 8170
+        },
+        {
+          "id": "C6_59",
+          "name": "C6_59",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 8170
+        },
+        {
+          "id": "C6_60",
+          "name": "C6_60",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 8420
+        },
+        {
+          "id": "C6_61",
+          "name": "C6_61",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 8420
+        },
+        {
+          "id": "C6_62",
+          "name": "C6_62",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 8420
+        },
+        {
+          "id": "C6_63",
+          "name": "C6_63",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM6"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 8420
+        },
+        {
+          "id": "BIT7",
+          "name": "BIT7",
+          "kind": "block",
+          "cell_name": "SAR8_BOTTOM",
+          "pins": {
+            "VIN": "VIN",
+            "VREF": "VREF",
+            "BIT": "B7",
+            "SAMPLE": "SAMPLE",
+            "SAMPLEB": "SAMPLEB",
+            "OUT": "BOTTOM7",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 8670
+        },
+        {
+          "id": "C7_0",
+          "name": "C7_0",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 8670
+        },
+        {
+          "id": "C7_1",
+          "name": "C7_1",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 8670
+        },
+        {
+          "id": "C7_2",
+          "name": "C7_2",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 8670
+        },
+        {
+          "id": "C7_3",
+          "name": "C7_3",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 8920
+        },
+        {
+          "id": "C7_4",
+          "name": "C7_4",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 8920
+        },
+        {
+          "id": "C7_5",
+          "name": "C7_5",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 8920
+        },
+        {
+          "id": "C7_6",
+          "name": "C7_6",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 8920
+        },
+        {
+          "id": "C7_7",
+          "name": "C7_7",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 9170
+        },
+        {
+          "id": "C7_8",
+          "name": "C7_8",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 9170
+        },
+        {
+          "id": "C7_9",
+          "name": "C7_9",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 9170
+        },
+        {
+          "id": "C7_10",
+          "name": "C7_10",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 9170
+        },
+        {
+          "id": "C7_11",
+          "name": "C7_11",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 9420
+        },
+        {
+          "id": "C7_12",
+          "name": "C7_12",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 9420
+        },
+        {
+          "id": "C7_13",
+          "name": "C7_13",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 9420
+        },
+        {
+          "id": "C7_14",
+          "name": "C7_14",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 9420
+        },
+        {
+          "id": "C7_15",
+          "name": "C7_15",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 9670
+        },
+        {
+          "id": "C7_16",
+          "name": "C7_16",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 9670
+        },
+        {
+          "id": "C7_17",
+          "name": "C7_17",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 9670
+        },
+        {
+          "id": "C7_18",
+          "name": "C7_18",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 9670
+        },
+        {
+          "id": "C7_19",
+          "name": "C7_19",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 9920
+        },
+        {
+          "id": "C7_20",
+          "name": "C7_20",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 9920
+        },
+        {
+          "id": "C7_21",
+          "name": "C7_21",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 9920
+        },
+        {
+          "id": "C7_22",
+          "name": "C7_22",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 9920
+        },
+        {
+          "id": "C7_23",
+          "name": "C7_23",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 10170
+        },
+        {
+          "id": "C7_24",
+          "name": "C7_24",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 10170
+        },
+        {
+          "id": "C7_25",
+          "name": "C7_25",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 10170
+        },
+        {
+          "id": "C7_26",
+          "name": "C7_26",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 10170
+        },
+        {
+          "id": "C7_27",
+          "name": "C7_27",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 10420
+        },
+        {
+          "id": "C7_28",
+          "name": "C7_28",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 10420
+        },
+        {
+          "id": "C7_29",
+          "name": "C7_29",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 10420
+        },
+        {
+          "id": "C7_30",
+          "name": "C7_30",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 10420
+        },
+        {
+          "id": "C7_31",
+          "name": "C7_31",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 10670
+        },
+        {
+          "id": "C7_32",
+          "name": "C7_32",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 10670
+        },
+        {
+          "id": "C7_33",
+          "name": "C7_33",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 10670
+        },
+        {
+          "id": "C7_34",
+          "name": "C7_34",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 10670
+        },
+        {
+          "id": "C7_35",
+          "name": "C7_35",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 10920
+        },
+        {
+          "id": "C7_36",
+          "name": "C7_36",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 10920
+        },
+        {
+          "id": "C7_37",
+          "name": "C7_37",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 10920
+        },
+        {
+          "id": "C7_38",
+          "name": "C7_38",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 10920
+        },
+        {
+          "id": "C7_39",
+          "name": "C7_39",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 11170
+        },
+        {
+          "id": "C7_40",
+          "name": "C7_40",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 11170
+        },
+        {
+          "id": "C7_41",
+          "name": "C7_41",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 11170
+        },
+        {
+          "id": "C7_42",
+          "name": "C7_42",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 11170
+        },
+        {
+          "id": "C7_43",
+          "name": "C7_43",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 11420
+        },
+        {
+          "id": "C7_44",
+          "name": "C7_44",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 11420
+        },
+        {
+          "id": "C7_45",
+          "name": "C7_45",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 11420
+        },
+        {
+          "id": "C7_46",
+          "name": "C7_46",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 11420
+        },
+        {
+          "id": "C7_47",
+          "name": "C7_47",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 11670
+        },
+        {
+          "id": "C7_48",
+          "name": "C7_48",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 11670
+        },
+        {
+          "id": "C7_49",
+          "name": "C7_49",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 11670
+        },
+        {
+          "id": "C7_50",
+          "name": "C7_50",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 11670
+        },
+        {
+          "id": "C7_51",
+          "name": "C7_51",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 11920
+        },
+        {
+          "id": "C7_52",
+          "name": "C7_52",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 11920
+        },
+        {
+          "id": "C7_53",
+          "name": "C7_53",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 11920
+        },
+        {
+          "id": "C7_54",
+          "name": "C7_54",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 11920
+        },
+        {
+          "id": "C7_55",
+          "name": "C7_55",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 12170
+        },
+        {
+          "id": "C7_56",
+          "name": "C7_56",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 12170
+        },
+        {
+          "id": "C7_57",
+          "name": "C7_57",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 12170
+        },
+        {
+          "id": "C7_58",
+          "name": "C7_58",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 12170
+        },
+        {
+          "id": "C7_59",
+          "name": "C7_59",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 12420
+        },
+        {
+          "id": "C7_60",
+          "name": "C7_60",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 12420
+        },
+        {
+          "id": "C7_61",
+          "name": "C7_61",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 12420
+        },
+        {
+          "id": "C7_62",
+          "name": "C7_62",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 12420
+        },
+        {
+          "id": "C7_63",
+          "name": "C7_63",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 12670
+        },
+        {
+          "id": "C7_64",
+          "name": "C7_64",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 12670
+        },
+        {
+          "id": "C7_65",
+          "name": "C7_65",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 12670
+        },
+        {
+          "id": "C7_66",
+          "name": "C7_66",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 12670
+        },
+        {
+          "id": "C7_67",
+          "name": "C7_67",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 12920
+        },
+        {
+          "id": "C7_68",
+          "name": "C7_68",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 12920
+        },
+        {
+          "id": "C7_69",
+          "name": "C7_69",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 12920
+        },
+        {
+          "id": "C7_70",
+          "name": "C7_70",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 12920
+        },
+        {
+          "id": "C7_71",
+          "name": "C7_71",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 13170
+        },
+        {
+          "id": "C7_72",
+          "name": "C7_72",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 13170
+        },
+        {
+          "id": "C7_73",
+          "name": "C7_73",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 13170
+        },
+        {
+          "id": "C7_74",
+          "name": "C7_74",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 13170
+        },
+        {
+          "id": "C7_75",
+          "name": "C7_75",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 13420
+        },
+        {
+          "id": "C7_76",
+          "name": "C7_76",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 13420
+        },
+        {
+          "id": "C7_77",
+          "name": "C7_77",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 13420
+        },
+        {
+          "id": "C7_78",
+          "name": "C7_78",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 13420
+        },
+        {
+          "id": "C7_79",
+          "name": "C7_79",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 13670
+        },
+        {
+          "id": "C7_80",
+          "name": "C7_80",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 13670
+        },
+        {
+          "id": "C7_81",
+          "name": "C7_81",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 13670
+        },
+        {
+          "id": "C7_82",
+          "name": "C7_82",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 13670
+        },
+        {
+          "id": "C7_83",
+          "name": "C7_83",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 13920
+        },
+        {
+          "id": "C7_84",
+          "name": "C7_84",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 13920
+        },
+        {
+          "id": "C7_85",
+          "name": "C7_85",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 13920
+        },
+        {
+          "id": "C7_86",
+          "name": "C7_86",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 13920
+        },
+        {
+          "id": "C7_87",
+          "name": "C7_87",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 14170
+        },
+        {
+          "id": "C7_88",
+          "name": "C7_88",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 14170
+        },
+        {
+          "id": "C7_89",
+          "name": "C7_89",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 14170
+        },
+        {
+          "id": "C7_90",
+          "name": "C7_90",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 14170
+        },
+        {
+          "id": "C7_91",
+          "name": "C7_91",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 14420
+        },
+        {
+          "id": "C7_92",
+          "name": "C7_92",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 14420
+        },
+        {
+          "id": "C7_93",
+          "name": "C7_93",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 14420
+        },
+        {
+          "id": "C7_94",
+          "name": "C7_94",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 14420
+        },
+        {
+          "id": "C7_95",
+          "name": "C7_95",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 14670
+        },
+        {
+          "id": "C7_96",
+          "name": "C7_96",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 14670
+        },
+        {
+          "id": "C7_97",
+          "name": "C7_97",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 14670
+        },
+        {
+          "id": "C7_98",
+          "name": "C7_98",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 14670
+        },
+        {
+          "id": "C7_99",
+          "name": "C7_99",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 14920
+        },
+        {
+          "id": "C7_100",
+          "name": "C7_100",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 14920
+        },
+        {
+          "id": "C7_101",
+          "name": "C7_101",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 14920
+        },
+        {
+          "id": "C7_102",
+          "name": "C7_102",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 14920
+        },
+        {
+          "id": "C7_103",
+          "name": "C7_103",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 15170
+        },
+        {
+          "id": "C7_104",
+          "name": "C7_104",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 15170
+        },
+        {
+          "id": "C7_105",
+          "name": "C7_105",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 15170
+        },
+        {
+          "id": "C7_106",
+          "name": "C7_106",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 15170
+        },
+        {
+          "id": "C7_107",
+          "name": "C7_107",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 15420
+        },
+        {
+          "id": "C7_108",
+          "name": "C7_108",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 15420
+        },
+        {
+          "id": "C7_109",
+          "name": "C7_109",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 15420
+        },
+        {
+          "id": "C7_110",
+          "name": "C7_110",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 15420
+        },
+        {
+          "id": "C7_111",
+          "name": "C7_111",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 15670
+        },
+        {
+          "id": "C7_112",
+          "name": "C7_112",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 15670
+        },
+        {
+          "id": "C7_113",
+          "name": "C7_113",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 15670
+        },
+        {
+          "id": "C7_114",
+          "name": "C7_114",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 15670
+        },
+        {
+          "id": "C7_115",
+          "name": "C7_115",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 15920
+        },
+        {
+          "id": "C7_116",
+          "name": "C7_116",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 15920
+        },
+        {
+          "id": "C7_117",
+          "name": "C7_117",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 15920
+        },
+        {
+          "id": "C7_118",
+          "name": "C7_118",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 15920
+        },
+        {
+          "id": "C7_119",
+          "name": "C7_119",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 16170
+        },
+        {
+          "id": "C7_120",
+          "name": "C7_120",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 16170
+        },
+        {
+          "id": "C7_121",
+          "name": "C7_121",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 16170
+        },
+        {
+          "id": "C7_122",
+          "name": "C7_122",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 16170
+        },
+        {
+          "id": "C7_123",
+          "name": "C7_123",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 16420
+        },
+        {
+          "id": "C7_124",
+          "name": "C7_124",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 16420
+        },
+        {
+          "id": "C7_125",
+          "name": "C7_125",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 16420
+        },
+        {
+          "id": "C7_126",
+          "name": "C7_126",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 16420
+        },
+        {
+          "id": "C7_127",
+          "name": "C7_127",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "BOTTOM7"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 16670
+        },
+        {
+          "id": "DUMMY_SWITCH",
+          "name": "DUMMY_SWITCH",
+          "kind": "block",
+          "cell_name": "SAR8_BOTTOM",
+          "pins": {
+            "VIN": "VIN",
+            "VREF": "VREF",
+            "BIT": "VGND",
+            "SAMPLE": "SAMPLE",
+            "SAMPLEB": "SAMPLEB",
+            "OUT": "DUMMY",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 16670
+        },
+        {
+          "id": "DUMMY_CAP",
+          "name": "DUMMY_CAP",
+          "kind": "block",
+          "cell_name": "SAR8_UNIT",
+          "pins": {
+            "TOP": "TOP",
+            "BOTTOM": "DUMMY"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 16670
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "INV": {
+      "schema_version": 1,
+      "connectivity_mode": "explicit",
+      "ports": [
+        "A",
+        "Y",
+        "VPWR",
+        "VGND"
+      ],
+      "devices": [
+        {
+          "id": "MP",
+          "name": "MP",
+          "kind": "pmos",
+          "model": "sky130_fd_pr__pfet_01v8_hvt",
+          "pins": {
+            "D": "Y",
+            "G": "A",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 160
+        },
+        {
+          "id": "MN",
+          "name": "MN",
+          "kind": "nmos",
+          "model": "sky130_fd_pr__nfet_01v8",
+          "pins": {
+            "D": "Y",
+            "G": "A",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 370,
+          "y": 160
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "SAR8_TG": {
+      "schema_version": 1,
+      "ports": [
+        "A",
+        "Y",
+        "EN",
+        "ENB",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "N",
+          "name": "N",
+          "kind": "nmos",
+          "pins": {
+            "D": "Y",
+            "G": "EN",
+            "S": "A",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 4,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "P",
+          "name": "P",
+          "kind": "pmos",
+          "pins": {
+            "D": "Y",
+            "G": "ENB",
+            "S": "A",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 8,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 420,
+          "y": 170,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "SAR8_BOTTOM": {
+      "schema_version": 1,
+      "ports": [
+        "VIN",
+        "VREF",
+        "BIT",
+        "SAMPLE",
+        "SAMPLEB",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "BIT_INV",
+          "name": "BIT_INV",
+          "kind": "block",
+          "cell_name": "INV",
+          "pins": {
+            "A": "BIT",
+            "Y": "BITB",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 170
+        },
+        {
+          "id": "HIGH",
+          "name": "HIGH",
+          "kind": "block",
+          "cell_name": "SAR8_TG",
+          "pins": {
+            "A": "VREF",
+            "Y": "REFSEL",
+            "EN": "BIT",
+            "ENB": "BITB",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 170
+        },
+        {
+          "id": "LOW",
+          "name": "LOW",
+          "kind": "block",
+          "cell_name": "SAR8_TG",
+          "pins": {
+            "A": "VGND",
+            "Y": "REFSEL",
+            "EN": "BITB",
+            "ENB": "BIT",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 170
+        },
+        {
+          "id": "ACQUIRE",
+          "name": "ACQUIRE",
+          "kind": "block",
+          "cell_name": "SAR8_TG",
+          "pins": {
+            "A": "VIN",
+            "Y": "OUT",
+            "EN": "SAMPLE",
+            "ENB": "SAMPLEB",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 170
+        },
+        {
+          "id": "CONVERT",
+          "name": "CONVERT",
+          "kind": "block",
+          "cell_name": "SAR8_TG",
+          "pins": {
+            "A": "REFSEL",
+            "Y": "OUT",
+            "EN": "SAMPLEB",
+            "ENB": "SAMPLE",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 420
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "SAR8_UNIT": {
+      "schema_version": 1,
+      "ports": [
+        "TOP",
+        "BOTTOM"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "C_UNIT",
+          "name": "C_UNIT",
+          "kind": "capacitor",
+          "pins": {
+            "+": "TOP",
+            "-": "BOTTOM"
+          },
+          "parameters": {
+            "value": 4e-13
+          },
+          "x": 180,
+          "y": 170
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "SAR8_COMPARATOR": {
+      "schema_version": 1,
+      "ports": [
+        "INP",
+        "INN",
+        "BIAS",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "PREAMP",
+          "name": "PREAMP",
+          "kind": "block",
+          "pins": {
+            "INP": "INP",
+            "INN": "INN",
+            "BIAS": "BIAS",
+            "OUT": "PRE",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 180,
+          "y": 170,
+          "cell_name": "PREAMP"
+        },
+        {
+          "id": "P_OUT",
+          "name": "P_OUT",
+          "kind": "pmos",
+          "pins": {
+            "D": "DECISION_RAW",
+            "G": "PRE",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 8,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 420,
+          "y": 170,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "N_OUT",
+          "name": "N_OUT",
+          "kind": "nmos",
+          "pins": {
+            "D": "DECISION_RAW",
+            "G": "PRE",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 4,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 660,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "RESTORE0",
+          "name": "RESTORE0",
+          "kind": "block",
+          "cell_name": "INV",
+          "pins": {
+            "A": "DECISION_RAW",
+            "Y": "DECISION_B",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 860,
+          "y": 170
+        },
+        {
+          "id": "RESTORE1",
+          "name": "RESTORE1",
+          "kind": "block",
+          "cell_name": "INV",
+          "pins": {
+            "A": "DECISION_B",
+            "Y": "OUT",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 420
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "PREAMP": {
+      "schema_version": 1,
+      "ports": [
+        "INP",
+        "INN",
+        "BIAS",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "N_INP",
+          "name": "N_INP",
+          "kind": "nmos",
+          "pins": {
+            "D": "OUT",
+            "G": "INP",
+            "S": "TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 10,
+            "l_um": 1,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "N_INN",
+          "name": "N_INN",
+          "kind": "nmos",
+          "pins": {
+            "D": "MIR",
+            "G": "INN",
+            "S": "TAIL",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 10,
+            "l_um": 1,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 420,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "P_DIODE",
+          "name": "P_DIODE",
+          "kind": "pmos",
+          "pins": {
+            "D": "MIR",
+            "G": "MIR",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 20,
+            "l_um": 1,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 660,
+          "y": 170,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "P_MIRROR",
+          "name": "P_MIRROR",
+          "kind": "pmos",
+          "pins": {
+            "D": "OUT",
+            "G": "MIR",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 20,
+            "l_um": 1,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 900,
+          "y": 170,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        },
+        {
+          "id": "N_TAIL",
+          "name": "N_TAIL",
+          "kind": "nmos",
+          "pins": {
+            "D": "TAIL",
+            "G": "BIAS",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 2,
+            "l_um": 1,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 350,
+          "model": "sky130_fd_pr__nfet_01v8"
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    }
+  }
+}

@@ -1,0 +1,57 @@
+* NGSPICE file created from soc_filter2.ext - technology: sky130A
+
+.subckt soc_filter2 VPWR VGND VIN OUT BIAS
+X0 FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X1 VGND BIAS BUFFER1__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X2 FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X3 BUFFER0__COMP MID VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X4 BUFFER1__PRE BUFFER1__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X5 FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X6 FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X7 FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X8 FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X9 FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X10 BUFFER0__FIRST__TAIL FILTER0 BUFFER0__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X11 BUFFER0__FIRST__TAIL FILTER0 BUFFER0__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X12 MID FILTER1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=28.04
+X13 VPWR BUFFER0__PRE MID VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X14 FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X15 VPWR BUFFER0__FIRST__MIR BUFFER0__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X16 VPWR BUFFER1__FIRST__MIR BUFFER1__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X17 FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X18 FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X19 BUFFER0__PRE BUFFER0__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X20 FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X21 BUFFER1__FIRST__TAIL FILTER1 BUFFER1__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X22 FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X23 BUFFER0__FIRST__TAIL MID BUFFER0__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X24 VPWR BUFFER0__FIRST__MIR BUFFER0__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X25 BUFFER1__PRE BUFFER1__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X26 FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X27 FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X28 BUFFER1__FIRST__TAIL FILTER1 BUFFER1__PRE VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X29 FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X30 BUFFER1__FIRST__TAIL OUT BUFFER1__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X31 VGND BIAS OUT VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X32 BUFFER1__COMP OUT VGND sky130_fd_pr__res_xhigh_po_1p41 l=3.36
+X33 FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X34 FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X35 FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X36 BUFFER1__FIRST__TAIL OUT BUFFER1__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X37 VPWR BUFFER1__PRE OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=11.6 pd=80.58 as=11.6 ps=80.58 w=40 l=1
+X38 BUFFER1__PRE BUFFER1__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X39 FILTER0 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X40 FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X41 VGND BIAS MID VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X42 FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X43 BUFFER0__FIRST__TAIL MID BUFFER0__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=1.45 pd=10.58 as=1.45 ps=10.58 w=5 l=1
+X44 VGND BIAS BUFFER0__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X45 FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X46 FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X47 FILTER1 VGND sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X48 VPWR BUFFER1__FIRST__MIR BUFFER1__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X49 VIN FILTER0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=28.04
+X50 BUFFER0__PRE BUFFER0__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+X51 BUFFER0__PRE BUFFER0__COMP sky130_fd_pr__cap_mim_m3_1 l=28.68 w=28.68
+.ends
+

@@ -40,7 +40,8 @@ for stage,color in [('pre','#89b5ef'),('post','#edbd79')]:
     waves={w['name']:w for w in json.loads((folder/(stage+'-waveforms.json')).read_text())}
     for ax,name in zip(axs,['TOP','COMP','reference_current','CODE']):
         w=waves[name];points=[(x*1e6,y) for x,y in zip(w['x'],w['y']) if x<=56e-6]
-        ax.plot([p[0] for p in points],[p[1] for p in points],label=stage,color=color,linewidth=1)
+        if name=='CODE':ax.step([p[0] for p in points],[p[1] for p in points],where='post',label=stage,color=color,linewidth=1,marker='o',markersize=3)
+        else:ax.plot([p[0] for p in points],[p[1] for p in points],label=stage,color=color,linewidth=1)
         ax.set_ylabel(name+'\n'+w['unit']);ax.grid(alpha=.15)
 axs[0].set_title('Measured SAR charge residue, restored comparator, reference current and replayed CODE')
 axs[0].legend();axs[-1].set_xlabel('Native analog bridge time (µs) · digital logic replay excludes transistor timing')

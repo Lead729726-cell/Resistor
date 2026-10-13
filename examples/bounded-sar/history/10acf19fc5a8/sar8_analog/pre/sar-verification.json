@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "kind": "sar8_analog",
+  "source": "continuous ngspice MOS/capacitor decisions + actual Icarus RTL/gate replay",
+  "checks": [
+    {
+      "name": "RTL / synthesized gates / CMOS schematic reproduce every native comparator decision and trial",
+      "pass": true
+    },
+    {
+      "name": "Comparator logic levels unambiguous at decision edges",
+      "pass": true
+    },
+    {
+      "name": "Directed input codes within one LSB",
+      "pass": true
+    }
+  ],
+  "frames": [
+    {
+      "frame": 0,
+      "input_V": 0.6,
+      "code": 128,
+      "expected_code": 128,
+      "error_codes": 0
+    },
+    {
+      "frame": 1,
+      "input_V": 0.0,
+      "code": 0,
+      "expected_code": 0,
+      "error_codes": 0
+    },
+    {
+      "frame": 2,
+      "input_V": 1.2,
+      "code": 255,
+      "expected_code": 255,
+      "error_codes": 0
+    },
+    {
+      "frame": 3,
+      "input_V": 0.00234375,
+      "code": 0,
+      "expected_code": 0,
+      "error_codes": 0
+    },
+    {
+      "frame": 4,
+      "input_V": 0.007031249999999999,
+      "code": 1,
+      "expected_code": 1,
+      "error_codes": 0
+    },
+    {
+      "frame": 5,
+      "input_V": 0.29765625,
+      "code": 63,
+      "expected_code": 63,
+      "error_codes": 0
+    },
+    {
+      "frame": 6,
+      "input_V": 0.59765625,
+      "code": 127,
+      "expected_code": 127,
+      "error_codes": 0
+    },
+    {
+      "frame": 7,
+      "input_V": 0.60234375,
+      "code": 128,
+      "expected_code": 128,
+      "error_codes": 0
+    },
+    {
+      "frame": 8,
+      "input_V": 0.8976562499999999,
+      "code": 191,
+      "expected_code": 191,
+      "error_codes": 0
+    },
+    {
+      "frame": 9,
+      "input_V": 1.19296875,
+      "code": 254,
+      "expected_code": 254,
+      "error_codes": 0
+    },
+    {
+      "frame": 10,
+      "input_V": 1.1976562499999999,
+      "code": 255,
+      "expected_code": 255,
+      "error_codes": 0
+    }
+  ],
+  "ambiguous_decisions": 0,
+  "rtl_sha256": "23111df558a25c974ca6884f1ec654357b427314dd9dc9cfa3a7a35d5e02b899",
+  "gate_sha256": "87a98f9a2f8f3d78b7ba37adbde5a8754c0c9064b7fc2b27c0f20983a7f8e662",
+  "scope": "Directed static inputs only; \u00b11 code criterion. Not full INL/DNL, noise, ENOB, yield, digital transistor timing or manufacturing signoff.",
+  "pass": true
+}
