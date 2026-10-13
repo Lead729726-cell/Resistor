@@ -75,17 +75,20 @@ export async function startNativeWorker(workspace,{resourcesRoot=workspace,prepa
     const {unlink}=await import('node:fs/promises');await unlink(lockFile);lock=await open(lockFile,'wx');
   }
   await lock.writeFile(JSON.stringify({workspace_id:id,launcher_pid:process.pid,started_at:new Date().toISOString()}));
-  let output,child,started=false;
+  let output,input,child,started=false;const launchFile=path.join(logDir,'launch-'+instance+'.json');
   try{
     const env=launch||await nativeEnvironment(workspace,{resourcesRoot,prepare,run});
     output=await open(path.join(logDir,'engine.log'),'a');
     const entry=path.join(resourcesRoot,'workers/eda/native_entry.py');if(!await exists(entry))throw Error('Native engine entry is missing from the application resources.');
-    child=spawn(env.python,env.args||[entry,'--stdin-config'],{cwd:resourcesRoot,env:env.environment,windowsHide:true,detached:true,stdio:['pipe',output.fd,output.fd]});
+    // A short-lived private file supplies fd 0. No anonymous pipe remains
+    // attached to Electron's lifetime after the launch envelope is read.
+    await writeFile(launchFile,JSON.stringify({...env.extra,MOS_WORKSPACE:env.workspace||workspace,MOS_WORKSPACE_ID:id,MOS_TOKEN:config.token,MOS_PORT:new URL(config.url).port,MOS_BIND:'127.0.0.1',MOS_RUNTIME_KIND:runtimeKind,MOS_INSTANCE_ID:instance})+'\n',{flag:'wx',mode:0o600});input=await open(launchFile,'r');
+    child=spawn(env.python,env.args||[entry,'--detach','--stdin-config'],{cwd:resourcesRoot,env:env.environment,windowsHide:true,detached:true,stdio:[input.fd,output.fd,output.fd]});
     await new Promise((resolve,reject)=>{child.once('spawn',resolve);child.once('error',reject);});
-    child.stdin.on('error',()=>{});child.stdin.end(JSON.stringify({...env.extra,MOS_WORKSPACE:env.workspace||workspace,MOS_WORKSPACE_ID:id,MOS_TOKEN:config.token,MOS_PORT:new URL(config.url).port,MOS_BIND:'127.0.0.1',MOS_RUNTIME_KIND:runtimeKind,MOS_INSTANCE_ID:instance})+'\n');child.unref();
-    for(let i=0;i<120;i++){const identity=await runtimeIdentity(config,fetchImpl);if(identity){if(identity.instance_id!==instance||identity.workspace_id!==id)throw Error('Native engine ownership mismatch.');await writeFile(path.join(logDir,'owner.json'),JSON.stringify({instance_id:instance,workspace_id:id,pid:child.pid,runtime_kind:identity.runtime_kind}));started=true;return {...config,engine_mode:runtimeKind.startsWith('wsl-')?'wsl':'native'};}if(child.exitCode!==null)break;await new Promise(r=>setTimeout(r,250));}
+    child.unref();
+    for(let i=0;i<120;i++){const identity=await runtimeIdentity(config,fetchImpl);if(identity){if(identity.instance_id!==instance||identity.workspace_id!==id)throw Error('Native engine ownership mismatch.');await writeFile(path.join(logDir,'owner.json'),JSON.stringify({instance_id:instance,workspace_id:id,pid:identity.pid,runtime_kind:identity.runtime_kind}));started=true;return {...config,engine_mode:runtimeKind.startsWith('wsl-')?'wsl':'native'};}if(child.exitCode!==null&&child.exitCode!==0)break;await new Promise(r=>setTimeout(r,250));}
     const log=await readFile(path.join(logDir,'engine.log'),'utf8');throw Error('로컬 엔진 시작 실패: '+log.slice(-3000).replaceAll(config.token,'[redacted]'));
-  }finally{if(child&&!started&&child.exitCode===null)child.kill();await output?.close();await lock.close();const {unlink}=await import('node:fs/promises');await unlink(lockFile);}
+  }finally{if(child&&!started&&child.exitCode===null)child.kill();await input?.close();await output?.close();await lock.close();const {unlink}=await import('node:fs/promises');try{await unlink(launchFile);}catch(e){if(e.code!=='ENOENT')throw e;}await unlink(lockFile);}
 }
 export async function stopNativeWorker(workspace){
   const config=await runtimeConfig(workspace),owner=JSON.parse(await readFile(path.join(workspace,'.runtime/native-engine/owner.json'),'utf8')),current=await runtimeIdentity(config);
