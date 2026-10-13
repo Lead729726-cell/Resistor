@@ -6,7 +6,8 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {selectRelease,compareVersions,platformKey,REPOSITORY,RELEASES_URL} from '../apps/desktop/update-feed.mjs';
 import {DesktopUpdater} from '../apps/desktop/updates.mjs';
-import {safeArchiveEntries,assertInside,applyInstallation,validateTree} from '../apps/desktop/update-install.mjs';
+import {safeArchiveEntries,assertInside,applyInstallation,validateTree,zipEntryNames} from '../apps/desktop/update-install.mjs';
+import {zipSync} from 'fflate';
 const body=Buffer.from('real deterministic download fixture'),digest=createHash('sha256').update(body).digest('hex');
 function release(version='0.23.0',options={}){const tag='v'+version;return {tag_name:tag,html_url:`https://github.com/${REPOSITORY}/releases/tag/${tag}`,draft:false,prerelease:true,published_at:'2026-10-13T00:00:00Z',body:'Release notes',assets:[{name:`Resistor-${version}-win-x64.exe`,size:body.length,digest:'sha256:'+digest,browser_download_url:`https://github.com/${REPOSITORY}/releases/download/${tag}/Resistor-${version}-win-x64.exe`}],...options};}
 const choose=(data,options={})=>selectRelease(data,{currentVersion:'0.22.0',platform:'windows',...options});
@@ -68,6 +69,12 @@ test('preferences persist; auto checks are opt-out and throttled',async t=>{
 test('archive traversal, absolute paths and unrelated roots are rejected; normal framework links retained',()=>{
   for(const entry of ['../outside','/outside','Resistor.app/../outside','Resistor.app\\bad','Other.app/x'])assert.throws(()=>safeArchiveEntries('Resistor.app/a\n'+entry,'Resistor.app',{mac:true}));
   safeArchiveEntries('Resistor.app/Contents/Frameworks/a\nBUNDLE-SYMLINKS.tsv\n','Resistor.app',{mac:true});assert.throws(()=>assertInside('D:/root','D:/outside'));
+});
+test('ZIP directory Unicode names do not depend on the native unzip locale; malformed directories fail',async()=>{
+  const folder=await mkdtemp(path.join(os.tmpdir(),'resistor-update-unicode-')),file=path.join(folder,'file.zip');
+  await writeFile(file,zipSync({'Resistor.app/Contents/test':Buffer.from('x'),'Mac 설치 안내.txt':Buffer.from('안내')}));
+  const names=await zipEntryNames(file);assert(names.includes('Mac 설치 안내.txt'));safeArchiveEntries(names.join('\n'),'Resistor.app',{mac:true});
+  await writeFile(file,Buffer.from('not zip'));await assert.rejects(zipEntryNames(file));
 });
 test('atomic Linux replacement preserves prior app and design data and updates launcher',async()=>{
   const home=await mkdtemp(path.join(os.tmpdir(),'resistor-update-install-')),parent=path.join(home,'.local/opt/resistor'),target=path.join(parent,'0.23.0'),staging=path.join(parent,'.resistor-update-fixture'),folder=path.join(home,'updates');

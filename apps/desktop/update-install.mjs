@@ -1,4 +1,4 @@
-import {cp,mkdir,readFile,writeFile,lstat,realpath,rename,unlink} from 'node:fs/promises';
+import {cp,mkdir,readFile,writeFile,lstat,realpath,rename,unlink,open} from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import {spawn} from 'node:child_process';
@@ -20,6 +20,25 @@ export function safeArchiveEntries(list,prefix,{mac=false}={}){
   }
   if(!list.split('\n').some(e=>e.startsWith(prefix+'/')))throw Error('업데이트 앱이 압축 파일에 없습니다.');
 }
+export async function zipEntryNames(file){
+  // Read Unicode names from the ZIP directory, not locale-dependent unzip output.
+  const handle=await open(file,'r');try{
+    const size=(await handle.stat()).size,tailSize=Math.min(size,65557),tail=Buffer.alloc(tailSize);await handle.read(tail,0,tailSize,size-tailSize);
+    let e=-1;for(let i=tailSize-22;i>=0;i--)if(tail.readUInt32LE(i)===0x06054b50&&i+22+tail.readUInt16LE(i+20)===tailSize){e=i;break;}
+    if(e<0||tail.readUInt16LE(e+4)||tail.readUInt16LE(e+6))throw Error('지원하지 않는 ZIP 디렉터리입니다.');
+    const count=tail.readUInt16LE(e+10),length=tail.readUInt32LE(e+12),offset=tail.readUInt32LE(e+16);
+    if(count===65535||length>8*1024*1024||offset+length>size-tailSize+e||count!==tail.readUInt16LE(e+8))throw Error('ZIP 디렉터리 크기가 잘못되었습니다.');
+    const directory=Buffer.alloc(length);await handle.read(directory,0,length,offset);const names=[];let position=0;
+    for(let i=0;i<count;i++){
+      if(position+46>length||directory.readUInt32LE(position)!==0x02014b50)throw Error('ZIP 파일 목록이 잘못되었습니다.');
+      const flags=directory.readUInt16LE(position+8),n=directory.readUInt16LE(position+28),extra=directory.readUInt16LE(position+30),comment=directory.readUInt16LE(position+32),end=position+46+n+extra+comment;
+      if(end>length||flags&1)throw Error('암호화되거나 잘못된 ZIP입니다.');
+      const bytes=directory.subarray(position+46,position+46+n);if(!(flags&0x800)&&bytes.some(b=>b>=128))throw Error('UTF-8이 아닌 ZIP 이름입니다.');
+      const name=new TextDecoder('utf-8',{fatal:true}).decode(bytes);if(/[\r\n\0]/.test(name))throw Error('ZIP 이름에 제어 문자가 있습니다.');names.push(name);position=end;
+    }
+    if(position!==length)throw Error('ZIP 디렉터리에 알 수 없는 항목이 있습니다.');return names;
+  }finally{await handle.close();}
+}
 export async function validateTree(root){
   if((await lstat(root)).isSymbolicLink())throw Error('앱 최상위 폴더가 심볼릭 링크입니다.');
   const base=await realpath(root);
@@ -34,7 +53,7 @@ export async function prepareInstallation({file,update,folder,platform=process.p
   if(path.basename(file)!==update.asset.name||!await verifiedFile(file,update.asset))throw Error('업데이트 파일 무결성 검사가 실패했습니다.');
   const cache=path.join(folder,'stage-'+randomUUID());await mkdir(cache,{mode:0o700});
   const prefix=platform==='darwin'?'Resistor.app':`Resistor-${update.version}-linux-x64`;
-  const list=platform==='darwin'?await runImpl('/usr/bin/unzip',['-Z1',file]):await runImpl('tar',['-tzf',file]);safeArchiveEntries(list,prefix,{mac:platform==='darwin'});
+  const list=platform==='darwin'?(await zipEntryNames(file)).join('\n'):await runImpl('tar',['-tzf',file]);safeArchiveEntries(list,prefix,{mac:platform==='darwin'});
   if(platform==='darwin')await runImpl('/usr/bin/ditto',['-x','-k',file,cache]);else await runImpl('tar',['-xzf',file,'--no-same-owner','-C',cache]);
   const source=platform==='darwin'?path.join(cache,prefix):path.join(cache,prefix,'Resistor');await validateTree(source);
   const resources=platform==='darwin'?path.join(source,'Contents/Resources/app'):path.join(source,'resources/app');
