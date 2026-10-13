@@ -70,7 +70,7 @@ export default function SignalFlowPanel({ run, revision, cursor, onCursor, onSel
         branches: frame.map(({ values_A, ...row }) => row), scope: flow?.scope, omitted_nets: flow?.omitted })}>현재 흐름 JSON</button>
     </header>
     {prepared.error && <p role="alert">{prepared.error}</p>}
-    {!flow ? <p>전류 데이터가 없습니다. Transient·DC·OP 해석을 실행하세요. 복소 AC에는 이 단자 방향 표시를 적용하지 않습니다.</p> : <>
+    {!flow ? <p>{run.waveforms?.some(w=>w.unit==='A')?'전류 수치는 아래 실제 파형에서 확인할 수 있습니다. 이 실행에는 분기별 단자 전류·공간 매핑이 없어 방향 화살표를 표시하지 않습니다.':'분기별 전류 데이터가 없습니다. 지원되는 Transient·DC·OP 해석을 실행하세요. 복소 AC에는 이 단자 방향 표시를 적용하지 않습니다.'}</p> : <>
       <div className="sf-timeline"><button className="button small" disabled={flow.xUnit !== 's' || start === end} onClick={() => { if (!playing && x >= end) onCursor(start); setPlaying(!playing); }}>{playing ? '일시정지' : '흐름 재생'}</button>
         <label>해석 위치 ({flow.xUnit})<input aria-label="흐름 해석 위치" type="range" min={start} max={end || 1} step={end > start ? (end - start) / 1000 : 1} value={x} disabled={start === end} onChange={e => { setPlaying(false); onCursor(Number(e.target.value)); }}/></label>
         <strong data-testid="flow-time">{show(x, flow.xUnit)}</strong></div>
