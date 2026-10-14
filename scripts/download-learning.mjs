@@ -107,7 +107,8 @@ export async function prepareLearningSite(root=process.cwd(),tag){
  await save('learning-records.json',JSON.stringify({schema_version:1,records},null,2)+'\n');
  const handbook=`# Resistor ${tag} 전체 실습 안내\n\n[튜토리얼 라이브러리](https://resistor-downloads.vercel.app/tutorial/library/)\n\n${allLessons.length}개 실습. 학습 완료 표시는 엔진 PASS가 아닙니다. 과거 실행은 source/run/조건별로 보존하며 가져온 프로젝트에서 다시 실행합니다. 기존 실제 영상 3편을 보존한 문서 갱신입니다. 새 연속 영상은 제작하지 않았습니다.\n\n`+allLessons.map(l=>`## ${l.title}\n\n${l.summary}\n\n[웹 실습](https://resistor-downloads.vercel.app${l.url}) · [원문](${repo}/blob/main/${l.doc})\n\n시작 조건:\n\n${l.prerequisites.map(p=>'- '+p).join('\n')}\n\n${l.steps.map((s,i)=>(i+1)+'. '+s).join('\n')}\n\n확인 결과와 한계:\n\n${l.checkpoints.map(p=>'- '+p).join('\n')}\n\n막혔을 때:\n\n${l.recovery.map(p=>'- '+p).join('\n')}\n`).join('\n');
  await save('learning-handbook.md',handbook);
- for(const f of ['learning.css','learning.js'])await save(f,await readFile(path.join(root,'scripts/tutorial-library/'+f)));
+ // Source checkouts may use CRLF; checksum-pinned generated text always uses LF.
+ for(const f of ['learning.css','learning.js'])await save(f,(await readFile(path.join(root,'scripts/tutorial-library/'+f),'utf8')).replace(/\r\n/g,'\n'));
  await build({entryPoints:[path.join(root,'scripts/tutorial-library/calculators.ts')],bundle:true,platform:'browser',target:'es2022',outfile:path.join(site,'learning-calculators.js'),minify:true,legalComments:'none'});output.push('learning-calculators.js');
  const config=await json(path.join(site,'vercel.json'));
  const rewrites=[...['/tutorial/library','/tutorial/library/'].map(source=>({source,destination:'/tutorial-library.html'})),...allLessons.flatMap(l=>[l.url.slice(0,-1),l.url].map(source=>({source,destination:'/'+l.file})))];
