@@ -41,7 +41,7 @@ npm run dev:edu
 
 실제 검증 기록: [native.json](evidence/edu-inverter/native.json). 5fF/50fF에서 Y 상승은 약 **0.08129ns / 0.6818ns**, 하강은 **0.04289ns / 0.2629ns**였습니다. 두 조건 모두 1544개 실제 시간 표본을 사용했습니다. 값은 이 모델·조건·측정 정의에 한정합니다. 공통 공식·단위·기하 변환 검사는 기존 core 검사와 함께 수행합니다.
 
-이 Windows 환경에는 KLayout·ngspice가 있고 Magic·Netgen은 없습니다. DRC/LVS/PEX는 각각 `unavailable / unknown`, 시뮬레이션은 실제 개별 run 상태로 표시합니다. 시뮬레이션의 독립 기준이 통과해도 나머지 검증이나 제조 signoff를 뜻하지 않습니다. 공정 단면 생성·실측 두께/coverage·매칭 평가·전체 PVT와 배선 기생 변화는 이 최소 실습에서 실행하지 않습니다.
+2026-10-14 초기 native.json 검증 시점에는 KLayout·ngspice만 있었습니다. 이후 Magic·Netgen을 독립 WSL에 설치하고 Edu·Indust에 공통 연결했습니다. [현재 설치·실행 결과](physical-tools.md)를 확인하세요. 아래 unavailable 상태는 초기 기록이며 원본은 보존합니다. DRC/LVS/PEX는 각각 `unavailable / unknown`, 시뮬레이션은 실제 개별 run 상태로 표시합니다. 시뮬레이션의 독립 기준이 통과해도 나머지 검증이나 제조 signoff를 뜻하지 않습니다. 공정 단면 생성·실측 두께/coverage·매칭 평가·전체 PVT와 배선 기생 변화는 이 최소 실습에서 실행하지 않습니다.
 
 ## 저장 형식과 호환성
 
