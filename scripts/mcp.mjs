@@ -8,6 +8,7 @@ import {fileURLToPath} from 'node:url';
 import {educationRpc} from './education-service.mjs';
 import {runtimeIdentity,workspaceId} from './native-worker.mjs';
 import {inverterLesson} from '../packages/education/src/inverter.ts';
+import {assignments,catalogVersion,learningPaths,studentReferences,sources} from '../packages/education/src/assignment-catalog.ts';
 const resourcesRoot=fileURLToPath(new URL('../',import.meta.url));
 const edition=getProductEdition({root:resourcesRoot});
 const workspace=await prepareEditionWorkspace({root:resourcesRoot,edition,workspace:process.env.MOS_WORKSPACE});
@@ -32,6 +33,8 @@ function tool(name,description,inputSchema,callback,{readOnly=true,idempotent=re
 tool('register_product_context','Identify Resistor Edu/Indust, the selected workspace, branch and learning/verification boundary. No credentials or provider calls.',{},()=>productContext);
 
 if(edition.edition==='edu'){
+ tool('register_edu_assignments','Read authored Edu tasks, launch scope, raw concept questions and manual rubric. No engine execution, student answers or auto grades.',{query:z.string().max(120).optional()},({query})=>({schema_version:1,edition:'edu',catalog_version:catalogVersion,project_id:null,data_revision:null,assignments:assignments.filter(a=>!query||(a.title+' '+a.id+' '+a.category).toLowerCase().includes(query.toLowerCase())).map(({instructor,...a})=>a),paths:learningPaths,education_effect_proven:false}));
+ tool('register_edu_references','Read Edu reference cards with equations, units, conditions, unknowns and primary-source links. These are guides, not student submissions or engine verdicts.',{},()=>({schema_version:1,edition:'edu',catalog_version:catalogVersion,project_id:null,data_revision:null,references:studentReferences,sources,education_effect_proven:false}));
  const lesson=z.string().uuid(),revision=z.number().int().positive();
  const learning=async(method,params)=>{if(method==='learning.run'){if(submissions>=32)throw Error('MCP native job budget exhausted (32)');submissions++;}const r=await educationRpc(config,method,params,{edition:edition.edition});if(!r.ok)throw Object.assign(Error(r.error.message),{code:r.error.code});return r.result;};
  tool('register_learning_catalog','Edu goals, prerequisites, supported public inverter, conditions, observations, interpretation questions and explicit limitations.',{},()=>({schema_version:1,edition:'edu',definition:inverterLesson,education_effect_proven:false}));

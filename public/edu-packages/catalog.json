@@ -1,0 +1,5838 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "product_id": "resistor.edu",
+  "catalog_version": "edu-coursepack-20261014-v1",
+  "assignments": [
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "금색을 유효 숫자 색띠로 쓸 수 없는 이유는?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-resistor-color-code",
+      "title": "색띠와 허용오차",
+      "category": "기초 계산",
+      "goal": "갈색·검정·빨강·금색의 명목값과 ±5% 범위를 읽습니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "resistor-color-code",
+        "inputs": {
+          "band1": "brown",
+          "band2": "black",
+          "multiplier": "red",
+          "tolerance": "gold"
+        }
+      },
+      "conditions": [
+        "R = (10 x first digit + second digit) x multiplier",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "금색을 유효 숫자 색띠로 쓸 수 없는 이유는?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "허용오차는 실측값이나 온도 계수가 아닙니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "가까운 명목값과 실제 공차가 같은 뜻인가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-resistor-series",
+      "title": "E-series와 목표 오차",
+      "category": "기초 계산",
+      "goal": "4.6kΩ 목표에서 E24와 E96 선택을 비교합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "resistor-series",
+        "inputs": {
+          "target": 4600,
+          "series": "E24"
+        }
+      },
+      "conditions": [
+        "nearest value in selected IEC E-series",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "가까운 명목값과 실제 공차가 같은 뜻인가요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "표준값 선택은 부품 재고·정격 보증이 아닙니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "Req가 가장 작은 branch 저항보다 큰가요, 작은가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-parallel-resistor",
+      "title": "병렬 저항과 branch 전류",
+      "category": "기초 계산",
+      "goal": "1kΩ 두 개를 병렬로 놓고 하나를 2kΩ로 바꿉니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "parallel-resistor",
+        "inputs": {
+          "r1": 1000,
+          "r2": 1000,
+          "r3": 0,
+          "r4": 0
+        }
+      },
+      "conditions": [
+        "1 / Req = 1/R1 + 1/R2 + ...",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "Req가 가장 작은 branch 저항보다 큰가요, 작은가요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "이상적 독립 저항. 배선·온도·공차는 포함하지 않습니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "직렬 전류가 같을 때 어느 저항의 전압강하가 큰가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-series-resistor",
+      "title": "직렬 저항과 전압 분담",
+      "category": "기초 계산",
+      "goal": "1kΩ+2.2kΩ 총합과 한 저항 변경을 비교합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "series-resistor",
+        "inputs": {
+          "r1": 1000,
+          "r2": 2200,
+          "r3": 0,
+          "r4": 0
+        }
+      },
+      "conditions": [
+        "Req = R1 + R2 + ...",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "직렬 전류가 같을 때 어느 저항의 전압강하가 큰가요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "이상적 직렬 연결이며 중간 노드 부하는 없습니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "분압비를 유지하면서 전체 저항을 10배 키우면 전류는?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-voltage-divider",
+      "title": "분압비와 전류 비용",
+      "category": "기초 계산",
+      "goal": "Vin=1.8V, R1=R2=10kΩ에서 R2=5kΩ로 비교합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "voltage-divider",
+        "inputs": {
+          "vin": 1.8,
+          "r1": 10000,
+          "r2": 10000
+        }
+      },
+      "conditions": [
+        "Vout = Vin x R2 / (R1 + R2)",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "분압비를 유지하면서 전체 저항을 10배 키우면 전류는?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "무부하 저항 분배기만 계산합니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "LED Vf 온도 변화와 저항 정격 여유를 어떻게 확인할까요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-led-resistor",
+      "title": "LED 전류 제한과 정격",
+      "category": "기초 계산",
+      "goal": "Vs=5V, Vf=2V, 목표 10mA에서 20mA로 비교합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "led-resistor",
+        "inputs": {
+          "supply": 5,
+          "forward": 2,
+          "current_ma": 10
+        }
+      },
+      "conditions": [
+        "R = (Vs - Vf) / If",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "LED Vf 온도 변화와 저항 정격 여유를 어떻게 확인할까요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "고정 Vf 근사이며 LED 모델·열 해석은 아닙니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "전압을 두 배로 하면 전력은 몇 배인가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-power-dissipation",
+      "title": "저항 손실과 전압 제곱",
+      "category": "기초 계산",
+      "goal": "1kΩ에 5V와 10V를 인가한 소비 전력을 비교합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "power-dissipation",
+        "inputs": {
+          "voltage": 5,
+          "resistance": 1000
+        }
+      },
+      "conditions": [
+        "P = V^2 / R = I^2R = VI",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "전압을 두 배로 하면 전력은 몇 배인가요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "정상 상태 이상 저항. 온도 상승은 열 모델이 있어야 합니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "10과 0.01 중 어떤 입력이 SI A 단위에 맞나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-ohms-law",
+      "title": "옴의 법칙과 단위",
+      "category": "기초 계산",
+      "goal": "I=10mA, R=1kΩ에서 mA/A 변환을 확인합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "ohms-law",
+        "inputs": {
+          "current": 0.01,
+          "resistance": 1000
+        }
+      },
+      "conditions": [
+        "V = I x R",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "10과 0.01 중 어떤 입력이 SI A 단위에 맞나요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "선형 저항의 V=IR이며 MOS의 전체 I-V 법칙이 아닙니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "63.2% 도달과 1% settling은 같은 시간인가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-rc-time-constant",
+      "title": "RC settling과 대역폭",
+      "category": "기초 계산",
+      "goal": "10kΩ·1µF의 τ와 fc를 C=2µF 조건과 비교합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "rc-time-constant",
+        "inputs": {
+          "resistance": 10000,
+          "capacitance": 0.000001
+        }
+      },
+      "conditions": [
+        "tau = R x C, fc = 1 / (2πRC)",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "63.2% 도달과 1% settling은 같은 시간인가요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "이상적 단일 pole RC, step 최종값 일정."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "인덕터 전류가 즉시 바뀔 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-rl-time-constant",
+      "title": "RL 전류 응답",
+      "category": "기초 계산",
+      "goal": "10mH·100Ω에서 R=200Ω로 τ를 비교합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "rl-time-constant",
+        "inputs": {
+          "inductance": 0.01,
+          "resistance": 100
+        }
+      },
+      "conditions": [
+        "tau = L / R, fc = R / (2πL)",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "인덕터 전류가 즉시 바뀔 수 있나요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "이상적 L, 직렬 R. 포화·기생 C는 제외합니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "이상적 f0와 Q가 각각 어떻게 변하나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-rlc-resonance",
+      "title": "RLC 공진과 Q",
+      "category": "기초 계산",
+      "goal": "10µH·100nF·10Ω에서 R만 20Ω로 변경합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "rlc-resonance",
+        "inputs": {
+          "resistance": 10,
+          "inductance": 0.00001,
+          "capacitance": 1e-7
+        }
+      },
+      "conditions": [
+        "f0 = 1 / (2π√LC), Q = 1/R x √(L/C)",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "이상적 f0와 Q가 각각 어떻게 변하나요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "직렬 RLC의 공진식이며 능동 필터/병렬 Q 공식과 구분합니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "전하와 에너지가 각각 몇 배가 되는지 설명하세요.",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-capacitor-calculator",
+      "title": "커패시터 전하와 에너지",
+      "category": "기초 계산",
+      "goal": "1µF·5V에서 V=10V의 Q와 E를 비교합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "capacitor-calculator",
+        "inputs": {
+          "capacitance": 0.000001,
+          "voltage": 5
+        }
+      },
+      "conditions": [
+        "Q = C x V, E = 1/2 C V²",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "전하와 에너지가 각각 몇 배가 되는지 설명하세요.",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "고정 선형 용량. 정격·누설·ESR은 별도입니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "endpoint step과 bin width를 왜 구분해야 하나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit",
+        "adc-code-definitions"
+      ],
+      "id": "calc-adc-resolution",
+      "title": "ADC 코드 수와 정의",
+      "category": "기초 계산",
+      "goal": "12bit·3.3V에서 N을 변경하고 코드 수를 확인합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "adc-resolution",
+        "inputs": {
+          "bits": 12,
+          "vref": 3.3
+        }
+      },
+      "conditions": [
+        "LSB = Vref / (2^N - 1)",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "endpoint step과 bin width를 왜 구분해야 하나요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "현재 공통 계산기는 endpoint 정의 Vref/(2^N−1). SAR bin은 Vref/2^N. ENOB 측정 아님."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "최대 코드가 2^N인지 2^N−1인지 설명하세요.",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit",
+        "adc-code-definitions"
+      ],
+      "id": "calc-dac-resolution",
+      "title": "DAC endpoint와 step",
+      "category": "기초 계산",
+      "goal": "10bit·5V의 step을 8bit 조건과 비교합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "dac-resolution",
+        "inputs": {
+          "bits": 10,
+          "vfs": 5
+        }
+      },
+      "conditions": [
+        "LSB = Vfs / (2^N - 1)",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "최대 코드가 2^N인지 2^N−1인지 설명하세요.",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "현재 endpoint full-scale 정의. 실제 DAC transfer 정의를 먼저 확인합니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "반전 부호와 계산기의 반전 이득 크기 표시는 어떻게 다른가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-op-amp-gain",
+      "title": "이상적 폐루프 이득",
+      "category": "기초 계산",
+      "goal": "Rf=10kΩ, Rg=1kΩ의 두 구성 이득을 비교합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "op-amp-gain",
+        "inputs": {
+          "rf": 10000,
+          "rg": 1000
+        }
+      },
+      "conditions": [
+        "Av(non-inverting)=1+Rf/Rg, Av(inverting)=-Rf/Rin",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "반전 부호와 계산기의 반전 이득 크기 표시는 어떻게 다른가요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "이상적 음의 피드백 근사. 실제 GBW·slew·rail은 계산하지 않습니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "20log와 10log를 언제 쓰나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-db-conversion",
+      "title": "전압비·전력비 dB",
+      "category": "기초 계산",
+      "goal": "전압비 2와 0.5를 dB로 비교합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "db-conversion",
+        "inputs": {
+          "ratio": 2
+        }
+      },
+      "conditions": [
+        "dB = 20 log10(Vout/Vin)",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "20log와 10log를 언제 쓰나요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "등가 power ratio=amplitude²는 동일 임피던스 조건입니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "f와 ω의 단위 및 2π 관계를 설명하세요.",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-frequency-period",
+      "title": "주파수·주기·각주파수",
+      "category": "기초 계산",
+      "goal": "1kHz와 1MHz의 s·ms·µs를 비교합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "frequency-period",
+        "inputs": {
+          "frequency": 1000
+        }
+      },
+      "conditions": [
+        "T = 1 / f",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "f와 ω의 단위 및 2π 관계를 설명하세요.",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "일정 주기의 이상 신호. jitter 측정은 별도입니다."
+    },
+    {
+      "level": 1,
+      "minutes": 20,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "계산 입력 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공식·단위·주 결과·보조 결과",
+          "points": 30
+        },
+        {
+          "criterion": "milli와 micro 혼동은 결과를 몇 배 바꾸나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "units-si",
+        "ideal-circuit"
+      ],
+      "id": "calc-unit-converter",
+      "title": "SI prefix 오류 찾기",
+      "category": "기초 계산",
+      "goal": "4.7kΩ→Ω와 1nF→pF를 직접 변환합니다.",
+      "launch": {
+        "kind": "calculator",
+        "id": "unit-converter",
+        "inputs": {
+          "value": 4.7,
+          "conversion": "resistance:kohm:ohm"
+        }
+      },
+      "conditions": [
+        "valueout = valuein x scalein / scaleout",
+        "입력 label의 SI 단위·정의와 invalid input을 먼저 확인합니다."
+      ],
+      "variable": "계산 입력 한 개",
+      "observations": [
+        "공식·단위·주 결과·보조 결과",
+        "정상 입력과 0/음수/빈 값 처리"
+      ],
+      "questions": [
+        "milli와 micro 혼동은 결과를 몇 배 바꾸나요?",
+        "계산기의 적용 조건 밖에서 추가로 필요한 데이터는 무엇인가요?"
+      ],
+      "scope": "지원된 같은 물리량의 단위 변환만 사용합니다."
+    },
+    {
+      "level": 1,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "R2: 10kΩ → 5kΩ 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "Vout·I(R1)·전압원 branch 전류 부호",
+          "points": 30
+        },
+        {
+          "criterion": "0.9V→0.6V와 90µA→120µA가 왜 함께 변하나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "kcl-kvl",
+        "current-sign"
+      ],
+      "id": "circuit-divider",
+      "title": "1.8V 전압 분배기 · OP와 전류",
+      "category": "기초 회로",
+      "goal": "0.9V·90µA 예측을 실제 OP와 비교합니다.",
+      "launch": {
+        "kind": "circuit",
+        "id": "divider"
+      },
+      "conditions": [
+        "Vin=1.8V, R1=10kΩ, R2=10kΩ",
+        "R2 변경 후 5kΩ. 무부하·이상 저항."
+      ],
+      "variable": "R2: 10kΩ → 5kΩ",
+      "observations": [
+        "Vout·I(R1)·전압원 branch 전류 부호",
+        "수치 OP에 기능 합격 기준이 없으면 미판정"
+      ],
+      "questions": [
+        "0.9V→0.6V와 90µA→120µA가 왜 함께 변하나요?",
+        "전압원 전류의 음수는 무엇을 뜻하나요?"
+      ],
+      "scope": "ngspice 실제 OP. 회로도만 생성하며 제조 레이아웃 없음.",
+      "guide": "blank-divider"
+    },
+    {
+      "level": 1,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "RL: 10kΩ → 100kΩ 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "R2와 RL 전류 분배",
+          "points": 30
+        },
+        {
+          "criterion": "계측기 입력 저항도 부하인가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "kcl-kvl",
+        "divider-loading"
+      ],
+      "id": "circuit-loaded-divider",
+      "title": "분배기에 부하를 연결하면",
+      "category": "기초 회로",
+      "goal": "10kΩ 부하로 분압비가 달라지는 이유를 설명합니다.",
+      "launch": {
+        "kind": "circuit",
+        "id": "loaded-divider"
+      },
+      "conditions": [
+        "1.8V, R1=R2=10kΩ, RL=10kΩ",
+        "R2||RL=5kΩ, 초기 Vout=0.6V"
+      ],
+      "variable": "RL: 10kΩ → 100kΩ",
+      "observations": [
+        "R2와 RL 전류 분배",
+        "무부하 공식과 실제 부하 포함 OP 비교"
+      ],
+      "questions": [
+        "계측기 입력 저항도 부하인가요?",
+        "분압기의 출력 저항을 줄이는 비용은?"
+      ],
+      "scope": "선형 저항 OP, 입력 저항만 모델링."
+    },
+    {
+      "level": 1,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "RB: 2kΩ → 4kΩ 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "총 공급 전류와 branch 전류 합",
+          "points": 30
+        },
+        {
+          "criterion": "branch를 제거하면 나머지 전류가 바뀌나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "kcl-kvl",
+        "current-sign"
+      ],
+      "id": "circuit-parallel",
+      "title": "병렬 branch의 KCL",
+      "category": "기초 회로",
+      "goal": "1.8V의 1kΩ/2kΩ branch 전류 합을 확인합니다.",
+      "launch": {
+        "kind": "circuit",
+        "id": "parallel"
+      },
+      "conditions": [
+        "1.8V, RA=1kΩ, RB=2kΩ",
+        "예측 IA=1.8mA, IB=0.9mA"
+      ],
+      "variable": "RB: 2kΩ → 4kΩ",
+      "observations": [
+        "총 공급 전류와 branch 전류 합",
+        "각 branch가 같은 전압을 갖는 연결"
+      ],
+      "questions": [
+        "branch를 제거하면 나머지 전류가 바뀌나요?",
+        "전류 방향의 기준을 기록했나요?"
+      ],
+      "scope": "이상 전압원과 독립 저항. 실제 OP."
+    },
+    {
+      "level": 1,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "RA: 1kΩ → 2kΩ 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "공통 전류와 전압강하",
+          "points": 30
+        },
+        {
+          "criterion": "저항 순서를 바꾸면 중간 노드는 어떻게 변하나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "kcl-kvl",
+        "voltage-reference"
+      ],
+      "id": "circuit-series",
+      "title": "직렬 경로의 KVL",
+      "category": "기초 회로",
+      "goal": "두 전압강하의 합과 단일 전류를 확인합니다.",
+      "launch": {
+        "kind": "circuit",
+        "id": "series"
+      },
+      "conditions": [
+        "1.8V, RA=1kΩ, RB=2kΩ",
+        "예측 I=0.6mA, ΔVA=0.6V, ΔVB=1.2V"
+      ],
+      "variable": "RA: 1kΩ → 2kΩ",
+      "observations": [
+        "공통 전류와 전압강하",
+        "전원 전압과 폐회로 전압 합"
+      ],
+      "questions": [
+        "저항 순서를 바꾸면 중간 노드는 어떻게 변하나요?",
+        "총 저항이 같아도 각 노드 전위가 같은가요?"
+      ],
+      "scope": "접지 기준 선형 OP."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "C: 1nF → 2nF 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "step 시작부터 63.2%까지 시간",
+          "points": 30
+        },
+        {
+          "criterion": "63.2% 시간은 step 시작 기준인가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "rc-settling",
+        "sampling-step"
+      ],
+      "id": "circuit-rc-charge",
+      "title": "RC step · τ와 63.2%",
+      "category": "기초 회로",
+      "goal": "정상 값과 실제 charging waveform을 연결합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "rc_lowpass",
+        "parameters": {
+          "resistance_Ohm": 10000,
+          "capacitance_F": 1e-9
+        },
+        "testbench": {
+          "analysis": "tran",
+          "duration_s": 0.0001,
+          "step_s": 5e-8
+        }
+      },
+      "conditions": [
+        "Vin 0→1.8V step, R=10kΩ, C=1nF",
+        "τ=10µs. 유한 rise와 초기조건을 로그에 기록."
+      ],
+      "variable": "C: 1nF → 2nF",
+      "observations": [
+        "step 시작부터 63.2%까지 시간",
+        "최대 time step과 보간 측정 오차"
+      ],
+      "questions": [
+        "63.2% 시간은 step 시작 기준인가요?",
+        "기생 용량을 임의로 더해도 될까요?"
+      ],
+      "scope": "이상 단일 RC transient. 부하 C만 실제 회로 입력으로 변경."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "R: 10kΩ → 20kΩ 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "τ 후 36.8% 전압",
+          "points": 30
+        },
+        {
+          "criterion": "초기조건 없이 OP부터 시작하면 왜 방전이 보이지 않을 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "rc-settling",
+        "initial-conditions"
+      ],
+      "id": "circuit-rc-discharge",
+      "title": "RC 방전 · 초기조건을 명시하기",
+      "category": "기초 회로",
+      "goal": "초기 충전된 C의 방전 응답을 실제 해석합니다.",
+      "launch": {
+        "kind": "fixture",
+        "id": "rc-discharge"
+      },
+      "conditions": [
+        "R=10kΩ, C=1nF, C 초기 1.8V",
+        "standalone fixture는 .ic와 UIC를 명시. 앱에서는 standalone UIC deck 실행을 자동 제공하지 않습니다."
+      ],
+      "variable": "R: 10kΩ → 20kΩ",
+      "observations": [
+        "τ 후 36.8% 전압",
+        "초기조건·OP 사용 여부의 차이"
+      ],
+      "questions": [
+        "초기조건 없이 OP부터 시작하면 왜 방전이 보이지 않을 수 있나요?",
+        "방전 에너지는 어디로 가나요?"
+      ],
+      "scope": "초기조건 deck은 ZIP의 ngspice fixture. 별도 ngspice deck 다운로드·실행. 앱 transient 연동을 주장하지 않습니다."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "C: 1nF → 2nF 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "−3.01dB와 약 −45°의 fc",
+          "points": 30
+        },
+        {
+          "criterion": "AC 파형을 시간의 사인 waveform이라고 부를 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "ac-small-signal",
+        "db-impedance"
+      ],
+      "id": "circuit-rc-ac",
+      "title": "RC AC · −3dB와 위상",
+      "category": "기초 회로",
+      "goal": "fc=1/(2πRC)와 실제 AC 이득·위상을 비교합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "rc_lowpass",
+        "parameters": {
+          "resistance_Ohm": 10000,
+          "capacitance_F": 1e-9
+        }
+      },
+      "conditions": [
+        "이상 R=10kΩ, C=1nF",
+        "AC 소신호의 입력 기준과 Hz 축 확인"
+      ],
+      "variable": "C: 1nF → 2nF",
+      "observations": [
+        "−3.01dB와 약 −45°의 fc",
+        "DC 바이어스와 AC amplitude의 역할"
+      ],
+      "questions": [
+        "AC 파형을 시간의 사인 waveform이라고 부를 수 있나요?",
+        "입력 amplitude를 바꾸면 선형 전달비가 바뀌나요?"
+      ],
+      "scope": "기존 rc_lowpass template와 실제 AC. 물리 RC 없음."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "RL: 5kΩ → 20kΩ 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "무부하 Vth·부하 출력",
+          "points": 30
+        },
+        {
+          "criterion": "독립 전압원을 0V로 한다는 뜻은?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "divider-loading",
+        "ideal-circuit"
+      ],
+      "id": "circuit-thevenin",
+      "title": "테브난 출력 저항과 부하",
+      "category": "기초 회로",
+      "goal": "분배기를 Vth와 Rth로 표현하고 부하 OP를 비교합니다.",
+      "launch": {
+        "kind": "circuit",
+        "id": "thevenin"
+      },
+      "conditions": [
+        "1.8V, R1=R2=10kΩ, RL=5kΩ",
+        "Vth=0.9V, Rth=5kΩ, Vload=0.45V"
+      ],
+      "variable": "RL: 5kΩ → 20kΩ",
+      "observations": [
+        "무부하 Vth·부하 출력",
+        "전원을 0V로 둘 때 Rth=R1||R2"
+      ],
+      "questions": [
+        "독립 전압원을 0V로 한다는 뜻은?",
+        "비선형 MOS 회로에 이 전역 모델을 그대로 적용할 수 있나요?"
+      ],
+      "scope": "선형 저항망의 정확한 등가. 비선형 소자는 범위 밖."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "지원 PCell W 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "DC I–V·모델·W/L·D/G/S/B",
+          "points": 30
+        },
+        {
+          "criterion": "W를 늘릴 때 전류가 항상 정확히 비례하나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "mos-model",
+        "body-bias"
+      ],
+      "id": "mos-iv",
+      "title": "NMOS I–V · W/L과 동작 영역",
+      "category": "MOS·바이어스",
+      "goal": "게이트·드레인 바이어스와 실제 I–V를 읽습니다.",
+      "launch": {
+        "kind": "example",
+        "id": "mosfet"
+      },
+      "conditions": [
+        "SKY130 1.8V NMOS, W/L은 생성된 소자에서 확인",
+        "TT/27°C. 바이어스와 sweep 범위는 해석 설정에 명시."
+      ],
+      "variable": "지원 PCell W 한 개",
+      "observations": [
+        "DC I–V·모델·W/L·D/G/S/B",
+        "포화 경계는 모델 결과로 판단"
+      ],
+      "questions": [
+        "W를 늘릴 때 전류가 항상 정확히 비례하나요?",
+        "B와 S가 다르면 어떤 추가 모델이 필요한가요?"
+      ],
+      "scope": "설치된 public MOS 모델. PCell 지원 범위를 확인한 뒤 형상 재생성·LVS 별도."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "gate_bias_V: 0.7 → 0.6V 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "Vout DC와 drain current",
+          "points": 30
+        },
+        {
+          "criterion": "출력 DC가 낮으면 어떤 방향의 swing 여유가 줄어드나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "mos-model",
+        "headroom",
+        "ac-small-signal"
+      ],
+      "id": "mos-common-source",
+      "title": "공통 소스 · OP headroom",
+      "category": "MOS·바이어스",
+      "goal": "증폭하기 전에 드레인 DC 동작점을 확인합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "common_source"
+      },
+      "conditions": [
+        "R_D=10kΩ, gate bias=0.7V, W=0.65µm/L=0.15µm",
+        "VDD=1.8V, TT/27°C"
+      ],
+      "variable": "gate_bias_V: 0.7 → 0.6V",
+      "observations": [
+        "Vout DC와 drain current",
+        "rail에 접근할 때 소신호 이득의 적용 범위"
+      ],
+      "questions": [
+        "출력 DC가 낮으면 어떤 방향의 swing 여유가 줄어드나요?",
+        "gm·ro 없이 이득 수치를 확정할 수 있나요?"
+      ],
+      "scope": "실제 MOS OP/AC. 초기 layout 없음."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "bias_bottom_Ohm: 60kΩ → 50kΩ 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "게이트 DC와 입력 AC 전달",
+          "points": 30
+        },
+        {
+          "criterion": "커플링 C가 DC에 open으로 보이는 이유는?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "divider-loading",
+        "initial-conditions",
+        "headroom"
+      ],
+      "id": "mos-bias-divider",
+      "title": "게이트 분압·커플링 C",
+      "category": "MOS·바이어스",
+      "goal": "바이어스와 AC coupling의 역할을 구분합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "common_source_bias"
+      },
+      "conditions": [
+        "Rtop=100kΩ, Rbottom=60kΩ, coupling=1pF",
+        "R_D=10kΩ, 1.8V·TT/27°C"
+      ],
+      "variable": "bias_bottom_Ohm: 60kΩ → 50kΩ",
+      "observations": [
+        "게이트 DC와 입력 AC 전달",
+        "바이어스 저항과 입력 loading"
+      ],
+      "questions": [
+        "커플링 C가 DC에 open으로 보이는 이유는?",
+        "gate bias 공식과 실제 OP가 다르면 무엇을 확인하나요?"
+      ],
+      "scope": "public MOS+이상 저항/C. 물리 기생 미추출."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "reference_current_A: 100µA → 50µA 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "Iref/Iout와 출력 전압",
+          "points": 30
+        },
+        {
+          "criterion": "Iout≈Iref가 성립하는 출력 조건은?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "mirror-compliance",
+        "matching-environment"
+      ],
+      "id": "mos-current-mirror",
+      "title": "전류 미러 · compliance",
+      "category": "MOS·바이어스",
+      "goal": "reference와 출력 전류를 실제 DC 조건으로 비교합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "current_mirror"
+      },
+      "conditions": [
+        "Iref=100µA, W=0.65µm/L=0.15µm",
+        "Vout sweep 범위·TT/27°C를 기록"
+      ],
+      "variable": "reference_current_A: 100µA → 50µA",
+      "observations": [
+        "Iref/Iout와 출력 전압",
+        "같은 W/L이라도 VDS와 주변 환경은 다를 수 있음"
+      ],
+      "questions": [
+        "Iout≈Iref가 성립하는 출력 조건은?",
+        "모양이 대칭이면 mismatch 수율도 알 수 있나요?"
+      ],
+      "scope": "실제 MOS DC/OP. 매칭 수율은 mismatch 모델·MC 필요."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "differential_V: 10mV → 20mV 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "OUTP/OUTN·branch current",
+          "points": 30
+        },
+        {
+          "criterion": "두 입력을 같이 이동하는 변화와 차동 변화가 같은가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "differential-commonmode",
+        "matching-environment"
+      ],
+      "id": "mos-differential-pair",
+      "title": "차동 쌍 · differential와 common mode",
+      "category": "MOS·바이어스",
+      "goal": "전류 steering과 입력 범위를 구분합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "differential_pair"
+      },
+      "conditions": [
+        "VCM=0.9V, Vdiff=10mV, tail bias=0.7V",
+        "TT/27°C · 실제 tail current는 OP에서 읽기"
+      ],
+      "variable": "differential_V: 10mV → 20mV",
+      "observations": [
+        "OUTP/OUTN·branch current",
+        "tail current와 입력 common mode"
+      ],
+      "questions": [
+        "두 입력을 같이 이동하는 변화와 차동 변화가 같은가요?",
+        "대칭 소자에서 실제 offset은 어떻게 측정하나요?"
+      ],
+      "scope": "모델 기반 deterministic OP/DC. offset·noise·MC 미실행."
+    },
+    {
+      "level": 3,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "reference_current_A: 10µA → 5µA 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "출력 DC sweep의 Iout 변화",
+          "points": 30
+        },
+        {
+          "criterion": "compliance가 나빠져도 ro 이점이 유지되나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "headroom",
+        "mirror-compliance"
+      ],
+      "id": "mos-cascode",
+      "title": "캐스코드 · 출력 저항과 headroom",
+      "category": "MOS·바이어스",
+      "goal": "캐스코드의 이점과 전압 여유 비용을 같이 봅니다.",
+      "launch": {
+        "kind": "template",
+        "id": "soc_cascode_mirror"
+      },
+      "conditions": [
+        "Iref=10µA, VDD=1.8V, TT/27°C",
+        "실제 바이어스 공급과 출력 sweep을 기록"
+      ],
+      "variable": "reference_current_A: 10µA → 5µA",
+      "observations": [
+        "출력 DC sweep의 Iout 변화",
+        "직렬 MOS의 각 내부 노드 전압"
+      ],
+      "questions": [
+        "compliance가 나빠져도 ro 이점이 유지되나요?",
+        "바이어스 노드를 이상 전압원으로 두었다면 어떤 한계인가요?"
+      ],
+      "scope": "기존 public SoC block. 실제 sweep 수행 전 성능 수치 없음."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "이상 CLOAD: 5 → 50fF 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "입출력 50% 지연·10–90% transition",
+          "points": 30
+        },
+        {
+          "criterion": "형상이 같아도 부하만으로 지연이 바뀌는 이유는?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "inverter-timing",
+        "cross-probe",
+        "stack-assumptions"
+      ],
+      "id": "mos-inverter-load",
+      "title": "연결형 CMOS · 부하와 지연",
+      "category": "MOS·바이어스",
+      "goal": "회로·마스크·표시 적층을 읽고 부하 전후를 비교합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "inverter"
+      },
+      "conditions": [
+        "공개 표준 셀 inverter, VDD=1.8V·TT/27°C",
+        "연결형 실습의 CLOAD 5→50fF와 실제 waveform 조건 사용"
+      ],
+      "variable": "이상 CLOAD: 5 → 50fF",
+      "observations": [
+        "입출력 50% 지연·10–90% transition",
+        "회로/마스크 연결은 metadata 후보와 확정을 구분"
+      ],
+      "questions": [
+        "형상이 같아도 부하만으로 지연이 바뀌는 이유는?",
+        "표시 Z가 실제 공정 높이라는 근거가 있나요?"
+      ],
+      "scope": "첫 화면의 연결형 CMOS 실습 권장. 실제 ngspice와 독립 DRC/LVS/PEX.",
+      "guide": "design-cell-inv"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "input_slew_ns 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "11 조합의 pull-down과 다른 조합의 pull-up",
+          "points": 30
+        },
+        {
+          "criterion": "NAND에서 한 입력만 바꾸는 timing arc를 어떻게 고르나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "logic-path",
+        "hierarchy-ports",
+        "pnr-library"
+      ],
+      "id": "digital-nand",
+      "title": "NAND2 · 직렬 NMOS 경로",
+      "category": "디지털·계층",
+      "goal": "기존 셀의 연결과 다음 관측을 설명합니다: 11 조합의 pull-down과 다른 조합의 pull-up.",
+      "launch": {
+        "kind": "template",
+        "id": "cell_nand2"
+      },
+      "conditions": [
+        "A/B의 4개 조합·VDD=1.8V·TT/27°C",
+        "새 사본·실제 run ID·revision을 기록하며 원본 셀은 보존합니다."
+      ],
+      "variable": "input_slew_ns",
+      "observations": [
+        "11 조합의 pull-down과 다른 조합의 pull-up",
+        "논리·timing·물리 검증을 각각 기록"
+      ],
+      "questions": [
+        "NAND에서 한 입력만 바꾸는 timing arc를 어떻게 고르나요?",
+        "새 셀 자동 설계 대신 기존 계층을 읽고 재사용하는 이점은?"
+      ],
+      "scope": "실제 기존 CMOS 계층. 새 제조 표준 셀 라이브러리 인증 아님. 초기 physical_core=false."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "input_slew_ns 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "00 조합의 직렬 PMOS와 출력 transition",
+          "points": 30
+        },
+        {
+          "criterion": "NAND와 NOR의 진리표가 같지 않은 이유를 transistor 경로로 설명하세요.",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "logic-path",
+        "hierarchy-ports",
+        "pnr-library"
+      ],
+      "id": "digital-nor",
+      "title": "NOR2 · 병렬 NMOS 경로",
+      "category": "디지털·계층",
+      "goal": "기존 셀의 연결과 다음 관측을 설명합니다: 00 조합의 직렬 PMOS와 출력 transition.",
+      "launch": {
+        "kind": "template",
+        "id": "cell_nor2"
+      },
+      "conditions": [
+        "A/B 4개 조합과 explicit input slew",
+        "새 사본·실제 run ID·revision을 기록하며 원본 셀은 보존합니다."
+      ],
+      "variable": "input_slew_ns",
+      "observations": [
+        "00 조합의 직렬 PMOS와 출력 transition",
+        "논리·timing·물리 검증을 각각 기록"
+      ],
+      "questions": [
+        "NAND와 NOR의 진리표가 같지 않은 이유를 transistor 경로로 설명하세요.",
+        "새 셀 자동 설계 대신 기존 계층을 읽고 재사용하는 이점은?"
+      ],
+      "scope": "실제 기존 CMOS 계층. 새 제조 표준 셀 라이브러리 인증 아님. 초기 physical_core=false."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "input_slew_ns 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "A≠B일 때 HIGH·내부 net",
+          "points": 30
+        },
+        {
+          "criterion": "겉 진리표가 같으면 내부 기생·지연도 같은가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "logic-path",
+        "hierarchy-ports",
+        "pnr-library"
+      ],
+      "id": "digital-xor",
+      "title": "XOR2 · 연결을 따라 parity 읽기",
+      "category": "디지털·계층",
+      "goal": "기존 셀의 연결과 다음 관측을 설명합니다: A≠B일 때 HIGH·내부 net.",
+      "launch": {
+        "kind": "template",
+        "id": "cell_xor2"
+      },
+      "conditions": [
+        "A/B 4개 조합·기존 public CMOS reference",
+        "새 사본·실제 run ID·revision을 기록하며 원본 셀은 보존합니다."
+      ],
+      "variable": "input_slew_ns",
+      "observations": [
+        "A≠B일 때 HIGH·내부 net",
+        "논리·timing·물리 검증을 각각 기록"
+      ],
+      "questions": [
+        "겉 진리표가 같으면 내부 기생·지연도 같은가요?",
+        "새 셀 자동 설계 대신 기존 계층을 읽고 재사용하는 이점은?"
+      ],
+      "scope": "실제 기존 CMOS 계층. 새 제조 표준 셀 라이브러리 인증 아님. 초기 physical_core=false."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "input_slew_ns 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "선택된 데이터에서 Y까지 실제 연결",
+          "points": 30
+        },
+        {
+          "criterion": "select 변경 중 glitch가 없다는 결론에 필요한 실험은?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "logic-path",
+        "hierarchy-ports",
+        "pnr-library"
+      ],
+      "id": "digital-mux2",
+      "title": "MUX2 · 선택과 전달 경로",
+      "category": "디지털·계층",
+      "goal": "기존 셀의 연결과 다음 관측을 설명합니다: 선택된 데이터에서 Y까지 실제 연결.",
+      "launch": {
+        "kind": "template",
+        "id": "cell_mux2"
+      },
+      "conditions": [
+        "데이터·select 진리표, finite slew",
+        "새 사본·실제 run ID·revision을 기록하며 원본 셀은 보존합니다."
+      ],
+      "variable": "input_slew_ns",
+      "observations": [
+        "선택된 데이터에서 Y까지 실제 연결",
+        "논리·timing·물리 검증을 각각 기록"
+      ],
+      "questions": [
+        "select 변경 중 glitch가 없다는 결론에 필요한 실험은?",
+        "새 셀 자동 설계 대신 기존 계층을 읽고 재사용하는 이점은?"
+      ],
+      "scope": "실제 기존 CMOS 계층. 새 제조 표준 셀 라이브러리 인증 아님. 초기 physical_core=false."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "slot_ns: 5 → 20ns 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "선택·출력 rail·안정 구간·공급 전류",
+          "points": 30
+        },
+        {
+          "criterion": "실행 완료와 기능 기준 FAIL이 같이 존재할 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "logic-path",
+        "hierarchy-ports",
+        "pnr-library"
+      ],
+      "id": "digital-mux4",
+      "title": "MUX4 · 선택 안정 시간",
+      "category": "디지털·계층",
+      "goal": "기존 셀의 연결과 다음 관측을 설명합니다: 선택·출력 rail·안정 구간·공급 전류.",
+      "launch": {
+        "kind": "template",
+        "id": "mux4"
+      },
+      "conditions": [
+        "slot_ns=5, rise_ns=0.1, 64개 지정 조건",
+        "새 사본·실제 run ID·revision을 기록하며 원본 셀은 보존합니다."
+      ],
+      "variable": "slot_ns: 5 → 20ns",
+      "observations": [
+        "선택·출력 rail·안정 구간·공급 전류",
+        "논리·timing·물리 검증을 각각 기록"
+      ],
+      "questions": [
+        "실행 완료와 기능 기준 FAIL이 같이 존재할 수 있나요?",
+        "새 셀 자동 설계 대신 기존 계층을 읽고 재사용하는 이점은?"
+      ],
+      "scope": "실제 기존 CMOS 계층. 새 제조 표준 셀 라이브러리 인증 아님. 초기 physical_core=false."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "입력 slew 또는 output load 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "SUM parity와 carry · 9개 NAND 연결",
+          "points": 30
+        },
+        {
+          "criterion": "세 입력이 모두 HIGH일 때 SUM과 COUT은 왜 둘 다 HIGH인가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "logic-path",
+        "hierarchy-ports",
+        "pnr-library"
+      ],
+      "id": "digital-full-adder",
+      "title": "전가산기 · SUM/COUT",
+      "category": "디지털·계층",
+      "goal": "기존 셀의 연결과 다음 관측을 설명합니다: SUM parity와 carry · 9개 NAND 연결.",
+      "launch": {
+        "kind": "digital",
+        "id": "full_adder"
+      },
+      "conditions": [
+        "A/B/CIN 8개 조합·기존 NAND 계층",
+        "새 사본·실제 run ID·revision을 기록하며 원본 셀은 보존합니다."
+      ],
+      "variable": "입력 slew 또는 output load 하나",
+      "observations": [
+        "SUM parity와 carry · 9개 NAND 연결",
+        "논리·timing·물리 검증을 각각 기록"
+      ],
+      "questions": [
+        "세 입력이 모두 HIGH일 때 SUM과 COUT은 왜 둘 다 HIGH인가요?",
+        "새 셀 자동 설계 대신 기존 계층을 읽고 재사용하는 이점은?"
+      ],
+      "scope": "실제 기존 CMOS 계층. 새 제조 표준 셀 라이브러리 인증 아님. 초기 physical_core=false."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "주기 또는 output load 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "최하위 carry가 최상위 출력에 도달하는 경로",
+          "points": 30
+        },
+        {
+          "criterion": "논리 조합 통과와 최대 동작 주파수 검증은 같은가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "logic-path",
+        "hierarchy-ports",
+        "pnr-library"
+      ],
+      "id": "digital-adder4",
+      "title": "4bit ripple carry · 지연 경로",
+      "category": "디지털·계층",
+      "goal": "기존 셀의 연결과 다음 관측을 설명합니다: 최하위 carry가 최상위 출력에 도달하는 경로.",
+      "launch": {
+        "kind": "digital",
+        "id": "adder4"
+      },
+      "conditions": [
+        "512개 조합·주기와 부하를 실제 testbench에서 읽기",
+        "새 사본·실제 run ID·revision을 기록하며 원본 셀은 보존합니다."
+      ],
+      "variable": "주기 또는 output load 하나",
+      "observations": [
+        "최하위 carry가 최상위 출력에 도달하는 경로",
+        "논리·timing·물리 검증을 각각 기록"
+      ],
+      "questions": [
+        "논리 조합 통과와 최대 동작 주파수 검증은 같은가요?",
+        "새 셀 자동 설계 대신 기존 계층을 읽고 재사용하는 이점은?"
+      ],
+      "scope": "실제 기존 CMOS 계층. 새 제조 표준 셀 라이브러리 인증 아님. 초기 physical_core=false."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "읽기 과제: 셀/배치/배선 단계 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "배치+배선+timing 최적화와 셀 라이브러리의 역할",
+          "points": 30
+        },
+        {
+          "criterion": "Resistor의 제한된 reference routing을 산업용 P&R로 부를 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "logic-path",
+        "hierarchy-ports",
+        "pnr-library"
+      ],
+      "id": "digital-pnr",
+      "title": "표준 셀·P&R·timing 경계",
+      "category": "디지털·계층",
+      "goal": "기존 셀의 연결과 다음 관측을 설명합니다: 배치+배선+timing 최적화와 셀 라이브러리의 역할.",
+      "launch": {
+        "kind": "study",
+        "tool": "digital-workbench",
+        "topic": "pnr-boundary"
+      },
+      "conditions": [
+        "검증된 셀 예제·LEF/Liberty/회로/마스크의 역할 비교",
+        "새 사본·실제 run ID·revision을 기록하며 원본 셀은 보존합니다."
+      ],
+      "variable": "읽기 과제: 셀/배치/배선 단계",
+      "observations": [
+        "배치+배선+timing 최적화와 셀 라이브러리의 역할",
+        "논리·timing·물리 검증을 각각 기록"
+      ],
+      "questions": [
+        "Resistor의 제한된 reference routing을 산업용 P&R로 부를 수 있나요?",
+        "새 셀 자동 설계 대신 기존 계층을 읽고 재사용하는 이점은?"
+      ],
+      "scope": "문서/기존 도구 탐색 과제. OpenROAD 자동 실행·Liberty/STA closure 제공 아님."
+    },
+    {
+      "level": 3,
+      "minutes": 75,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "load_F: 1 → 2pF 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "DC bias·이득·대역폭·출력 pole",
+          "points": 30
+        },
+        {
+          "criterion": "open-loop 이득과 unity feedback phase margin은 같은 측정인가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "ac-small-signal",
+        "headroom",
+        "matching-environment"
+      ],
+      "id": "analog-ota",
+      "title": "5MOS OTA · DC와 AC",
+      "category": "아날로그·전원",
+      "goal": "입력·모델 조건을 기록하고 다음 항목을 해석합니다: DC bias·이득·대역폭·출력 pole.",
+      "launch": {
+        "kind": "template",
+        "id": "chip_ota"
+      },
+      "conditions": [
+        "input_width_um=10, load_F=1pF",
+        "공개 SKY130 모델·TT/27°C. 외부 bias/reference/driver는 testbench 가정."
+      ],
+      "variable": "load_F: 1 → 2pF",
+      "observations": [
+        "DC bias·이득·대역폭·출력 pole",
+        "바이어스·finite stimulus·회로 parameter"
+      ],
+      "questions": [
+        "open-loop 이득과 unity feedback phase margin은 같은 측정인가요?",
+        "실제 기생·noise·mismatch 평가에 추가로 필요한 모델과 검사는?"
+      ],
+      "scope": "기존 실제 MOS template를 회로 사본으로 생성. full PVT/noise/MC/EMIR/ESD/manufacturing 미검증."
+    },
+    {
+      "level": 3,
+      "minutes": 75,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "compensation_F: 5 → 10pF 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "실제 AC의 gain/phase·pole 이동",
+          "points": 30
+        },
+        {
+          "criterion": "보상 C를 키우면 항상 더 좋은가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "ac-small-signal",
+        "headroom",
+        "matching-environment"
+      ],
+      "id": "analog-miller",
+      "title": "Miller OTA · 보상과 Rz",
+      "category": "아날로그·전원",
+      "goal": "입력·모델 조건을 기록하고 다음 항목을 해석합니다: 실제 AC의 gain/phase·pole 이동.",
+      "launch": {
+        "kind": "template",
+        "id": "soc_miller_ota"
+      },
+      "conditions": [
+        "Cc=5pF, Rz=5kΩ",
+        "공개 SKY130 모델·TT/27°C. 외부 bias/reference/driver는 testbench 가정."
+      ],
+      "variable": "compensation_F: 5 → 10pF",
+      "observations": [
+        "실제 AC의 gain/phase·pole 이동",
+        "바이어스·finite stimulus·회로 parameter"
+      ],
+      "questions": [
+        "보상 C를 키우면 항상 더 좋은가요?",
+        "실제 기생·noise·mismatch 평가에 추가로 필요한 모델과 검사는?"
+      ],
+      "scope": "기존 실제 MOS template를 회로 사본으로 생성. full PVT/noise/MC/EMIR/ESD/manufacturing 미검증."
+    },
+    {
+      "level": 3,
+      "minutes": 75,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "compensation_F 한 개 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "입력/출력·rail·폐루프 settling",
+          "points": 30
+        },
+        {
+          "criterion": "저항비 목표 gain과 actual gain 차이를 설명하세요.",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "ac-small-signal",
+        "headroom",
+        "matching-environment"
+      ],
+      "id": "analog-pga",
+      "title": "PGA · 폐루프 gain와 swing",
+      "category": "아날로그·전원",
+      "goal": "입력·모델 조건을 기록하고 다음 항목을 해석합니다: 입력/출력·rail·폐루프 settling.",
+      "launch": {
+        "kind": "template",
+        "id": "soc_pga"
+      },
+      "conditions": [
+        "Cc=5pF, Rz=5kΩ·1.8V",
+        "공개 SKY130 모델·TT/27°C. 외부 bias/reference/driver는 testbench 가정."
+      ],
+      "variable": "compensation_F 한 개",
+      "observations": [
+        "입력/출력·rail·폐루프 settling",
+        "바이어스·finite stimulus·회로 parameter"
+      ],
+      "questions": [
+        "저항비 목표 gain과 actual gain 차이를 설명하세요.",
+        "실제 기생·noise·mismatch 평가에 추가로 필요한 모델과 검사는?"
+      ],
+      "scope": "기존 실제 MOS template를 회로 사본으로 생성. full PVT/noise/MC/EMIR/ESD/manufacturing 미검증."
+    },
+    {
+      "level": 3,
+      "minutes": 75,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "filter_F: 20 → 40pF 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "실제 AC gain/phase와 transient settling",
+          "points": 30
+        },
+        {
+          "criterion": "이상 pole 공식만으로 OTA 필터 응답을 보장할 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "ac-small-signal",
+        "headroom",
+        "matching-environment"
+      ],
+      "id": "analog-filter",
+      "title": "2차 필터 · pole와 bandwidth",
+      "category": "아날로그·전원",
+      "goal": "입력·모델 조건을 기록하고 다음 항목을 해석합니다: 실제 AC gain/phase와 transient settling.",
+      "launch": {
+        "kind": "template",
+        "id": "soc_filter2"
+      },
+      "conditions": [
+        "Rfilter=40kΩ, Cfilter=20pF",
+        "공개 SKY130 모델·TT/27°C. 외부 bias/reference/driver는 testbench 가정."
+      ],
+      "variable": "filter_F: 20 → 40pF",
+      "observations": [
+        "실제 AC gain/phase와 transient settling",
+        "바이어스·finite stimulus·회로 parameter"
+      ],
+      "questions": [
+        "이상 pole 공식만으로 OTA 필터 응답을 보장할 수 있나요?",
+        "실제 기생·noise·mismatch 평가에 추가로 필요한 모델과 검사는?"
+      ],
+      "scope": "기존 실제 MOS template를 회로 사본으로 생성. full PVT/noise/MC/EMIR/ESD/manufacturing 미검증."
+    },
+    {
+      "level": 3,
+      "minutes": 75,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "feedback_F: 1 → 2pF 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "Vout/Iin 전달비·안정성·입력 노드",
+          "points": 30
+        },
+        {
+          "criterion": "sensor C를 생략하면 실제 대역폭을 주장할 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "ac-small-signal",
+        "headroom",
+        "matching-environment"
+      ],
+      "id": "analog-tia",
+      "title": "TIA · 전류를 전압으로",
+      "category": "아날로그·전원",
+      "goal": "입력·모델 조건을 기록하고 다음 항목을 해석합니다: Vout/Iin 전달비·안정성·입력 노드.",
+      "launch": {
+        "kind": "template",
+        "id": "soc_tia"
+      },
+      "conditions": [
+        "Rfb=100kΩ, Cfb=1pF, Cc=5pF",
+        "공개 SKY130 모델·TT/27°C. 외부 bias/reference/driver는 testbench 가정."
+      ],
+      "variable": "feedback_F: 1 → 2pF",
+      "observations": [
+        "Vout/Iin 전달비·안정성·입력 노드",
+        "바이어스·finite stimulus·회로 parameter"
+      ],
+      "questions": [
+        "sensor C를 생략하면 실제 대역폭을 주장할 수 있나요?",
+        "실제 기생·noise·mismatch 평가에 추가로 필요한 모델과 검사는?"
+      ],
+      "scope": "기존 실제 MOS template를 회로 사본으로 생성. full PVT/noise/MC/EMIR/ESD/manufacturing 미검증."
+    },
+    {
+      "level": 3,
+      "minutes": 75,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "differential_V: 0.1 → 0.05V 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "입력 차동 부호·출력 rail·actual delay",
+          "points": 30
+        },
+        {
+          "criterion": "이 한 번의 deterministic 해석에서 offset yield를 알 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "ac-small-signal",
+        "headroom",
+        "matching-environment"
+      ],
+      "id": "analog-comparator",
+      "title": "비교기 · 작은 입력과 지연",
+      "category": "아날로그·전원",
+      "goal": "입력·모델 조건을 기록하고 다음 항목을 해석합니다: 입력 차동 부호·출력 rail·actual delay.",
+      "launch": {
+        "kind": "template",
+        "id": "chip_comparator"
+      },
+      "conditions": [
+        "Vdiff=0.1V, Cload=50fF",
+        "공개 SKY130 모델·TT/27°C. 외부 bias/reference/driver는 testbench 가정."
+      ],
+      "variable": "differential_V: 0.1 → 0.05V",
+      "observations": [
+        "입력 차동 부호·출력 rail·actual delay",
+        "바이어스·finite stimulus·회로 parameter"
+      ],
+      "questions": [
+        "이 한 번의 deterministic 해석에서 offset yield를 알 수 있나요?",
+        "실제 기생·noise·mismatch 평가에 추가로 필요한 모델과 검사는?"
+      ],
+      "scope": "기존 실제 MOS template를 회로 사본으로 생성. full PVT/noise/MC/EMIR/ESD/manufacturing 미검증."
+    },
+    {
+      "level": 3,
+      "minutes": 75,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "output_F: 1 → 2nF 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "입출력 전압·undershoot·recovery·공급 전류",
+          "points": 30
+        },
+        {
+          "criterion": "열·패키지·ESR 없는 결과의 적용 한계는?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "ac-small-signal",
+        "headroom",
+        "ldo-limits"
+      ],
+      "id": "analog-ldo",
+      "title": "LDO · 부하 step과 dropout",
+      "category": "아날로그·전원",
+      "goal": "입력·모델 조건을 기록하고 다음 항목을 해석합니다: 입출력 전압·undershoot·recovery·공급 전류.",
+      "launch": {
+        "kind": "template",
+        "id": "chip_ldo"
+      },
+      "conditions": [
+        "출력 C=1nF, Iload=20→200µA",
+        "공개 SKY130 모델·TT/27°C. 외부 bias/reference/driver는 testbench 가정."
+      ],
+      "variable": "output_F: 1 → 2nF",
+      "observations": [
+        "입출력 전압·undershoot·recovery·공급 전류",
+        "바이어스·finite stimulus·회로 parameter"
+      ],
+      "questions": [
+        "열·패키지·ESR 없는 결과의 적용 한계는?",
+        "실제 기생·noise·mismatch 평가에 추가로 필요한 모델과 검사는?"
+      ],
+      "scope": "기존 실제 MOS template를 회로 사본으로 생성. full PVT/noise/MC/EMIR/ESD/manufacturing 미검증."
+    },
+    {
+      "level": 3,
+      "minutes": 75,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "load_Ohm: 50k → 25kΩ 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "정상 구간 출력·ripple·switch 경로",
+          "points": 30
+        },
+        {
+          "criterion": "이상 2:1 비와 부하가 걸린 actual output은 왜 다른가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "ac-small-signal",
+        "headroom",
+        "sc-dcdc"
+      ],
+      "id": "analog-dcdc",
+      "title": "2:1 SC DC-DC · ripple",
+      "category": "아날로그·전원",
+      "goal": "입력·모델 조건을 기록하고 다음 항목을 해석합니다: 정상 구간 출력·ripple·switch 경로.",
+      "launch": {
+        "kind": "template",
+        "id": "chip_sc_dcdc"
+      },
+      "conditions": [
+        "Cflying=Cout=1nF, RL=50kΩ",
+        "공개 SKY130 모델·TT/27°C. 외부 bias/reference/driver는 testbench 가정."
+      ],
+      "variable": "load_Ohm: 50k → 25kΩ",
+      "observations": [
+        "정상 구간 출력·ripple·switch 경로",
+        "바이어스·finite stimulus·회로 parameter"
+      ],
+      "questions": [
+        "이상 2:1 비와 부하가 걸린 actual output은 왜 다른가요?",
+        "실제 기생·noise·mismatch 평가에 추가로 필요한 모델과 검사는?"
+      ],
+      "scope": "기존 실제 MOS template를 회로 사본으로 생성. full PVT/noise/MC/EMIR/ESD/manufacturing 미검증."
+    },
+    {
+      "level": 3,
+      "minutes": 90,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "지원된 외부 입력 조건 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "analog state·BITSTREAM·CIC·CODE/VALID",
+          "points": 30
+        },
+        {
+          "criterion": "적분기 상태는 왜 초기화가 필요한가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "adc-code-definitions",
+        "sdm-osr",
+        "fft-coherent",
+        "sampling-alias"
+      ],
+      "id": "adc-sdm-integrator",
+      "title": "ΣΔ 적분기 · 되먹임의 상태",
+      "category": "데이터 변환",
+      "goal": "필요한 하위 블록과 실제 관측 신호를 연결합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "sdm8_integrator"
+      },
+      "conditions": [
+        "기존 고정 블록·clock/reset 조건 읽기",
+        "블록별 입력/외부 driver·reference·모델과 지원 해석을 먼저 확인합니다."
+      ],
+      "variable": "지원된 외부 입력 조건 하나",
+      "observations": [
+        "analog state·BITSTREAM·CIC·CODE/VALID",
+        "digital replay와 transistor timing·물리 controller를 구분"
+      ],
+      "questions": [
+        "적분기 상태는 왜 초기화가 필요한가요?",
+        "이번 결과에서 ENOB/INL/DNL/noise 중 실제로 측정한 항목은?"
+      ],
+      "scope": "제한된 기존 MOS/RTL block. 고정 standalone 블록은 parameter 없는 경우 읽기/기존 testbench 관찰. 전체 SoC·8bit ENOB·controller mask/timing 인증 없음."
+    },
+    {
+      "level": 3,
+      "minutes": 90,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "input_V: 0.9 → 0.8V 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "analog state·BITSTREAM·CIC·CODE/VALID",
+          "points": 30
+        },
+        {
+          "criterion": "bit density가 곧 8bit ENOB를 뜻하나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "adc-code-definitions",
+        "sdm-osr",
+        "fft-coherent",
+        "sampling-alias"
+      ],
+      "id": "adc-sdm-density",
+      "title": "ΣΔ modulator · bit 밀도",
+      "category": "데이터 변환",
+      "goal": "필요한 하위 블록과 실제 관측 신호를 연결합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "sdm8_modulator"
+      },
+      "conditions": [
+        "입력=0.9V, sine amplitude=0",
+        "블록별 입력/외부 driver·reference·모델과 지원 해석을 먼저 확인합니다."
+      ],
+      "variable": "input_V: 0.9 → 0.8V",
+      "observations": [
+        "analog state·BITSTREAM·CIC·CODE/VALID",
+        "digital replay와 transistor timing·물리 controller를 구분"
+      ],
+      "questions": [
+        "bit density가 곧 8bit ENOB를 뜻하나요?",
+        "이번 결과에서 ENOB/INL/DNL/noise 중 실제로 측정한 항목은?"
+      ],
+      "scope": "제한된 기존 MOS/RTL block. 고정 standalone 블록은 parameter 없는 경우 읽기/기존 testbench 관찰. 전체 SoC·8bit ENOB·controller mask/timing 인증 없음."
+    },
+    {
+      "level": 3,
+      "minutes": 90,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "관찰 frame 범위 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "analog state·BITSTREAM·CIC·CODE/VALID",
+          "points": 30
+        },
+        {
+          "criterion": "적분기·comb·downsample의 순서를 설명하세요.",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "adc-code-definitions",
+        "sdm-osr",
+        "fft-coherent",
+        "sampling-alias"
+      ],
+      "id": "adc-sdm-cic",
+      "title": "CIC2×256 · decimation",
+      "category": "데이터 변환",
+      "goal": "필요한 하위 블록과 실제 관측 신호를 연결합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "sdm8_filter"
+      },
+      "conditions": [
+        "기존 digital filter·CODE/VALID·OSR 조건",
+        "블록별 입력/외부 driver·reference·모델과 지원 해석을 먼저 확인합니다."
+      ],
+      "variable": "관찰 frame 범위",
+      "observations": [
+        "analog state·BITSTREAM·CIC·CODE/VALID",
+        "digital replay와 transistor timing·물리 controller를 구분"
+      ],
+      "questions": [
+        "적분기·comb·downsample의 순서를 설명하세요.",
+        "이번 결과에서 ENOB/INL/DNL/noise 중 실제로 측정한 항목은?"
+      ],
+      "scope": "제한된 기존 MOS/RTL block. 고정 standalone 블록은 parameter 없는 경우 읽기/기존 testbench 관찰. 전체 SoC·8bit ENOB·controller mask/timing 인증 없음."
+    },
+    {
+      "level": 3,
+      "minutes": 90,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "sine_amplitude_V: 0 → 0.1V 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "analog state·BITSTREAM·CIC·CODE/VALID",
+          "points": 30
+        },
+        {
+          "criterion": "settling frame을 FFT에 섞으면 어떤 오류가 생기나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "adc-code-definitions",
+        "sdm-osr",
+        "fft-coherent",
+        "sampling-alias"
+      ],
+      "id": "adc-sdm-spectrum",
+      "title": "ΣΔ FFT · coherent 조건",
+      "category": "데이터 변환",
+      "goal": "필요한 하위 블록과 실제 관측 신호를 연결합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "sigma_delta8"
+      },
+      "conditions": [
+        "sine frequency=61.03515625Hz·실제 설정 확인",
+        "블록별 입력/외부 driver·reference·모델과 지원 해석을 먼저 확인합니다."
+      ],
+      "variable": "sine_amplitude_V: 0 → 0.1V",
+      "observations": [
+        "analog state·BITSTREAM·CIC·CODE/VALID",
+        "digital replay와 transistor timing·물리 controller를 구분"
+      ],
+      "questions": [
+        "settling frame을 FFT에 섞으면 어떤 오류가 생기나요?",
+        "이번 결과에서 ENOB/INL/DNL/noise 중 실제로 측정한 항목은?"
+      ],
+      "scope": "제한된 기존 MOS/RTL block. 고정 standalone 블록은 parameter 없는 경우 읽기/기존 testbench 관찰. 전체 SoC·8bit ENOB·controller mask/timing 인증 없음."
+    },
+    {
+      "level": 3,
+      "minutes": 90,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "지원된 sample 입력 조건 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "SAMPLE·TOP·COMP·trial 또는 CODE/VALID",
+          "points": 30
+        },
+        {
+          "criterion": "스위치 ON 저항과 charge injection을 어떻게 분리 측정하나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "adc-code-definitions",
+        "sar-charge",
+        "fft-coherent",
+        "sampling-alias"
+      ],
+      "id": "adc-sar-switch",
+      "title": "SAR · 샘플 스위치",
+      "category": "데이터 변환",
+      "goal": "필요한 하위 블록과 실제 관측 신호를 연결합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "sar8_switch"
+      },
+      "conditions": [
+        "기존 fixed MOS switch·sample/control 조건",
+        "블록별 입력/외부 driver·reference·모델과 지원 해석을 먼저 확인합니다."
+      ],
+      "variable": "지원된 sample 입력 조건 하나",
+      "observations": [
+        "SAMPLE·TOP·COMP·trial 또는 CODE/VALID",
+        "digital replay와 transistor timing·물리 controller를 구분"
+      ],
+      "questions": [
+        "스위치 ON 저항과 charge injection을 어떻게 분리 측정하나요?",
+        "이번 결과에서 ENOB/INL/DNL/noise 중 실제로 측정한 항목은?"
+      ],
+      "scope": "제한된 기존 MOS/RTL block. 고정 standalone 블록은 parameter 없는 경우 읽기/기존 testbench 관찰. 전체 SoC·8bit ENOB·controller mask/timing 인증 없음."
+    },
+    {
+      "level": 3,
+      "minutes": 90,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "읽기: trial bit 하나의 전압 기여 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "SAMPLE·TOP·COMP·trial 또는 CODE/VALID",
+          "points": 30
+        },
+        {
+          "criterion": "LSB bin 폭과 endpoint step이 다른 이유는?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "adc-code-definitions",
+        "sar-charge",
+        "fft-coherent",
+        "sampling-alias"
+      ],
+      "id": "adc-sar-cdac",
+      "title": "SAR · binary CDAC와 dummy",
+      "category": "데이터 변환",
+      "goal": "필요한 하위 블록과 실제 관측 신호를 연결합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "sar8_cdac"
+      },
+      "conditions": [
+        "256×400fF unit·128:64:…:1+dummy·외부 VREF",
+        "블록별 입력/외부 driver·reference·모델과 지원 해석을 먼저 확인합니다."
+      ],
+      "variable": "읽기: trial bit 하나의 전압 기여",
+      "observations": [
+        "SAMPLE·TOP·COMP·trial 또는 CODE/VALID",
+        "digital replay와 transistor timing·물리 controller를 구분"
+      ],
+      "questions": [
+        "LSB bin 폭과 endpoint step이 다른 이유는?",
+        "이번 결과에서 ENOB/INL/DNL/noise 중 실제로 측정한 항목은?"
+      ],
+      "scope": "제한된 기존 MOS/RTL block. 고정 standalone 블록은 parameter 없는 경우 읽기/기존 testbench 관찰. 전체 SoC·8bit ENOB·controller mask/timing 인증 없음."
+    },
+    {
+      "level": 3,
+      "minutes": 90,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "input_V: 0.6 → 0.3V 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "SAMPLE·TOP·COMP·trial 또는 CODE/VALID",
+          "points": 30
+        },
+        {
+          "criterion": "실제 comparator decision과 이상 code 공식의 차이는?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "adc-code-definitions",
+        "sar-charge",
+        "fft-coherent",
+        "sampling-alias"
+      ],
+      "id": "adc-sar-core",
+      "title": "SAR · 8회 bit trial",
+      "category": "데이터 변환",
+      "goal": "필요한 하위 블록과 실제 관측 신호를 연결합니다.",
+      "launch": {
+        "kind": "template",
+        "id": "sar8_analog"
+      },
+      "conditions": [
+        "VIN=0.6V, VREF=1.2V, acquisition=bit period=2µs",
+        "블록별 입력/외부 driver·reference·모델과 지원 해석을 먼저 확인합니다."
+      ],
+      "variable": "input_V: 0.6 → 0.3V",
+      "observations": [
+        "SAMPLE·TOP·COMP·trial 또는 CODE/VALID",
+        "digital replay와 transistor timing·물리 controller를 구분"
+      ],
+      "questions": [
+        "실제 comparator decision과 이상 code 공식의 차이는?",
+        "이번 결과에서 ENOB/INL/DNL/noise 중 실제로 측정한 항목은?"
+      ],
+      "scope": "제한된 기존 MOS/RTL block. 고정 standalone 블록은 parameter 없는 경우 읽기/기존 testbench 관찰. 전체 SoC·8bit ENOB·controller mask/timing 인증 없음."
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "사각형 폭 DBU 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "DBU와 µm의 변환·0.001µm/DBU는 설명용 가정",
+          "points": 30
+        },
+        {
+          "criterion": "grid 반올림으로 폭이 바뀌면 어떤 문제가 생기나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "dbu-grid",
+        "geometry-matching",
+        "matching-environment"
+      ],
+      "id": "layout-dbu",
+      "title": "정수 DBU·grid·단위",
+      "category": "레이아웃·공정",
+      "goal": "형상으로 확인할 사실과 모델이 필요한 판단을 구분합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "layout"
+      },
+      "conditions": [
+        "DBU와 µm의 변환·0.001µm/DBU는 설명용 가정",
+        "교육용 기하·표시 적층과 실제 foundry 공정 자료를 명시적으로 구분합니다."
+      ],
+      "variable": "사각형 폭 DBU 하나",
+      "observations": [
+        "DBU와 µm의 변환·0.001µm/DBU는 설명용 가정",
+        "직접 확인한 좌표·layer·revision·변경 전후"
+      ],
+      "questions": [
+        "grid 반올림으로 폭이 바뀌면 어떤 문제가 생기나요?",
+        "전기·공정 결론을 내리기 위해 추가로 필요한 데이터는?"
+      ],
+      "scope": "기하·표시 관찰 과제. matching·성능 수치는 실제 추출/모델 없이 생성하지 않습니다.",
+      "guide": "layout-drawing"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "지원 배선 폭 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "작업 layer/purpose·net metadata·grid",
+          "points": 30
+        },
+        {
+          "criterion": "화면 pixel과 저장된 mask 좌표가 같은 단위인가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "dbu-grid",
+        "geometry-matching",
+        "matching-environment"
+      ],
+      "id": "layout-primitives",
+      "title": "사각형·다각형·path",
+      "category": "레이아웃·공정",
+      "goal": "형상으로 확인할 사실과 모델이 필요한 판단을 구분합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "layout"
+      },
+      "conditions": [
+        "작업 layer/purpose·net metadata·grid",
+        "교육용 기하·표시 적층과 실제 foundry 공정 자료를 명시적으로 구분합니다."
+      ],
+      "variable": "지원 배선 폭 하나",
+      "observations": [
+        "작업 layer/purpose·net metadata·grid",
+        "직접 확인한 좌표·layer·revision·변경 전후"
+      ],
+      "questions": [
+        "화면 pixel과 저장된 mask 좌표가 같은 단위인가요?",
+        "전기·공정 결론을 내리기 위해 추가로 필요한 데이터는?"
+      ],
+      "scope": "기하·표시 관찰 과제. matching·성능 수치는 실제 추출/모델 없이 생성하지 않습니다.",
+      "guide": "layout-drawing"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "90° 회전 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "원본 도형 좌표·rotation/mirror·revision",
+          "points": 30
+        },
+        {
+          "criterion": "기하 면적 보존과 device 방향 보존은 같은가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "dbu-grid",
+        "geometry-matching",
+        "matching-environment"
+      ],
+      "id": "layout-transform",
+      "title": "복사·회전·미러·Undo",
+      "category": "레이아웃·공정",
+      "goal": "형상으로 확인할 사실과 모델이 필요한 판단을 구분합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "layout"
+      },
+      "conditions": [
+        "원본 도형 좌표·rotation/mirror·revision",
+        "교육용 기하·표시 적층과 실제 foundry 공정 자료를 명시적으로 구분합니다."
+      ],
+      "variable": "90° 회전 하나",
+      "observations": [
+        "원본 도형 좌표·rotation/mirror·revision",
+        "직접 확인한 좌표·layer·revision·변경 전후"
+      ],
+      "questions": [
+        "기하 면적 보존과 device 방향 보존은 같은가요?",
+        "전기·공정 결론을 내리기 위해 추가로 필요한 데이터는?"
+      ],
+      "scope": "기하·표시 관찰 과제. matching·성능 수치는 실제 추출/모델 없이 생성하지 않습니다.",
+      "guide": "layout-drawing"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "한 rect의 x 위치 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "교육용 rect 쌍의 좌표와 경계",
+          "points": 30
+        },
+        {
+          "criterion": "기하 대칭만으로 전기적 matching을 확정할 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "dbu-grid",
+        "geometry-matching",
+        "matching-environment"
+      ],
+      "id": "layout-symmetry",
+      "title": "대칭 배치·간격의 근거",
+      "category": "레이아웃·공정",
+      "goal": "형상으로 확인할 사실과 모델이 필요한 판단을 구분합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "layout"
+      },
+      "conditions": [
+        "교육용 rect 쌍의 좌표와 경계",
+        "교육용 기하·표시 적층과 실제 foundry 공정 자료를 명시적으로 구분합니다."
+      ],
+      "variable": "한 rect의 x 위치",
+      "observations": [
+        "교육용 rect 쌍의 좌표와 경계",
+        "직접 확인한 좌표·layer·revision·변경 전후"
+      ],
+      "questions": [
+        "기하 대칭만으로 전기적 matching을 확정할 수 있나요?",
+        "전기·공정 결론을 내리기 위해 추가로 필요한 데이터는?"
+      ],
+      "scope": "기하·표시 관찰 과제. matching·성능 수치는 실제 추출/모델 없이 생성하지 않습니다.",
+      "guide": "layout-drawing"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "A/B unit 순서 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "교육용 동일 면적 unit 좌표·gradient는 가정",
+          "points": 30
+        },
+        {
+          "criterion": "같은 centroid이면 모든 gradient·주변 효과를 제거하나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "dbu-grid",
+        "geometry-matching",
+        "matching-environment"
+      ],
+      "id": "layout-centroid",
+      "title": "ABBA·common centroid",
+      "category": "레이아웃·공정",
+      "goal": "형상으로 확인할 사실과 모델이 필요한 판단을 구분합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "layout"
+      },
+      "conditions": [
+        "교육용 동일 면적 unit 좌표·gradient는 가정",
+        "교육용 기하·표시 적층과 실제 foundry 공정 자료를 명시적으로 구분합니다."
+      ],
+      "variable": "A/B unit 순서",
+      "observations": [
+        "교육용 동일 면적 unit 좌표·gradient는 가정",
+        "직접 확인한 좌표·layer·revision·변경 전후"
+      ],
+      "questions": [
+        "같은 centroid이면 모든 gradient·주변 효과를 제거하나요?",
+        "전기·공정 결론을 내리기 위해 추가로 필요한 데이터는?"
+      ],
+      "scope": "기하·표시 관찰 과제. matching·성능 수치는 실제 추출/모델 없이 생성하지 않습니다.",
+      "guide": "layout-drawing"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "dummy 위치 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "교육용 unit 주변 이웃·dummy는 가정",
+          "points": 30
+        },
+        {
+          "criterion": "dummy의 electrical 연결과 layer rule은 왜 따로 확인해야 하나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "dbu-grid",
+        "geometry-matching",
+        "matching-environment"
+      ],
+      "id": "layout-dummy",
+      "title": "dummy와 경계 환경",
+      "category": "레이아웃·공정",
+      "goal": "형상으로 확인할 사실과 모델이 필요한 판단을 구분합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "layout"
+      },
+      "conditions": [
+        "교육용 unit 주변 이웃·dummy는 가정",
+        "교육용 기하·표시 적층과 실제 foundry 공정 자료를 명시적으로 구분합니다."
+      ],
+      "variable": "dummy 위치 하나",
+      "observations": [
+        "교육용 unit 주변 이웃·dummy는 가정",
+        "직접 확인한 좌표·layer·revision·변경 전후"
+      ],
+      "questions": [
+        "dummy의 electrical 연결과 layer rule은 왜 따로 확인해야 하나요?",
+        "전기·공정 결론을 내리기 위해 추가로 필요한 데이터는?"
+      ],
+      "scope": "기하·표시 관찰 과제. matching·성능 수치는 실제 추출/모델 없이 생성하지 않습니다.",
+      "guide": "layout-drawing"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "배선 길이 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "실제 path length와 추출 전후를 구분",
+          "points": 30
+        },
+        {
+          "criterion": "형상 길이만으로 actual delay를 수치화할 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "dbu-grid",
+        "geometry-matching",
+        "matching-environment"
+      ],
+      "id": "layout-interconnect",
+      "title": "배선 길이와 RC 증거",
+      "category": "레이아웃·공정",
+      "goal": "형상으로 확인할 사실과 모델이 필요한 판단을 구분합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "layout"
+      },
+      "conditions": [
+        "실제 path length와 추출 전후를 구분",
+        "교육용 기하·표시 적층과 실제 foundry 공정 자료를 명시적으로 구분합니다."
+      ],
+      "variable": "배선 길이 하나",
+      "observations": [
+        "실제 path length와 추출 전후를 구분",
+        "직접 확인한 좌표·layer·revision·변경 전후"
+      ],
+      "questions": [
+        "형상 길이만으로 actual delay를 수치화할 수 있나요?",
+        "전기·공정 결론을 내리기 위해 추가로 필요한 데이터는?"
+      ],
+      "scope": "기하·표시 관찰 과제. matching·성능 수치는 실제 추출/모델 없이 생성하지 않습니다.",
+      "guide": "layout-drawing"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "max width 또는 height 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "작업 bbox·정해진 면적 한도·µm²",
+          "points": 30
+        },
+        {
+          "criterion": "bbox 면적과 모든 도형 면적 합은 같은가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "dbu-grid",
+        "geometry-matching",
+        "matching-environment"
+      ],
+      "id": "layout-chip-area",
+      "title": "chip envelope·aspect ratio",
+      "category": "레이아웃·공정",
+      "goal": "형상으로 확인할 사실과 모델이 필요한 판단을 구분합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "layout"
+      },
+      "conditions": [
+        "작업 bbox·정해진 면적 한도·µm²",
+        "교육용 기하·표시 적층과 실제 foundry 공정 자료를 명시적으로 구분합니다."
+      ],
+      "variable": "max width 또는 height 하나",
+      "observations": [
+        "작업 bbox·정해진 면적 한도·µm²",
+        "직접 확인한 좌표·layer·revision·변경 전후"
+      ],
+      "questions": [
+        "bbox 면적과 모든 도형 면적 합은 같은가요?",
+        "전기·공정 결론을 내리기 위해 추가로 필요한 데이터는?"
+      ],
+      "scope": "기하·표시 관찰 과제. matching·성능 수치는 실제 추출/모델 없이 생성하지 않습니다.",
+      "guide": "layout-drawing"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "표시 z scale 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "layer/datatype·표시 Z·z scale·공정 자료 출처",
+          "points": 30
+        },
+        {
+          "criterion": "GDS에 재료와 실제 film thickness가 들어 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "dbu-grid",
+        "geometry-matching",
+        "stack-assumptions"
+      ],
+      "id": "layout-stack",
+      "title": "layer mapping과 2.5D 단면",
+      "category": "레이아웃·공정",
+      "goal": "형상으로 확인할 사실과 모델이 필요한 판단을 구분합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "inverter"
+      },
+      "conditions": [
+        "layer/datatype·표시 Z·z scale·공정 자료 출처",
+        "교육용 기하·표시 적층과 실제 foundry 공정 자료를 명시적으로 구분합니다."
+      ],
+      "variable": "표시 z scale 하나",
+      "observations": [
+        "layer/datatype·표시 Z·z scale·공정 자료 출처",
+        "직접 확인한 좌표·layer·revision·변경 전후"
+      ],
+      "questions": [
+        "GDS에 재료와 실제 film thickness가 들어 있나요?",
+        "전기·공정 결론을 내리기 위해 추가로 필요한 데이터는?"
+      ],
+      "scope": "기하·표시 관찰 과제. matching·성능 수치는 실제 추출/모델 없이 생성하지 않습니다.",
+      "guide": "layout-drawing"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "가정된 step 높이 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "교육용 heightmap/recipe 가정·voxel resolution",
+          "points": 30
+        },
+        {
+          "criterion": "격자보다 얇은 film을 resolved defect라고 판정할 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "dbu-grid",
+        "geometry-matching",
+        "topography-resolution"
+      ],
+      "id": "layout-topography",
+      "title": "hole·step·coverage의 가설",
+      "category": "레이아웃·공정",
+      "goal": "형상으로 확인할 사실과 모델이 필요한 판단을 구분합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "layout"
+      },
+      "conditions": [
+        "교육용 heightmap/recipe 가정·voxel resolution",
+        "교육용 기하·표시 적층과 실제 foundry 공정 자료를 명시적으로 구분합니다."
+      ],
+      "variable": "가정된 step 높이 하나",
+      "observations": [
+        "교육용 heightmap/recipe 가정·voxel resolution",
+        "직접 확인한 좌표·layer·revision·변경 전후"
+      ],
+      "questions": [
+        "격자보다 얇은 film을 resolved defect라고 판정할 수 있나요?",
+        "전기·공정 결론을 내리기 위해 추가로 필요한 데이터는?"
+      ],
+      "scope": "가정 기반 process 표현/해상도 관찰. calibrated TCAD·실제 coverage 예측 아님.",
+      "guide": "layout-drawing"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "별도 사본의 작은 metal rect 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "completed인데 violation이 있으면 성공인가요?",
+          "points": 30
+        },
+        {
+          "criterion": "completed인데 violation이 있으면 성공인가요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "engine-evidence",
+        "drc-lvs-pex",
+        "revision-history",
+        "pvt-mismatch"
+      ],
+      "id": "verify-drc",
+      "title": "DRC · 폭/간격 오류 읽기",
+      "category": "검증·재현",
+      "goal": "판정의 원인·범위·재현 조건을 근거와 함께 기록합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "inverter"
+      },
+      "conditions": [
+        "실제 public inverter mask·pinned rule deck",
+        "오류 재현은 새 사본에만 수행하고 원본·실패 보고서를 보존합니다."
+      ],
+      "variable": "별도 사본의 작은 metal rect",
+      "observations": [
+        "completed인데 violation이 있으면 성공인가요?",
+        "simulation/DRC/LVS/PEX 각각의 실제 실행·결과·freshness"
+      ],
+      "questions": [
+        "completed인데 violation이 있으면 성공인가요?",
+        "문제 해결 뒤 어떤 실행을 다시 해야 하나요?"
+      ],
+      "scope": "실제 설치된 도구와 공개 deck의 제한된 검사. foundry signoff 아님. 도구가 없으면 unavailable, 실행 안 했으면 not_run.",
+      "guide": "physical-verification"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "별도 사본의 gate net 연결 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "DRC=0이면 LVS도 자동으로 같나요?",
+          "points": 30
+        },
+        {
+          "criterion": "DRC=0이면 LVS도 자동으로 같나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "engine-evidence",
+        "drc-lvs-pex",
+        "revision-history",
+        "pvt-mismatch"
+      ],
+      "id": "verify-lvs",
+      "title": "LVS · net/소자/핀 일치",
+      "category": "검증·재현",
+      "goal": "판정의 원인·범위·재현 조건을 근거와 함께 기록합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "inverter"
+      },
+      "conditions": [
+        "원본 inverter와 annotated schematic·Netgen/Magic",
+        "오류 재현은 새 사본에만 수행하고 원본·실패 보고서를 보존합니다."
+      ],
+      "variable": "별도 사본의 gate net 연결",
+      "observations": [
+        "DRC=0이면 LVS도 자동으로 같나요?",
+        "simulation/DRC/LVS/PEX 각각의 실제 실행·결과·freshness"
+      ],
+      "questions": [
+        "DRC=0이면 LVS도 자동으로 같나요?",
+        "문제 해결 뒤 어떤 실행을 다시 해야 하나요?"
+      ],
+      "scope": "실제 설치된 도구와 공개 deck의 제한된 검사. foundry signoff 아님. 도구가 없으면 unavailable, 실행 안 했으면 not_run.",
+      "guide": "physical-verification"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "post_layout 여부만 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "추출한 RC 개수만으로 timing signoff를 할 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "추출한 RC 개수만으로 timing signoff를 할 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "engine-evidence",
+        "drc-lvs-pex",
+        "revision-history",
+        "pvt-mismatch"
+      ],
+      "id": "verify-pex",
+      "title": "PEX · RC와 post 해석",
+      "category": "검증·재현",
+      "goal": "판정의 원인·범위·재현 조건을 근거와 함께 기록합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "inverter"
+      },
+      "conditions": [
+        "pre 조건·같은 layout·실제 extracted RC",
+        "오류 재현은 새 사본에만 수행하고 원본·실패 보고서를 보존합니다."
+      ],
+      "variable": "post_layout 여부만",
+      "observations": [
+        "추출한 RC 개수만으로 timing signoff를 할 수 있나요?",
+        "simulation/DRC/LVS/PEX 각각의 실제 실행·결과·freshness"
+      ],
+      "questions": [
+        "추출한 RC 개수만으로 timing signoff를 할 수 있나요?",
+        "문제 해결 뒤 어떤 실행을 다시 해야 하나요?"
+      ],
+      "scope": "실제 설치된 도구와 공개 deck의 제한된 검사. foundry signoff 아님. 도구가 없으면 unavailable, 실행 안 했으면 not_run.",
+      "guide": "physical-verification"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "corner/온도 묶음은 명시된 비교 조건 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "각 코너 변화의 효과를 독립 원인으로 단정할 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "각 코너 변화의 효과를 독립 원인으로 단정할 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "engine-evidence",
+        "drc-lvs-pex",
+        "revision-history",
+        "pvt-mismatch"
+      ],
+      "id": "verify-pvt",
+      "title": "PVT · 같은 회로, 다른 모델",
+      "category": "검증·재현",
+      "goal": "판정의 원인·범위·재현 조건을 근거와 함께 기록합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "inverter"
+      },
+      "conditions": [
+        "TT/27°C·SS/125°C·FF/−40°C·명시 VDD",
+        "오류 재현은 새 사본에만 수행하고 원본·실패 보고서를 보존합니다."
+      ],
+      "variable": "corner/온도 묶음은 명시된 비교 조건",
+      "observations": [
+        "각 코너 변화의 효과를 독립 원인으로 단정할 수 있나요?",
+        "simulation/DRC/LVS/PEX 각각의 실제 실행·결과·freshness"
+      ],
+      "questions": [
+        "각 코너 변화의 효과를 독립 원인으로 단정할 수 있나요?",
+        "문제 해결 뒤 어떤 실행을 다시 해야 하나요?"
+      ],
+      "scope": "실제 설치된 도구와 공개 deck의 제한된 검사. foundry signoff 아님. 도구가 없으면 unavailable, 실행 안 했으면 not_run.",
+      "guide": "physical-verification"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "부하 또는 revision 하나 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "설계 이름만 바뀌어도 정책상 freshness가 바뀔 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "설계 이름만 바뀌어도 정책상 freshness가 바뀔 수 있나요?",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "engine-evidence",
+        "drc-lvs-pex",
+        "revision-history",
+        "pvt-mismatch"
+      ],
+      "id": "verify-revision",
+      "title": "revision·모델 변경과 과거 결과",
+      "category": "검증·재현",
+      "goal": "판정의 원인·범위·재현 조건을 근거와 함께 기록합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "inverter"
+      },
+      "conditions": [
+        "run ID·revision·model/deck/engine signature",
+        "오류 재현은 새 사본에만 수행하고 원본·실패 보고서를 보존합니다."
+      ],
+      "variable": "부하 또는 revision 하나",
+      "observations": [
+        "설계 이름만 바뀌어도 정책상 freshness가 바뀔 수 있나요?",
+        "simulation/DRC/LVS/PEX 각각의 실제 실행·결과·freshness"
+      ],
+      "questions": [
+        "설계 이름만 바뀌어도 정책상 freshness가 바뀔 수 있나요?",
+        "문제 해결 뒤 어떤 실행을 다시 해야 하나요?"
+      ],
+      "scope": "실제 설치된 도구와 공개 deck의 제한된 검사. foundry signoff 아님. 도구가 없으면 unavailable, 실행 안 했으면 not_run.",
+      "guide": "physical-verification"
+    },
+    {
+      "level": 2,
+      "minutes": 50,
+      "prerequisites": [
+        "전압·전류·단위",
+        "현재 프로젝트와 revision 확인"
+      ],
+      "steps": [
+        "새 과제 사본을 만들고 입력·모델·도구 준비 상태를 기록합니다.",
+        "회로·포트 또는 기하 구조를 읽고 먼저 변화 방향을 예측합니다.",
+        "변경 전 실제 계산/해석/관찰 증거를 저장합니다. 미지원 항목은 이유를 적습니다.",
+        "문제 상태 하나를 읽고 분류 이외의 조건을 유지하고 변경 후 증거와 비교합니다.",
+        "관찰 → 규칙/모델 → 판단 근거 → 다음 실험 순서로 자신의 설명을 저장합니다."
+      ],
+      "deliverables": [
+        "조건·revision 비교표",
+        "실제 실행 ID/로그 또는 실행 불가 사유",
+        "학생이 작성한 해석과 다음 실험"
+      ],
+      "rubric": [
+        {
+          "criterion": "프로젝트·revision·모델·입력 조건을 재현 가능하게 기록",
+          "points": 20
+        },
+        {
+          "criterion": "unavailable·failed·completed/fail·not_run을 구별하세요.",
+          "points": 30
+        },
+        {
+          "criterion": "unavailable·failed·completed/fail·not_run을 구별하세요.",
+          "points": 30
+        },
+        {
+          "criterion": "한계·오류·다음 실험을 근거와 함께 설명",
+          "points": 20
+        }
+      ],
+      "reference_ids": [
+        "engine-evidence",
+        "drc-lvs-pex",
+        "revision-history",
+        "pvt-mismatch"
+      ],
+      "id": "verify-unavailable",
+      "title": "미설치·검사 불합격·엔진 오류",
+      "category": "검증·재현",
+      "goal": "판정의 원인·범위·재현 조건을 근거와 함께 기록합니다.",
+      "launch": {
+        "kind": "example",
+        "id": "inverter"
+      },
+      "conditions": [
+        "doctor 상태·job status·실제 로그",
+        "오류 재현은 새 사본에만 수행하고 원본·실패 보고서를 보존합니다."
+      ],
+      "variable": "문제 상태 하나를 읽고 분류",
+      "observations": [
+        "unavailable·failed·completed/fail·not_run을 구별하세요.",
+        "simulation/DRC/LVS/PEX 각각의 실제 실행·결과·freshness"
+      ],
+      "questions": [
+        "unavailable·failed·completed/fail·not_run을 구별하세요.",
+        "문제 해결 뒤 어떤 실행을 다시 해야 하나요?"
+      ],
+      "scope": "실제 설치된 도구와 공개 deck의 제한된 검사. foundry signoff 아님. 도구가 없으면 unavailable, 실행 안 했으면 not_run.",
+      "guide": "physical-verification"
+    }
+  ],
+  "references": [
+    {
+      "id": "units-si",
+      "title": "SI 단위와 prefix",
+      "summary": "입력의 물리량과 prefix를 먼저 읽습니다.",
+      "equation": "x_SI = x × prefix_scale",
+      "units": "m=10⁻³, µ=10⁻⁶, n=10⁻⁹, p=10⁻¹², f=10⁻¹⁵",
+      "assumptions": "같은 물리량 사이의 변환",
+      "pitfall": "SPICE의 m과 meg를 혼동하지 않습니다.",
+      "next_experiment": "1nF와 1000pF 입력이 같은 결과인지 비교하세요.",
+      "source_ids": [
+        "shared-math",
+        "ngspice"
+      ]
+    },
+    {
+      "id": "ideal-circuit",
+      "title": "이상 모델의 적용 범위",
+      "summary": "정확한 식도 적용 모델을 벗어나면 예측을 보장하지 않습니다.",
+      "equation": "V=IR; Q=CV",
+      "units": "V, A, Ω, C, F",
+      "assumptions": "선형·고정 R/C; 열·비선형 제외",
+      "pitfall": "이상 부품 계산을 실제 PDK 성능으로 쓰지 않습니다.",
+      "next_experiment": "모델 없이 알 수 없는 현상을 목록으로 적으세요.",
+      "source_ids": [
+        "shared-math"
+      ]
+    },
+    {
+      "id": "kcl-kvl",
+      "title": "KCL·KVL과 노드",
+      "summary": "전류의 기준 방향과 폐회로 전압 부호를 정합니다.",
+      "equation": "Σ I_node=0; Σ ΔV_loop=0",
+      "units": "A, V",
+      "assumptions": "같은 노드와 폐회로·일관된 부호",
+      "pitfall": "단순 선 교차는 연결된 노드가 아닙니다.",
+      "next_experiment": "branch 전류 합과 공급 전류를 비교하세요.",
+      "source_ids": [
+        "ngspice"
+      ]
+    },
+    {
+      "id": "current-sign",
+      "title": "전류원·전압원 branch 부호",
+      "summary": "음수 전류도 실제 기준 방향에 대한 유효한 결과입니다.",
+      "units": "A",
+      "assumptions": "SPICE 전압원 전류 기준: +단자 안으로 흐름",
+      "pitfall": "공급 전류를 절댓값으로 바꿔 방향 정보를 지우지 않습니다.",
+      "next_experiment": "원본 signed 전류와 전원 공급 전력을 함께 적으세요.",
+      "source_ids": [
+        "ngspice"
+      ]
+    },
+    {
+      "id": "voltage-reference",
+      "title": "노드 전압과 전압강하",
+      "summary": "노드 전위와 소자 양단 차이는 구분합니다.",
+      "equation": "ΔV_ab=V(a)−V(b)",
+      "units": "V",
+      "assumptions": "기준 ground와 순서 명시",
+      "pitfall": "V(a)를 곧바로 소자 drop이라고 부르지 않습니다.",
+      "next_experiment": "ground 위치를 읽고 저항 양단 차이를 계산하세요.",
+      "source_ids": [
+        "ngspice"
+      ]
+    },
+    {
+      "id": "divider-loading",
+      "title": "부하가 있는 분배기",
+      "summary": "아래쪽 branch에 부하가 병렬로 들어갑니다.",
+      "equation": "Rb=R2||RL; Vout=Vin·Rb/(R1+Rb)",
+      "units": "V, Ω",
+      "assumptions": "이상 전압원·선형 저항",
+      "pitfall": "무부하 식으로 유한 입력 저항을 생략하지 않습니다.",
+      "next_experiment": "RL=10kΩ와 100kΩ의 실제 OP를 비교하세요.",
+      "source_ids": [
+        "shared-math",
+        "ngspice"
+      ]
+    },
+    {
+      "id": "rc-settling",
+      "title": "RC charging·settling",
+      "summary": "한 τ와 충분한 settling 시간을 구분합니다.",
+      "equation": "τ=RC; V(t)=Vf+(Vi−Vf)e^(−t/τ)",
+      "units": "s, Ω, F, V",
+      "assumptions": "단일 pole·일정 최종값·step 기준 시간",
+      "pitfall": "5τ는 약 0.674% 잔차이며 정확히 0%가 아닙니다.",
+      "next_experiment": "τ·3τ·5τ의 실제 잔차를 비교하세요.",
+      "source_ids": [
+        "shared-math",
+        "ngspice"
+      ]
+    },
+    {
+      "id": "rl-response",
+      "title": "RL 전류와 저장 에너지",
+      "summary": "직렬 RL 전류가 연속적으로 변합니다.",
+      "equation": "τ=L/R; E=½LI²",
+      "units": "s, H, Ω, J",
+      "assumptions": "선형 L, 포화·기생 제외",
+      "pitfall": "실제 coil의 DC 저항·포화·자기 손실은 추가 모델입니다.",
+      "next_experiment": "R을 두 배로 바꾼 τ를 계산하세요.",
+      "source_ids": [
+        "shared-math"
+      ]
+    },
+    {
+      "id": "rlc-q",
+      "title": "직렬 RLC 공진과 Q",
+      "summary": "손실과 공진 주파수의 역할을 나눕니다.",
+      "equation": "f0=1/(2π√LC); Q=√(L/C)/R",
+      "units": "Hz, H, F, Ω",
+      "assumptions": "직렬 RLC·이상 L/C",
+      "pitfall": "병렬 RLC의 Q 식을 그대로 섞지 않습니다.",
+      "next_experiment": "R만 바꾸고 f0와 Q의 변화를 설명하세요.",
+      "source_ids": [
+        "shared-math"
+      ]
+    },
+    {
+      "id": "initial-conditions",
+      "title": "OP·초기조건·UIC",
+      "summary": "같은 R/C라도 시작 상태가 다르면 waveform이 달라집니다.",
+      "units": "V, A, s",
+      "assumptions": "deck의 .ic/UIC·OP 설정과 실제 초기값 확인",
+      "pitfall": "sample waveform으로 미실행 초기조건을 대체하지 않습니다.",
+      "next_experiment": "방전 fixture와 pulse falling edge를 비교하세요.",
+      "source_ids": [
+        "ngspice"
+      ]
+    },
+    {
+      "id": "ac-small-signal",
+      "title": "AC 소신호 해석",
+      "summary": "DC 동작점 주위의 선형 전달을 주파수별로 해석합니다.",
+      "equation": "H(jω)=Vout/Vin",
+      "units": "Hz, V/V, °",
+      "assumptions": "유효 OP·AC source amplitude",
+      "pitfall": "AC plot은 시간 transient waveform이 아닙니다.",
+      "next_experiment": "DC rail에 가까운 MOS의 OP부터 확인하세요.",
+      "source_ids": [
+        "ngspice"
+      ]
+    },
+    {
+      "id": "db-impedance",
+      "title": "dB·전압비·전력비",
+      "summary": "전압비와 전력비를 같은 식으로 취급하지 않습니다.",
+      "equation": "20log10|Av|; 10log10(Pout/Pin)",
+      "units": "dB",
+      "assumptions": "Av²의 power 대응에는 같은 임피던스 조건",
+      "pitfall": "음수 dB는 음수 전압이 아니라 비가 1 미만이라는 뜻입니다.",
+      "next_experiment": "0.5배와 2배 전압 gain을 계산하세요.",
+      "source_ids": [
+        "shared-math"
+      ]
+    },
+    {
+      "id": "mos-model",
+      "title": "MOS W/L과 모델",
+      "summary": "square-law 직관과 실제 public 모델을 구분합니다.",
+      "units": "µm, V, A",
+      "assumptions": "소자 종류·model ID·corner·온도·W/L·nf/m",
+      "pitfall": "W/L만으로 공정·short-channel 전류를 확정하지 않습니다.",
+      "next_experiment": "실제 DC sweep에서 model/version을 보존하세요.",
+      "source_ids": [
+        "sky130",
+        "ngspice"
+      ]
+    },
+    {
+      "id": "body-bias",
+      "title": "D/G/S/B와 body",
+      "summary": "MOS의 네 단자와 body 연결을 읽습니다.",
+      "units": "V",
+      "assumptions": "공개 모델·전압 정격·body 조건",
+      "pitfall": "GDS 표시 polygon으로 body 접속을 추측하지 않습니다.",
+      "next_experiment": "schematic B와 LVS extracted body 연결을 비교하세요.",
+      "source_ids": [
+        "sky130"
+      ]
+    },
+    {
+      "id": "headroom",
+      "title": "headroom·swing·rail",
+      "summary": "DC bias와 가용 출력 범위를 먼저 확인합니다.",
+      "units": "V",
+      "assumptions": "실제 공급·각 MOS 동작점",
+      "pitfall": "높은 AC gain이 큰 rail-to-rail swing을 보장하지 않습니다.",
+      "next_experiment": "게이트 바이어스를 하나 바꾸고 OP를 비교하세요.",
+      "source_ids": [
+        "ngspice",
+        "sky130"
+      ]
+    },
+    {
+      "id": "mirror-compliance",
+      "title": "전류 미러 compliance",
+      "summary": "출력 전압이 전류 전달에 미치는 영향을 봅니다.",
+      "equation": "관측 ratio=Iout/Iref",
+      "units": "A/A, V",
+      "assumptions": "실제 MOS DC·동일 조건 비교",
+      "pitfall": "동일 W/L만으로 ratio=1을 보장하지 않습니다.",
+      "next_experiment": "두 reference current의 출력 sweep을 비교하세요.",
+      "source_ids": [
+        "sky130",
+        "ngspice"
+      ]
+    },
+    {
+      "id": "differential-commonmode",
+      "title": "차동·공통 모드",
+      "summary": "같이 움직이는 입력과 서로 벌어지는 입력을 구분합니다.",
+      "equation": "Vdiff=Vp−Vn; Vcm=(Vp+Vn)/2",
+      "units": "V",
+      "assumptions": "입력 범위·bias·외부 구동 명시",
+      "pitfall": "동일한 geometric placement가 CMRR 수치를 제공하지 않습니다.",
+      "next_experiment": "Vdiff 고정 후 Vcm 변화 실험을 계획하세요.",
+      "source_ids": [
+        "ngspice"
+      ]
+    },
+    {
+      "id": "inverter-timing",
+      "title": "인버터 timing 기준",
+      "summary": "정확한 입력/출력 crossing과 부하를 기록합니다.",
+      "equation": "tpHL=tY,50%,fall−tA,50%,rise",
+      "units": "s, ns; Cload: F/fF",
+      "assumptions": "matching input event·finite rise·실제 samples",
+      "pitfall": "50% 지연과 10–90% transition은 다른 수치입니다.",
+      "next_experiment": "5fF와 50fF의 actual waveform을 비교하세요.",
+      "source_ids": [
+        "repo-inverter"
+      ]
+    },
+    {
+      "id": "logic-path",
+      "title": "논리 진리표와 물리 경로",
+      "summary": "기존 셀의 연결과 입력에 따른 conducting path를 읽습니다.",
+      "units": "V, s",
+      "assumptions": "각 입력 조합과 안정 구간·threshold 명시",
+      "pitfall": "진리표 검사 통과는 모든 timing arc/Liberty characterization이 아닙니다.",
+      "next_experiment": "NAND와 NOR의 최악 경로 후보를 표시하세요.",
+      "source_ids": [
+        "repo-cells"
+      ]
+    },
+    {
+      "id": "hierarchy-ports",
+      "title": "계층과 포트 mapping",
+      "summary": "하위 셀의 정의와 상위 instance 연결을 나눕니다.",
+      "units": "net names, integer DBU",
+      "assumptions": "포트 순서·namespace·대상 revision",
+      "pitfall": "schematic 연결과 블록 사이 실제 mask 배선은 별도입니다.",
+      "next_experiment": "복사 preview에서 추가 도형과 port mapping을 확인하세요.",
+      "source_ids": [
+        "repo-cells"
+      ]
+    },
+    {
+      "id": "pnr-library",
+      "title": "표준 셀 라이브러리와 P&R",
+      "summary": "셀 특성과 전체 칩 배치·배선·timing 최적화의 역할을 구분합니다.",
+      "units": "LEF/Liberty/netlist/GDS",
+      "assumptions": "표준 셀·공정 룰·constraints·timing 데이터 필요",
+      "pitfall": "P&R을 배선만 하는 과정으로 설명하지 않습니다.",
+      "next_experiment": "Liberty와 GDS가 각각 담는 데이터를 대조하세요.",
+      "source_ids": [
+        "openroad"
+      ]
+    },
+    {
+      "id": "ldo-limits",
+      "title": "LDO load transient 한계",
+      "summary": "출력 C·ESR·부하·dropout 조건을 명시합니다.",
+      "units": "V, A, F, s",
+      "assumptions": "실제 loop·external reference/bias·testbench",
+      "pitfall": "한 step 통과가 full PVT·안정성·열 인증은 아닙니다.",
+      "next_experiment": "부하와 C 중 하나만 바꿔 actual undershoot를 보세요.",
+      "source_ids": [
+        "repo-cells"
+      ]
+    },
+    {
+      "id": "sc-dcdc",
+      "title": "SC DC-DC 변환비",
+      "summary": "이상 charge transfer와 switch·부하 손실을 구분합니다.",
+      "units": "V, A, F, Hz",
+      "assumptions": "클록·switch·C·load 모델 명시",
+      "pitfall": "2:1 ideal ratio를 actual regulation 보증으로 쓰지 않습니다.",
+      "next_experiment": "steady interval ripple과 공급 전류를 보세요.",
+      "source_ids": [
+        "repo-cells"
+      ]
+    },
+    {
+      "id": "adc-code-definitions",
+      "title": "ADC bin과 endpoint",
+      "summary": "코드 수, 이상 bin 폭, endpoint 정의를 구분합니다.",
+      "equation": "codes=2^N; bin=Vref/2^N; endpoint=Vfs/(2^N−1)",
+      "units": "V/code",
+      "assumptions": "SAR reference는 bin 정의. 기존 hub는 endpoint 정의.",
+      "pitfall": "8bit CODE는 측정한 ENOB8이 아닙니다.",
+      "next_experiment": "1.2V·8bit의 4.6875mV bin과 endpoint를 따로 적으세요.",
+      "source_ids": [
+        "shared-math",
+        "sar-architecture"
+      ]
+    },
+    {
+      "id": "sar-charge",
+      "title": "SAR charge redistribution",
+      "summary": "샘플 전하와 trial 전압을 추적합니다.",
+      "equation": "VTOP=VCM−VIN+VREF·trial/256",
+      "units": "V",
+      "assumptions": "이상 equal units·8bit·명시 driver/reference. actual MOS는 별도.",
+      "pitfall": "이상식이 comparator noise/offset·switch injection을 없애지 않습니다.",
+      "next_experiment": "실제 COMP decision 로그와 trial을 나란히 보세요.",
+      "source_ids": [
+        "repo-sar",
+        "sar-architecture"
+      ]
+    },
+    {
+      "id": "sdm-osr",
+      "title": "ΣΔ bitstream과 OSR",
+      "summary": "modulator와 decimator의 역할을 구분합니다.",
+      "units": "Hz, samples, code",
+      "assumptions": "현재 reference의 modulator clock·CIC2×256·settling 명시",
+      "pitfall": "OSR만으로 ENOB·noise-shaping 성능을 확정하지 않습니다.",
+      "next_experiment": "같은 입력에서 BITSTREAM과 CODE/VALID를 연결하세요.",
+      "source_ids": [
+        "repo-sdm"
+      ]
+    },
+    {
+      "id": "fft-coherent",
+      "title": "FFT 관측 조건",
+      "summary": "입력 주파수·sample 수·window·settling을 함께 기록합니다.",
+      "equation": "fin=k·fs/N",
+      "units": "Hz, samples",
+      "assumptions": "정수 k·기록된 actual valid frames",
+      "pitfall": "DC offset·settling frame·leakage를 성능으로 오해하지 않습니다.",
+      "next_experiment": "입력 주파수와 window를 기록하고 spectrum을 확인하세요.",
+      "source_ids": [
+        "repo-sdm"
+      ]
+    },
+    {
+      "id": "sampling-alias",
+      "title": "sampling과 alias",
+      "summary": "샘플 속도·입력 대역과 anti-alias 필요성을 구분합니다.",
+      "units": "Hz",
+      "assumptions": "bandlimit와 실제 sample/valid rate 확인",
+      "pitfall": "출력 코드 폭이 alias 방지를 보장하지 않습니다.",
+      "next_experiment": "filter 전후 signal path를 표시하세요.",
+      "source_ids": [
+        "repo-sdm",
+        "repo-sar"
+      ]
+    },
+    {
+      "id": "dbu-grid",
+      "title": "DBU와 µm",
+      "summary": "도형은 정수 좌표, 물리 길이는 DBU 배율로 표현합니다.",
+      "equation": "length_um=length_DBU×dbu_um",
+      "units": "DBU, µm",
+      "assumptions": "현재 layout DBU 사용",
+      "pitfall": "교육용 예시 DBU=0.001µm를 모든 GDS에 강제하지 않습니다.",
+      "next_experiment": "export/reimport 좌표와 DBU를 비교하세요.",
+      "source_ids": [
+        "klayout"
+      ]
+    },
+    {
+      "id": "geometry-matching",
+      "title": "대칭·centroid와 matching",
+      "summary": "좌표 특성과 전기적 mismatch를 별도 증거로 취급합니다.",
+      "equation": "centroid=(ΣAi xi/ΣAi, ΣAi yi/ΣAi)",
+      "units": "µm, µm²",
+      "assumptions": "같은 unit 면적·기하 확인. gradient 선형 가정은 명시.",
+      "pitfall": "같은 centroid는 orientation·이웃·배선·고차 gradient 일치를 보장하지 않습니다.",
+      "next_experiment": "ABBA와 ABAB의 좌표·이웃 차이를 적으세요.",
+      "source_ids": [
+        "align"
+      ]
+    },
+    {
+      "id": "matching-environment",
+      "title": "주변 환경·방향·dummy",
+      "summary": "같은 W/L 외에 orientation·이웃·배선·온도 조건이 있습니다.",
+      "units": "geometry, model ID",
+      "assumptions": "공정 자료·추출·mismatch 모델 필요",
+      "pitfall": "common centroid와 dummy가 항상 최선이라고 가르치지 않습니다.",
+      "next_experiment": "기하로 아는 사실과 모델 없이는 모르는 것을 구분하세요.",
+      "source_ids": [
+        "align",
+        "sky130"
+      ]
+    },
+    {
+      "id": "stack-assumptions",
+      "title": "GDS·표시 Z·실제 적층",
+      "summary": "XY 마스크와 공정 적층·재료 정보를 구분합니다.",
+      "units": "layer/datatype, µm, z scale",
+      "assumptions": "사용한 layer mapping·공정 출처·가상/실제 표기",
+      "pitfall": "단순 돌출 2.5D를 공정 simulation이라고 부르지 않습니다.",
+      "next_experiment": "표시 z scale 변경으로 전기 결과가 바뀌지 않음을 확인하세요.",
+      "source_ids": [
+        "klayout",
+        "xsection"
+      ]
+    },
+    {
+      "id": "topography-resolution",
+      "title": "step·hole·coverage와 해상도",
+      "summary": "가정 기반 heightmap의 해상도와 미해결 얇은 film을 밝힙니다.",
+      "units": "µm, voxel size",
+      "assumptions": "입력 recipe·측정 데이터·재료/공정 모델의 유무",
+      "pitfall": "그림만으로 calibrated TCAD·결함·foundry 공정 성능을 확정하지 않습니다.",
+      "next_experiment": "격자보다 얇은 막을 unresolved로 분류하세요.",
+      "source_ids": [
+        "xsection",
+        "sky130"
+      ]
+    },
+    {
+      "id": "cross-probe",
+      "title": "회로↔mask 연결의 확실성",
+      "summary": "원본 device/net metadata가 있을 때만 대응을 확정합니다.",
+      "units": "device ID, net, layer",
+      "assumptions": "원본 annotation·현재 revision·추출 증거",
+      "pitfall": "이름이 비슷한 polygon만으로 MOS 대응을 확정하지 않습니다.",
+      "next_experiment": "unknown/candidate/confirmed를 구분해 설명하세요.",
+      "source_ids": [
+        "repo-inverter"
+      ]
+    },
+    {
+      "id": "drc-lvs-pex",
+      "title": "DRC·LVS·PEX 독립성",
+      "summary": "룰 검사, 연결 비교, RC 추출은 각각 다른 질문입니다.",
+      "units": "violation count, device/net, Ω/F",
+      "assumptions": "실제 deck·모델·도구·입력 revision",
+      "pitfall": "한 job 성공으로 전체 검증 PASS를 표시하지 않습니다.",
+      "next_experiment": "각 단계의 run ID와 실패 원인을 기록하세요.",
+      "source_ids": [
+        "repo-physical",
+        "sky130"
+      ]
+    },
+    {
+      "id": "engine-evidence",
+      "title": "실행·판정·미지원 상태",
+      "summary": "설치 진단과 설계 실행 결과를 분리합니다.",
+      "units": "execution_status, analysis_result",
+      "assumptions": "not_run/unavailable/queued/running/completed/failed/canceled",
+      "pitfall": "completed/fail은 실제 검사 불합격이며 엔진 crash와 다릅니다.",
+      "next_experiment": "물리 검사 없는 계산 과제를 not_run으로 남기세요.",
+      "source_ids": [
+        "repo-physical"
+      ]
+    },
+    {
+      "id": "revision-history",
+      "title": "현재 결과와 역사적 결과",
+      "summary": "run의 revision과 입력 signature를 현재 상태와 대조합니다.",
+      "units": "project_id, revision, engine/model/deck hash",
+      "assumptions": "현재 dependency와 실제 provenance",
+      "pitfall": "같은 project 이름을 현재 검증 증거로 쓰지 않습니다.",
+      "next_experiment": "입력 한 개 수정 뒤 과거 결과 label을 확인하세요.",
+      "source_ids": [
+        "repo-inverter",
+        "repo-physical"
+      ]
+    },
+    {
+      "id": "pvt-mismatch",
+      "title": "corner·MC·mismatch 구분",
+      "summary": "deterministic corner와 확률적 mismatch 수율은 다릅니다.",
+      "units": "°C, V, model corner, seed",
+      "assumptions": "각 corner와 MC 제공 모델의 실제 범위",
+      "pitfall": "TT/SS/FF 세 점이 통계 수율이나 모든 온도 범위를 보장하지 않습니다.",
+      "next_experiment": "실행한 조건과 미실행 noise/MC 항목을 나누세요.",
+      "source_ids": [
+        "sky130",
+        "repo-soc"
+      ]
+    },
+    {
+      "id": "sampling-step",
+      "title": "time step과 수치 수렴",
+      "summary": "실제 sample 간격·보간·solver 조건을 기록합니다.",
+      "units": "s, V, A",
+      "assumptions": "동일 회로·입력·모델에서 step 비교",
+      "pitfall": "최대 time step보다 짧은 pulse를 항상 정확히 측정할 수 있다고 가정하지 않습니다.",
+      "next_experiment": "step을 절반으로 줄여 transition 수치의 안정성을 비교하세요.",
+      "source_ids": [
+        "ngspice"
+      ]
+    },
+    {
+      "id": "learner-explanation",
+      "title": "학생 설명과 교수자 평가",
+      "summary": "자신의 관찰·근거·다음 실험을 직접 작성합니다.",
+      "assumptions": "원본 학생 입력과 교수자 가이드 분리",
+      "pitfall": "자동 해설·QA fixture를 학생 제출·학습 효과 증명으로 저장하지 않습니다.",
+      "next_experiment": "사전/사후 설명을 보존하고 교수자에게 검토를 요청하세요.",
+      "source_ids": [
+        "repo-inverter"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "shared-math",
+      "title": "Resistor 공통 계산 모듈과 수식 fixture",
+      "url": "https://github.com/Lead729726-cell/Resistor/blob/codex/resistor-edu/packages/calculators/src/index.ts",
+      "local": "packages/calculators/src/index.ts",
+      "license": "MIT · 이 저장소의 계산 코드"
+    },
+    {
+      "id": "ngspice",
+      "title": "ngspice 공식 문서 · OP/DC/AC/Transient",
+      "url": "https://ngspice.sourceforge.io/docs.html",
+      "license": "외부 링크만 포함 · 문서의 원래 라이선스 적용"
+    },
+    {
+      "id": "sky130",
+      "title": "공개 SKY130 PDK · 모델·레이어·룰 문서",
+      "url": "https://skywater-pdk.readthedocs.io/en/main/",
+      "license": "외부 링크만 포함 · 각 PDK 파일 라이선스를 별도 확인"
+    },
+    {
+      "id": "klayout",
+      "title": "KLayout 공식 2.5D 표현",
+      "url": "https://www.klayout.de/doc/about/25d_view.html",
+      "license": "외부 링크만 포함"
+    },
+    {
+      "id": "xsection",
+      "title": "KLayout XSection 프로젝트",
+      "url": "https://klayoutmatthias.github.io/xsection/",
+      "license": "외부 링크만 포함 · 현재 Edu에 XSection 실행 연동을 주장하지 않음"
+    },
+    {
+      "id": "align",
+      "title": "ALIGN · 대칭·배치·경계 제약",
+      "url": "https://align-analoglayout.github.io/ALIGN-public/notes/const.html",
+      "license": "외부 링크만 포함 · 독립 ALIGN 엔진 실행 아님"
+    },
+    {
+      "id": "openroad",
+      "title": "OpenROAD · RTL에서 물리 구현까지",
+      "url": "https://github.com/The-OpenROAD-Project/OpenROAD/blob/master/README.md",
+      "license": "외부 링크만 포함 · OpenROAD는 이 과제의 기본 실행 엔진이 아님"
+    },
+    {
+      "id": "sar-architecture",
+      "title": "Analog Devices · SAR 구조와 charge redistribution",
+      "url": "https://www.analog.com/en/resources/technical-articles/successive-approximation-registers-sar-and-flash-adcs.html",
+      "license": "외부 링크만 포함"
+    },
+    {
+      "id": "repo-physical",
+      "title": "실제 실행된 공통 물리 도구 QA · 역사적 기록",
+      "url": "https://github.com/Lead729726-cell/Resistor/blob/codex/resistor-edu/docs/physical-tools.md",
+      "local": "docs/physical-tools.md",
+      "license": "MIT · 프로젝트·revision·도구 조건이 다른 현재 결과로 재사용 금지"
+    },
+    {
+      "id": "repo-inverter",
+      "title": "연결형 CMOS 실습과 실제 모델 범위",
+      "url": "https://github.com/Lead729726-cell/Resistor/blob/codex/resistor-edu/docs/edu-inverter-lab.md",
+      "local": "docs/edu-inverter-lab.md",
+      "license": "MIT · 실행 증거는 해당 revision에만 유효"
+    },
+    {
+      "id": "repo-soc",
+      "title": "소규모 아날로그 SoC 레퍼런스",
+      "url": "https://github.com/Lead729726-cell/Resistor/blob/codex/resistor-edu/docs/analog-soc.md",
+      "local": "docs/analog-soc.md",
+      "license": "MIT · 제조 signoff·잡음·mismatch 수율 인증 없음"
+    },
+    {
+      "id": "repo-sar",
+      "title": "SAR8 · 모델·외부 제어·면적 범위",
+      "url": "https://github.com/Lead729726-cell/Resistor/blob/codex/resistor-edu/docs/sar-adc.md",
+      "local": "docs/sar-adc.md",
+      "license": "MIT · 전체 controller mask/timing 미지원"
+    },
+    {
+      "id": "repo-sdm",
+      "title": "Sigma-delta8 · 계층·CIC·실행 범위",
+      "url": "https://github.com/Lead729726-cell/Resistor/blob/codex/resistor-edu/examples/sigma-delta8/README.md",
+      "local": "examples/sigma-delta8/README.md",
+      "license": "MIT · CODE 비트 수와 ENOB를 구분"
+    },
+    {
+      "id": "repo-cells",
+      "title": "기존 물리 셀·칩 레퍼런스 · 독립 검사 기록",
+      "url": "https://github.com/Lead729726-cell/Resistor/blob/codex/resistor-edu/examples/physical-library/README.md",
+      "local": "examples/physical-library/README.md",
+      "license": "MIT · 역사적 보고서이며 현재 PASS로 표시하지 않음"
+    }
+  ],
+  "paths": [
+    {
+      "id": "first-lab",
+      "title": "첫 실습 · 4회",
+      "assignment_ids": [
+        "calc-unit-converter",
+        "calc-voltage-divider",
+        "circuit-divider",
+        "circuit-loaded-divider"
+      ]
+    },
+    {
+      "id": "circuits",
+      "title": "회로 이론 · 8회",
+      "assignment_ids": [
+        "circuit-series",
+        "circuit-parallel",
+        "circuit-thevenin",
+        "circuit-rc-charge",
+        "circuit-rc-discharge",
+        "circuit-rc-ac",
+        "calc-rl-time-constant",
+        "calc-rlc-resonance"
+      ]
+    },
+    {
+      "id": "mos-foundations",
+      "title": "MOS와 바이어스 · 6회",
+      "assignment_ids": [
+        "mos-iv",
+        "mos-common-source",
+        "mos-bias-divider",
+        "mos-current-mirror",
+        "mos-differential-pair",
+        "mos-inverter-load"
+      ]
+    },
+    {
+      "id": "digital-reading",
+      "title": "디지털 셀과 계층 · 8회",
+      "assignment_ids": [
+        "digital-nand",
+        "digital-nor",
+        "digital-xor",
+        "digital-mux2",
+        "digital-mux4",
+        "digital-full-adder",
+        "digital-adder4",
+        "digital-pnr"
+      ]
+    },
+    {
+      "id": "analog-front-end",
+      "title": "아날로그 AFE · 6회",
+      "assignment_ids": [
+        "mos-differential-pair",
+        "mos-cascode",
+        "analog-ota",
+        "analog-miller",
+        "analog-pga",
+        "analog-tia"
+      ]
+    },
+    {
+      "id": "power-clocks",
+      "title": "전원·신호 응답 · 4회",
+      "assignment_ids": [
+        "calc-power-dissipation",
+        "analog-ldo",
+        "analog-dcdc",
+        "calc-frequency-period"
+      ]
+    },
+    {
+      "id": "data-converters",
+      "title": "데이터 변환 · 9회",
+      "assignment_ids": [
+        "calc-adc-resolution",
+        "calc-dac-resolution",
+        "adc-sdm-integrator",
+        "adc-sdm-density",
+        "adc-sdm-cic",
+        "adc-sdm-spectrum",
+        "adc-sar-switch",
+        "adc-sar-cdac",
+        "adc-sar-core"
+      ]
+    },
+    {
+      "id": "physical-thinking",
+      "title": "레이아웃 판단 · 10회",
+      "assignment_ids": [
+        "layout-dbu",
+        "layout-primitives",
+        "layout-transform",
+        "layout-symmetry",
+        "layout-centroid",
+        "layout-dummy",
+        "layout-interconnect",
+        "layout-chip-area",
+        "layout-stack",
+        "layout-topography"
+      ]
+    },
+    {
+      "id": "verification",
+      "title": "실제 검증과 재현 · 6회",
+      "assignment_ids": [
+        "verify-drc",
+        "verify-lvs",
+        "verify-pex",
+        "verify-pvt",
+        "verify-revision",
+        "verify-unavailable"
+      ]
+    },
+    {
+      "id": "semester",
+      "title": "한 학기 · 15회",
+      "assignment_ids": [
+        "calc-unit-converter",
+        "circuit-divider",
+        "circuit-loaded-divider",
+        "circuit-rc-charge",
+        "mos-iv",
+        "mos-common-source",
+        "mos-current-mirror",
+        "mos-inverter-load",
+        "digital-nand",
+        "digital-full-adder",
+        "layout-primitives",
+        "layout-centroid",
+        "verify-drc",
+        "verify-lvs",
+        "verify-pex"
+      ]
+    }
+  ],
+  "bundles": [
+    {
+      "file": "Resistor-Edu-instructor-all.zip",
+      "title": "Resistor Edu 전체 과제·레퍼런스",
+      "audience": "instructor",
+      "assignment_count": 72,
+      "bytes": 199944,
+      "sha256": "d7e5f2d23fa0f35ab39bdec25c7eea722f6407fd055d52595c2dcfb5363b0127"
+    },
+    {
+      "file": "Resistor-Edu-instructor-category-1.zip",
+      "title": "기초 계산",
+      "audience": "instructor",
+      "assignment_count": 18,
+      "bytes": 50828,
+      "sha256": "6d90ee24a05160b874a9fba935ffba83a2b7e378004d7018e667ac4fb84926a6"
+    },
+    {
+      "file": "Resistor-Edu-instructor-category-2.zip",
+      "title": "기초 회로",
+      "audience": "instructor",
+      "assignment_count": 8,
+      "bytes": 31962,
+      "sha256": "d865f8dbde46b26a1b04b396ad31cefd651e27d7dbb804831f0f92530f626eb0"
+    },
+    {
+      "file": "Resistor-Edu-instructor-category-3.zip",
+      "title": "MOS·바이어스",
+      "audience": "instructor",
+      "assignment_count": 7,
+      "bytes": 30409,
+      "sha256": "56b0c7ab151745520015c7996cdcdeba94deb150a2b27ef0df75b1ea79d927aa"
+    },
+    {
+      "file": "Resistor-Edu-instructor-category-4.zip",
+      "title": "디지털·계층",
+      "audience": "instructor",
+      "assignment_count": 8,
+      "bytes": 24415,
+      "sha256": "dc07652118878cb06e6f6574e76146408f0311cb4271cbfe92487026c48a341a"
+    },
+    {
+      "file": "Resistor-Edu-instructor-category-5.zip",
+      "title": "아날로그·전원",
+      "audience": "instructor",
+      "assignment_count": 8,
+      "bytes": 26576,
+      "sha256": "6fdf0a368fe1d0e6ac1b2a0fb52a8b9c0646b1d1a90a07ec879c71ad20290b42"
+    },
+    {
+      "file": "Resistor-Edu-instructor-category-6.zip",
+      "title": "데이터 변환",
+      "audience": "instructor",
+      "assignment_count": 7,
+      "bytes": 24930,
+      "sha256": "c7650abc06112b62faf520aa09b28f491726b2bbcb48597d123526feeedb329c"
+    },
+    {
+      "file": "Resistor-Edu-instructor-category-7.zip",
+      "title": "레이아웃·공정",
+      "audience": "instructor",
+      "assignment_count": 10,
+      "bytes": 35127,
+      "sha256": "f77adb292ce9d8ed8c9650b2874d4fe544f70d05ff29c6277af3f9d1c14d4413"
+    },
+    {
+      "file": "Resistor-Edu-instructor-category-8.zip",
+      "title": "검증·재현",
+      "audience": "instructor",
+      "assignment_count": 6,
+      "bytes": 21746,
+      "sha256": "1a82d7e980ac8676c4648183588ee6b4625dc8cdd83cc747da833c6d20ad0f71"
+    },
+    {
+      "file": "Resistor-Edu-instructor-first-lab.zip",
+      "title": "첫 실습 · 4회",
+      "audience": "instructor",
+      "assignment_count": 4,
+      "bytes": 19581,
+      "sha256": "4d04b89ecef6c28ba2afc95aec5092cb06d9c03a44293e908895393393c54de4"
+    },
+    {
+      "file": "Resistor-Edu-instructor-circuits.zip",
+      "title": "회로 이론 · 8회",
+      "audience": "instructor",
+      "assignment_count": 8,
+      "bytes": 33552,
+      "sha256": "eb5082083f4d6e2c9621304793c28dc04472b62a903b0679a473ff444c69fd3e"
+    },
+    {
+      "file": "Resistor-Edu-instructor-mos-foundations.zip",
+      "title": "MOS와 바이어스 · 6회",
+      "audience": "instructor",
+      "assignment_count": 6,
+      "bytes": 28396,
+      "sha256": "f8b3700afa5ddd142fa463fbb80671aad1213d1a9720226a45593a28862afdc8"
+    },
+    {
+      "file": "Resistor-Edu-instructor-digital-reading.zip",
+      "title": "디지털 셀과 계층 · 8회",
+      "audience": "instructor",
+      "assignment_count": 8,
+      "bytes": 24445,
+      "sha256": "e89a605df1757bf2bf1a6894681efd90ca34df64f6a2d100ff789f766cd462ce"
+    },
+    {
+      "file": "Resistor-Edu-instructor-analog-front-end.zip",
+      "title": "아날로그 AFE · 6회",
+      "audience": "instructor",
+      "assignment_count": 6,
+      "bytes": 22397,
+      "sha256": "c3a8847b86722b348c0bf8299a40ddc995790b5eba9cd4041b275715ee1a59b7"
+    },
+    {
+      "file": "Resistor-Edu-instructor-power-clocks.zip",
+      "title": "전원·신호 응답 · 4회",
+      "audience": "instructor",
+      "assignment_count": 4,
+      "bytes": 20369,
+      "sha256": "c52e3c0cb1898ec3660d3d92d2feffee6a7da2c571a030ae959a047309ad6276"
+    },
+    {
+      "file": "Resistor-Edu-instructor-data-converters.zip",
+      "title": "데이터 변환 · 9회",
+      "audience": "instructor",
+      "assignment_count": 9,
+      "bytes": 31921,
+      "sha256": "c514a77e10e2bc9adece6e5fd709586b4b4753cc5e99b855313cf1221a874e91"
+    },
+    {
+      "file": "Resistor-Edu-instructor-physical-thinking.zip",
+      "title": "레이아웃 판단 · 10회",
+      "audience": "instructor",
+      "assignment_count": 10,
+      "bytes": 35146,
+      "sha256": "60d946ca2dd8e3419ec7dff058f7cf7d5aa903a3c408b85eafea4c92f53d50da"
+    },
+    {
+      "file": "Resistor-Edu-instructor-verification.zip",
+      "title": "실제 검증과 재현 · 6회",
+      "audience": "instructor",
+      "assignment_count": 6,
+      "bytes": 21775,
+      "sha256": "2b030bfb17c1fd587349fd55e2e0ea6b9ffde2e77e8131e8b3c3971663ba47ce"
+    },
+    {
+      "file": "Resistor-Edu-instructor-semester.zip",
+      "title": "한 학기 · 15회",
+      "audience": "instructor",
+      "assignment_count": 15,
+      "bytes": 62693,
+      "sha256": "4b9f6492d2d602d99919740063926f434733c98e1e248661df31246937fa0cde"
+    },
+    {
+      "file": "Resistor-Edu-student-all.zip",
+      "title": "Resistor Edu 전체 과제·레퍼런스",
+      "audience": "student",
+      "assignment_count": 72,
+      "bytes": 177110,
+      "sha256": "e6a1cb4ea37a787b61b5af921f91fed02e92568e22f4b07cb0d046780f486344"
+    },
+    {
+      "file": "Resistor-Edu-student-category-1.zip",
+      "title": "기초 계산",
+      "audience": "student",
+      "assignment_count": 18,
+      "bytes": 38999,
+      "sha256": "7490c3dcd506ca046135c1b9eae6c15911600bb326b540f6f87a84874fa70316"
+    },
+    {
+      "file": "Resistor-Edu-student-category-2.zip",
+      "title": "기초 회로",
+      "audience": "student",
+      "assignment_count": 8,
+      "bytes": 28970,
+      "sha256": "a74198b3fafc5d68cd509a0950d7b55522eb066478a20d419ef863a0446c7682"
+    },
+    {
+      "file": "Resistor-Edu-student-category-3.zip",
+      "title": "MOS·바이어스",
+      "audience": "student",
+      "assignment_count": 7,
+      "bytes": 28097,
+      "sha256": "d05a00d99e917a46431e9e7eb07a06c359d7a9448a12c4807d95c695ce5f426c"
+    },
+    {
+      "file": "Resistor-Edu-student-category-4.zip",
+      "title": "디지털·계층",
+      "audience": "student",
+      "assignment_count": 8,
+      "bytes": 21942,
+      "sha256": "4c5e0b120371833c56bfbd5366e0f54134d22bc344a3a2c3c5772b909f4e04be"
+    },
+    {
+      "file": "Resistor-Edu-student-category-5.zip",
+      "title": "아날로그·전원",
+      "audience": "student",
+      "assignment_count": 8,
+      "bytes": 24046,
+      "sha256": "2e2a9ce9cc2f18b2492f155d9ab19c5191417c583a41587bd24118b161fc90b8"
+    },
+    {
+      "file": "Resistor-Edu-student-category-6.zip",
+      "title": "데이터 변환",
+      "audience": "student",
+      "assignment_count": 7,
+      "bytes": 22642,
+      "sha256": "a256389b8deaa605a1d210986b8d80dbc47fe4d41061cfb9350390cf4631187d"
+    },
+    {
+      "file": "Resistor-Edu-student-category-7.zip",
+      "title": "레이아웃·공정",
+      "audience": "student",
+      "assignment_count": 10,
+      "bytes": 32264,
+      "sha256": "66d2272ebb31700d0a65e588fab490915a17d4311c5b447e318ac74bec7238d7"
+    },
+    {
+      "file": "Resistor-Edu-student-category-8.zip",
+      "title": "검증·재현",
+      "audience": "student",
+      "assignment_count": 6,
+      "bytes": 19622,
+      "sha256": "656eea0a76456046c3fa4ea8f25dfd73d80826aeb2c85ab6476474805fee1ec2"
+    },
+    {
+      "file": "Resistor-Edu-student-first-lab.zip",
+      "title": "첫 실습 · 4회",
+      "audience": "student",
+      "assignment_count": 4,
+      "bytes": 16522,
+      "sha256": "7bd963500f4f7f6869b3ef88403449020b16a94d5f6b309d7e1b547248a4c20e"
+    },
+    {
+      "file": "Resistor-Edu-student-circuits.zip",
+      "title": "회로 이론 · 8회",
+      "audience": "student",
+      "assignment_count": 8,
+      "bytes": 29440,
+      "sha256": "059b70f3597b7e488cae54453ce0914dbd95bf9a7eec5245ee3261cfad85ec69"
+    },
+    {
+      "file": "Resistor-Edu-student-mos-foundations.zip",
+      "title": "MOS와 바이어스 · 6회",
+      "audience": "student",
+      "assignment_count": 6,
+      "bytes": 26278,
+      "sha256": "6fd3e27fa7349d3ce5504f328142fe2ebd117b4cef82bc3c6590115e6377f4af"
+    },
+    {
+      "file": "Resistor-Edu-student-digital-reading.zip",
+      "title": "디지털 셀과 계층 · 8회",
+      "audience": "student",
+      "assignment_count": 8,
+      "bytes": 21973,
+      "sha256": "e5ecb2f71216e0f5b5e851169ef355749da2806ccbc6f55cfb956cd71bce33d2"
+    },
+    {
+      "file": "Resistor-Edu-student-analog-front-end.zip",
+      "title": "아날로그 AFE · 6회",
+      "audience": "student",
+      "assignment_count": 6,
+      "bytes": 20271,
+      "sha256": "c47cef978d4505159a759fd514ac4ab838ab7c5d1c124ea883632a6f8d46a230"
+    },
+    {
+      "file": "Resistor-Edu-student-power-clocks.zip",
+      "title": "전원·신호 응답 · 4회",
+      "audience": "student",
+      "assignment_count": 4,
+      "bytes": 17550,
+      "sha256": "fc061dee933cca95a80f4fbb4cd81c8065dac42010db53fd99ec845410b470dc"
+    },
+    {
+      "file": "Resistor-Edu-student-data-converters.zip",
+      "title": "데이터 변환 · 9회",
+      "audience": "student",
+      "assignment_count": 9,
+      "bytes": 28223,
+      "sha256": "34364cd471ba424dea8eadc81f44a37f35b729e6b1b8d012f3fea5db67ab9371"
+    },
+    {
+      "file": "Resistor-Edu-student-physical-thinking.zip",
+      "title": "레이아웃 판단 · 10회",
+      "audience": "student",
+      "assignment_count": 10,
+      "bytes": 32283,
+      "sha256": "62d427c7bcab51fa2cb243d997d659b4bc0ded1d3579c544126d2f5704797461"
+    },
+    {
+      "file": "Resistor-Edu-student-verification.zip",
+      "title": "실제 검증과 재현 · 6회",
+      "audience": "student",
+      "assignment_count": 6,
+      "bytes": 19651,
+      "sha256": "eafd714351db2610879f7f37e8728de771082b39ba77cdf0e172d4518e3e5e23"
+    },
+    {
+      "file": "Resistor-Edu-student-semester.zip",
+      "title": "한 학기 · 15회",
+      "audience": "student",
+      "assignment_count": 15,
+      "bytes": 57909,
+      "sha256": "c62b9e9a8bbd292f6159fb4cb2e4b87da34a4a0a5cc6feaccb030dc305f55678"
+    }
+  ],
+  "student_submissions_included": false,
+  "education_effect_proven": false,
+  "foundry_signoff": false
+}

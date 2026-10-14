@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "product_id": "resistor.edu",
+  "catalog_version": "edu-coursepack-20261014-v1",
+  "artifact_kind": "student_authored_record",
+  "id": "ec552456-01bc-4e2f-b0d8-dda4f296916f",
+  "assignment_id": "circuit-divider",
+  "purpose": "qa",
+  "created_at": "2026-10-14T09:25:02.864Z",
+  "saved_at": "2026-10-14T09:25:02.864Z",
+  "student": {
+    "prediction": "",
+    "explanation": "[QA fixture, not a student submission] Actual OP before 0.9V and after 0.6V; R2 10k to 5k.",
+    "limitations": "",
+    "pre_answers": [
+      "",
+      ""
+    ],
+    "post_answers": [
+      "",
+      ""
+    ],
+    "completed": false
+  },
+  "calculations": [],
+  "evidence": {
+    "schema_version": 1,
+    "edition": "edu",
+    "project_id": "a9cd6267019a4e229a7ccbb08a063031",
+    "data_revision": 12,
+    "engine": {
+      "id": "wsl-linux",
+      "tools": [
+        {
+          "name": "ngspice",
+          "version": "** ngspice-42 : Circuit level simulation program",
+          "available": true
+        },
+        {
+          "name": "KLayout",
+          "version": "0.30.5",
+          "available": true
+        },
+        {
+          "name": "Magic",
+          "version": "8.3.582",
+          "available": true
+        },
+        {
+          "name": "Netgen",
+          "version": "Netgen 1.5.313 compiled on Wed Oct 14 14:09:10 KST 2026",
+          "available": true
+        },
+        {
+          "name": "Xschem",
+          "version": "XSCHEM V3.4.4",
+          "available": true
+        },
+        {
+          "name": "Yosys",
+          "version": "Yosys 0.33 (git sha1 2584903a060)",
+          "available": true
+        },
+        {
+          "name": "Icarus Verilog",
+          "version": "Icarus Verilog version 12.0 (stable) ()",
+          "available": true
+        },
+        {
+          "name": "VVP",
+          "version": "Icarus Verilog runtime version 12.0 (stable) ()",
+          "available": true
+        }
+      ]
+    },
+    "process": {
+      "id": "sky130A",
+      "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb"
+    },
+    "inputs": {
+      "analysis": "op",
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.8,
+      "duration_s": 3e-8,
+      "step_s": 2e-11,
+      "load_F": 5e-15,
+      "vds_V": 1.8,
+      "vbs_V": 0
+    },
+    "runs": [
+      {
+        "id": "fddbd8ae1a054241aaa6f45812bd81c8",
+        "project_id": "a9cd6267019a4e229a7ccbb08a063031",
+        "revision": 12,
+        "kind": "simulation",
+        "tool": "ngspice",
+        "execution_status": "completed",
+        "analysis_result": "unknown",
+        "freshness": "current",
+        "message": "Actual ngspice op: 1 samples.; reference criteria 0/0"
+      }
+    ],
+    "source": "explicit_native_snapshot",
+    "saved_at": "2026-10-14T09:25:02.864Z"
+  },
+  "teacher_review": "pending",
+  "grade": null,
+  "education_effect_proven": false,
+  "learning_completion_is_engine_verification": false
+}

@@ -352,3 +352,7 @@ npm run test:ui
 ## 8-bit Sigma Delta ADC
 
 [19개 전체 하위 블록과 편집 예제](examples/sigma-delta8/README.md): 실제 SKY130 모듈레이터와 CIC2 ×256 디지털 필터. 1MHz / 3.90625kS/s, 8-bit CODE + VALID, 실제 SPICE/RTL/gate 비교와 coherent SINAD/ENOB. TT·27°C·1.8V·0.6V 진폭에서 측정 ENOB 7.34bit이며 8 ENOB·마스크·제조 승인을 주장하지 않습니다. `npm run test:adc`는 수식·단위·reset·포화·계층·실제 RTL/gate API를 검사합니다. [공개 ADC 가이드](https://resistor-downloads.vercel.app/tutorial/sigma-delta8/) · [예제 ZIP](examples/Resistor-Sigma-Delta8-Library.zip).
+
+## Resistor Edu 과제 자료
+
+교육용 브랜치에는 72개 과제, 40개 학생 레퍼런스, 10개 수업 경로와 교수자/학생 ZIP 38개가 있습니다. 앱의 교육 실습에서 검색·새 사본·실제 실행 증거·원본 설명 저장을 사용합니다. [교수자/학생 자료 가이드](docs/edu-assignment-packages.md)를 참고하세요. 자료 준비는 학습 효과나 제조 검증을 의미하지 않습니다.
