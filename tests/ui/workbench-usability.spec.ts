@@ -10,10 +10,10 @@ test.beforeAll(async()=>{await mkdir(evidence,{recursive:true});});
 test.afterAll(async()=>{await writeFile(`${evidence}/verification.json`,JSON.stringify({checked_at:new Date().toISOString(),records,user_projects_modified:false,source:'actual authenticated native engine and browser UI'},null,2)+'\n');});
 
 test('new circuit starts in its drawing workspace, keyboard focus stays in dialog, readiness explains missing input',async({page})=>{
- const original=await api('project.create',{example:'schematic',name:'Usability preserved original'});await open(page,original.id);
+ await page.setViewportSize({width:1366,height:720});const original=await api('project.create',{example:'schematic',name:'Usability preserved original'});await open(page,original.id);
  const trigger=page.getByRole('button',{name:'새 프로젝트',exact:true}).first();await trigger.click();
  const dialog=page.getByRole('dialog');await expect(page.getByTestId('project-example-select')).toHaveValue('schematic');
- await page.getByTestId('project-name').fill('Usability fresh circuit');
+ await page.getByTestId('project-name').fill('Usability fresh circuit');await expect(page.getByTestId('project-create')).toBeInViewport();
  await dialog.getByRole('button',{name:'닫기',exact:true}).focus();await page.keyboard.press('Shift+Tab');await expect(page.getByTestId('project-create')).toBeFocused();
  await page.keyboard.press('Tab');await expect(dialog.getByRole('button',{name:'닫기',exact:true})).toBeFocused();
  await page.keyboard.press('Escape');await expect(dialog).not.toBeVisible();await expect(trigger).toBeFocused();await trigger.click();
