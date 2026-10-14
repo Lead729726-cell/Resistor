@@ -101,7 +101,10 @@ def local_paths(value):
     if RUNTIME_KIND=='linux-docker':return value
     if isinstance(value,dict):return {k:local_paths(v) for k,v in value.items()}
     if isinstance(value,list):return [local_paths(v) for v in value]
-    if isinstance(value,str) and value.startswith('/workspace/'):return str(trusted(value))
+    if isinstance(value,str):
+        if value.startswith('/workspace/'):return str(trusted(value))
+        from workspace_paths import legacy_local_path
+        return legacy_local_path(value,WORKSPACE,RUNTIME_KIND) or value
     return value
 def trusted(path):
     # Keep the existing virtual artifact paths usable across native, Docker

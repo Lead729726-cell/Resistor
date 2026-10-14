@@ -54,6 +54,6 @@ jobs:
         run: npm run check:docs
       - name: Python evidence and diagnostics unit tests
         working-directory: workers/eda
-        run: python3 -m unittest test_job_evidence test_toolchain_diagnostics
+        run: python3 -m unittest test_job_evidence test_toolchain_diagnostics test_workspace_paths
       - name: Workspace metadata and detailed API compatibility
         run: python3 -m unittest discover -s tests -p test_project_index.py

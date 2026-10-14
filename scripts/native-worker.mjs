@@ -83,7 +83,8 @@ export async function startNativeWorker(workspace,{resourcesRoot=workspace,prepa
     // A short-lived private file supplies fd 0. No anonymous pipe remains
     // attached to Electron's lifetime after the launch envelope is read.
     await writeFile(launchFile,JSON.stringify({...env.extra,MOS_WORKSPACE:env.workspace||workspace,MOS_WORKSPACE_ID:id,MOS_TOKEN:config.token,MOS_PORT:new URL(config.url).port,MOS_BIND:'127.0.0.1',MOS_RUNTIME_KIND:runtimeKind,MOS_INSTANCE_ID:instance})+'\n',{flag:'wx',mode:0o600});input=await open(launchFile,'r');
-    child=spawn(env.python,env.args||['-B',entry,'--detach','--stdin-config'],{cwd:resourcesRoot,env:env.environment,windowsHide:true,detached:true,stdio:[input.fd,output.fd,output.fd]});
+    // wsl.exe needs a normal Windows launcher; native_entry.py detaches the Linux engine.
+    child=spawn(env.python,env.args||['-B',entry,'--detach','--stdin-config'],{cwd:resourcesRoot,env:env.environment,windowsHide:true,detached:!runtimeKind.startsWith('wsl-'),stdio:[input.fd,output.fd,output.fd]});
     await new Promise((resolve,reject)=>{child.once('spawn',resolve);child.once('error',reject);});
     child.unref();
     for(let i=0;i<120;i++){const identity=await runtimeIdentity(config,fetchImpl);if(identity){if(identity.instance_id!==instance||identity.workspace_id!==id)throw Error('Native engine ownership mismatch.');await writeFile(path.join(logDir,'owner.json'),JSON.stringify({instance_id:instance,workspace_id:id,pid:identity.pid,runtime_kind:identity.runtime_kind}));started=true;return {...config,engine_mode:runtimeKind.startsWith('wsl-')?'wsl':'native'};}if(child.exitCode!==null&&child.exitCode!==0)break;await new Promise(r=>setTimeout(r,250));}
