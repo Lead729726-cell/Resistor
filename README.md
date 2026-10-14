@@ -1,5 +1,7 @@
 # Resistor
 
+[전체 튜토리얼](https://resistor-downloads.vercel.app/tutorial/library/): 최근 설치·업데이트·편집 개선 35개 작업 흐름, 모든 template/가산기/CPU 59종과 계산기 18종을 실습으로 제공합니다. 포트·실제 하위 셀·입력·결과·오류 복구·원본 기록을 연결하고 기존 한국어 영상 3편은 촬영 버전 그대로 보존합니다. [구성·검증·갱신](docs/tutorial-library.md).
+
 **v0.27 작업 흐름 개선**: 빈 회로도 시작, 이름·공정으로 프로젝트 열기, 50개씩 목록 표시와 키보드 대화창 이동을 지원합니다. **다음 실행**에서 준비 사항을 확인하고, 실행 목록·파형·로그를 같은 결과에 맞춥니다. 이전 결과의 원인을 표시하며 수치의 최신성과 기능적 PASS/FAIL을 구분합니다. [사용 안내와 실제 검증](docs/workbench-usability.md).
 
 **v0.26 Docker 없는 로컬 엔진**: 설치 파일에 Python·KLayout·ngspice와 공개 SKY130 자료를 포함합니다. 회로·레이아웃 편집, GDS/OASIS 입출력과 실제 전압·전류 해석을 로컬에서 실행합니다. 전체 물리 도구는 Mac/Linux에 직접 설치하거나 Windows의 독립 WSL을 연결하며 Docker는 선택 방식으로 남습니다. [설치·전환·검증 안내](docs/native-runtime.md).

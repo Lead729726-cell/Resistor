@@ -11,6 +11,7 @@ import {prepareSarSite} from './download-sar-adc.mjs';
 import {prepareUpdateSite} from './download-updates.mjs';
 import {prepareSchematicSite} from './download-schematic.mjs';
 import {prepareNativeRuntimeSite} from './download-native-runtime.mjs';
+import {prepareLearningSite} from './download-learning.mjs';
 const root=process.cwd(),folder=path.join(root,'platform/download-site');
 const current=JSON.parse(await readFile(path.join(root,'package.json'),'utf8')).version;
 const tag=process.argv.find(a=>a.startsWith('--release='))?.slice(10)||'v'+current;
@@ -78,4 +79,5 @@ if((Number(tag.slice(1).split('.')[0])>0||Number(tag.split('.')[1])>=22)){await 
 if((Number(tag.slice(1).split('.')[0])>0||Number(tag.split('.')[1])>=23))await prepareUpdateSite(folder,tag);
 if(Number(tag.split('.')[1])>=25)await prepareSchematicSite();
 if(Number(tag.split('.')[1])>=26)await prepareNativeRuntimeSite(root,tag);
+await prepareLearningSite(root,tag);
 console.log(JSON.stringify({directory:'platform/download-site',release:tag,files:downloads.map(a=>({name:a.name,bytes:a.bytes,sha256:a.sha256})),static_only:true,credentials_included:false},null,2));

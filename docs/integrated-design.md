@@ -47,8 +47,11 @@ via·접촉·antenna·다중 레이어 자동 배선과 전체 DRC를 대신하�
 미생성 레이아웃을 검증된 physical 설계로 표시하지 않습니다. 물리 core를
 지원하는 경우도 최종 DRC/LVS/PEX 결과는 각각 실행해 확인해야 합니다.
 
-현재 카탈로그는 RC 저역통과, 공통 소스, 저항 바이어스 공통 소스,
-전류 미러, 차동쌍, 4:1 MUX 6개 회로입니다. 각 회로의 실제 공급원과 지원 분석은
+v0.8 초기 카탈로그의 RC 저역통과, 공통 소스, 저항 바이어스 공통 소스,
+전류 미러, 차동쌍, 4:1 MUX 6개 회로에 기본 셀·칩·SoC·ΣΔ·SAR를 더해
+현재 54개 template와 별도 가산기/CPU 5종을 제공합니다.
+[모든 블록 실습](https://resistor-downloads.vercel.app/tutorial/library/?kind=design)과
+[원본 catalog](../examples/research-20261013/latest-catalog.json)를 확인하세요. 각 회로의 실제 공급원과 지원 분석은
 worker가 반환합니다. 예를 들어 RC의 VIN 조건표는 transient 해석을 사용하며,
 전류 미러에서 sweep하는 출력 전원을 PVT 공급원으로 중복 지정할 수 없습니다.
 

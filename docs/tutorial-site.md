@@ -1,5 +1,9 @@
 # Resistor 사용 가이드
 
+[최신 전체 튜토리얼 라이브러리](https://resistor-downloads.vercel.app/tutorial/library/)는
+35개 작업 흐름·59개 설계 블록·18개 계산 실습을 제공합니다. 아래 영상은 촬영 버전을
+유지하는 첫 회로 가이드입니다. [전체 구성과 실제 검증](tutorial-library.md).
+
 [공개 튜토리얼](https://resistor-downloads.vercel.app/tutorial/) ·
 [다운로드 홈](https://resistor-downloads.vercel.app/)
 
