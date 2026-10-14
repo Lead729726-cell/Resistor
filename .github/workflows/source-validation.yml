@@ -61,4 +61,5 @@ jobs:
         run: |
           python3 -m pip install klayout==0.30.5
           python3 -B -m unittest discover -s workers/eda -p test_electrical_review.py
+          MOS_WORKSPACE="$RUNNER_TEMP/selection-native" RESISTOR_EDITION=indust python3 -B tests/selection-native-test.py
           MOS_WORKSPACE="$RUNNER_TEMP/indust-review" RESISTOR_EDITION=indust python3 -B tests/industry-review-test.py

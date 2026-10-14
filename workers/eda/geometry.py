@@ -223,7 +223,24 @@ def check_instance_bounds(cell,trans,columns=1,rows=1,dx=0,dy=0):
             for by in (0,(rows-1)*dy):
                 coord(str(x+trans.disp.x+ax)); coord(str(y+trans.disp.y+by))
 
-def apply(layout,project,command):
+def apply(layout,project,command,_selection_index=None):
+    if command.get('type')=='selection':
+        from selection_commands import group
+        action,items=group(command)
+        target=layout.cell(command.get('cell_name') or project['cell'])
+        if target is None:raise EDAError('NOT_FOUND','Target cell does not exist.')
+        tokens=[ident.rsplit('/',1)[-1] for _,ident in items]
+        if len(set(tokens))!=len(tokens):raise EDAError('INVALID_SELECTION','Repeated occurrences of shared child geometry require one explicit cell edit, not duplicate transforms.')
+        requested=set(tokens);index={}
+        for li in layout.layer_indices():
+            for shape in target.shapes(li).each():
+                ident=shape.property(1)
+                if ident in requested:
+                    if ident in index:raise EDAError('AMBIGUOUS_ID','Selected shape ID is duplicated in this cell.')
+                    index[ident]=(shape,li)
+        for _,ident in items:
+            apply(layout,project,{'type':action+'_shape','id':ident,**({'dx':command.get('dx'),'dy':command.get('dy')} if action!='delete' else {}),**({'cell_name':command['cell_name']} if command.get('cell_name') else {})},index)
+        return
     ty=command.get('type'); top=layout.cell(project['cell']); grid=project['grid_dbu']
     target_name=command.get('target_cell_name') if ty=='add_instance' else command.get('cell_name')
     target=layout.cell(target_name) if target_name else top
@@ -336,10 +353,13 @@ def apply(layout,project,command):
         wanted=command.get('id'); found=None; found_li=None
         if not isinstance(wanted,str):raise EDAError('INVALID_COMMAND','An existing shape ID is required.')
         if target==top and (not wanted.startswith(top.name+'/') or wanted.count('/')>1): raise EDAError('GENERATED_GEOMETRY','Child/PCell geometry is read-only; select an editable child cell explicitly.')
-        for li in layout.layer_indices():
-            for s in target.shapes(li).each():
-                if s.property(1)==wanted.rsplit('/',1)[-1]: found=s; found_li=li; break
-            if found is not None:break
+        if _selection_index is not None:
+            found,found_li=_selection_index.get(wanted.rsplit('/',1)[-1],(None,None))
+        else:
+            for li in layout.layer_indices():
+                for s in target.shapes(li).each():
+                    if s.property(1)==wanted.rsplit('/',1)[-1]: found=s; found_li=li; break
+                if found is not None:break
         if found is None: raise EDAError('NOT_FOUND','Shape no longer exists.')
         # Editing shared child geometry affects every occurrence; do not silently mutate PCells.
         if target==top and (not wanted.startswith(top.name+'/') or wanted.count('/')>1): raise EDAError('GENERATED_GEOMETRY','Child/PCell geometry is read-only; select an editable child cell explicitly.')

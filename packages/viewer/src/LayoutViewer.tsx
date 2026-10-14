@@ -16,6 +16,7 @@ import { branchCurrent,currentDirection,currentPath,flowStatus,formatCurrent,pro
 import { CurrentFlowPanel } from './CurrentFlowPanel';
 import { AdvancedTools } from './AdvancedTools';
 import { CanvasLayoutFallback } from './CanvasLayoutFallback';
+import {maskInRegion,selectionBox,mergeSelection,selectionMode,type SelectionMode} from './selection';
 import './viewer.css';
 
 export interface LayoutViewerProps {
@@ -23,6 +24,7 @@ export interface LayoutViewerProps {
   mode: '2d' | '3d';
   selection: string | null;
   onSelect: (id: string | null) => void;
+  onSelectionChange?: (ids:string[])=>void;
   onCommand: (command: LayoutCommand) => Promise<void>;
   markers?: Marker[];
   display?: ViewerDisplay;
@@ -72,7 +74,7 @@ interface Stage {
   fit: (preset?: ViewerDisplay['preset'], preserveOrientation?: boolean) => void;
   setProjection: (projection: ViewerDisplay['projection']) => void;
 }
-interface MoveDrag { shape: RenderShape; start: THREE.Vector3; initial: THREE.Vector3; plane: THREE.Plane; dx: string; dy: string }
+interface MoveDrag { shape: RenderShape; companions:{shape:RenderShape;initial:THREE.Vector3}[]; ids:string[];start: THREE.Vector3; initial: THREE.Vector3; plane: THREE.Plane; dx: string; dy: string }
 
 const DEFAULT_DISPLAY: ViewerDisplay = { projection: 'orthographic', preset: 'iso', explode: 0, clip: { axis: 'none', fraction: 1 }, layers: {} };
 
@@ -122,15 +124,21 @@ export function LayoutViewer(props: LayoutViewerProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<Stage | null>(null);
   const propsRef = useRef(props); propsRef.current = props;
+  const [selectedIds,setSelectedIds]=useState<string[]>(selection?[selection]:[]),selectionRef=useRef(selectedIds);selectionRef.current=selectedIds;
+  const [marquee,setMarquee]=useState<{start:[number,number];end:[number,number]}|null>(null);
+  const marqueeRef=useRef<{start:[string,string];screen:[number,number];mode:SelectionMode;scope:string}|null>(null);
+  const commitSelection=(hits:string[],op:SelectionMode='replace')=>{const ids=mergeSelection(selectionRef.current,hits,op);selectionRef.current=ids;setSelectedIds(ids);propsRef.current.onSelect(ids[0]??null);propsRef.current.onSelectionChange?.(ids);};
   const [internalDisplay, setInternalDisplay] = useState<ViewerDisplay>(DEFAULT_DISPLAY);
   const display = props.display ?? internalDisplay;
   const displayRef = useRef(display); displayRef.current = display;
+  useEffect(()=>{const ids=selectionRef.current;if(selection&&!ids.includes(selection)){selectionRef.current=[selection];setSelectedIds([selection]);}else if(!selection&&ids.length){selectionRef.current=[];setSelectedIds([]);}},[selection]);
+  useEffect(()=>{const ids=selectionRef.current.filter(id=>scene?.shapes.some(s=>s.id===id&&isPickable(displayLayer(scene!,display,s.layer_id))));if(ids.length!==selectionRef.current.length)commitSelection(ids);marqueeRef.current=null;setMarquee(null);},[scene?.project_id,scene?.revision,display.layers]);
   const [error, setError] = useState<string | null>(null);
   const [cpuFallback,setCpuFallback]=useState(false);
-  const [note, setNote] = useState('도형 선택 · 드래그 회전/이동 · 휠 확대');
+  const [note, setNote] = useState('2D 빈 영역 드래그로 선택 · Shift 추가 · Alt 제외 · 가운데 버튼 화면 이동');
   const [pending, setPending] = useState(false);
   const pendingRef = useRef(false);
-  const [tool, setTool] = useState<'select' | 'move' | 'copy' | DrawTool>('select');
+  const [tool, setTool] = useState<'select' | 'area' | 'move' | 'copy' | DrawTool>('select');
   const toolRef = useRef(tool); toolRef.current = tool;
   const [editor, setEditor] = useState<'none' | 'move' | 'box' | 'route'>('none');
   const [editLayer, setEditLayer] = useState('');
@@ -238,6 +246,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
     if (propsRef.current.readOnly) { setError('읽기 전용 설계: 편집 기능이 비활성화되어 있습니다.'); return false; }
     if (pendingRef.current) return false;
     const source = propsRef.current.scene;
+    if(source&&command.type==='selection'&&command.ids.some(id=>{const shape=source.shapes.find(s=>s.id===id);return shape&&displayLayer(source,displayRef.current,shape.layer_id).locked;})){setError('선택에 잠긴 레이어가 있습니다. 전체 명령을 적용하지 않았습니다.');return false;}
     if(source&&'layer_id' in command&&typeof command.layer_id==='string'&&displayLayer(source,displayRef.current,command.layer_id).locked){setError('잠긴 레이어입니다. 레이어 잠금을 해제한 뒤 편집하세요.');return false;}
     if (source && ['move_shape','delete_shape','copy_shape','update_box'].includes(command.type)&&'id' in command) {
       const shape = source.shapes.find(item => item.id === command.id);
@@ -294,7 +303,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
     const light = new THREE.DirectionalLight('#d9eaff', 2.1); light.position.set(3, -4, 10); world.add(light);
     const camera = new THREE.OrthographicCamera(-5, 5, 5, -5, 0.001, 1e6);
     camera.up.set(0, 0, 1);
-    const controls = new OrbitControls(camera, canvas);
+    const controls = new OrbitControls(camera, canvas);controls.mouseButtons.MIDDLE=THREE.MOUSE.PAN;controls.mouseButtons.LEFT=mode==='2d'?THREE.MOUSE.PAN:THREE.MOUSE.ROTATE;
     controls.enableDamping = true; controls.dampingFactor = 0.1;
     controls.enableRotate = mode === '3d';
     controls.screenSpacePanning = true;
@@ -360,7 +369,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
       next.near = stage.camera.near; next.far = stage.camera.far;
       const target = stage.controls.target.clone();
       stage.controls.dispose(); stage.camera = next;
-      stage.controls = new OrbitControls(next, canvas); stage.controls.target.copy(target);
+      stage.controls = new OrbitControls(next, canvas);stage.controls.mouseButtons.MIDDLE=THREE.MOUSE.PAN;stage.controls.mouseButtons.LEFT=mode==='2d'?THREE.MOUSE.PAN:THREE.MOUSE.ROTATE; stage.controls.target.copy(target);
       stage.controls.enableDamping = true; stage.controls.enableRotate = mode === '3d';
       stage.controls.screenSpacePanning = true;
       stage.controls.mouseButtons = { LEFT: mode === '2d' ? THREE.MOUSE.PAN : THREE.MOUSE.ROTATE, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.PAN };
@@ -413,6 +422,9 @@ export function LayoutViewer(props: LayoutViewerProps) {
     const pointerDown = (event: PointerEvent) => {
       if (event.button !== 0) return;
       downScope=`${propsRef.current.scene?.project_id}:${propsRef.current.scene?.revision}`;
+      if(mode==='2d'&&(toolRef.current==='area'||toolRef.current==='select'&&(!pick(event)||event.shiftKey||event.altKey))&&!pendingRef.current){
+        try{const start=canvasPoint(event,1);if(start){const r=canvas.getBoundingClientRect(),screen:[number,number]=[event.clientX-r.left,event.clientY-r.top];marqueeRef.current={start,screen,mode:selectionMode(event),scope:downScope};setMarquee({start:screen,end:screen});down=[event.clientX,event.clientY];event.preventDefault();event.stopImmediatePropagation();canvas.focus({preventScroll:true});canvas.setPointerCapture(event.pointerId);stage.controls.enabled=false;}}catch(cause){setError(String(cause));}return;
+      }
       if(['box','polygon','route','copy'].includes(toolRef.current)){
         event.preventDefault();event.stopImmediatePropagation();down=[event.clientX,event.clientY];canvas.focus({preventScroll:true});
         if(toolRef.current==='box'&&!pendingRef.current&&!propsRef.current.readOnly){try{const anchor=drawRef.current.points[0]??canvasPoint(event);if(anchor){boxGesture.current={anchor,dragging:false};canvas.setPointerCapture(event.pointerId);}}catch(cause){setError(String(cause));}}
@@ -423,22 +435,23 @@ export function LayoutViewer(props: LayoutViewerProps) {
       if (toolRef.current !== 'move' || pendingRef.current || propsRef.current.readOnly) return;
       const shape = pick(event);
       if (!shape) return;
-      propsRef.current.onSelect(shape.id);
+      if(!selectionRef.current.includes(shape.id))commitSelection([shape.id]);
       if (!('group' in shape)) { setNote('대규모 instance 선택: 이동 값 명령으로 정수 DBU를 편집하세요.'); return; }
       setRay(event);
       const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -shape.group.position.z);
       const start = raycaster.ray.intersectPlane(plane, new THREE.Vector3());
       if (!start) return;
-      dragRef.current = { shape, start, initial: shape.group.position.clone(), plane, dx: '0', dy: '0' };
+      dragRef.current = { shape, ids:[...selectionRef.current], companions:stage.shapes.filter(s=>s.id!==shape.id&&selectionRef.current.includes(s.id)).map(shape=>({shape,initial:shape.group.position.clone()})), start, initial: shape.group.position.clone(), plane, dx: '0', dy: '0' };
       canvas.setPointerCapture(event.pointerId);
     };
-    function canvasPoint(event:PointerEvent):DecimalPoint|null{
+    function canvasPoint(event:PointerEvent,grid?:number):DecimalPoint|null{
       const source=propsRef.current.scene;if(!source)return null;setRay(event);const p=raycaster.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0,0,1),0),new THREE.Vector3());if(!p)return null;
-      return drawingPoint(p.x,p.y,stage.frame,source.grid_dbu??1);
+      return drawingPoint(p.x,p.y,stage.frame,grid??source.grid_dbu??1);
     }
     let lastCursor = 0;
     const pointerMove = (event: PointerEvent) => {
       const source = propsRef.current.scene;
+      if(marqueeRef.current){const r=canvas.getBoundingClientRect();setMarquee({start:marqueeRef.current.screen,end:[event.clientX-r.left,event.clientY-r.top]});return;}
       if(['box','polygon','route','copy'].includes(toolRef.current)&&!pendingRef.current){try{setDrawCursor(canvasPoint(event));if(toolRef.current==='box'&&boxGesture.current&&down&&Math.hypot(event.clientX-down[0],event.clientY-down[1])>5){boxGesture.current.dragging=true;drawRef.current.points=[boxGesture.current.anchor];setDraft(drawRef.current.points);}}catch(cause){setError(String(cause));}}
       if (source && propsRef.current.onCursorMove && performance.now() - lastCursor > 45) {
         lastCursor = performance.now(); setRay(event);
@@ -462,17 +475,29 @@ export function LayoutViewer(props: LayoutViewerProps) {
         drag.dy = snappedDelta(current.y - drag.start.y, stage.frame.dbuUm, grid);
         drag.shape.group.position.x = drag.initial.x + Number(drag.dx) * stage.frame.dbuUm;
         drag.shape.group.position.y = drag.initial.y + Number(drag.dy) * stage.frame.dbuUm;
+        for(const other of drag.companions){other.shape.group.position.x=other.initial.x+Number(drag.dx)*stage.frame.dbuUm;other.shape.group.position.y=other.initial.y+Number(drag.dy)*stage.frame.dbuUm;}
         setNote(`이동 미리보기: ΔX ${drag.dx}, ΔY ${drag.dy} DBU · 놓으면 worker 명령 제출`);
       } catch (cause) { setError(cause instanceof Error ? cause.message : String(cause)); }
     };
     const cancelDrag = () => {
       const drag = dragRef.current;
-      if (drag) drag.shape.group.position.copy(drag.initial);
+      if (drag){drag.shape.group.position.copy(drag.initial);for(const other of drag.companions)other.shape.group.position.copy(other.initial);}
+      marqueeRef.current=null;setMarquee(null);
       dragRef.current = null; down = null;boxGesture.current=null;
     };
     const pointerUp = (event: PointerEvent) => {
       if(event.button!==0)return;
       if(downScope!==`${propsRef.current.scene?.project_id}:${propsRef.current.scene?.revision}`){cancelDrag();clearDrawing();return;}
+      if(marqueeRef.current){
+        event.preventDefault();event.stopImmediatePropagation();const gesture=marqueeRef.current;marqueeRef.current=null;setMarquee(null);if(canvas.hasPointerCapture(event.pointerId))canvas.releasePointerCapture(event.pointerId);
+        const end=canvasPoint(event,1),distance=down?Math.hypot(event.clientX-down[0],event.clientY-down[1]):0;down=null;
+        if(!end||!propsRef.current.scene)return;if(distance<4){const shape=pick(event);commitSelection(shape?[shape.id]:[],selectionMode(event,true));return;}
+        const source=propsRef.current.scene,box=selectionBox(gesture.start,end),contained=event.clientX>=gesture.screen[0]+canvas.getBoundingClientRect().left;
+        const clipped=[...box] as typeof box,clip=displayRef.current.clip;
+        if(clip&&(clip.axis==='x'||clip.axis==='y')){const axis=clip.axis==='x'?0:1,[low,high]=clipRange(clip.axis,stage.frame.boundsUm,stage.maxZ),threshold=low+(high-low)*Math.max(0,Math.min(1,clip.fraction));const dbu=BigInt(drawingPoint(axis===0?threshold:0,axis===1?threshold:0,stage.frame,1)[axis]);const index=axis+(clip.flip?0:2);clipped[index]=clip.flip?(clipped[index]>dbu?clipped[index]:dbu):(clipped[index]<dbu?clipped[index]:dbu);}
+        const hits=clipped[0]>clipped[2]||clipped[1]>clipped[3]?[]:source.shapes.filter(s=>{const i=source.layers.findIndex(l=>l.id===s.layer_id),z=layerZ(source,s.layer_id,i,displayRef.current,'2d')+(source.layers[i]?.thickness_display_um??0);return isPickable(displayLayer(source,displayRef.current,s.layer_id))&&(!clip||clip.axis!=='z'||pointSurvivesClip([0,0,z],clip,stage.frame.boundsUm,stage.maxZ))&&(contained?maskInRegion(s,box,true)&&maskInRegion(s,clipped,false):maskInRegion(s,clipped,false));}).map(s=>s.id);
+        commitSelection(hits,gesture.mode);setNote(`${contained?'완전 포함':'걸친 도형'} · ${hits.length}개 영역 선택 · 현재 로드 범위만 검사`);return;
+      }
       if(['box','polygon','route','copy'].includes(toolRef.current)){
         event.preventDefault();event.stopImmediatePropagation();const start=down;down=null;
         if(canvas.hasPointerCapture(event.pointerId))canvas.releasePointerCapture(event.pointerId);
@@ -485,7 +510,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
             const hit=pick(event),source=propsRef.current.scene,shape=source?.shapes.find(s=>s.id===hit?.id);if(!shape)return;
             if(shape.cell_path.includes('/'))throw Error('하위 셀·PCell 도형은 직접 복사할 수 없습니다. 계층 가져오기를 사용하세요.');
             if(displayLayer(source!,displayRef.current,shape.layer_id).locked)throw Error('잠긴 레이어입니다.');
-            copyRef.current={shape,anchor:p};setCopySource(copyRef.current);propsRef.current.onSelect(shape.id);setDrawCursor(p);setNote('새 위치를 클릭하면 마스크 도형을 복사합니다. 미저장 미리보기입니다.');return;
+            copyRef.current={shape,anchor:p};setCopySource(copyRef.current);commitSelection([shape.id]);setDrawCursor(p);setNote('새 위치를 클릭하면 마스크 도형을 복사합니다. 미저장 미리보기입니다.');return;
           }
           const kind=toolRef.current as DrawTool;
           if(kind==='polygon'&&d.points.length>=3&&p[0]===d.points[0][0]&&p[1]===d.points[0][1]){void finishDrawing();return;}
@@ -495,27 +520,32 @@ export function LayoutViewer(props: LayoutViewerProps) {
       const drag = dragRef.current;
       if (drag) {
         drag.shape.group.position.copy(drag.initial); dragRef.current = null;
-        if (drag.dx !== '0' || drag.dy !== '0') void execute({ type: 'move_shape', id: drag.shape.id, dx: drag.dx, dy: drag.dy });
+        for(const other of drag.companions)other.shape.group.position.copy(other.initial);
+        if (drag.dx !== '0' || drag.dy !== '0') void execute({ type: 'selection',action:'move',ids:drag.ids,dx:drag.dx,dy:drag.dy });
         down = null; return;
       }
       if (!down || Math.hypot(event.clientX - down[0], event.clientY - down[1]) > 5) { down = null; return; }
       down = null;
-      propsRef.current.onSelect(pick(event)?.id ?? null);
+      const picked=pick(event);commitSelection(picked?[picked.id]:[],selectionMode(event,true));
     };
     const keydown = (event: KeyboardEvent) => {
+      const deleteKey=event.key==='Delete'||/Mac|iPhone|iPad/.test(navigator.platform)&&event.key==='Backspace';
+      if(deleteKey&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!['box','polygon','route','copy'].includes(toolRef.current)&&!event.isComposing){event.preventDefault();event.stopPropagation();if(!propsRef.current.readOnly&&!pendingRef.current&&selectionRef.current.length)void execute({type:'selection',action:'delete',ids:selectionRef.current}).then(ok=>{if(ok)commitSelection([]);});return;}
       const action=resolveShortcut('layout',event,{apple:/Mac|iPhone|iPad/.test(navigator.platform),readOnly:propsRef.current.readOnly,pending:pendingRef.current||!propsRef.current.scene,drawing:['box','polygon','route','copy'].includes(toolRef.current)});
       if(!action)return;event.preventDefault();event.stopPropagation();
-      if(action.id==='cancel'||action.id==='select'){cancelDrag();chooseTool('select');propsRef.current.onSelect(null);return;}
+      if(action.id==='select_all'){const source=propsRef.current.scene;if(source)commitSelection(source.shapes.filter(s=>isPickable(displayLayer(source,displayRef.current,s.layer_id))).map(s=>s.id));return;}
+      if(action.id==='cancel'){cancelDrag();chooseTool('select');commitSelection([]);return;}
+      if(action.id==='select'){cancelDrag();chooseTool('select');return;}
       if(action.id==='finish'){if(toolRef.current==='copy')void finishCopy();else void finishDrawing();return;}
       if(action.id==='undo_point'){if(toolRef.current==='copy'){clearDrawing();return;}const count=drawHistory.current.pop()??0;drawRef.current.points=drawRef.current.points.slice(0,count);setDraft(drawRef.current.points);return;}
       if(action.id==='bend'){if(toolRef.current==='route')setDrawOrder(order=>order==='x-first'?'y-first':'x-first');return;}
-      if(['box','polygon','route','move','copy'].includes(action.id)){if(mode==='2d'||action.id==='move')chooseTool(action.id as typeof tool);return;}
+      if(['box','polygon','route','move','copy','area'].includes(action.id)){if(mode==='2d'||action.id==='move')chooseTool(action.id as typeof tool);return;}
       if(action.id==='fit'){stage.focusBounds=undefined;stage.fit();return;}
       if(action.id==='layers'){setPaletteOpen(value=>!value);return;}
       if(action.id==='zoom_in'||action.id==='zoom_out'){const factor=action.id==='zoom_in'?1.2:1/1.2;if(stage.camera instanceof THREE.OrthographicCamera)stage.camera.zoom=Math.max(.01,Math.min(1000,stage.camera.zoom*factor));else{const distance=stage.camera.position.clone().sub(stage.controls.target);distance.setLength(Math.max(.001,Math.min(1e8,distance.length()/factor)));stage.camera.position.copy(stage.controls.target).add(distance);}stage.camera.updateProjectionMatrix();stage.controls.update();return;}
       const source=propsRef.current.scene,id=propsRef.current.selection;if(!source||!id)return;
-      if(action.id==='nudge'&&mode==='2d'&&toolRef.current==='select'){const [dx,dy]=nudgeVector(event.key,!!event.shiftKey,source.grid_dbu??1);void execute({type:'move_shape',id,dx:String(dx),dy:String(dy)});}
-      if(action.id==='duplicate'){try{const offset=lengthToDbu('1','um',source.dbu_um,source.grid_dbu??1);void execute({type:'copy_shape',id,dx:offset,dy:offset});}catch(cause){setError(String(cause));}}
+      if(action.id==='nudge'&&mode==='2d'&&['select','area'].includes(toolRef.current)&&!marqueeRef.current){const [dx,dy]=nudgeVector(event.key,!!event.shiftKey,source.grid_dbu??1);void execute({type:'selection',action:'move',ids:selectionRef.current,dx:String(dx),dy:String(dy)});}
+      if(action.id==='duplicate'){try{const offset=lengthToDbu('1','um',source.dbu_um,source.grid_dbu??1);void execute({type:'selection',action:'copy',ids:selectionRef.current,dx:offset,dy:offset});}catch(cause){setError(String(cause));}}
     };
     const contextLost = (event: Event) => { event.preventDefault(); setError('WebGL2 context가 중단되었습니다. 화면을 다시 열거나 GPU 드라이버를 확인하세요. 설계는 worker에 보존됩니다.'); };
     const pointerLeave = () => propsRef.current.onCursorMove?.(null);
@@ -528,7 +558,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
     canvas.addEventListener('pointerleave', pointerLeave);
     let animation = 0, lastInfo = 0;
     const render = (time: number) => {
-      stage.controls.enabled = toolRef.current !== 'move';
+      stage.controls.enabled = toolRef.current !== 'move'&&!marqueeRef.current;
       stage.controls.update();
       stage.batch?.cull(stage.camera);
       stage.capBatch?.cull(stage.camera);
@@ -667,14 +697,14 @@ export function LayoutViewer(props: LayoutViewerProps) {
       const normal = new THREE.Vector3(axis === 'x' ? 1 : 0, axis === 'y' ? 1 : 0, axis === 'z' ? 1 : 0).multiplyScalar(flip ? 1 : -1);
       planes = [new THREE.Plane(normal, flip ? -threshold : threshold)];
     }
-    const net = display.highlightNet;
-    stage.batch?.apply(display, selection, planes);
+    const net = display.highlightNet,selectedSet=new Set(selectedIds);
+    stage.batch?.apply(display, selectedIds, planes);
     for (const shape of stage.shapes) {
       const layer = displayLayer(scene, display, shape.layerId);
       shape.group.visible = layer.visible && layer.opacity > 0;
       // The 2D footprint sits on the same top surface as 3D so a shared Z clip has the same layer meaning.
       shape.group.position.z = layerZ(scene, shape.layerId, shape.layerIndex, display, mode) + (mode === '2d' ? scene.layers[shape.layerIndex].thickness_display_um : 0);
-      const selected = shape.id === selection, highlighted = net != null && shape.net === net;
+      const selected = selectedSet.has(shape.id), highlighted = net != null && shape.net === net;
       const opacity = layer.opacity * (net != null && !highlighted && !selected ? 0.16 : 1);
       shape.mesh.material.color.set(layer.color);
       shape.mesh.material.opacity = opacity; shape.mesh.material.depthWrite = opacity >= 1;
@@ -687,7 +717,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
       shape.mesh.material.needsUpdate = true; shape.outline.material.needsUpdate = true;
     }
     stage.setProjection(mode === '2d' ? 'orthographic' : display.projection ?? 'orthographic');
-  }, [scene, mode, display, selection]);
+  }, [scene, mode, display, selection,selectedIds]);
 
   useEffect(() => {
     stageRef.current?.fit(undefined, true);
@@ -890,7 +920,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
   const submitEdit = () => {
     try {
       const coord = (value: string) => String(decimalCoordinate(value));
-      if (editor === 'move' && selection) void execute({ type: 'move_shape', id: selection, dx: coord(fields.dx), dy: coord(fields.dy) });
+      if (editor === 'move' && selection) void execute({ type: 'selection',action:'move',ids:selectionRef.current,dx:coord(fields.dx),dy:coord(fields.dy) });
       if (editor === 'box') void execute({ type: 'add_box', layer_id: editLayer, box: [coord(fields.x1), coord(fields.y1), coord(fields.x2), coord(fields.y2)], ...(fields.net ? { net: fields.net } : {}) });
       if (editor === 'route') void execute({ type: 'add_route', layer_id: editLayer, points: manhattanPoints([coord(fields.x1), coord(fields.y1)], [coord(fields.x2), coord(fields.y2)]), width: coord(fields.width), ...(fields.net ? { net: fields.net } : {}) });
     } catch (cause) { setError(cause instanceof Error ? cause.message : String(cause)); }
@@ -928,11 +958,12 @@ export function LayoutViewer(props: LayoutViewerProps) {
   const clipActive = display.clip?.axis !== undefined && display.clip.axis !== 'none';
   const input = (name: keyof typeof fields, label: string) => <label key={name}>{label}<input value={fields[name]} onChange={event => setFields({ ...fields, [name]: event.target.value })} inputMode={name === 'net' ? 'text' : 'numeric'} /></label>;
 
-  if(cpuFallback&&scene)return <CanvasLayoutFallback scene={scene} display={display} onSelect={props.onSelect}/>;
-  return <div className={`mos-viewer mos-viewer-${mode}${paletteOpen ? ' mos-viewer-has-palette' : ''}`} data-testid={`layout-viewer-${mode}`} data-tool={tool}>
+  if(cpuFallback&&scene)return <CanvasLayoutFallback scene={scene} display={display} selectedIds={selectedIds} onSelection={(ids,op)=>commitSelection(ids,op)} onSelect={id=>commitSelection(id?[id]:[])}/>;
+  return <div className={`mos-viewer mos-viewer-${mode}${paletteOpen ? ' mos-viewer-has-palette' : ''}`} data-testid={`layout-viewer-${mode}`} data-tool={tool} data-selection-count={selectedIds.length}>
     <div className="mos-viewer-toolbar">
       <div className="mos-toolgroup">
         <button className={tool === 'select' ? 'active' : ''} onClick={() => chooseTool('select')} title="도형 선택, orbit/pan · V">선택</button>
+        {mode==='2d'&&<button data-testid="layout-area-select" disabled={!scene||pending} className={tool==='area'?'active':''} onClick={()=>chooseTool('area')} title="A · 드래그 영역 선택 · Shift 추가 · Alt 제외">영역 선택</button>}
         <button className={tool === 'move' ? 'active' : ''} disabled={!scene || pending || props.readOnly} onClick={() => { chooseTool('move'); setNote('도형을 XY 방향으로 드래그하세요. 표시 Z 높이는 설계 명령에 포함되지 않습니다.'); }} title={props.readOnly ? '읽기 전용 설계 · 편집 기능 비활성화' : 'XY grid 이동 · M'}>XY 이동</button>
         {mode==='2d'&&(['box','polygon','route','copy'] as const).map(kind=><button key={kind} data-testid={`layout-draw-${kind}`} title={kind==='box'?'드래그 또는 두 점 클릭 · R':kind==='polygon'?'꼭짓점 클릭 · P':kind==='route'?'Manhattan 배선 · W':'원본 도형과 새 위치 클릭 · C'} aria-pressed={tool===kind} className={tool===kind?'active':''} disabled={!scene||pending||props.readOnly} onClick={()=>chooseTool(kind)}>{kind==='box'?'사각형':kind==='polygon'?'다각형':kind==='route'?'배선 그리기':'복사'}</button>)}
         <button onClick={() => { if (stageRef.current) stageRef.current.focusBounds = undefined; stageRef.current?.fit(); }} title="전체 맞춤 (F)">맞춤</button>
@@ -956,7 +987,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
       <span data-testid="layout-drawing-status">{draft.length} points · grid {scene?.grid_dbu??1} DBU{drawCursor?` · X ${drawCursor[0]} Y ${drawCursor[1]}`:''} · 미저장 미리보기 / DRC 미실행</span>
     </div>}
     <div className="mos-viewer-stage">
-      <div ref={hostRef} className="mos-viewer-host" />
+      <div ref={hostRef} className="mos-viewer-host">{marquee&&<div data-testid="layout-selection-region" className={'mos-selection-region '+(marquee.end[0]<marquee.start[0]?'crossing':'')} style={{left:Math.min(...[marquee.start[0],marquee.end[0]]),top:Math.min(...[marquee.start[1],marquee.end[1]]),width:Math.abs(marquee.end[0]-marquee.start[0]),height:Math.abs(marquee.end[1]-marquee.start[1])}}/>}</div>
       {flowLabels.map(item=><span key={item.id} className="mos-current-label" style={{color:item.color}} ref={element=>{if(element)flowLabelRefs.current.set(item.id,element);else flowLabelRefs.current.delete(item.id);}}>{item.text}</span>)}
       {(props.presence ?? []).map(peer => <span className="mos-viewer-peer" key={peer.peerId} ref={element => { if (element) peerLabelRefs.current.set(peer.peerId, element); else peerLabelRefs.current.delete(peer.peerId); }} style={{ color: peer.color }} hidden={!peer.cursor}>↖ {peer.name}</span>)}
       {!scene && <div className="mos-viewer-empty">레이아웃을 불러오면 정수 polygon을 표시합니다.</div>}
@@ -994,6 +1025,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
         if (id) focusShape(id);
         else setNote(`실제 ${element?.id ?? 'RC'}: layout shape mapping 없음 · source ${props.extractedMapping!.source}`);
       }}><option value="">PEX {props.extractedMapping.revision !== scene?.revision ? 'STALE' : 'RC'} · {props.extractedMapping.elements.length}</option>{props.extractedMapping.elements.map(element => <option key={element.id} value={element.id}>{element.id}: {element.value} {element.unit} · {element.nodes.join(' ↔ ')}</option>)}</select>}
+      <button data-testid="layout-delete-selection" disabled={!selectedIds.length||pending||props.readOnly} onClick={()=>void execute({type:'selection',action:'delete',ids:selectionRef.current}).then(ok=>{if(ok)commitSelection([]);})}>선택 삭제 ({selectedIds.length})</button>
       <button disabled={!selection || pending || props.readOnly} title={props.readOnly ? '읽기 전용 설계 · 편집 기능 비활성화' : undefined} onClick={() => setEditor(editor === 'move' ? 'none' : 'move')}>이동 값</button>
       <button disabled={!scene || pending || props.readOnly} title={props.readOnly ? '읽기 전용 설계 · 편집 기능 비활성화' : undefined} onClick={() => setEditor(editor === 'box' ? 'none' : 'box')}>Box 추가</button>
       <button disabled={!scene || pending || props.readOnly} title={props.readOnly ? '읽기 전용 설계 · 편집 기능 비활성화' : undefined} onClick={() => setEditor(editor === 'route' ? 'none' : 'route')}>배선 추가</button>
@@ -1007,6 +1039,6 @@ export function LayoutViewer(props: LayoutViewerProps) {
       {editor === 'move' ? <>{input('dx', 'ΔX')}{input('dy', 'ΔY')}</> : <><label>레이어<select value={editLayer} onChange={event => setEditLayer(event.target.value)}>{scene?.layers.map(layer => <option key={layer.id} value={layer.id}>{layer.name}</option>)}</select></label>{input('x1', 'X₁')}{input('y1', 'Y₁')}{input('x2', 'X₂')}{input('y2', 'Y₂')}{editor === 'route' && input('width', '폭')}{input('net', 'Net')}</>}
       <button disabled={pending || props.readOnly || (editor === 'move' && !selection)} onClick={submitEdit}>{pending ? 'worker 저장 중…' : '명령 적용'}</button><button onClick={() => setEditor('none')}>닫기</button>
     </div>}
-    <div className="mos-viewer-status" role="status"><span>{error ? <span className="mos-viewer-error">{error}</span> : pending ? '정수 DBU command 처리 중…' : note}</span><span>{selection ? `ID ${selection}` : '선택 없음'}</span></div>
+    <div className="mos-viewer-status" role="status"><span>{error ? <span className="mos-viewer-error">{error}</span> : pending ? '정수 DBU command 처리 중…' : note}</span><span>{selectedIds.length?`${selectedIds.length}개 선택 · 기준 ${selectedIds[0]}`:'선택 없음'}</span></div>
   </div>;
 }
