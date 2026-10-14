@@ -1,0 +1,623 @@
+{
+  "report": {
+    "id": "0fcca9376e314a7aa891751182a4176a",
+    "kind": "resistor-layout-review-report",
+    "schema_version": 1,
+    "edition": "indust",
+    "project_id": "a3e42d4fcb374c6b89a6fa80d0942bd5",
+    "revision": 1,
+    "review_id": "b5017107fc4343c9855b3a431da31c95",
+    "review_revision": 4,
+    "source": {
+      "schema_version": 1,
+      "edition": "indust",
+      "product_id": "resistor.indust",
+      "product_name": "Resistor Indust",
+      "project_id": "91804131a82c4ce7ade5f0b35ff0d1e8",
+      "revision": 3,
+      "process": {
+        "id": "sky130A",
+        "source": "pdk",
+        "mapping_status": "unconfirmed",
+        "lock_sha256": "ab6bf24561973a37d6b160713920b06574fa23dbcbce24dc2cd38726808aa068"
+      },
+      "engine": {
+        "name": "KLayout",
+        "version": "0.30.5",
+        "review_adapter_sha256": "7378a84a83139cad3b28551c65a3dbfab4f07a448b48c8f685b882fad497f168",
+        "implementation_sha256": "956e6ef2d022a6a4818e4dfb51d4185b7408d0fb8c7ed082a36eb690f75dc982"
+      },
+      "layout_sha256": "524e885685831aa4e6e3f79d5aa0cfbbf8e605de39b344b22f3ba696aff76c42",
+      "import": null
+    },
+    "name": "공개 마스크 검토 예제 · 전기적 미검증 · review",
+    "constraints": [
+      {
+        "id": "b63b6f4555f941aba5a97d0e8d23e145",
+        "kind": "symmetry",
+        "title": "대칭 · 실제 마스크",
+        "reason": "Explicit public-fixture criterion symmetry",
+        "priority": "must",
+        "author": "Public UI QA",
+        "revision": 1,
+        "review_revision": 2,
+        "created_at": "2026-10-14T05:18:34.014601+00:00",
+        "criteria": {
+          "axis": "x",
+          "axis_twice_dbu": "0"
+        },
+        "method": "Exact reflected mask XOR",
+        "required_data": [
+          "layout",
+          "axis"
+        ],
+        "targets": [
+          {
+            "id": "layout/afc168516fc04490bc59d24550eed042",
+            "cell_path": "layout",
+            "layer_id": "68/20",
+            "hull": [
+              [
+                -2000,
+                0
+              ],
+              [
+                -2000,
+                1000
+              ],
+              [
+                -1000,
+                1000
+              ],
+              [
+                -1000,
+                0
+              ]
+            ],
+            "holes": [],
+            "signature": "9d5a9527fe3b91f345f731223e747f324d5692e4117f6a8576f5b7f55185d40b",
+            "bbox": [
+              "-2000",
+              "0",
+              "-1000",
+              "1000"
+            ],
+            "net": null,
+            "device_id": null,
+            "signature_occurrences": 1
+          },
+          {
+            "id": "layout/aafdf7336e7843a8a6c9cfed5e6e2e6b",
+            "cell_path": "layout",
+            "layer_id": "68/20",
+            "hull": [
+              [
+                1000,
+                0
+              ],
+              [
+                1000,
+                1000
+              ],
+              [
+                2000,
+                1000
+              ],
+              [
+                2000,
+                0
+              ]
+            ],
+            "holes": [],
+            "signature": "70260d6fc585096e4a3d5222bb15da36190895e47b1adc2c3c1972bf8377d8dc",
+            "bbox": [
+              "1000",
+              "0",
+              "2000",
+              "1000"
+            ],
+            "net": null,
+            "device_id": null,
+            "signature_occurrences": 1
+          }
+        ]
+      },
+      {
+        "id": "1a67fd1f959642998beeff8a0e2a60fa",
+        "kind": "spacing",
+        "title": "도형 간격",
+        "reason": "Explicit public-fixture criterion spacing",
+        "priority": "must",
+        "author": "Public UI QA",
+        "revision": 1,
+        "review_revision": 3,
+        "created_at": "2026-10-14T05:18:36.440601+00:00",
+        "criteria": {
+          "minimum_dbu": "2000"
+        },
+        "method": "Exact minimum polygon edge distance",
+        "required_data": [
+          "layout",
+          "minimum_spacing"
+        ],
+        "targets": [
+          {
+            "id": "layout/afc168516fc04490bc59d24550eed042",
+            "cell_path": "layout",
+            "layer_id": "68/20",
+            "hull": [
+              [
+                -2000,
+                0
+              ],
+              [
+                -2000,
+                1000
+              ],
+              [
+                -1000,
+                1000
+              ],
+              [
+                -1000,
+                0
+              ]
+            ],
+            "holes": [],
+            "signature": "9d5a9527fe3b91f345f731223e747f324d5692e4117f6a8576f5b7f55185d40b",
+            "bbox": [
+              "-2000",
+              "0",
+              "-1000",
+              "1000"
+            ],
+            "net": null,
+            "device_id": null,
+            "signature_occurrences": 1
+          },
+          {
+            "id": "layout/aafdf7336e7843a8a6c9cfed5e6e2e6b",
+            "cell_path": "layout",
+            "layer_id": "68/20",
+            "hull": [
+              [
+                1000,
+                0
+              ],
+              [
+                1000,
+                1000
+              ],
+              [
+                2000,
+                1000
+              ],
+              [
+                2000,
+                0
+              ]
+            ],
+            "holes": [],
+            "signature": "70260d6fc585096e4a3d5222bb15da36190895e47b1adc2c3c1972bf8377d8dc",
+            "bbox": [
+              "1000",
+              "0",
+              "2000",
+              "1000"
+            ],
+            "net": null,
+            "device_id": null,
+            "signature_occurrences": 1
+          }
+        ]
+      },
+      {
+        "id": "c0898901f5c644779baca6a3ca07dfc3",
+        "kind": "fixed_region",
+        "title": "고정 영역",
+        "reason": "Explicit public-fixture criterion fixed_region",
+        "priority": "must",
+        "author": "Public UI QA",
+        "revision": 1,
+        "review_revision": 4,
+        "created_at": "2026-10-14T05:18:38.183077+00:00",
+        "criteria": {
+          "box": [
+            "-2500",
+            "-500",
+            "2500",
+            "1500"
+          ],
+          "layers": [
+            "68/20"
+          ]
+        },
+        "method": "Baseline/candidate clipped mask XOR",
+        "required_data": [
+          "layout",
+          "baseline",
+          "region"
+        ],
+        "targets": []
+      }
+    ],
+    "evaluation": {
+      "schema_version": 1,
+      "edition": "indust",
+      "product_id": "resistor.indust",
+      "product_name": "Resistor Indust",
+      "project_id": "a3e42d4fcb374c6b89a6fa80d0942bd5",
+      "revision": 1,
+      "process": {
+        "id": "sky130A",
+        "source": "pdk",
+        "mapping_status": "unconfirmed",
+        "lock_sha256": "ab6bf24561973a37d6b160713920b06574fa23dbcbce24dc2cd38726808aa068"
+      },
+      "engine": {
+        "name": "KLayout",
+        "version": "0.30.5",
+        "review_adapter_sha256": "7378a84a83139cad3b28551c65a3dbfab4f07a448b48c8f685b882fad497f168",
+        "implementation_sha256": "956e6ef2d022a6a4818e4dfb51d4185b7408d0fb8c7ed082a36eb690f75dc982"
+      },
+      "review_revision": 4,
+      "baseline_revision": 1,
+      "checked_at": "2026-10-14T05:18:40.394253+00:00",
+      "results": [
+        {
+          "constraint_id": "b63b6f4555f941aba5a97d0e8d23e145",
+          "title": "대칭 · 실제 마스크",
+          "kind": "symmetry",
+          "priority": "must",
+          "method": "Exact reflected mask XOR",
+          "required_data": [
+            "layout",
+            "axis"
+          ],
+          "mapping": [
+            {
+              "status": "stable_id",
+              "changed": false,
+              "shape": {
+                "id": "layout/afc168516fc04490bc59d24550eed042",
+                "cell_path": "layout",
+                "layer_id": "68/20",
+                "hull": [
+                  [
+                    -2000,
+                    0
+                  ],
+                  [
+                    -2000,
+                    1000
+                  ],
+                  [
+                    -1000,
+                    1000
+                  ],
+                  [
+                    -1000,
+                    0
+                  ]
+                ],
+                "holes": [],
+                "signature": "9d5a9527fe3b91f345f731223e747f324d5692e4117f6a8576f5b7f55185d40b",
+                "bbox": [
+                  "-2000",
+                  "0",
+                  "-1000",
+                  "1000"
+                ],
+                "net": null,
+                "device_id": null,
+                "signature_occurrences": 1
+              }
+            },
+            {
+              "status": "stable_id",
+              "changed": false,
+              "shape": {
+                "id": "layout/aafdf7336e7843a8a6c9cfed5e6e2e6b",
+                "cell_path": "layout",
+                "layer_id": "68/20",
+                "hull": [
+                  [
+                    1000,
+                    0
+                  ],
+                  [
+                    1000,
+                    1000
+                  ],
+                  [
+                    2000,
+                    1000
+                  ],
+                  [
+                    2000,
+                    0
+                  ]
+                ],
+                "holes": [],
+                "signature": "70260d6fc585096e4a3d5222bb15da36190895e47b1adc2c3c1972bf8377d8dc",
+                "bbox": [
+                  "1000",
+                  "0",
+                  "2000",
+                  "1000"
+                ],
+                "net": null,
+                "device_id": null,
+                "signature_occurrences": 1
+              }
+            }
+          ],
+          "status": "pass",
+          "markers": [],
+          "electrical_assessment": "not_run",
+          "metrics": {
+            "xor_area_dbu2": "0",
+            "same_layer": true
+          },
+          "reason": "Geometric criterion satisfied.",
+          "affected_by_change": false
+        },
+        {
+          "constraint_id": "1a67fd1f959642998beeff8a0e2a60fa",
+          "title": "도형 간격",
+          "kind": "spacing",
+          "priority": "must",
+          "method": "Exact minimum polygon edge distance",
+          "required_data": [
+            "layout",
+            "minimum_spacing"
+          ],
+          "mapping": [
+            {
+              "status": "stable_id",
+              "changed": false,
+              "shape": {
+                "id": "layout/afc168516fc04490bc59d24550eed042",
+                "cell_path": "layout",
+                "layer_id": "68/20",
+                "hull": [
+                  [
+                    -2000,
+                    0
+                  ],
+                  [
+                    -2000,
+                    1000
+                  ],
+                  [
+                    -1000,
+                    1000
+                  ],
+                  [
+                    -1000,
+                    0
+                  ]
+                ],
+                "holes": [],
+                "signature": "9d5a9527fe3b91f345f731223e747f324d5692e4117f6a8576f5b7f55185d40b",
+                "bbox": [
+                  "-2000",
+                  "0",
+                  "-1000",
+                  "1000"
+                ],
+                "net": null,
+                "device_id": null,
+                "signature_occurrences": 1
+              }
+            },
+            {
+              "status": "stable_id",
+              "changed": false,
+              "shape": {
+                "id": "layout/aafdf7336e7843a8a6c9cfed5e6e2e6b",
+                "cell_path": "layout",
+                "layer_id": "68/20",
+                "hull": [
+                  [
+                    1000,
+                    0
+                  ],
+                  [
+                    1000,
+                    1000
+                  ],
+                  [
+                    2000,
+                    1000
+                  ],
+                  [
+                    2000,
+                    0
+                  ]
+                ],
+                "holes": [],
+                "signature": "70260d6fc585096e4a3d5222bb15da36190895e47b1adc2c3c1972bf8377d8dc",
+                "bbox": [
+                  "1000",
+                  "0",
+                  "2000",
+                  "1000"
+                ],
+                "net": null,
+                "device_id": null,
+                "signature_occurrences": 1
+              }
+            }
+          ],
+          "status": "pass",
+          "markers": [],
+          "electrical_assessment": "not_run",
+          "metrics": {
+            "distance_squared_dbu2": "4000000",
+            "distance_um_approx": 2,
+            "minimum_dbu": "2000",
+            "verdict_uses_exact_squared_distance": true
+          },
+          "reason": "Geometric criterion satisfied.",
+          "affected_by_change": false
+        },
+        {
+          "constraint_id": "c0898901f5c644779baca6a3ca07dfc3",
+          "title": "고정 영역",
+          "kind": "fixed_region",
+          "priority": "must",
+          "method": "Baseline/candidate clipped mask XOR",
+          "required_data": [
+            "layout",
+            "baseline",
+            "region"
+          ],
+          "mapping": [],
+          "status": "pass",
+          "markers": [],
+          "electrical_assessment": "not_run",
+          "metrics": {
+            "xor_area_dbu2_by_layer": {
+              "68/20": "0"
+            },
+            "region_dbu": [
+              "-2500",
+              "-500",
+              "2500",
+              "1500"
+            ]
+          },
+          "reason": "Geometric criterion satisfied.",
+          "affected_by_change": false
+        }
+      ],
+      "comparison": {
+        "geometry_equal": true,
+        "file_bytes_equal": true,
+        "hierarchy_equal": true,
+        "annotations_equal": true,
+        "changed": [],
+        "removed": [],
+        "added": [],
+        "unchanged": 2,
+        "layers": [
+          {
+            "layer_id": "68/20",
+            "added_area_dbu2": "0",
+            "removed_area_dbu2": "0"
+          }
+        ],
+        "electrical_impact": "not_run",
+        "scope": "Whole expanded per-layer merged masks; text and hierarchy reported separately."
+      },
+      "baseline": {
+        "context": {
+          "schema_version": 1,
+          "edition": "indust",
+          "product_id": "resistor.indust",
+          "product_name": "Resistor Indust",
+          "project_id": "a3e42d4fcb374c6b89a6fa80d0942bd5",
+          "revision": 1,
+          "process": {
+            "id": "sky130A",
+            "source": "pdk",
+            "mapping_status": "unconfirmed",
+            "lock_sha256": "ab6bf24561973a37d6b160713920b06574fa23dbcbce24dc2cd38726808aa068"
+          },
+          "engine": {
+            "name": "KLayout",
+            "version": "0.30.5",
+            "review_adapter_sha256": "7378a84a83139cad3b28551c65a3dbfab4f07a448b48c8f685b882fad497f168",
+            "implementation_sha256": "956e6ef2d022a6a4818e4dfb51d4185b7408d0fb8c7ed082a36eb690f75dc982"
+          }
+        },
+        "dbu_um": "0.001",
+        "top_cell": "layout",
+        "layout_sha256": "524e885685831aa4e6e3f79d5aa0cfbbf8e605de39b344b22f3ba696aff76c42",
+        "geometry_hash": "265312cbcaea079959eabd9b71a52729f83b1bec4c3599a011c99fc35d3e7d53",
+        "hierarchy_hash": "0eb5604835a1e06d9886ce26c75046d0c3218437575104ca3f994cf35d146bd3",
+        "identity_hash": "5ad102ba9d80190e98db224f41a02567c7a7e6cb3cdfce912ae5840ac2ee30cd",
+        "shape_count": 2,
+        "annotations": [],
+        "instances": []
+      },
+      "candidate": {
+        "context": {
+          "schema_version": 1,
+          "edition": "indust",
+          "product_id": "resistor.indust",
+          "product_name": "Resistor Indust",
+          "project_id": "a3e42d4fcb374c6b89a6fa80d0942bd5",
+          "revision": 1,
+          "process": {
+            "id": "sky130A",
+            "source": "pdk",
+            "mapping_status": "unconfirmed",
+            "lock_sha256": "ab6bf24561973a37d6b160713920b06574fa23dbcbce24dc2cd38726808aa068"
+          },
+          "engine": {
+            "name": "KLayout",
+            "version": "0.30.5",
+            "review_adapter_sha256": "7378a84a83139cad3b28551c65a3dbfab4f07a448b48c8f685b882fad497f168",
+            "implementation_sha256": "956e6ef2d022a6a4818e4dfb51d4185b7408d0fb8c7ed082a36eb690f75dc982"
+          }
+        },
+        "dbu_um": "0.001",
+        "top_cell": "layout",
+        "layout_sha256": "524e885685831aa4e6e3f79d5aa0cfbbf8e605de39b344b22f3ba696aff76c42",
+        "geometry_hash": "265312cbcaea079959eabd9b71a52729f83b1bec4c3599a011c99fc35d3e7d53",
+        "hierarchy_hash": "0eb5604835a1e06d9886ce26c75046d0c3218437575104ca3f994cf35d146bd3",
+        "identity_hash": "5ad102ba9d80190e98db224f41a02567c7a7e6cb3cdfce912ae5840ac2ee30cd",
+        "shape_count": 2,
+        "annotations": [],
+        "instances": []
+      },
+      "runs": [],
+      "limits": [
+        "Geometric intent checks are not DRC, LVS, PEX, electrical matching or foundry signoff.",
+        "GDS/OASIS does not establish a circuit, material stack or physical thickness.",
+        "No customer or PDK data is sent to an external AI service by this workflow.",
+        "Customer value and superiority over existing tools remain unmeasured.",
+        "Whole expanded mask review is bounded at 20000 shapes / 200000 vertices; limits fail closed."
+      ],
+      "unevaluated": [],
+      "freshness": "current",
+      "signoff": false
+    },
+    "decision": "deferred",
+    "decision_reason": "Public fixture only; electrical matching and manufacturing are unassessed",
+    "author": "Public UI QA",
+    "saved_at": "2026-10-14T05:18:42.923639+00:00",
+    "signoff": false,
+    "limits": [
+      "Geometric intent checks are not DRC, LVS, PEX, electrical matching or foundry signoff.",
+      "GDS/OASIS does not establish a circuit, material stack or physical thickness.",
+      "No customer or PDK data is sent to an external AI service by this workflow.",
+      "Customer value and superiority over existing tools remain unmeasured.",
+      "Whole expanded mask review is bounded at 20000 shapes / 200000 vertices; limits fail closed."
+    ]
+  },
+  "sha256": "4692119861cd456cf7560437d87a3cc0ebb5ad88cd5e78513c85fa0d8c5e716a",
+  "path": "/workspace/.runtime/eda/projects/a3e42d4fcb374c6b89a6fa80d0942bd5/reviews/0fcca9376e314a7aa891751182a4176a.review.json",
+  "context": {
+    "schema_version": 1,
+    "edition": "indust",
+    "product_id": "resistor.indust",
+    "product_name": "Resistor Indust",
+    "project_id": "a3e42d4fcb374c6b89a6fa80d0942bd5",
+    "revision": 1,
+    "process": {
+      "id": "sky130A",
+      "source": "pdk",
+      "mapping_status": "unconfirmed",
+      "lock_sha256": "ab6bf24561973a37d6b160713920b06574fa23dbcbce24dc2cd38726808aa068"
+    },
+    "engine": {
+      "name": "KLayout",
+      "version": "0.30.5",
+      "review_adapter_sha256": "7378a84a83139cad3b28551c65a3dbfab4f07a448b48c8f685b882fad497f168",
+      "implementation_sha256": "956e6ef2d022a6a4818e4dfb51d4185b7408d0fb8c7ed082a36eb690f75dc982"
+    }
+  }
+}

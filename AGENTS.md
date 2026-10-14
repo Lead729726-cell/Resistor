@@ -5,7 +5,7 @@ An explicitly selected `RESISTOR_EDITION` overrides the branch default.
 
 - `edu` / **Resistor Edu** / `codex/resistor-edu`: guided engineering practice, explanations,
   new learning projects, and learner records. Learning checkboxes are not engine verification.
-- `indust` / **Resistor Industry** / `codex/resistor-indust`: professional circuit/layout workflow,
+- `indust` / **Resistor Indust** / `codex/resistor-indust`: professional circuit/layout workflow,
   actual simulation, tool provenance, revision freshness, DRC/LVS/PEX and review.
 - `main`: shared core. Keep fixes to mathematical logic, geometry, file formats, API and engine
   shared between editions. Do not fork formulas or invent educational waveforms/PASS verdicts.

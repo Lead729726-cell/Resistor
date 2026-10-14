@@ -39,6 +39,10 @@ jobs:
         run: node scripts/native-engine-qa.mjs
         env:
           REGISTER_NATIVE_PHYSICAL_QA: '1'
+      - name: Verify Indust review with actual DRC, LVS, PEX and simulation evidence
+        run: npm run test:industry-review
+        env:
+          REGISTER_NATIVE_PHYSICAL_QA: '1'
       - run: npm run build
       - run: node scripts/package.mjs --stage-only --linux
       - run: node scripts/linux-cross-build.mjs

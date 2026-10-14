@@ -7,7 +7,10 @@ export const {getProductEdition}=require('../apps/desktop/product-edition.cjs');
 export function defaultEditionWorkspace(root,edition){return edition.edition==='edu'?path.join(path.resolve(root),'.runtime/editions/edu/workspace'):path.resolve(root);}
 export async function prepareEditionWorkspace({root=process.cwd(),workspace,edition=getProductEdition({root})}){
   root=path.resolve(root);workspace=path.resolve(workspace??defaultEditionWorkspace(root,edition));
-  if(edition.edition==='indust')return workspace;
+  if(edition.edition==='indust'){
+    try{const previous=JSON.parse(await readFile(path.join(workspace,'.runtime/product-context.json'),'utf8'));if(previous.product_id!==edition.id||previous.edition&&previous.edition!==edition.edition)throw Error('This workspace belongs to another product edition.');}catch(e){if(e.code!=='ENOENT')throw e;}
+    return workspace;
+  }
   if(workspace===root)throw Error('Edu needs its own workspace; select a separate directory instead of the industrial source workspace.');
   await mkdir(path.join(workspace,'.runtime'),{recursive:true});
   const marker=path.join(workspace,'.runtime/product-context.json');

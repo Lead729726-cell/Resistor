@@ -128,9 +128,9 @@ def scene(layout, project, layers,options=None):
                     labels.append(item)
         for inst in cell.each_inst():
             array=inst.cell_inst; t=trans*array.cplx_trans
-            item={'id':f'{path}/@{inst.property(1)}','cell_name':inst.cell.name,'cell_path':path,'parent_cell':cell.name,'position':[str(t.disp.x),str(t.disp.y)],'rotation':round(t.angle)%360,'mirror':t.is_mirror()}
+            item={'id':f'{path}/@{inst.property(1)}','cell_name':inst.cell.name,'cell_path':path,'parent_cell':cell.name,'position':[str(t.disp.x),str(t.disp.y)],'rotation':t.angle%360,'mirror':t.is_mirror(),'magnification':t.mag}
             bb=inst.bbox().transformed(trans);item['bbox']=[str(bb.left),str(bb.bottom),str(bb.right),str(bb.top)]
-            if array.is_regular_array(): item['array']={'columns':array.na,'rows':array.nb,'dx':str(array.a.x),'dy':str(array.b.y)}
+            if array.is_regular_array(): item['array']={'columns':array.na,'rows':array.nb,'dx':str(array.a.x),'dy':str(array.b.y),'vector_a':[str(array.a.x),str(array.a.y)],'vector_b':[str(array.b.x),str(array.b.y)]}
             instances.append(item)
             if has_annotations(inst.cell):
                 for j,ct in enumerate(array.each_cplx_trans()):

@@ -47,10 +47,20 @@ import conversion
 import custom_circuit
 import project_index
 import runtime_resources
+import layout_review
 from toolchain_diagnostics import ToolchainDiagnostics
 from job_evidence import write_job_evidence
 
 WORKSPACE=Path(os.environ.get('MOS_WORKSPACE','/workspace')).resolve()
+def selected_edition():
+    marker=WORKSPACE/'.runtime/product-context.json'
+    record=json.loads(marker.read_text(encoding='utf-8')) if marker.is_file() else None
+    marked=record.get('edition') if record else None
+    if record and (record.get('schema_version')!=1 or marked not in ('edu','indust') or record.get('product_id')!='resistor.'+marked):raise RuntimeError('Invalid product workspace identity; no engine is started.')
+    value=os.environ.get('RESISTOR_EDITION') or marked or 'indust'
+    if value not in ('edu','indust') or marked and marked!=value:raise RuntimeError('Product edition does not match this workspace.')
+    return value
+EDITION=selected_edition()
 RUNTIME_KIND=os.environ.get('MOS_RUNTIME_KIND','linux-docker')
 INSTANCE_ID=os.environ.get('MOS_INSTANCE_ID','')
 HTTP_SERVER=None
@@ -113,7 +123,10 @@ def get_project(pid):
     with LOCK:
         row=DB.execute('SELECT data FROM projects WHERE id=?',(pid,)).fetchone()
         if not row: raise EDAError('NOT_FOUND','Project not found.')
-        p=json.loads(row[0]); p['runs']=runs_for(pid,p['revision']); return p
+        p=json.loads(row[0]); p['runs']=runs_for(pid,p['revision'])
+        p.update(edition=EDITION,project_id=p['id'],product_id='resistor.'+EDITION,
+                 engine={'name':'KLayout','version':k.__version__},process={'id':p['pdk_id'],'source':p['source']})
+        return p
 def put_project(p):
     p=copy.deepcopy(p); p['runs']=[]
     DB.execute('INSERT OR REPLACE INTO projects VALUES(?,?)',(p['id'],json.dumps(p))); db_commit()
@@ -330,7 +343,7 @@ def tool_hashes():
 def doctor(refresh=False):
     global TOOLS
     TOOLS=TOOL_DIAGNOSTICS.inspect(refresh=refresh)
-    return {'protocol_version':1,'runner':RUNTIME_KIND,'tools':TOOLS,'pdk':profile.capabilities(),'geometry':{'engine':'KLayout','coordinate_bits':32,'dbu_um':.001,'grid_dbu':5},'runtime_image':profile.IMAGE if RUNTIME_KIND=='linux-docker' else None}
+    return {'protocol_version':1,'schema_version':1,'edition':EDITION,'product_id':'resistor.'+EDITION,'runner':RUNTIME_KIND,'tools':TOOLS,'pdk':profile.capabilities(),'geometry':{'engine':'KLayout','coordinate_bits':32,'dbu_um':.001,'grid_dbu':5},'runtime_image':profile.IMAGE if RUNTIME_KIND=='linux-docker' else None}
 
 def magic_generate(folder,cell,w=.65,l=.15):
     folder.mkdir(parents=True,exist_ok=True)
@@ -471,6 +484,7 @@ def export_layout(params):
     exchange_project=copy.deepcopy(p); exchange_project['runs']=[]
     sidecar=dest.with_suffix(dest.suffix+'.mos.json'); dump(sidecar,{'schema_version':1,'file_hash':profile.sha(dest),'project':exchange_project,'geometry_hash':before_hash})
     ids_before={s['id'] for s in geo.scene(l,p,p['layers'])['shapes']}; ids_after={s['id'] for s in geo.scene(after,p,p['layers'])['shapes']}
+    if before_hash!=after_hash or geo.hierarchy_hash(l)!=geo.hierarchy_hash(after):raise EDAError('LOSSY_EXPORT','Export roundtrip changed geometry or hierarchy; the artifact is not a successful lossless export.',{'path':str(dest),'before_hash':before_hash,'after_hash':after_hash})
     return {'path':str(dest),'sidecar_path':str(sidecar),'roundtrip':{'geometry_equal':before_hash==after_hash,'before_hash':before_hash,'after_hash':after_hash,'hierarchy_preserved':geo.hierarchy_hash(l)==geo.hierarchy_hash(after),'stable_ids_preserved':ids_before==ids_after},'metadata':{'ids':'layout properties + app sidecar','schematic':'sidecar','physical_stack':'unknown','flattened':False}}
 
 def generate_pcell(params):
@@ -928,6 +942,7 @@ def rpc(method,params):
     with LOCK:
         if STOPPING:raise EDAError('ENGINE_STOPPING','Local engine is shutting down; reconnect after it closes.')
     if any(str(key).startswith('_') for key in params):raise EDAError('PRIVATE_PARAMETER','Internal engine settings cannot be supplied through public RPC.')
+    if method.startswith('review.'):return layout_review.rpc(method,params)
     if method.startswith('conversion.'):return conversion.rpc(method,params)
     if method.startswith('pvt.'):return pvt.rpc(method,params)
     if method.startswith('design.'):return design_tools.rpc(method,params)
@@ -1074,6 +1089,7 @@ semiconductor_starters.configure(sys.modules[__name__])
 digital_units.configure(sys.modules[__name__])
 hierarchy_transfer.configure(sys.modules[__name__])
 conversion.configure(sys.modules[__name__])
+layout_review.configure(sys.modules[__name__])
 
 if __name__=='__main__':
     if not TOKEN: raise SystemExit('MOS_TOKEN must be provided by the local runner.')

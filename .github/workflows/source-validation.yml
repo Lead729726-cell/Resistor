@@ -57,3 +57,7 @@ jobs:
         run: python3 -m unittest test_job_evidence test_toolchain_diagnostics
       - name: Workspace metadata and detailed API compatibility
         run: python3 -m unittest discover -s tests -p test_project_index.py
+      - name: Exact KLayout intent review and revision persistence
+        run: |
+          python3 -m pip install klayout==0.30.5
+          MOS_WORKSPACE="$RUNNER_TEMP/indust-review" RESISTOR_EDITION=indust python3 -B tests/industry-review-test.py

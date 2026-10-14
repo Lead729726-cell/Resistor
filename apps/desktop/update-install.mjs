@@ -49,6 +49,12 @@ export async function validateTree(root){
     if(info.isSymbolicLink())assertInside(base,await realpath(file));else if(info.isDirectory())await walk(file);else if(!info.isFile())throw Error('앱에 지원하지 않는 파일이 있습니다.');
   }}await walk(root);
 }
+export function validateInstalledProduct(metadata,version,editionMarker){
+  if(metadata.version!==version||metadata.name!=='resistor-eda')throw Error('압축 파일의 제품 또는 버전이 다릅니다.');
+  if(editionMarker){
+    if(editionMarker.schema_version!==1||editionMarker.edition!=='indust'||!['Resistor','Resistor Industry','Resistor Indust'].includes(metadata.productName))throw Error('업데이트 제품 버전이 현재 Indust와 다릅니다.');
+  }else if(metadata.productName!=='Resistor')throw Error('새 제품 이름의 업데이트에는 명시적 edition 식별자가 필요합니다.');
+}
 export async function prepareInstallation({file,update,folder,platform=process.platform,home=os.homedir(),runImpl=run}){
   if(!['darwin','linux'].includes(platform))throw Error('압축 설치는 Mac과 Linux에서만 지원합니다.');
   versionParts(update.version);assertInside(folder,file);
@@ -60,7 +66,8 @@ export async function prepareInstallation({file,update,folder,platform=process.p
   const source=platform==='darwin'?path.join(cache,prefix):path.join(cache,prefix,'Resistor');await validateTree(source);
   const resources=platform==='darwin'?path.join(source,'Contents/Resources/app'):path.join(source,'resources/app');
   const metadata=JSON.parse(await readFile(path.join(resources,'package.json'),'utf8'));
-  if(metadata.version!==update.version||metadata.productName!=='Resistor'||metadata.name!=='resistor-eda')throw Error('압축 파일의 제품 또는 버전이 다릅니다.');
+  let editionMarker;try{editionMarker=JSON.parse(await readFile(path.join(resources,'product-edition.json'),'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;}
+  validateInstalledProduct(metadata,update.version,editionMarker);
   const executable=platform==='darwin'?path.join(source,'Contents/MacOS/Resistor'):path.join(source,'Resistor');
   const binary=await readFile(executable);
   if(platform==='darwin'){

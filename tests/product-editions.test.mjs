@@ -38,6 +38,11 @@ test('app names are distinct while Indust keeps existing user designs in place',
  const observed=[];for(const edition of [edu,indust]){const app={getPath:()=>os.tmpdir(),setName:name=>observed.push(name),setPath:(_key,value)=>observed.push(value)};configureAppIdentity(app,{edition});}
  assert.deepEqual(observed,[edu.name,path.join(os.tmpdir(),'Resistor Edu'),indust.name,path.join(os.tmpdir(),'레지스터')]);
 });
+test('Indust never adopts an existing Edu workspace or credentials',async t=>{
+ const root=await fixture(t);await mkdir(path.join(root,'.runtime'),{recursive:true});
+ await writeFile(path.join(root,'.runtime/product-context.json'),JSON.stringify({schema_version:1,edition:'edu',product_id:'resistor.edu'}));
+ await assert.rejects(prepareEditionWorkspace({root,workspace:root,edition:indust}),/another product edition/);
+});
 test('desktop rejects another edition renderer rather than mislabeling it',async t=>{
  const root=await fixture(t);await mkdir(path.join(root,'dist'),{recursive:true});await writeFile(path.join(root,'dist/index.html'),'legacy renderer');
  assert.equal(rendererDirectory(root,indust),path.join(root,'dist'));assert.throws(()=>rendererDirectory(root,edu),/Build Resistor Edu/);
@@ -52,6 +57,6 @@ test('Edu updater cannot download or apply a historical Indust installer',async 
 for(const edition of [edu,indust])test('real MCP handshake identifies '+edition.name+' without exposing credentials',async t=>{
  const workspace=await fixture(t);const transport=new StdioClientTransport({command:process.execPath,args:[path.resolve(process.env.REGISTER_MCP_ENTRY||'scripts/mcp.mjs')],env:{RESISTOR_EDITION:edition.edition,MOS_WORKSPACE:workspace},stderr:'pipe'});
  const client=new Client({name:'edition-qa',version:'1.0.0'});t.after(()=>client.close());await client.connect(transport);
- assert.equal(client.getServerVersion().name,edition.mcp_name);const tools=await client.listTools();assert.equal(tools.tools.length,48);
+ assert.equal(client.getServerVersion().name,edition.mcp_name);const tools=await client.listTools();assert.equal(tools.tools.length,edition.edition==='indust'?55:48);
  const result=await client.callTool({name:'register_product_context',arguments:{}});assert.equal(result.isError,undefined);assert.equal(result.structuredContent.result.product_id,edition.id);assert.equal(result.structuredContent.product.id,edition.id);assert.equal(result.structuredContent.result.workspace,workspace);assert.equal(result.structuredContent.result.foundry_signoff,false);assert(!JSON.stringify(result).includes('token'));
 });

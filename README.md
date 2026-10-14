@@ -1,6 +1,8 @@
 # Resistor
 
-**Resistor Edu / Industry**: 교육용과 전문 작업용을 브랜치·저장 폴더·Codex 작업 공간으로 나눕니다. Edu에는 8개 단계별 실습과 학습 기록·보고서를 추가했습니다. [구성·실행·MCP 연동](docs/product-editions.md) · [버전 선택](https://resistor-downloads.vercel.app/editions/). 현재 v0.27.0 설치 파일과 새 소스 버전을 구분합니다.
+**Resistor Edu / Indust**: 교육용과 전문 작업용을 브랜치·저장 폴더·Codex 작업 공간으로 나눕니다. Edu에는 단계별 실습과 학습 기록·보고서를 제공합니다. [구성·실행·MCP 연동](docs/product-editions.md) · [버전 선택](https://resistor-downloads.vercel.app/editions/). 현재 v0.27.0 설치 파일과 새 소스 버전을 구분합니다.
+
+**Resistor Indust의 첫 검토 흐름**: 원본을 유지하는 레이아웃 작업 사본에서 사용자 지정 대칭·간격·고정 영역·상대 위치를 실제 KLayout 기하로 검사합니다. 변경 revision, 대상 매핑, 실제 엔진 manifest, 미평가 항목과 검토 결정을 로컬 보고서에 연결하고 재열기·checksum·STALE를 확인합니다. [실행·지원 범위·비교 결과](docs/industry-layout-review.md). 전기적 매칭, 고객 가치와 제조 signoff는 별도 검증입니다.
 
 [전체 튜토리얼](https://resistor-downloads.vercel.app/tutorial/library/): 최근 설치·업데이트·편집 개선 35개 작업 흐름, 모든 template/가산기/CPU 59종과 계산기 18종을 실습으로 제공합니다. 포트·실제 하위 셀·입력·결과·오류 복구·원본 기록을 연결하고 기존 한국어 영상 3편은 촬영 버전 그대로 보존합니다. [구성·검증·갱신](docs/tutorial-library.md).
 

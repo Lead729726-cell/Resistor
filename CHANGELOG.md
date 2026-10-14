@@ -4,6 +4,17 @@ This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
 `docs/evidence/` and the example READMEs. Package version: 0.27.0.
 
+## Unreleased — Resistor Indust intent review (2026-10-14)
+
+- Preserve the source project and original file while creating a separate baseline/candidate review workspace.
+- Designer rationale, author, priority, criteria, target binding and review revision; edits/removals retain history.
+- Exact reflected masks, rational polygon spacing, fixed-region XOR and bbox ordering using KLayout; missing electrical/process input remains unassessed.
+- Whole-mask revision comparison, explicit ID/unique exact-geometry mapping, ambiguous/deleted target handling and historical report checksums.
+- Actual engine run manifests, conditions, hashes, logs and artifact references remain independent from geometric criteria and review acceptance.
+- Local report save/reopen and stale evidence after candidate changes or engine revision; no external AI transmission or automatic repair.
+- Indust MCP tools and product identity; preserve legacy data and common update compatibility while rejecting another edition.
+- Public-fixture tests and predeclared direct KLayout Python extension comparison; customer workflow time and commercial signoff unverified.
+
 ## 0.27.0 — Clearer design and result workflows (2026-10-14)
 
 - Empty schematic default, correct initial drawing workspace and a visible create action on laptop screens.

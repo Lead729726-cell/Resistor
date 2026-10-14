@@ -13,6 +13,7 @@ export const IMAGE = 'hpretl/iic-osic-tools@sha256:92961478ad3c4f508efb42d9ccdba
 for (const method of ['digital.catalog','digital.create','hierarchy.sources','hierarchy.preview','hierarchy.apply']) METHODS.add(method);
 for (const method of ['design.floorplan_preview','design.floorplan_apply']) METHODS.add(method);
 for (const method of ['conversion.catalog','conversion.reverse','conversion.forward','conversion.result','conversion.apply']) METHODS.add(method);
+for (const method of ['review.catalog','review.create','review.list','review.status','review.scene','review.add_constraint','review.update_constraint','review.remove_constraint','review.evaluate','review.save_report','review.open_report']) METHODS.add(method);
 export async function runtimeConfig(workspace=process.env.MOS_WORKSPACE??process.cwd()){
   const folder=path.join(workspace,'.runtime');const file=path.join(folder,'worker.json');
   await mkdir(folder,{recursive:true});

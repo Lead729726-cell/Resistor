@@ -2,11 +2,11 @@
 
 Resistor는 회로도·계층·레이아웃·GDS/OASIS·실제 엔진 시뮬레이션과 전자공학 계산을 연결하는 작업대입니다. 교육용과 전문 설계용은 같은 엔진과 수학을 사용합니다.
 
-| 구분 | Resistor Edu | Resistor Industry |
+| 구분 | Resistor Edu | Resistor Indust |
 | --- | --- | --- |
 | Git 브랜치 | `codex/resistor-edu` | `codex/resistor-indust` |
 | 내부 edition ID | `edu` | `indust` |
-| Codex 사이드바 폴더 | Resistor Edu | Resistor Industry |
+| Codex 사이드바 폴더 | Resistor Edu | Resistor Indust |
 | MCP 서버 이름 | `resistor-edu` | `resistor-indust` |
 | 기본 개발 화면 | `http://127.0.0.1:5177/eda` | `http://127.0.0.1:5176/eda` |
 | 기본 엔진 포트 | 18775 | 18765 |
