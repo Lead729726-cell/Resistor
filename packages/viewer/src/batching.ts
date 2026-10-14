@@ -37,7 +37,7 @@ export class BatchedScene {
   private frame: LocalFrame;
   private mode: '2d' | '3d';
   private display: ViewerDisplay = {};
-  private selection: string | null = null;
+  private selection: string[] = [];
   private colorSignature = '';
   private planes: THREE.Plane[] = [];
   private frustum = new THREE.Frustum();
@@ -107,12 +107,12 @@ export class BatchedScene {
     this.apply(this.display, this.selection);
     progress?.(this.stats.total, this.stats.total);
   }
-  apply(display: ViewerDisplay, selection: string | null, planes?: THREE.Plane[]) {
-    const previousSelection = this.selection;
+  apply(display: ViewerDisplay, selection: string | string[] | null, planes?: THREE.Plane[]) {
+    const previousSelection = new Set(this.selection);
     const signature = JSON.stringify([display.highlightNet, this.source.layers.map(layer => display.layers?.[layer.id]?.color ?? layer.color)]);
     const allColors = signature !== this.colorSignature;
     this.colorSignature = signature;
-    this.display = display; this.selection = selection;
+    this.display = display; this.selection = Array.isArray(selection)?selection:selection?[selection]:[];const selectedSet=new Set(this.selection);
     if (planes) this.planes = planes;
     const color = new THREE.Color();
     for (const batch of this.batches) {
@@ -127,8 +127,8 @@ export class BatchedScene {
       batch.mesh.position.z = z;
       color.set(override?.color ?? layer.color);
       for (const record of batch.records) {
-        if (!allColors && batch.initialized && record.shape.id !== selection && record.shape.id !== previousSelection) continue;
-        const selected = record.shape.id === selection, netSelected = display.highlightNet != null && record.shape.net === display.highlightNet;
+        if (!allColors && batch.initialized && !selectedSet.has(record.shape.id) && !previousSelection.has(record.shape.id)) continue;
+        const selected = selectedSet.has(record.shape.id), netSelected = display.highlightNet != null && record.shape.net === display.highlightNet;
         const instanceColor = selected ? new THREE.Color('#b5f8ff') : netSelected ? new THREE.Color('#82f7d7') : display.highlightNet != null ? color.clone().multiplyScalar(.25) : color;
         batch.mesh.setColorAt(record.index, instanceColor);
       }

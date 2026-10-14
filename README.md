@@ -4,6 +4,8 @@
 
 **Resistor Indust의 첫 검토 흐름**: 원본을 유지하는 레이아웃 작업 사본에서 사용자 지정 대칭·간격·고정 영역·상대 위치를 실제 KLayout 기하로 검사합니다. 변경 revision, 대상 매핑, 실제 엔진 manifest, 미평가 항목과 검토 결정을 로컬 보고서에 연결하고 재열기·checksum·STALE를 확인합니다. [실행·지원 범위·비교 결과](docs/industry-layout-review.md). [실제 공개 OTA 전기적 검사](docs/industry-qualification.md)는 3개 PVT 조건의 추출 전후 192개 표본과 DRC/LVS/PEX를 확인합니다. 임의 소자 쌍 매칭·수율, 실제 상용 실행, 고객 가치와 제조 signoff는 별도 근거가 필요합니다.
 
+**드래그 영역 선택과 묶음 편집**: 레이아웃 2D와 현재 회로도 셀에서 Shift 추가·Alt 제외, 그룹 이동/복제/삭제, 한 번에 실행 취소를 지원합니다. BigInt 마스크/hole 판정·잠금·보호된 PCell·원자적 오류 거절을 유지합니다. [사용법·단축키·실제 조작 녹화](docs/area-selection.md).
+
 [전체 튜토리얼](https://resistor-downloads.vercel.app/tutorial/library/): 최근 설치·업데이트·편집 개선 35개 작업 흐름, 모든 template/가산기/CPU 59종과 계산기 18종을 실습으로 제공합니다. 포트·실제 하위 셀·입력·결과·오류 복구·원본 기록을 연결하고 기존 한국어 영상 3편은 촬영 버전 그대로 보존합니다. [구성·검증·갱신](docs/tutorial-library.md).
 
 **v0.27 작업 흐름 개선**: 빈 회로도 시작, 이름·공정으로 프로젝트 열기, 50개씩 목록 표시와 키보드 대화창 이동을 지원합니다. **다음 실행**에서 준비 사항을 확인하고, 실행 목록·파형·로그를 같은 결과에 맞춥니다. 이전 결과의 원인을 표시하며 수치의 최신성과 기능적 PASS/FAIL을 구분합니다. [사용 안내와 실제 검증](docs/workbench-usability.md).

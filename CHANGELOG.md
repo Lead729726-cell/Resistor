@@ -6,6 +6,10 @@ history that did not previously exist. Existing detailed verification remains in
 
 ## Unreleased — Resistor Indust intent review (2026-10-14)
 
+- Directional area selection in Layout 2D and schematics, Shift add/Alt subtract, Ctrl/Cmd+A, selection counts and a read-only CPU viewer path.
+- Atomic bounded group moves/copies/deletes with one undo step, exact mask/hole DBU selection, mixed device/wire/junction previews, preserved net names and protected-cell rejection.
+- Linear-time native mask ID indexing and set-based large-batch highlighting; current-cell/loaded-scope limits and real engine/UI regression recordings.
+
 - Actual public OTA follower offset assessment with explicit native run IDs, PVT, seed, sample count, pre/post coverage and voltage criteria; recompute raw results and check native evidence checksums.
 - Three representative PVT conditions × 32 samples × pre/post, real Magic DRC/LVS/PEX, deterministic replay and negative/stale/corrupt evidence gates; no device-pair, yield or manufacturing claim.
 - Portable native/agent transport regression with public ngspice (34 cases), current commercial-profile availability probe and an unmeasured customer-study protocol; licensed vendor execution remains unavailable.

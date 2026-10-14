@@ -179,6 +179,19 @@ def apply(schematic,c,cell_name=None):
         if cell_name is not None or set(c)-{'type','kind'}:raise EDAError('INVALID_COMMAND','A logic demo starts only in a new empty root schematic.')
         import logic_composition
         return logic_composition.demo(schematic,c.get('kind'))
+    if c.get('type')=='selection':
+        from selection_commands import group
+        action,items=group(c,True); candidate=copy.deepcopy(schematic);ir=cell_ir(candidate,cell_name)
+        for kind,ident in items:
+            key={'device':'devices','wire':'wires','junction':'junctions'}[kind]
+            item=next((v for v in ir.get(key,[]) if v['id']==ident),None)
+            if item is None:raise EDAError('NOT_FOUND','Selected '+kind+' does not exist in this cell.')
+            dx=num(c.get('dx')) if action!='delete' else 0;dy=num(c.get('dy')) if action!='delete' else 0
+            if action=='move' and kind=='device':command={'type':'move_device','id':ident,'x':item['x']+dx,'y':item['y']+dy}
+            elif action=='copy' and kind=='junction':command={'type':'add_junction','junction':{**item,'id':uuid.uuid4().hex,'x':item['x']+dx,'y':item['y']+dy}}
+            else:command={'type':action+'_'+kind,'id':ident,**({'dx':dx,'dy':dy} if action!='delete' else {})}
+            apply(candidate,command,cell_name)
+        schematic.clear();schematic.update(candidate);return
     ir=cell_ir(schematic,cell_name)
     ty=c.get('type'); devices=ir['devices']; d=next((d for d in devices if d['id']==c.get('id')),None)
     if ty=='add_device':

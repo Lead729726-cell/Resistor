@@ -40,3 +40,8 @@ test('layer culling, locks, hidden state and explode do not alter DBU source geo
   assert.equal(JSON.stringify(scene.shapes), original);
   batch.dispose();
 });
+test('large batches highlight every selected stable ID and clear prior colors',async()=>{
+ const scene=fixture(6000),before=JSON.stringify(scene.shapes),batch=new BatchedScene(scene,sceneFrame(scene),'2d');await batch.build();
+ const ids=[scene.shapes[2].id,scene.shapes[4500].id];batch.apply({},ids);const color=(id:string)=>{const item=batch.records.get(id)!,c=new THREE.Color();item.batch.mesh.getColorAt(item.record.index,c);return c.getHexString();};
+ assert.equal(color(ids[0]),'b5f8ff');assert.equal(color(ids[1]),'b5f8ff');batch.apply({},[ids[1]]);assert.equal(color(ids[0]),'54a5dd');assert.equal(color(ids[1]),'b5f8ff');assert.equal(JSON.stringify(scene.shapes),before);batch.dispose();
+});
