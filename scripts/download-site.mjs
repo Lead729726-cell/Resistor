@@ -42,6 +42,7 @@ if(Number(tag.split('.')[1])>=26){
  for(const item of downloads){
   const proof=evidence.version===tag.slice(1)?evidence.files.find(p=>p.name===item.name&&p.bytes===item.bytes&&p.sha256===item.sha256):null;
   if(!proof?.native_eda_verified||!proof?.native_package_ipc_test)throw Error('Current package requires matching native EDA evidence: '+item.name);
+  if(Number(tag.split('.')[1])>=27){if(!proof.native_usability_verified)throw Error('Current package requires actual readiness/result UI evidence: '+item.name);item.native_usability_verified=true;}
   item.native_eda_verified=true;item.native_package_ipc_test=true;item.native_core_checks=proof.native_core_checks;item.native_physical_tools_verified=proof.native_physical_tools_verified;
   if(item.platform==='windows')platforms.windows.scope='현재 Windows x64 패키지의 실제 로컬 엔진 IPC·분압 해석과 독립 GDS 뷰어 검사를 통과했습니다. 설치·삭제 UI는 미확인이며 Authenticode 서명은 없습니다. Magic/Netgen은 독립 WSL로 추가 준비합니다.';
   if(item.platform==='linux')platforms.linux.scope='Ubuntu 24.04 CI에서 현재 패키지의 로컬 엔진 IPC·GDS 뷰어와 별도 설치한 Magic/Netgen의 DRC/LVS/PEX·추출 후 해석을 확인했습니다. GTK 3·NSS·Chromium sandbox가 필요합니다. 다른 배포판과 실기기 검증은 별도입니다.';

@@ -2,7 +2,16 @@
 
 This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
-`docs/evidence/` and the example READMEs. Package version: 0.26.0.
+`docs/evidence/` and the example READMEs. Package version: 0.27.0.
+
+## 0.27.0 — Clearer design and result workflows (2026-10-14)
+
+- Empty schematic default, correct initial drawing workspace and a visible create action on laptop screens.
+- Searchable project opening, process filters, name sorting and 50-card pages.
+- Actual execution prerequisites, compact-window access and keyboard focus containment/restoration.
+- Synchronize simulation history, waveform selection and logs; explain revision versus model/PDK/engine staleness.
+- Separate numeric current-flow freshness from functional PASS/FAIL/UNKNOWN without altering formulas or engine APIs.
+- Actual 0.9 V / 0.6 V regression and native packaged GUI checks; preserve data, themes, formats and Docker-free runtime.
 
 ## 0.26.0 — Docker-free native execution (2026-10-13)
 
