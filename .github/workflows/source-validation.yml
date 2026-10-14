@@ -21,7 +21,7 @@ jobs:
           cache: npm
       - name: Install locked source dependencies
         run: npm ci
-      - name: Prepare browser and original tutorial media
+      - name: Prepare browser and checksum-pinned tutorial assets
         run: |
           npx playwright install --with-deps chromium
           node scripts/tutorial-library-media.mjs

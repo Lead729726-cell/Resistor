@@ -51,8 +51,9 @@ npm run check:docs
 `scripts/download-learning.mjs`에서 결합합니다. template 변경 시 누락된 실습은 생성 오류로 차단합니다.
 `npm run download:site`도 마지막에 학습 라이브러리를 재생성하여 기존 generator가 링크를 제거하지 않습니다.
 `learning-assets.json`은 배포 파일의 크기·SHA-256을, `learning-catalog.json`은 source hash와 전체 coverage를 기록합니다.
-새 체크아웃의 영상 검사는 `node scripts/tutorial-library-media.mjs`로 공개된 원본 3편을
-받아 크기·SHA-256을 검증합니다. 새 영상/음성 생성이나 유료 호출을 하지 않으며 기존 파일이
+새 체크아웃은 `node scripts/tutorial-library-media.mjs`로 공개된 원본 영상 3편과
+Git에서 제외한 대형 예제 ZIP 4개를 받아 크기·SHA-256을 검증합니다.
+새 영상/음성 생성이나 유료 호출을 하지 않으며 기존 파일이
 원본과 다르면 덮어쓰지 않습니다. GitHub Source validation의 별도 tutorials job도 이 검사를 실행합니다.
 
 검사는 모든 실습/관련 링크·source 파일/해시·기록 판정 보존·18개 실제 브라우저 계산·잘못된 입력,
