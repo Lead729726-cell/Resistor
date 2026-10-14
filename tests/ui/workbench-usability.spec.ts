@@ -20,7 +20,7 @@ test('new circuit starts in its drawing workspace, keyboard focus stays in dialo
  const created=page.waitForResponse(r=>r.url().endsWith('/api/rpc')&&r.request().postDataJSON()?.method==='project.create');
  await page.getByTestId('project-create').click();const fresh=(await(await created).json()).result;
  await expect(page.getByTestId('tab-schematic')).toHaveAttribute('aria-selected','true');await expect(page.locator('.schematic-svg')).toBeVisible();
- await expect(page.getByTestId('run-simulation')).toBeDisabled();await page.getByTestId('next-run-context').click();
+ await expect(page.getByTestId('run-simulation')).toBeDisabled();await page.setViewportSize({width:1100,height:720});await expect(page.getByTestId('next-run-context')).toBeVisible();await page.getByTestId('next-run-context').click();
  await expect(page.getByTestId('readiness-simulation')).toContainText('빈 회로입니다');await expect(page.getByTestId('readiness-simulation').getByRole('button')).toBeDisabled();
  await expect(page.getByTestId('execution-readiness')).not.toContainText('PASS');await page.screenshot({path:`${evidence}/readiness-desktop.png`});
  await page.setViewportSize({width:390,height:844});const box=await dialog.evaluate(el=>({width:el.clientWidth,content:el.scrollWidth}));expect(box.content).toBeLessThanOrEqual(box.width+1);await page.screenshot({path:`${evidence}/readiness-mobile.png`});
