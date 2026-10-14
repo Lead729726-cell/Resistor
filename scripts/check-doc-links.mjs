@@ -9,6 +9,7 @@ const documents = ['README.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'SECURITY.md'
 const missing = [];
 documents.push('docs/literature-update-2026.md');
 documents.push('docs/native-runtime.md','docs/schematic-quickstart.md','docs/gds-schematic-conversion.md','docs/workbench-usability.md');
+documents.push('docs/physical-tools.md');
 documents.push('docs/product-editions.md','docs/website-design.md','docs/industry-layout-review.md');
 documents.push('docs/tutorial-library.md','docs/tutorial-site.md','docs/integrated-design.md');
 let checked = 0;

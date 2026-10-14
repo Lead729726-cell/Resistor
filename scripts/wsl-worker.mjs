@@ -19,7 +19,9 @@ export async function startWslWorker(workspace,{resourcesRoot=workspace,run=runN
   if(!pdk){const development=path.join(resourcesRoot,'release/native-runtimes/win32-x64/pdks');try{await access(development);pdk=development;}catch{pdk=path.join(workspace,'.runtime/native-pdks');}}
   const python=(await run('wsl.exe',[...prefix,'python3','-c','import pathlib; p=pathlib.Path.home()/".local/share/resistor/engine/bin/python3"; assert p.is_file(), "Run native-tools-setup.sh inside WSL first"; print(p)'])).trim();
   await run('wsl.exe',[...prefix,python,'-c','import klayout.db']);
-  const linuxPdk=await convert(pdk);
+  const cachedPdk=!settings.pdk_root?(await run('wsl.exe',[...prefix,'python3','-c',
+    'import pathlib,json; p=pathlib.Path.home()/".local/share/resistor/pdks"; m=p/"provenance.json"; d=json.loads(m.read_text()) if m.is_file() else {}; names=["libs.tech/magic/sky130A.tech","libs.tech/magic/sky130A.magicrc","libs.tech/netgen/sky130A_setup.tcl","libs.tech/ngspice/sky130.lib.spice"]; print(p if d.get("source")=="installed-public-SKY130A" and d.get("private_pdk_included") is False and d.get("open_pdks_commit")=="d400e26845538beaeb7cc5fdb9bfc06c30ea27cb" and all((p/"sky130A"/n).is_file() for n in names) else "")'])).trim():'';
+  const linuxPdk=cachedPdk||await convert(pdk);
   // All paths are argv entries; no caller data is interpolated into shell code.
   return startNativeWorker(workspace,{resourcesRoot,fetchImpl,runtimeKind:'wsl-linux',launch:{python:'wsl.exe',args:[...prefix,'env',`PATH=${(await run('wsl.exe',[...prefix,'python3','-c','import pathlib,os; print(str(pathlib.Path.home()/".local/share/resistor/tools/bin")+":"+os.environ["PATH"])'])).trim()}`, 'PYTHONUTF8=1',python,'-B',linuxRoot+'/workers/eda/native_entry.py','--detach','--stdin-config'],environment:process.env,extra:{PDK_ROOT:linuxPdk},workspace:linuxWorkspace}});
 }
