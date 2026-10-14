@@ -455,12 +455,14 @@ def edit(pid,c,mode,cell_name=None):
             return commit(restored,l,parent=p['revision'])
         l=load_layout(p); old=p['revision']; p['revision']=p['next_revision']; p['next_revision']+=1; p['redo_stack']=[]; p['undo_stack']=p.get('undo_stack',[])+[old]
         if mode=='schematic':
+            if c.get('type') in ('place_logic_gate','initialize_logic_demo') and p['cell'].upper().startswith('RES_LOGIC_'):raise EDAError('LOGIC_CELL_CONFLICT','The root cell cannot shadow the reserved reference-cell namespace.')
             if c.get('type')=='update_testbench': p['testbench']=testbench_validator(p)({**p.get('testbench',{}),**c.get('settings',{})})
             elif c.get('type')=='add_cell' and c.get('name','').lower()==p['cell'].lower():raise EDAError('INVALID_NAME','A schematic child cell cannot shadow the root cell name.')
             else: native.apply(p['schematic'],copy.deepcopy(c),cell_name)
             if p['example']=='schematic' and not cell_name:
                 ports=list(dict.fromkeys(d['pins']['P'] for d in p['schematic']['devices'] if d['kind']=='port' and d['pins'].get('P')))
                 p['ports']=ports;p['schematic']['ports']=ports
+            if c.get('type')=='initialize_logic_demo':p['testbench']=native.testbench({**p['testbench'],'analysis':'op'})
         elif c.get('type')=='update_device':
             if p['example']!='mosfet': raise EDAError('UNSUPPORTED','Inverter layout is a fixed public template. Edit schematic independently or modify actual geometry and rerun LVS.')
             if c.get('id')!='mn1': raise EDAError('UNSUPPORTED','Only the public mn1 MOS PCell is linked to layout regeneration.')
@@ -890,7 +892,7 @@ def simulation(run,p,folder,manifest,params):
         run['measurements']=measurements
         digital_units.verify(p,run,params)
         measurements=run['measurements']
-    if custom:run['reference_verification']={'schema_version':1,'kind':'custom-flat-numerical-analysis','source':'actual-ngspice-samples','checks':[],'pass':None,'scope':'Explicit DC sources; measured voltages/currents only. Functional constraints and transient excitation are not configured.'}
+    if custom:run['reference_verification']={'schema_version':1,'kind':'custom-flat-numerical-analysis','source':'actual-ngspice-samples','checks':[],'pass':None,'scope':'Explicit DC sources; measured voltages/currents only. Hierarchy is resolved and flattened for analysis; original schematic is preserved. Functional constraints and time-varying excitation are not configured.'}
     reference=run.get('reference_verification')
     verdict=run.get('digital_verification') or run.get('unit_verification') or reference
     result='unknown' if verdict and verdict.get('pass') is None else 'fail' if verdict and not verdict['pass'] else 'pass'

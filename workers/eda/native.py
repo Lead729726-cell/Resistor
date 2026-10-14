@@ -38,6 +38,9 @@ def validate_device(d):
         if net and (not isinstance(net,str) or not NET.fullmatch(net)): raise EDAError('INVALID_NET','Net names must use the supported SPICE identifier syntax.')
     if kind=='block':
         if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*',d.get('cell_name','')): raise EDAError('INVALID_NAME','Block target must be a schematic cell identifier.')
+    if 'pin_roles' in d:
+        roles=d['pin_roles']
+        if kind!='block' or not isinstance(roles,dict) or set(roles)!=set(pins) or any(role not in ('input','output','power') for role in roles.values()) or sum(role=='power' for role in roles.values())>2:raise EDAError('INVALID_PIN_ROLES','Block pin roles must cover its named ports; at most two power pins.')
     elif kind in {'nmos','pmos'}:
         if MODEL_KIND.get(d.get('model')) != kind: raise EDAError('UNSUPPORTED_MODEL','This device model is not in the tested public profile.')
         for pin in ('D','G','S','B'):
@@ -68,6 +71,13 @@ def base_pin_offsets(d):
     if kind in ('resistor','capacitor','voltage','current'): return {'+':(0,-44),'-':(0,44),'1':(0,-44),'2':(0,44),**({'B':(44,0)} if kind=='resistor' and d.get('model') else {})}
     if kind=='ground': return {'G':(0,-30)}
     if kind=='port': return {'P':(-30,0)}
+    if kind=='block' and d.get('pin_roles'):
+        roles=d['pin_roles'];result={};height=max(60,len(d['pins'])*24)
+        for role,x in [('input',-55),('output',73)]:
+            names=[pin for pin in d['pins'] if roles[pin]==role]
+            result.update({pin:(x,-(len(names)-1)*12+i*24) for i,pin in enumerate(names)})
+        for i,pin in enumerate(pin for pin in d['pins'] if roles[pin]=='power'):result[pin]=(10,(-1 if i==0 else 1)*(height/2+20))
+        return result
     keys=list(d.get('pins',{})); return {key:(-55,-(len(keys)-1)*12+i*24) for i,key in enumerate(keys)}
 
 def pin_offsets(d):
@@ -162,6 +172,13 @@ def validate(schematic,cell_name=None):
     return {'valid':not issues,'issues':issues,'connectivity_source':'geometric_graph' if graph else 'explicit_pin_net_ir','connectivity':graph,'limits':[]}
 
 def apply(schematic,c,cell_name=None):
+    if c.get('type')=='place_logic_gate':
+        import logic_composition
+        return logic_composition.place(schematic,c,cell_name)
+    if c.get('type')=='initialize_logic_demo':
+        if cell_name is not None or set(c)-{'type','kind'}:raise EDAError('INVALID_COMMAND','A logic demo starts only in a new empty root schematic.')
+        import logic_composition
+        return logic_composition.demo(schematic,c.get('kind'))
     ir=cell_ir(schematic,cell_name)
     ty=c.get('type'); devices=ir['devices']; d=next((d for d in devices if d['id']==c.get('id')),None)
     if ty=='add_device':
