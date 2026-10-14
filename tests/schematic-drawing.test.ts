@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {makePlacedDevice,pinOffsets,orthogonalBridge,pinBridge,engineeringValue} from '../packages/ui/src/schematic-drawing';
 import {isLocalWorkbench} from '../packages/contracts/src/index';
+import {logicPreview,connectionCommand} from '../packages/ui/src/logic-composition';
 test('local workstation routing keeps desktop/dev local and public hosting behind cloud auth',()=>{
   const descriptor=Object.getOwnPropertyDescriptor(globalThis,'location');
   try{for(const [protocol,hostname,port,expected] of [['file:','','',true],['http:','127.0.0.1','5173',true],['https:','example.com','5173',false],['http:','127.0.0.1','18766',false]] as const){Object.defineProperty(globalThis,'location',{value:{protocol,hostname,port},configurable:true});assert.equal(isLocalWorkbench(),expected);}}
@@ -11,6 +12,23 @@ test('horizontal resistor terminals retain polarity after clockwise rotation',()
   const d=makePlacedDevice('resistor',[],[100,200],'r',90);
   assert.deepEqual(pinOffsets(d)['+'],[44,0]);assert.deepEqual(pinOffsets(d)['-'],[-44,0]);
   assert.equal(d.parameters.value,1000);assert.deepEqual(d.pins,{'+':'','-':''});
+});
+
+test('role-aware gate terminals match native coordinates in every orientation; legacy blocks keep their coordinates',()=>{
+  const d=logicPreview('INV','u','U1',200,200);
+  assert.deepEqual(pinOffsets(d),{A:[-55,0],Y:[73,0],VPWR:[10,-68],VGND:[10,68]});
+  assert.deepEqual(pinOffsets({...d,rotation:90,mirror:true}),{A:[0,55],Y:[0,-73],VPWR:[68,-10],VGND:[-68,-10]});
+  assert.deepEqual(pinOffsets({...d,pin_roles:undefined}),{A:[-55,-36],Y:[-55,-12],VPWR:[-55,12],VGND:[-55,36]});
+  const nand=logicPreview('NAND2','n','U2',400,300);assert.deepEqual(Object.keys(nand.pins),['A0','A1','Y','VPWR','VGND']);
+  assert.equal(nand.pins.A0,'');assert.equal(nand.pins.VGND,'0');
+});
+
+test('output-to-input helper uses actual transformed terminals and does not invent a net or merge existing names',()=>{
+  const from=logicPreview('AND2','u1','U1',400,250),to=logicPreview('INV','u2','U2',700,300,90,true);
+  from.pins.Y='MID';to.pins.A='OTHER';const cmd=connectionCommand(from,'Y',to,'A','wire');
+  assert.deepEqual(cmd.points[0],[473,250]);assert.deepEqual(cmd.points.at(-1),[700,355]);assert.equal(cmd.net,undefined);
+  assert.equal(from.pins.Y,'MID');assert.equal(to.pins.A,'OTHER');
+  assert.throws(()=>connectionCommand(from,'missing',to,'A','bad'));assert.throws(()=>connectionCommand(from,'Y',from,'Y','same'));
 });
 test('new devices do not invent ground connections; only ground symbols name node zero',()=>{
   assert.deepEqual(makePlacedDevice('pmos',[],[0,0],'p').pins,{D:'',G:'',S:'',B:''});

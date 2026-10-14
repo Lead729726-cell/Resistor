@@ -1,11 +1,15 @@
-"""Explicit DC-source flat circuits: actual OP/static transient, no guessed bias."""
+"""Explicit DC-source circuits: actual OP/static transient, no guessed bias."""
 from pathlib import Path
 import native,design_tools,conversion
 from geometry import EDAError
 
 def prepare(p):
-    if any(d['kind']=='block' for d in p['schematic']['devices']):raise EDAError('CUSTOM_HIERARCHY','Custom numerical analysis currently requires a flat graph; hierarchical export remains available.')
-    return {**p,'schematic':conversion.resolved(p['schematic'])}
+    resolved=conversion.resolved(p['schematic'])
+    if any(d['kind']=='block' for d in resolved['devices']):
+        import digital_units
+        resolved.setdefault('ports',p['ports']);resolved=digital_units.flattened(resolved)
+        if len(resolved['devices'])>4096:raise EDAError('CUSTOM_ANALYSIS_LIMIT','Custom hierarchical analysis supports at most 4096 primitives.')
+    return {**p,'schematic':resolved}
 
 def extracted_terminal_nodes(netlist,ports):
     # Distributed PEX replaces a logical node by distinct terminal nodes.

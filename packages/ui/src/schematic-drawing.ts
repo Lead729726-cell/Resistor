@@ -9,7 +9,11 @@ export function pinOffsets(d:Device):Record<string,Point>{
   if(d.kind==='nmos'||d.kind==='pmos')offsets={D:[30,d.kind==='pmos'?42:-42],G:[-46,0],S:[30,d.kind==='pmos'?-42:42],B:[49,0]};
   else if(d.kind==='ground')offsets={G:[0,-30]};
   else if(d.kind==='port')offsets={P:[-30,0]};
-  else if(d.kind==='block'){const pins=Object.keys(d.pins);offsets=Object.fromEntries(pins.map((p,i)=>[p,[-55,-(pins.length-1)*12+i*24]]));}
+  else if(d.kind==='block'){
+    const pins=Object.keys(d.pins);offsets={};
+    if(d.pin_roles){for(const role of ['input','output','power'] as const){const group=pins.filter(p=>d.pin_roles?.[p]===role);group.forEach((p,i)=>{offsets[p]=role==='power'?[10,(i===0?-1:1)*(Math.max(60,pins.length*24)/2+20)]:[role==='input'?-55:73,-(group.length-1)*12+i*24];});}}
+    else offsets=Object.fromEntries(pins.map((p,i)=>[p,[-55,-(pins.length-1)*12+i*24]]));
+  }
   else offsets={'+':[0,-44],'-':[0,44],'1':[0,-44],'2':[0,44],...(d.kind==='resistor'&&d.model?{B:[44,0] as Point}:{})};
   const rotation=d.rotation??0;
   return Object.fromEntries(Object.entries(offsets).map(([p,[x,y]])=>{if(d.mirror)x=-x;const point=rotation===90?[-y,x]:rotation===180?[-x,-y]:rotation===270?[y,-x]:[x,y];return [p,point.map(value=>value===0?0:value) as Point];}));

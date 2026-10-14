@@ -174,7 +174,7 @@ def flattened(ir):
         if len(active)>64:raise EDAError('HIERARCHY_LIMIT','Flattening is limited to 64 levels.')
         for d in node['devices']:
             if d['kind']=='port':continue
-            pins={p:mapping.get(v,prefix+v) for p,v in d['pins'].items()}
+            pins={p:'0' if v=='0' else mapping.get(v,prefix+v) for p,v in d['pins'].items()}
             if d['kind']=='block':
                 name=d['cell_name']
                 if name not in cells:raise EDAError('MISSING_CELL','Flattening requires a defined child cell: '+name)
