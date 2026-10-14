@@ -37,6 +37,8 @@ M1 이후 Mac은 arm64, Intel Mac은 x64 파일을 사용하며 macOS 13 이상�
 
 ## Windows에서 전체 물리 도구 준비
 
+2026-10-14 공통 도구 설치 CLI와 WSL 실행기를 보강했습니다. 현재 개발 PC에서는 Edu와 Indust 모두 실제 DRC/LVS/PEX가 실행 가능하며, 각각 공개 인버터로 실행했습니다. 소스에서 `npm run tools:prepare` → `npm run tools:connect`를 사용합니다. [공통 설치·실행·원본 결과](physical-tools.md). 아래 수동 스크립트와 기존 설치 파일의 범위도 유지합니다.
+
 독립된 Ubuntu WSL이 이미 설치되어 있다면 Ubuntu 터미널에서 실행합니다.
 아직 없다면 Microsoft의 [WSL 설치 안내](https://learn.microsoft.com/windows/wsl/install)에
 따라 준비하세요. 앱은 WSL 설치·Windows 기능 변경·재부팅을 자동으로 수행하지 않습니다.

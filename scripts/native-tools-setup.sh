@@ -5,6 +5,7 @@ set -eu
 prefix="$HOME/.local/share/resistor/tools"
 engine="$HOME/.local/share/resistor/engine"
 build="$HOME/.local/share/resistor/tool-build"
+case "${RESISTOR_SKIP_SYSTEM_PACKAGES:-0}" in 0|1) ;; *) echo 'RESISTOR_SKIP_SYSTEM_PACKAGES must be 0 or 1.'; exit 1;; esac
 mkdir -p "$prefix" "$build"
 if [ "$(uname -s)" = Darwin ]; then
   command -v brew >/dev/null || { echo 'Install Homebrew from https://brew.sh first.'; exit 1; }
@@ -14,8 +15,11 @@ if [ "$(uname -s)" = Darwin ]; then
   python="$(brew --prefix python@3.13)/bin/python3.13"
 else
   command -v apt-get >/dev/null || { echo 'See docs/native-runtime.md for non-Debian systems.'; exit 1; }
-  sudo apt-get update
-  sudo apt-get install -y build-essential git curl python3 python3-venv tcl8.6-dev tk8.6-dev libx11-dev libxrender-dev libxext-dev libcairo2-dev libreadline-dev autoconf automake libtool pkg-config ngspice yosys iverilog xschem
+  if [ "${RESISTOR_SKIP_SYSTEM_PACKAGES:-0}" != 1 ]; then
+    if [ "$(id -u)" = 0 ]; then elevation=''; else elevation=sudo; fi
+    $elevation apt-get update
+    $elevation apt-get install -y build-essential git curl python3 python3-venv tcl8.6-dev tk8.6-dev libx11-dev libxrender-dev libxext-dev libcairo2-dev libreadline-dev autoconf automake libtool pkg-config ngspice yosys iverilog xschem
+  fi
   tcl_root=/usr
   python=python3
 fi

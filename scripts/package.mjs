@@ -1,4 +1,4 @@
-import { mkdir, cp, writeFile, stat, rm, readFile } from 'node:fs/promises';
+import { mkdir, cp, writeFile, stat, rm, readFile, realpath } from 'node:fs/promises';
 import path from 'node:path';
 import { packager } from '@electron/packager';
 import { copyNotices } from './notices.mjs';
@@ -27,8 +27,8 @@ await cp('examples/sky130',path.join(stage,'examples/sky130'),{recursive:true});
 await cp('node_modules/ws',path.join(stage,'node_modules/ws'),{recursive:true});
 for(const name of ['README.md','LICENSE','.dockerignore','product-edition.json'])await cp(name,path.join(stage,name));
 await writeFile(path.join(stage,'product-edition.json'),JSON.stringify({schema_version:1,edition:edition.edition})+'\n');
-await cp(nativeRuntime,path.join(stage,'native-runtime'),{recursive:true,verbatimSymlinks:true});
-await mkdir(path.join(stage,'scripts'),{recursive:true});for(const name of ['edition-workspace.mjs','runtime.mjs','local-http.mjs','worker.mjs','native-worker.mjs','wsl-worker.mjs','engine-settings.mjs','native-tools-setup.sh','docker-cli.mjs','desktop-diagnostics.mjs','cloud.mjs','cloud-backup.mjs','commercial-agent.mjs'])await cp(path.join('scripts',name),path.join(stage,'scripts',name));
+await cp(await realpath(nativeRuntime),path.join(stage,'native-runtime'),{recursive:true,verbatimSymlinks:true});
+await mkdir(path.join(stage,'scripts'),{recursive:true});for(const name of ['edition-workspace.mjs','runtime.mjs','local-http.mjs','worker.mjs','native-worker.mjs','wsl-worker.mjs','engine-settings.mjs','native-tools-setup.sh','physical-tools.mjs','physical-tools-lock.json','physical-tools-qa.mjs','wsl-tools-bootstrap.sh','docker-cli.mjs','desktop-diagnostics.mjs','cloud.mjs','cloud-backup.mjs','commercial-agent.mjs'])await cp(path.join('scripts',name),path.join(stage,'scripts',name));
 await build({entryPoints:['scripts/design-assistant.mjs'],outfile:path.join(stage,'scripts/design-assistant.mjs'),bundle:true,platform:'node',target:'node24',format:'esm',legalComments:'linked'});
 await build({entryPoints:['scripts/mcp.mjs'],outfile:path.join(stage,'scripts/mcp.mjs'),bundle:true,platform:'node',target:'node24',format:'esm',external:['ws'],legalComments:'linked',banner:{js:"import {createRequire as __registerCreateRequire} from 'node:module'; const require=__registerCreateRequire(import.meta.url);"}});
 await build({entryPoints:['scripts/process-run.ts'],outfile:path.join(stage,'scripts/process-engine.mjs'),bundle:true,platform:'node',target:'node24',format:'esm',legalComments:'linked'});
