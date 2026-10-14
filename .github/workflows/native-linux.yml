@@ -43,6 +43,12 @@ jobs:
         run: npm run test:industry-review
         env:
           REGISTER_NATIVE_PHYSICAL_QA: '1'
+      - name: Save actual Indust review engine evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: Resistor-Indust-review-Linux-evidence
+          path: docs/evidence/industry-review/native-verification.json
+          if-no-files-found: error
       - run: npm run build
       - run: node scripts/package.mjs --stage-only --linux
       - run: node scripts/linux-cross-build.mjs
