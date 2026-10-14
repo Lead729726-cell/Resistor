@@ -5,6 +5,7 @@ import {createHash} from 'node:crypto';
 import {build} from 'esbuild';
 import {calculators,defaultInputs} from '../packages/calculators/src/index.ts';
 import {workflows,probes,paths} from './tutorial-library-content.mjs';
+import {prepareWorkbenchSite} from './download-workbench.mjs';
 
 const repo='https://github.com/Lead729726-cell/Resistor';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -122,6 +123,7 @@ export async function prepareLearningSite(root=process.cwd(),tag){
  await writeFile(path.join(site,'learning-assets.json'),JSON.stringify(manifest,null,2)+'\n');
  const ignoreFile=path.join(site,'.vercelignore');let ignore=await readFile(ignoreFile,'utf8');for(const pattern of ['!tutorial-library.html','!learning.css','!learning.js','!learning-calculators.js','!learning-catalog.json','!learning-records.json','!learning-handbook.md','!learning-assets.json','!learning/','!learning/**','!learning-assets/','!learning-assets/**'])if(!ignore.split('\n').includes(pattern))ignore+='\n'+pattern;await writeFile(ignoreFile,ignore.trimEnd()+'\n');
  console.log(JSON.stringify({tutorial_library:'/tutorial/library/',...summary.counts,catalog_source:latest.source_version,new_video_recorded:false}));
+ await prepareWorkbenchSite(root);
  return summary;
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))await prepareLearningSite();

@@ -1,5 +1,7 @@
 # Resistor
 
+**Resistor Edu / Industry**: 교육용과 전문 작업용을 브랜치·저장 폴더·Codex 작업 공간으로 나눕니다. Edu에는 8개 단계별 실습과 학습 기록·보고서를 추가했습니다. [구성·실행·MCP 연동](docs/product-editions.md) · [버전 선택](https://resistor-downloads.vercel.app/editions/). 현재 v0.27.0 설치 파일과 새 소스 버전을 구분합니다.
+
 [전체 튜토리얼](https://resistor-downloads.vercel.app/tutorial/library/): 최근 설치·업데이트·편집 개선 35개 작업 흐름, 모든 template/가산기/CPU 59종과 계산기 18종을 실습으로 제공합니다. 포트·실제 하위 셀·입력·결과·오류 복구·원본 기록을 연결하고 기존 한국어 영상 3편은 촬영 버전 그대로 보존합니다. [구성·검증·갱신](docs/tutorial-library.md).
 
 **v0.27 작업 흐름 개선**: 빈 회로도 시작, 이름·공정으로 프로젝트 열기, 50개씩 목록 표시와 키보드 대화창 이동을 지원합니다. **다음 실행**에서 준비 사항을 확인하고, 실행 목록·파형·로그를 같은 결과에 맞춥니다. 이전 결과의 원인을 표시하며 수치의 최신성과 기능적 PASS/FAIL을 구분합니다. [사용 안내와 실제 검증](docs/workbench-usability.md).

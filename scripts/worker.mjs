@@ -103,6 +103,6 @@ export async function stopDockerWorker(workspace,{run=exec,fetchImpl=fetch}={}){
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   const action=process.argv[2]??'start';
-  try{if(action==='stop'){await stopWorker();console.log('MOS worker stopped. Projects and snapshots preserved.');}else{const config=await startWorker();if(action==='doctor'){const r=await workerRpc(config,'toolchain.doctor');console.log(JSON.stringify(r,null,2));}else console.log(`MOS worker ready at ${config.url}`);}}
+  try{const {getProductEdition,prepareEditionWorkspace}=await import('./edition-workspace.mjs');const root=process.cwd(),edition=getProductEdition({root}),workspace=await prepareEditionWorkspace({root,edition,workspace:process.env.MOS_WORKSPACE});if(action==='stop'){await stopWorker(workspace);console.log(edition.name+' worker stopped. Projects and snapshots preserved.');}else{const config=await startWorker(workspace,{resourcesRoot:root});if(action==='doctor'){const r=await workerRpc(config,'toolchain.doctor');console.log(JSON.stringify(r,null,2));}else console.log(`${edition.name} worker ready at ${config.url}`);}}
   catch(e){console.error(e.message);process.exitCode=1;}
 }

@@ -1,3 +1,4 @@
+import {productEdition} from './product-edition';
 import {isLocalWorkbench} from '@mos/contracts';
 import { useEffect, useRef, useState } from 'react';
 import { localRpc, type BackendSetup, type AnalysisSetup, type CurrentFlow, type Layer, type Project, type Run, type Scene } from '@mos/contracts';
@@ -162,7 +163,7 @@ export default function StandaloneViewer({ onExit }: { onExit: () => void }) {
   useEffect(()=>{const handler=(e:KeyboardEvent)=>{if(!shortcutHelpOpen&&resolveShortcut('global',e,{apple:appleKeyboard(),textEditing:editingText(e.target),modalOpen:!!modal})?.id==='help'){e.preventDefault();setShortcutHelpOpen(true);}};window.addEventListener('keydown',handler);return()=>window.removeEventListener('keydown',handler);},[shortcutHelpOpen,modal]);
   useEffect(()=>{const guard=(e:KeyboardEvent)=>{if((shortcutHelpOpen||modal)&&e.target instanceof Element&&!e.target.closest('[role="dialog"]')){e.preventDefault();e.stopImmediatePropagation();if(e.key==='Escape'){setShortcutHelpOpen(false);setModal(null);}}};window.addEventListener('keydown',guard,true);return()=>window.removeEventListener('keydown',guard,true);},[shortcutHelpOpen,modal]);
   useEffect(()=>window.mos?.onMenuCommand?.(command=>{if(document.querySelector('[data-update-dialog]'))return;if(command==='shortcuts'&&!modal)setShortcutHelpOpen(true);else if((command==='undo'||command==='redo')&&editingText(document.activeElement))document.execCommand(command);}),[modal]);
-  useEffect(() => { document.title = 'Resistor · Local GDS Viewer'; }, []);
+  useEffect(() => { document.title = productEdition.name+' · Local GDS Viewer'; }, []);
   useEffect(() => () => { sequence.current++; }, []);
 
   const execute = async (label: string, work: () => Promise<void>) => {

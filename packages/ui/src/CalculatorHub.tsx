@@ -4,9 +4,10 @@ import { calculateSafe, calculators, defaultInputs, displayNumber, getCalculator
 import './calculator-hub.css';
 import { RegisterMark } from './Brand';
 import AppearanceControl from './AppearanceControl';
+import {productEdition} from './product-edition';
 
 function titleFor(calculator: CalculatorDefinition) {
-  return `${calculator.title} | Resistor engineering calculators`;
+  return `${calculator.title} | ${productEdition.name} engineering calculators`;
 }
 
 function updateSeo(calculator: CalculatorDefinition) {
@@ -49,7 +50,7 @@ export default function CalculatorHub() {
     <aside className="calculator-nav" aria-label="Calculators">
       <div className="calculator-brand">
         <span className="calculator-logo"><RegisterMark size={28}/></span>
-        <div><strong>Resistor</strong><small>electronics calculator hub</small></div>
+        <div><strong>{productEdition.name}</strong><small>electronics calculator hub</small></div>
       </div>
       <label className="calculator-search">
         <Search size={15}/>

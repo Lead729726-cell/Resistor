@@ -1,7 +1,7 @@
 name: Source validation
 on:
   push:
-    branches: [main]
+    branches: [main, codex/resistor-edu, codex/resistor-indust]
   pull_request:
   workflow_dispatch:
 permissions:
@@ -42,6 +42,10 @@ jobs:
         run: npm run test:core
       - name: Check source types
         run: npm run typecheck
+      - name: Edition isolation and actual MCP identity
+        run: npm run test:editions
+      - name: Build both product editions
+        run: npm run build:edu && npm run build:indust
       - name: Build web and process engine
         run: npm run build
       - name: Check publication candidates

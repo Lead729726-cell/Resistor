@@ -5,6 +5,11 @@ import { copyNotices } from './notices.mjs';
 import { build } from 'esbuild';
 import { signMacApp } from './mac-signing.mjs';
 import {prepareNativeRuntime} from './prepare-native-runtime.mjs';
+import {getProductEdition} from './edition-workspace.mjs';
+import renderer from '../apps/desktop/renderer.cjs';
+const edition=getProductEdition();
+const packageName=edition.edition==='edu'?'Resistor Edu':'Resistor';
+const rendererRoot=renderer.rendererDirectory(process.cwd(),edition);
 const targetPlatform=process.argv.includes('--mac')?'darwin':process.argv.includes('--linux')?'linux':process.platform;
 const targetArch=process.argv.includes('--arm64')?'arm64':process.argv.includes('--x64')?'x64':process.arch;
 if(targetPlatform!==process.platform||targetArch!==process.arch)throw Error('Build each native engine and installer on its own CPU/OS. Cross packages cannot reuse another platform engine.');
@@ -15,21 +20,23 @@ if(path.dirname(stage)!==release||path.dirname(release)!==process.cwd())throw ne
 await rm(stage,{recursive:true,force:true});
 await mkdir(stage,{recursive:true});
 await copyNotices(path.join(stage,'licenses'));
-for(const folder of ['dist','apps/desktop','workers/eda','adapters','docs','platform/cloud','platform/commercial'])await cp(folder,path.join(stage,folder),{recursive:true,filter:source=>!source.includes('__pycache__')&&!source.includes('vendor')&&!source.includes('.secrets')&&!source.includes(`${path.sep}evidence${path.sep}`)&&!source.endsWith(`${path.sep}evidence`)});
+await cp(rendererRoot,path.join(stage,'dist'),{recursive:true});
+for(const folder of ['apps/desktop','workers/eda','adapters','docs','platform/cloud','platform/commercial'])await cp(folder,path.join(stage,folder),{recursive:true,filter:source=>!source.includes('__pycache__')&&!source.includes('vendor')&&!source.includes('.secrets')&&!source.includes(`${path.sep}evidence${path.sep}`)&&!source.endsWith(`${path.sep}evidence`)});
 // Runtime samples only; large recordings and test evidence are delivered separately.
 await cp('examples/sky130',path.join(stage,'examples/sky130'),{recursive:true});
 await cp('node_modules/ws',path.join(stage,'node_modules/ws'),{recursive:true});
-for(const name of ['README.md','LICENSE','.dockerignore'])await cp(name,path.join(stage,name));
+for(const name of ['README.md','LICENSE','.dockerignore','product-edition.json'])await cp(name,path.join(stage,name));
+await writeFile(path.join(stage,'product-edition.json'),JSON.stringify({schema_version:1,edition:edition.edition})+'\n');
 await cp(nativeRuntime,path.join(stage,'native-runtime'),{recursive:true,verbatimSymlinks:true});
-await mkdir(path.join(stage,'scripts'),{recursive:true});for(const name of ['runtime.mjs','local-http.mjs','worker.mjs','native-worker.mjs','wsl-worker.mjs','engine-settings.mjs','native-tools-setup.sh','docker-cli.mjs','desktop-diagnostics.mjs','cloud.mjs','cloud-backup.mjs','commercial-agent.mjs'])await cp(path.join('scripts',name),path.join(stage,'scripts',name));
+await mkdir(path.join(stage,'scripts'),{recursive:true});for(const name of ['edition-workspace.mjs','runtime.mjs','local-http.mjs','worker.mjs','native-worker.mjs','wsl-worker.mjs','engine-settings.mjs','native-tools-setup.sh','docker-cli.mjs','desktop-diagnostics.mjs','cloud.mjs','cloud-backup.mjs','commercial-agent.mjs'])await cp(path.join('scripts',name),path.join(stage,'scripts',name));
 await build({entryPoints:['scripts/design-assistant.mjs'],outfile:path.join(stage,'scripts/design-assistant.mjs'),bundle:true,platform:'node',target:'node24',format:'esm',legalComments:'linked'});
 await build({entryPoints:['scripts/mcp.mjs'],outfile:path.join(stage,'scripts/mcp.mjs'),bundle:true,platform:'node',target:'node24',format:'esm',external:['ws'],legalComments:'linked',banner:{js:"import {createRequire as __registerCreateRequire} from 'node:module'; const require=__registerCreateRequire(import.meta.url);"}});
 await build({entryPoints:['scripts/process-run.ts'],outfile:path.join(stage,'scripts/process-engine.mjs'),bundle:true,platform:'node',target:'node24',format:'esm',legalComments:'linked'});
 const metadata=JSON.parse(await readFile('package.json','utf8'));
-await writeFile(path.join(stage,'package.json'),JSON.stringify({name:'resistor-eda',productName:'Resistor',description:metadata.description,author:'Resistor contributors',license:'MIT',version:metadata.version,main:'apps/desktop/main.cjs',private:true}));
+await writeFile(path.join(stage,'package.json'),JSON.stringify({name:'resistor-eda',productName:edition.name,description:metadata.description,author:'Resistor contributors',license:'MIT',version:metadata.version,main:'apps/desktop/main.cjs',private:true}));
 if(process.argv.includes('--stage-only')){console.log(`Staged Resistor ${metadata.version} resources without private runtime data.`);process.exit(0);}
 const platform=targetPlatform;const arch=targetArch;
 if(platform==='win32'&&arch!=='x64')throw Error('Windows release is verified for x64 only.');
-const result=await packager({dir:stage,out:`release/${metadata.version}`,name:'Resistor',icon:platform==='win32'?'apps/desktop/assets/register.ico':'apps/desktop/assets/register.icns',platform,arch,electronVersion:'44.5.0',overwrite:true,asar:false,prune:false,appVersion:metadata.version,appBundleId:'org.register.eda',appCategoryType:'public.app-category.developer-tools',darwinDarkModeSupport:true,appCopyright:'Resistor contributors',win32metadata:{ProductName:'Resistor',FileDescription:'Resistor EDA 공동 설계'}});
+const result=await packager({dir:stage,out:`release/${metadata.version}`,name:packageName,icon:platform==='win32'?'apps/desktop/assets/register.ico':'apps/desktop/assets/register.icns',platform,arch,electronVersion:'44.5.0',overwrite:true,asar:false,prune:false,appVersion:metadata.version,appBundleId:edition.bundle_id,appCategoryType:'public.app-category.developer-tools',darwinDarkModeSupport:true,appCopyright:'Resistor contributors',win32metadata:{ProductName:edition.name,FileDescription:edition.purpose}});
 if(!result.length)throw Error('No package was created. Build macOS .app/DMG on the prepared macOS workflow; this Windows host cannot create the required symlinks.');
-for(const folder of result){if(platform==='win32'){const exe=path.join(folder,'Resistor.exe');const info=await stat(exe);await writeFile(path.join(folder,'Open-Viewer.cmd'),'@echo off\r\n"%~dp0Resistor.exe" --viewer\r\n');console.log(`Windows executable: ${exe} (${info.size} bytes)`);}else{await signMacApp(path.join(folder,'Resistor.app'));console.log(`Ad-hoc signed Mac application prepared: ${folder}. Developer ID/notarization are not complete.`);}}
+for(const folder of result){if(platform==='win32'){const exe=path.join(folder,packageName+'.exe');const info=await stat(exe);await writeFile(path.join(folder,'Open-Viewer.cmd'),'@echo off\r\n"%~dp0'+packageName+'.exe" --viewer\r\n');console.log(`Windows executable: ${exe} (${info.size} bytes)`);}else{await signMacApp(path.join(folder,packageName+'.app'));console.log(`Ad-hoc signed Mac application prepared: ${folder}. Developer ID/notarization are not complete.`);}}

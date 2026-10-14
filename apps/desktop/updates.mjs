@@ -18,7 +18,8 @@ async function publicFetch(url,{fetchImpl,signal}){
   throw Error('업데이트 다운로드 주소가 너무 많이 이동했습니다.');
 }
 export class DesktopUpdater{
-  constructor({version,platform=process.platform,arch=process.arch,userData,fetchImpl=fetch,packaged=true,install,clock=Date.now}){
+  constructor({version,edition='indust',platform=process.platform,arch=process.arch,userData,fetchImpl=fetch,packaged=true,install,clock=Date.now}){
+    if(!['edu','indust'].includes(edition))throw Error('Unknown product edition');this.edition=edition;
     this.platform=platformKey(platform,arch);this.fetchImpl=fetchImpl;this.folder=path.join(userData,'updates');this.install=install;this.clock=clock;this.packaged=packaged;this.active=null;this.abort=null;this.file=null;this.lastAuto=0;
     this.state={status:this.platform?'idle':'unsupported',currentVersion:version,platform:this.platform,settings:{automatic:true,channel:'preview'},update:null,downloadedBytes:0,totalBytes:0,message:'',checkedAt:null,packaged,receipt:null};
   }
@@ -36,6 +37,7 @@ export class DesktopUpdater{
     this.state.settings={automatic:p.automatic,channel:p.channel};this.state.update=null;this.file=null;this.state.status='idle';return this.status();
   }
   async check({automatic=false}={}){
+    if(this.edition==='edu'){this.state.status='unsupported';this.state.update=null;this.file=null;this.state.message='Resistor Edu 전용 설치 파일·업데이트는 아직 공개되지 않았습니다. Indust 설치 파일로 교육용 앱을 교체하지 않습니다.';return this.status();}
     if(!this.platform)return this.status();if(this.active)return this.status();
     if(automatic&&(!this.state.settings.automatic||this.clock()-this.lastAuto<15*60*1000))return this.status();
     this.lastAuto=this.clock();this.state.status='checking';this.state.message='';this.state.update=null;this.file=null;
@@ -52,6 +54,7 @@ export class DesktopUpdater{
     })();try{return await this.active;}finally{this.active=null;}
   }
   async download(){
+    if(this.edition==='edu')throw Error('Edu 전용 업데이트 파일이 필요합니다.');
     if(this.active)return this.status();if(!this.state.update||!['available','error','offline','ready'].includes(this.state.status))throw Error('새 버전을 먼저 확인하세요.');
     const {asset,tag}=this.state.update;validateAsset({name:asset.name,browser_download_url:asset.url.replace(/\?download=1$/,''),size:asset.bytes,digest:'sha256:'+asset.sha256},tag,this.platform);
     this.abort=new AbortController();const signal=AbortSignal.any([this.abort.signal,AbortSignal.timeout(15*60*1000)]);
@@ -74,6 +77,7 @@ export class DesktopUpdater{
   }
   cancel(){this.abort?.abort();return this.status();}
   async apply(){
+    if(this.edition==='edu')throw Error('Edu를 Indust 설치 파일로 교체할 수 없습니다.');
     if(this.active||this.state.status!=='ready'||!this.file||!this.state.update)throw Error('검증된 다운로드가 준비되어야 합니다.');
     if(!this.packaged)throw Error('소스 실행 환경에서는 설치 앱을 교체하지 않습니다. 다운로드 사이트에서 설치하세요.');
     this.active=(async()=>{try{

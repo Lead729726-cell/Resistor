@@ -2,9 +2,16 @@ import {McpServer} from '@modelcontextprotocol/sdk/server/mcp.js';
 import {StdioServerTransport} from '@modelcontextprotocol/sdk/server/stdio.js';
 import {z} from 'zod/v4';
 import {runtimeConfig,workerRpc} from './runtime.mjs';
-const workspace=process.env.MOS_WORKSPACE||process.cwd();
+import {getProductEdition,prepareEditionWorkspace} from './edition-workspace.mjs';
+import {readFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+const resourcesRoot=fileURLToPath(new URL('../',import.meta.url));
+const edition=getProductEdition({root:resourcesRoot});
+const workspace=await prepareEditionWorkspace({root:resourcesRoot,edition,workspace:process.env.MOS_WORKSPACE});
 const config=await runtimeConfig(workspace);
-const server=new McpServer({name:'register-eda',version:'0.12.0'});
+const version=JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8')).version;
+const productContext={product_id:edition.id,name:edition.name,edition:edition.edition,branch:edition.branch,workspace,engine_url:config.url,shared_engine_implementation:true,learning_check_is_verification:false,foundry_signoff:false,tutorial_url:edition.tutorial_url};
+const server=new McpServer({name:edition.mcp_name,version},{instructions:`This server is ${edition.name} (${edition.id}), branch ${edition.branch}. Use register_product_context to confirm the selected workspace. Edu learning completion is never engine PASS. Preserve actual run status, freshness, math and geometry.`});
 const id=z.string().regex(/^[a-f0-9]{32}$/);
 const decimal=z.string().regex(/^-?\d{1,18}$/);
 const point=z.tuple([decimal,decimal]);
@@ -18,7 +25,8 @@ const operation=z.discriminatedUnion('type',[
 ]);
 let submissions=0;
 async function native(method,params={},cost=0){if(submissions+cost>32)throw new Error('MCP session native job budget exhausted (32). Start a new explicitly authorized session to continue.');submissions+=cost;const value=await workerRpc(config,method,params);if(!value.ok)throw Object.assign(new Error(value.error.message),{code:value.error.code});return value.result;}
-function tool(name,description,inputSchema,callback,{readOnly=true,idempotent=readOnly}={}){server.registerTool(name,{description,inputSchema,annotations:{readOnlyHint:readOnly,destructiveHint:false,idempotentHint:idempotent,openWorldHint:false}},async args=>{try{const output=await callback(args);return {content:[{type:'text',text:JSON.stringify(output)}],structuredContent:{result:output}};}catch(e){return {isError:true,content:[{type:'text',text:JSON.stringify({code:e.code||'AGENT_BOUNDARY',message:e.message})}]};}});}
+function tool(name,description,inputSchema,callback,{readOnly=true,idempotent=readOnly}={}){server.registerTool(name,{description,inputSchema,annotations:{readOnlyHint:readOnly,destructiveHint:false,idempotentHint:idempotent,openWorldHint:false}},async args=>{try{const output=await callback(args);return {content:[{type:'text',text:JSON.stringify(output)}],structuredContent:{result:output,product:{id:edition.id,name:edition.name,edition:edition.edition}}};}catch(e){return {isError:true,content:[{type:'text',text:JSON.stringify({code:e.code||'AGENT_BOUNDARY',message:e.message})}]};}});}
+tool('register_product_context','Identify Resistor Edu/Indust, the selected workspace, branch and learning/verification boundary. No credentials or provider calls.',{},()=>productContext);
 tool('register_doctor','Actual native tool/PDK availability and provenance. No provider API calls.',{},()=>native('toolchain.doctor'));
 tool('register_projects','List this explicitly selected local workspace projects.',{},()=>native('project.list'));
 tool('register_snapshot','Read schematic, integer scene subset and actual run references of a project.',{project_id:id,max_shapes:z.number().int().min(1).max(2000).default(500)},async p=>({project:await native('project.snapshot',{project_id:p.project_id}),scene:await native('view.get_scene',p)}));
