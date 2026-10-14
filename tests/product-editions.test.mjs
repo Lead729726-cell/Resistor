@@ -34,6 +34,14 @@ test('Edu data and engine do not reuse or overwrite the historical workspace',as
  await writeFile(path.join(workspace,'.runtime/product-context.json'),'{"product_id":"resistor.indust"}');await assert.rejects(prepareEditionWorkspace({root,edition:edu}),/another product/);
  assert.equal(await prepareEditionWorkspace({root,edition:indust}),root);
 });
+test('matching Edu registry reuses its workspace; another checkout or product does not',async t=>{
+ const root=await fixture(t),workspace=path.join(root,'existing-edu');await mkdir(path.join(root,'.runtime'),{recursive:true});await mkdir(path.join(workspace,'.runtime'),{recursive:true});
+ await writeFile(path.join(workspace,'.runtime/product-context.json'),JSON.stringify({product_id:'resistor.edu'}));
+ const file=path.join(root,'.runtime/product-workspaces.json'),entry={checkout:root,existing_demo_workspace:workspace};await writeFile(file,JSON.stringify({edu:entry}));assert.equal(defaultEditionWorkspace(root,edu),workspace);
+ await writeFile(file,JSON.stringify({edu:{...entry,checkout:path.join(root,'another-checkout')}}));assert.notEqual(defaultEditionWorkspace(root,edu),workspace);
+ await writeFile(file,JSON.stringify({edu:entry}));await writeFile(path.join(workspace,'.runtime/product-context.json'),JSON.stringify({product_id:'resistor.indust'}));assert.notEqual(defaultEditionWorkspace(root,edu),workspace);
+ assert.equal(JSON.parse(await readFile(path.join(workspace,'.runtime/product-context.json'),'utf8')).product_id,'resistor.indust');
+});
 test('app names are distinct while Indust keeps existing user designs in place',()=>{
  const observed=[];for(const edition of [edu,indust]){const app={getPath:()=>os.tmpdir(),setName:name=>observed.push(name),setPath:(_key,value)=>observed.push(value)};configureAppIdentity(app,{edition});}
  assert.deepEqual(observed,[edu.name,path.join(os.tmpdir(),'Resistor Edu'),indust.name,path.join(os.tmpdir(),'레지스터')]);
@@ -52,6 +60,6 @@ test('Edu updater cannot download or apply a historical Indust installer',async 
 for(const edition of [edu,indust])test('real MCP handshake identifies '+edition.name+' without exposing credentials',async t=>{
  const workspace=await fixture(t);const transport=new StdioClientTransport({command:process.execPath,args:[path.resolve(process.env.REGISTER_MCP_ENTRY||'scripts/mcp.mjs')],env:{RESISTOR_EDITION:edition.edition,MOS_WORKSPACE:workspace},stderr:'pipe'});
  const client=new Client({name:'edition-qa',version:'1.0.0'});t.after(()=>client.close());await client.connect(transport);
- assert.equal(client.getServerVersion().name,edition.mcp_name);const tools=await client.listTools();assert.equal(tools.tools.length,48);
+ assert.equal(client.getServerVersion().name,edition.mcp_name);const tools=await client.listTools();assert.equal(tools.tools.length,edition.edition==='edu'?58:48);
  const result=await client.callTool({name:'register_product_context',arguments:{}});assert.equal(result.isError,undefined);assert.equal(result.structuredContent.result.product_id,edition.id);assert.equal(result.structuredContent.product.id,edition.id);assert.equal(result.structuredContent.result.workspace,workspace);assert.equal(result.structuredContent.result.foundry_signoff,false);assert(!JSON.stringify(result).includes('token'));
 });

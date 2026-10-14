@@ -2,9 +2,10 @@ import {mkdir,readFile,writeFile,cp} from 'node:fs/promises';
 import {randomBytes} from 'node:crypto';
 import path from 'node:path';
 import {createRequire} from 'node:module';
+import {readFileSync} from 'node:fs';
 const require=createRequire(import.meta.url);
 export const {getProductEdition}=require('../apps/desktop/product-edition.cjs');
-export function defaultEditionWorkspace(root,edition){return edition.edition==='edu'?path.join(path.resolve(root),'.runtime/editions/edu/workspace'):path.resolve(root);}
+export function defaultEditionWorkspace(root,edition){if(edition.edition==='edu'){try{const registry=JSON.parse(readFileSync(path.join(root,'.runtime/product-workspaces.json'),'utf8')),entry=registry.edu;if(entry?.checkout&&path.resolve(entry.checkout)===path.resolve(root)&&path.isAbsolute(entry.existing_demo_workspace)){const marker=JSON.parse(readFileSync(path.join(entry.existing_demo_workspace,'.runtime/product-context.json'),'utf8'));if(marker.product_id==='resistor.edu')return path.resolve(entry.existing_demo_workspace);}}catch(e){if(e.code!=='ENOENT')throw e;}}return edition.edition==='edu'?path.join(path.resolve(root),'.runtime/editions/edu/workspace'):path.resolve(root);}
 export async function prepareEditionWorkspace({root=process.cwd(),workspace,edition=getProductEdition({root})}){
   root=path.resolve(root);workspace=path.resolve(workspace??defaultEditionWorkspace(root,edition));
   if(edition.edition==='indust')return workspace;

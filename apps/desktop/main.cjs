@@ -96,6 +96,7 @@ async function boot(){
         return {ok:true,result:await engineSettings(workspace)};
       }
       const runtime=await ensureRuntime();
+      if(typeof payload.method==='string'&&payload.method.startsWith('learning.'))return await (await import(pathToFileURL(path.join(root,'scripts/education-service.mjs')))).educationRpc(runtime,payload.method,payload.params??{}, {edition:productEdition.edition});
       if(typeof payload.method==='string'&&payload.method.startsWith('assistant.'))return await assistantRpc(runtime,payload.method,payload.params??{});
       return await workerRpc(runtime,payload.method,payload.params??{});
     }catch(e){return {ok:false,error:{code:'WORKER_UNAVAILABLE',message:e.message}};}

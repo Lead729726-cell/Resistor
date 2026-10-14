@@ -13,6 +13,7 @@ const devPort=Number(process.env.REGISTER_DEV_PORT??edition.dev_port);
 if(!Number.isSafeInteger(devPort)||devPort<1024||devPort>65535)throw new Error('REGISTER_DEV_PORT must be a port from 1024 to 65535.');
 const localOrigin=`http://127.0.0.1:${devPort}`;
 export default defineConfig({
+  optimizeDeps:{entries:['index.html']},
   define:{__RESISTOR_EDITION__:JSON.stringify(edition.edition)},
   base:'./',resolve:{alias:{'@mos/contracts':path.resolve('packages/contracts/src/index.ts'),'@mos/ui':path.resolve('packages/ui/src/index.ts'),'@mos/viewer':path.resolve('packages/viewer/src/index.ts'),'@mos/cloud':path.resolve('packages/cloud/src/index.ts'),'@mos/importer':path.resolve('packages/importer/src/index.ts')}},
   esbuild:{jsx:'automatic'}, build:{outDir:process.env.RESISTOR_BUILD_DIR||'dist',sourcemap:true},server:{host:'127.0.0.1',port:devPort,strictPort:true,cors:false,
@@ -22,7 +23,7 @@ export default defineConfig({
     const origin=req.headers.origin;if(req.method!=='POST'||(origin&&origin!==localOrigin)||req.headers['sec-fetch-site']==='cross-site'){res.writeHead(403);res.end();return;}
     if(!req.headers['content-type']?.startsWith('application/json')){res.writeHead(415);res.end();return;}
     let body='';for await(const chunk of req){body+=chunk;if(body.length>32*1024*1024){res.writeHead(413);res.end();return;}}
-    try {const payload=JSON.parse(body);const config=await runtimeConfig(workspace);const result=typeof payload.method==='string'&&payload.method.startsWith('assistant.')?await assistantRpc(config,payload.method,payload.params??{}):await workerRpc(config,payload.method,payload.params??{});res.writeHead(200,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(result));}
+    try {const payload=JSON.parse(body);const config=await runtimeConfig(workspace);const result=typeof payload.method==='string'&&payload.method.startsWith('learning.')?await (await import(pathToFileURL(path.resolve('scripts/education-service.mjs')).href)).educationRpc(config,payload.method,payload.params??{}, {edition:edition.edition}):typeof payload.method==='string'&&payload.method.startsWith('assistant.')?await assistantRpc(config,payload.method,payload.params??{}):await workerRpc(config,payload.method,payload.params??{});res.writeHead(200,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(result));}
     catch(e){res.writeHead(503,{'Content-Type':'application/json'});res.end(JSON.stringify({ok:false,error:{code:'WORKER_UNAVAILABLE',message:e instanceof Error?e.message:'Worker unavailable'}}));}
   });}}]
 });

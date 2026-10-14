@@ -1,0 +1,344 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-14T04:48:47.590Z",
+  "edition": "edu",
+  "lesson_id": "a7be820d-da68-4feb-afe2-7cf7feab6e32",
+  "project_id": "6d967c5fcfab4e449b795c4208f329e1",
+  "context": {
+    "schema_version": 1,
+    "edition": "edu",
+    "product_id": "resistor.edu",
+    "project_id": "6d967c5fcfab4e449b795c4208f329e1",
+    "data_revision": 3,
+    "engine": {
+      "id": "native-win32",
+      "code_sha256": "5b6ca099b61d6fd0f0246e7d4133df4adc1e2117ae92acec1c58100ee01f9774",
+      "tool_versions": {
+        "ngspice": "** ngspice-47 : Circuit level simulation program",
+        "KLayout": "0.30.5",
+        "Magic": "unknown",
+        "Netgen": "unknown",
+        "Xschem": "unknown",
+        "Yosys": "unknown",
+        "Icarus Verilog": "unknown",
+        "VVP": "unknown"
+      }
+    },
+    "process": {
+      "id": "sky130A",
+      "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb",
+      "model_scope": "public SKY130 nfet_01v8 / pfet_01v8_hvt · supported application subset"
+    }
+  },
+  "purpose": "qa",
+  "not_student_submission": true,
+  "cases": [
+    {
+      "slot": "before",
+      "project_id": "6d967c5fcfab4e449b795c4208f329e1",
+      "revision": 2,
+      "conditions": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 3e-8,
+        "step_s": 2e-11,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "geometry_sha256": "c1419efb1c85ae75854377f2b03643a6f173284fadc60182c2256f60432cbf90",
+      "geometry_hash_method": "klayout-semantic-v1",
+      "circuit_sha256": "67d5095f0682f3edbe886b6ca3a9c65e22967511ac40e31528ce1d990e3c8672",
+      "run_id": "3b8e3128c7ba4c629344f19d27322c1a",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "tool": "ngspice",
+      "metrics": {
+        "rise_s": 8.128803473889245e-11,
+        "fall_s": 4.288958783711448e-11,
+        "tphl_s": 3.9648941602716406e-11,
+        "tplh_s": 6.981790900965684e-11,
+        "output_min_V": -0.0300805313,
+        "output_max_V": 1.85479362,
+        "samples": 1544,
+        "source": "actual_ngspice_samples",
+        "method": "동일 run의 실제 비균일 X 표본에서 선형 보간. 첫 완전 전이의 10–90%, 입력/출력의 VDD/2 교차."
+      },
+      "context": {
+        "schema_version": 1,
+        "edition": "edu",
+        "product_id": "resistor.edu",
+        "project_id": "6d967c5fcfab4e449b795c4208f329e1",
+        "data_revision": 2,
+        "engine": {
+          "id": "native-win32",
+          "code_sha256": "5b6ca099b61d6fd0f0246e7d4133df4adc1e2117ae92acec1c58100ee01f9774",
+          "tool_versions": {
+            "ngspice": "** ngspice-47 : Circuit level simulation program",
+            "KLayout": "0.30.5",
+            "Magic": "unknown",
+            "Netgen": "unknown",
+            "Xschem": "unknown",
+            "Yosys": "unknown",
+            "Icarus Verilog": "unknown",
+            "VVP": "unknown"
+          }
+        },
+        "process": {
+          "id": "sky130A",
+          "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb",
+          "model_scope": "public SKY130 nfet_01v8 / pfet_01v8_hvt · supported application subset"
+        }
+      },
+      "input_signature": "837ca616521e909224a3ffe26fd7f59f469c6622769732478dfa1d203e90bd40",
+      "freshness": "stale",
+      "message": "Actual ngspice tran: 1544 samples."
+    },
+    {
+      "slot": "after",
+      "project_id": "6d967c5fcfab4e449b795c4208f329e1",
+      "revision": 3,
+      "conditions": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 3e-8,
+        "step_s": 2e-11,
+        "load_F": 5e-14,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "geometry_sha256": "c1419efb1c85ae75854377f2b03643a6f173284fadc60182c2256f60432cbf90",
+      "geometry_hash_method": "klayout-semantic-v1",
+      "circuit_sha256": "67d5095f0682f3edbe886b6ca3a9c65e22967511ac40e31528ce1d990e3c8672",
+      "run_id": "56e7d1ed4bac4569937052aa26a0e19f",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "tool": "ngspice",
+      "metrics": {
+        "rise_s": 6.818105919215514e-10,
+        "fall_s": 2.629054827562601e-10,
+        "tphl_s": 1.6927977538113752e-10,
+        "tplh_s": 3.67283611900642e-10,
+        "output_min_V": -0.00886239115,
+        "output_max_V": 1.80915646,
+        "samples": 1544,
+        "source": "actual_ngspice_samples",
+        "method": "동일 run의 실제 비균일 X 표본에서 선형 보간. 첫 완전 전이의 10–90%, 입력/출력의 VDD/2 교차."
+      },
+      "context": {
+        "schema_version": 1,
+        "edition": "edu",
+        "product_id": "resistor.edu",
+        "project_id": "6d967c5fcfab4e449b795c4208f329e1",
+        "data_revision": 3,
+        "engine": {
+          "id": "native-win32",
+          "code_sha256": "5b6ca099b61d6fd0f0246e7d4133df4adc1e2117ae92acec1c58100ee01f9774",
+          "tool_versions": {
+            "ngspice": "** ngspice-47 : Circuit level simulation program",
+            "KLayout": "0.30.5",
+            "Magic": "unknown",
+            "Netgen": "unknown",
+            "Xschem": "unknown",
+            "Yosys": "unknown",
+            "Icarus Verilog": "unknown",
+            "VVP": "unknown"
+          }
+        },
+        "process": {
+          "id": "sky130A",
+          "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb",
+          "model_scope": "public SKY130 nfet_01v8 / pfet_01v8_hvt · supported application subset"
+        }
+      },
+      "input_signature": "837ca616521e909224a3ffe26fd7f59f469c6622769732478dfa1d203e90bd40",
+      "freshness": "current",
+      "message": "Actual ngspice tran: 1544 samples."
+    }
+  ],
+  "comparison": {
+    "available": true,
+    "reason": "같은 형상·모델·입력에서 ideal CLOAD만 변경한 실제 ngspice 결과입니다.",
+    "current_relevance": "current",
+    "delta": {
+      "rise_s": 6.00522557182659e-10,
+      "fall_s": 2.2001589491914562e-10,
+      "tphl_s": 1.296308337784211e-10,
+      "tplh_s": 2.9746570289098516e-10
+    },
+    "before": {
+      "slot": "before",
+      "project_id": "6d967c5fcfab4e449b795c4208f329e1",
+      "revision": 2,
+      "conditions": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 3e-8,
+        "step_s": 2e-11,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "geometry_sha256": "c1419efb1c85ae75854377f2b03643a6f173284fadc60182c2256f60432cbf90",
+      "geometry_hash_method": "klayout-semantic-v1",
+      "circuit_sha256": "67d5095f0682f3edbe886b6ca3a9c65e22967511ac40e31528ce1d990e3c8672",
+      "run_id": "3b8e3128c7ba4c629344f19d27322c1a",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "tool": "ngspice",
+      "metrics": {
+        "rise_s": 8.128803473889245e-11,
+        "fall_s": 4.288958783711448e-11,
+        "tphl_s": 3.9648941602716406e-11,
+        "tplh_s": 6.981790900965684e-11,
+        "output_min_V": -0.0300805313,
+        "output_max_V": 1.85479362,
+        "samples": 1544,
+        "source": "actual_ngspice_samples",
+        "method": "동일 run의 실제 비균일 X 표본에서 선형 보간. 첫 완전 전이의 10–90%, 입력/출력의 VDD/2 교차."
+      },
+      "context": {
+        "schema_version": 1,
+        "edition": "edu",
+        "product_id": "resistor.edu",
+        "project_id": "6d967c5fcfab4e449b795c4208f329e1",
+        "data_revision": 2,
+        "engine": {
+          "id": "native-win32",
+          "code_sha256": "5b6ca099b61d6fd0f0246e7d4133df4adc1e2117ae92acec1c58100ee01f9774",
+          "tool_versions": {
+            "ngspice": "** ngspice-47 : Circuit level simulation program",
+            "KLayout": "0.30.5",
+            "Magic": "unknown",
+            "Netgen": "unknown",
+            "Xschem": "unknown",
+            "Yosys": "unknown",
+            "Icarus Verilog": "unknown",
+            "VVP": "unknown"
+          }
+        },
+        "process": {
+          "id": "sky130A",
+          "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb",
+          "model_scope": "public SKY130 nfet_01v8 / pfet_01v8_hvt · supported application subset"
+        }
+      },
+      "input_signature": "837ca616521e909224a3ffe26fd7f59f469c6622769732478dfa1d203e90bd40",
+      "freshness": "stale",
+      "message": "Actual ngspice tran: 1544 samples."
+    },
+    "after": {
+      "slot": "after",
+      "project_id": "6d967c5fcfab4e449b795c4208f329e1",
+      "revision": 3,
+      "conditions": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 3e-8,
+        "step_s": 2e-11,
+        "load_F": 5e-14,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "geometry_sha256": "c1419efb1c85ae75854377f2b03643a6f173284fadc60182c2256f60432cbf90",
+      "geometry_hash_method": "klayout-semantic-v1",
+      "circuit_sha256": "67d5095f0682f3edbe886b6ca3a9c65e22967511ac40e31528ce1d990e3c8672",
+      "run_id": "56e7d1ed4bac4569937052aa26a0e19f",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "tool": "ngspice",
+      "metrics": {
+        "rise_s": 6.818105919215514e-10,
+        "fall_s": 2.629054827562601e-10,
+        "tphl_s": 1.6927977538113752e-10,
+        "tplh_s": 3.67283611900642e-10,
+        "output_min_V": -0.00886239115,
+        "output_max_V": 1.80915646,
+        "samples": 1544,
+        "source": "actual_ngspice_samples",
+        "method": "동일 run의 실제 비균일 X 표본에서 선형 보간. 첫 완전 전이의 10–90%, 입력/출력의 VDD/2 교차."
+      },
+      "context": {
+        "schema_version": 1,
+        "edition": "edu",
+        "product_id": "resistor.edu",
+        "project_id": "6d967c5fcfab4e449b795c4208f329e1",
+        "data_revision": 3,
+        "engine": {
+          "id": "native-win32",
+          "code_sha256": "5b6ca099b61d6fd0f0246e7d4133df4adc1e2117ae92acec1c58100ee01f9774",
+          "tool_versions": {
+            "ngspice": "** ngspice-47 : Circuit level simulation program",
+            "KLayout": "0.30.5",
+            "Magic": "unknown",
+            "Netgen": "unknown",
+            "Xschem": "unknown",
+            "Yosys": "unknown",
+            "Icarus Verilog": "unknown",
+            "VVP": "unknown"
+          }
+        },
+        "process": {
+          "id": "sky130A",
+          "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb",
+          "model_scope": "public SKY130 nfet_01v8 / pfet_01v8_hvt · supported application subset"
+        }
+      },
+      "input_signature": "837ca616521e909224a3ffe26fd7f59f469c6622769732478dfa1d203e90bd40",
+      "freshness": "current",
+      "message": "Actual ngspice tran: 1544 samples."
+    }
+  },
+  "checks": {
+    "new_supported_project": true,
+    "actual_native_before_after": true,
+    "geometry_unchanged": true,
+    "circuit_unchanged": true,
+    "saved_explanation_reopened": true,
+    "source_clone_preserved": true,
+    "stale_revision_rejected": true,
+    "historical_comparison_labeled": true
+  },
+  "independent_verification": {
+    "drc": {
+      "run_id": null,
+      "revision": null,
+      "execution_status": "unavailable",
+      "analysis_result": "unknown",
+      "freshness": null,
+      "reason": "미설치 도구: magic"
+    },
+    "lvs": {
+      "run_id": null,
+      "revision": null,
+      "execution_status": "unavailable",
+      "analysis_result": "unknown",
+      "freshness": null,
+      "reason": "미설치 도구: magic, netgen"
+    },
+    "pex": {
+      "run_id": null,
+      "revision": null,
+      "execution_status": "unavailable",
+      "analysis_result": "unknown",
+      "freshness": null,
+      "reason": "미설치 도구: magic"
+    }
+  },
+  "physical_process_simulation": false,
+  "education_effect_proven": false,
+  "foundry_signoff": false,
+  "source_hashes": {
+    "scripts/education-service.mjs": "4ea40948067196eed225c24e676417e4f59a6c79d78d6e90d2c3b5fad6f31ad5",
+    "packages/education/src/inverter.ts": "b5637162fad3fd48d83d93672e8dda861b9a19412f8a957820acf92bb5959b9d",
+    "packages/ui/src/InverterLesson.tsx": "bc32d7eb0b1872238f78fde191de0c8f0e3d8c535c7d2d559f91f97c043f6d5b"
+  }
+}
