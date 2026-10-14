@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {readFile,mkdir,writeFile,stat,access} from 'node:fs/promises';
+import {readFile,mkdir,writeFile,stat,access,readdir} from 'node:fs/promises';
 import {createReadStream} from 'node:fs';
 import {createServer} from 'node:http';
 import {createHash} from 'node:crypto';
@@ -21,6 +21,8 @@ let browser;
 try{
  check('112 unique lessons',catalog.counts.total===112&&catalog.lessons.length===112&&new Set(catalog.lessons.map(l=>l.id)).size===112);
  check('Document update does not claim new recordings',catalog.new_video_recorded===false);
+ const documents=[...(await readdir(root)).filter(f=>f.endsWith('.html')),...(await readdir(root+'/learning')).filter(f=>f.endsWith('.html')).map(f=>'learning/'+f)];
+ for(const file of documents){const html=await readFile(root+'/'+file,'utf8');check('One theme controller and shared navigation '+file,(html.match(/<header\b/g)||[]).length===1&&(html.match(/src="\/appearance\.js"/g)||[]).length===1&&html.indexOf('<header')<html.indexOf('<main'));check('Keyboard skip target is unique '+file,(html.match(/id="main-content"/g)||[]).length===1&&html.includes('href="#main-content"'));}
  const sourceCatalog=JSON.parse(await readFile('examples/research-20261013/latest-catalog.json','utf8'));
  const designs=JSON.parse(await readFile('examples/research-20261013/'+sourceCatalog.catalog,'utf8')).templates;
  for(const d of [...designs,...['full_adder','adder4','cpu4','adder16','cpu16'].map(id=>({id}))])check('Authored steps and historical evidence '+d.id,catalog.lessons.some(l=>l.design_id===d.id&&l.steps.length>=6)&&records[d.id]?.length>0);
@@ -36,11 +38,13 @@ try{
  check('OTA experiments retain fail',records.soc_miller_ota.some(r=>r.stages.some(s=>s.analysis_result==='fail')));
  browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(base+'/tutorial/library/',{waitUntil:'networkidle'});
- check('All tutorials visible',await page.locator('[data-entry]:visible').count()===112);
+ check('All tutorials retained with a bounded first page',await page.locator('[data-entry]').count()===112&&await page.locator('[data-entry]:visible').count()===24);
+ const seen=new Set();for(let n=0;n<5;n++){for(const id of await page.locator('[data-entry]:visible').evaluateAll(rows=>rows.map(row=>row.querySelector('a').getAttribute('href')))){check('Pagination never duplicates '+id,!seen.has(id));seen.add(id);}if(n<4)await page.locator('[data-lesson-next]').click();}check('All 112 lessons reachable through pagination',seen.size===112&&await page.locator('[data-lesson-next]').isDisabled());
+ await page.reload();check('Shared final page survives reload',await page.locator('[data-entry]:visible').count()===16);
  await page.locator('input[name=q]').fill('sar');check('SAR search includes 8 block lessons',await page.locator('[data-entry][data-group="SAR ADC"]:visible').count()===8);
  await page.locator('select[name=kind]').selectOption('design');check('Search and kind intersect',await page.locator('[data-entry]:visible').count()===8);
  await page.reload();check('Shareable filters survive reload',await page.locator('[data-entry]:visible').count()===8);
- await page.getByRole('button',{name:'초기화',exact:true}).click();await page.waitForTimeout(100);check('Filter reset restores all',await page.locator('[data-entry]:visible').count()===112);
+ await page.getByRole('button',{name:'초기화',exact:true}).click();await page.waitForTimeout(100);check('Filter reset restores the first page',await page.locator('[data-entry]:visible').count()===24&&!(new URL(page.url())).searchParams.has('page'));
  await page.locator('input[name=q]').fill('no-such-scheme-xyz');check('Empty search explained',await page.locator('[data-empty]').isVisible());
  await page.getByRole('button',{name:'초기화',exact:true}).click();await page.waitForTimeout(100);
  await page.locator('h1').click();await page.keyboard.press('/');check('Keyboard search shortcut',await page.locator('input[name=q]').evaluate(e=>e===document.activeElement));
@@ -51,7 +55,16 @@ try{
  for(const c of calculators){await page.goto(base+'/tutorial/learn/calc-'+c.id+'/');await page.locator('[data-calc-example]').click();const expected=c.calculate(c.examples[0].inputs);check('Browser uses original formula '+c.id,(await page.locator('.calc-result strong').innerText())===(displayNumber(expected.primaryValue)+' '+(expected.primaryUnit||'')).trim());}
  await page.goto(base+'/tutorial/learn/calc-parallel-resistor/');await page.evaluate(()=>{for(const name of ['r1','r2','r3','r4'])document.querySelector(`[name=${name}]`).value='0';document.querySelector('.calculator-practice form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));});check('Invalid network blocks numeric result',await page.locator('.calc-error').isVisible()&&(await page.locator('.calc-result').innerText())==='');
  for(const width of [1440,768,390,320]){await page.setViewportSize({width,height:950});for(const route of ['/tutorial/library/','/tutorial/learn/workbench/','/tutorial/learn/design-sar-adc8/','/tutorial/learn/calc-unit-converter/']){await page.goto(base+route);check('No overflow '+width+' '+route,await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}}
- await page.goto(base+'/tutorial/library/');const old=await page.locator('html').getAttribute('data-theme');await page.locator('[data-theme]').click();const next=await page.locator('html').getAttribute('data-theme');check('Light/dark selection changes',next!==old);await page.reload();check('Theme choice persists',await page.locator('html').getAttribute('data-theme')===next);
+ await page.goto(base+'/tutorial/library/');const old=await page.locator('html').getAttribute('data-theme');if(await page.locator('[data-wb-menu]').isVisible())await page.locator('[data-wb-menu]').click();await page.locator('button[data-theme]').click();const next=await page.locator('html').getAttribute('data-theme');check('Light/dark selection changes',next!==old);await page.reload();check('Theme choice persists',await page.locator('html').getAttribute('data-theme')===next);
+ await page.setViewportSize({width:390,height:844});await page.goto(base+'/pdk-links.html');
+ check('Mobile navigation starts compact',!(await page.locator('.wb-site-nav').isVisible()));await page.locator('[data-wb-menu]').click();check('Mobile menu opens with accurate expanded state',await page.locator('.wb-site-nav').isVisible()&&await page.locator('[data-wb-menu]').getAttribute('aria-expanded')==='true');await page.keyboard.press('Escape');check('Escape closes menu and restores keyboard focus',!(await page.locator('.wb-site-nav').isVisible())&&await page.locator('[data-wb-menu]').evaluate(e=>e===document.activeElement));
+ await page.locator('input[name=pdk-q]').fill('ihp');await page.locator('select[name=pdk-category]').selectOption('foundry');check('PDK search intersects category',await page.locator('[data-pdk-entry]:visible').count()===1&&await page.locator('#ihp-sg13g2').isVisible());await page.getByRole('button',{name:'검색 초기화'}).click();await page.waitForTimeout(100);check('PDK search reset preserves all resources',await page.locator('[data-pdk-entry]:visible').count()===13);
+ const pdk=JSON.parse(await readFile(root+'/open-pdk-links.json','utf8'));for(const resource of pdk.resources)for(const link of resource.links)check('PDK official source retained '+link.url,await page.locator('#'+resource.id+' a').evaluateAll((anchors,url)=>anchors.some(a=>a.href===url),link.url));
+ await page.setViewportSize({width:1440,height:1000});await page.goto(base+'/pdk-links.html');
+ const luminance=rgb=>{const [r,g,b]=rgb.match(/[\d.]+/g).slice(0,3).map(Number).map(n=>{const s=n/255;return s<=.04045?s/12.92:((s+.055)/1.055)**2.4;});return .2126*r+.7152*g+.0722*b;};
+ for(let n=0;n<2;n++){const colors=await page.evaluate(()=>({text:getComputedStyle(document.querySelector('.wb-pdk-filter label')).color,background:getComputedStyle(document.querySelector('.wb-pdk-filter')).backgroundColor})),a=luminance(colors.text),b=luminance(colors.background);check('PDK text contrast at least 4.5:1 '+n,(Math.max(a,b)+.05)/(Math.min(a,b)+.05)>=4.5);await page.locator('button[data-theme]').click();}
+ const pdkTheme=await page.locator('html').getAttribute('data-theme');await page.goto(base+'/research/');check('Theme persists across reference pages',await page.locator('html').getAttribute('data-theme')===pdkTheme);
+ for(const width of [1440,768,390,320]){await page.setViewportSize({width,height:950});for(const route of ['/pdk-links.html','/research/','/tutorial/sigma-delta8/','/tutorial/analog-soc/','/editions/','/tutorial/physical-chips/']){await page.goto(base+route);check('Legacy reference layout has no overflow '+width+' '+route,await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}}
  const videos=[['/tutorial/','guide-ko-v1.mp4'],['/tutorial/physical-logic/','physical-logic.mp4'],['/tutorial/physical-chips/','physical-chips.mp4']];
  for(const [route,file]of videos){await page.goto(base+route);const video=page.locator('video');await video.evaluate(v=>v.load());await page.waitForFunction(()=>{const v=document.querySelector('video');return v&&v.readyState>=1&&v.duration>0;},{},{timeout:30000});const meta=await video.evaluate(v=>({width:v.videoWidth,height:v.videoHeight,duration:v.duration,tracks:v.querySelectorAll('track').length,src:v.currentSrc,error:v.error?.message}));check('Preserved 1080p tutorial '+file,meta.width===1920&&meta.height===1080&&meta.duration>60&&meta.tracks>=1&&!meta.error);}
  check('No browser script errors',errors.length===0);

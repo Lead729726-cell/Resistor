@@ -8,7 +8,21 @@
  document.querySelector('[data-print]')?.addEventListener('click',()=>{for(const d of document.querySelectorAll('details.record'))d.open=true;window.print();});
  const form=document.querySelector('.lesson-filters');if(!form)return;
  const params=new URLSearchParams(location.search);for(const name of ['q','group','kind'])if(params.has(name))form.elements[name].value=params.get(name);
- const filter=()=>{const q=form.elements.q.value.trim().normalize('NFKC').toLowerCase(),terms=q.split(/\s+/).filter(Boolean),group=form.elements.group.value,kind=form.elements.kind.value;let count=0;for(const row of document.querySelectorAll('[data-entry]')){const visible=(!group||row.dataset.group===group)&&(!kind||row.dataset.kind===kind)&&terms.every(t=>row.dataset.search.includes(t));row.hidden=!visible;if(visible)count++;}document.querySelector('[data-filter-count]').textContent=count+'개 실습';document.querySelector('[data-empty]').hidden=count!==0;const url=new URL(location.href);for(const [name,value]of [['q',q],['group',group],['kind',kind]]){if(value)url.searchParams.set(name,value);else url.searchParams.delete(name);}history.replaceState(null,'',url);};
- form.addEventListener('submit',e=>{e.preventDefault();filter();});form.addEventListener('input',filter);form.addEventListener('change',filter);form.addEventListener('reset',()=>requestAnimationFrame(filter));
+ const size=24,rows=[...document.querySelectorAll('[data-entry]')];
+ const requested=Number(params.get('page')||1);let page=Number.isSafeInteger(requested)&&requested>0?requested:1;
+ const filter=(reset=false)=>{
+  if(reset)page=1;
+  const q=form.elements.q.value.trim().normalize('NFKC').toLowerCase(),terms=q.split(/\s+/).filter(Boolean),group=form.elements.group.value,kind=form.elements.kind.value;
+  const matches=rows.filter(row=>(!group||row.dataset.group===group)&&(!kind||row.dataset.kind===kind)&&terms.every(t=>row.dataset.search.includes(t)));
+  const count=matches.length,pages=Math.max(1,Math.ceil(count/size));page=Math.min(page,pages);
+  const visible=new Set(matches.slice((page-1)*size,page*size));for(const row of rows)row.hidden=!visible.has(row);
+  document.querySelector('[data-filter-count]').textContent=count+'개 실습';document.querySelector('[data-empty]').hidden=count!==0;
+  document.querySelector('[data-page-range]').textContent=count?`${(page-1)*size+1}–${Math.min(page*size,count)} / ${count} · ${page}/${pages} 페이지`:'0개 실습';
+  document.querySelector('[data-lesson-prev]').disabled=page===1||count===0;document.querySelector('[data-lesson-next]').disabled=page===pages||count===0;
+  const url=new URL(location.href);for(const [name,value]of [['q',q],['group',group],['kind',kind],['page',page>1?String(page):'']]){if(value)url.searchParams.set(name,value);else url.searchParams.delete(name);}history.replaceState(null,'',url);
+ };
+ const turn=delta=>{page+=delta;filter();document.getElementById('catalog-heading').scrollIntoView({block:'start'});};
+ document.querySelector('[data-lesson-prev]').addEventListener('click',()=>turn(-1));document.querySelector('[data-lesson-next]').addEventListener('click',()=>turn(1));
+ form.addEventListener('submit',e=>{e.preventDefault();filter(true);});form.addEventListener('input',()=>filter(true));form.addEventListener('change',()=>filter(true));form.addEventListener('reset',()=>requestAnimationFrame(()=>filter(true)));
  addEventListener('keydown',e=>{if(e.key==='/'&&!e.ctrlKey&&!e.metaKey&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)){e.preventDefault();form.elements.q.focus();}});filter();
 })();

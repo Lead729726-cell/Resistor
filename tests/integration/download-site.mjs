@@ -41,7 +41,8 @@ try{
     check(`No horizontal overflow at ${width}px`,await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   }
   const before=await page.locator('html').getAttribute('data-theme');
-  await page.locator('[data-theme]').click();
+  if(await page.locator('[data-wb-menu]').isVisible())await page.locator('[data-wb-menu]').click();
+  await page.locator('button[data-theme]').click();
   const after=await page.locator('html').getAttribute('data-theme');
   check('Theme changes',after!==before);
   await page.reload();check('Theme persists',await page.locator('html').getAttribute('data-theme')===after);
