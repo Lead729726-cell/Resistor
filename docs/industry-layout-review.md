@@ -75,6 +75,8 @@ npm run check:docs
 
 공정 profile 이름과 실제 mapping 확인 상태를 구분합니다. 수동 공개 마스크나 bare GDS는 mapping `unconfirmed`로 남기며, 공정 모델·물리 적층을 도형 이름만으로 확인하지 않습니다. 실제 인스턴스 응답은 magnification과 배열의 두 전체 벡터를 추가로 반환하고, 임의 각도의 회전을 반올림하지 않습니다. 기존 dx/dy 필드를 제거하지 않습니다.
 
+[Linux 실제 물리 검사 기록](evidence/industry-review/linux-physical-verification.json)은 GitHub 실행 [38516998204](https://github.com/Lead729726-cell/Resistor/actions/runs/38516998204)의 전용 evidence artifact에서 가져왔습니다. 공개 SKY130 inv_1 작업 사본에 실제 Magic DRC, Magic/Netgen LVS, Magic PEX와 ngspice를 실행하고 모든 원본 manifest가 검토 보고서에 연결되는 것을 확인했습니다. r1 결과의 PASS, r2 마스크 변경 후 제약 FAIL/STALE와 과거 보고서 보존을 따로 확인했습니다. 이는 공개 예제와 공개 룰 범위의 결과이며 고객 공정·성능·foundry signoff가 아닙니다.
+
 현재 공개 공통판에는 이번 미발행 소스 기능이 포함되지 않습니다. 새 이름의 archive를 구형 공통판 updater에 직접 전달하는 이행 경로는 추가 검증이 필요하며, 다음 발행 때 직접 설치를 포함한 이행 안내를 제공해야 합니다. 이번의 installer 수정은 새 updater가 공통/Indust의 식별자를 정확히 확인하는 범위이며, 새 설치 파일 발행이나 구형 앱의 자동 이행 성공을 뜻하지 않습니다.
 
 비교 과제와 기준을 먼저 [측정 계획](evidence/industry-review/comparison-plan.json)에 고정하고 [결과](evidence/industry-review/comparison-results.json)를 기록합니다. 비교 대상에는 **KLayout Python 확장**을 포함합니다. 같은 공개 기하·단위·제약의 14개 사례를 독립적인 Region XOR / separation_check / clip 검사와 비교합니다. 이는 코드 판정 정확도·작은 도형의 evaluator 시간 측정이며 사용자 준비/검토 시간이나 고객 가치를 측정하지 않습니다. 둘 다 KLayout을 사용하므로 속도 개선율·시장 우위를 주장하지 않습니다.

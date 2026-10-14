@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "edition": "indust",
+  "product_name": "Resistor Indust",
+  "checked_at": "2026-10-14T05:33:27.305Z",
+  "unit_tests": 17,
+  "docker_used": false,
+  "customer_value_verified": false,
+  "commercial_execution_verified": false,
+  "signoff": false,
+  "cases": [
+    {
+      "name": "Actual MCP review tools, native project identity, report re-open and foreign edition rejection",
+      "pass": true,
+      "industry_review_tools": 7
+    },
+    {
+      "name": "Native actual public SKY130 simulation, manifest linkage and report re-open",
+      "pass": true,
+      "source_project_id": "bbee9e957dfc4371bbcdf5d5da551a9d",
+      "project_id": "afa264aa7a974221a0443eaa150231d2",
+      "review_id": "acf3423cfa7549f49c39c5de2c501081",
+      "run_id": "9f1498505adf4e6d8290ac14864ee315",
+      "report_id": "8570623f5e9148b6ac3e5d83d1dd2d46",
+      "report_sha256": "d28b02d68a98633b6a3546b6421593d56c605f6919685bb32384c9fafdfc66d5",
+      "source_gds": {
+        "geometry_equal": true,
+        "before_hash": "c1419efb1c85ae75854377f2b03643a6f173284fadc60182c2256f60432cbf90",
+        "after_hash": "c1419efb1c85ae75854377f2b03643a6f173284fadc60182c2256f60432cbf90",
+        "hierarchy_preserved": true,
+        "stable_ids_preserved": true
+      }
+    },
+    {
+      "name": "Restart persistence, changed mask failure and immutable historical report",
+      "pass": true,
+      "candidate_revision": 2,
+      "original_expanded_shapes": 90,
+      "historical_report_freshness": "stale",
+      "post_change_constraint_status": "fail"
+    }
+  ],
+  "tools": [
+    {
+      "name": "ngspice",
+      "available": true,
+      "version": "** ngspice-47 : Circuit level simulation program"
+    },
+    {
+      "name": "KLayout",
+      "available": true,
+      "version": "0.30.5"
+    },
+    {
+      "name": "Magic",
+      "available": true,
+      "version": "8.3.582"
+    },
+    {
+      "name": "Netgen",
+      "available": true,
+      "version": "Netgen 1.5.313 compiled on Wed Oct 14 05:33:10 UTC 2026"
+    },
+    {
+      "name": "Xschem",
+      "available": true,
+      "version": "XSCHEM V3.4.4"
+    },
+    {
+      "name": "Yosys",
+      "available": true,
+      "version": "Yosys 0.33 (git sha1 2584903a060)"
+    },
+    {
+      "name": "Icarus Verilog",
+      "available": true,
+      "version": "Icarus Verilog version 12.0 (stable) ()"
+    },
+    {
+      "name": "VVP",
+      "available": true,
+      "version": "Icarus Verilog runtime version 12.0 (stable) ()"
+    }
+  ],
+  "physical_runs": [
+    {
+      "id": "6c01504b346a420b887ab50ae876e693",
+      "kind": "drc",
+      "revision": 1,
+      "tool": "Magic",
+      "execution_status": "completed",
+      "analysis_result": "pass"
+    },
+    {
+      "id": "2a4cdd1c6e9a43c8addac0b792ba1c4a",
+      "kind": "lvs",
+      "revision": 1,
+      "tool": "Magic + Netgen",
+      "execution_status": "completed",
+      "analysis_result": "pass"
+    },
+    {
+      "id": "e9cfc9b28e0b478093a2ac46c22dd0e2",
+      "kind": "pex",
+      "revision": 1,
+      "tool": "Magic",
+      "execution_status": "completed",
+      "analysis_result": "pass"
+    }
+  ],
+  "source_sha256": {
+    "workers/eda/layout_review.py": "7378a84a83139cad3b28551c65a3dbfab4f07a448b48c8f685b882fad497f168",
+    "workers/eda/server.py": "13b5689ed3ca6323186715f1a5cd64c35616feb546c1f45027043e86dc267ea3",
+    "packages/ui/src/IndustryReview.tsx": "cb1bc78e92dcea3f42d7a2a82f2b5a3413f131b9335fbafce41de1e93fa4ab5a",
+    "scripts/mcp.mjs": "9e95ad8820b40a05668e1cb2ff02006dad8c5682430e8d95ae2503ce2a2998a8",
+    "tests/industry-review-test.py": "68cd2b0779997c98e19fc70339ebe59949517482af1aa8fa0d10fa61240136d0"
+  }
+}
