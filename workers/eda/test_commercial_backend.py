@@ -1,9 +1,12 @@
 """Actual open-source native/agent transport regression. Never a vendor-license test."""
-import base64,copy,hashlib,json,os,secrets,shutil,signal,subprocess,time,urllib.request,uuid
+import base64,copy,hashlib,json,os,secrets,shutil,signal,socket,subprocess,sys,time,urllib.request,uuid
 from pathlib import Path
 
-ROOT=Path('/workspace');folder=ROOT/'.runtime/evidence'/('commercial-'+uuid.uuid4().hex);folder.mkdir(parents=True);cases=[];worker=None;agent=None
-port=8891;aport=8892;token=secrets.token_urlsafe(40);env={**os.environ,'MOS_STATE':str(folder/'native-state'),'MOS_BIND':'127.0.0.1','MOS_PORT':str(port),'MOS_TOKEN':token}
+ROOT=Path(os.environ.get('REGISTER_TEST_RESOURCES','/workspace')).resolve();base=Path(os.environ.get('REGISTER_TEST_STATE',str(ROOT/'.runtime/evidence')));folder=base/('commercial-'+uuid.uuid4().hex);folder.mkdir(parents=True);cases=[];worker=None;agent=None
+shutil.copytree(ROOT/'adapters',folder/'adapters')  # Public template resources only.
+def free_port():
+    with socket.socket() as s:s.bind(('127.0.0.1',0));return s.getsockname()[1]
+port=free_port();aport=free_port();token=secrets.token_urlsafe(40);env={**os.environ,'MOS_WORKSPACE':str(folder),'MOS_STATE':str(folder/'native-state'),'MOS_BIND':'127.0.0.1','MOS_PORT':str(port),'MOS_TOKEN':token}
 log=(folder/'worker.log').open('w');alog=(folder/'agent.log').open('w')
 def call(method,params={}):
     request=urllib.request.Request(f'http://127.0.0.1:{port}/rpc',json.dumps({'method':method,'params':params}).encode(),{'Content-Type':'application/json','X-MOS-Token':token})
@@ -31,13 +34,15 @@ def startup(proc_port):
         except OSError:time.sleep(.05)
     raise AssertionError('Isolated service startup failed')
 try:
-    worker=subprocess.Popen(['python3',str(ROOT/'workers/eda/server.py')],env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True);startup(port)
+    worker=subprocess.Popen([sys.executable,str(ROOT/'workers/eda/server.py')],env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True);startup(port)
     cat=rpc('backend.catalog');assert len(cat['tools'])==18 and all(t['verification']=='unverified' for t in cat['tools'] if t['vendor']!='Open source');entry('All seventeen commercial families are install-later/unverified; ngspice explicitly open source')
     original=json.loads((ROOT/'adapters/commercial/calibration-ngspice.manifest.json').read_text());original['runner']['executable']=shutil.which('ngspice')
     original['id']='actual-local-'+uuid.uuid4().hex[:8];deck=folder/'calibration.spice';deck.write_bytes((ROOT/'adapters/commercial/examples/resistor-calibration.spice').read_bytes());original['runner']['resources']['deck']=str(deck)
     public=rpc('backend.register',{'manifest':original});assert public['available'] and public['status']=='available-unverified';assert not {'executable','env_names','token_file','resources','recipes'}&set(public);assert str(deck) not in json.dumps(public);entry('Local operator profile registration/hash; no public resources/credentials',fingerprint=public['fingerprint'])
     assert rpc('backend.validate',{'profile_id':original['id']})['valid'];entry('Actual local native executable/resource availability; license remains unverified')
-    unavailable=json.loads((ROOT/'adapters/commercial/templates/spectre.json').read_text());unavailable['id']='absent-spectre';pvendor=rpc('backend.register',{'manifest':unavailable});assert not pvendor['available'];entry('Absent licensed Spectre remains unavailable')
+    unavailable=json.loads((ROOT/'adapters/commercial/templates/spectre.json').read_text());unavailable['id']='absent-spectre'
+    unavailable['runner']['resources']={key:str(folder/('missing-'+key)) for key in unavailable['runner']['resources']}
+    pvendor=rpc('backend.register',{'manifest':unavailable});assert not pvendor['available'];entry('Absent licensed Spectre remains unavailable')
     p=rpc('project.create',{'example':'fixture','name':'Commercial transport actual fixture'});p=configure(p,unavailable['id']);reject('No vendor process or fake result when native binary absent','backend.run',{'project_id':p['id']},'BACKEND_UNAVAILABLE')
     bad=copy.deepcopy(original);bad['id']='shell-reject';bad['runner']['executable']='/usr/bin/bash';reject('Shell/interpreter executable is outside named native-tool API','backend.register',{'manifest':bad},'UNSUPPORTED_EXECUTABLE')
     bad=copy.deepcopy(original);bad['id']='env-reject';bad['runner']['env']={'PASSWORD':'not-a-real-secret'};reject('Environment values rejected; only names allowed','backend.register',{'manifest':bad},'INVALID_BACKEND_MANIFEST')
@@ -54,8 +59,8 @@ try:
     deck.write_text(deck.read_text().replace('V1 out 0 2','V1 out 0 1'))
     # Real standard-library HTTP companion on a distinct operator state/profile.
     remote_profile=copy.deepcopy(original);remote_profile['id']='agent-open-source';remote_slow=copy.deepcopy(original);remote_slow['id']='agent-slow';remote_deck=folder/'remote-slow.spice';remote_deck.write_text('* actual long transient restart calibration\nV1 out 0 1\nR1 out 0 1000\nC1 out 0 1p\n.control\nset num_threads=1\ntran 1p 1m\nquit\n.endc\n.end\n');remote_slow['runner']['resources']['deck']=str(remote_deck);remote_slow['runner']['recipes']['simulation']['timeout_s']=3
-    cfg=folder/'operator-profiles.json';cfg.write_text(json.dumps({'allowed_roots':['/workspace','/foss'],'profiles':[remote_profile,remote_slow]}));token_file=folder/'private-agent.token'
-    agent=subprocess.Popen(['python3',str(ROOT/'platform/commercial/agent.py'),'--profiles',str(cfg),'--state',str(folder/'agent-state'),'--token-file',str(token_file),'--port',str(aport)],stdout=alog,stderr=subprocess.STDOUT,start_new_session=True);startup(aport)
+    cfg=folder/'operator-profiles.json';cfg.write_text(json.dumps({'allowed_roots':[str(folder),'/usr','/foss'],'profiles':[remote_profile,remote_slow]}));token_file=folder/'private-agent.token'
+    agent=subprocess.Popen([sys.executable,str(ROOT/'platform/commercial/agent.py'),'--profiles',str(cfg),'--state',str(folder/'agent-state'),'--token-file',str(token_file),'--port',str(aport)],stdout=alog,stderr=subprocess.STDOUT,start_new_session=True);startup(aport)
     assert token_file.stat().st_mode&0o077==0;entry('Companion auto-generated owner-only token_FILE (no API/log value)')
     request=urllib.request.Request(f'http://127.0.0.1:{aport}/rpc',b'{"method":"profile.list"}',{'Content-Type':'application/json'})
     try:urllib.request.urlopen(request);raise AssertionError('Unauthenticated agent access accepted')
@@ -97,14 +102,14 @@ try:
         aj=agent_rpc('job.status',{'job_id':aj['id']})
         if aj.get('process_identity'):break
         time.sleep(.02)
-    assert aj.get('process_identity');os.killpg(agent.pid,signal.SIGKILL);agent.wait();agent=subprocess.Popen(['python3',str(ROOT/'platform/commercial/agent.py'),'--profiles',str(cfg),'--state',str(folder/'agent-state'),'--token-file',str(token_file),'--port',str(aport)],stdout=alog,stderr=subprocess.STDOUT,start_new_session=True);startup(aport)
+    assert aj.get('process_identity');os.killpg(agent.pid,signal.SIGKILL);agent.wait();agent=subprocess.Popen([sys.executable,str(ROOT/'platform/commercial/agent.py'),'--profiles',str(cfg),'--state',str(folder/'agent-state'),'--token-file',str(token_file),'--port',str(aport)],stdout=alog,stderr=subprocess.STDOUT,start_new_session=True);startup(aport)
     interrupted=agent_rpc('job.status',{'job_id':aj['id']});assert interrupted['execution_status']=='failed' and interrupted['analysis_result']=='unknown' and interrupted['error_code']=='AGENT_RESTARTED' and interrupted['interrupted_process_stopped'];assert agent_rpc('job.submit',payload)['id']==aj['id'];entry('Actual companion interruption stops identified native process and preserves failed/unknown exact-once receipt',remote_job_id=aj['id'])
     # Bounded stream redaction keeps a sensitive value split at the read boundary out of logs.
     import io
     os.environ['REGISTER_TEST_SECRET']='calibration-boundary-private-value';redacted=folder/'redaction.log';runner.write_redacted_stream(io.BytesIO(b'A'*65525+os.environ['REGISTER_TEST_SECRET'].encode()+b'\nshort '+os.environ['REGISTER_TEST_SECRET'].encode()+b'\n'),redacted,['REGISTER_TEST_SECRET']);assert os.environ['REGISTER_TEST_SECRET'] not in redacted.read_text() and 'OVERLONG_NATIVE_LINE_DISCARDED' in redacted.read_text();entry('Sensitive environment values cannot leak across stdout chunk boundaries')
     truncated=folder/'truncated.log';runner.write_redacted_stream(io.BytesIO((b'X'*60000+b'\n')*80),truncated,[]);assert '[NATIVE_LOG_TRUNCATED]' in truncated.read_text() and truncated.stat().st_size<4*1024*1024+100;entry('Explicit native log truncation marker prevents false completeness')
     summary={'case_count':len(cases),'cases':cases,'source_state':str(folder),'commercial_execution':'unavailable/unverified; no licensed executable installed','calibration':'actual ngspice open-source resistor; no foundry/signoff claim'}
-    (ROOT/'.runtime/evidence/commercial-backend.json').write_text(json.dumps(summary,indent=2));(folder/'summary.json').write_text(json.dumps(summary,indent=2));print(json.dumps(summary))
+    target=Path(os.environ.get('REGISTER_TEST_REPORT',str(ROOT/'.runtime/evidence/commercial-backend.json')));target.parent.mkdir(parents=True,exist_ok=True);target.write_text(json.dumps(summary,indent=2));(folder/'summary.json').write_text(json.dumps(summary,indent=2));print(json.dumps(summary))
 finally:
     for proc in (worker,agent):
         if proc is not None and proc.poll() is None:

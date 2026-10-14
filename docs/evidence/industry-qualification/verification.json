@@ -1,0 +1,3896 @@
+{
+  "schema_version": 1,
+  "edition": "indust",
+  "product_id": "resistor.indust",
+  "checked_at": "2026-10-14T08:36:31.199Z",
+  "workspace": "D:\\Coldbrew\\Resistor\\.runtime\\industry-qualification\\qa-KSVxXM",
+  "public_fixture": true,
+  "paid_calls": 0,
+  "foundry_signoff": false,
+  "customer_value_verified": false,
+  "commercial_execution_verified": false,
+  "runs": [
+    {
+      "name": "drc",
+      "id": "853bd38b3d1b4c548a3b9a03b6e0693f",
+      "project_id": "ddf3e6130eba4928ab99b4c56f551794",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "tool": "Magic",
+      "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+      "manifest_sha256": "5055062482fefeec9ddb5f73697f5890b2957257b51102928f21fda482fbae26",
+      "manifest": "runs/drc/manifest.json"
+    },
+    {
+      "name": "lvs",
+      "id": "486f9ef15e5646c0aca2c162c3619e92",
+      "project_id": "ddf3e6130eba4928ab99b4c56f551794",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "tool": "Magic + Netgen",
+      "message": "Actual Netgen comparison: circuits match uniquely.",
+      "manifest_sha256": "e5b4c88307415af7057273386810951d5a0bb5130ea53988bc886c1d114bb4f2",
+      "manifest": "runs/lvs/manifest.json"
+    },
+    {
+      "name": "pex",
+      "id": "7ca02c77a0174f5d93f2675cc6f81f5f",
+      "project_id": "ddf3e6130eba4928ab99b4c56f551794",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "tool": "Magic",
+      "parasitics": {
+        "resistors": 3575,
+        "capacitors": 1303
+      },
+      "message": "Actual Magic RC extraction: 3575 resistors, 1303 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+      "manifest_sha256": "c66ace31cc3761adb1fe8f0a9c82d78c63f506010014811eb7111a5e5969f04d",
+      "manifest": "runs/pex/manifest.json"
+    },
+    {
+      "name": "tt-pre",
+      "id": "fa2d99a9c1be4168a76c0d3b92f72c16",
+      "project_id": "ddf3e6130eba4928ab99b4c56f551794",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "tool": "ngspice",
+      "measurements": {
+        "samples": 32,
+        "seed": 729726,
+        "offset_mean_V": -0.0005284260460541867,
+        "offset_sample_std_V": 0.002829533729274099,
+        "offset_min_V": -0.005765682835226493,
+        "offset_max_V": 0.0044181634844789874,
+        "offset_abs_max_V": 0.005765682835226493,
+        "within_limit_samples": 32,
+        "analysis": "mismatch",
+        "x_unit": "sample",
+        "x_label": "Seeded native OP sample",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "solver": "SPARSE 1.3",
+        "post_layout": "false",
+        "reference_scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff."
+      },
+      "message": "Actual OTA mismatch: 32 samples; requested criterion PASS",
+      "manifest_sha256": "12e1f5c9c208ab02411b0fb9990f3e7d493861a9eabbb9765ef3ef62c100a1be",
+      "manifest": "runs/tt-pre/manifest.json",
+      "characterization_sha256": "13acc949506f2fa10a44fe57882b98256a0af64727d26fba458a6642ef586e1d",
+      "characterization": {
+        "schema_version": 1,
+        "mode": "mismatch",
+        "settings": {
+          "analysis": "op",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "duration_s": 0.0002,
+          "step_s": 2e-8,
+          "load_F": 5e-15,
+          "vds_V": 1.8,
+          "vbs_V": 0
+        },
+        "config": {
+          "mode": "mismatch",
+          "samples": 32,
+          "seed": 729726,
+          "offset_limit_V": 0.01
+        },
+        "metrics": {
+          "samples": 32,
+          "seed": 729726,
+          "offset_mean_V": -0.0005284260460541867,
+          "offset_sample_std_V": 0.002829533729274099,
+          "offset_min_V": -0.005765682835226493,
+          "offset_max_V": 0.0044181634844789874,
+          "offset_abs_max_V": 0.005765682835226493,
+          "within_limit_samples": 32
+        },
+        "rows": [
+          {
+            "index": 1,
+            "seed": 729726,
+            "output_V": 0.9043230619690803,
+            "input_V": 0.9,
+            "offset_V": 0.004323061969080277,
+            "supply_current_A": 0.00004261263828518288,
+            "output_sha256": "ce7187d543c3f5774f92682ad5cb5bbea47b89febc911356279880b6306176de",
+            "controller_sha256": "a2414a6350955728946ccec0357e0b84ffffd86dce7ef8525ab1d54d3c197859"
+          },
+          {
+            "index": 2,
+            "seed": 729727,
+            "output_V": 0.9033517410744025,
+            "input_V": 0.9,
+            "offset_V": 0.0033517410744025034,
+            "supply_current_A": 0.00004452222881764473,
+            "output_sha256": "4a770132efa5063640673c0f50990da9c23f39582e54158b2938b9e27295d31f",
+            "controller_sha256": "49f6a01b1057c28683d4db1528b2d25da5b5df3552c514aa1eed4299319808c8"
+          },
+          {
+            "index": 3,
+            "seed": 729728,
+            "output_V": 0.9012791630520951,
+            "input_V": 0.9,
+            "offset_V": 0.001279163052095078,
+            "supply_current_A": 0.00004355221824388518,
+            "output_sha256": "162ce579ca51d853927f4e2b363c5f9027d86c6b4ab3cf07f8b8f117c33c8fc6",
+            "controller_sha256": "cb30aac854ee072835a6ff3162e36c0a4896781ce6e2997e412b8ac008265904"
+          },
+          {
+            "index": 4,
+            "seed": 729729,
+            "output_V": 0.8961286616022335,
+            "input_V": 0.9,
+            "offset_V": -0.003871338397766544,
+            "supply_current_A": 0.00004365354343515316,
+            "output_sha256": "e71dc84357e7caa18e427bec2c48f14db3948e2943531a36f5c3d367c0ecfa98",
+            "controller_sha256": "e862e0f8f3b3bee61fb3ff909bda20f8b1658d286ab913a26f5939dd077e1828"
+          },
+          {
+            "index": 5,
+            "seed": 729730,
+            "output_V": 0.8985205651233628,
+            "input_V": 0.9,
+            "offset_V": -0.0014794348766372645,
+            "supply_current_A": 0.000044033863519774664,
+            "output_sha256": "2c906563178e54058237c7bf5910178d57cd5b0d34eade773dd36367ac5fd2fc",
+            "controller_sha256": "156f5f24d210f24be00d7f39c6c8141fd93acf7342efeb3538c95465c9041be4"
+          },
+          {
+            "index": 6,
+            "seed": 729731,
+            "output_V": 0.903012970972668,
+            "input_V": 0.9,
+            "offset_V": 0.00301297097266795,
+            "supply_current_A": 0.000043917456600440244,
+            "output_sha256": "c8f899df3eaba7a0eb3b154670ef9b28c3fd48d92d7ebc0578ba4a3479984e0c",
+            "controller_sha256": "d3ff78f327b2cc17d1ed5c89d2d9eb1ec072c5a73534647062c42a0dc67d9cb6"
+          },
+          {
+            "index": 7,
+            "seed": 729732,
+            "output_V": 0.8983228611696177,
+            "input_V": 0.9,
+            "offset_V": -0.001677138830382341,
+            "supply_current_A": 0.00004364049437696532,
+            "output_sha256": "bfe30223969e76cf7f78bdc72e33cec6e9a56b66530e1bd4f08ba63e37d6c63f",
+            "controller_sha256": "f253d7d2387b55735e729b2ff900d81d1322418cc05c93479213b50c4546cbd8"
+          },
+          {
+            "index": 8,
+            "seed": 729733,
+            "output_V": 0.8972697084700485,
+            "input_V": 0.9,
+            "offset_V": -0.002730291529951523,
+            "supply_current_A": 0.00004405540196818206,
+            "output_sha256": "14459d2266eff45cd7ae06759446827a6a2b98b34ec743fa156d7b02a0af10f9",
+            "controller_sha256": "ddd4708203fba2717123508eb2907aa6be7d1665542cd09fe57a470e2ed8f83e"
+          },
+          {
+            "index": 9,
+            "seed": 729734,
+            "output_V": 0.8971984395602703,
+            "input_V": 0.9,
+            "offset_V": -0.002801560439729678,
+            "supply_current_A": 0.000044363784098600754,
+            "output_sha256": "b91d8b6f74000e48dcb8a29e5102008964ff7932ffd0a3cb00d819418d664256",
+            "controller_sha256": "191e5eca000ca894441062ba86b107ebcacb73cfb2c2d826612fa9dfdfdc656d"
+          },
+          {
+            "index": 10,
+            "seed": 729735,
+            "output_V": 0.8981257034438386,
+            "input_V": 0.9,
+            "offset_V": -0.0018742965561614477,
+            "supply_current_A": 0.000043737924631537966,
+            "output_sha256": "d1420c81261fa07c09e83bf2fb67a5b8920dcced1602e6dfbb5d8a5755b3e259",
+            "controller_sha256": "0484c8264e2d4dd5c3146bdaefb1752dad1147481ed900575105cfb23f78d8c2"
+          },
+          {
+            "index": 11,
+            "seed": 729736,
+            "output_V": 0.8968731439035764,
+            "input_V": 0.9,
+            "offset_V": -0.0031268560964236025,
+            "supply_current_A": 0.00004389178858733861,
+            "output_sha256": "5b97db4d07f28e731184c0f8362442846fbdfc4282982f948cabe9e9ae77fac8",
+            "controller_sha256": "f12d10078b10c8a4e51c4b1e06b904a736be1d9dda55acf4222e45549c24cdf7"
+          },
+          {
+            "index": 12,
+            "seed": 729737,
+            "output_V": 0.8986840892357577,
+            "input_V": 0.9,
+            "offset_V": -0.0013159107642423118,
+            "supply_current_A": 0.00004362589533457646,
+            "output_sha256": "e6fb23cbd859f68c172a3d3fe724fff73dea0f09f13334a562f4de5e97e47f93",
+            "controller_sha256": "04df8ee961d943faf2784d58115088852e0dc532ebad6c9c3c8bb930007ad316"
+          },
+          {
+            "index": 13,
+            "seed": 729738,
+            "output_V": 0.9023317984765526,
+            "input_V": 0.9,
+            "offset_V": 0.0023317984765526267,
+            "supply_current_A": 0.00004411451869743116,
+            "output_sha256": "bcd0c6f4aefd54a74133c3da90d02292a78d1595788e7f07c604b0ace070dc6b",
+            "controller_sha256": "167d1b95369daf849f744e18e13f21b45bf9d8b5b0b42e690a6ccc1d710e1f09"
+          },
+          {
+            "index": 14,
+            "seed": 729739,
+            "output_V": 0.9001802298689654,
+            "input_V": 0.9,
+            "offset_V": 0.00018022986896537585,
+            "supply_current_A": 0.000043789723462819705,
+            "output_sha256": "5ff23e77a3cfeb60093fdf326dca63e27f43955ad67cb6371b224e8172fd5f63",
+            "controller_sha256": "a7cee5407ad75fe2d0eea56bb2a1eef93a3577214aaac567dd686deb616bc1df"
+          },
+          {
+            "index": 15,
+            "seed": 729740,
+            "output_V": 0.8974510326588643,
+            "input_V": 0.9,
+            "offset_V": -0.002548967341135744,
+            "supply_current_A": 0.00004396127307142376,
+            "output_sha256": "a8d4bd53cf8cd8d0aad6a6b0317a42af57249199d31ceb4812d8577b4f9eefad",
+            "controller_sha256": "d5372125b37c5292a6898797dcf03f62922ce359d97defb700c8adbb4a2c1059"
+          },
+          {
+            "index": 16,
+            "seed": 729741,
+            "output_V": 0.9011311655585814,
+            "input_V": 0.9,
+            "offset_V": 0.001131165558581393,
+            "supply_current_A": 0.000043817158447126,
+            "output_sha256": "717e0e51772a198897b6e80f99a83f2260b491542d0acc39b621b54ad6050b51",
+            "controller_sha256": "1b5cc8837f667b62fb43ac95a7cef993acb81d7d7d59189ba17bcf1a83d0a6e8"
+          },
+          {
+            "index": 17,
+            "seed": 729742,
+            "output_V": 0.904418163484479,
+            "input_V": 0.9,
+            "offset_V": 0.0044181634844789874,
+            "supply_current_A": 0.000043802618513769266,
+            "output_sha256": "c690410456957ed1eca1c0b47848eaa8311ea96f4d855800057b867aea0c133c",
+            "controller_sha256": "4c91bd3e4cefcd7b3422f3e4aeec6a4b2a50dd5a150bbcb49c136b7bc117b210"
+          },
+          {
+            "index": 18,
+            "seed": 729743,
+            "output_V": 0.9009194221234793,
+            "input_V": 0.9,
+            "offset_V": 0.0009194221234792854,
+            "supply_current_A": 0.00004332173574582543,
+            "output_sha256": "36a61c57dc95b52738056f29fe529671f21a67fe51356a923ac70c66c5fe77c6",
+            "controller_sha256": "92da5636cf96e01f8bb17839fc7859a1001d9b5adda4a3b183b67f948241b017"
+          },
+          {
+            "index": 19,
+            "seed": 729744,
+            "output_V": 0.8970778109160165,
+            "input_V": 0.9,
+            "offset_V": -0.002922189083983562,
+            "supply_current_A": 0.00004230029047561001,
+            "output_sha256": "e5eefa9f8155ed0c5cc7b978dc63b4c52d766104be70f46d3079ac02b1681962",
+            "controller_sha256": "55f7e7931201921429478ad921ff7e75a05f27c5f68890629ecda39d8d25da35"
+          },
+          {
+            "index": 20,
+            "seed": 729745,
+            "output_V": 0.8942343171647735,
+            "input_V": 0.9,
+            "offset_V": -0.005765682835226493,
+            "supply_current_A": 0.00004312905001088255,
+            "output_sha256": "f8140ba0664692ba20804a561d8e8865efb86efc7b2035f4ccd600f173ede4f4",
+            "controller_sha256": "4aa227416079faf5c5c449f55878a3836a559ab5c1897072a15ff1f824b82b62"
+          },
+          {
+            "index": 21,
+            "seed": 729746,
+            "output_V": 0.901207994289507,
+            "input_V": 0.9,
+            "offset_V": 0.0012079942895070195,
+            "supply_current_A": 0.000043827804331874514,
+            "output_sha256": "b21f7635c25b9b0c8ead0a5c0a8c42cc6ab09f7fe3c9189aaf72890009566ecd",
+            "controller_sha256": "605a5ed1111aff62ed240fa55c9ca00e3a607e8e3c9fb6593a65597ff89555dc"
+          },
+          {
+            "index": 22,
+            "seed": 729747,
+            "output_V": 0.8996797298714228,
+            "input_V": 0.9,
+            "offset_V": -0.00032027012857727133,
+            "supply_current_A": 0.00004323213561694783,
+            "output_sha256": "0e470f611a8f26dfaf9defad4ac4fa1947b2efda5ca79527e605d8a1063cd5e9",
+            "controller_sha256": "82ae8780864031296d7d3b8f52d705b5935909a6f7399406086d5b89b8732966"
+          },
+          {
+            "index": 23,
+            "seed": 729748,
+            "output_V": 0.9014329797528262,
+            "input_V": 0.9,
+            "offset_V": 0.0014329797528261912,
+            "supply_current_A": 0.00004358763066821954,
+            "output_sha256": "826dc8687f68bd10afb560a6dae3d38c6d862c8090b1719be6d4b0c5c0224a5d",
+            "controller_sha256": "6928e3ff529a9ef9316d64c319245bb05f470a77af97e63fc826979ab1541dca"
+          },
+          {
+            "index": 24,
+            "seed": 729749,
+            "output_V": 0.8956428387309643,
+            "input_V": 0.9,
+            "offset_V": -0.004357161269035736,
+            "supply_current_A": 0.00004449527348921164,
+            "output_sha256": "1755849ef5599e9ead3d55dd672d12089fb6e085fcf146aa8b12471803f3f50e",
+            "controller_sha256": "26565c4ca96e661bc62e3b28c8e737d9af7c9f4ef07c9989c1ac5dc6c8236222"
+          },
+          {
+            "index": 25,
+            "seed": 729750,
+            "output_V": 0.8959013176645385,
+            "input_V": 0.9,
+            "offset_V": -0.004098682335461512,
+            "supply_current_A": 0.00004386228472152311,
+            "output_sha256": "f932c49d05277284911be92daf0bd698c9e2eb81343494348378e6a00fc8e0da",
+            "controller_sha256": "0e94f08983a62a637b668b8ec18fcdc2103478082c9c2bef298e9fa29dab320e"
+          },
+          {
+            "index": 26,
+            "seed": 729751,
+            "output_V": 0.8979860546041891,
+            "input_V": 0.9,
+            "offset_V": -0.002013945395810901,
+            "supply_current_A": 0.000044468045609845526,
+            "output_sha256": "06d7874a9add007344c602ed64e912942f1e36c560510bb8265ce5bb24d5639e",
+            "controller_sha256": "d2558dc8da117991abb33c39cf4563217bf414315cb5b5e9a15dd8c4e9ba917d"
+          },
+          {
+            "index": 27,
+            "seed": 729752,
+            "output_V": 0.9014735872187885,
+            "input_V": 0.9,
+            "offset_V": 0.0014735872187884302,
+            "supply_current_A": 0.000044507050350095674,
+            "output_sha256": "0121d2b5796e08d24c386a4a1032c626a5ac59e29f4e8ec0193e6c5280d10be0",
+            "controller_sha256": "ed34f29b435dbab7fdd91bb580e2a2c61998194901e9ea45f4fe40e01fb0d05b"
+          },
+          {
+            "index": 28,
+            "seed": 729753,
+            "output_V": 0.8950810708720383,
+            "input_V": 0.9,
+            "offset_V": -0.004918929127961769,
+            "supply_current_A": 0.00004307542512061374,
+            "output_sha256": "f5c8478cc6765c262da18861074766d48757d972ebc82973ddca461e60a7d6f1",
+            "controller_sha256": "7f41b89e8a4bac48e41177f8238dc94ad263ef1b1dc6c6612a90248a600bb059"
+          },
+          {
+            "index": 29,
+            "seed": 729754,
+            "output_V": 0.8991206254077042,
+            "input_V": 0.9,
+            "offset_V": -0.0008793745922958118,
+            "supply_current_A": 0.0000439389625106381,
+            "output_sha256": "2cb1bb96b7f7f3c18e796b1f2d877659f5fa665a85589f6c5b5d31fe2f62966e",
+            "controller_sha256": "b5844716d25e47c02cca17e40fb49557325bebfea4bdc8d90426b9076e76bc0e"
+          },
+          {
+            "index": 30,
+            "seed": 729755,
+            "output_V": 0.9007743014344669,
+            "input_V": 0.9,
+            "offset_V": 0.0007743014344668842,
+            "supply_current_A": 0.00004366797935100971,
+            "output_sha256": "ea44fecf553a552f065c8e43c2c6ce35ca526f7e8ef2aa74e6830fea2990681f",
+            "controller_sha256": "6fed63d82d7a71df5287f415da3db258ed48d3d26b61f0fecdfc0bdeeb3223a8"
+          },
+          {
+            "index": 31,
+            "seed": 729756,
+            "output_V": 0.9044032358478944,
+            "input_V": 0.9,
+            "offset_V": 0.004403235847894371,
+            "supply_current_A": 0.000043759434067829924,
+            "output_sha256": "2ab4cb494ef5ef4fbd71b73845b4a54fdd1aef0efdb9635a85034033b6f7508a",
+            "controller_sha256": "1df88fb81cc7f95e822279853b0a12ba8c8c9af0e8e1eef88414a0d19932afff"
+          },
+          {
+            "index": 32,
+            "seed": 729757,
+            "output_V": 0.8995525810032632,
+            "input_V": 0.9,
+            "offset_V": -0.00044741899673683694,
+            "supply_current_A": 0.00004380613316906537,
+            "output_sha256": "87c643d5aa423107d72e294d2cf082adf608ffe4518b6ad41f704a5e91b8d1c3",
+            "controller_sha256": "abecec6fd18fe9974a10a55c4ac8f8f2ee33b052a927b5d07b495b32bbfdea51"
+          }
+        ],
+        "native_engine": "ngspice",
+        "model_resources": [
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/all.spice",
+            "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+            "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__tt.pm3.spice",
+            "sha256": "459eca963a134574cf7c842ad6d3814e7e0752bfb5de8e581c2f483534b5ad06"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+            "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__tt.pm3.spice",
+            "sha256": "3a1be2e1c50d710bdb951d414ecca711113a8c3fe8bcc1be65fb16c6fe004e83"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+            "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+            "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+            "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+            "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+            "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+            "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+            "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+            "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+          }
+        ],
+        "post_layout": false,
+        "scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff.",
+        "pass": true
+      }
+    },
+    {
+      "name": "tt-post",
+      "id": "cb4f3aa67dc0465dbe1db4241fb194b4",
+      "project_id": "ddf3e6130eba4928ab99b4c56f551794",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "tool": "ngspice",
+      "measurements": {
+        "samples": 32,
+        "seed": 729726,
+        "offset_mean_V": -0.00032273404327636326,
+        "offset_sample_std_V": 0.0027089745561621505,
+        "offset_min_V": -0.007263995940433032,
+        "offset_max_V": 0.005380613011232271,
+        "offset_abs_max_V": 0.007263995940433032,
+        "within_limit_samples": 32,
+        "analysis": "mismatch",
+        "x_unit": "sample",
+        "x_label": "Seeded native OP sample",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "solver": "SPARSE 1.3",
+        "post_layout": "true",
+        "reference_scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff."
+      },
+      "parasitics": {
+        "resistors": 3577,
+        "capacitors": 1304
+      },
+      "message": "Actual OTA mismatch: 32 samples; requested criterion PASS",
+      "manifest_sha256": "a2c8bcf9bf2f5fb756e6214a076752c1fe6c450d6a3d1d0d40697c0d7830370a",
+      "manifest": "runs/tt-post/manifest.json",
+      "characterization_sha256": "25fb83a80c0f27805e0da4d76e0adf39a23bff6ba7914f8dac190aa43c54c1ca",
+      "characterization": {
+        "schema_version": 1,
+        "mode": "mismatch",
+        "settings": {
+          "analysis": "op",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "duration_s": 0.0002,
+          "step_s": 2e-8,
+          "load_F": 5e-15,
+          "vds_V": 1.8,
+          "vbs_V": 0
+        },
+        "config": {
+          "mode": "mismatch",
+          "samples": 32,
+          "seed": 729726,
+          "offset_limit_V": 0.01
+        },
+        "metrics": {
+          "samples": 32,
+          "seed": 729726,
+          "offset_mean_V": -0.00032273404327636326,
+          "offset_sample_std_V": 0.0027089745561621505,
+          "offset_min_V": -0.007263995940433032,
+          "offset_max_V": 0.005380613011232271,
+          "offset_abs_max_V": 0.007263995940433032,
+          "within_limit_samples": 32
+        },
+        "rows": [
+          {
+            "index": 1,
+            "seed": 729726,
+            "output_V": 0.9012146551468907,
+            "input_V": 0.9,
+            "offset_V": 0.0012146551468906752,
+            "supply_current_A": 0.00004301476889139941,
+            "output_sha256": "2bb4b166e3ea32aa481bc3825d564d663ff02b144fcc7d53d57bc43a7881bbba",
+            "controller_sha256": "d9c8eb47db0907725d5a1166f02c8f03421e50db987151baffb368d447089b33"
+          },
+          {
+            "index": 2,
+            "seed": 729727,
+            "output_V": 0.8994308907545122,
+            "input_V": 0.9,
+            "offset_V": -0.0005691092454878088,
+            "supply_current_A": 0.0000426274866039706,
+            "output_sha256": "3af16faf457b7d245e4280d1f20f58c06925db8d731ed8c21d5651d6419bfb9f",
+            "controller_sha256": "9704f77297cfe536a72f14dc10f77d86aa7493d3e07004323b253e2052abeda4"
+          },
+          {
+            "index": 3,
+            "seed": 729728,
+            "output_V": 0.8986917234474161,
+            "input_V": 0.9,
+            "offset_V": -0.0013082765525839202,
+            "supply_current_A": 0.000044029379177955644,
+            "output_sha256": "deb3099a207443ae7d9a55608d891e62f6fc1950e790fff6c3f1595439141f9a",
+            "controller_sha256": "ff70eceec506994a5bd4a765dfe856f4e5bfae3c36153df1763522e19807ddcb"
+          },
+          {
+            "index": 4,
+            "seed": 729729,
+            "output_V": 0.8987677861161859,
+            "input_V": 0.9,
+            "offset_V": -0.001232213883814115,
+            "supply_current_A": 0.00004204362412221947,
+            "output_sha256": "aac960e16ef81c17233f8fb1065535b27b81144160913fbb10ea0f0fe94e4f18",
+            "controller_sha256": "49b88faddb1eb517860906ad0d9e86915d314135f742ab645f549ddf2f48983a"
+          },
+          {
+            "index": 5,
+            "seed": 729730,
+            "output_V": 0.8994525221350682,
+            "input_V": 0.9,
+            "offset_V": -0.0005474778649318113,
+            "supply_current_A": 0.00004264643127832937,
+            "output_sha256": "3425d5a72d970a7e578262fae06f84a70b237f632f64c8bf91e934f7904a688b",
+            "controller_sha256": "1c1228272c12de36c25b26f7424e5efc540849538b1e6e7d24641c4bb87dc17b"
+          },
+          {
+            "index": 6,
+            "seed": 729731,
+            "output_V": 0.8939345483800036,
+            "input_V": 0.9,
+            "offset_V": -0.006065451619996387,
+            "supply_current_A": 0.000043105972566197595,
+            "output_sha256": "dbbabddf11328824561fa29d4231805384be3c93a74328b3b13a80f2d7055822",
+            "controller_sha256": "da8ed6eaedf986121f761216767275847ce08aed3c9ae258e7604f1ca5e4f4cd"
+          },
+          {
+            "index": 7,
+            "seed": 729732,
+            "output_V": 0.9023660202123543,
+            "input_V": 0.9,
+            "offset_V": 0.002366020212354325,
+            "supply_current_A": 0.00004382875839350868,
+            "output_sha256": "676f3ecdaf887ada78d20c9a5ddeb610f2d946dd0af3d8f592db59b4981d6e65",
+            "controller_sha256": "ef681db992df345f768500cb8da6a14c4e9c5f3a8a6dbd13c6ae4c0a43f68901"
+          },
+          {
+            "index": 8,
+            "seed": 729733,
+            "output_V": 0.8989813595389329,
+            "input_V": 0.9,
+            "offset_V": -0.001018640461067144,
+            "supply_current_A": 0.00004306075702040918,
+            "output_sha256": "c8aee2a8695b923d4657dfb4eaf70036517ccb411052716ddf4889f758bae7ca",
+            "controller_sha256": "cc690bf2dc1d28ea2466ea3479963e0d4d75155bd5ee5e1399345edef746138b"
+          },
+          {
+            "index": 9,
+            "seed": 729734,
+            "output_V": 0.892736004059567,
+            "input_V": 0.9,
+            "offset_V": -0.007263995940433032,
+            "supply_current_A": 0.0000418026680838509,
+            "output_sha256": "5a2c2063a9000e51369a0bb4f2ee432406f713a01cd7f79d3b3902ab502113c8",
+            "controller_sha256": "2d1221c2cacf5b692e8ba8e19f81cdcf92f147f49e4fe85a792a570142e912b4"
+          },
+          {
+            "index": 10,
+            "seed": 729735,
+            "output_V": 0.8973369677511204,
+            "input_V": 0.9,
+            "offset_V": -0.0026630322488796487,
+            "supply_current_A": 0.00004289341791389144,
+            "output_sha256": "2f49d7efaebdae84bc7c99b54a451f394dec29ad3634662602dee6e0c46247f5",
+            "controller_sha256": "7f84ff89250608d07bd69b6e52c93e12e612dec003f955d4b5ae770755975f4a"
+          },
+          {
+            "index": 11,
+            "seed": 729736,
+            "output_V": 0.9011212626844729,
+            "input_V": 0.9,
+            "offset_V": 0.001121262684472879,
+            "supply_current_A": 0.000042828346242137355,
+            "output_sha256": "880301a46bc686d67f8aaf2b865b94052eedc37fe1913fa173804623ce2e02f2",
+            "controller_sha256": "22ab05f172608f5a27a5cd56c2fb62faf4644301ba41571750144b4938adf3da"
+          },
+          {
+            "index": 12,
+            "seed": 729737,
+            "output_V": 0.9037707745726986,
+            "input_V": 0.9,
+            "offset_V": 0.0037707745726985875,
+            "supply_current_A": 0.00004289066540632061,
+            "output_sha256": "a6d936809c2238914867d8700759d9757995a999327c1092d77d32193602caf3",
+            "controller_sha256": "65199aa8e00f5d0cc2bebd9dec6bbf088dcd38a353dd87ea258f1fc756808496"
+          },
+          {
+            "index": 13,
+            "seed": 729738,
+            "output_V": 0.9025346464114693,
+            "input_V": 0.9,
+            "offset_V": 0.002534646411469277,
+            "supply_current_A": 0.00004385384507071474,
+            "output_sha256": "b607c112f28d49b3a07d8b79baf081945fbbb1dbb53a272399dcc01bbf1a63f9",
+            "controller_sha256": "168ec09d6494310e73f3731d815c188d7fae82027378928b15f4ddfb900f95a9"
+          },
+          {
+            "index": 14,
+            "seed": 729739,
+            "output_V": 0.8982537585221116,
+            "input_V": 0.9,
+            "offset_V": -0.0017462414778883772,
+            "supply_current_A": 0.000042917283900316405,
+            "output_sha256": "bbed496a7098fc6739ea709f6cb95bd5dcef3f859b70ebbd100c6a40caea6645",
+            "controller_sha256": "311971b3fbdd43e82ce114cb40e3cdb17a73f68130ce0a2d356642d419391e63"
+          },
+          {
+            "index": 15,
+            "seed": 729740,
+            "output_V": 0.8971383401995349,
+            "input_V": 0.9,
+            "offset_V": -0.002861659800465155,
+            "supply_current_A": 0.00004353762753159067,
+            "output_sha256": "d8fc7a5e3036b5fc67dfd453ecb7f0bbd0a10271e33c4b4821ca70af74f0166c",
+            "controller_sha256": "7a2acf6fb56a712ce32aa41a0bbeae75002823427b83056df2256ebdca4ae32b"
+          },
+          {
+            "index": 16,
+            "seed": 729741,
+            "output_V": 0.900091226636345,
+            "input_V": 0.9,
+            "offset_V": 0.00009122663634497652,
+            "supply_current_A": 0.00004255576020091405,
+            "output_sha256": "21c74aaf534b2be8a3b0f958bdc43f2419a6264c486ac6fdbf17cdb9f0362bee",
+            "controller_sha256": "6c1c4441cbb1a060c4488ab96c57c57eea40861e9cb234f947b5218f94bfdf25"
+          },
+          {
+            "index": 17,
+            "seed": 729742,
+            "output_V": 0.9018798646257181,
+            "input_V": 0.9,
+            "offset_V": 0.0018798646257180973,
+            "supply_current_A": 0.00004255557313768629,
+            "output_sha256": "8ef7e08b289ae101fa265b4a9d5ff82ede79787ddbd255881e7f1e36c33114b3",
+            "controller_sha256": "a577d807bfde35ddc6f4eaac99dbdd9799515b7dae051197700b6b245bc813b7"
+          },
+          {
+            "index": 18,
+            "seed": 729743,
+            "output_V": 0.9029955312560518,
+            "input_V": 0.9,
+            "offset_V": 0.0029955312560517866,
+            "supply_current_A": 0.00004255304811465882,
+            "output_sha256": "bd38d3a564680c7d752c061f7aa1dda424d65c0c4a8ce89e275b953aff2ce1fb",
+            "controller_sha256": "9706e158c13142c95c4f0400bf3bd409989de51547d449591e79338f25bcc320"
+          },
+          {
+            "index": 19,
+            "seed": 729744,
+            "output_V": 0.9005517092289036,
+            "input_V": 0.9,
+            "offset_V": 0.0005517092289035741,
+            "supply_current_A": 0.00004376717168450006,
+            "output_sha256": "3a19dd1a2ed4bbcc07e3052eaf4348c6413df0e3aceb98ec916f9f81068bdc36",
+            "controller_sha256": "ef5b3bf6f0c0f757526408fb104eb422d3c5f73ba846ddbb86db1764cf014652"
+          },
+          {
+            "index": 20,
+            "seed": 729745,
+            "output_V": 0.9001601851912899,
+            "input_V": 0.9,
+            "offset_V": 0.0001601851912899077,
+            "supply_current_A": 0.000042742013740456816,
+            "output_sha256": "4c9096338e10ef8e64d0fc89b111ddc727a33056735ce2972f3619bee51832c1",
+            "controller_sha256": "21213e8618ebddfccfc52aa09ee26ba448e0f3bf55a4a1fc1e41b1c65f6344a5"
+          },
+          {
+            "index": 21,
+            "seed": 729746,
+            "output_V": 0.8999638749806281,
+            "input_V": 0.9,
+            "offset_V": -0.00003612501937189094,
+            "supply_current_A": 0.00004322829478265941,
+            "output_sha256": "07f8b7a0b97a0b10aea9aa0c12f0b3033681e3d19eb97e0980c88ca20eb738d3",
+            "controller_sha256": "710347c2d3d237b110c21f4f45368df0ac8f11fbe350dc1edb71fcb67985a37f"
+          },
+          {
+            "index": 22,
+            "seed": 729747,
+            "output_V": 0.9008340906854232,
+            "input_V": 0.9,
+            "offset_V": 0.0008340906854231722,
+            "supply_current_A": 0.00004410959958965448,
+            "output_sha256": "a4693cb9bbb951f4690352332c109f07f7fd73f43867a38e96f09168a33b5a56",
+            "controller_sha256": "134ece2a6668afd6c377edbd330009bd5cf542b89960bdc49a1493ba64b0a2df"
+          },
+          {
+            "index": 23,
+            "seed": 729748,
+            "output_V": 0.8985111917561212,
+            "input_V": 0.9,
+            "offset_V": -0.0014888082438788697,
+            "supply_current_A": 0.00004370604310703456,
+            "output_sha256": "cc97825d00b3e175d2793c18bd000925129efb86abb6a0ee9aac255a932cc016",
+            "controller_sha256": "ea077f3814555edcf5efd3eeaf46152fea502e3b3809daef1c619d834d9b542e"
+          },
+          {
+            "index": 24,
+            "seed": 729749,
+            "output_V": 0.8953407379346269,
+            "input_V": 0.9,
+            "offset_V": -0.004659262065373149,
+            "supply_current_A": 0.000042237281875353444,
+            "output_sha256": "92ccd0dac28053819f0d05b1890b66603b716656f34720210fb1214afdc5012a",
+            "controller_sha256": "151568c094df52dbaa2df1b832fdecd96ee3db09e70800f37e6686860cce616f"
+          },
+          {
+            "index": 25,
+            "seed": 729750,
+            "output_V": 0.9003266953842433,
+            "input_V": 0.9,
+            "offset_V": 0.0003266953842432363,
+            "supply_current_A": 0.000043521704184222576,
+            "output_sha256": "0862cf713a8478af8c00c7723597c8c53fec6d2fa9ecda9875c139b802d348ce",
+            "controller_sha256": "dbc0c7cccc808636143b0d57c078105e91fb9c4c6e8218cc77268e847429cf16"
+          },
+          {
+            "index": 26,
+            "seed": 729751,
+            "output_V": 0.9001687470279289,
+            "input_V": 0.9,
+            "offset_V": 0.00016874702792890606,
+            "supply_current_A": 0.000042828507567977195,
+            "output_sha256": "0e9e7bdf3f71a6c823914294affe6560ad12147b8e57105233b8d88c573f02ab",
+            "controller_sha256": "40e2496982a646065f1748e726ab66c793ecaa0c6cdfebeb4b17d631f4a07752"
+          },
+          {
+            "index": 27,
+            "seed": 729752,
+            "output_V": 0.8979727244594966,
+            "input_V": 0.9,
+            "offset_V": -0.002027275540503415,
+            "supply_current_A": 0.00004320244431661041,
+            "output_sha256": "ddb4078474f790fe067a32be8f787a200fa26b9c21c27b11efefaecc68cccec7",
+            "controller_sha256": "b54171bbec1567fe7ee8feaaafb4fa2260b2cdd41b9e260e312d5845fff80c74"
+          },
+          {
+            "index": 28,
+            "seed": 729753,
+            "output_V": 0.8969697988155875,
+            "input_V": 0.9,
+            "offset_V": -0.003030201184412551,
+            "supply_current_A": 0.00004379579656969661,
+            "output_sha256": "60bacee69b982f83fb29d929807b7753b13e21ec7d7b39a9b5eceaabcc90373a",
+            "controller_sha256": "1f9cc5a95f862bf3d4ad4ed767f1f3e888f1a01cf2ffb0095cdd2992911a00df"
+          },
+          {
+            "index": 29,
+            "seed": 729754,
+            "output_V": 0.8993253392251803,
+            "input_V": 0.9,
+            "offset_V": -0.000674660774819702,
+            "supply_current_A": 0.00004258874733893518,
+            "output_sha256": "f41b9ae8ce0701b8385663bdb737abd85f912d94c40aa38c8c565a17b41f0ec7",
+            "controller_sha256": "027fd3658ce2082d22f2695fec768c716aea0b3cfe901b1dca9226296dd8d8f8"
+          },
+          {
+            "index": 30,
+            "seed": 729755,
+            "output_V": 0.9053806130112323,
+            "input_V": 0.9,
+            "offset_V": 0.005380613011232271,
+            "supply_current_A": 0.00004307833247615099,
+            "output_sha256": "6aa62239b404bacd153b9671f6f8392a5f56f573da916040b496741e2f41daf2",
+            "controller_sha256": "bd62bfa67f7b57c426a910c4ecd032e7a35b94d1bc91c799be750aa63fadc9eb"
+          },
+          {
+            "index": 31,
+            "seed": 729756,
+            "output_V": 0.9029090918575977,
+            "input_V": 0.9,
+            "offset_V": 0.00290909185759769,
+            "supply_current_A": 0.000043036443782028255,
+            "output_sha256": "8ca006e7fb63571b58129e61bf08d113fd493a15a710ca4a8d2ad025ab868d6f",
+            "controller_sha256": "47f3c92a31a36ee3caccf5750c4dda1d14825463eb1f85f77499bb0c1caad7da"
+          },
+          {
+            "index": 32,
+            "seed": 729757,
+            "output_V": 0.900559828606444,
+            "input_V": 0.9,
+            "offset_V": 0.0005598286064439906,
+            "supply_current_A": 0.00004325198815183576,
+            "output_sha256": "0223dcdba39be76f37f00ce335c98ad02c3588b3b26c70d4d6d33b299844d7b6",
+            "controller_sha256": "9e6a48fcab8df024161b3efac27a7c4d7509777a25109b166347239935371ebb"
+          }
+        ],
+        "native_engine": "ngspice",
+        "model_resources": [
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/all.spice",
+            "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+            "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__tt.pm3.spice",
+            "sha256": "459eca963a134574cf7c842ad6d3814e7e0752bfb5de8e581c2f483534b5ad06"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+            "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__tt.pm3.spice",
+            "sha256": "3a1be2e1c50d710bdb951d414ecca711113a8c3fe8bcc1be65fb16c6fe004e83"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+            "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+            "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+            "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+            "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+            "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+            "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+            "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+            "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+          }
+        ],
+        "post_layout": true,
+        "scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff.",
+        "pass": true
+      }
+    },
+    {
+      "name": "ff-pre",
+      "id": "adcf4ea7048c45c6a20551ad0ea4fd01",
+      "project_id": "ddf3e6130eba4928ab99b4c56f551794",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "tool": "ngspice",
+      "measurements": {
+        "samples": 32,
+        "seed": 729726,
+        "offset_mean_V": -0.0003655960550134063,
+        "offset_sample_std_V": 0.002512870267056229,
+        "offset_min_V": -0.004953849455341719,
+        "offset_max_V": 0.00426828404451951,
+        "offset_abs_max_V": 0.004953849455341719,
+        "within_limit_samples": 32,
+        "analysis": "mismatch",
+        "x_unit": "sample",
+        "x_label": "Seeded native OP sample",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "solver": "SPARSE 1.3",
+        "post_layout": "false",
+        "reference_scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff."
+      },
+      "message": "Actual OTA mismatch: 32 samples; requested criterion PASS",
+      "manifest_sha256": "f7ab0a1a5fd9cd63798714884167f25636eb95cc764e0ce22118076112a269fd",
+      "manifest": "runs/ff-pre/manifest.json",
+      "characterization_sha256": "7b3a7f336f272992300608016de2c62958c2bf85de527eda84e131f59eb33317",
+      "characterization": {
+        "schema_version": 1,
+        "mode": "mismatch",
+        "settings": {
+          "analysis": "op",
+          "corner": "ff",
+          "temperature_C": -40,
+          "supply_V": 1.8,
+          "duration_s": 0.0002,
+          "step_s": 2e-8,
+          "load_F": 5e-15,
+          "vds_V": 1.8,
+          "vbs_V": 0
+        },
+        "config": {
+          "mode": "mismatch",
+          "samples": 32,
+          "seed": 729726,
+          "offset_limit_V": 0.01
+        },
+        "metrics": {
+          "samples": 32,
+          "seed": 729726,
+          "offset_mean_V": -0.0003655960550134063,
+          "offset_sample_std_V": 0.002512870267056229,
+          "offset_min_V": -0.004953849455341719,
+          "offset_max_V": 0.00426828404451951,
+          "offset_abs_max_V": 0.004953849455341719,
+          "within_limit_samples": 32
+        },
+        "rows": [
+          {
+            "index": 1,
+            "seed": 729726,
+            "output_V": 0.9042682840445195,
+            "input_V": 0.9,
+            "offset_V": 0.00426828404451951,
+            "supply_current_A": 0.000053523939402625115,
+            "output_sha256": "3219edc0c81e5d461b879a5b1a9713ad0f2cc59c771f05a97d93a61abd4dc503",
+            "controller_sha256": "3aa4f59fee9d841e79edf8698c4e868a9144becad8b9c066d05c320558166ba2"
+          },
+          {
+            "index": 2,
+            "seed": 729727,
+            "output_V": 0.9032276563120831,
+            "input_V": 0.9,
+            "offset_V": 0.0032276563120831048,
+            "supply_current_A": 0.00005614651217455556,
+            "output_sha256": "07740f89ec6094b104edd2404e8e915982c14666224d5bf696177f386663f6bc",
+            "controller_sha256": "97a99d7ad5fa5e13d8fefe33fa96a9f2e0e9e9d30ac484a6788864fb0ea90346"
+          },
+          {
+            "index": 3,
+            "seed": 729728,
+            "output_V": 0.9006176509137731,
+            "input_V": 0.9,
+            "offset_V": 0.0006176509137730823,
+            "supply_current_A": 0.00005481160754251349,
+            "output_sha256": "d4911569ce4e845daea8d1f903030466c41081e1e567ddc17790d40613c07032",
+            "controller_sha256": "00b03045e135caf081e0dd7469cc71c15264d155c045a36a734e842c5a4c639e"
+          },
+          {
+            "index": 4,
+            "seed": 729729,
+            "output_V": 0.8973401478251617,
+            "input_V": 0.9,
+            "offset_V": -0.0026598521748383286,
+            "supply_current_A": 0.00005497694078902723,
+            "output_sha256": "f786d705e4ba05944e93cb315e94fed3bfea07a023308f0acef795d7fd12745c",
+            "controller_sha256": "79bd670fe353518c43a2415331e9464ca6b4d1c7c0f36e015959ff5a8ddf6951"
+          },
+          {
+            "index": 5,
+            "seed": 729730,
+            "output_V": 0.8987089707916311,
+            "input_V": 0.9,
+            "offset_V": -0.0012910292083688768,
+            "supply_current_A": 0.00005546638837555654,
+            "output_sha256": "518a57903e8a1363624111a9dc47ede570e4e400521ecfbeca5e9a2ebf3ad764",
+            "controller_sha256": "941b8277752e184ca40ec9285a675261f3c478608b3aa0285221084ab4271e32"
+          },
+          {
+            "index": 6,
+            "seed": 729731,
+            "output_V": 0.9031949266673109,
+            "input_V": 0.9,
+            "offset_V": 0.0031949266673109156,
+            "supply_current_A": 0.000055398511646478644,
+            "output_sha256": "22596b2a8f8a025814693e2849e5a39c553c52ca1c67757a1abcdd2282106a6c",
+            "controller_sha256": "926b6849e19ee93ea0107f8579656dbc4818a4cae9eea6a25a23a0d94f4728ba"
+          },
+          {
+            "index": 7,
+            "seed": 729732,
+            "output_V": 0.8985851277311667,
+            "input_V": 0.9,
+            "offset_V": -0.0014148722688333004,
+            "supply_current_A": 0.00005491770581600935,
+            "output_sha256": "ca2032fb7fdbab7be2f4e740c7f3fa254f1eca8d41d519eba73055a2dde4d1fc",
+            "controller_sha256": "6d3d983a0d4aeac05ed5fd1a6b9a506e0397e0e7b7505dcc5c76c2d44be83230"
+          },
+          {
+            "index": 8,
+            "seed": 729733,
+            "output_V": 0.8977488437085412,
+            "input_V": 0.9,
+            "offset_V": -0.002251156291458778,
+            "supply_current_A": 0.00005543422169955418,
+            "output_sha256": "088115ce756676546c448296437d8086d3fc26ff0a50c085430d2c066937e3e3",
+            "controller_sha256": "03b144a6b7abda2063606ad6584b87fc3be24226a7ca847ba14f3d6c88e7495e"
+          },
+          {
+            "index": 9,
+            "seed": 729734,
+            "output_V": 0.8980834073445294,
+            "input_V": 0.9,
+            "offset_V": -0.001916592655470617,
+            "supply_current_A": 0.00005595383428412778,
+            "output_sha256": "fafdeb97c5660e03c99e1bc5336a457f2aae43ab3774406c6f9346b60119465b",
+            "controller_sha256": "ecd512af70f1062346bd8ad4b0f7bb2b2dfe2393428ede58141d874aac010e37"
+          },
+          {
+            "index": 10,
+            "seed": 729735,
+            "output_V": 0.8983622083424052,
+            "input_V": 0.9,
+            "offset_V": -0.0016377916575948115,
+            "supply_current_A": 0.000055169144569074255,
+            "output_sha256": "5a14252dcb5e0f790f59ce64b13d44ac9d62081a6b084107fd2bf64d424cf8ca",
+            "controller_sha256": "8b47f8456e380d1ddf62511a72ae5efb3e59baa9f672f1bbadff96609cfeb724"
+          },
+          {
+            "index": 11,
+            "seed": 729736,
+            "output_V": 0.8982476006203797,
+            "input_V": 0.9,
+            "offset_V": -0.0017523993796203508,
+            "supply_current_A": 0.00005527556244122036,
+            "output_sha256": "4fe862e248f2c63ee29bfa0983609aa5901984252d0ca0409f8b1f7cc63ab219",
+            "controller_sha256": "0acf2e77e1377a775dd8e129155f615016a4043005aff5f1824090eac10167f6"
+          },
+          {
+            "index": 12,
+            "seed": 729737,
+            "output_V": 0.8988447187239217,
+            "input_V": 0.9,
+            "offset_V": -0.0011552812760783349,
+            "supply_current_A": 0.00005480307424829463,
+            "output_sha256": "f3e8d0eec7d639cc0f8d37519b303ae98a00f67d7c77e6ebf19ffe6b67a7c9cd",
+            "controller_sha256": "1af20eb66e974676aa09cda6f9219777aa9896be2a1d26db6d846495480b0727"
+          },
+          {
+            "index": 13,
+            "seed": 729738,
+            "output_V": 0.9028038085880326,
+            "input_V": 0.9,
+            "offset_V": 0.0028038085880325303,
+            "supply_current_A": 0.00005555585018593564,
+            "output_sha256": "24b91b32ca1b0354026cb5683c39f26a60376a2b9ac6af7ba750331f6793a182",
+            "controller_sha256": "0234da969616c9601155a0ba47b8722b7e6a04302786e4f31a0c22c15f35db74"
+          },
+          {
+            "index": 14,
+            "seed": 729739,
+            "output_V": 0.9003945954318624,
+            "input_V": 0.9,
+            "offset_V": 0.0003945954318623768,
+            "supply_current_A": 0.00005516228961505618,
+            "output_sha256": "346eed72b2b5eb2e7545b876c8fa3325bd098c7ec915d491d38fd494426ac26e",
+            "controller_sha256": "8b44004439638e2059f2796d857db87b288c16d3b58f83000f132bdecfefe5ef"
+          },
+          {
+            "index": 15,
+            "seed": 729740,
+            "output_V": 0.8972968908719849,
+            "input_V": 0.9,
+            "offset_V": -0.00270310912801508,
+            "supply_current_A": 0.000055363073445331365,
+            "output_sha256": "0f18da79b48af969792320f91fe6ed1dc92d4966a5a850bee7007cd0646b0c07",
+            "controller_sha256": "95db461db5f9b991884c6597396fd4c214ee265c36aa304753f425a8ae3254bf"
+          },
+          {
+            "index": 16,
+            "seed": 729741,
+            "output_V": 0.9016949706729065,
+            "input_V": 0.9,
+            "offset_V": 0.0016949706729064706,
+            "supply_current_A": 0.00005518120064675939,
+            "output_sha256": "303a50fd155fba8eb08a90b7d65edb396e890acf20f5409a93edec8ce2aab254",
+            "controller_sha256": "4dc8a7c8adec364fa32059c18db41a0793cf8d73779c0f0997254b388c41975f"
+          },
+          {
+            "index": 17,
+            "seed": 729742,
+            "output_V": 0.9034524070330008,
+            "input_V": 0.9,
+            "offset_V": 0.0034524070330007595,
+            "supply_current_A": 0.000055134385698694585,
+            "output_sha256": "85a99ad3364f67334c7a7a95f128e456bcbd8fe35c73da82040e25aa1cd9e965",
+            "controller_sha256": "5aebeb8df2ad639e9502d964ce4f36b8c295d4de0976ba6b43ec1d400644b50a"
+          },
+          {
+            "index": 18,
+            "seed": 729743,
+            "output_V": 0.8999203822131676,
+            "input_V": 0.9,
+            "offset_V": -0.00007961778683240883,
+            "supply_current_A": 0.00005457276740749518,
+            "output_sha256": "90cce7107d197425a62e59768adda4cfcbd520488dd90f76279b7c03c8bff165",
+            "controller_sha256": "02879b12a850e5edcc15c09eeae3c37e333ea575213f4d093645e8abb12e266b"
+          },
+          {
+            "index": 19,
+            "seed": 729744,
+            "output_V": 0.8982387794985698,
+            "input_V": 0.9,
+            "offset_V": -0.0017612205014302384,
+            "supply_current_A": 0.00005324538630654618,
+            "output_sha256": "56fba8abdcd05b7a33c7cf52eea5940adc7a3d82be3db38d383ae9aea06cf19e",
+            "controller_sha256": "808c9286da580cf8028c1912c543cffbd8102532b643ae51cc62872a07d395de"
+          },
+          {
+            "index": 20,
+            "seed": 729745,
+            "output_V": 0.895292578675253,
+            "input_V": 0.9,
+            "offset_V": -0.0047074213247469965,
+            "supply_current_A": 0.00005427496045029028,
+            "output_sha256": "42dab1b7a0cfa1ad7641ec611cbdb6c421bc9885fd817ce7cec2a831753b9963",
+            "controller_sha256": "b59e94f1b80d9ee17e93ac74f14d25a8da5054f78c6964c2d6eae1a53ede4405"
+          },
+          {
+            "index": 21,
+            "seed": 729746,
+            "output_V": 0.9018098332990121,
+            "input_V": 0.9,
+            "offset_V": 0.0018098332990120758,
+            "supply_current_A": 0.0000551673921628983,
+            "output_sha256": "367c34713800893a4863d592f6c179de1e323c2d7e0e7f89deade134eca14b47",
+            "controller_sha256": "ab0f872ed00252ae93d6bac08c5d19df76f19695f0c0c5bbcce9763e1c80bf3c"
+          },
+          {
+            "index": 22,
+            "seed": 729747,
+            "output_V": 0.8994719582296966,
+            "input_V": 0.9,
+            "offset_V": -0.0005280417703034113,
+            "supply_current_A": 0.00005428739444225642,
+            "output_sha256": "882de54f2b099a3fb1e62bda6afd705775de9dd98cbf0fccfa4b665cdea50c22",
+            "controller_sha256": "06187fd3c0b61b061d0c980bba5b53eb76fe58ae2c648dbd31c64206c091f2ec"
+          },
+          {
+            "index": 23,
+            "seed": 729748,
+            "output_V": 0.9013066270090349,
+            "input_V": 0.9,
+            "offset_V": 0.001306627009034833,
+            "supply_current_A": 0.0000548950923495616,
+            "output_sha256": "479785d845f6873f1fcb1e671d3ce89c6cc1387c0e4cfda68605b2a84b43fd53",
+            "controller_sha256": "ab2a99e4606ee8d3874db95dd2c27bfc7f9d9739df97a52aa4b9749770112fdc"
+          },
+          {
+            "index": 24,
+            "seed": 729749,
+            "output_V": 0.8970410214151343,
+            "input_V": 0.9,
+            "offset_V": -0.0029589785848657124,
+            "supply_current_A": 0.00005611457878253035,
+            "output_sha256": "9318596e279f8422238f4da23430f464829e4d50209f046fc66c591226df85d7",
+            "controller_sha256": "631d00ac735ea1cc5ab818856bf147f9296d44f2f47fb5ff5afda587d0bd18a7"
+          },
+          {
+            "index": 25,
+            "seed": 729750,
+            "output_V": 0.8951627666147033,
+            "input_V": 0.9,
+            "offset_V": -0.004837233385296735,
+            "supply_current_A": 0.00005521254104432218,
+            "output_sha256": "3908929dc74c404b3a8b725fdd569a11513fb14ec18540af3b12b2bd9fc672e1",
+            "controller_sha256": "3047d074871aa0862092d158e6a9523d9f37901cdccc9e70e56492bdf3ca7609"
+          },
+          {
+            "index": 26,
+            "seed": 729751,
+            "output_V": 0.8992940318057663,
+            "input_V": 0.9,
+            "offset_V": -0.0007059681942337415,
+            "supply_current_A": 0.00005609715470217822,
+            "output_sha256": "a8374898abf084ab094da5bbb77ec0057d26273da6a02f050999c54c27d26e57",
+            "controller_sha256": "dd80214baa120cadbfe599b23a6806a826f1442c546941909b09789e16282dd7"
+          },
+          {
+            "index": 27,
+            "seed": 729752,
+            "output_V": 0.9001333165888354,
+            "input_V": 0.9,
+            "offset_V": 0.0001333165888354193,
+            "supply_current_A": 0.00005617160219297524,
+            "output_sha256": "724670083f559406412689f1cc6cfaf226d613c1a463cb42efc8e719612aaa60",
+            "controller_sha256": "7ecf6cfa7fe6862ce3012bed1e6991dc65570d64199520db325e99bbf565e98f"
+          },
+          {
+            "index": 28,
+            "seed": 729753,
+            "output_V": 0.8950461505446583,
+            "input_V": 0.9,
+            "offset_V": -0.004953849455341719,
+            "supply_current_A": 0.00005422259852037341,
+            "output_sha256": "baaea93bd227dfc3cefb4c329e40f8ba565915f91c83b5713420af5ad8f5f935",
+            "controller_sha256": "b62b7db2fb7ce7b149e575d1f82a244645dab6c934cddc5a2eb45631fbdb69d9"
+          },
+          {
+            "index": 29,
+            "seed": 729754,
+            "output_V": 0.8989713267492334,
+            "input_V": 0.9,
+            "offset_V": -0.0010286732507666096,
+            "supply_current_A": 0.0000553251129624088,
+            "output_sha256": "314ae415510cad4aa2e41b55ebe66cd26423ee19e4e49bb33e6392ef5993a3d1",
+            "controller_sha256": "c31e73e7a18478e8774dd0757a7b5e4db5f889bfecf2e14ea0979704ed04237c"
+          },
+          {
+            "index": 30,
+            "seed": 729755,
+            "output_V": 0.8997450605456834,
+            "input_V": 0.9,
+            "offset_V": -0.00025493945431664944,
+            "supply_current_A": 0.00005498636266807402,
+            "output_sha256": "47b904cefa26e4ddac63fda04ff4a54048735914184cbd797694096d1d25e50f",
+            "controller_sha256": "ce851ee5ce2c013348653bc29d896c86c0d35d2ecaee49330c6d643f548d158b"
+          },
+          {
+            "index": 31,
+            "seed": 729756,
+            "output_V": 0.903904045579111,
+            "input_V": 0.9,
+            "offset_V": 0.0039040455791109485,
+            "supply_current_A": 0.00005510531793619688,
+            "output_sha256": "60f5c6d89bfec1c30eee0a057a6033608897903572a6b95edf3776cea64ee1f8",
+            "controller_sha256": "52b05ea71c180f16828b4dc47c4e6b780eef0b0eaa7509c7771715b14ab8a722"
+          },
+          {
+            "index": 32,
+            "seed": 729757,
+            "output_V": 0.9000908318485017,
+            "input_V": 0.9,
+            "offset_V": 0.00009083184850167125,
+            "supply_current_A": 0.000055206530353050837,
+            "output_sha256": "973fd3442e97e56b94193090b63bafe22b9881e8272c7c1d14e82a35cacf35d7",
+            "controller_sha256": "d8be804dde394407a5421672d1615f4d39d470b2c56e2e8c8655e5bc91bd5038"
+          }
+        ],
+        "native_engine": "ngspice",
+        "model_resources": [
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/all.spice",
+            "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+            "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ff.pm3.spice",
+            "sha256": "abbf671996e76bf3e75ea2bb26036fa17b99f92599330e25bb814ac498b600fe"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+            "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ff.pm3.spice",
+            "sha256": "d67e1b0f7f379ea42f2e21d8976dbb94e93c52bbc77ece644b63ffa152c4d7ef"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+            "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+            "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+            "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+            "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+            "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+            "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+            "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+            "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+          }
+        ],
+        "post_layout": false,
+        "scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff.",
+        "pass": true
+      }
+    },
+    {
+      "name": "ff-post",
+      "id": "56546e9c068a4f5e8e1aab5267fe7336",
+      "project_id": "ddf3e6130eba4928ab99b4c56f551794",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "tool": "ngspice",
+      "measurements": {
+        "samples": 32,
+        "seed": 729726,
+        "offset_mean_V": -0.00019350376677959927,
+        "offset_sample_std_V": 0.0022534926823776506,
+        "offset_min_V": -0.0065955090412959105,
+        "offset_max_V": 0.004040124030089687,
+        "offset_abs_max_V": 0.0065955090412959105,
+        "within_limit_samples": 32,
+        "analysis": "mismatch",
+        "x_unit": "sample",
+        "x_label": "Seeded native OP sample",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "solver": "SPARSE 1.3",
+        "post_layout": "true",
+        "reference_scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff."
+      },
+      "parasitics": {
+        "resistors": 3577,
+        "capacitors": 1304
+      },
+      "message": "Actual OTA mismatch: 32 samples; requested criterion PASS",
+      "manifest_sha256": "a7d44405d8fa0c9fcfdfbde0c435e33bb1cb897a6a9188b0ed026cb3ee29c546",
+      "manifest": "runs/ff-post/manifest.json",
+      "characterization_sha256": "2b41a5f500c14d8319da4614f9cda34ed6eb374808cf8e399f36f03cea82f7d5",
+      "characterization": {
+        "schema_version": 1,
+        "mode": "mismatch",
+        "settings": {
+          "analysis": "op",
+          "corner": "ff",
+          "temperature_C": -40,
+          "supply_V": 1.8,
+          "duration_s": 0.0002,
+          "step_s": 2e-8,
+          "load_F": 5e-15,
+          "vds_V": 1.8,
+          "vbs_V": 0
+        },
+        "config": {
+          "mode": "mismatch",
+          "samples": 32,
+          "seed": 729726,
+          "offset_limit_V": 0.01
+        },
+        "metrics": {
+          "samples": 32,
+          "seed": 729726,
+          "offset_mean_V": -0.00019350376677959927,
+          "offset_sample_std_V": 0.0022534926823776506,
+          "offset_min_V": -0.0065955090412959105,
+          "offset_max_V": 0.004040124030089687,
+          "offset_abs_max_V": 0.0065955090412959105,
+          "within_limit_samples": 32
+        },
+        "rows": [
+          {
+            "index": 1,
+            "seed": 729726,
+            "output_V": 0.9009158150970469,
+            "input_V": 0.9,
+            "offset_V": 0.000915815097046857,
+            "supply_current_A": 0.00005378641211007881,
+            "output_sha256": "379fbeccdd3acc6793f5c114033f6b0c4159767a42ad7ffca9dae943f398c637",
+            "controller_sha256": "e3a8de6083955503cdb1141e3bc0269b30ace178cec42843aa52df913ab9fd70"
+          },
+          {
+            "index": 2,
+            "seed": 729727,
+            "output_V": 0.899770924183874,
+            "input_V": 0.9,
+            "offset_V": -0.0002290758161259676,
+            "supply_current_A": 0.00005323664668900434,
+            "output_sha256": "44da3fc45c7debdc287db4f1ab95ced434ef2f32e090237092bb1b60043f2ded",
+            "controller_sha256": "4d0483c48c2142cf8f771e02ece0f87c0ebb6f35ce874fb6b0a22fe0a8f2fe25"
+          },
+          {
+            "index": 3,
+            "seed": 729728,
+            "output_V": 0.8980849883199373,
+            "input_V": 0.9,
+            "offset_V": -0.0019150116800626948,
+            "supply_current_A": 0.00005518498895070237,
+            "output_sha256": "74f82ca63754e8eaacd0b72f9013267be696e5c108115896d149cfb74108360f",
+            "controller_sha256": "b4629cd68fffac5e19b9c32e09feeeb7ad024dbce57af0b3742cdce9698af608"
+          },
+          {
+            "index": 4,
+            "seed": 729729,
+            "output_V": 0.8992310219596139,
+            "input_V": 0.9,
+            "offset_V": -0.0007689780403861146,
+            "supply_current_A": 0.000052480318803154596,
+            "output_sha256": "fe157cfb3d5373d760003fe28633e7cb398a3f937d3ffbb507ea19813fef8497",
+            "controller_sha256": "a810182a4e84bd31ac94085f28c55f4a851b573ac17b3d5ce30cfc0e46854b83"
+          },
+          {
+            "index": 5,
+            "seed": 729730,
+            "output_V": 0.8985351481151206,
+            "input_V": 0.9,
+            "offset_V": -0.0014648518848794367,
+            "supply_current_A": 0.000053274579809921285,
+            "output_sha256": "236a4b629e24bfe5fb256d19bafca89a71dc105bd3b5dbb498e9c0830a91c7af",
+            "controller_sha256": "8e2c4b55ad91ad3493399d5cf572efb4bab5339137fe66701bfbf24d769b3c70"
+          },
+          {
+            "index": 6,
+            "seed": 729731,
+            "output_V": 0.8955376994807639,
+            "input_V": 0.9,
+            "offset_V": -0.004462300519236129,
+            "supply_current_A": 0.00005402660503570772,
+            "output_sha256": "9511a2d36071f92f6bd246339e7da1a12a055c0d192fcc4007ec06cb4a7cf6e7",
+            "controller_sha256": "98a5ab3d4c7ec4f685e577431b40d2ea4ecd350fe4027d4eae7aca9fdb6a7989"
+          },
+          {
+            "index": 7,
+            "seed": 729732,
+            "output_V": 0.9015084421730999,
+            "input_V": 0.9,
+            "offset_V": 0.0015084421730998665,
+            "supply_current_A": 0.000054832726536663615,
+            "output_sha256": "41dbb3de04b98ed1708f1f12ed5daee9abeab9b8cf55e5e523a8f123d1d7a25a",
+            "controller_sha256": "72af5a403808d0fdd457869ac456d91b55eeb0b6cccdd66bf40def085dce6696"
+          },
+          {
+            "index": 8,
+            "seed": 729733,
+            "output_V": 0.8999723030601786,
+            "input_V": 0.9,
+            "offset_V": -0.00002769693982140886,
+            "supply_current_A": 0.000053921833785157414,
+            "output_sha256": "50e21d903c935a0d6ba7b5796098a0cf850433c57544645adbd12c166321a05a",
+            "controller_sha256": "35a626e49c5598d4047c91c81b94ba50ad7c97a098c73258add52d43bf4727b5"
+          },
+          {
+            "index": 9,
+            "seed": 729734,
+            "output_V": 0.8934044909587041,
+            "input_V": 0.9,
+            "offset_V": -0.0065955090412959105,
+            "supply_current_A": 0.00005219839048842788,
+            "output_sha256": "372bf376e60055f8b0e92c6373d488621c7c07108bc8a6e189502c7a16c1ba44",
+            "controller_sha256": "15b78d8092232bb9bd900bd64f77d3cc50b6877c7a2a6666703ca89c44e7ee56"
+          },
+          {
+            "index": 10,
+            "seed": 729735,
+            "output_V": 0.897585765172693,
+            "input_V": 0.9,
+            "offset_V": -0.0024142348273070713,
+            "supply_current_A": 0.00005365698043635625,
+            "output_sha256": "a1c1b9bff094509e7c3e1155d4a694fc3c1253252a7cfbedf71ed9f234d05c1d",
+            "controller_sha256": "4d83a0cb5b50d031f6423266d1864d3c4dae0ba63e757bb9d6da6ae320de58c0"
+          },
+          {
+            "index": 11,
+            "seed": 729736,
+            "output_V": 0.9003439141109382,
+            "input_V": 0.9,
+            "offset_V": 0.0003439141109381483,
+            "supply_current_A": 0.000053571657892494476,
+            "output_sha256": "b24c4eae66dfb268b18c1a1090dd899859570d601214a662f699018a761460b1",
+            "controller_sha256": "caf26b57d94be521413c3fee9adc7053379c30a7a738508b4267c903b3ed108f"
+          },
+          {
+            "index": 12,
+            "seed": 729737,
+            "output_V": 0.9028161358848055,
+            "input_V": 0.9,
+            "offset_V": 0.0028161358848054485,
+            "supply_current_A": 0.00005366294703506615,
+            "output_sha256": "2d2ff0547cc8cef2dd64496e3672d5d25400337f7b36522ed359c2394007ae45",
+            "controller_sha256": "2d6e0d3161b61a590e051231942dff926bf55334fba3bedf4ea7ed050fa9cf1b"
+          },
+          {
+            "index": 13,
+            "seed": 729738,
+            "output_V": 0.9022683876273656,
+            "input_V": 0.9,
+            "offset_V": 0.0022683876273655867,
+            "supply_current_A": 0.00005500839447829427,
+            "output_sha256": "217ccd7c07a870a983100f7882f8ff7ce5771c2bd519837d3a9784dd50658718",
+            "controller_sha256": "11e0c2965edc717744d1282ccd5838162d73fca1c12ac95064beed209ba28578"
+          },
+          {
+            "index": 14,
+            "seed": 729739,
+            "output_V": 0.8994555079007905,
+            "input_V": 0.9,
+            "offset_V": -0.0005444920992094815,
+            "supply_current_A": 0.00005365802630422252,
+            "output_sha256": "af72d36187f3bf8c0a3a62c7ce9d3629189d3398771a7ead1332c1ce87cf60c1",
+            "controller_sha256": "1ef6d1791bea694a1b8d7bd0aef6d8d9542dbd9eb4f8aa4fe232c6d1cd0f3395"
+          },
+          {
+            "index": 15,
+            "seed": 729740,
+            "output_V": 0.8981585861503442,
+            "input_V": 0.9,
+            "offset_V": -0.0018414138496558596,
+            "supply_current_A": 0.00005444987136442141,
+            "output_sha256": "684e8b14ec340be15f6bb76ec20681b79f5a3247fdfe7890e514133b65061df4",
+            "controller_sha256": "5ca47d2995c07add1b5930649cf777ccf3030d80822e70d3188699b2536479aa"
+          },
+          {
+            "index": 16,
+            "seed": 729741,
+            "output_V": 0.9018218735125425,
+            "input_V": 0.9,
+            "offset_V": 0.0018218735125424823,
+            "supply_current_A": 0.00005318188919142125,
+            "output_sha256": "cb03deedd0d9d19d0386556881069cf848f167fe915d1430f1c7c057239ec577",
+            "controller_sha256": "d418f175ca45bf6b72717cf663d41f3693a09c935d692ea8b2e8e43441378d98"
+          },
+          {
+            "index": 17,
+            "seed": 729742,
+            "output_V": 0.9003624523662613,
+            "input_V": 0.9,
+            "offset_V": 0.00036245236626131216,
+            "supply_current_A": 0.000053142666967220115,
+            "output_sha256": "94ffa84304775f0ab60a0d29a6bbbd6a6faebab6f1429290183d6cb1d57969ed",
+            "controller_sha256": "44962d8a98cfafc38b30c0ecf5e8268959cb8adb5ee45770619187abc8dcea9d"
+          },
+          {
+            "index": 18,
+            "seed": 729743,
+            "output_V": 0.9024137349349076,
+            "input_V": 0.9,
+            "offset_V": 0.0024137349349075965,
+            "supply_current_A": 0.00005317381582088318,
+            "output_sha256": "0b96d622c38cfabbb26e3cea7d7df6c220ecfb8c0f1e58040548a2cd70be9817",
+            "controller_sha256": "445aef050a80a7b508b18283c49ae1eace7fb66971541fa01fa3ec5e15d2252f"
+          },
+          {
+            "index": 19,
+            "seed": 729744,
+            "output_V": 0.9012441072315553,
+            "input_V": 0.9,
+            "offset_V": 0.0012441072315553248,
+            "supply_current_A": 0.00005483465416110389,
+            "output_sha256": "46a459e98439a241dc87866cdec47960bcbb12062a8a006a61c5d6b40cea4d97",
+            "controller_sha256": "ab2c60f70a85bdd564087f8781bf02b429a5438637d079221d064f6d5fadaa3e"
+          },
+          {
+            "index": 20,
+            "seed": 729745,
+            "output_V": 0.9014891262597988,
+            "input_V": 0.9,
+            "offset_V": 0.0014891262597988009,
+            "supply_current_A": 0.00005349734826081039,
+            "output_sha256": "3190b129530c9febabe15db040d006ece3f93ec03aac34bb3c9732085bc311f3",
+            "controller_sha256": "6a8bc0565273e59ffde551b056529acf31347e8dc808f76ba5e051b7bf3deced"
+          },
+          {
+            "index": 21,
+            "seed": 729746,
+            "output_V": 0.8993429643066044,
+            "input_V": 0.9,
+            "offset_V": -0.0006570356933955912,
+            "supply_current_A": 0.00005406535499228454,
+            "output_sha256": "b7e11895cd2c2e05892a086f1a757bed6d83ef70ffdaa935b44736011309cb2a",
+            "controller_sha256": "be179b4010776f94de1a9e0fb85b66e6aec908a09530937a286121e6b82b6686"
+          },
+          {
+            "index": 22,
+            "seed": 729747,
+            "output_V": 0.8986697185401937,
+            "input_V": 0.9,
+            "offset_V": -0.0013302814598062929,
+            "supply_current_A": 0.000055238064011831414,
+            "output_sha256": "50f9be01bd1d5feb0499c3b1b2b8b7f92eb958be6276c54886851e463825026a",
+            "controller_sha256": "90f603a8d6e8832168f8654158405eab851b490a426ca5080b27835ae0eec103"
+          },
+          {
+            "index": 23,
+            "seed": 729748,
+            "output_V": 0.8989479695198008,
+            "input_V": 0.9,
+            "offset_V": -0.0010520304801991953,
+            "supply_current_A": 0.0000547181397087728,
+            "output_sha256": "3d17ba2e7baca99ae16d54cba960b298b44389da2b22acdd1d40a63ccfe09573",
+            "controller_sha256": "f54f841f996726d68af479bfdc5542fc0694fce319adc493260c2b9439efc234"
+          },
+          {
+            "index": 24,
+            "seed": 729749,
+            "output_V": 0.8974270297230579,
+            "input_V": 0.9,
+            "offset_V": -0.0025729702769421436,
+            "supply_current_A": 0.00005279079333289291,
+            "output_sha256": "338ac00577467e76e52241490b0577c7e1fea9833720d3bdff8d7bc24ac0dad9",
+            "controller_sha256": "38b8d59a5adc1389a1c718cb111294cd413515234b96adbb356f8ae5e820077a"
+          },
+          {
+            "index": 25,
+            "seed": 729750,
+            "output_V": 0.9001261652944859,
+            "input_V": 0.9,
+            "offset_V": 0.00012616529448583602,
+            "supply_current_A": 0.00005444003608690538,
+            "output_sha256": "9baf5c2a5532a2e8d4d17ebba9a28ebb90950320abd9446a9e0d9f745ca126b8",
+            "controller_sha256": "7c18b9f33b33921b70c6bbedf9bc814f78c0c7b6db687fc892ee99d0bc5a2603"
+          },
+          {
+            "index": 26,
+            "seed": 729751,
+            "output_V": 0.8998589216365325,
+            "input_V": 0.9,
+            "offset_V": -0.00014107836346755054,
+            "supply_current_A": 0.00005362649106036531,
+            "output_sha256": "3796b74f9276136c362805d7e56d5c7f8e8e4b9a5e441518602a10795d65d8a0",
+            "controller_sha256": "802aff5e86d45253c4bdc122e20191c03532d8bb343588564d8cce1007b54288"
+          },
+          {
+            "index": 27,
+            "seed": 729752,
+            "output_V": 0.8985411363792755,
+            "input_V": 0.9,
+            "offset_V": -0.0014588636207245598,
+            "supply_current_A": 0.00005410430822210682,
+            "output_sha256": "302336e2ff1ae053df4210e0ed14b273eb445c7c1e793344d67bf4a5c6106861",
+            "controller_sha256": "5cf8fe17488a8acf32f9a641a153fdd051bc46f0eb3d8c726d70d91c1ded1060"
+          },
+          {
+            "index": 28,
+            "seed": 729753,
+            "output_V": 0.8974182923240379,
+            "input_V": 0.9,
+            "offset_V": -0.0025817076759621083,
+            "supply_current_A": 0.000054864066721477256,
+            "output_sha256": "30057a919a120649525b545b4b9acd2169a3d5c224b12fb861eaa53f11226c9a",
+            "controller_sha256": "6b0174c65c991591e6e35f658e6447caf3f82d3a51ecec3a3201396e08c7854d"
+          },
+          {
+            "index": 29,
+            "seed": 729754,
+            "output_V": 0.8996072918083875,
+            "input_V": 0.9,
+            "offset_V": -0.000392708191612523,
+            "supply_current_A": 0.00005316169917591977,
+            "output_sha256": "3ed302dc3818cfd5fc16dec78fbe320f6d10f5127e003d51c9f2ef5c3057e05f",
+            "controller_sha256": "7f87b6209b5a8e0085da21f70694508201baf840a89d25537ef84da4c8585f7d"
+          },
+          {
+            "index": 30,
+            "seed": 729755,
+            "output_V": 0.9040401240300897,
+            "input_V": 0.9,
+            "offset_V": 0.004040124030089687,
+            "supply_current_A": 0.000053924096063646954,
+            "output_sha256": "7c0f0dda7dabf7e53b555bc158296194f752a907ab60e5a9ad641758f833ace3",
+            "controller_sha256": "cc076b9661495706c2ecfd905e72cbde27e900b4ec5ea908394b2924e358f16e"
+          },
+          {
+            "index": 31,
+            "seed": 729756,
+            "output_V": 0.9035959613858217,
+            "input_V": 0.9,
+            "offset_V": 0.0035959613858216333,
+            "supply_current_A": 0.00005386497153071247,
+            "output_sha256": "202b2c3d8d099722b874e33d9cf5b00c2953a57669f681e6bbcd2372c925d120",
+            "controller_sha256": "cc94d4bb73d2f972af588a3509907b037fbe4653ffbd589a00f32ca67c26bc75"
+          },
+          {
+            "index": 32,
+            "seed": 729757,
+            "output_V": 0.9013118800144243,
+            "input_V": 0.9,
+            "offset_V": 0.0013118800144242826,
+            "supply_current_A": 0.00005409990520349739,
+            "output_sha256": "8d81037300b22d419addef7e6f22ec1985541384dd2bbaec8eb4a589bbcc210d",
+            "controller_sha256": "c490fe588445da7e50c2112ae2e59be63da0037233ad96e37a01a8368eafe58f"
+          }
+        ],
+        "native_engine": "ngspice",
+        "model_resources": [
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/all.spice",
+            "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+            "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ff.pm3.spice",
+            "sha256": "abbf671996e76bf3e75ea2bb26036fa17b99f92599330e25bb814ac498b600fe"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+            "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ff.pm3.spice",
+            "sha256": "d67e1b0f7f379ea42f2e21d8976dbb94e93c52bbc77ece644b63ffa152c4d7ef"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+            "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+            "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+            "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+            "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+            "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+            "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+            "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+            "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+          }
+        ],
+        "post_layout": true,
+        "scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff.",
+        "pass": true
+      }
+    },
+    {
+      "name": "ss-pre",
+      "id": "d816ca0233664a26978028416d59ebdc",
+      "project_id": "ddf3e6130eba4928ab99b4c56f551794",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "tool": "ngspice",
+      "measurements": {
+        "samples": 32,
+        "seed": 729726,
+        "offset_mean_V": -0.0009140644822054345,
+        "offset_sample_std_V": 0.0034494729457289043,
+        "offset_min_V": -0.007280286580953588,
+        "offset_max_V": 0.005732639417328711,
+        "offset_abs_max_V": 0.007280286580953588,
+        "within_limit_samples": 32,
+        "analysis": "mismatch",
+        "x_unit": "sample",
+        "x_label": "Seeded native OP sample",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.6,
+        "solver": "SPARSE 1.3",
+        "post_layout": "false",
+        "reference_scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff."
+      },
+      "message": "Actual OTA mismatch: 32 samples; requested criterion PASS",
+      "manifest_sha256": "9c844af1d8b6be7a9e2e0ca2e69238468b045ced21a34606069141cb8fdc4fc4",
+      "manifest": "runs/ss-pre/manifest.json",
+      "characterization_sha256": "5a98c93c190213e47293d4a35bd1f71acfc8b39c4c7254dda10cc68cbb8c2964",
+      "characterization": {
+        "schema_version": 1,
+        "mode": "mismatch",
+        "settings": {
+          "analysis": "op",
+          "corner": "ss",
+          "temperature_C": 125,
+          "supply_V": 1.6,
+          "duration_s": 0.0002,
+          "step_s": 2e-8,
+          "load_F": 5e-15,
+          "vds_V": 1.8,
+          "vbs_V": 0
+        },
+        "config": {
+          "mode": "mismatch",
+          "samples": 32,
+          "seed": 729726,
+          "offset_limit_V": 0.01
+        },
+        "metrics": {
+          "samples": 32,
+          "seed": 729726,
+          "offset_mean_V": -0.0009140644822054345,
+          "offset_sample_std_V": 0.0034494729457289043,
+          "offset_min_V": -0.007280286580953588,
+          "offset_max_V": 0.005732639417328711,
+          "offset_abs_max_V": 0.007280286580953588,
+          "within_limit_samples": 32
+        },
+        "rows": [
+          {
+            "index": 1,
+            "seed": 729726,
+            "output_V": 0.8044874071329104,
+            "input_V": 0.8,
+            "offset_V": 0.004487407132910404,
+            "supply_current_A": 0.00003106316901189092,
+            "output_sha256": "9b1b28ed85c140039507a6c1550f64c622c41309645bc60ea81bb160d58f420f",
+            "controller_sha256": "089a98a75f23480022ef8d54b7e01f464534c78cdc3ae70eabe9699ccdf64688"
+          },
+          {
+            "index": 2,
+            "seed": 729727,
+            "output_V": 0.8034880041313954,
+            "input_V": 0.8,
+            "offset_V": 0.0034880041313953836,
+            "supply_current_A": 0.00003240176184044857,
+            "output_sha256": "ea5ff1663792e856c3f125598cb5851410627ca2a4768ce55978921eb64451b0",
+            "controller_sha256": "a9510fe722e496d5df62e1093d3f759213da37a5f45530c3b2523b5cd5c75d8d"
+          },
+          {
+            "index": 3,
+            "seed": 729728,
+            "output_V": 0.8016902359418054,
+            "input_V": 0.8,
+            "offset_V": 0.0016902359418053958,
+            "supply_current_A": 0.00003155270788370689,
+            "output_sha256": "63fac5e725c701e803e364aaa50111fa737a0bb246ec6d67a7f2ac46ff8339d8",
+            "controller_sha256": "0b1547470fa60059bf9342806c2244997305299cd7549f7a056e0cf2ed9aff44"
+          },
+          {
+            "index": 4,
+            "seed": 729729,
+            "output_V": 0.7948381751448323,
+            "input_V": 0.8,
+            "offset_V": -0.005161824855167696,
+            "supply_current_A": 0.00003174293922029466,
+            "output_sha256": "4e0cc900f1bc382aac674a245eb104a9f2963d7876ba9d5668e67cb0a851a44e",
+            "controller_sha256": "8a57ea912d62117b7911ca4624a3beef0f95ebfe378d43b078f5c95ac50e7d23"
+          },
+          {
+            "index": 5,
+            "seed": 729730,
+            "output_V": 0.7984306565149382,
+            "input_V": 0.8,
+            "offset_V": -0.0015693434850618804,
+            "supply_current_A": 0.00003193609706413387,
+            "output_sha256": "c90e3ca5789870817d02574e87d126c7f0ff7ee248bb13333ba774a18d5cd0ef",
+            "controller_sha256": "4abaa4e1738f3a2f966567c770a3e9c5c448b008a8bb392d78085efffac405ba"
+          },
+          {
+            "index": 6,
+            "seed": 729731,
+            "output_V": 0.8029642925857843,
+            "input_V": 0.8,
+            "offset_V": 0.002964292585784234,
+            "supply_current_A": 0.00003177542008960472,
+            "output_sha256": "6e361e7e2a707429cf96f67a207c9b9b8b83cf656a26be3a451ac2c1fa103da4",
+            "controller_sha256": "d0e74d7f1fd31ed5cca79c799b8a5bf1ccf86e29cef9f45005080b1b32a53705"
+          },
+          {
+            "index": 7,
+            "seed": 729732,
+            "output_V": 0.7977160931477556,
+            "input_V": 0.8,
+            "offset_V": -0.002283906852244444,
+            "supply_current_A": 0.00003175647428249747,
+            "output_sha256": "8a32c4bfb86aba33faed6ef87d85287793726a69ad0e233f18e2058f7373aca8",
+            "controller_sha256": "c11cf1183271f030d83779e964a838bae7be638d72356c742a78c2c2d50ee7e9"
+          },
+          {
+            "index": 8,
+            "seed": 729733,
+            "output_V": 0.7970503570313667,
+            "input_V": 0.8,
+            "offset_V": -0.0029496429686333148,
+            "supply_current_A": 0.00003203451356700045,
+            "output_sha256": "eb086c544753dbf724c2f2eaabba3e548910e45784aff6511c24f01c79468873",
+            "controller_sha256": "0079877f5a69a9c79fb9e778c80a993481aaccd6c0004b4bd3bc2942fdff4615"
+          },
+          {
+            "index": 9,
+            "seed": 729734,
+            "output_V": 0.7956791154470011,
+            "input_V": 0.8,
+            "offset_V": -0.004320884552998949,
+            "supply_current_A": 0.00003215514394382064,
+            "output_sha256": "a9350f1ce2118c3e10bb087abf0e986a0f18d774925130ed20a6dd17a84a0d50",
+            "controller_sha256": "d8a81ba9e4ca0f2e175d8e6157803e14519ab7923926972645fb0f390f633f98"
+          },
+          {
+            "index": 10,
+            "seed": 729735,
+            "output_V": 0.7973526851551469,
+            "input_V": 0.8,
+            "offset_V": -0.0026473148448531436,
+            "supply_current_A": 0.000031519616803470964,
+            "output_sha256": "1c4b76afcb673241fc70ca0e69cf7dde94a6c0bfd5b0f68ebec07931b22e19ab",
+            "controller_sha256": "85d9fbfbf8039b4bec069083391e46e0d13a99757704205d801e58c030967d5c"
+          },
+          {
+            "index": 11,
+            "seed": 729736,
+            "output_V": 0.7946513225710987,
+            "input_V": 0.8,
+            "offset_V": -0.005348677428901327,
+            "supply_current_A": 0.000031728893879505644,
+            "output_sha256": "74f520167470d908baf7125add1c2d38009c054c8a164089fb252f9755bc5820",
+            "controller_sha256": "1dd6439c6a4f109257b5c96eeb42e01002d60190b5e40f99f1b2d5fbe9059403"
+          },
+          {
+            "index": 12,
+            "seed": 729737,
+            "output_V": 0.7985023007609016,
+            "input_V": 0.8,
+            "offset_V": -0.0014976992390984822,
+            "supply_current_A": 0.000031823941592452564,
+            "output_sha256": "e1bcba9c24346642d3788d967c61e097ec03c6918b39d33c56d026b6afe2618d",
+            "controller_sha256": "aee9d0331aa5631f28ffa4cb454b94a65ebf8f88eeb7c7c18af28cc155e212e3"
+          },
+          {
+            "index": 13,
+            "seed": 729738,
+            "output_V": 0.8019149543379172,
+            "input_V": 0.8,
+            "offset_V": 0.0019149543379171075,
+            "supply_current_A": 0.00003210734459137011,
+            "output_sha256": "bfb5f8f334394117febc9d20358ddbc9c9fbcefc06ac8d50bfa16fb6631d2bbe",
+            "controller_sha256": "dbbbae30046cc1b491a097ed0ac069dbeb57d648f04bab48112c4dfb8f952171"
+          },
+          {
+            "index": 14,
+            "seed": 729739,
+            "output_V": 0.7992649393977445,
+            "input_V": 0.8,
+            "offset_V": -0.0007350606022555883,
+            "supply_current_A": 0.00003164121543841498,
+            "output_sha256": "0744e99f9e697d9b9409e92a26f9fe11f29a512dc79ff95c98b47e63b9020b90",
+            "controller_sha256": "93d0ff94ec0caf35e3e2b878273b2fa4953539e3f513b6c85fb4507119102456"
+          },
+          {
+            "index": 15,
+            "seed": 729740,
+            "output_V": 0.7965617202958128,
+            "input_V": 0.8,
+            "offset_V": -0.003438279704187197,
+            "supply_current_A": 0.00003194326990192018,
+            "output_sha256": "3cf3b245747941fdbc4ad0c0dec0694699a498ee162ac233c8b1128236121bbd",
+            "controller_sha256": "2aea0c4a44f951184ed53046893927d19f781c62e10056f5c705847e423633a3"
+          },
+          {
+            "index": 16,
+            "seed": 729741,
+            "output_V": 0.8005260756699499,
+            "input_V": 0.8,
+            "offset_V": 0.0005260756699498881,
+            "supply_current_A": 0.00003189118824738454,
+            "output_sha256": "77c6c4f9ac3e0e772cb2d5b01367bc9b1b33fe8d7a248395ed519a2ff3e8c394",
+            "controller_sha256": "3264482673f160475adce3b0aae9bad6bbc9785f657076edde79b194fa4fdd48"
+          },
+          {
+            "index": 17,
+            "seed": 729742,
+            "output_V": 0.8057326394173288,
+            "input_V": 0.8,
+            "offset_V": 0.005732639417328711,
+            "supply_current_A": 0.000031843973421882366,
+            "output_sha256": "3076b2620bf9c65adaee949d1b17e7a887aba9867791233a84d05c36f053f400",
+            "controller_sha256": "60a5cbe6f21152e56144c7a568ba9cb85054b3046e21d37af30636d32d5a0e8a"
+          },
+          {
+            "index": 18,
+            "seed": 729743,
+            "output_V": 0.8021315813875844,
+            "input_V": 0.8,
+            "offset_V": 0.0021315813875844025,
+            "supply_current_A": 0.0000313078927029401,
+            "output_sha256": "d17cff212431a127dcc4762b9d9bb560d22b4dfe9c31e3023bbe46d3973bd6dc",
+            "controller_sha256": "97d03dc175ba69301a2be63e261c7ed65791c09ae4313c9688b80edd97660829"
+          },
+          {
+            "index": 19,
+            "seed": 729744,
+            "output_V": 0.7956729304237342,
+            "input_V": 0.8,
+            "offset_V": -0.0043270695762658296,
+            "supply_current_A": 0.00003064879836295403,
+            "output_sha256": "3ae90265eea9694aa2c7e92af18a0a8746192ef8cffcb3ad71bbaedc72dd1ee3",
+            "controller_sha256": "ebf53bbbdf6d8f2e2aa03086cac33b6e5308d15e4bb8412914774a970c85b69c"
+          },
+          {
+            "index": 20,
+            "seed": 729745,
+            "output_V": 0.7927197134190465,
+            "input_V": 0.8,
+            "offset_V": -0.007280286580953588,
+            "supply_current_A": 0.000031253074306851464,
+            "output_sha256": "35c3804933cb55e88f190e57bff15af0e6f154a9e5b2c0010b698953220188f4",
+            "controller_sha256": "007dff1516fea8663a89cb581c3283c6078025bb5b84f8676d5ccfa714a79bbf"
+          },
+          {
+            "index": 21,
+            "seed": 729746,
+            "output_V": 0.8005886241994631,
+            "input_V": 0.8,
+            "offset_V": 0.0005886241994630392,
+            "supply_current_A": 0.00003183949940408462,
+            "output_sha256": "9960dda0e12b349927c2ab5707d516a98fa81765619641b73081d17f4b56fb64",
+            "controller_sha256": "fcff213b22ac6b60025e39d082d66632a05332bafb1a4151d71f0cc536bd5894"
+          },
+          {
+            "index": 22,
+            "seed": 729747,
+            "output_V": 0.7998423026438104,
+            "input_V": 0.8,
+            "offset_V": -0.00015769735618964553,
+            "supply_current_A": 0.00003162074787865301,
+            "output_sha256": "6db4429d336fe6193913d7821abef1c90df7303edc21cf1b84d833216d20e2be",
+            "controller_sha256": "e35e4f261e6a23dc4d019281e331f8ea54216db2d87febb950c001108cbe9c88"
+          },
+          {
+            "index": 23,
+            "seed": 729748,
+            "output_V": 0.8014606576721235,
+            "input_V": 0.8,
+            "offset_V": 0.0014606576721234443,
+            "supply_current_A": 0.000031572124215399104,
+            "output_sha256": "428b8bbb03c2410c843987a9165fd4241b5bad7e3dd28259426f3b3fa978a951",
+            "controller_sha256": "e2acc58a56c91bee9dfa663178a8ac0966231641296260573cdb4c268186c25d"
+          },
+          {
+            "index": 24,
+            "seed": 729749,
+            "output_V": 0.7937705505960366,
+            "input_V": 0.8,
+            "offset_V": -0.006229449403963416,
+            "supply_current_A": 0.000032226588521777806,
+            "output_sha256": "93aa9fbe8c25510dbb3da3b9ec68fe78429694c29466dda31d268124fdf9186c",
+            "controller_sha256": "8502e983abf788a0de3fad54ce6783c958542e81abeac6588e3ac883d8436bb3"
+          },
+          {
+            "index": 25,
+            "seed": 729750,
+            "output_V": 0.7959898392273317,
+            "input_V": 0.8,
+            "offset_V": -0.004010160772668359,
+            "supply_current_A": 0.00003184589019540218,
+            "output_sha256": "4f52e48fdbd8afa2b0db92810fdf038060c80b40d4d8c9a6f54b15087c2452cc",
+            "controller_sha256": "1fe4e91f57b7938432f7a742b77756e106ab87d85d2a82cefa2cd9c16e417a2d"
+          },
+          {
+            "index": 26,
+            "seed": 729751,
+            "output_V": 0.7964936422727078,
+            "input_V": 0.8,
+            "offset_V": -0.003506357727292242,
+            "supply_current_A": 0.00003226254977994021,
+            "output_sha256": "3370c008067dd8f2b914bb82703507d2ec856ed9daad92779f4ae6d451c523db",
+            "controller_sha256": "5f8ab25a354cc77f663f48317f78bbf5f1666cba4a06e10aecee44d94cb73245"
+          },
+          {
+            "index": 27,
+            "seed": 729752,
+            "output_V": 0.8025449601045693,
+            "input_V": 0.8,
+            "offset_V": 0.0025449601045692827,
+            "supply_current_A": 0.000032209756264639484,
+            "output_sha256": "6f9af0fb7a760510315de13fbe1ae4326592a586078bf719948e603ece1f07d6",
+            "controller_sha256": "c727e9e597fc037f19571ac0faaad43dac26cf97de0cdcccde3b5d6b1c032c7f"
+          },
+          {
+            "index": 28,
+            "seed": 729753,
+            "output_V": 0.7949543677545989,
+            "input_V": 0.8,
+            "offset_V": -0.0050456322454011104,
+            "supply_current_A": 0.000031164532287474136,
+            "output_sha256": "65c8d7225458b7b071997ac393abfc1717774113a3a6f31fdfe205a6124310c8",
+            "controller_sha256": "c4866e55dd904ec5cc0e05d58643a11238245f55dbd39b09e1ea5ded906cb1f8"
+          },
+          {
+            "index": 29,
+            "seed": 729754,
+            "output_V": 0.7990889628799778,
+            "input_V": 0.8,
+            "offset_V": -0.0009110371200222733,
+            "supply_current_A": 0.00003193721492747183,
+            "output_sha256": "c5f72c97bc571626ebefee6b3ab131aaf3c9bbf0895e1a41d56ffc8038c0cc9c",
+            "controller_sha256": "ff5b674cbc63bb0f146d7058b57705ad3b02739fcc4175e0d37ba96fb996e2e7"
+          },
+          {
+            "index": 30,
+            "seed": 729755,
+            "output_V": 0.8013674081312274,
+            "input_V": 0.8,
+            "offset_V": 0.0013674081312273767,
+            "supply_current_A": 0.00003171013556508243,
+            "output_sha256": "7e92a4a6d04add9290aed2c7a45275e72c7c4236d135628c05623be160616c61",
+            "controller_sha256": "22dbd0c007aca3912fcf1b0cd79a4434553ab447929eefa6376d063901a6d3bc"
+          },
+          {
+            "index": 31,
+            "seed": 729756,
+            "output_V": 0.8045506710254813,
+            "input_V": 0.8,
+            "offset_V": 0.004550671025481234,
+            "supply_current_A": 0.0000317695746430544,
+            "output_sha256": "0401c4ad9d07dc4aef676287a78d05236cf1c1c951e3b4f628a6f52f8a2d80d2",
+            "controller_sha256": "b6e3c00d413f3663c506aab05af51e13e910d9ec1e61f8cdadfe3d2756c40cb5"
+          },
+          {
+            "index": 32,
+            "seed": 729757,
+            "output_V": 0.7987227501480447,
+            "input_V": 0.8,
+            "offset_V": -0.00127724985195532,
+            "supply_current_A": 0.0000318218705827552,
+            "output_sha256": "7344d73cfab91564dabd1f1f50a061ceb81d58d6da536ad55fb879de4311f079",
+            "controller_sha256": "2e71bb2746d36534dfe90c141489cb8b4d835accd34882bb936e45f6806fe586"
+          }
+        ],
+        "native_engine": "ngspice",
+        "model_resources": [
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/all.spice",
+            "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+            "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ss.pm3.spice",
+            "sha256": "4a70607ef6e016b426e9b447fe75ca417cdb7e44fe98ca6d7f0319656e65ed0c"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+            "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ss.pm3.spice",
+            "sha256": "ec4f1b79d6dc56c48f4bbf2a5d8aa33274e6e881b68433120974e27056f28076"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+            "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+            "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+            "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+            "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+            "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+            "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+            "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+            "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+          }
+        ],
+        "post_layout": false,
+        "scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff.",
+        "pass": true
+      }
+    },
+    {
+      "name": "ss-post",
+      "id": "078759e4762c43a6917e573a5178614a",
+      "project_id": "ddf3e6130eba4928ab99b4c56f551794",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "tool": "ngspice",
+      "measurements": {
+        "samples": 32,
+        "seed": 729726,
+        "offset_mean_V": -0.0006983469338080958,
+        "offset_sample_std_V": 0.0036320791921562526,
+        "offset_min_V": -0.009454698522768812,
+        "offset_max_V": 0.007454119071923282,
+        "offset_abs_max_V": 0.009454698522768812,
+        "within_limit_samples": 32,
+        "analysis": "mismatch",
+        "x_unit": "sample",
+        "x_label": "Seeded native OP sample",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.6,
+        "solver": "SPARSE 1.3",
+        "post_layout": "true",
+        "reference_scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff."
+      },
+      "parasitics": {
+        "resistors": 3577,
+        "capacitors": 1304
+      },
+      "message": "Actual OTA mismatch: 32 samples; requested criterion PASS",
+      "manifest_sha256": "20880a16c204bee199fdd5a30590e3b615ffc9367b5c2570176e3b79de56af4b",
+      "manifest": "runs/ss-post/manifest.json",
+      "characterization_sha256": "1efcedb230cc4b8f83ae5f59cfc94cd0b1f22438827fa7750fff50c54fd583af",
+      "characterization": {
+        "schema_version": 1,
+        "mode": "mismatch",
+        "settings": {
+          "analysis": "op",
+          "corner": "ss",
+          "temperature_C": 125,
+          "supply_V": 1.6,
+          "duration_s": 0.0002,
+          "step_s": 2e-8,
+          "load_F": 5e-15,
+          "vds_V": 1.8,
+          "vbs_V": 0
+        },
+        "config": {
+          "mode": "mismatch",
+          "samples": 32,
+          "seed": 729726,
+          "offset_limit_V": 0.01
+        },
+        "metrics": {
+          "samples": 32,
+          "seed": 729726,
+          "offset_mean_V": -0.0006983469338080958,
+          "offset_sample_std_V": 0.0036320791921562526,
+          "offset_min_V": -0.009454698522768812,
+          "offset_max_V": 0.007454119071923282,
+          "offset_abs_max_V": 0.009454698522768812,
+          "within_limit_samples": 32
+        },
+        "rows": [
+          {
+            "index": 1,
+            "seed": 729726,
+            "output_V": 0.8013058824349102,
+            "input_V": 0.8,
+            "offset_V": 0.0013058824349101439,
+            "supply_current_A": 0.000031360062231389554,
+            "output_sha256": "62573de851e0249b614da5291db18bd994382895edbcada049fa81f9e1902813",
+            "controller_sha256": "860177e9283f94be055d9bb7644cd78265e8c0d1ca2fc1769595dcb16732a2dc"
+          },
+          {
+            "index": 2,
+            "seed": 729727,
+            "output_V": 0.7983144387062951,
+            "input_V": 0.8,
+            "offset_V": -0.0016855612937048958,
+            "supply_current_A": 0.00003120395891390709,
+            "output_sha256": "45f11cb97f83db208e391a3a7fd7cd7362a604c7c9d48115b4315969f79df17c",
+            "controller_sha256": "8642773a7b6ea542f66f3b72a7017d2dfb52eaa2f5847193ca24fb3e7a960a62"
+          },
+          {
+            "index": 3,
+            "seed": 729728,
+            "output_V": 0.7993004819003485,
+            "input_V": 0.8,
+            "offset_V": -0.0006995180996515193,
+            "supply_current_A": 0.00003205983552668004,
+            "output_sha256": "defa0e8ae5be7d1221e36275e0288af81322e0339b8a003dbd5817a8caa73bde",
+            "controller_sha256": "ebe0303f4de5ad1f0810a817c114556faae3176122402c12584f7f4f87609502"
+          },
+          {
+            "index": 4,
+            "seed": 729729,
+            "output_V": 0.7984952879904981,
+            "input_V": 0.8,
+            "offset_V": -0.001504712009501974,
+            "supply_current_A": 0.00003083259050953337,
+            "output_sha256": "c430b54d0b13fb4868cd4c98573209df9effbf2d37db62235672cff10245b5c7",
+            "controller_sha256": "df638e6a901190e61d7cb12999644a5fd72349814e017b0cef590024d1d43708"
+          },
+          {
+            "index": 5,
+            "seed": 729730,
+            "output_V": 0.8009224400190624,
+            "input_V": 0.8,
+            "offset_V": 0.0009224400190623872,
+            "supply_current_A": 0.00003112909735022984,
+            "output_sha256": "7a33d4e453a3515aa77b697ab4d11994059ae1eed3b75307f976a754525e388a",
+            "controller_sha256": "25ad06d4da55f1e97d9b86a71798da4caca06fa43ae26576a6ec769744646de0"
+          },
+          {
+            "index": 6,
+            "seed": 729731,
+            "output_V": 0.7922204855748561,
+            "input_V": 0.8,
+            "offset_V": -0.0077795144251439075,
+            "supply_current_A": 0.00003117271278229618,
+            "output_sha256": "621293e5079ae319b38b9fbf67e503a9a560e6ee96f4ea64d011770a2ca28ea3",
+            "controller_sha256": "6677573500a0ef47531abb331074d8ac49cab564cfcfdce8fb09b105a09b8756"
+          },
+          {
+            "index": 7,
+            "seed": 729732,
+            "output_V": 0.8029158128613973,
+            "input_V": 0.8,
+            "offset_V": 0.0029158128613973044,
+            "supply_current_A": 0.00003200139527958536,
+            "output_sha256": "70a9c410417de578ec1d05c68377c131fe76b10f48f28758ef36d9f264e390ba",
+            "controller_sha256": "b4d8ecb7cfd7aef30069641c9feccaa18bc595279b2fe6d87f986aba102bfde5"
+          },
+          {
+            "index": 8,
+            "seed": 729733,
+            "output_V": 0.7976547673744607,
+            "input_V": 0.8,
+            "offset_V": -0.0023452326255393174,
+            "supply_current_A": 0.000031262753914707356,
+            "output_sha256": "f79fd9f336111a47f8426c0a87efd6169dbf266cbcf2a9460e1138d7a3477b26",
+            "controller_sha256": "6539f8ac4fb2ef522e92f0030b0455607a71484f25a94fb2531cba28eda8848d"
+          },
+          {
+            "index": 9,
+            "seed": 729734,
+            "output_V": 0.7905453014772312,
+            "input_V": 0.8,
+            "offset_V": -0.009454698522768812,
+            "supply_current_A": 0.000030363662407511052,
+            "output_sha256": "9f5d119d7965436f5cae3f77ab8754dfd89a4c6fe76e518d75476968467ea05a",
+            "controller_sha256": "7b588b2ce41a867c9d41fa6200382bc0d6a5898e6c0d13d4600796b632ba65ee"
+          },
+          {
+            "index": 10,
+            "seed": 729735,
+            "output_V": 0.7968896530379368,
+            "input_V": 0.8,
+            "offset_V": -0.0031103469620632485,
+            "supply_current_A": 0.00003128340285421527,
+            "output_sha256": "658c84aeb89bcb687ed2eff632c72ca8399f9bcc53b227e0738132b5dd08d5aa",
+            "controller_sha256": "fb74ee8895e04cf57ac77702b455de64e3463d7a260a7fe073508163ebed6a7f"
+          },
+          {
+            "index": 11,
+            "seed": 729736,
+            "output_V": 0.8019886154208187,
+            "input_V": 0.8,
+            "offset_V": 0.001988615420818629,
+            "supply_current_A": 0.00003117381624381105,
+            "output_sha256": "15522e9debd9da40c93855fee465c0980a24245907238fbdb8d6fdd542c6925d",
+            "controller_sha256": "a15dd4e8015702944283c4389340b5002eb51999ce76b7e91797109a6a1d5f87"
+          },
+          {
+            "index": 12,
+            "seed": 729737,
+            "output_V": 0.8038903487433393,
+            "input_V": 0.8,
+            "offset_V": 0.003890348743339267,
+            "supply_current_A": 0.0000312314895430741,
+            "output_sha256": "c2e7cd80ffe3adddf9c0fe5ca95730bb66c3492f447fa72e483d13306f80337e",
+            "controller_sha256": "739ec610031a68e9c37d8ae73a4f6152c8d6244e89915bbdb8e1956edc62907c"
+          },
+          {
+            "index": 13,
+            "seed": 729738,
+            "output_V": 0.8028937056993011,
+            "input_V": 0.8,
+            "offset_V": 0.00289370569930103,
+            "supply_current_A": 0.00003174228364791892,
+            "output_sha256": "17536c8de8f02e87ca4f3c5b571b95bcf669c2c116a242c0b7a5965136613166",
+            "controller_sha256": "78c45aa976a56ba8819ae56f8b5ca44ec8cac8b17c0f6fc110e514b73d276440"
+          },
+          {
+            "index": 14,
+            "seed": 729739,
+            "output_V": 0.7968393698476525,
+            "input_V": 0.8,
+            "offset_V": -0.0031606301523475766,
+            "supply_current_A": 0.00003131952511591443,
+            "output_sha256": "08d5a9735ca1464d3818ae0634418f8d0202047dcaab6a9bf5c9076784d0f6be",
+            "controller_sha256": "d41a7264d7b11b1032136083a6bf70e1dcf1e5e42353e94776e0b734d6ae86b0"
+          },
+          {
+            "index": 15,
+            "seed": 729740,
+            "output_V": 0.7957022339737208,
+            "input_V": 0.8,
+            "offset_V": -0.004297766026279293,
+            "supply_current_A": 0.00003182344205608298,
+            "output_sha256": "2846408703eecc9baade2d1e7fe141c13851bc95114bf55066a017636261869e",
+            "controller_sha256": "a581efb5b0a51e79e7793d1f5930fdf6ce2cace4922e06af6e98f4c86f9f21fb"
+          },
+          {
+            "index": 16,
+            "seed": 729741,
+            "output_V": 0.7978893389459127,
+            "input_V": 0.8,
+            "offset_V": -0.002110661054087304,
+            "supply_current_A": 0.000031117769891963326,
+            "output_sha256": "274db556672b7535d6478307d4fbc29964321ea9a2e76a0f2c71feb94d85ad12",
+            "controller_sha256": "900e0f011db844c3d923cbf998ff5f6937b319517bcfbe8bde87dbd3ea5d92e1"
+          },
+          {
+            "index": 17,
+            "seed": 729742,
+            "output_V": 0.8039339947979653,
+            "input_V": 0.8,
+            "offset_V": 0.003933994797965301,
+            "supply_current_A": 0.000031108976234506605,
+            "output_sha256": "85be9c353b31d00c1d7f25fa478e465ffeb99de82041a68998b2b759446d5233",
+            "controller_sha256": "53e7a4e871d704f8d5498992305f59ec3f79f1f10015bbffaa78725ead835f93"
+          },
+          {
+            "index": 18,
+            "seed": 729743,
+            "output_V": 0.8034480300733,
+            "input_V": 0.8,
+            "offset_V": 0.003448030073299968,
+            "supply_current_A": 0.00003104560419457669,
+            "output_sha256": "b0aeda8be2fe6496358f4aab3255bb477d6e83c2b62d2ca3977930037c2cb6f3",
+            "controller_sha256": "5ae66c70849235f623c3b272c0b7fdffc43bd2b6644029b79a448e8548230c95"
+          },
+          {
+            "index": 19,
+            "seed": 729744,
+            "output_V": 0.7993909223650552,
+            "input_V": 0.8,
+            "offset_V": -0.0006090776349448879,
+            "supply_current_A": 0.000031875633772597556,
+            "output_sha256": "9317d1e0eeaf6f77e4abcf3ea3c8b7614717f0bc183df908764aed743d2e6a98",
+            "controller_sha256": "7f45aa29089e3392bbe3e356c83638cd3e783a31a84c30f658138c13d5813fbe"
+          },
+          {
+            "index": 20,
+            "seed": 729745,
+            "output_V": 0.7983531915972903,
+            "input_V": 0.8,
+            "offset_V": -0.0016468084027096985,
+            "supply_current_A": 0.00003116771081614761,
+            "output_sha256": "a942d27e69a6eac8ec61c34373e4cb7ebe1896cc22e07d33948420169a2f92ed",
+            "controller_sha256": "c29d8a88ca9ee93b36d735c3bf0eef46339f261bca58a2623341402779e71097"
+          },
+          {
+            "index": 21,
+            "seed": 729746,
+            "output_V": 0.8006219536797088,
+            "input_V": 0.8,
+            "offset_V": 0.0006219536797087422,
+            "supply_current_A": 0.000031620407630428976,
+            "output_sha256": "71317acfe10d795b76ef1dde50db4e8953c2ff59b1f24511011ebd97e3408f34",
+            "controller_sha256": "b4702adb26dd98fadec2a3f2a636f1fcfd7f517882efdb842bec8eb222d69019"
+          },
+          {
+            "index": 22,
+            "seed": 729747,
+            "output_V": 0.8031631829355295,
+            "input_V": 0.8,
+            "offset_V": 0.0031631829355294183,
+            "supply_current_A": 0.00003219045723599524,
+            "output_sha256": "dff246527fee182439b8f8b465351202da9fdf21050528ec731d757c13f72707",
+            "controller_sha256": "c2d4a5411eebafad6d39fb884b05e3c1232d81279b160c6b538ff8d2c7968b1b"
+          },
+          {
+            "index": 23,
+            "seed": 729748,
+            "output_V": 0.7978851517695369,
+            "input_V": 0.8,
+            "offset_V": -0.002114848230463151,
+            "supply_current_A": 0.00003178666750944942,
+            "output_sha256": "7a9692c7e7752a42ce47ce7ca940b7d0c0d8734d31a4a3c7407f911eb59e5709",
+            "controller_sha256": "21826eece64fcffe620585a47c50bc99a3688aa6919352f29ab8fde215696801"
+          },
+          {
+            "index": 24,
+            "seed": 729749,
+            "output_V": 0.7927195937447498,
+            "input_V": 0.8,
+            "offset_V": -0.007280406255250282,
+            "supply_current_A": 0.00003074730962926257,
+            "output_sha256": "f873fc024f26c86286f96f2c8dbeaa78d4b49c4722de5d6290e83e319b76f4ba",
+            "controller_sha256": "9de9b8ec388e88fd1555adc3ae92ee47f9a27d9e6a014efa2c3f8dff62adc3af"
+          },
+          {
+            "index": 25,
+            "seed": 729750,
+            "output_V": 0.7997072474615073,
+            "input_V": 0.8,
+            "offset_V": -0.0002927525384927021,
+            "supply_current_A": 0.000031765201893492814,
+            "output_sha256": "addcceebcbe91eb88366dc974b26dcabc47a64ea627a16daa5bb120abc22e11c",
+            "controller_sha256": "6d507fdd26361d3a7a8b915a0fca2c9902217a0fbd1da1e2bd6d7b3716e5c70e"
+          },
+          {
+            "index": 26,
+            "seed": 729751,
+            "output_V": 0.8000797186241058,
+            "input_V": 0.8,
+            "offset_V": 0.00007971862410571795,
+            "supply_current_A": 0.00003111214662308674,
+            "output_sha256": "9fff5aeac771d8bf1986e97fa42f18f6724c7201281c9b4035b66e63cd3b6f19",
+            "controller_sha256": "29e0ea45dd5e54ae0f82047da36d40070110d2c99f51e824832477678ed20134"
+          },
+          {
+            "index": 27,
+            "seed": 729752,
+            "output_V": 0.7965058798735716,
+            "input_V": 0.8,
+            "offset_V": -0.0034941201264284683,
+            "supply_current_A": 0.000031505902321569274,
+            "output_sha256": "77cd54886d94a8d5b22f54ac9040a12634fe5d4d2aa6e777f33e03e1b76cbffd",
+            "controller_sha256": "863c1ff7d33b68a11d339ab3afb0dea0a231ff3c42c997562471b914a233d459"
+          },
+          {
+            "index": 28,
+            "seed": 729753,
+            "output_V": 0.7967160709227541,
+            "input_V": 0.8,
+            "offset_V": -0.0032839290772459506,
+            "supply_current_A": 0.00003181550422472548,
+            "output_sha256": "32bfd1c5cd5ca70d486617d358a1af847b4b2355c09e4728351d3ca5c03e80db",
+            "controller_sha256": "e9e86db08a8f127978cd9f95bfaafb3d0f4f4af66a751f90a1339f9980148eb2"
+          },
+          {
+            "index": 29,
+            "seed": 729754,
+            "output_V": 0.7986954664821593,
+            "input_V": 0.8,
+            "offset_V": -0.0013045335178407669,
+            "supply_current_A": 0.00003114564723146959,
+            "output_sha256": "a1b9485d4ec7ca142e6059b4404b4e88bdc21e252fce6f939dc016d2013fc343",
+            "controller_sha256": "ae7c98ff56607ce9d2cc62811f915384511e97bb993d7501301263d170b2a334"
+          },
+          {
+            "index": 30,
+            "seed": 729755,
+            "output_V": 0.8074541190719233,
+            "input_V": 0.8,
+            "offset_V": 0.007454119071923282,
+            "supply_current_A": 0.00003152864474553242,
+            "output_sha256": "3acd6a8d691b2f9e335a26ab58b5343878c5e9db98522f276a8680db7977bc2e",
+            "controller_sha256": "799936c1a7e3cad3077dc4f8f07416dd58e5d64ea961b52cde9f32d248f0edab"
+          },
+          {
+            "index": 31,
+            "seed": 729756,
+            "output_V": 0.8018379296482787,
+            "input_V": 0.8,
+            "offset_V": 0.001837929648278669,
+            "supply_current_A": 0.00003134040898680919,
+            "output_sha256": "0b6860115cdebeb62374758b2f9391c55253d76caf57243ac353e389816627e0",
+            "controller_sha256": "90bbd6e7ddbd9b4efdaae47ffbcc8ccd1970cf912398d3e0f410f6f531bb5c8e"
+          },
+          {
+            "index": 32,
+            "seed": 729757,
+            "output_V": 0.7993722810629649,
+            "input_V": 0.8,
+            "offset_V": -0.000627718937035171,
+            "supply_current_A": 0.000031435389802807884,
+            "output_sha256": "e4322ac3edc25f56fb47fed55d2337f29ac489268ff84e8f27473bd048ceed64",
+            "controller_sha256": "e688d0e6941889e43de74d8b879937d653f84225183c8811c9d5d6c8cfd8f90c"
+          }
+        ],
+        "native_engine": "ngspice",
+        "model_resources": [
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/all.spice",
+            "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+            "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__ss.pm3.spice",
+            "sha256": "4a70607ef6e016b426e9b447fe75ca417cdb7e44fe98ca6d7f0319656e65ed0c"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+            "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__ss.pm3.spice",
+            "sha256": "ec4f1b79d6dc56c48f4bbf2a5d8aa33274e6e881b68433120974e27056f28076"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+            "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+            "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+            "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+            "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+            "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+            "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+            "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+            "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+          }
+        ],
+        "post_layout": true,
+        "scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff.",
+        "pass": true
+      }
+    },
+    {
+      "name": "tt-pre-replay",
+      "id": "066f443e238849bdaea2689ca3fa4630",
+      "project_id": "ddf3e6130eba4928ab99b4c56f551794",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "tool": "ngspice",
+      "measurements": {
+        "samples": 32,
+        "seed": 729726,
+        "offset_mean_V": -0.0005284260460541867,
+        "offset_sample_std_V": 0.002829533729274099,
+        "offset_min_V": -0.005765682835226493,
+        "offset_max_V": 0.0044181634844789874,
+        "offset_abs_max_V": 0.005765682835226493,
+        "within_limit_samples": 32,
+        "analysis": "mismatch",
+        "x_unit": "sample",
+        "x_label": "Seeded native OP sample",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "solver": "SPARSE 1.3",
+        "post_layout": "false",
+        "reference_scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff."
+      },
+      "message": "Actual OTA mismatch: 32 samples; requested criterion PASS",
+      "manifest_sha256": "3015fc281ceebbc530437aeba8786048031246811ee40101d026ebb2cac3f9b6",
+      "manifest": "runs/tt-pre-replay/manifest.json",
+      "characterization_sha256": "d85d1cac803c2198f3b6fff5deaffdc19790ec2e55e0dab0bf83fda4a00607dc",
+      "characterization": {
+        "schema_version": 1,
+        "mode": "mismatch",
+        "settings": {
+          "analysis": "op",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "duration_s": 0.0002,
+          "step_s": 2e-8,
+          "load_F": 5e-15,
+          "vds_V": 1.8,
+          "vbs_V": 0
+        },
+        "config": {
+          "mode": "mismatch",
+          "samples": 32,
+          "seed": 729726,
+          "offset_limit_V": 0.01
+        },
+        "metrics": {
+          "samples": 32,
+          "seed": 729726,
+          "offset_mean_V": -0.0005284260460541867,
+          "offset_sample_std_V": 0.002829533729274099,
+          "offset_min_V": -0.005765682835226493,
+          "offset_max_V": 0.0044181634844789874,
+          "offset_abs_max_V": 0.005765682835226493,
+          "within_limit_samples": 32
+        },
+        "rows": [
+          {
+            "index": 1,
+            "seed": 729726,
+            "output_V": 0.9043230619690803,
+            "input_V": 0.9,
+            "offset_V": 0.004323061969080277,
+            "supply_current_A": 0.00004261263828518288,
+            "output_sha256": "ce7187d543c3f5774f92682ad5cb5bbea47b89febc911356279880b6306176de",
+            "controller_sha256": "e516850ad62b15900714f32eadcadc9e658164d6e3f729d13f79c81b1f9bbbb6"
+          },
+          {
+            "index": 2,
+            "seed": 729727,
+            "output_V": 0.9033517410744025,
+            "input_V": 0.9,
+            "offset_V": 0.0033517410744025034,
+            "supply_current_A": 0.00004452222881764473,
+            "output_sha256": "4a770132efa5063640673c0f50990da9c23f39582e54158b2938b9e27295d31f",
+            "controller_sha256": "00bfdc843b51f5f0202d41ee65afeb523e0d5777587852865f55818df0a5371c"
+          },
+          {
+            "index": 3,
+            "seed": 729728,
+            "output_V": 0.9012791630520951,
+            "input_V": 0.9,
+            "offset_V": 0.001279163052095078,
+            "supply_current_A": 0.00004355221824388518,
+            "output_sha256": "162ce579ca51d853927f4e2b363c5f9027d86c6b4ab3cf07f8b8f117c33c8fc6",
+            "controller_sha256": "d4c1f5bd7881b1d721cc9dd8fdeacc9d040b73eb3c7b15ae40bf973a0cac55dd"
+          },
+          {
+            "index": 4,
+            "seed": 729729,
+            "output_V": 0.8961286616022335,
+            "input_V": 0.9,
+            "offset_V": -0.003871338397766544,
+            "supply_current_A": 0.00004365354343515316,
+            "output_sha256": "e71dc84357e7caa18e427bec2c48f14db3948e2943531a36f5c3d367c0ecfa98",
+            "controller_sha256": "61025fa4a604e4e0edec8c0b540a9b0b78071da6dae15c08234a42f035574adc"
+          },
+          {
+            "index": 5,
+            "seed": 729730,
+            "output_V": 0.8985205651233628,
+            "input_V": 0.9,
+            "offset_V": -0.0014794348766372645,
+            "supply_current_A": 0.000044033863519774664,
+            "output_sha256": "2c906563178e54058237c7bf5910178d57cd5b0d34eade773dd36367ac5fd2fc",
+            "controller_sha256": "94400250bdd310803db0ca06bb26fa287f80deb7285ca96a85af2ff324373a8e"
+          },
+          {
+            "index": 6,
+            "seed": 729731,
+            "output_V": 0.903012970972668,
+            "input_V": 0.9,
+            "offset_V": 0.00301297097266795,
+            "supply_current_A": 0.000043917456600440244,
+            "output_sha256": "c8f899df3eaba7a0eb3b154670ef9b28c3fd48d92d7ebc0578ba4a3479984e0c",
+            "controller_sha256": "1ef70d71d80a0e7e32911c2f8ab278d251817257752d44c9f07f47e19c56e883"
+          },
+          {
+            "index": 7,
+            "seed": 729732,
+            "output_V": 0.8983228611696177,
+            "input_V": 0.9,
+            "offset_V": -0.001677138830382341,
+            "supply_current_A": 0.00004364049437696532,
+            "output_sha256": "bfe30223969e76cf7f78bdc72e33cec6e9a56b66530e1bd4f08ba63e37d6c63f",
+            "controller_sha256": "638a92b0a7969bd1d10cc002c37e61696de86abf1cf91e403a13228d5120279f"
+          },
+          {
+            "index": 8,
+            "seed": 729733,
+            "output_V": 0.8972697084700485,
+            "input_V": 0.9,
+            "offset_V": -0.002730291529951523,
+            "supply_current_A": 0.00004405540196818206,
+            "output_sha256": "14459d2266eff45cd7ae06759446827a6a2b98b34ec743fa156d7b02a0af10f9",
+            "controller_sha256": "e5922043aa5554c7438a868e6fd08bbbcc12f574f400aba8ddc812715b19b172"
+          },
+          {
+            "index": 9,
+            "seed": 729734,
+            "output_V": 0.8971984395602703,
+            "input_V": 0.9,
+            "offset_V": -0.002801560439729678,
+            "supply_current_A": 0.000044363784098600754,
+            "output_sha256": "b91d8b6f74000e48dcb8a29e5102008964ff7932ffd0a3cb00d819418d664256",
+            "controller_sha256": "e2430ecfc86cf45f3bc4a49b8276c816afba061ee6a8f1250f20143644e60e10"
+          },
+          {
+            "index": 10,
+            "seed": 729735,
+            "output_V": 0.8981257034438386,
+            "input_V": 0.9,
+            "offset_V": -0.0018742965561614477,
+            "supply_current_A": 0.000043737924631537966,
+            "output_sha256": "d1420c81261fa07c09e83bf2fb67a5b8920dcced1602e6dfbb5d8a5755b3e259",
+            "controller_sha256": "c33c5d0a8103d80211699571463e6b81b0c0ccbb6e46acaec1ea3f2df84cd3d8"
+          },
+          {
+            "index": 11,
+            "seed": 729736,
+            "output_V": 0.8968731439035764,
+            "input_V": 0.9,
+            "offset_V": -0.0031268560964236025,
+            "supply_current_A": 0.00004389178858733861,
+            "output_sha256": "5b97db4d07f28e731184c0f8362442846fbdfc4282982f948cabe9e9ae77fac8",
+            "controller_sha256": "20c18af7f476b33c0d669f97fcabce37f3cc527d51b2e2fb303c30b2c51ae338"
+          },
+          {
+            "index": 12,
+            "seed": 729737,
+            "output_V": 0.8986840892357577,
+            "input_V": 0.9,
+            "offset_V": -0.0013159107642423118,
+            "supply_current_A": 0.00004362589533457646,
+            "output_sha256": "e6fb23cbd859f68c172a3d3fe724fff73dea0f09f13334a562f4de5e97e47f93",
+            "controller_sha256": "ad3784e36d63703216a9ce49dd32386fd97e78056f640752d9b55dd9ee0ffc40"
+          },
+          {
+            "index": 13,
+            "seed": 729738,
+            "output_V": 0.9023317984765526,
+            "input_V": 0.9,
+            "offset_V": 0.0023317984765526267,
+            "supply_current_A": 0.00004411451869743116,
+            "output_sha256": "bcd0c6f4aefd54a74133c3da90d02292a78d1595788e7f07c604b0ace070dc6b",
+            "controller_sha256": "241d16feed1c219be798048ff7efa54a393b73b6202e9a5bf2b78d8f8a703ad0"
+          },
+          {
+            "index": 14,
+            "seed": 729739,
+            "output_V": 0.9001802298689654,
+            "input_V": 0.9,
+            "offset_V": 0.00018022986896537585,
+            "supply_current_A": 0.000043789723462819705,
+            "output_sha256": "5ff23e77a3cfeb60093fdf326dca63e27f43955ad67cb6371b224e8172fd5f63",
+            "controller_sha256": "3da924d9ac009bb4badcec78c0d5839bc5a1e67854232ab1c108a4bd2d6b4990"
+          },
+          {
+            "index": 15,
+            "seed": 729740,
+            "output_V": 0.8974510326588643,
+            "input_V": 0.9,
+            "offset_V": -0.002548967341135744,
+            "supply_current_A": 0.00004396127307142376,
+            "output_sha256": "a8d4bd53cf8cd8d0aad6a6b0317a42af57249199d31ceb4812d8577b4f9eefad",
+            "controller_sha256": "5412fa2ab9351788f8a472a15a4eafd76dbb552bed36700b3c8e55b231fa544d"
+          },
+          {
+            "index": 16,
+            "seed": 729741,
+            "output_V": 0.9011311655585814,
+            "input_V": 0.9,
+            "offset_V": 0.001131165558581393,
+            "supply_current_A": 0.000043817158447126,
+            "output_sha256": "717e0e51772a198897b6e80f99a83f2260b491542d0acc39b621b54ad6050b51",
+            "controller_sha256": "3095ab01ec5bfa82dd60bb7b36b5b2c75572455c3357478bb16bf8fb80a6bc80"
+          },
+          {
+            "index": 17,
+            "seed": 729742,
+            "output_V": 0.904418163484479,
+            "input_V": 0.9,
+            "offset_V": 0.0044181634844789874,
+            "supply_current_A": 0.000043802618513769266,
+            "output_sha256": "c690410456957ed1eca1c0b47848eaa8311ea96f4d855800057b867aea0c133c",
+            "controller_sha256": "861e9e0f388ae5065a4e2f7b839df09c3d936be79f075d5e5c63b99e0ba55205"
+          },
+          {
+            "index": 18,
+            "seed": 729743,
+            "output_V": 0.9009194221234793,
+            "input_V": 0.9,
+            "offset_V": 0.0009194221234792854,
+            "supply_current_A": 0.00004332173574582543,
+            "output_sha256": "36a61c57dc95b52738056f29fe529671f21a67fe51356a923ac70c66c5fe77c6",
+            "controller_sha256": "d29216e4a7567096b727eea4a7f6c2e35ae8e19b83ea0c1124802af2f42c2b92"
+          },
+          {
+            "index": 19,
+            "seed": 729744,
+            "output_V": 0.8970778109160165,
+            "input_V": 0.9,
+            "offset_V": -0.002922189083983562,
+            "supply_current_A": 0.00004230029047561001,
+            "output_sha256": "e5eefa9f8155ed0c5cc7b978dc63b4c52d766104be70f46d3079ac02b1681962",
+            "controller_sha256": "1366e82dfa050b2d6ac9399ff82ea389f674954dcd51fcc6638496c0a2a6f1c3"
+          },
+          {
+            "index": 20,
+            "seed": 729745,
+            "output_V": 0.8942343171647735,
+            "input_V": 0.9,
+            "offset_V": -0.005765682835226493,
+            "supply_current_A": 0.00004312905001088255,
+            "output_sha256": "f8140ba0664692ba20804a561d8e8865efb86efc7b2035f4ccd600f173ede4f4",
+            "controller_sha256": "0cb120cbf2dbf2c2555728d73110c7a69d20d38c8b917ca82242c1bdd2a8c2bf"
+          },
+          {
+            "index": 21,
+            "seed": 729746,
+            "output_V": 0.901207994289507,
+            "input_V": 0.9,
+            "offset_V": 0.0012079942895070195,
+            "supply_current_A": 0.000043827804331874514,
+            "output_sha256": "b21f7635c25b9b0c8ead0a5c0a8c42cc6ab09f7fe3c9189aaf72890009566ecd",
+            "controller_sha256": "e270ec9ca1a03862d160a9e416f6d91be423028a7b7d0e9e705044d3bc39d4c0"
+          },
+          {
+            "index": 22,
+            "seed": 729747,
+            "output_V": 0.8996797298714228,
+            "input_V": 0.9,
+            "offset_V": -0.00032027012857727133,
+            "supply_current_A": 0.00004323213561694783,
+            "output_sha256": "0e470f611a8f26dfaf9defad4ac4fa1947b2efda5ca79527e605d8a1063cd5e9",
+            "controller_sha256": "8249b1850c35848e25acc0c46a9e275bf771f15ad66a220fb057cdea0105b3d2"
+          },
+          {
+            "index": 23,
+            "seed": 729748,
+            "output_V": 0.9014329797528262,
+            "input_V": 0.9,
+            "offset_V": 0.0014329797528261912,
+            "supply_current_A": 0.00004358763066821954,
+            "output_sha256": "826dc8687f68bd10afb560a6dae3d38c6d862c8090b1719be6d4b0c5c0224a5d",
+            "controller_sha256": "37184ad819cb660b06a2acf21fcbbadfd071c77b4afb859f1ab9275235c2f919"
+          },
+          {
+            "index": 24,
+            "seed": 729749,
+            "output_V": 0.8956428387309643,
+            "input_V": 0.9,
+            "offset_V": -0.004357161269035736,
+            "supply_current_A": 0.00004449527348921164,
+            "output_sha256": "1755849ef5599e9ead3d55dd672d12089fb6e085fcf146aa8b12471803f3f50e",
+            "controller_sha256": "bb34041a6ad61424f7ff2565c7530d65d1dd9d8148d06d3d6b54f88871a7921b"
+          },
+          {
+            "index": 25,
+            "seed": 729750,
+            "output_V": 0.8959013176645385,
+            "input_V": 0.9,
+            "offset_V": -0.004098682335461512,
+            "supply_current_A": 0.00004386228472152311,
+            "output_sha256": "f932c49d05277284911be92daf0bd698c9e2eb81343494348378e6a00fc8e0da",
+            "controller_sha256": "36c6f2c009d6dfdbd9f8f8046709bac0e6a9cc589582aaee52065ee9eca0a635"
+          },
+          {
+            "index": 26,
+            "seed": 729751,
+            "output_V": 0.8979860546041891,
+            "input_V": 0.9,
+            "offset_V": -0.002013945395810901,
+            "supply_current_A": 0.000044468045609845526,
+            "output_sha256": "06d7874a9add007344c602ed64e912942f1e36c560510bb8265ce5bb24d5639e",
+            "controller_sha256": "f3a572ad600be1b8f949c79e483c93be44fe605116f34c00e1557701e7a792c5"
+          },
+          {
+            "index": 27,
+            "seed": 729752,
+            "output_V": 0.9014735872187885,
+            "input_V": 0.9,
+            "offset_V": 0.0014735872187884302,
+            "supply_current_A": 0.000044507050350095674,
+            "output_sha256": "0121d2b5796e08d24c386a4a1032c626a5ac59e29f4e8ec0193e6c5280d10be0",
+            "controller_sha256": "d71008fa1ff2c6223b7e0b186f5642b5058191a64e5f7bd48176e5754416b17d"
+          },
+          {
+            "index": 28,
+            "seed": 729753,
+            "output_V": 0.8950810708720383,
+            "input_V": 0.9,
+            "offset_V": -0.004918929127961769,
+            "supply_current_A": 0.00004307542512061374,
+            "output_sha256": "f5c8478cc6765c262da18861074766d48757d972ebc82973ddca461e60a7d6f1",
+            "controller_sha256": "d5f9d4c81bc31bfee2ec5786805789334940153fc012f0e6b57080868a66c61d"
+          },
+          {
+            "index": 29,
+            "seed": 729754,
+            "output_V": 0.8991206254077042,
+            "input_V": 0.9,
+            "offset_V": -0.0008793745922958118,
+            "supply_current_A": 0.0000439389625106381,
+            "output_sha256": "2cb1bb96b7f7f3c18e796b1f2d877659f5fa665a85589f6c5b5d31fe2f62966e",
+            "controller_sha256": "8ff9bfe23812ad2021077e3ad60989abf468555313ebd2aa93000296493c1e3c"
+          },
+          {
+            "index": 30,
+            "seed": 729755,
+            "output_V": 0.9007743014344669,
+            "input_V": 0.9,
+            "offset_V": 0.0007743014344668842,
+            "supply_current_A": 0.00004366797935100971,
+            "output_sha256": "ea44fecf553a552f065c8e43c2c6ce35ca526f7e8ef2aa74e6830fea2990681f",
+            "controller_sha256": "92deadbd45010e2b833c63c236aabbc7ab8a2aa5ac46e67c0b3a3543ae72d705"
+          },
+          {
+            "index": 31,
+            "seed": 729756,
+            "output_V": 0.9044032358478944,
+            "input_V": 0.9,
+            "offset_V": 0.004403235847894371,
+            "supply_current_A": 0.000043759434067829924,
+            "output_sha256": "2ab4cb494ef5ef4fbd71b73845b4a54fdd1aef0efdb9635a85034033b6f7508a",
+            "controller_sha256": "7303b1429cfee461e86027b6406124ca3c30843d17c59698d23dd2ef3b510676"
+          },
+          {
+            "index": 32,
+            "seed": 729757,
+            "output_V": 0.8995525810032632,
+            "input_V": 0.9,
+            "offset_V": -0.00044741899673683694,
+            "supply_current_A": 0.00004380613316906537,
+            "output_sha256": "87c643d5aa423107d72e294d2cf082adf608ffe4518b6ad41f704a5e91b8d1c3",
+            "controller_sha256": "50b1408c7873114e5e393b921593cedecc263332a1c97dd559b0b3a1907ada2f"
+          }
+        ],
+        "native_engine": "ngspice",
+        "model_resources": [
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/all.spice",
+            "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+            "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__tt.pm3.spice",
+            "sha256": "459eca963a134574cf7c842ad6d3814e7e0752bfb5de8e581c2f483534b5ad06"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+            "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__tt.pm3.spice",
+            "sha256": "3a1be2e1c50d710bdb951d414ecca711113a8c3fe8bcc1be65fb16c6fe004e83"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+            "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+            "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+            "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+            "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+            "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+            "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+            "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+            "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+          }
+        ],
+        "post_layout": false,
+        "scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff.",
+        "pass": true
+      }
+    },
+    {
+      "name": "foreign-project-tt",
+      "id": "dc77230c2cd34827be35456acc80e9ff",
+      "project_id": "77008508ed5240aab6c60dd07837d52b",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "tool": "ngspice",
+      "measurements": {
+        "samples": 4,
+        "seed": 729726,
+        "offset_mean_V": 0.0012706569244528287,
+        "offset_sample_std_V": 0.003655510727817762,
+        "offset_min_V": -0.003871338397766544,
+        "offset_max_V": 0.004323061969080277,
+        "offset_abs_max_V": 0.004323061969080277,
+        "within_limit_samples": 4,
+        "analysis": "mismatch",
+        "x_unit": "sample",
+        "x_label": "Seeded native OP sample",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "solver": "SPARSE 1.3",
+        "post_layout": "false",
+        "reference_scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff."
+      },
+      "message": "Actual OTA mismatch: 4 samples; requested criterion PASS",
+      "manifest_sha256": "0016f568dd3a4f176aa52bea155058a1f7f7a8a303fb8a29c1e11ca2862182fc",
+      "manifest": "runs/foreign-project-tt/manifest.json",
+      "characterization_sha256": "40d4a1aa5f6cd47f522482e4e8fda75e85210e7d59d46ba727733f304d812193",
+      "characterization": {
+        "schema_version": 1,
+        "mode": "mismatch",
+        "settings": {
+          "analysis": "op",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "duration_s": 0.0002,
+          "step_s": 2e-8,
+          "load_F": 5e-15,
+          "vds_V": 1.8,
+          "vbs_V": 0
+        },
+        "config": {
+          "mode": "mismatch",
+          "samples": 4,
+          "seed": 729726,
+          "offset_limit_V": 0.01
+        },
+        "metrics": {
+          "samples": 4,
+          "seed": 729726,
+          "offset_mean_V": 0.0012706569244528287,
+          "offset_sample_std_V": 0.003655510727817762,
+          "offset_min_V": -0.003871338397766544,
+          "offset_max_V": 0.004323061969080277,
+          "offset_abs_max_V": 0.004323061969080277,
+          "within_limit_samples": 4
+        },
+        "rows": [
+          {
+            "index": 1,
+            "seed": 729726,
+            "output_V": 0.9043230619690803,
+            "input_V": 0.9,
+            "offset_V": 0.004323061969080277,
+            "supply_current_A": 0.00004261263828518288,
+            "output_sha256": "ce7187d543c3f5774f92682ad5cb5bbea47b89febc911356279880b6306176de",
+            "controller_sha256": "9385e6fe2950ce9e1a684478a1a6cf5ed11d35d00eefeffd8d0940060bdc25e6"
+          },
+          {
+            "index": 2,
+            "seed": 729727,
+            "output_V": 0.9033517410744025,
+            "input_V": 0.9,
+            "offset_V": 0.0033517410744025034,
+            "supply_current_A": 0.00004452222881764473,
+            "output_sha256": "4a770132efa5063640673c0f50990da9c23f39582e54158b2938b9e27295d31f",
+            "controller_sha256": "37ebf43eee6d9507b4bb80722c5c66cc1362dd1356e0447c28b6c6b6563b9751"
+          },
+          {
+            "index": 3,
+            "seed": 729728,
+            "output_V": 0.9012791630520951,
+            "input_V": 0.9,
+            "offset_V": 0.001279163052095078,
+            "supply_current_A": 0.00004355221824388518,
+            "output_sha256": "162ce579ca51d853927f4e2b363c5f9027d86c6b4ab3cf07f8b8f117c33c8fc6",
+            "controller_sha256": "4336ebee340cd259932d9d3f5bd38af3619a94e99bc6c437ab7a3c01d54ff592"
+          },
+          {
+            "index": 4,
+            "seed": 729729,
+            "output_V": 0.8961286616022335,
+            "input_V": 0.9,
+            "offset_V": -0.003871338397766544,
+            "supply_current_A": 0.00004365354343515316,
+            "output_sha256": "e71dc84357e7caa18e427bec2c48f14db3948e2943531a36f5c3d367c0ecfa98",
+            "controller_sha256": "25bd8b9d9eeacf039f1d8d22c96c434480d5bb0973b128eb00294d43e488b321"
+          }
+        ],
+        "native_engine": "ngspice",
+        "model_resources": [
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/all.spice",
+            "sha256": "ada86dba53017af314dfa04dac253c8424e0941158cf476a7ca191c55aea3bbb"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/parameters/lod.spice",
+            "sha256": "6200b50c14eebb68d8009ca68e452d4c045e2d25d7438ee417c155883527fd7c"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__tt.pm3.spice",
+            "sha256": "459eca963a134574cf7c842ad6d3814e7e0752bfb5de8e581c2f483534b5ad06"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__nfet_01v8__mismatch.corner.spice",
+            "sha256": "24a3b29d7d7f26f99098811c31eb5497950a3aed520ab83768a96f35467fe818"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__tt.pm3.spice",
+            "sha256": "3a1be2e1c50d710bdb951d414ecca711113a8c3fe8bcc1be65fb16c6fe004e83"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pfet_01v8_hvt__mismatch.corner.spice",
+            "sha256": "05e258ab6724c8276cc058f6dba732e8024c5f0bb79ff3131ca219143491d631"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice",
+            "sha256": "7c29723076a22fe5b080d245adb97451de5ad0812f0344f6bfe31c9697b71f0d"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice",
+            "sha256": "4deedaa4be27f2e1f083567a945cbaed02027e018fcd09431e57a02c08a117b1"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.tech/ngspice/r+c.mrp1monte.spice",
+            "sha256": "33b89d7474d93e57702dfb05c912b856536cfb1cb07d9a98bb99221fc8eacdec"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_high_po_0p35.model.spice",
+            "sha256": "5012e5c17781fda2201468075affa44e833ee67479fef18d745ca52a6ae237e4"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po__base.model.spice",
+            "sha256": "dfd4555cbf283e9140650b6bd8b6f4a26651589f71c68c7ac982015cf457c96f"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__res_xhigh_po_1p41.model.spice",
+            "sha256": "c5993a674226d7878ac8a7400db00a26bfd25db3bd35c7b9a9da29db8ca11c14"
+          },
+          {
+            "path": "/home/resistor/.local/share/resistor/pdks/sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__cap_mim_m3_1.model.spice",
+            "sha256": "5cb086313d55341351305d30500ca39571d689b692d2be525c4b3b8b4db86e6f"
+          }
+        ],
+        "post_layout": false,
+        "scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff.",
+        "pass": true
+      }
+    }
+  ],
+  "checks": [
+    {
+      "name": "Magic available",
+      "pass": true
+    },
+    {
+      "name": "Netgen available",
+      "pass": true
+    },
+    {
+      "name": "KLayout available",
+      "pass": true
+    },
+    {
+      "name": "ngspice available",
+      "pass": true
+    },
+    {
+      "name": "drc completed actual native solve",
+      "pass": true
+    },
+    {
+      "name": "drc public-deck criterion",
+      "pass": true
+    },
+    {
+      "name": "lvs completed actual native solve",
+      "pass": true
+    },
+    {
+      "name": "lvs public-deck criterion",
+      "pass": true
+    },
+    {
+      "name": "pex completed actual native solve",
+      "pass": true
+    },
+    {
+      "name": "pex public-deck criterion",
+      "pass": true
+    },
+    {
+      "name": "tt-pre completed actual native solve",
+      "pass": true
+    },
+    {
+      "name": "tt-post completed actual native solve",
+      "pass": true
+    },
+    {
+      "name": "ff-pre completed actual native solve",
+      "pass": true
+    },
+    {
+      "name": "ff-post completed actual native solve",
+      "pass": true
+    },
+    {
+      "name": "ss-pre completed actual native solve",
+      "pass": true
+    },
+    {
+      "name": "ss-post completed actual native solve",
+      "pass": true
+    },
+    {
+      "name": "tt-pre-replay completed actual native solve",
+      "pass": true
+    },
+    {
+      "name": "same seed actual pre-layout replay",
+      "pass": true
+    },
+    {
+      "name": "actual public OTA offset evaluator ran",
+      "pass": true
+    },
+    {
+      "name": "stricter 1uV offset criterion fails",
+      "pass": true
+    },
+    {
+      "name": "missing post/PVT evidence never passes",
+      "pass": true
+    },
+    {
+      "name": "insufficient declared sample count never passes",
+      "pass": true
+    },
+    {
+      "name": "foreign-project-tt completed actual native solve",
+      "pass": true
+    },
+    {
+      "name": "another project cannot supply matching evidence",
+      "pass": true
+    },
+    {
+      "name": "tampered evidence invalidates current review",
+      "pass": true
+    },
+    {
+      "name": "tampered native metrics cannot become PASS",
+      "pass": true
+    },
+    {
+      "name": "layout revision invalidates past matching review",
+      "pass": true
+    },
+    {
+      "name": "old simulation cannot evaluate new layout",
+      "pass": true
+    },
+    {
+      "name": "immutable historical report retained stale",
+      "pass": true
+    },
+    {
+      "name": "source circuit/layout preserved",
+      "pass": true
+    }
+  ],
+  "plan_sha256": "230945e82fd8115926e3ae9e44146f460ba7cb90628060c9b15aa4158230a2a4",
+  "commercial": {
+    "checked_at": "2026-10-14T08:36:31.221Z",
+    "registered_profile_count": 43,
+    "profiles": [
+      {
+        "id": "ui-unavailable-spectre-1790847350913",
+        "tool_id": "spectre",
+        "runner": "local",
+        "valid": false,
+        "checked_at": "2026-10-14T08:36:31.227847+00:00",
+        "checks": [
+          {
+            "name": "executable",
+            "status": "fail",
+            "message": "Operator resource is unavailable or outside snapshot bounds."
+          },
+          {
+            "name": "license",
+            "status": "warning",
+            "message": "License availability and site flow have not been verified by a vendor execution."
+          }
+        ]
+      },
+      {
+        "id": "ui-unavailable-agent-1790847368385",
+        "tool_id": "spectre",
+        "runner": "agent",
+        "valid": false,
+        "checked_at": "2026-10-14T08:36:31.245689+00:00",
+        "checks": [
+          {
+            "name": "agent",
+            "status": "fail",
+            "message": "Private operator token file unavailable."
+          }
+        ]
+      },
+      {
+        "id": "database_ui_vendor_1790847444916",
+        "tool_id": "virtuoso",
+        "runner": "local",
+        "valid": false,
+        "checked_at": "2026-10-14T08:36:31.249389+00:00",
+        "checks": [
+          {
+            "name": "executable",
+            "status": "fail",
+            "message": "Operator resource is unavailable or outside snapshot bounds."
+          },
+          {
+            "name": "resource.site_script",
+            "status": "fail",
+            "message": "Operator resource is unavailable or outside snapshot bounds."
+          },
+          {
+            "name": "resource.native_db",
+            "status": "fail",
+            "message": "Operator resource is unavailable or outside snapshot bounds."
+          },
+          {
+            "name": "license",
+            "status": "warning",
+            "message": "License availability and site flow have not been verified by a vendor execution."
+          }
+        ]
+      },
+      {
+        "id": "ngspice-calibration-v1",
+        "tool_id": "ngspice",
+        "runner": "local",
+        "valid": false,
+        "checked_at": "2026-10-14T08:36:31.268081+00:00",
+        "checks": [
+          {
+            "name": "executable",
+            "status": "fail",
+            "message": "Operator resource is unavailable or outside snapshot bounds."
+          },
+          {
+            "name": "resource.deck",
+            "status": "fail",
+            "message": "Operator resource is unavailable or outside snapshot bounds."
+          },
+          {
+            "name": "license",
+            "status": "warning",
+            "message": "License availability and site flow have not been verified by a vendor execution."
+          }
+        ]
+      }
+    ],
+    "status": "unavailable",
+    "reason": "No licensed commercial environment supplied; ngspice calibration is open source.",
+    "commercial_ready_profiles": 0
+  },
+  "doctor": {
+    "protocol_version": 1,
+    "schema_version": 1,
+    "edition": "indust",
+    "product_id": "resistor.indust",
+    "runner": "wsl-linux",
+    "tools": [
+      {
+        "name": "ngspice",
+        "path": "/usr/bin/ngspice",
+        "version": "** ngspice-42 : Circuit level simulation program",
+        "available": true,
+        "probe_status": "ready"
+      },
+      {
+        "name": "KLayout",
+        "path": "/home/resistor/.local/share/resistor/engine/bin/python3",
+        "version": "0.30.5",
+        "available": true,
+        "probe_status": "ready"
+      },
+      {
+        "name": "Magic",
+        "path": "/home/resistor/.local/share/resistor/tools/bin/magic",
+        "version": "8.3.582",
+        "available": true,
+        "probe_status": "ready"
+      },
+      {
+        "name": "Netgen",
+        "path": "/home/resistor/.local/share/resistor/tools/bin/netgen",
+        "version": "Netgen 1.5.313 compiled on Wed Oct 14 14:09:10 KST 2026",
+        "available": true,
+        "probe_status": "ready"
+      },
+      {
+        "name": "Xschem",
+        "path": "/usr/bin/xschem",
+        "version": "XSCHEM V3.4.4",
+        "available": true,
+        "probe_status": "ready"
+      },
+      {
+        "name": "Yosys",
+        "path": "/usr/bin/yosys",
+        "version": "Yosys 0.33 (git sha1 2584903a060)",
+        "available": true,
+        "probe_status": "ready"
+      },
+      {
+        "name": "Icarus Verilog",
+        "path": "/usr/bin/iverilog",
+        "version": "Icarus Verilog version 12.0 (stable) ()",
+        "available": true,
+        "probe_status": "ready"
+      },
+      {
+        "name": "VVP",
+        "path": "/usr/bin/vvp",
+        "version": "Icarus Verilog runtime version 12.0 (stable) ()",
+        "available": true,
+        "probe_status": "ready"
+      }
+    ],
+    "pdk": {
+      "id": "sky130A",
+      "available": true,
+      "path": "/home/resistor/.local/share/resistor/pdks/sky130A",
+      "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb",
+      "capabilities": {
+        "simulation": true,
+        "drc": true,
+        "lvs": true,
+        "pex": true,
+        "mos_pcell": true
+      },
+      "supported_devices": [
+        "sky130_fd_pr__nfet_01v8",
+        "sky130_fd_pr__pfet_01v8_hvt",
+        "sky130_fd_pr__res_xhigh_po_1p41",
+        "sky130_fd_pr__cap_mim_m3_1"
+      ],
+      "supported_corners": [
+        "tt",
+        "ff",
+        "ss"
+      ],
+      "supported_analyses": [
+        "tran",
+        "dc",
+        "ac",
+        "op"
+      ],
+      "supported_vias": [
+        "via1",
+        "via2"
+      ],
+      "supported_templates": [
+        "inverter",
+        "mosfet",
+        "wire",
+        "current_mirror",
+        "differential_pair"
+      ],
+      "experiment_scope": {
+        "algorithms": [
+          "grid",
+          "random",
+          "tpe"
+        ],
+        "device": "single-MOS nf=m=1",
+        "max_trials": 16,
+        "max_concurrent": 2,
+        "wall_time_s": [
+          60,
+          1800
+        ],
+        "gates": [
+          "Magic DRC",
+          "Netgen LVS",
+          "ngspice DC"
+        ]
+      },
+      "xschem_bridge_scope": "flat public MOS/R/C/source symbols; native hierarchical SPICE separately verified",
+      "pex_scope": {
+        "connectivity": true,
+        "ground_capacitance": true,
+        "coupling_capacitance": true,
+        "distributed_resistance": true
+      },
+      "limits": [
+        "Public Magic drc(full) deck; no foundry signoff.",
+        "MOS PCell parameter regeneration is tested for nf=1, m=1.",
+        "Inverter uses fixed public inv_1 layout; schematic edits require explicit layout work and revalidation.",
+        "No TCAD or physically sourced process reconstruction stack."
+      ]
+    },
+    "geometry": {
+      "engine": "KLayout",
+      "coordinate_bits": 32,
+      "dbu_um": 0.001,
+      "grid_dbu": 5
+    },
+    "runtime_image": null
+  },
+  "source_project_id": "77008508ed5240aab6c60dd07837d52b",
+  "project_id": "ddf3e6130eba4928ab99b4c56f551794",
+  "revision": 1,
+  "review_id": "9faf42ca90e543ac8f6f114ac8ad2838",
+  "electrical_matching": {
+    "status": "pass",
+    "scope": "Public physical SKY130 Miller OTA unity follower, 1pF load, 0.9V external bias; finite local mismatch, not device-pair matching or yield",
+    "metrics": {
+      "offset_abs_max_V": 0.009454698522768812,
+      "offset_limit_V": 0.01,
+      "runs": [
+        {
+          "run_id": "fa2d99a9c1be4168a76c0d3b92f72c16",
+          "post_layout": false,
+          "settings": {
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8
+          },
+          "metrics": {
+            "samples": 32,
+            "seed": 729726,
+            "offset_mean_V": -0.0005284260460541867,
+            "offset_sample_std_V": 0.002829533729274099,
+            "offset_min_V": -0.005765682835226493,
+            "offset_max_V": 0.0044181634844789874,
+            "offset_abs_max_V": 0.005765682835226493,
+            "within_limit_samples": 32
+          },
+          "seed": 729726,
+          "manifest_sha256": "12e1f5c9c208ab02411b0fb9990f3e7d493861a9eabbb9765ef3ef62c100a1be",
+          "characterization_sha256": "13acc949506f2fa10a44fe57882b98256a0af64727d26fba458a6642ef586e1d",
+          "model_deck_sha256": "df3b7ab2873f7a9d3a1601332e304bf7330604e1ad3779cff7fdaf6830058b00",
+          "scope": "Public SKY130 OTA unity follower offset, finite local-mismatch samples; no device-pair/yield/foundry signoff."
+        },
+        {
+          "run_id": "cb4f3aa67dc0465dbe1db4241fb194b4",
+          "post_layout": true,
+          "settings": {
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8
+          },
+          "metrics": {
+            "samples": 32,
+            "seed": 729726,
+            "offset_mean_V": -0.00032273404327636326,
+            "offset_sample_std_V": 0.0027089745561621505,
+            "offset_min_V": -0.007263995940433032,
+            "offset_max_V": 0.005380613011232271,
+            "offset_abs_max_V": 0.007263995940433032,
+            "within_limit_samples": 32
+          },
+          "seed": 729726,
+          "manifest_sha256": "a2c8bcf9bf2f5fb756e6214a076752c1fe6c450d6a3d1d0d40697c0d7830370a",
+          "characterization_sha256": "25fb83a80c0f27805e0da4d76e0adf39a23bff6ba7914f8dac190aa43c54c1ca",
+          "model_deck_sha256": "df3b7ab2873f7a9d3a1601332e304bf7330604e1ad3779cff7fdaf6830058b00",
+          "scope": "Public SKY130 OTA unity follower offset, finite local-mismatch samples; no device-pair/yield/foundry signoff."
+        },
+        {
+          "run_id": "adcf4ea7048c45c6a20551ad0ea4fd01",
+          "post_layout": false,
+          "settings": {
+            "corner": "ff",
+            "temperature_C": -40,
+            "supply_V": 1.8
+          },
+          "metrics": {
+            "samples": 32,
+            "seed": 729726,
+            "offset_mean_V": -0.0003655960550134063,
+            "offset_sample_std_V": 0.002512870267056229,
+            "offset_min_V": -0.004953849455341719,
+            "offset_max_V": 0.00426828404451951,
+            "offset_abs_max_V": 0.004953849455341719,
+            "within_limit_samples": 32
+          },
+          "seed": 729726,
+          "manifest_sha256": "f7ab0a1a5fd9cd63798714884167f25636eb95cc764e0ce22118076112a269fd",
+          "characterization_sha256": "7b3a7f336f272992300608016de2c62958c2bf85de527eda84e131f59eb33317",
+          "model_deck_sha256": "dcac10dd86d4fa3ef4f109e33b61cebfcff712eb7936345353a9865b0db4d8f7",
+          "scope": "Public SKY130 OTA unity follower offset, finite local-mismatch samples; no device-pair/yield/foundry signoff."
+        },
+        {
+          "run_id": "56546e9c068a4f5e8e1aab5267fe7336",
+          "post_layout": true,
+          "settings": {
+            "corner": "ff",
+            "temperature_C": -40,
+            "supply_V": 1.8
+          },
+          "metrics": {
+            "samples": 32,
+            "seed": 729726,
+            "offset_mean_V": -0.00019350376677959927,
+            "offset_sample_std_V": 0.0022534926823776506,
+            "offset_min_V": -0.0065955090412959105,
+            "offset_max_V": 0.004040124030089687,
+            "offset_abs_max_V": 0.0065955090412959105,
+            "within_limit_samples": 32
+          },
+          "seed": 729726,
+          "manifest_sha256": "a7d44405d8fa0c9fcfdfbde0c435e33bb1cb897a6a9188b0ed026cb3ee29c546",
+          "characterization_sha256": "2b41a5f500c14d8319da4614f9cda34ed6eb374808cf8e399f36f03cea82f7d5",
+          "model_deck_sha256": "dcac10dd86d4fa3ef4f109e33b61cebfcff712eb7936345353a9865b0db4d8f7",
+          "scope": "Public SKY130 OTA unity follower offset, finite local-mismatch samples; no device-pair/yield/foundry signoff."
+        },
+        {
+          "run_id": "d816ca0233664a26978028416d59ebdc",
+          "post_layout": false,
+          "settings": {
+            "corner": "ss",
+            "temperature_C": 125,
+            "supply_V": 1.6
+          },
+          "metrics": {
+            "samples": 32,
+            "seed": 729726,
+            "offset_mean_V": -0.0009140644822054345,
+            "offset_sample_std_V": 0.0034494729457289043,
+            "offset_min_V": -0.007280286580953588,
+            "offset_max_V": 0.005732639417328711,
+            "offset_abs_max_V": 0.007280286580953588,
+            "within_limit_samples": 32
+          },
+          "seed": 729726,
+          "manifest_sha256": "9c844af1d8b6be7a9e2e0ca2e69238468b045ced21a34606069141cb8fdc4fc4",
+          "characterization_sha256": "5a98c93c190213e47293d4a35bd1f71acfc8b39c4c7254dda10cc68cbb8c2964",
+          "model_deck_sha256": "b084271abeb4f3b3ff88e0c50561491c295ffdcd48d3ec3b0981fe6d6fe0f1a9",
+          "scope": "Public SKY130 OTA unity follower offset, finite local-mismatch samples; no device-pair/yield/foundry signoff."
+        },
+        {
+          "run_id": "078759e4762c43a6917e573a5178614a",
+          "post_layout": true,
+          "settings": {
+            "corner": "ss",
+            "temperature_C": 125,
+            "supply_V": 1.6
+          },
+          "metrics": {
+            "samples": 32,
+            "seed": 729726,
+            "offset_mean_V": -0.0006983469338080958,
+            "offset_sample_std_V": 0.0036320791921562526,
+            "offset_min_V": -0.009454698522768812,
+            "offset_max_V": 0.007454119071923282,
+            "offset_abs_max_V": 0.009454698522768812,
+            "within_limit_samples": 32
+          },
+          "seed": 729726,
+          "manifest_sha256": "20880a16c204bee199fdd5a30590e3b615ffc9367b5c2570176e3b79de56af4b",
+          "characterization_sha256": "1efcedb230cc4b8f83ae5f59cfc94cd0b1f22438827fa7750fff50c54fd583af",
+          "model_deck_sha256": "b084271abeb4f3b3ff88e0c50561491c295ffdcd48d3ec3b0981fe6d6fe0f1a9",
+          "scope": "Public SKY130 OTA unity follower offset, finite local-mismatch samples; no device-pair/yield/foundry signoff."
+        }
+      ],
+      "scope": "Public SKY130 OTA unity follower offset, finite local-mismatch samples; no device-pair/yield/foundry signoff.",
+      "device_pair_matching_verified": false,
+      "yield_verified": false,
+      "foundry_signoff": false
+    },
+    "device_pair_matching_verified": false,
+    "yield_verified": false
+  },
+  "report_id": "475167ffa5d549cb83da58c4740383ac",
+  "report_sha256": "c912447373af2a8a3e727d566249169798497d445d5d5b7197663bdca993d0d8",
+  "customer_value": {
+    "status": "not_measured",
+    "baseline": "KLayout direct Python extension included",
+    "protocol": "customer-study.json",
+    "participants": 0
+  },
+  "manufacturing": {
+    "status": "unavailable",
+    "public_drc_lvs_pex": true,
+    "gaps": [
+      "named foundry/process and approved deck/tool versions",
+      "complete signoff corner/RC/mismatch requirements",
+      "antenna/density/fill and final post-fill DRC/LVS/PEX",
+      "EM/IR/ESD/latch-up/reliability where required",
+      "package/IO/top-level integration",
+      "qualified reviewer, waivers and foundry acceptance receipt"
+    ],
+    "approved": false
+  },
+  "completed": true,
+  "source_sha256": {
+    "workers/eda/layout_review.py": "31062bcca79439839d162477557e0eb0f8cd6e633ca2d05d4b5f26f77a93e032",
+    "workers/eda/electrical_review.py": "6764758c3058406b62a96c683f5d8ed9e45046c1f432bfba4d603cb7e9b6658d",
+    "workers/eda/characterization.py": "6b0a9feb9acaff73a7675835748bdc3ec98c0d12cbafec3b7085f98249920349",
+    "scripts/industry-qualification.mjs": "b486d1beb0fd1caffdf00d9c4affb56736f4d5165950122d31306c12bad48693"
+  }
+}

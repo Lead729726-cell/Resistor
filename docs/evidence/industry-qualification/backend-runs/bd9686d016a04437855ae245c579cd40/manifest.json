@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "workflow": "commercial-backend",
+  "run_id": "bd9686d016a04437855ae245c579cd40",
+  "project_id": "7348cfcb7a0041eab2e9552d4c5ced81",
+  "revision": 4,
+  "backend_profile_id": "remote-open-source",
+  "tool_id": "ngspice",
+  "version": "45.2",
+  "runner": "agent",
+  "input_signature": "ab02cbe45e6b7739087f711723f8240554835a829b7c53214f4525b222345a26",
+  "settings": {
+    "profile_id": "remote-open-source",
+    "operation": "simulation",
+    "top_cell": "fixture",
+    "parameters": {},
+    "profile_hash": "ab02cbe45e6b7739087f711723f8240554835a829b7c53214f4525b222345a26",
+    "backend_fingerprint": "ab02cbe45e6b7739087f711723f8240554835a829b7c53214f4525b222345a26"
+  },
+  "input_hashes": {
+    "layout.oas": "6b9f35a5a8c0e11bf8e2ce90656888c5bf20435317c8b281e49cac9d76418dd5",
+    "project.json": "62c9cd94ccfe844ddc2f08ac5a7292878f0095ad2639be15e27157279892d34c",
+    "settings.json": "279a77852718b2e4d580db8ef96b20afada1b680df361c39d3322eec686b3f1e",
+    "layout.gds": "9a03059e8735d3c3bc4b492893aaa7bbafb54ef479015d1304fbf8632b1c5f89"
+  },
+  "verification": "open-source-calibration",
+  "commands": [],
+  "remote_job_id": "7a13dc5423444fbd95f4aeed9e43be67",
+  "execution": {
+    "id": "7a13dc5423444fbd95f4aeed9e43be67",
+    "profile_id": "agent-open-source",
+    "operation": "simulation",
+    "execution_status": "completed",
+    "analysis_result": "unknown",
+    "fingerprint": "1244fee2a53191f92eed0e617d9f1ed1475bfb7711c4b5ec0e244c43b59a7718",
+    "outputs": {
+      "waves": {
+        "path": "waveform.dat",
+        "sha256": "b04d404c70287e6931cf2d8cde9fe9571a81b9e916be1dabfae3ca28a06cb6e6",
+        "size_bytes": 33
+      },
+      "currents": {
+        "path": "currents.dat",
+        "sha256": "3c5299ef9c5f9862cbc7550699f06babefd1b21b8615bfe29fe6e9345e0b00a8",
+        "size_bytes": 49
+      }
+    },
+    "created_at": 1791967350.9692109,
+    "result_context": {
+      "analysis": "op",
+      "formats": {
+        "waves": "table",
+        "currents": "table"
+      },
+      "wave_schema": {
+        "x": {
+          "column": 0,
+          "unit": "point"
+        },
+        "signals": [
+          {
+            "column": 1,
+            "name": "V(out)",
+            "unit": "V"
+          }
+        ]
+      },
+      "current_schema": {
+        "x": {
+          "column": 0,
+          "unit": "point"
+        },
+        "branches": [
+          {
+            "column": 1,
+            "id": "V1",
+            "name": "V1 source current",
+            "from_net": "out",
+            "to_net": "0",
+            "unit": "A",
+            "source_vector": "i(V1)"
+          },
+          {
+            "column": 2,
+            "id": "R1",
+            "name": "R1 resistor current",
+            "from_net": "out",
+            "to_net": "0",
+            "unit": "A",
+            "source_vector": "v(out)/1000"
+          }
+        ]
+      }
+    },
+    "started_at": 1791967350.9726331,
+    "exit_code": 0,
+    "elapsed_s": 0.056246699998155236,
+    "input_hashes": {
+      "layout.gds": "9a03059e8735d3c3bc4b492893aaa7bbafb54ef479015d1304fbf8632b1c5f89",
+      "layout.oas": "6b9f35a5a8c0e11bf8e2ce90656888c5bf20435317c8b281e49cac9d76418dd5",
+      "project.json": "62c9cd94ccfe844ddc2f08ac5a7292878f0095ad2639be15e27157279892d34c",
+      "settings.json": "279a77852718b2e4d580db8ef96b20afada1b680df361c39d3322eec686b3f1e"
+    },
+    "resource_hashes": {
+      "executable": "820658317b0b54035208da41936fd6871ce924036e5ea4113a4168b821b7fc45",
+      "resource.deck": "c2032cb5763b527936b90dc028c69b6f97fc2fa805158a16f8e69e8d829dba66"
+    },
+    "resource_evidence": {
+      "executable": {
+        "kind": "file",
+        "sha256": "820658317b0b54035208da41936fd6871ce924036e5ea4113a4168b821b7fc45",
+        "size_bytes": 8300800,
+        "files": 1
+      },
+      "resource.deck": {
+        "kind": "file",
+        "sha256": "c2032cb5763b527936b90dc028c69b6f97fc2fa805158a16f8e69e8d829dba66",
+        "size_bytes": 279,
+        "files": 1
+      }
+    },
+    "input_origin": "operator-recipe",
+    "logs_redacted": true,
+    "stdout_sha256": "71b576376a5c0d7c230d6976d0dc0c402e933e95ce84a28d3bfa1d4e9cde0adc",
+    "shell": false,
+    "ended_at": 1791967351.036982
+  },
+  "input_origin": "operator-recipe",
+  "geometry_binding": false,
+  "parser_provenance": {
+    "adapter": "register-commercial-results-v1",
+    "vendor_execution_verified": false,
+    "files": {
+      "waves": {
+        "path": "waveform.dat",
+        "sha256": "b04d404c70287e6931cf2d8cde9fe9571a81b9e916be1dabfae3ca28a06cb6e6",
+        "bytes": 33,
+        "format": "table"
+      },
+      "currents": {
+        "path": "currents.dat",
+        "sha256": "3c5299ef9c5f9862cbc7550699f06babefd1b21b8615bfe29fe6e9345e0b00a8",
+        "bytes": 49,
+        "format": "table"
+      }
+    },
+    "diagnostics": []
+  },
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "ended_at": "2026-10-14T08:42:31.200202+00:00"
+}

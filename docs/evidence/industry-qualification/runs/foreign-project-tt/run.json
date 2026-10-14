@@ -1,0 +1,123 @@
+{
+  "id": "dc77230c2cd34827be35456acc80e9ff",
+  "project_id": "77008508ed5240aab6c60dd07837d52b",
+  "kind": "simulation",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "freshness": "current",
+  "artifacts": {
+    "reference_netlist": "/workspace/.runtime/eda/runs/dc77230c2cd34827be35456acc80e9ff/reference.spice",
+    "characterization_fixture": "/workspace/.runtime/eda/runs/dc77230c2cd34827be35456acc80e9ff/follower.spice",
+    "characterization_models": "/workspace/.runtime/eda/runs/dc77230c2cd34827be35456acc80e9ff/supported-tt.spice",
+    "characterization": "/workspace/.runtime/eda/runs/dc77230c2cd34827be35456acc80e9ff/characterization.json",
+    "stdout": "/workspace/.runtime/eda/runs/dc77230c2cd34827be35456acc80e9ff/stdout.log"
+  },
+  "manifest_path": "/workspace/.runtime/eda/runs/dc77230c2cd34827be35456acc80e9ff/manifest.json",
+  "input_signature": "36e1664680d1fc8459334b443d9d82e2d0ad7c2bd17efbb03ed57db14b5cd4f9",
+  "analysis_stage": "pre-layout",
+  "started_at": "2026-10-14T08:45:01.033848+00:00",
+  "tool": "ngspice",
+  "waveforms": [
+    {
+      "name": "follower_offset",
+      "unit": "V",
+      "x": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "y": [
+        0.004323061969080277,
+        0.0033517410744025034,
+        0.001279163052095078,
+        -0.003871338397766544
+      ]
+    }
+  ],
+  "reference_verification": {
+    "schema_version": 1,
+    "kind": "ota-mismatch",
+    "source": "actual-ngspice-public-models",
+    "checks": [
+      {
+        "name": "All 4 observed offsets ≤ 0.01 V",
+        "observed": 0.004323061969080277,
+        "pass": true
+      }
+    ],
+    "scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff.",
+    "pass": true
+  },
+  "measurements": {
+    "samples": 4,
+    "seed": 729726,
+    "offset_mean_V": 0.0012706569244528287,
+    "offset_sample_std_V": 0.003655510727817762,
+    "offset_min_V": -0.003871338397766544,
+    "offset_max_V": 0.004323061969080277,
+    "offset_abs_max_V": 0.004323061969080277,
+    "within_limit_samples": 4,
+    "analysis": "mismatch",
+    "x_unit": "sample",
+    "x_label": "Seeded native OP sample",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "solver": "SPARSE 1.3",
+    "post_layout": "false",
+    "reference_scope": "Actual installed SKY130 public-model follower characterization. Finite sample set, no foundry-calibrated statistical yield, no global process Monte Carlo or EM/IR/ESD signoff."
+  },
+  "message": "Actual OTA mismatch: 4 samples; requested criterion PASS",
+  "literature_review": {
+    "schema_version": 1,
+    "review_version": "literature-review-20261013-v1",
+    "reviewed_at": "2026-10-13",
+    "reference_ids": [
+      "isscc-trends-2026",
+      "placement-2024"
+    ],
+    "references": [
+      {
+        "id": "isscc-trends-2026",
+        "title": "ISSCC 2026 Press Kit — Analog, Power Management, Data Converters and Frequency Synthesizers trends",
+        "authors": "ISSCC technical subcommittees",
+        "date": "2026",
+        "venue": "Official conference summaries; not full research papers",
+        "doi": null,
+        "url": "https://www.isscc.org/s/ISSCC2026PressKit.pdf",
+        "read_scope": "PDF pages 97–98 and 113–122 (zero-based), including paper 32.2 summary",
+        "technology": "Multiple technologies; architecture and robustness trends only",
+        "adopted": "PVT/source-buffer assumptions, source completeness and named noise/linearity/timing gaps on every block.",
+        "not_reproduced": "Paper 32.2 dynamic ΔΣ topology, conference circuits, calibration, phase-noise or advertised performance."
+      },
+      {
+        "id": "placement-2024",
+        "title": "Automated Placement of Analog Integrated Circuits using Priority-based Constructive Heuristic",
+        "authors": "Josef Grus; Zdeněk Hanzálek",
+        "date": "2024-11-13",
+        "venue": "arXiv v2, foundational source rather than latest research",
+        "doi": "10.48550/arXiv.2411.02406",
+        "url": "https://arxiv.org/abs/2411.02406",
+        "read_scope": "Full HTML, sections 3 and 4.1.4",
+        "technology": "Analog placement constraints and symmetry groups",
+        "adopted": "Audit native matched-unit centroids, preserve indivisible groups and complete chip-envelope constraints.",
+        "not_reproduced": "ILP, GA, CMA-ES, DQN or paper placement benchmarks. Equal centroids do not certify identical surroundings or mismatch yield."
+      }
+    ],
+    "relationship": "method-inspired review; existing owned circuits, not a reproduction of the cited chips",
+    "paper_performance_reproduced": false,
+    "qualification": "See actual engine verdict; literature review cannot establish PASS.",
+    "pending": [
+      "Thermal/flicker noise and mismatch yield except explicitly executed studies.",
+      "Full PVT/RC, EM/IR, ESD, antenna/density, foundry signoff.",
+      "Complete sequential timing, STA/Liberty and physical CPU/ADC-controller closure."
+    ],
+    "revision": 1,
+    "project_id": "77008508ed5240aab6c60dd07837d52b",
+    "run_id": "dc77230c2cd34827be35456acc80e9ff"
+  },
+  "ended_at": "2026-10-14T08:45:05.205095+00:00",
+  "elapsed_s": 4.180483526084572
+}

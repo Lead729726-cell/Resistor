@@ -6,6 +6,10 @@ history that did not previously exist. Existing detailed verification remains in
 
 ## Unreleased — Resistor Indust intent review (2026-10-14)
 
+- Actual public OTA follower offset assessment with explicit native run IDs, PVT, seed, sample count, pre/post coverage and voltage criteria; recompute raw results and check native evidence checksums.
+- Three representative PVT conditions × 32 samples × pre/post, real Magic DRC/LVS/PEX, deterministic replay and negative/stale/corrupt evidence gates; no device-pair, yield or manufacturing claim.
+- Portable native/agent transport regression with public ngspice (34 cases), current commercial-profile availability probe and an unmeasured customer-study protocol; licensed vendor execution remains unavailable.
+
 - Preserve the source project and original file while creating a separate baseline/candidate review workspace.
 - Designer rationale, author, priority, criteria, target binding and review revision; edits/removals retain history.
 - Exact reflected masks, rational polygon spacing, fixed-region XOR and bbox ordering using KLayout; missing electrical/process input remains unassessed.

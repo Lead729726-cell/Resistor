@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "edition": "indust",
+  "status": "not_measured",
+  "actual_participants": 0,
+  "customer_value_verified": false,
+  "task": "Review an identical public layout: intent constraints, changed masks, ambiguous targets, stale electrical evidence and a reproducible handoff report",
+  "baseline": "KLayout GUI plus direct Python scripting/extensions; evaluator scripts provided, not default GUI alone",
+  "candidate": "Resistor Indust review workbench",
+  "design": "Counterbalanced within-participant task order; three practicing analog/layout engineers for an initial pilot, followed by a larger agreed study",
+  "same_conditions": ["same GDS/OASIS and DBU", "same PDK and native engine versions", "same acceptance criteria and planted faults", "same hardware", "same training time and access to scripts", "independent answer key fixed before recording"],
+  "tasks": [
+    {"id": "unchanged", "expected": "accept only the explicit mask scope, no foundry approval"},
+    {"id": "changed", "expected": "detect a 5 DBU move and new protected-region geometry"},
+    {"id": "ambiguous", "expected": "withhold judgment when stable target correspondence is lost"},
+    {"id": "electrical", "expected": "link actual same-revision finite OTA evidence and refuse incomplete PVT/old simulations"},
+    {"id": "handoff", "expected": "another engineer reopens the report and identifies sources, engine inputs and unresolved requirements"}
+  ],
+  "metrics": ["setup_seconds", "review_seconds", "handoff_seconds", "missed_faults", "false_pass_count", "evidence_completeness_fraction", "report_reopen_success", "task_completion_rate", "participant_usability_comments"],
+  "raw_session_required": ["consented pseudonymous participant ID and relevant experience", "tool order and exact task revision", "timestamped start/end and corrections", "recording/log path plus SHA-256", "independent answer-key scoring", "failed/incomplete tasks retained"],
+  "provisional_pilot_gate": {"false_pass_count": 0, "report_reopen_success": true, "no_increase_in_missed_faults": true, "time_claim": "only compute paired raw times after real sessions; a small pilot does not establish market superiority"},
+  "records": [],
+  "human_timing_results": null,
+  "interpretation": "The automated KLayout fixture comparison establishes only code verdict agreement. It cannot fill participant times or customer value."
+}

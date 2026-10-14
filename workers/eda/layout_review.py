@@ -14,6 +14,7 @@ import re
 import uuid
 import klayout.db as k
 import geometry as G
+import electrical_review as E
 from geometry import EDAError
 
 S = None
@@ -26,7 +27,7 @@ KINDS = {
     'fixed_region': ('Baseline/candidate clipped mask XOR', ['layout', 'baseline', 'region']),
     'relative_position': ('Bounding-box edge ordering', ['layout', 'direction']),
     'orientation': ('Recorded instance transform', ['instance_transform', 'expected_orientation']),
-    'matching': ('Electrical matching requires characterized device/model/PVT evidence', ['netlist', 'models', 'simulation', 'acceptance_criteria']),
+    'matching': ('Revision-bound native OTA follower mismatch sample assessment', ['native_mismatch_runs', 'explicit_PVT', 'samples', 'offset_limit_V']),
     'dummy': ('Designer inspection; device and process mapping required', ['device_mapping', 'pdk_rules', 'acceptance_criteria']),
     'route_length': ('Electrical route length requires an extracted path', ['extracted_path', 'acceptance_criteria']),
     'shielding': ('Shield connectivity and process rules required', ['netlist', 'layer_mapping', 'pdk_rules', 'acceptance_criteria']),
@@ -157,7 +158,7 @@ def guard(review, params):
 def catalog():
     return {'schema_version': 1, 'edition': 'indust', 'product_name': 'Resistor Indust', 'kinds': [
         {'id': name, 'method': method, 'required_data': required,
-         'automatic': name in ('symmetry', 'spacing', 'fixed_region', 'relative_position')}
+         'automatic': name in ('symmetry', 'spacing', 'fixed_region', 'relative_position', 'matching')}
         for name, (method, required) in KINDS.items()], 'limits': LIMITS, 'local_only': True, 'automatic_modification': False}
 
 def create(params):
@@ -196,7 +197,8 @@ def constraint(review, value, candidate):
         if not isinstance(criteria, dict):
             raise EDAError('INVALID_REVIEW', 'Criteria must be a JSON object or omitted.')
         allowed = {'symmetry': {'axis', 'axis_twice_dbu'}, 'spacing': {'minimum_dbu'},
-                   'fixed_region': {'box', 'layers'}, 'relative_position': {'direction'}}.get(kind, {'description'})
+                   'fixed_region': {'box', 'layers'}, 'relative_position': {'direction'},
+                   'matching': {'description', 'assessment', 'run_ids', 'offset_limit_V', 'minimum_samples', 'seed', 'conditions', 'require_pre_and_post'}}.get(kind, {'description'})
         if set(criteria) - allowed:
             raise EDAError('INVALID_REVIEW', 'Unsupported criteria fields.')
         if kind == 'symmetry':
@@ -214,6 +216,7 @@ def constraint(review, value, candidate):
             if set(layers)-known: raise EDAError('UNKNOWN_LAYER', 'Choose existing layer/datatype entries; unknown process layers are not inferred.')
         if kind == 'relative_position' and criteria.get('direction') not in ('left', 'right', 'above', 'below'):
             raise EDAError('INVALID_REVIEW', 'Unsupported bbox ordering.')
+        if kind == 'matching': E.validate(criteria)
         if len(json.dumps(criteria)) > 4096:
             raise EDAError('INVALID_REVIEW', 'Criteria exceed the bounded data limit.')
     priority = value.get('priority', 'must')
@@ -379,6 +382,10 @@ def run_evidence(p, revision):
                        'markers': run.get('markers', []), 'artifacts': run.get('artifacts', {}),
                        'manifest_path': path, 'manifest_sha256': S.cached_sha(S.trusted(path)) if path else None,
                        'input_conditions': manifest, 'evidence_missing': manifest is None,
+                       'characterization': {'mode': 'mismatch', 'samples': run['measurements']['samples'], 'seed': run['measurements']['seed'],
+                           'corner': run['measurements']['corner'], 'temperature_C': run['measurements']['temperature_C'],
+                           'supply_V': run['measurements']['supply_V'], 'post_layout': run['measurements']['post_layout'] == 'true'}
+                           if run.get('reference_verification', {}).get('kind') == 'ota-mismatch' else None,
                        'commercial_execution_verified': False if run.get('workflow') != 'commercial-backend' else None})
     return values
 
@@ -388,7 +395,8 @@ def evaluate(params):
         p = S.get_project(review['project_id'])
         base = snapshot(S.history_project(p['id'], review['baseline_revision']))
         candidate = snapshot(p)
-        results = [evaluate_constraint(c, base, candidate) for c in review['constraints']]
+        results = [{**evaluate_constraint(c, base, candidate), **E.evaluate(S, p, c)} if c['kind'] == 'matching'
+                   else evaluate_constraint(c, base, candidate) for c in review['constraints']]
         change = comparison(base, candidate)
         for result, c in zip(results, review['constraints']):
             result['affected_by_change'] = c['kind'] == 'fixed_region' and result['status'] == 'fail' or any(m['changed'] or m['shape'] is None for m in result['mapping'])
@@ -414,7 +422,17 @@ def status(params):
             run['freshness'] = actual['freshness']
             if actual['execution_status'] != run['execution_status'] or actual['analysis_result'] != run['analysis_result']:
                 latest['freshness'] = 'stale'
+        if not electrical_current(p, review['constraints'], latest): latest['freshness'] = 'stale'
     return {**review, 'context': context(p), 'revision': p['revision'], 'limits': LIMITS}
+
+def electrical_current(p, constraints, evaluation):
+    for c in constraints:
+        if c['kind'] == 'matching' and (c.get('criteria') or {}).get('assessment') == E.ASSESSMENT:
+            old = next((r for r in evaluation['results'] if r['constraint_id'] == c['id']), {})
+            now = E.evaluate(S, p, c)
+            if any(old.get(key) != now.get(key) for key in ('status', 'electrical_assessment', 'reason', 'metrics', 'error_code')):
+                return False
+    return True
 
 def scene(params):
     review = require_review(params)
@@ -468,7 +486,7 @@ def open_report(params):
         raise EDAError('EVIDENCE_MISSING', 'Saved report file cannot be reopened.', str(error))
     p = S.get_project(review['project_id'])
     return {'report': report, 'sha256': row[1], 'path': str(file), 'context': context(p),
-            'freshness': 'current' if report['revision'] == p['revision'] and digest(report['constraints']) == digest(review['constraints']) and report['evaluation']['engine'] == context(p)['engine'] else 'stale', 'historical_evidence_preserved': True}
+            'freshness': 'current' if report['revision'] == p['revision'] and digest(report['constraints']) == digest(review['constraints']) and report['evaluation']['engine'] == context(p)['engine'] and electrical_current(p, report['constraints'], report['evaluation']) else 'stale', 'historical_evidence_preserved': True}
 
 def rpc(method, params):
     with S.LOCK:

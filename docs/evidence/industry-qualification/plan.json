@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "scope": "Public physical SKY130 Miller OTA unity follower, 1pF load, 0.9V external bias; finite local mismatch, not device-pair matching or yield",
+  "conditions": [
+    {
+      "corner": "tt",
+      "temperature_C": 27,
+      "supply_V": 1.8
+    },
+    {
+      "corner": "ff",
+      "temperature_C": -40,
+      "supply_V": 1.8
+    },
+    {
+      "corner": "ss",
+      "temperature_C": 125,
+      "supply_V": 1.6
+    }
+  ],
+  "samples_per_run": 32,
+  "seed": 729726,
+  "offset_limit_V": 0.01,
+  "post_layout": "Actual Magic typical-RC extraction for each post solve",
+  "gates": [
+    "actual DRC/LVS/PEX",
+    "finite sample offset <=10mV for every listed condition/stage",
+    "same-seed pre-layout replay",
+    "foreign project, missing PVT, insufficient samples, strict failing threshold, stale and checksum corruption rejected"
+  ],
+  "customer_value": "not_measured",
+  "manufacturing_signoff": "unavailable: no foundry-approved process/deck/acceptance",
+  "commercial": "unavailable: user confirmed no licensed environment"
+}
