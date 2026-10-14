@@ -1,5 +1,7 @@
 # Resistor
 
+**v0.27 작업 흐름 개선**: 빈 회로도 시작, 이름·공정으로 프로젝트 열기, 50개씩 목록 표시와 키보드 대화창 이동을 지원합니다. **다음 실행**에서 준비 사항을 확인하고, 실행 목록·파형·로그를 같은 결과에 맞춥니다. 이전 결과의 원인을 표시하며 수치의 최신성과 기능적 PASS/FAIL을 구분합니다. [사용 안내와 실제 검증](docs/workbench-usability.md).
+
 **v0.26 Docker 없는 로컬 엔진**: 설치 파일에 Python·KLayout·ngspice와 공개 SKY130 자료를 포함합니다. 회로·레이아웃 편집, GDS/OASIS 입출력과 실제 전압·전류 해석을 로컬에서 실행합니다. 전체 물리 도구는 Mac/Linux에 직접 설치하거나 Windows의 독립 WSL을 연결하며 Docker는 선택 방식으로 남습니다. [설치·전환·검증 안내](docs/native-runtime.md).
 
 **v0.25 회로 작성·GDS 변환**: [빈 회로에서 값 입력·핀 연결·실제 해석](docs/schematic-quickstart.md), [GDS/OASIS 회로 역추출과 영역·핀 채널 규격 레이아웃](docs/gds-schematic-conversion.md)을 제공합니다. 변환은 미리보기 확인 후 새 revision으로 적용하며 DRC/LVS/PEX는 실제 별도 실행 결과를 표시합니다. 지원 PDK·소자와 flat graph 범위는 가이드에 명시합니다.

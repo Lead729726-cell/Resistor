@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { rpc, type Project } from '@mos/contracts';
 import './workspace-bundle.css';
+import './workbench-usability.css';
 
 interface Props { currentId?: string; onOpen: (project: Project) => Promise<void>; onCreate: () => void; }
 type WorkspaceEntry = Pick<Project, 'id' | 'name' | 'cell' | 'pdk_id' | 'revision' | 'source'>;
 export default function WorkspaceBrowser({ currentId, onOpen, onCreate }: Props) {
   const [projects, setProjects] = useState<WorkspaceEntry[]>([]);
   const [query, setQuery] = useState('');
+  const [pdk,setPdk]=useState(''),[sort,setSort]=useState('recent'),[page,setPage]=useState(0);
   const [busy, setBusy] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [listError, setListError] = useState<string | null>(null);
@@ -20,7 +22,12 @@ export default function WorkspaceBrowser({ currentId, onOpen, onCreate }: Props)
     finally { setLoading(false); }
   }, []);
   useEffect(() => { void load(); }, [load]);
-  const filtered = useMemo(() => projects.filter(project => `${project.name} ${project.cell} ${project.pdk_id} ${project.id}`.toLowerCase().includes(query.toLowerCase())), [projects, query]);
+  const filtered = useMemo(() => {
+    const result=projects.filter(project => (!pdk||project.pdk_id===pdk)&&`${project.name} ${project.cell} ${project.pdk_id} ${project.id}`.toLowerCase().includes(query.trim().toLowerCase()));
+    return sort==='name'?result.sort((a,b)=>a.name.localeCompare(b.name,'ko')||a.id.localeCompare(b.id)):result;
+  }, [projects, query,pdk,sort]);
+  const pages=Math.max(1,Math.ceil(filtered.length/50)),visible=filtered.slice(page*50,(page+1)*50);
+  useEffect(()=>setPage(value=>Math.min(value,pages-1)),[pages]);
   const execute = async (key: string, task: () => Promise<void>) => {
     setBusy(key); setError(null);
     try { await task(); } catch (cause) { setError(cause instanceof Error ? cause.message : String(cause)); }
@@ -40,12 +47,14 @@ export default function WorkspaceBrowser({ currentId, onOpen, onCreate }: Props)
     anchor.href=url;anchor.download=`${p.cell}-r${p.revision}.register-project.zip`;anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   });
   return <div className="workspace-browser">
-    <div className="workspace-browser-toolbar"><input data-testid="workspace-search" autoFocus aria-label="프로젝트 검색" placeholder="이름, cell, PDK 검색…" value={query} onChange={event => setQuery(event.target.value)}/><button className="button small" disabled={!!busy || loading} onClick={() => void load()}>새로고침</button><button className="button small" data-testid="workspace-import" disabled={!!busy} onClick={()=>input.current?.click()}>설계 파일 가져오기</button><input ref={input} hidden type="file" accept=".zip,.register-project.zip" data-testid="workspace-bundle-input" onChange={event=>{const file=event.target.files?.[0];event.target.value='';if(file)void importFile(file);}}/><button className="button primary small" disabled={!!busy} onClick={onCreate}>새 프로젝트</button></div>
+    <div className="workspace-browser-toolbar"><input data-testid="workspace-search" autoFocus aria-label="프로젝트 검색" placeholder="이름, cell, PDK 또는 설계 ID 검색…" value={query} onChange={event => {setQuery(event.target.value);setPage(0);}}/><button className="button small" disabled={!!busy || loading} onClick={() => void load()}>새로고침</button><button className="button small" data-testid="workspace-import" disabled={!!busy} onClick={()=>input.current?.click()}>설계 파일 가져오기</button><input ref={input} hidden type="file" accept=".zip,.register-project.zip" data-testid="workspace-bundle-input" onChange={event=>{const file=event.target.files?.[0];event.target.value='';if(file)void importFile(file);}}/><button className="button primary small" disabled={!!busy} onClick={onCreate}>새 프로젝트</button></div>
+    <div className="workspace-filter-row"><label>공정 필터<select aria-label="프로젝트 공정 필터" value={pdk} onChange={event=>{setPdk(event.target.value);setPage(0);}}><option value="">전체 공정</option>{[...new Set(projects.map(p=>p.pdk_id))].sort().map(id=><option key={id} value={id}>{id}</option>)}</select></label><label>정렬<select aria-label="프로젝트 정렬" value={sort} onChange={event=>{setSort(event.target.value);setPage(0);}}><option value="recent">최근 작업 순</option><option value="name">이름 순</option></select></label>{(query||pdk)&&<button className="text-button" onClick={()=>{setQuery('');setPdk('');setPage(0);}}>검색·필터 지우기</button>}</div>
     <p className="workspace-index-note">{loading ? '로컬 worker의 프로젝트 목록 확인 중…' : `로컬 worker의 저장된 프로젝트 ${projects.length}개 · 실제 snapshot과 revision`}</p>
-    {listError && <div className="inline-error" role="alert">프로젝트 목록: {listError}</div>}
+    {listError && <div className="inline-error" role="alert">프로젝트 목록: {listError}<button className="button small" disabled={loading} onClick={()=>void load()}>목록 다시 읽기</button></div>}
     {error && <div className="inline-error" role="alert">{error}</div>}
     {busy && <div className="workspace-operation" role="status">{busy === 'import' ? '설계 파일을 검증하고 가져오는 중…' : busy === 'open:import' ? '가져온 설계의 레이아웃과 계층을 여는 중…' : busy.startsWith('export:') ? '설계 파일을 저장하는 중…' : busy.startsWith('open:') ? '프로젝트를 여는 중…' : busy.startsWith('rename:') ? '프로젝트 이름을 저장하는 중…' : '프로젝트를 복제하는 중…'}</div>}
-    <div className="workspace-project-list">{filtered.map(project => <article className={`workspace-project-card ${project.id === currentId ? 'current' : ''}`} key={project.id}>
+    <div className="workspace-pagination" aria-live="polite"><span>{filtered.length?`${page*50+1}–${Math.min((page+1)*50,filtered.length)} / ${filtered.length}개`:'0개'}{query||pdk?' · 검색 결과':''}</span>{pages>1&&<div><button className="button small" aria-label="이전 프로젝트 페이지" disabled={page===0||!!busy} onClick={()=>setPage(value=>value-1)}>이전</button><span>{page+1} / {pages}</span><button className="button small" aria-label="다음 프로젝트 페이지" disabled={page>=pages-1||!!busy} onClick={()=>setPage(value=>value+1)}>다음</button></div>}</div>
+    <div className="workspace-project-list">{visible.map(project => <article className={`workspace-project-card ${project.id === currentId ? 'current' : ''}`} key={project.id}>
       <div className="workspace-project-icon">{project.source === 'fixture' ? '◇' : '▧'}</div><div className="workspace-project-info">
         {renaming === project.id ? <form onSubmit={event => { event.preventDefault(); void execute(`rename:${project.id}`, async () => { await rpc('project.rename', { project_id: project.id, name: name.trim() }); setRenaming(null); await load(); }); }}><input autoFocus aria-label="새 프로젝트 이름" value={name} onChange={event => setName(event.target.value)}/><button className="button small" disabled={!name.trim() || !!busy}>적용</button><button className="text-button" type="button" onClick={() => setRenaming(null)}>취소</button></form> : <strong>{project.name}</strong>}
         <div><span className="tag">{project.pdk_id}</span><span>{project.cell}</span><span className="mono">r{project.revision}</span>{project.id === currentId && <span className="current-project-tag">현재 열림</span>}</div><code>{project.id}</code>
