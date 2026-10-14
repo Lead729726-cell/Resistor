@@ -10,6 +10,23 @@ concurrency:
   group: source-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  tutorials:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install locked source dependencies
+        run: npm ci
+      - name: Prepare browser and original tutorial media
+        run: |
+          npx playwright install --with-deps chromium
+          node scripts/tutorial-library-media.mjs
+      - name: Validate every lesson, formula practice, mobile UI and original video
+        run: npm run test:learning
   core:
     runs-on: ubuntu-latest
     timeout-minutes: 20
