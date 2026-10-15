@@ -56,7 +56,7 @@ jobs:
         run: python3 -m pip install klayout==0.30.5
       - name: Python evidence, diagnostics and logic hierarchy unit tests
         working-directory: workers/eda
-        run: python3 -m unittest test_job_evidence test_toolchain_diagnostics test_workspace_paths test_drawing test_logic_composition
+        run: python3 -m unittest test_job_evidence test_toolchain_diagnostics test_workspace_paths test_drawing test_logic_composition test_source_stimulus
       - name: Workspace metadata and detailed API compatibility
         run: python3 -m unittest discover -s tests -p test_project_index.py
       - name: Exact KLayout intent review and revision persistence
