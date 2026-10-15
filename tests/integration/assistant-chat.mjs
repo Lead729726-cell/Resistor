@@ -75,7 +75,18 @@ try{
   await page.evaluate(()=>localStorage.setItem('register.appearance',JSON.stringify({version:1,mode:'light',skin:'graphite'})));await page.reload();await page.getByTestId('app-ready').waitFor();await openAssistant();await page.getByTestId('assistant-diagnose').click();await poll(async()=>await page.getByTestId('assistant-preview').isEnabled());check('Saved light theme is applied to the assistant',await page.locator('html').getAttribute('data-theme')==='light');await page.screenshot({path:path.join(out,'diagnosis-light.png')});
   const doctor=await api('toolchain.doctor');report.actual_ngspice_ui=false;
   if(doctor.tools.some(t=>t.name==='ngspice'&&t.available)){
-    const rc=await api('design.create_template',{template_id:'rc_lowpass',name:'[Indust QA] 실제 ngspice 전류·전압 요약',command_id:randomUUID()});let run=await api('simulation.run',{project_id:rc.id,analysis:'tran',netlister:'native'});report.actual_run={project_id:rc.id,run_id:run.id};console.log('Waiting for the actual isolated ngspice job.');await poll(async()=>{run=await api('job.status',{run_id:run.id});return !['queued','running'].includes(run.execution_status);},120000);assert.equal(run.execution_status,'completed');
+    // This UI assertion checks actual terminal signs and voltage differences,
+    // independent of a foundry PDK. Use explicit ideal R/C and numeric excitation.
+    let rc=await api('project.create',{example:'schematic',name:'[Indust QA] 실제 ideal-RC ngspice 전류·전압 요약'});
+    for(const device of [
+      {id:'vin',name:'VIN',kind:'voltage',x:100,y:200,pins:{'+':'IN','-':'0'},parameters:{dc:0},stimulus:{kind:'pulse',low:0,high:1.8,delay_s:2e-9,rise_s:100e-12,fall_s:100e-12,width_s:4.9e-9,period_s:10e-9}},
+      {id:'r1',name:'R1',kind:'resistor',x:300,y:200,pins:{'+':'IN','-':'OUT'},parameters:{value:1000}},
+      {id:'c1',name:'C1',kind:'capacitor',x:500,y:200,pins:{'+':'OUT','-':'0'},parameters:{value:1e-12}},
+      {id:'pin',name:'PORT_IN',kind:'port',x:100,y:100,pins:{P:'IN'},parameters:{}},
+      {id:'pout',name:'PORT_OUT',kind:'port',x:500,y:100,pins:{P:'OUT'},parameters:{}}
+    ])rc=await apply(rc,{type:'add_device',device});
+    rc=await apply(rc,{type:'update_testbench',settings:{analysis:'tran',duration_s:40e-9,step_s:5e-12}});
+    let run=await api('simulation.run',{project_id:rc.id,analysis:'tran',netlister:'native'});report.actual_run={project_id:rc.id,run_id:run.id};console.log('Waiting for the actual isolated ngspice job.');await poll(async()=>{run=await api('job.status',{run_id:run.id});return !['queued','running'].includes(run.execution_status);},120000);assert.equal(run.execution_status,'completed');
     await page.evaluate(id=>localStorage.setItem('mos.last_project',id),rc.id);await page.reload();await page.getByTestId('app-ready').waitFor();await openAssistant();await page.getByTestId('assistant-diagnose').click();await poll(async()=>await page.getByTestId('assistant-preview').isEnabled());await page.getByText('실제 전압·전류·전압 강하 요약',{exact:false}).click();await poll(async()=>await page.locator('.assistant-measurements tbody tr').count()>2);
     const summary=await collectEvidence(config,{project_id:rc.id,expected_revision:rc.revision}),measured=summary.runs.find(r=>r.id===run.id),first=measured.current_flow_summary.branches.find(b=>b.device_id==='r1');check('Actual ngspice branch signs and node differences reach the assistant table',first.current.max===Math.max(...run.current_flow.branches.find(b=>b.device_id==='r1').values_A)&&first.voltage_drop.available&&await page.locator('.assistant-measurements').innerText().then(t=>t.includes('(A)')&&t.includes('IN − OUT (V)')));
     await page.screenshot({path:path.join(out,'measurements-desktop.png')});report.actual_ngspice_ui=true;report.actual_run={project_id:rc.id,run_id:run.id,revision:run.revision,tool:run.tool,current_max_A:first.current.max,drop_max_V:first.voltage_drop.max};
