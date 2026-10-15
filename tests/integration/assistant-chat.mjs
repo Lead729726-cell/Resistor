@@ -44,7 +44,19 @@ try{
   const child=await collectEvidence(config,{project_id:p.id,expected_revision:p.revision,context:{cell_name:'child',device_ids:['child-r']}});check('Actual native child-cell evidence excludes root-only devices',child.connectivity.devices.length===1&&child.connectivity.devices[0].id==='child-r'&&child.context.cell_name==='child');
   const port=await free(),url='http://127.0.0.1:'+port+'/eda';
   vite=spawn(process.execPath,['node_modules/vite/bin/vite.js','--host','127.0.0.1'],{cwd:root,env:{...process.env,RESISTOR_EDITION:'indust',MOS_WORKSPACE:workspace,REGISTER_DEV_PORT:String(port)},windowsHide:true,stdio:['ignore','pipe','pipe']});
-  await new Promise((resolve,reject)=>{let raw='';const timer=setTimeout(()=>reject(Error('App startup timed out')),30000);vite.stdout.on('data',b=>{raw+=b;if(raw.includes('Local:')){clearTimeout(timer);resolve();}});vite.once('error',reject);});
+  // Readiness is an HTTP response, not an English console label (CI can
+  // suppress or redirect the banner). Preserve stderr and early process exits.
+  let appOutput='',appFailure;
+  const capture=b=>{appOutput=(appOutput+b.toString()).slice(-8000);};
+  vite.stdout.on('data',capture);vite.stderr.on('data',capture);
+  vite.once('error',e=>{appFailure=e.message;});vite.once('exit',(code,signal)=>{appFailure=`App exited (${code??signal})`;});
+  const appDeadline=Date.now()+60000;
+  while(true){
+    if(appFailure)throw Error(`${appFailure}\n${appOutput}`);
+    try{const response=await fetch(url,{signal:AbortSignal.timeout(1500)});if(response.ok)break;}catch{}
+    if(Date.now()>=appDeadline)throw Error(`App HTTP startup timed out\n${appOutput}`);
+    await new Promise(resolve=>setTimeout(resolve,100));
+  }
   browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});context=await browser.newContext({viewport:{width:1440,height:1000},recordVideo:{dir:path.join(workspace,'recording'),size:{width:1440,height:1000}}});page=await context.newPage();page.on('pageerror',e=>report.browser_errors.push(e.message));
   const poll=async(fn,timeout=30000)=>{const deadline=Date.now()+timeout;while(!await fn()){assert(Date.now()<deadline,'Expected native/UI state timed out');await new Promise(r=>setTimeout(r,100));}};
   const openAssistant=async()=>{const action=page.getByTestId('open-design-assistant');const parent=await action.evaluate(e=>{const d=e.closest('details');return d&&!d.open?d.dataset.testid:null;});if(parent)await page.getByTestId(parent).locator('summary').click();await action.click();await page.getByTestId('assistant-preview').waitFor();};
