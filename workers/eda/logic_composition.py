@@ -7,6 +7,26 @@ from geometry import EDAError
 
 GATES=('INV','NAND2','NOR2','AND2','OR2','XOR2','XNOR2','MUX2')
 VERSION='resistor-logic-reference-v1'
+
+def transient(schematic):
+    import source_stimulus
+    meta=schematic.get('logic_practice',{});kind=meta.get('kind')
+    if kind not in ('nand-chain','half-adder','mux-chain'):raise EDAError('LOGIC_PRACTICE_REQUIRED','The clock preset requires a supported logic composition practice.')
+    candidate=copy.deepcopy(schematic)
+    def source(name,net):
+        d=next((d for d in candidate['devices'] if d['id']==name),None)
+        if not d or d['kind']!='voltage' or d['pins']!={'+':net,'-':'0'}:raise EDAError('LOGIC_SOURCE_CHANGED','Preset input sources were changed; configure each actual source manually.')
+        return d
+    supply=source('source_vpwr','VPWR');high=native.num(supply['parameters']['dc'])
+    if supply.get('stimulus') or not .1<=high<=1.8:raise EDAError('LOGIC_SUPPLY_REQUIRED','The preset requires an explicit DC supply of 0.1..1.8 V.')
+    a=source('source_a','A');b=source('source_b','B')
+    a['parameters']['dc']=0;a['stimulus']=source_stimulus.validate({'kind':'pulse','low':0,'high':high,'delay_s':2e-9,'rise_s':100e-12,'fall_s':100e-12,'width_s':4.9e-9,'period_s':10e-9})
+    b.pop('stimulus',None);b['parameters']['dc']=0 if kind=='half-adder' else high
+    if kind=='mux-chain':
+        s=source('source_sel','SEL');s.pop('stimulus',None);s['parameters']['dc']=high
+    candidate['timing_check']=source_stimulus.timing_recipe({'schema_version':1,'input':'A','output':'SUM' if kind=='half-adder' else 'Y','polarity':'inverting' if kind=='nand-chain' else 'same','low_V':0,'high_V':high,'start_s':0,'end_s':40e-9,'settle_s':1e-9,'max_delay_s':1e-9,'max_rise_s':1e-9,'max_fall_s':1e-9,'minimum_cycles':2})
+    candidate['logic_practice']['transient_preset']='single-input-clock-v1'
+    schematic.clear();schematic.update(candidate)
 def digest(value):return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
 def library(gate):

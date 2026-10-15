@@ -31,7 +31,7 @@ Resistor Edu의 조합 실습은 기존 공개 CMOS 회로를 읽고 연결하�
 
 기존 `physical_library.py`/`digital_units.py` CMOS 정의에서 필요한 하위 셀만 가져옵니다. 출력에 정답 전압원을 넣지 않습니다. `custom_circuit.prepare`가 검증된 계층을 **해석 사본에서만** 펼치며 원본 계층·ID·배선·revision은 그대로 저장됩니다. 계층 내부의 SPICE `0`은 전역 기준점으로 유지합니다.
 
-이 흐름은 명시적 DC 전원에서 **OP / DC-source transient**를 지원합니다. 새 입력 버튼은 정적 입력 변경이며 자동 PULSE/PWL 생성, 전파 지연·setup/hold 측정, 자동 진리표 판정은 이 기능의 범위가 아닙니다. 기존 디지털 전용 실험의 동적 엔진은 별도 흐름입니다. 수치 해석이 완료되어도 기능 명세의 합격 조건이 없으면 `analysis_result=unknown`입니다. DRC/LVS/PEX는 각각 실제 실행이 필요하며 이 조합 실습은 마스크를 생성하지 않습니다.
+이 흐름은 **OP / DC·PULSE·PWL transient**를 지원합니다. [동적 신호·지연 실습](logic-transient.md)에서 단일 입력 펄스·비반복 PWL과 실제 주기별 지연 기준을 설정할 수 있습니다. 정적 입력 버튼은 해당 소스를 DC로 바꿉니다. 전체 진리표·setup/hold·STA는 이 기능의 범위가 아닙니다. 기존 디지털 전용 실험은 별도 흐름입니다. 수치 해석이 완료되어도 기능 명세의 합격 조건이 없으면 `analysis_result=unknown`입니다. DRC/LVS/PEX는 각각 실제 실행이 필요하며 이 조합 실습은 마스크를 생성하지 않습니다.
 
 ngspice 또는 모델이 없으면 실행 불가 이유를 표시합니다. Source의 공개 SKY130 지원 모델만 사용하며 다른 공정이나 임의의 셀을 검증했다고 표시하지 않습니다. 상한은 셀당 256 소자, 해석 사본 4,096 primitives, 수치 trace 256 넷입니다. 더 큰 회로는 지원 한도 오류로 중단합니다.
 

@@ -2,7 +2,7 @@ import {useEffect,useState} from 'react';
 import type {Device} from '@mos/contracts';
 import {engineeringValue} from './schematic-drawing';
 type Props={device:Device;revision:number;disabled:boolean;placement?:boolean;onDraft?:(parameters:Device['parameters'],valid:boolean)=>void;onApply?:(parameters:Device['parameters'])=>Promise<boolean>};
-const fields=(d:Device)=>d.kind==='nmos'||d.kind==='pmos'?[['w_um','W (µm)','um'],['l_um','L (µm)','um']]:d.kind==='resistor'&&!d.model?[['value','저항 (Ω)','ohm']]:d.kind==='capacitor'&&!d.model?[['value','용량 (F)','F']]:d.kind==='voltage'?[['dc','전압 (V)','V']]:d.kind==='current'?[['dc','전류 (A)','A']]:[];
+const fields=(d:Device)=>d.kind==='nmos'||d.kind==='pmos'?[['w_um','W (µm)','um'],['l_um','L (µm)','um']]:d.kind==='resistor'&&!d.model?[['value','저항 (Ω)','ohm']]:d.kind==='capacitor'&&!d.model?[['value','용량 (F)','F']]:d.kind==='voltage'?[['dc',d.stimulus?'DC 바이어스 (V)':'전압 (V)','V']]:d.kind==='current'?[['dc',d.stimulus?'DC 바이어스 (A)':'전류 (A)','A']]:[];
 export default function SchematicQuickValues({device,revision,disabled,placement=false,onDraft,onApply}:Props){
  const spec=fields(device),initial=()=>Object.fromEntries(spec.map(([key])=>[key,String(device.parameters[key])]));
  const [draft,setDraft]=useState(initial),[dirty,setDirty]=useState(false),[savedRevision,setSavedRevision]=useState(revision),[error,setError]=useState('');

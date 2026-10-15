@@ -1,0 +1,2850 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "checked_at": "2026-10-15T02:03:33.110Z",
+  "purpose": "qa",
+  "not_student_submission": true,
+  "physical_signoff": false,
+  "actual_runs": [
+    {
+      "label": "nand-chain",
+      "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+      "revision": 3,
+      "run_id": "9ff6bc84093f4b189dcf0a243839a0e7",
+      "tool": "ngspice",
+      "execution_status": "completed",
+      "engine_analysis_result": "unknown",
+      "source_stimuli": [
+        {
+          "name": "VDD",
+          "kind": "voltage",
+          "pins": {
+            "+": "VPWR",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        },
+        {
+          "name": "VIN_A",
+          "kind": "voltage",
+          "pins": {
+            "+": "A",
+            "-": "0"
+          },
+          "dc": 0,
+          "stimulus": {
+            "kind": "pulse",
+            "low": 0,
+            "high": 1.8,
+            "delay_s": 2e-9,
+            "rise_s": 1e-10,
+            "fall_s": 1e-10,
+            "width_s": 4.9e-9,
+            "period_s": 1e-8
+          }
+        },
+        {
+          "name": "VIN_B",
+          "kind": "voltage",
+          "pins": {
+            "+": "B",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        }
+      ],
+      "samples": 8056,
+      "waveforms_sha256": "5277cd9425f60e0080632792a80dc472a586ba01bb99c8f42679a62ec0ffd5b5",
+      "timing": {
+        "schema_version": 1,
+        "method": "sampled-single-input-timing-v1",
+        "run_id": "9ff6bc84093f4b189dcf0a243839a0e7",
+        "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+        "revision": 3,
+        "current_revision": 3,
+        "recipe": {
+          "schema_version": 1,
+          "input": "A",
+          "output": "Y",
+          "polarity": "inverting",
+          "low_V": 0,
+          "high_V": 1.8,
+          "start_s": 0,
+          "end_s": 4e-8,
+          "settle_s": 1e-9,
+          "max_delay_s": 1e-9,
+          "max_rise_s": 1e-9,
+          "max_fall_s": 1e-9,
+          "minimum_cycles": 2
+        },
+        "status": "pass",
+        "reasons": [],
+        "rows": [
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 2.05e-9,
+            "window_s": [
+              2.01e-9,
+              7.0099999999999996e-9
+            ],
+            "target_s": 2.150240037543236e-9,
+            "delay_s": 1.0024003754323577e-10,
+            "delay_bracket_s": [
+              9.499999999999978e-11,
+              1.0500000000000036e-10
+            ],
+            "rise_s": null,
+            "fall_s": 3.660675556880957e-11,
+            "slew_bracket_s": [
+              3.499999999999998e-11,
+              4.5000000000000155e-11
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 7.0499999999999994e-9,
+            "window_s": [
+              7.0099999999999996e-9,
+              1.201e-8
+            ],
+            "target_s": 7.1942686533632545e-9,
+            "delay_s": 1.442686533632551e-10,
+            "delay_bracket_s": [
+              1.3999999999999993e-10,
+              1.499999999999997e-10
+            ],
+            "rise_s": 1.1428580757834953e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0999999999999983e-10,
+              1.200000000000004e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 1.205e-8,
+            "window_s": [
+              1.201e-8,
+              1.7009999999999998e-8
+            ],
+            "target_s": 1.2150240037269602e-8,
+            "delay_s": 1.0024003726960153e-10,
+            "delay_bracket_s": [
+              9.500000000000019e-11,
+              1.050000000000016e-10
+            ],
+            "rise_s": null,
+            "fall_s": 3.660675558568943e-11,
+            "slew_bracket_s": [
+              3.499999999999998e-11,
+              4.499999999999974e-11
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 1.705e-8,
+            "window_s": [
+              1.7009999999999998e-8,
+              2.201e-8
+            ],
+            "target_s": 1.7194268653363256e-8,
+            "delay_s": 1.442686533632551e-10,
+            "delay_bracket_s": [
+              1.3999999999999993e-10,
+              1.4999999999999803e-10
+            ],
+            "rise_s": 1.1428580757834622e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.09999999999999e-10,
+              1.200000000000004e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 2.205e-8,
+            "window_s": [
+              2.201e-8,
+              2.7009999999999998e-8
+            ],
+            "target_s": 2.2150240037269602e-8,
+            "delay_s": 1.0024003726960318e-10,
+            "delay_bracket_s": [
+              9.500000000000184e-11,
+              1.0499999999999995e-10
+            ],
+            "rise_s": null,
+            "fall_s": 3.6606755585687777e-11,
+            "slew_bracket_s": [
+              3.499999999999998e-11,
+              4.499999999999809e-11
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 2.705e-8,
+            "window_s": [
+              2.7009999999999998e-8,
+              3.201e-8
+            ],
+            "target_s": 2.7194268653363256e-8,
+            "delay_s": 1.442686533632551e-10,
+            "delay_bracket_s": [
+              1.3999999999999993e-10,
+              1.4999999999999803e-10
+            ],
+            "rise_s": 1.1428580757834622e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.09999999999999e-10,
+              1.200000000000004e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 3.2050000000000006e-8,
+            "window_s": [
+              3.201e-8,
+              3.701e-8
+            ],
+            "target_s": 3.21502400372696e-8,
+            "delay_s": 1.0024003726959325e-10,
+            "delay_bracket_s": [
+              9.499999999999523e-11,
+              1.0499999999999995e-10
+            ],
+            "rise_s": null,
+            "fall_s": 3.6606755585691085e-11,
+            "slew_bracket_s": [
+              3.499999999999998e-11,
+              4.499999999999809e-11
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 3.705e-8,
+            "window_s": [
+              3.701e-8,
+              4e-8
+            ],
+            "target_s": 3.719426865336325e-8,
+            "delay_s": 1.442686533632551e-10,
+            "delay_bracket_s": [
+              1.3999999999999993e-10,
+              1.4999999999999803e-10
+            ],
+            "rise_s": 1.1428580757834953e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.09999999999999e-10,
+              1.199999999999971e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          }
+        ],
+        "checks": [
+          {
+            "name": "주기/양방향 전이 범위",
+            "status": "pass",
+            "reason": "입력 상승 4, 하강 4 · 각 2개 이상 필요"
+          },
+          {
+            "name": "정착 후 논리 관계",
+            "status": "pass",
+            "reason": "관찰 가능한 정착 구간 8개 · 논리 불일치 0개"
+          },
+          {
+            "name": "주기별 지연·전이 시간",
+            "status": "pass",
+            "reason": "50% 전파 지연, 출력 10–90%/90–10%, 입력 전이 구간 안에서만 짝지음"
+          }
+        ],
+        "summary": {
+          "tpLH_s": 1.442686533632551e-10,
+          "tpHL_s": 1.0024003733800843e-10,
+          "rise_s": 1.1428580757834787e-10,
+          "fall_s": 3.6606755581469466e-11,
+          "input_rises": 4,
+          "input_falls": 4
+        },
+        "engine_result": "unknown",
+        "physical_signoff": false
+      }
+    },
+    {
+      "label": "intentional-1ps-limit",
+      "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+      "revision": 4,
+      "run_id": "89babaae33e546a58c23fdaf7d630ee1",
+      "tool": "ngspice",
+      "execution_status": "completed",
+      "engine_analysis_result": "unknown",
+      "source_stimuli": [
+        {
+          "name": "VDD",
+          "kind": "voltage",
+          "pins": {
+            "+": "VPWR",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        },
+        {
+          "name": "VIN_A",
+          "kind": "voltage",
+          "pins": {
+            "+": "A",
+            "-": "0"
+          },
+          "dc": 0,
+          "stimulus": {
+            "kind": "pulse",
+            "low": 0,
+            "high": 1.8,
+            "delay_s": 2e-9,
+            "rise_s": 1e-10,
+            "fall_s": 1e-10,
+            "width_s": 4.9e-9,
+            "period_s": 1e-8
+          }
+        },
+        {
+          "name": "VIN_B",
+          "kind": "voltage",
+          "pins": {
+            "+": "B",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        }
+      ],
+      "samples": 8056,
+      "waveforms_sha256": "5277cd9425f60e0080632792a80dc472a586ba01bb99c8f42679a62ec0ffd5b5",
+      "timing": {
+        "schema_version": 1,
+        "method": "sampled-single-input-timing-v1",
+        "run_id": "89babaae33e546a58c23fdaf7d630ee1",
+        "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+        "revision": 4,
+        "current_revision": 4,
+        "recipe": {
+          "schema_version": 1,
+          "input": "A",
+          "output": "Y",
+          "polarity": "inverting",
+          "low_V": 0,
+          "high_V": 1.8,
+          "start_s": 0,
+          "end_s": 4e-8,
+          "settle_s": 1e-9,
+          "max_delay_s": 1e-12,
+          "max_rise_s": 1e-9,
+          "max_fall_s": 1e-9,
+          "minimum_cycles": 2
+        },
+        "status": "fail",
+        "reasons": [
+          "50% 전파 지연, 출력 10–90%/90–10%, 입력 전이 구간 안에서만 짝지음"
+        ],
+        "rows": [
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 2.05e-9,
+            "window_s": [
+              2.01e-9,
+              7.0099999999999996e-9
+            ],
+            "target_s": 2.150240037543236e-9,
+            "delay_s": 1.0024003754323577e-10,
+            "delay_bracket_s": [
+              9.499999999999978e-11,
+              1.0500000000000036e-10
+            ],
+            "rise_s": null,
+            "fall_s": 3.660675556880957e-11,
+            "slew_bracket_s": [
+              3.499999999999998e-11,
+              4.5000000000000155e-11
+            ],
+            "status": "fail",
+            "reasons": [
+              "전파 지연이 한도를 초과했습니다."
+            ]
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 7.0499999999999994e-9,
+            "window_s": [
+              7.0099999999999996e-9,
+              1.201e-8
+            ],
+            "target_s": 7.1942686533632545e-9,
+            "delay_s": 1.442686533632551e-10,
+            "delay_bracket_s": [
+              1.3999999999999993e-10,
+              1.499999999999997e-10
+            ],
+            "rise_s": 1.1428580757834953e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0999999999999983e-10,
+              1.200000000000004e-10
+            ],
+            "status": "fail",
+            "reasons": [
+              "전파 지연이 한도를 초과했습니다."
+            ]
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 1.205e-8,
+            "window_s": [
+              1.201e-8,
+              1.7009999999999998e-8
+            ],
+            "target_s": 1.2150240037269602e-8,
+            "delay_s": 1.0024003726960153e-10,
+            "delay_bracket_s": [
+              9.500000000000019e-11,
+              1.050000000000016e-10
+            ],
+            "rise_s": null,
+            "fall_s": 3.660675558568943e-11,
+            "slew_bracket_s": [
+              3.499999999999998e-11,
+              4.499999999999974e-11
+            ],
+            "status": "fail",
+            "reasons": [
+              "전파 지연이 한도를 초과했습니다."
+            ]
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 1.705e-8,
+            "window_s": [
+              1.7009999999999998e-8,
+              2.201e-8
+            ],
+            "target_s": 1.7194268653363256e-8,
+            "delay_s": 1.442686533632551e-10,
+            "delay_bracket_s": [
+              1.3999999999999993e-10,
+              1.4999999999999803e-10
+            ],
+            "rise_s": 1.1428580757834622e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.09999999999999e-10,
+              1.200000000000004e-10
+            ],
+            "status": "fail",
+            "reasons": [
+              "전파 지연이 한도를 초과했습니다."
+            ]
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 2.205e-8,
+            "window_s": [
+              2.201e-8,
+              2.7009999999999998e-8
+            ],
+            "target_s": 2.2150240037269602e-8,
+            "delay_s": 1.0024003726960318e-10,
+            "delay_bracket_s": [
+              9.500000000000184e-11,
+              1.0499999999999995e-10
+            ],
+            "rise_s": null,
+            "fall_s": 3.6606755585687777e-11,
+            "slew_bracket_s": [
+              3.499999999999998e-11,
+              4.499999999999809e-11
+            ],
+            "status": "fail",
+            "reasons": [
+              "전파 지연이 한도를 초과했습니다."
+            ]
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 2.705e-8,
+            "window_s": [
+              2.7009999999999998e-8,
+              3.201e-8
+            ],
+            "target_s": 2.7194268653363256e-8,
+            "delay_s": 1.442686533632551e-10,
+            "delay_bracket_s": [
+              1.3999999999999993e-10,
+              1.4999999999999803e-10
+            ],
+            "rise_s": 1.1428580757834622e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.09999999999999e-10,
+              1.200000000000004e-10
+            ],
+            "status": "fail",
+            "reasons": [
+              "전파 지연이 한도를 초과했습니다."
+            ]
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 3.2050000000000006e-8,
+            "window_s": [
+              3.201e-8,
+              3.701e-8
+            ],
+            "target_s": 3.21502400372696e-8,
+            "delay_s": 1.0024003726959325e-10,
+            "delay_bracket_s": [
+              9.499999999999523e-11,
+              1.0499999999999995e-10
+            ],
+            "rise_s": null,
+            "fall_s": 3.6606755585691085e-11,
+            "slew_bracket_s": [
+              3.499999999999998e-11,
+              4.499999999999809e-11
+            ],
+            "status": "fail",
+            "reasons": [
+              "전파 지연이 한도를 초과했습니다."
+            ]
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 3.705e-8,
+            "window_s": [
+              3.701e-8,
+              4e-8
+            ],
+            "target_s": 3.719426865336325e-8,
+            "delay_s": 1.442686533632551e-10,
+            "delay_bracket_s": [
+              1.3999999999999993e-10,
+              1.4999999999999803e-10
+            ],
+            "rise_s": 1.1428580757834953e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.09999999999999e-10,
+              1.199999999999971e-10
+            ],
+            "status": "fail",
+            "reasons": [
+              "전파 지연이 한도를 초과했습니다."
+            ]
+          }
+        ],
+        "checks": [
+          {
+            "name": "주기/양방향 전이 범위",
+            "status": "pass",
+            "reason": "입력 상승 4, 하강 4 · 각 2개 이상 필요"
+          },
+          {
+            "name": "정착 후 논리 관계",
+            "status": "pass",
+            "reason": "관찰 가능한 정착 구간 8개 · 논리 불일치 0개"
+          },
+          {
+            "name": "주기별 지연·전이 시간",
+            "status": "fail",
+            "reason": "50% 전파 지연, 출력 10–90%/90–10%, 입력 전이 구간 안에서만 짝지음"
+          }
+        ],
+        "summary": {
+          "tpLH_s": 1.442686533632551e-10,
+          "tpHL_s": 1.0024003733800843e-10,
+          "rise_s": 1.1428580757834787e-10,
+          "fall_s": 3.6606755581469466e-11,
+          "input_rises": 4,
+          "input_falls": 4
+        },
+        "engine_result": "unknown",
+        "physical_signoff": false
+      }
+    },
+    {
+      "label": "50fF-load-1ns-rise-limit",
+      "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+      "revision": 6,
+      "run_id": "ce70f99dea344dccb64fe1a18aa8ee17",
+      "tool": "ngspice",
+      "execution_status": "completed",
+      "engine_analysis_result": "unknown",
+      "source_stimuli": [
+        {
+          "name": "VDD",
+          "kind": "voltage",
+          "pins": {
+            "+": "VPWR",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        },
+        {
+          "name": "VIN_A",
+          "kind": "voltage",
+          "pins": {
+            "+": "A",
+            "-": "0"
+          },
+          "dc": 0,
+          "stimulus": {
+            "kind": "pulse",
+            "low": 0,
+            "high": 1.8,
+            "delay_s": 2e-9,
+            "rise_s": 1e-10,
+            "fall_s": 1e-10,
+            "width_s": 4.9e-9,
+            "period_s": 1e-8
+          }
+        },
+        {
+          "name": "VIN_B",
+          "kind": "voltage",
+          "pins": {
+            "+": "B",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        }
+      ],
+      "samples": 8056,
+      "waveforms_sha256": "fe82f285867f01bb7bf2a6c8a244fef3b197b8226b7cbaf953ac72c5035c352e",
+      "timing": {
+        "schema_version": 1,
+        "method": "sampled-single-input-timing-v1",
+        "run_id": "ce70f99dea344dccb64fe1a18aa8ee17",
+        "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+        "revision": 6,
+        "current_revision": 6,
+        "recipe": {
+          "schema_version": 1,
+          "input": "A",
+          "output": "Y",
+          "polarity": "inverting",
+          "low_V": 0,
+          "high_V": 1.8,
+          "start_s": 0,
+          "end_s": 4e-8,
+          "settle_s": 1e-9,
+          "max_delay_s": 1e-9,
+          "max_rise_s": 1e-9,
+          "max_fall_s": 1e-9,
+          "minimum_cycles": 2
+        },
+        "status": "fail",
+        "reasons": [
+          "50% 전파 지연, 출력 10–90%/90–10%, 입력 전이 구간 안에서만 짝지음"
+        ],
+        "rows": [
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 2.05e-9,
+            "window_s": [
+              2.01e-9,
+              7.0099999999999996e-9
+            ],
+            "target_s": 2.2803574309174766e-9,
+            "delay_s": 2.3035743091747642e-10,
+            "delay_bracket_s": [
+              2.2499999999999995e-10,
+              2.350000000000001e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.645612155407742e-10,
+            "slew_bracket_s": [
+              2.5500000000000005e-10,
+              2.650000000000002e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 7.0499999999999994e-9,
+            "window_s": [
+              7.0099999999999996e-9,
+              1.201e-8
+            ],
+            "target_s": 7.642506583894306e-9,
+            "delay_s": 5.925065838943069e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.999999999999996e-10
+            ],
+            "rise_s": 1.0354583261465285e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0299999999999991e-9,
+              1.0399999999999997e-9
+            ],
+            "status": "fail",
+            "reasons": [
+              "출력 상승/하강 시간이 한도를 초과했습니다."
+            ]
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 1.205e-8,
+            "window_s": [
+              1.201e-8,
+              1.7009999999999998e-8
+            ],
+            "target_s": 1.2280357390727556e-8,
+            "delay_s": 2.3035739072755599e-10,
+            "delay_bracket_s": [
+              2.2500000000000036e-10,
+              2.350000000000001e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.645612173964654e-10,
+            "slew_bracket_s": [
+              2.5499999999999964e-10,
+              2.649999999999994e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 1.705e-8,
+            "window_s": [
+              1.7009999999999998e-8,
+              2.201e-8
+            ],
+            "target_s": 1.7642506583894307e-8,
+            "delay_s": 5.925065838943061e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.999999999999988e-10
+            ],
+            "rise_s": 1.0354583261465285e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.03e-9,
+              1.0400000000000014e-9
+            ],
+            "status": "fail",
+            "reasons": [
+              "출력 상승/하강 시간이 한도를 초과했습니다."
+            ]
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 2.205e-8,
+            "window_s": [
+              2.201e-8,
+              2.7009999999999998e-8
+            ],
+            "target_s": 2.2280357390727557e-8,
+            "delay_s": 2.3035739072755764e-10,
+            "delay_bracket_s": [
+              2.2500000000000036e-10,
+              2.3500000000000177e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.645612173964637e-10,
+            "slew_bracket_s": [
+              2.550000000000013e-10,
+              2.649999999999994e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 2.705e-8,
+            "window_s": [
+              2.7009999999999998e-8,
+              3.201e-8
+            ],
+            "target_s": 2.7642506583894307e-8,
+            "delay_s": 5.925065838943061e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.999999999999988e-10
+            ],
+            "rise_s": 1.0354583261465285e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.03e-9,
+              1.0400000000000014e-9
+            ],
+            "status": "fail",
+            "reasons": [
+              "출력 상승/하강 시간이 한도를 초과했습니다."
+            ]
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 3.2050000000000006e-8,
+            "window_s": [
+              3.201e-8,
+              3.701e-8
+            ],
+            "target_s": 3.228035739072756e-8,
+            "delay_s": 2.3035739072755102e-10,
+            "delay_bracket_s": [
+              2.2499999999999705e-10,
+              2.3499999999999516e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.645612173964571e-10,
+            "slew_bracket_s": [
+              2.54999999999998e-10,
+              2.649999999999961e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 3.705e-8,
+            "window_s": [
+              3.701e-8,
+              4e-8
+            ],
+            "target_s": 3.7642506583894304e-8,
+            "delay_s": 5.925065838943061e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.999999999999988e-10
+            ],
+            "rise_s": 1.0354583261465318e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0300000000000033e-9,
+              1.0400000000000014e-9
+            ],
+            "status": "fail",
+            "reasons": [
+              "출력 상승/하강 시간이 한도를 초과했습니다."
+            ]
+          }
+        ],
+        "checks": [
+          {
+            "name": "주기/양방향 전이 범위",
+            "status": "pass",
+            "reason": "입력 상승 4, 하강 4 · 각 2개 이상 필요"
+          },
+          {
+            "name": "정착 후 논리 관계",
+            "status": "pass",
+            "reason": "관찰 가능한 정착 구간 8개 · 논리 불일치 0개"
+          },
+          {
+            "name": "주기별 지연·전이 시간",
+            "status": "fail",
+            "reason": "50% 전파 지연, 출력 10–90%/90–10%, 입력 전이 구간 안에서만 짝지음"
+          }
+        ],
+        "summary": {
+          "tpLH_s": 5.925065838943063e-10,
+          "tpHL_s": 2.3035740077503527e-10,
+          "rise_s": 1.0354583261465293e-9,
+          "fall_s": 2.645612169325401e-10,
+          "input_rises": 4,
+          "input_falls": 4
+        },
+        "engine_result": "unknown",
+        "physical_signoff": false
+      }
+    },
+    {
+      "label": "50fF-explicit-1.5ns-rise-limit",
+      "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+      "revision": 7,
+      "run_id": "0a92f8d3508a445e9d3dc60b222885a1",
+      "tool": "ngspice",
+      "execution_status": "completed",
+      "engine_analysis_result": "unknown",
+      "source_stimuli": [
+        {
+          "name": "VDD",
+          "kind": "voltage",
+          "pins": {
+            "+": "VPWR",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        },
+        {
+          "name": "VIN_A",
+          "kind": "voltage",
+          "pins": {
+            "+": "A",
+            "-": "0"
+          },
+          "dc": 0,
+          "stimulus": {
+            "kind": "pulse",
+            "low": 0,
+            "high": 1.8,
+            "delay_s": 2e-9,
+            "rise_s": 1e-10,
+            "fall_s": 1e-10,
+            "width_s": 4.9e-9,
+            "period_s": 1e-8
+          }
+        },
+        {
+          "name": "VIN_B",
+          "kind": "voltage",
+          "pins": {
+            "+": "B",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        }
+      ],
+      "samples": 8056,
+      "waveforms_sha256": "fe82f285867f01bb7bf2a6c8a244fef3b197b8226b7cbaf953ac72c5035c352e",
+      "timing": {
+        "schema_version": 1,
+        "method": "sampled-single-input-timing-v1",
+        "run_id": "0a92f8d3508a445e9d3dc60b222885a1",
+        "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+        "revision": 7,
+        "current_revision": 7,
+        "recipe": {
+          "schema_version": 1,
+          "input": "A",
+          "output": "Y",
+          "polarity": "inverting",
+          "low_V": 0,
+          "high_V": 1.8,
+          "start_s": 0,
+          "end_s": 4e-8,
+          "settle_s": 1e-9,
+          "max_delay_s": 1e-9,
+          "max_rise_s": 1.5e-9,
+          "max_fall_s": 1e-9,
+          "minimum_cycles": 2
+        },
+        "status": "pass",
+        "reasons": [],
+        "rows": [
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 2.05e-9,
+            "window_s": [
+              2.01e-9,
+              7.0099999999999996e-9
+            ],
+            "target_s": 2.2803574309174766e-9,
+            "delay_s": 2.3035743091747642e-10,
+            "delay_bracket_s": [
+              2.2499999999999995e-10,
+              2.350000000000001e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.645612155407742e-10,
+            "slew_bracket_s": [
+              2.5500000000000005e-10,
+              2.650000000000002e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 7.0499999999999994e-9,
+            "window_s": [
+              7.0099999999999996e-9,
+              1.201e-8
+            ],
+            "target_s": 7.642506583894306e-9,
+            "delay_s": 5.925065838943069e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.999999999999996e-10
+            ],
+            "rise_s": 1.0354583261465285e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0299999999999991e-9,
+              1.0399999999999997e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 1.205e-8,
+            "window_s": [
+              1.201e-8,
+              1.7009999999999998e-8
+            ],
+            "target_s": 1.2280357390727556e-8,
+            "delay_s": 2.3035739072755599e-10,
+            "delay_bracket_s": [
+              2.2500000000000036e-10,
+              2.350000000000001e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.645612173964654e-10,
+            "slew_bracket_s": [
+              2.5499999999999964e-10,
+              2.649999999999994e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 1.705e-8,
+            "window_s": [
+              1.7009999999999998e-8,
+              2.201e-8
+            ],
+            "target_s": 1.7642506583894307e-8,
+            "delay_s": 5.925065838943061e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.999999999999988e-10
+            ],
+            "rise_s": 1.0354583261465285e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.03e-9,
+              1.0400000000000014e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 2.205e-8,
+            "window_s": [
+              2.201e-8,
+              2.7009999999999998e-8
+            ],
+            "target_s": 2.2280357390727557e-8,
+            "delay_s": 2.3035739072755764e-10,
+            "delay_bracket_s": [
+              2.2500000000000036e-10,
+              2.3500000000000177e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.645612173964637e-10,
+            "slew_bracket_s": [
+              2.550000000000013e-10,
+              2.649999999999994e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 2.705e-8,
+            "window_s": [
+              2.7009999999999998e-8,
+              3.201e-8
+            ],
+            "target_s": 2.7642506583894307e-8,
+            "delay_s": 5.925065838943061e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.999999999999988e-10
+            ],
+            "rise_s": 1.0354583261465285e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.03e-9,
+              1.0400000000000014e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 3.2050000000000006e-8,
+            "window_s": [
+              3.201e-8,
+              3.701e-8
+            ],
+            "target_s": 3.228035739072756e-8,
+            "delay_s": 2.3035739072755102e-10,
+            "delay_bracket_s": [
+              2.2499999999999705e-10,
+              2.3499999999999516e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.645612173964571e-10,
+            "slew_bracket_s": [
+              2.54999999999998e-10,
+              2.649999999999961e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 3.705e-8,
+            "window_s": [
+              3.701e-8,
+              4e-8
+            ],
+            "target_s": 3.7642506583894304e-8,
+            "delay_s": 5.925065838943061e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.999999999999988e-10
+            ],
+            "rise_s": 1.0354583261465318e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0300000000000033e-9,
+              1.0400000000000014e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          }
+        ],
+        "checks": [
+          {
+            "name": "주기/양방향 전이 범위",
+            "status": "pass",
+            "reason": "입력 상승 4, 하강 4 · 각 2개 이상 필요"
+          },
+          {
+            "name": "정착 후 논리 관계",
+            "status": "pass",
+            "reason": "관찰 가능한 정착 구간 8개 · 논리 불일치 0개"
+          },
+          {
+            "name": "주기별 지연·전이 시간",
+            "status": "pass",
+            "reason": "50% 전파 지연, 출력 10–90%/90–10%, 입력 전이 구간 안에서만 짝지음"
+          }
+        ],
+        "summary": {
+          "tpLH_s": 5.925065838943063e-10,
+          "tpHL_s": 2.3035740077503527e-10,
+          "rise_s": 1.0354583261465293e-9,
+          "fall_s": 2.645612169325401e-10,
+          "input_rises": 4,
+          "input_falls": 4
+        },
+        "engine_result": "unknown",
+        "physical_signoff": false
+      }
+    },
+    {
+      "label": "50fF-half-maxstep",
+      "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+      "revision": 8,
+      "run_id": "e827fbeb2aa2471a87cd69ee66154fce",
+      "tool": "ngspice",
+      "execution_status": "completed",
+      "engine_analysis_result": "unknown",
+      "source_stimuli": [
+        {
+          "name": "VDD",
+          "kind": "voltage",
+          "pins": {
+            "+": "VPWR",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        },
+        {
+          "name": "VIN_A",
+          "kind": "voltage",
+          "pins": {
+            "+": "A",
+            "-": "0"
+          },
+          "dc": 0,
+          "stimulus": {
+            "kind": "pulse",
+            "low": 0,
+            "high": 1.8,
+            "delay_s": 2e-9,
+            "rise_s": 1e-10,
+            "fall_s": 1e-10,
+            "width_s": 4.9e-9,
+            "period_s": 1e-8
+          }
+        },
+        {
+          "name": "VIN_B",
+          "kind": "voltage",
+          "pins": {
+            "+": "B",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        }
+      ],
+      "samples": 16056,
+      "waveforms_sha256": "dc952900df6b5d11842defc3dca4057d5ffd2a8cc652bcdc566e0a83805947de",
+      "timing": {
+        "schema_version": 1,
+        "method": "sampled-single-input-timing-v1",
+        "run_id": "e827fbeb2aa2471a87cd69ee66154fce",
+        "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+        "revision": 8,
+        "current_revision": 8,
+        "recipe": {
+          "schema_version": 1,
+          "input": "A",
+          "output": "Y",
+          "polarity": "inverting",
+          "low_V": 0,
+          "high_V": 1.8,
+          "start_s": 0,
+          "end_s": 4e-8,
+          "settle_s": 1e-9,
+          "max_delay_s": 1e-9,
+          "max_rise_s": 1.5e-9,
+          "max_fall_s": 1e-9,
+          "minimum_cycles": 2
+        },
+        "status": "pass",
+        "reasons": [],
+        "rows": [
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 2.05e-9,
+            "window_s": [
+              2.0100000000000003e-9,
+              7.0099999999999996e-9
+            ],
+            "target_s": 2.280333671685616e-9,
+            "delay_s": 2.303336716856158e-10,
+            "delay_bracket_s": [
+              2.2749999999999989e-10,
+              2.3250000000000018e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.645657392285632e-10,
+            "slew_bracket_s": [
+              2.6249999999999987e-10,
+              2.6749999999999975e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 7.0499999999999994e-9,
+            "window_s": [
+              7.0099999999999996e-9,
+              1.201e-8
+            ],
+            "target_s": 7.642439277885607e-9,
+            "delay_s": 5.924392778856074e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.950000000000005e-10
+            ],
+            "rise_s": 1.035452079159747e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0324999999999995e-9,
+              1.0375000000000002e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 1.205e-8,
+            "window_s": [
+              1.201e-8,
+              1.7009999999999998e-8
+            ],
+            "target_s": 1.2280333633212716e-8,
+            "delay_s": 2.3033363321271595e-10,
+            "delay_bracket_s": [
+              2.2749999999999989e-10,
+              2.3249999999999894e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.6456574169103603e-10,
+            "slew_bracket_s": [
+              2.6249999999999987e-10,
+              2.674999999999989e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 1.7049999999999997e-8,
+            "window_s": [
+              1.7009999999999998e-8,
+              2.201e-8
+            ],
+            "target_s": 1.7642439277885607e-8,
+            "delay_s": 5.924392778856099e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.949999999999997e-10
+            ],
+            "rise_s": 1.0354520791597461e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0324999999999995e-9,
+              1.0374999999999985e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 2.2050000000000002e-8,
+            "window_s": [
+              2.201e-8,
+              2.7009999999999998e-8
+            ],
+            "target_s": 2.2280333633212717e-8,
+            "delay_s": 2.303336332127143e-10,
+            "delay_bracket_s": [
+              2.2749999999999989e-10,
+              2.3249999999999894e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.6456574169103934e-10,
+            "slew_bracket_s": [
+              2.6249999999999987e-10,
+              2.6750000000000223e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 2.7049999999999997e-8,
+            "window_s": [
+              2.7009999999999998e-8,
+              3.201e-8
+            ],
+            "target_s": 2.7642439277885607e-8,
+            "delay_s": 5.924392778856099e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.949999999999997e-10
+            ],
+            "rise_s": 1.0354520791597461e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0324999999999995e-9,
+              1.0374999999999985e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 3.205e-8,
+            "window_s": [
+              3.201e-8,
+              3.701e-8
+            ],
+            "target_s": 3.228033363321272e-8,
+            "delay_s": 2.303336332127209e-10,
+            "delay_bracket_s": [
+              2.2749999999999989e-10,
+              2.3250000000000556e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.645657416910327e-10,
+            "slew_bracket_s": [
+              2.6249999999999987e-10,
+              2.674999999999989e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 3.705e-8,
+            "window_s": [
+              3.701e-8,
+              4e-8
+            ],
+            "target_s": 3.764243927788561e-8,
+            "delay_s": 5.924392778856099e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.949999999999997e-10
+            ],
+            "rise_s": 1.0354520791597495e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.032500000000006e-9,
+              1.0374999999999985e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          }
+        ],
+        "checks": [
+          {
+            "name": "주기/양방향 전이 범위",
+            "status": "pass",
+            "reason": "입력 상승 4, 하강 4 · 각 2개 이상 필요"
+          },
+          {
+            "name": "정착 후 논리 관계",
+            "status": "pass",
+            "reason": "관찰 가능한 정착 구간 8개 · 논리 불일치 0개"
+          },
+          {
+            "name": "주기별 지연·전이 시간",
+            "status": "pass",
+            "reason": "50% 전파 지연, 출력 10–90%/90–10%, 입력 전이 구간 안에서만 짝지음"
+          }
+        ],
+        "summary": {
+          "tpLH_s": 5.924392778856093e-10,
+          "tpHL_s": 2.3033364283094174e-10,
+          "rise_s": 1.0354520791597472e-9,
+          "fall_s": 2.645657410754178e-10,
+          "input_rises": 4,
+          "input_falls": 4
+        },
+        "engine_result": "unknown",
+        "physical_signoff": false
+      }
+    },
+    {
+      "label": "nonrepeating-PWL",
+      "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+      "revision": 9,
+      "run_id": "9102f3d1fb934e3e80697e7a5c035caf",
+      "tool": "ngspice",
+      "execution_status": "completed",
+      "engine_analysis_result": "unknown",
+      "source_stimuli": [
+        {
+          "name": "VDD",
+          "kind": "voltage",
+          "pins": {
+            "+": "VPWR",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        },
+        {
+          "name": "VIN_A",
+          "kind": "voltage",
+          "pins": {
+            "+": "A",
+            "-": "0"
+          },
+          "dc": 0,
+          "stimulus": {
+            "kind": "pwl",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                2e-9,
+                0
+              ],
+              [
+                2.1e-9,
+                1.8
+              ],
+              [
+                7e-9,
+                1.8
+              ],
+              [
+                7.1e-9,
+                0
+              ],
+              [
+                1.2e-8,
+                0
+              ],
+              [
+                1.21e-8,
+                1.8
+              ],
+              [
+                1.7e-8,
+                1.8
+              ],
+              [
+                1.71e-8,
+                0
+              ],
+              [
+                3e-8,
+                0
+              ]
+            ]
+          }
+        },
+        {
+          "name": "VIN_B",
+          "kind": "voltage",
+          "pins": {
+            "+": "B",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        }
+      ],
+      "samples": 16035,
+      "waveforms_sha256": "29f4ed3cdae679f2b0720a0bb17fd5be50bd69fc3545824bc49abcc5f8e9321c",
+      "timing": {
+        "schema_version": 1,
+        "method": "sampled-single-input-timing-v1",
+        "run_id": "9102f3d1fb934e3e80697e7a5c035caf",
+        "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+        "revision": 9,
+        "current_revision": 9,
+        "recipe": {
+          "schema_version": 1,
+          "input": "A",
+          "output": "Y",
+          "polarity": "inverting",
+          "low_V": 0,
+          "high_V": 1.8,
+          "start_s": 0,
+          "end_s": 4e-8,
+          "settle_s": 1e-9,
+          "max_delay_s": 1e-9,
+          "max_rise_s": 1.5e-9,
+          "max_fall_s": 1e-9,
+          "minimum_cycles": 2
+        },
+        "status": "pass",
+        "reasons": [],
+        "rows": [
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 2.05e-9,
+            "window_s": [
+              2.0100000000000003e-9,
+              7.0099999999999996e-9
+            ],
+            "target_s": 2.280333671685616e-9,
+            "delay_s": 2.303336716856158e-10,
+            "delay_bracket_s": [
+              2.2749999999999989e-10,
+              2.3250000000000018e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.645657392285632e-10,
+            "slew_bracket_s": [
+              2.6249999999999987e-10,
+              2.6749999999999975e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 7.0499999999999994e-9,
+            "window_s": [
+              7.0099999999999996e-9,
+              1.201e-8
+            ],
+            "target_s": 7.642439277885607e-9,
+            "delay_s": 5.924392778856074e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.950000000000005e-10
+            ],
+            "rise_s": 1.035452079159747e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0324999999999995e-9,
+              1.0375000000000002e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 1.205e-8,
+            "window_s": [
+              1.201e-8,
+              1.7009999999999998e-8
+            ],
+            "target_s": 1.2280333633212716e-8,
+            "delay_s": 2.3033363321271595e-10,
+            "delay_bracket_s": [
+              2.2749999999999989e-10,
+              2.3249999999999894e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.6456574169103603e-10,
+            "slew_bracket_s": [
+              2.6249999999999987e-10,
+              2.674999999999989e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 1.7049999999999997e-8,
+            "window_s": [
+              1.7009999999999998e-8,
+              4e-8
+            ],
+            "target_s": 1.7642439277885607e-8,
+            "delay_s": 5.924392778856099e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.949999999999997e-10
+            ],
+            "rise_s": 1.0354520791597461e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0324999999999995e-9,
+              1.0374999999999985e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          }
+        ],
+        "checks": [
+          {
+            "name": "주기/양방향 전이 범위",
+            "status": "pass",
+            "reason": "입력 상승 2, 하강 2 · 각 2개 이상 필요"
+          },
+          {
+            "name": "정착 후 논리 관계",
+            "status": "pass",
+            "reason": "관찰 가능한 정착 구간 4개 · 논리 불일치 0개"
+          },
+          {
+            "name": "주기별 지연·전이 시간",
+            "status": "pass",
+            "reason": "50% 전파 지연, 출력 10–90%/90–10%, 입력 전이 구간 안에서만 짝지음"
+          }
+        ],
+        "summary": {
+          "tpLH_s": 5.924392778856087e-10,
+          "tpHL_s": 2.3033365244916588e-10,
+          "rise_s": 1.0354520791597466e-9,
+          "fall_s": 2.645657404597996e-10,
+          "input_rises": 2,
+          "input_falls": 2
+        },
+        "engine_result": "unknown",
+        "physical_signoff": false
+      }
+    },
+    {
+      "label": "PWL-insufficient-cycle-coverage",
+      "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+      "revision": 10,
+      "run_id": "23f85635c62e4fabbdee155c47a5cf28",
+      "tool": "ngspice",
+      "execution_status": "completed",
+      "engine_analysis_result": "unknown",
+      "source_stimuli": [
+        {
+          "name": "VDD",
+          "kind": "voltage",
+          "pins": {
+            "+": "VPWR",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        },
+        {
+          "name": "VIN_A",
+          "kind": "voltage",
+          "pins": {
+            "+": "A",
+            "-": "0"
+          },
+          "dc": 0,
+          "stimulus": {
+            "kind": "pwl",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                2e-9,
+                0
+              ],
+              [
+                2.1e-9,
+                1.8
+              ],
+              [
+                7e-9,
+                1.8
+              ],
+              [
+                7.1e-9,
+                0
+              ],
+              [
+                1.2e-8,
+                0
+              ],
+              [
+                1.21e-8,
+                1.8
+              ],
+              [
+                1.7e-8,
+                1.8
+              ],
+              [
+                1.71e-8,
+                0
+              ],
+              [
+                3e-8,
+                0
+              ]
+            ]
+          }
+        },
+        {
+          "name": "VIN_B",
+          "kind": "voltage",
+          "pins": {
+            "+": "B",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        }
+      ],
+      "samples": 16035,
+      "waveforms_sha256": "29f4ed3cdae679f2b0720a0bb17fd5be50bd69fc3545824bc49abcc5f8e9321c",
+      "timing": {
+        "schema_version": 1,
+        "method": "sampled-single-input-timing-v1",
+        "run_id": "23f85635c62e4fabbdee155c47a5cf28",
+        "project_id": "3685d6eb78504af68ac0c053c37fea2c",
+        "revision": 10,
+        "current_revision": 10,
+        "recipe": {
+          "schema_version": 1,
+          "input": "A",
+          "output": "Y",
+          "polarity": "inverting",
+          "low_V": 0,
+          "high_V": 1.8,
+          "start_s": 0,
+          "end_s": 4e-8,
+          "settle_s": 1e-9,
+          "max_delay_s": 1e-9,
+          "max_rise_s": 1.5e-9,
+          "max_fall_s": 1e-9,
+          "minimum_cycles": 3
+        },
+        "status": "unavailable",
+        "reasons": [
+          "입력 상승 2, 하강 2 · 각 3개 이상 필요"
+        ],
+        "rows": [
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 2.05e-9,
+            "window_s": [
+              2.0100000000000003e-9,
+              7.0099999999999996e-9
+            ],
+            "target_s": 2.280333671685616e-9,
+            "delay_s": 2.303336716856158e-10,
+            "delay_bracket_s": [
+              2.2749999999999989e-10,
+              2.3250000000000018e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.645657392285632e-10,
+            "slew_bracket_s": [
+              2.6249999999999987e-10,
+              2.6749999999999975e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 7.0499999999999994e-9,
+            "window_s": [
+              7.0099999999999996e-9,
+              1.201e-8
+            ],
+            "target_s": 7.642439277885607e-9,
+            "delay_s": 5.924392778856074e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.950000000000005e-10
+            ],
+            "rise_s": 1.035452079159747e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0324999999999995e-9,
+              1.0375000000000002e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "falling",
+            "trigger_s": 1.205e-8,
+            "window_s": [
+              1.201e-8,
+              1.7009999999999998e-8
+            ],
+            "target_s": 1.2280333633212716e-8,
+            "delay_s": 2.3033363321271595e-10,
+            "delay_bracket_s": [
+              2.2749999999999989e-10,
+              2.3249999999999894e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.6456574169103603e-10,
+            "slew_bracket_s": [
+              2.6249999999999987e-10,
+              2.674999999999989e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "rising",
+            "trigger_s": 1.7049999999999997e-8,
+            "window_s": [
+              1.7009999999999998e-8,
+              4e-8
+            ],
+            "target_s": 1.7642439277885607e-8,
+            "delay_s": 5.924392778856099e-10,
+            "delay_bracket_s": [
+              5.900000000000007e-10,
+              5.949999999999997e-10
+            ],
+            "rise_s": 1.0354520791597461e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.0324999999999995e-9,
+              1.0374999999999985e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          }
+        ],
+        "checks": [
+          {
+            "name": "주기/양방향 전이 범위",
+            "status": "unavailable",
+            "reason": "입력 상승 2, 하강 2 · 각 3개 이상 필요"
+          },
+          {
+            "name": "정착 후 논리 관계",
+            "status": "pass",
+            "reason": "관찰 가능한 정착 구간 4개 · 논리 불일치 0개"
+          },
+          {
+            "name": "주기별 지연·전이 시간",
+            "status": "pass",
+            "reason": "50% 전파 지연, 출력 10–90%/90–10%, 입력 전이 구간 안에서만 짝지음"
+          }
+        ],
+        "summary": {
+          "tpLH_s": 5.924392778856087e-10,
+          "tpHL_s": 2.3033365244916588e-10,
+          "rise_s": 1.0354520791597466e-9,
+          "fall_s": 2.645657404597996e-10,
+          "input_rises": 2,
+          "input_falls": 2
+        },
+        "engine_result": "unknown",
+        "physical_signoff": false
+      }
+    },
+    {
+      "label": "half-adder",
+      "project_id": "d5c2828c53f84c519461146255123531",
+      "revision": 3,
+      "run_id": "cc10ea0363bf412c836be90b3d5f5835",
+      "tool": "ngspice",
+      "execution_status": "completed",
+      "engine_analysis_result": "unknown",
+      "source_stimuli": [
+        {
+          "name": "VDD",
+          "kind": "voltage",
+          "pins": {
+            "+": "VPWR",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        },
+        {
+          "name": "VIN_A",
+          "kind": "voltage",
+          "pins": {
+            "+": "A",
+            "-": "0"
+          },
+          "dc": 0,
+          "stimulus": {
+            "kind": "pulse",
+            "low": 0,
+            "high": 1.8,
+            "delay_s": 2e-9,
+            "rise_s": 1e-10,
+            "fall_s": 1e-10,
+            "width_s": 4.9e-9,
+            "period_s": 1e-8
+          }
+        },
+        {
+          "name": "VIN_B",
+          "kind": "voltage",
+          "pins": {
+            "+": "B",
+            "-": "0"
+          },
+          "dc": 0,
+          "stimulus": null
+        }
+      ],
+      "samples": 8056,
+      "waveforms_sha256": "842f6ea7c7a12445aa973128d697f611fc36aa2ccfb52424494a30c7143423ee",
+      "timing": {
+        "schema_version": 1,
+        "method": "sampled-single-input-timing-v1",
+        "run_id": "cc10ea0363bf412c836be90b3d5f5835",
+        "project_id": "d5c2828c53f84c519461146255123531",
+        "revision": 3,
+        "current_revision": 3,
+        "recipe": {
+          "schema_version": 1,
+          "input": "A",
+          "output": "SUM",
+          "polarity": "same",
+          "low_V": 0,
+          "high_V": 1.8,
+          "start_s": 0,
+          "end_s": 4e-8,
+          "settle_s": 1e-9,
+          "max_delay_s": 1e-9,
+          "max_rise_s": 1e-9,
+          "max_fall_s": 1e-9,
+          "minimum_cycles": 2
+        },
+        "status": "pass",
+        "reasons": [],
+        "rows": [
+          {
+            "input_edge": "rising",
+            "output_edge": "rising",
+            "trigger_s": 2.05e-9,
+            "window_s": [
+              2.01e-9,
+              7.0099999999999996e-9
+            ],
+            "target_s": 2.156444310837723e-9,
+            "delay_s": 1.0644431083772289e-10,
+            "delay_bracket_s": [
+              1.0000000000000007e-10,
+              1.1000000000000024e-10
+            ],
+            "rise_s": 1.1838412406753939e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.1500000000000012e-10,
+              1.2499999999999988e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "falling",
+            "trigger_s": 7.0499999999999994e-9,
+            "window_s": [
+              7.0099999999999996e-9,
+              1.201e-8
+            ],
+            "target_s": 7.1487006167277085e-9,
+            "delay_s": 9.870061672770902e-11,
+            "delay_bracket_s": [
+              9.500000000000019e-11,
+              1.0499999999999995e-10
+            ],
+            "rise_s": null,
+            "fall_s": 5.5707346179726715e-11,
+            "slew_bracket_s": [
+              5.000000000000045e-11,
+              6.00000000000002e-11
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "rising",
+            "trigger_s": 1.205e-8,
+            "window_s": [
+              1.201e-8,
+              1.7009999999999998e-8
+            ],
+            "target_s": 1.2156393906944341e-8,
+            "delay_s": 1.0639390694434098e-10,
+            "delay_bracket_s": [
+              1.000000000000009e-10,
+              1.1000000000000065e-10
+            ],
+            "rise_s": 1.183571720848558e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.149999999999997e-10,
+              1.2500000000000112e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "falling",
+            "trigger_s": 1.705e-8,
+            "window_s": [
+              1.7009999999999998e-8,
+              2.201e-8
+            ],
+            "target_s": 1.7148700640860324e-8,
+            "delay_s": 9.870064086032371e-11,
+            "delay_bracket_s": [
+              9.499999999999853e-11,
+              1.0499999999999995e-10
+            ],
+            "rise_s": null,
+            "fall_s": 5.570734761222983e-11,
+            "slew_bracket_s": [
+              5.000000000000045e-11,
+              5.999999999999855e-11
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "rising",
+            "trigger_s": 2.205e-8,
+            "window_s": [
+              2.201e-8,
+              2.7009999999999998e-8
+            ],
+            "target_s": 2.215639409154302e-8,
+            "delay_s": 1.0639409154302055e-10,
+            "delay_bracket_s": [
+              1.000000000000009e-10,
+              1.09999999999999e-10
+            ],
+            "rise_s": 1.1835729650031252e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.1499999999999805e-10,
+              1.2499999999999946e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "falling",
+            "trigger_s": 2.705e-8,
+            "window_s": [
+              2.7009999999999998e-8,
+              3.201e-8
+            ],
+            "target_s": 2.7148700652544982e-8,
+            "delay_s": 9.870065254498109e-11,
+            "delay_bracket_s": [
+              9.499999999999853e-11,
+              1.0499999999999995e-10
+            ],
+            "rise_s": null,
+            "fall_s": 5.570734832200704e-11,
+            "slew_bracket_s": [
+              5.000000000000045e-11,
+              5.999999999999855e-11
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "rising",
+            "trigger_s": 3.2050000000000006e-8,
+            "window_s": [
+              3.201e-8,
+              3.701e-8
+            ],
+            "target_s": 3.215639418058565e-8,
+            "delay_s": 1.0639418058564521e-10,
+            "delay_bracket_s": [
+              1.000000000000009e-10,
+              1.09999999999999e-10
+            ],
+            "rise_s": 1.1835735711120098e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              1.1500000000000467e-10,
+              1.2500000000000277e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "falling",
+            "trigger_s": 3.705e-8,
+            "window_s": [
+              3.701e-8,
+              4e-8
+            ],
+            "target_s": 3.714870065994574e-8,
+            "delay_s": 9.870065994573956e-11,
+            "delay_bracket_s": [
+              9.500000000000184e-11,
+              1.0499999999999995e-10
+            ],
+            "rise_s": null,
+            "fall_s": 5.57073488480906e-11,
+            "slew_bracket_s": [
+              5.0000000000003756e-11,
+              6.000000000000186e-11
+            ],
+            "status": "pass",
+            "reasons": []
+          }
+        ],
+        "checks": [
+          {
+            "name": "주기/양방향 전이 범위",
+            "status": "pass",
+            "reason": "입력 상승 4, 하강 4 · 각 2개 이상 필요"
+          },
+          {
+            "name": "정착 후 논리 관계",
+            "status": "pass",
+            "reason": "관찰 가능한 정착 구간 8개 · 논리 불일치 0개"
+          },
+          {
+            "name": "주기별 지연·전이 시간",
+            "status": "pass",
+            "reason": "50% 전파 지연, 출력 10–90%/90–10%, 입력 전이 구간 안에서만 짝지음"
+          }
+        ],
+        "summary": {
+          "tpLH_s": 1.064066224776824e-10,
+          "tpHL_s": 9.870064251968834e-11,
+          "rise_s": 1.1836398744097717e-10,
+          "fall_s": 5.5707347740513547e-11,
+          "input_rises": 4,
+          "input_falls": 4
+        },
+        "engine_result": "unknown",
+        "physical_signoff": false
+      }
+    },
+    {
+      "label": "mux-chain",
+      "project_id": "911c1f3518d2434398ad47e4e332b7ff",
+      "revision": 3,
+      "run_id": "8460a271423b42f7ba08b7fcb1bf8add",
+      "tool": "ngspice",
+      "execution_status": "completed",
+      "engine_analysis_result": "unknown",
+      "source_stimuli": [
+        {
+          "name": "VDD",
+          "kind": "voltage",
+          "pins": {
+            "+": "VPWR",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        },
+        {
+          "name": "VIN_A",
+          "kind": "voltage",
+          "pins": {
+            "+": "A",
+            "-": "0"
+          },
+          "dc": 0,
+          "stimulus": {
+            "kind": "pulse",
+            "low": 0,
+            "high": 1.8,
+            "delay_s": 2e-9,
+            "rise_s": 1e-10,
+            "fall_s": 1e-10,
+            "width_s": 4.9e-9,
+            "period_s": 1e-8
+          }
+        },
+        {
+          "name": "VIN_B",
+          "kind": "voltage",
+          "pins": {
+            "+": "B",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        },
+        {
+          "name": "VIN_SEL",
+          "kind": "voltage",
+          "pins": {
+            "+": "SEL",
+            "-": "0"
+          },
+          "dc": 1.8,
+          "stimulus": null
+        }
+      ],
+      "samples": 8056,
+      "waveforms_sha256": "21f73ce617745903255742341d09b7eea3e18fc85798b40191711164f06750d9",
+      "timing": {
+        "schema_version": 1,
+        "method": "sampled-single-input-timing-v1",
+        "run_id": "8460a271423b42f7ba08b7fcb1bf8add",
+        "project_id": "911c1f3518d2434398ad47e4e332b7ff",
+        "revision": 3,
+        "current_revision": 3,
+        "recipe": {
+          "schema_version": 1,
+          "input": "A",
+          "output": "Y",
+          "polarity": "same",
+          "low_V": 0,
+          "high_V": 1.8,
+          "start_s": 0,
+          "end_s": 4e-8,
+          "settle_s": 1e-9,
+          "max_delay_s": 1e-9,
+          "max_rise_s": 1e-9,
+          "max_fall_s": 1e-9,
+          "minimum_cycles": 2
+        },
+        "status": "pass",
+        "reasons": [],
+        "rows": [
+          {
+            "input_edge": "rising",
+            "output_edge": "rising",
+            "trigger_s": 2.05e-9,
+            "window_s": [
+              2.01e-9,
+              7.0099999999999996e-9
+            ],
+            "target_s": 2.1975371216223082e-9,
+            "delay_s": 1.4753712162230806e-10,
+            "delay_bracket_s": [
+              1.449999999999998e-10,
+              1.550000000000004e-10
+            ],
+            "rise_s": 2.4438253565823245e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              2.4e-10,
+              2.5000000000000017e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "falling",
+            "trigger_s": 7.0499999999999994e-9,
+            "window_s": [
+              7.0099999999999996e-9,
+              1.201e-8
+            ],
+            "target_s": 7.1569578841384054e-9,
+            "delay_s": 1.0695788413840598e-10,
+            "delay_bracket_s": [
+              1.0000000000000007e-10,
+              1.0999999999999983e-10
+            ],
+            "rise_s": null,
+            "fall_s": 5.8052855746000095e-11,
+            "slew_bracket_s": [
+              5.49999999999995e-11,
+              6.500000000000009e-11
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "rising",
+            "trigger_s": 1.205e-8,
+            "window_s": [
+              1.201e-8,
+              1.7009999999999998e-8
+            ],
+            "target_s": 1.2197537121460423e-8,
+            "delay_s": 1.475371214604222e-10,
+            "delay_bracket_s": [
+              1.4500000000000064e-10,
+              1.550000000000004e-10
+            ],
+            "rise_s": 2.44382535827242e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              2.3999999999999917e-10,
+              2.500000000000006e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "falling",
+            "trigger_s": 1.705e-8,
+            "window_s": [
+              1.7009999999999998e-8,
+              2.201e-8
+            ],
+            "target_s": 1.715695788410795e-8,
+            "delay_s": 1.0695788410794837e-10,
+            "delay_bracket_s": [
+              1.000000000000009e-10,
+              1.09999999999999e-10
+            ],
+            "rise_s": null,
+            "fall_s": 5.805285574600092e-11,
+            "slew_bracket_s": [
+              5.49999999999995e-11,
+              6.500000000000091e-11
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "rising",
+            "trigger_s": 2.205e-8,
+            "window_s": [
+              2.201e-8,
+              2.7009999999999998e-8
+            ],
+            "target_s": 2.219753712146042e-8,
+            "delay_s": 1.475371214604222e-10,
+            "delay_bracket_s": [
+              1.450000000000023e-10,
+              1.550000000000004e-10
+            ],
+            "rise_s": 2.4438253582724364e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              2.400000000000008e-10,
+              2.4999999999999893e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "falling",
+            "trigger_s": 2.705e-8,
+            "window_s": [
+              2.7009999999999998e-8,
+              3.201e-8
+            ],
+            "target_s": 2.715695788410795e-8,
+            "delay_s": 1.0695788410794837e-10,
+            "delay_bracket_s": [
+              1.000000000000009e-10,
+              1.09999999999999e-10
+            ],
+            "rise_s": null,
+            "fall_s": 5.805285574600092e-11,
+            "slew_bracket_s": [
+              5.49999999999995e-11,
+              6.500000000000091e-11
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "rising",
+            "trigger_s": 3.2050000000000006e-8,
+            "window_s": [
+              3.201e-8,
+              3.701e-8
+            ],
+            "target_s": 3.2197537121460425e-8,
+            "delay_s": 1.475371214604189e-10,
+            "delay_bracket_s": [
+              1.4499999999999898e-10,
+              1.5499999999999709e-10
+            ],
+            "rise_s": 2.4438253582724695e-10,
+            "fall_s": null,
+            "slew_bracket_s": [
+              2.399999999999942e-10,
+              2.5000000000000555e-10
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "falling",
+            "trigger_s": 3.705e-8,
+            "window_s": [
+              3.701e-8,
+              4e-8
+            ],
+            "target_s": 3.7156957884107946e-8,
+            "delay_s": 1.0695788410794837e-10,
+            "delay_bracket_s": [
+              1.000000000000009e-10,
+              1.09999999999999e-10
+            ],
+            "rise_s": null,
+            "fall_s": 5.805285574600092e-11,
+            "slew_bracket_s": [
+              5.500000000000281e-11,
+              6.500000000000091e-11
+            ],
+            "status": "pass",
+            "reasons": []
+          }
+        ],
+        "checks": [
+          {
+            "name": "주기/양방향 전이 범위",
+            "status": "pass",
+            "reason": "입력 상승 4, 하강 4 · 각 2개 이상 필요"
+          },
+          {
+            "name": "정착 후 논리 관계",
+            "status": "pass",
+            "reason": "관찰 가능한 정착 구간 8개 · 논리 불일치 0개"
+          },
+          {
+            "name": "주기별 지연·전이 시간",
+            "status": "pass",
+            "reason": "50% 전파 지연, 출력 10–90%/90–10%, 입력 전이 구간 안에서만 짝지음"
+          }
+        ],
+        "summary": {
+          "tpLH_s": 1.4753712150089284e-10,
+          "tpHL_s": 1.0695788411556277e-10,
+          "rise_s": 2.4438253578499126e-10,
+          "fall_s": 5.8052855746000716e-11,
+          "input_rises": 4,
+          "input_falls": 4
+        },
+        "engine_result": "unknown",
+        "physical_signoff": false
+      }
+    },
+    {
+      "label": "analytic-RC",
+      "project_id": "3a242d0f5c4448e5ab9bc7f7f20c2545",
+      "revision": 7,
+      "run_id": "44529922ba9341e0a91136d7d7fa0807",
+      "tool": "ngspice",
+      "execution_status": "completed",
+      "engine_analysis_result": "unknown",
+      "source_stimuli": [
+        {
+          "name": "VIN",
+          "kind": "voltage",
+          "pins": {
+            "+": "A",
+            "-": "0"
+          },
+          "dc": 0,
+          "stimulus": {
+            "kind": "pulse",
+            "low": 0,
+            "high": 1.8,
+            "delay_s": 2e-9,
+            "rise_s": 1e-10,
+            "fall_s": 1e-10,
+            "width_s": 4.9e-9,
+            "period_s": 1e-8
+          }
+        }
+      ],
+      "samples": 8256,
+      "waveforms_sha256": "9a217cb5bd57daa49ab0a304f7428208cd6faa66a509fbb3be47d6bd44538940",
+      "timing": {
+        "schema_version": 1,
+        "method": "sampled-single-input-timing-v1",
+        "run_id": "44529922ba9341e0a91136d7d7fa0807",
+        "project_id": "3a242d0f5c4448e5ab9bc7f7f20c2545",
+        "revision": 7,
+        "current_revision": 7,
+        "recipe": {
+          "schema_version": 1,
+          "input": "A",
+          "output": "Y",
+          "polarity": "same",
+          "low_V": 0,
+          "high_V": 1.8,
+          "start_s": 0,
+          "end_s": 4.1e-8,
+          "settle_s": 3e-9,
+          "max_delay_s": 1e-9,
+          "max_rise_s": 3e-9,
+          "max_fall_s": 3e-9,
+          "minimum_cycles": 2
+        },
+        "status": "pass",
+        "reasons": [],
+        "rows": [
+          {
+            "input_edge": "rising",
+            "output_edge": "rising",
+            "trigger_s": 2.05e-9,
+            "window_s": [
+              2.01e-9,
+              7.0099999999999996e-9
+            ],
+            "target_s": 2.743565365202102e-9,
+            "delay_s": 6.935653652021018e-10,
+            "delay_bracket_s": [
+              6.899999999999999e-10,
+              7.000000000000001e-10
+            ],
+            "rise_s": 2.1972182898561215e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              2.1949999999999996e-9,
+              2.205e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "falling",
+            "trigger_s": 7.0499999999999994e-9,
+            "window_s": [
+              7.0099999999999996e-9,
+              1.201e-8
+            ],
+            "target_s": 7.736804104382015e-9,
+            "delay_s": 6.868041043820152e-10,
+            "delay_bracket_s": [
+              6.800000000000001e-10,
+              6.900000000000007e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.197219715201896e-9,
+            "slew_bracket_s": [
+              2.190000000000001e-9,
+              2.2e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "rising",
+            "trigger_s": 1.205e-8,
+            "window_s": [
+              1.201e-8,
+              1.7009999999999998e-8
+            ],
+            "target_s": 1.2736849726140825e-8,
+            "delay_s": 6.868497261408246e-10,
+            "delay_bracket_s": [
+              6.800000000000001e-10,
+              6.900000000000015e-10
+            ],
+            "rise_s": 2.1972196202486504e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              2.1899999999999984e-9,
+              2.2e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "falling",
+            "trigger_s": 1.705e-8,
+            "window_s": [
+              1.7009999999999998e-8,
+              2.201e-8
+            ],
+            "target_s": 1.773684941878803e-8,
+            "delay_s": 6.86849418788031e-10,
+            "delay_bracket_s": [
+              6.800000000000001e-10,
+              6.899999999999982e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.197219616695645e-9,
+            "slew_bracket_s": [
+              2.1899999999999984e-9,
+              2.2e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "rising",
+            "trigger_s": 2.205e-8,
+            "window_s": [
+              2.201e-8,
+              2.7009999999999998e-8
+            ],
+            "target_s": 2.2736849421006144e-8,
+            "delay_s": 6.868494210061455e-10,
+            "delay_bracket_s": [
+              6.800000000000001e-10,
+              6.900000000000015e-10
+            ],
+            "rise_s": 2.1972195934164962e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              2.1900000000000017e-9,
+              2.2e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "falling",
+            "trigger_s": 2.705e-8,
+            "window_s": [
+              2.7009999999999998e-8,
+              3.201e-8
+            ],
+            "target_s": 2.7736849421006143e-8,
+            "delay_s": 6.868494210061422e-10,
+            "delay_bracket_s": [
+              6.800000000000001e-10,
+              6.899999999999982e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.197219612451249e-9,
+            "slew_bracket_s": [
+              2.1899999999999984e-9,
+              2.2e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "rising",
+            "output_edge": "rising",
+            "trigger_s": 3.2050000000000006e-8,
+            "window_s": [
+              3.201e-8,
+              3.701e-8
+            ],
+            "target_s": 3.2736849421006145e-8,
+            "delay_s": 6.868494210061389e-10,
+            "delay_bracket_s": [
+              6.799999999999968e-10,
+              6.899999999999949e-10
+            ],
+            "rise_s": 2.1972195934164962e-9,
+            "fall_s": null,
+            "slew_bracket_s": [
+              2.189999999999995e-9,
+              2.2e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          },
+          {
+            "input_edge": "falling",
+            "output_edge": "falling",
+            "trigger_s": 3.705e-8,
+            "window_s": [
+              3.701e-8,
+              4.1e-8
+            ],
+            "target_s": 3.773684942100615e-8,
+            "delay_s": 6.868494210061522e-10,
+            "delay_bracket_s": [
+              6.799999999999968e-10,
+              6.900000000000015e-10
+            ],
+            "rise_s": null,
+            "fall_s": 2.1972196124512456e-9,
+            "slew_bracket_s": [
+              2.1900000000000017e-9,
+              2.2e-9
+            ],
+            "status": "pass",
+            "reasons": []
+          }
+        ],
+        "checks": [
+          {
+            "name": "주기/양방향 전이 범위",
+            "status": "pass",
+            "reason": "입력 상승 4, 하강 4 · 각 2개 이상 필요"
+          },
+          {
+            "name": "정착 후 논리 관계",
+            "status": "pass",
+            "reason": "관찰 가능한 정착 구간 8개 · 논리 불일치 0개"
+          },
+          {
+            "name": "주기별 지연·전이 시간",
+            "status": "pass",
+            "reason": "50% 전파 지연, 출력 10–90%/90–10%, 입력 전이 구간 안에서만 짝지음"
+          }
+        ],
+        "summary": {
+          "tpLH_s": 6.885284833388027e-10,
+          "tpHL_s": 6.868380912955851e-10,
+          "rise_s": 2.197219274234441e-9,
+          "fall_s": 2.197219639200009e-9,
+          "input_rises": 4,
+          "input_falls": 4
+        },
+        "engine_result": "unknown",
+        "physical_signoff": false
+      }
+    }
+  ],
+  "checks": {
+    "undersampled_source_rejected": true,
+    "actual_pulse_and_pwl": true,
+    "three_logic_compositions": true,
+    "explicit_limit_failure": true,
+    "missing_coverage_unavailable": true,
+    "source_and_criteria_save_reopen": true,
+    "stale_previous_revision": true,
+    "load_change_changes_actual_slew": true,
+    "half_maxstep_convergence": true,
+    "analytic_rc_known_value": true,
+    "original_schematic_preserved": true
+  },
+  "source_sha256": {
+    "workers/eda/source_stimulus.py": "3e88962253391130198f0e3d4e21dd493bc6135d32df5b5fa5419a74874aef15",
+    "workers/eda/native.py": "7a6d0d34016e59f776eb7bfbc0ab3d5d0464bb1c486022faeee9b6932a25319b",
+    "workers/eda/custom_circuit.py": "691319b223ff8a90353563b6e6af2ef5640c69d3313b6a7b4ea6ed93fd07367e",
+    "workers/eda/logic_composition.py": "8a3687ed1e6e9571a589f7ce9f2d9cc028f7509bbe8b55a95795bdcab1b964cd",
+    "workers/eda/server.py": "32053cc3b934208ec7bd248325e11c04ccfdca0d9f7c353181c445c7ae43c0ca",
+    "packages/analysis/src/dynamic-timing.ts": "327ce8d4d5452a86a7ac3a88e31373c2abdc65eb90b8ca7c212f725cace015ea"
+  },
+  "analytic_rc": {
+    "R_ohm": 1000,
+    "C_F": 1e-12,
+    "tau_s": 1e-9,
+    "finite_ramp_s": 1e-10,
+    "expected_first_50percent_delay_s": 6.935638125099002e-10,
+    "actual_delay_s": 6.935653652021018e-10,
+    "expected_rise_s": 2.1972245773362196e-9,
+    "actual_rise_s": 2.1972182898561215e-9,
+    "tolerance_s": 1e-11
+  },
+  "analysis_recomputed_at": "2026-10-15T02:15:12.481Z",
+  "analysis_method": "sampled-single-input-timing-v1 including conservative slew sample brackets"
+}

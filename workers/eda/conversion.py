@@ -139,11 +139,11 @@ def forward_input(p, settings):
     # A child-local global 0 must not silently become a hierarchical net.
     if any('0' in d['pins'].values() for c in ir.get('cells',{}).values() for d in c['devices']):raise EDAError('GLOBAL_MAPPING_REQUIRED','Child-cell global 0 requires an explicit hierarchical ground port before placement.')
     flat=digital_units.flattened(ir)
-    excluded=[{'name':d['name'],'kind':d['kind'],'pins':d['pins'],'parameters':d['parameters']} for d in flat['devices'] if d['kind'] in ('voltage','current')]
+    excluded=[{key:copy.deepcopy(d[key]) for key in ('name','kind','pins','parameters','stimulus') if key in d} for d in flat['devices'] if d['kind'] in ('voltage','current')]
     flat['devices']=[d for d in flat['devices'] if d['kind'] not in ('voltage','current','ground','port')]
     nets={n for d in flat['devices'] for n in d['pins'].values()}
     # User-defined internal sources become explicitly recorded external ports,
-    # so their original DC biases can be replayed without addressing guessed
+    # so their original DC/PULSE/PWL sources can be replayed without guessed
     # hidden hierarchy nodes. This is disclosed in the preview interface.
     flat['ports']=list(dict.fromkeys([*flat['ports'],*[n for d in excluded if d['kind'] in ('voltage','current') for n in d['pins'].values() if n in nets and n!='0']]))
     if any(d['kind']=='resistor' and not d.get('model') for d in flat['devices']) and body not in nets:raise EDAError('INVALID_BODY_NET','The declared passive body net is absent from this actual circuit.')

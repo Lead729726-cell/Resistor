@@ -450,6 +450,7 @@ def edit(pid,c,mode,cell_name=None):
                 ports=list(dict.fromkeys(d['pins']['P'] for d in p['schematic']['devices'] if d['kind']=='port' and d['pins'].get('P')))
                 p['ports']=ports;p['schematic']['ports']=ports
             if c.get('type')=='initialize_logic_demo':p['testbench']=native.testbench({**p['testbench'],'analysis':'op'})
+            if c.get('type')=='configure_logic_transient':p['testbench']=native.testbench({**p['testbench'],'analysis':'tran','duration_s':40e-9,'step_s':5e-12,'supply_V':next(d['parameters']['dc'] for d in p['schematic']['devices'] if d['id']=='source_vpwr')})
         elif c.get('type')=='update_device':
             if p['example']!='mosfet': raise EDAError('UNSUPPORTED','Inverter layout is a fixed public template. Edit schematic independently or modify actual geometry and rerun LVS.')
             if c.get('id')!='mn1': raise EDAError('UNSUPPORTED','Only the public mn1 MOS PCell is linked to layout regeneration.')
@@ -780,6 +781,7 @@ def spice_tb(p,folder,params,netlist):
 
 def simulation(run,p,folder,manifest,params):
     custom=not p.get('design_template') and not p.get('digital_unit') and p['example'] in ('schematic','converted')
+    timing_recipe=copy.deepcopy(p['schematic'].get('timing_check')) if custom else None
     if custom:p=custom_circuit.prepare(p)
     if p.get('design_template',{}).get('id') in design_tools.sar_adc.CATALOG:
         return design_tools.sar_adc.execute(sys.modules[__name__],run,p,folder,manifest,params)
@@ -878,7 +880,11 @@ def simulation(run,p,folder,manifest,params):
         run['measurements']=measurements
         digital_units.verify(p,run,params)
         measurements=run['measurements']
-    if custom:run['reference_verification']={'schema_version':1,'kind':'custom-flat-numerical-analysis','source':'actual-ngspice-samples','checks':[],'pass':None,'scope':'Explicit DC sources; measured voltages/currents only. Hierarchy is resolved and flattened for analysis; original schematic is preserved. Functional constraints and time-varying excitation are not configured.'}
+    if custom:
+        run['reference_verification']={'schema_version':1,'kind':'custom-flat-numerical-analysis','source':'actual-ngspice-samples','checks':[],'pass':None,'scope':'Explicit DC/PULSE/PWL sources; actual numerical samples. Original hierarchy is preserved. Timing/logic criteria are evaluated separately on the recorded samples; no physical signoff.'}
+        if timing_recipe:run['timing_recipe']=timing_recipe
+        run['source_stimuli']=[{'name':d['name'],'kind':d['kind'],'pins':d['pins'],'dc':d['parameters'].get('dc',0),'stimulus':d.get('stimulus')} for d in [*p['schematic']['devices'],*p.get('conversion',{}).get('external_sources',[])] if d['kind'] in ('voltage','current')]
+        if analysis=='tran':measurements['transient_max_step_s']=params['step_s']
     reference=run.get('reference_verification')
     verdict=run.get('digital_verification') or run.get('unit_verification') or reference
     result='unknown' if verdict and verdict.get('pass') is None else 'fail' if verdict and not verdict['pass'] else 'pass'

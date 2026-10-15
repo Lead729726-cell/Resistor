@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import type { Run, Waveform } from '@mos/contracts';
 import { axisUnit, clipWaveform, csvCell, deriveWaveform, intervalStatistics, measurementWaveforms, propagationDelay, runStage, timingMeasurements, validateWaveform, type Edge, type WaveOperation } from '../../analysis/src/waveform';
 import WavePlot, { formatNumber } from './WavePlot';
+import DynamicTimingPanel from './DynamicTimingPanel';
 import SignalFlowPanel from './SignalFlowPanel';
 import './waveform-workbench.css';
 
@@ -92,6 +93,7 @@ export default function WaveformWorkbench({ run, compare, revision, onSelectDevi
     download(`waveform-${run?.id.slice(0, 8)}.csv`, rows.join('\r\n'), 'text/csv;charset=utf-8');
   };
   return <>
+    {run&&<DynamicTimingPanel run={run} revision={revision}/>}
     {run && <SignalFlowPanel run={run} revision={revision} cursor={interval.value?.a} onCursor={x => setA(String(x))} onSelectDevice={onSelectDevice}/>}
     <WavePlot run={run} compare={compare} extra={extra} inspected={source?.wave.name.startsWith('I: ') ? source.wave : undefined}
       xRange={zoom && stats ? [stats.start, stats.end] : undefined}

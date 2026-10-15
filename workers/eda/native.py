@@ -31,6 +31,10 @@ def validate_device(d):
     kind=d.get('kind'); pins=d.get('pins',{}); pars=d.get('parameters',{})
     if not isinstance(pins,dict) or not isinstance(pars,dict) or any(not isinstance(key,str) or not isinstance(value,str) for key,value in pins.items()):raise EDAError('INVALID_DEVICE','Pins must map string names to string nets and parameters must be an object.')
     if kind not in {'nmos','pmos','resistor','capacitor','voltage','current','ground','port','block'}: raise EDAError('UNSUPPORTED','Unsupported native device kind.')
+    if d.get('stimulus') is not None:
+        if kind not in ('voltage','current'):raise EDAError('INVALID_STIMULUS','Only independent voltage/current sources accept stimuli.')
+        import source_stimulus
+        source_stimulus.validate(d['stimulus'])
     supported={'w_um','l_um','nf','m'} if kind in {'nmos','pmos'} else {'value','w_um','l_um'} if kind in {'resistor','capacitor'} and d.get('model') else {'value'} if kind in {'resistor','capacitor'} else {'dc'} if kind in {'voltage','current'} else set()
     if set(pars)-supported:raise EDAError('UNSUPPORTED_PARAMETER','This native symbol mapping does not support the supplied parameter keys.')
     if kind in {'resistor','capacitor','voltage','current'} and not ({'+','-'}<=set(pins) or {'1','2'}<=set(pins)):raise EDAError('INVALID_DEVICE','Two-terminal elements need + and - (or 1 and 2) pin keys.')
@@ -172,6 +176,16 @@ def validate(schematic,cell_name=None):
     return {'valid':not issues,'issues':issues,'connectivity_source':'geometric_graph' if graph else 'explicit_pin_net_ir','connectivity':graph,'limits':[]}
 
 def apply(schematic,c,cell_name=None):
+    if c.get('type')=='configure_logic_transient':
+        if cell_name is not None or set(c)!={'type'}:raise EDAError('INVALID_COMMAND','Clock preset applies only to the root logic practice.')
+        import logic_composition
+        return logic_composition.transient(schematic)
+    if c.get('type')=='set_timing_check':
+        if cell_name is not None or set(c)!={'type','recipe'}:raise EDAError('INVALID_COMMAND','Timing criteria belong to the root project schematic.')
+        import source_stimulus
+        if c['recipe'] is None:schematic.pop('timing_check',None)
+        else:schematic['timing_check']=source_stimulus.timing_recipe(c['recipe'])
+        return
     if c.get('type')=='place_logic_gate':
         import logic_composition
         return logic_composition.place(schematic,c,cell_name)
@@ -181,7 +195,14 @@ def apply(schematic,c,cell_name=None):
         return logic_composition.demo(schematic,c.get('kind'))
     ir=cell_ir(schematic,cell_name)
     ty=c.get('type'); devices=ir['devices']; d=next((d for d in devices if d['id']==c.get('id')),None)
-    if ty=='add_device':
+    if ty=='set_source':
+        if not d or d['kind'] not in ('voltage','current') or set(c)!={'type','id','dc','stimulus'}:raise EDAError('INVALID_COMMAND','Select an independent source and provide DC and a stimulus (or null).')
+        import source_stimulus
+        candidate=copy.deepcopy(d);candidate['parameters']['dc']=num(c['dc'])
+        if c['stimulus'] is None:candidate.pop('stimulus',None)
+        else:candidate['stimulus']=source_stimulus.validate(c['stimulus'])
+        validate_device(candidate);d.clear();d.update(candidate)
+    elif ty=='add_device':
         d=c.get('device'); validate_device(d)
         if any(x['id']==d['id'] or x['name'].lower()==d['name'].lower() for x in devices): raise EDAError('DUPLICATE','Device ID or name already exists.')
         devices.append(d)
@@ -321,6 +342,9 @@ def emit(schematic,cell,ports):
                 # Precision-poly width is fixed in the model name, not a
                 # geometric LVS property in the installed extraction deck.
                 out.append(f'X{name} {a} {b}{body} {d["model"]}{width} l={num(p["l_um"]):.12g}')
+            elif kind in ('voltage','current'):
+                import source_stimulus
+                out.append(f'{prefix}{name} {a} {b} '+source_stimulus.emission(d))
             else:out.append(f'{prefix}{name} {a} {b} {value:.12g}')
         elif kind=='block': out.append('X'+name+' '+' '.join(nets[pin] for pin in schematic['cells'][d['cell_name']]['ports'])+' '+d['cell_name'])
     emit_cell(cell,schematic,ports,None)

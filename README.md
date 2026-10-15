@@ -357,4 +357,4 @@ npm run test:ui
 
 교육용 브랜치에는 72개 과제, 40개 학생 레퍼런스, 10개 수업 경로와 교수자/학생 ZIP 38개가 있습니다. 앱의 교육 실습에서 검색·새 사본·실제 실행 증거·원본 설명 저장을 사용합니다. [교수자/학생 자료 가이드](docs/edu-assignment-packages.md)를 참고하세요. 자료 준비는 학습 효과나 제조 검증을 의미하지 않습니다.
 
-기본 CMOS 블록을 회로도에서 배치·연결하고 실제 OP를 실행하는 [로직 조합 안내](docs/logic-composition.md)를 확인하세요.
+기본 CMOS 블록을 회로도에서 배치·연결하고 실제 OP를 실행하는 [로직 조합 안내](docs/logic-composition.md)를 확인하세요. [동적 신호·지연 실습](docs/logic-transient.md)은 PULSE/PWL 입력, 실제 ngspice transient, 주기별 논리·지연 한도, revision과 저장된 기준을 연결합니다.
