@@ -1,0 +1,584 @@
+{
+  "schema_version": 1,
+  "edition": "indust",
+  "checked_at": "2026-10-15T02:18:05.251Z",
+  "paid_calls": 0,
+  "actual_ngspice_run": "babcd1f7749d45268dcc6075ee2aff6b",
+  "project_id": "924793dd9f3d4003b1c9cfb76796fff3",
+  "revision": 1,
+  "passed": true,
+  "foundry_signoff": false,
+  "evidence": {
+    "schema_version": 1,
+    "product": {
+      "id": "resistor.indust",
+      "edition": "indust",
+      "name": "Resistor Indust"
+    },
+    "project": {
+      "id": "924793dd9f3d4003b1c9cfb76796fff3",
+      "name": "[Indust QA] AI 실제 근거 · 공개 RC 필터",
+      "cell": "rc_lowpass",
+      "revision": 1,
+      "pdk_id": "sky130A",
+      "testbench": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 2e-7,
+        "step_s": 1e-10,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      }
+    },
+    "context": {
+      "device_ids": [
+        "r1"
+      ]
+    },
+    "selection": {
+      "shapes": [],
+      "unavailable_shape_ids": [],
+      "layout_scope": "First 2000 native masks only; missing selections have no supplied geometry."
+    },
+    "connectivity": {
+      "devices": [
+        {
+          "id": "r1",
+          "name": "R1",
+          "kind": "resistor",
+          "pins": {
+            "+": "IN",
+            "-": "OUT"
+          },
+          "parameters": {
+            "value": 10000
+          },
+          "cell_name": "rc_lowpass",
+          "selected": true
+        },
+        {
+          "id": "c1",
+          "name": "C1",
+          "kind": "capacitor",
+          "pins": {
+            "+": "OUT",
+            "-": "VGND"
+          },
+          "parameters": {
+            "value": 1e-12
+          },
+          "cell_name": "rc_lowpass",
+          "selected": false
+        },
+        {
+          "id": "port_IN",
+          "name": "PORT_IN",
+          "kind": "port",
+          "pins": {
+            "P": "IN"
+          },
+          "parameters": {},
+          "cell_name": "rc_lowpass",
+          "selected": false
+        },
+        {
+          "id": "port_OUT",
+          "name": "PORT_OUT",
+          "kind": "port",
+          "pins": {
+            "P": "OUT"
+          },
+          "parameters": {},
+          "cell_name": "rc_lowpass",
+          "selected": false
+        },
+        {
+          "id": "port_VGND",
+          "name": "PORT_VGND",
+          "kind": "port",
+          "pins": {
+            "P": "VGND"
+          },
+          "parameters": {},
+          "cell_name": "rc_lowpass",
+          "selected": false
+        }
+      ],
+      "nets": [
+        {
+          "name": "IN",
+          "pin_count": 2,
+          "pins": [
+            {
+              "device_id": "r1",
+              "device_name": "R1",
+              "pin": "+"
+            },
+            {
+              "device_id": "port_IN",
+              "device_name": "PORT_IN",
+              "pin": "P"
+            }
+          ],
+          "selected": true
+        },
+        {
+          "name": "OUT",
+          "pin_count": 3,
+          "pins": [
+            {
+              "device_id": "r1",
+              "device_name": "R1",
+              "pin": "-"
+            },
+            {
+              "device_id": "c1",
+              "device_name": "C1",
+              "pin": "+"
+            },
+            {
+              "device_id": "port_OUT",
+              "device_name": "PORT_OUT",
+              "pin": "P"
+            }
+          ],
+          "selected": true
+        },
+        {
+          "name": "VGND",
+          "pin_count": 2,
+          "pins": [
+            {
+              "device_id": "c1",
+              "device_name": "C1",
+              "pin": "-"
+            },
+            {
+              "device_id": "port_VGND",
+              "device_name": "PORT_VGND",
+              "pin": "P"
+            }
+          ],
+          "selected": false
+        }
+      ],
+      "device_count": 5,
+      "net_count": 3,
+      "layout_status": "not-generated",
+      "scope": "selected schematic cell; layout metadata inspected over native hierarchy",
+      "truncated": false,
+      "limits": [
+        "Graph is the selected/root cell, not a flattened electrical graph of all child cells.",
+        "Advisory connectivity is not ERC/signoff.",
+        "Layout net/device annotations do not prove electrical extraction or physical validity."
+      ]
+    },
+    "issues": [
+      {
+        "code": "NOT_VERIFIED",
+        "severity": "info",
+        "kind": "drc",
+        "message": "No completed current drc evidence in the latest 12 runs."
+      },
+      {
+        "code": "NOT_VERIFIED",
+        "severity": "info",
+        "kind": "lvs",
+        "message": "No completed current lvs evidence in the latest 12 runs."
+      },
+      {
+        "code": "NOT_VERIFIED",
+        "severity": "info",
+        "kind": "pex",
+        "message": "No completed current pex evidence in the latest 12 runs."
+      }
+    ],
+    "runs": [
+      {
+        "id": "babcd1f7749d45268dcc6075ee2aff6b",
+        "revision": 1,
+        "kind": "simulation",
+        "execution_status": "completed",
+        "analysis_result": "pass",
+        "freshness": "current",
+        "tool": "ngspice",
+        "message": "Actual ngspice tran: 2022 samples.",
+        "measurements": {
+          "analysis": "tran",
+          "x_unit": "s",
+          "x_label": "time",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "post_layout": "false",
+          "samples": 2022,
+          "solver": "SPARSE 1.3",
+          "IN_min": 0,
+          "IN_max": 1.8,
+          "OUT_min": 0,
+          "OUT_max": 1.8,
+          "current_flow_status": "available",
+          "template_id": "rc_lowpass",
+          "layout_status": "not-generated",
+          "metric_source": "actual-ngspice-samples",
+          "measured_tau_s": 1.0000527327111767e-8,
+          "tau_target_fraction": 0.6321205588285577,
+          "research_metrics": {
+            "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+            "input_drivers_power": "not measured",
+            "external_bias_power": "not measured",
+            "complete_system_power_available": false,
+            "supply": {
+              "available": false,
+              "reason": "No analog supply-current trace; RTL/gate replay is not transistor power."
+            },
+            "OUT_tail": {
+              "available": true,
+              "start": 1.5e-7,
+              "end": 2e-7,
+              "integral": 8.999999394693461e-8,
+              "mean": 1.7999998789386922,
+              "rms": 1.7999998789386946,
+              "ac_rms": 9.424321830774485e-8,
+              "minimum": 1.799999393524,
+              "maximum": 1.8,
+              "peak_to_peak": 6.064760000867864e-7,
+              "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+            }
+          }
+        },
+        "waveform_summary": [
+          {
+            "name": "IN",
+            "unit": "V",
+            "x_unit": "",
+            "available": true,
+            "samples": 2022,
+            "x_start": 0,
+            "x_end": 2e-7,
+            "first": 0,
+            "last": 1.8,
+            "min": 0,
+            "max": 1.8,
+            "sample_mean": 1.782284866468845,
+            "scope": "Stored signed samples; sample mean is not a time average. Geometry does not establish current direction."
+          },
+          {
+            "name": "OUT",
+            "unit": "V",
+            "x_unit": "",
+            "available": true,
+            "samples": 2022,
+            "x_start": 0,
+            "x_end": 2e-7,
+            "first": 0,
+            "last": 1.8,
+            "min": 0,
+            "max": 1.8,
+            "sample_mean": 1.6835200706054636,
+            "scope": "Stored signed samples; sample mean is not a time average. Geometry does not establish current direction."
+          }
+        ],
+        "current_flow_summary": {
+          "available": true,
+          "source": "ngspice",
+          "analysis": "tran",
+          "revision": 1,
+          "freshness": "current",
+          "convention": "conventional",
+          "geometry_linkage": "unverified",
+          "truncated": false,
+          "branches": [
+            {
+              "id": "XU/RR1",
+              "name": "R1 terminal 1→2",
+              "device_id": "r1",
+              "from_net": "IN",
+              "to_net": "OUT",
+              "source_vector": "i(v.xu.vregister_cf_7c48c48dcebfc52e)",
+              "mapping": "unmapped",
+              "current": {
+                "name": "R1 terminal 1→2",
+                "unit": "A",
+                "x_unit": "s",
+                "available": true,
+                "samples": 2022,
+                "x_start": 0,
+                "x_end": 2e-7,
+                "first": 0,
+                "last": 4.09978285e-13,
+                "min": 0,
+                "max": 0.00017999091,
+                "sample_mean": 0.000009876479576036733,
+                "scope": "Stored signed samples; sample mean is not a time average. Geometry does not establish current direction."
+              },
+              "voltage_drop": {
+                "name": "IN - OUT",
+                "unit": "V",
+                "x_unit": "s",
+                "available": true,
+                "samples": 2022,
+                "x_start": 0,
+                "x_end": 2e-7,
+                "first": 0,
+                "last": 0,
+                "min": 0,
+                "max": 1.7999091032444001,
+                "sample_mean": 0.09876479586337347,
+                "scope": "Stored signed samples; sample mean is not a time average. Geometry does not establish current direction.",
+                "definition": "Same-grid stored node voltage: from_net minus to_net."
+              }
+            },
+            {
+              "id": "XU/CC1",
+              "name": "C1 terminal 1→2",
+              "device_id": "c1",
+              "from_net": "OUT",
+              "to_net": "VGND",
+              "source_vector": "i(v.xu.vregister_cf_14b59466c5db7da9)",
+              "mapping": "unmapped",
+              "current": {
+                "name": "C1 terminal 1→2",
+                "unit": "A",
+                "x_unit": "s",
+                "available": true,
+                "samples": 2022,
+                "x_start": 0,
+                "x_end": 2e-7,
+                "first": 0,
+                "last": 4.09977607e-13,
+                "min": 0,
+                "max": 0.00017999091,
+                "sample_mean": 0.00000987647957603832,
+                "scope": "Stored signed samples; sample mean is not a time average. Geometry does not establish current direction."
+              },
+              "voltage_drop": {
+                "name": "OUT - VGND",
+                "unit": "V",
+                "x_unit": "s",
+                "available": true,
+                "samples": 2022,
+                "x_start": 0,
+                "x_end": 2e-7,
+                "first": 0,
+                "last": 1.8,
+                "min": 0,
+                "max": 1.8,
+                "sample_mean": 1.6835200706054636,
+                "scope": "Stored signed samples; sample mean is not a time average. Geometry does not establish current direction.",
+                "definition": "Same-grid stored node voltage: from_net minus to_net."
+              }
+            },
+            {
+              "id": "testbench/VGND",
+              "name": "VGND source (+→−)",
+              "from_net": "VGND",
+              "to_net": "0",
+              "source_vector": "i(VGND)",
+              "mapping": "unmapped",
+              "current": {
+                "name": "VGND source (+→−)",
+                "unit": "A",
+                "x_unit": "s",
+                "available": true,
+                "samples": 2022,
+                "x_start": 0,
+                "x_end": 2e-7,
+                "first": 0,
+                "last": 0,
+                "min": -6.9388939e-18,
+                "max": 1.04083409e-17,
+                "sample_mean": 2.238517893922206e-18,
+                "scope": "Stored signed samples; sample mean is not a time average. Geometry does not establish current direction."
+              },
+              "voltage_drop": {
+                "name": "VGND - 0",
+                "unit": "V",
+                "x_unit": "s",
+                "available": true,
+                "samples": 2022,
+                "x_start": 0,
+                "x_end": 2e-7,
+                "first": 0,
+                "last": 0,
+                "min": 0,
+                "max": 0,
+                "sample_mean": 0,
+                "scope": "Stored signed samples; sample mean is not a time average. Geometry does not establish current direction.",
+                "definition": "Same-grid stored node voltage: from_net minus to_net."
+              }
+            },
+            {
+              "id": "testbench/VIN",
+              "name": "VIN source (+→−)",
+              "from_net": "IN",
+              "to_net": "VGND",
+              "source_vector": "i(VIN)",
+              "mapping": "unmapped",
+              "current": {
+                "name": "VIN source (+→−)",
+                "unit": "A",
+                "x_unit": "s",
+                "available": true,
+                "samples": 2022,
+                "x_start": 0,
+                "x_end": 2e-7,
+                "first": 0,
+                "last": -4.09978285e-13,
+                "min": -0.00017999091,
+                "max": 0,
+                "sample_mean": -0.000009876479576036733,
+                "scope": "Stored signed samples; sample mean is not a time average. Geometry does not establish current direction."
+              },
+              "voltage_drop": {
+                "name": "IN - VGND",
+                "unit": "V",
+                "x_unit": "s",
+                "available": true,
+                "samples": 2022,
+                "x_start": 0,
+                "x_end": 2e-7,
+                "first": 0,
+                "last": 1.8,
+                "min": 0,
+                "max": 1.8,
+                "sample_mean": 1.782284866468845,
+                "scope": "Stored signed samples; sample mean is not a time average. Geometry does not establish current direction.",
+                "definition": "Same-grid stored node voltage: from_net minus to_net."
+              }
+            }
+          ],
+          "limits": [
+            "Current sign uses the stored from_net/to_net reference and convention.",
+            "Mask annotations or display paths do not prove physical connectivity.",
+            "Voltage drops are calculated only from both stored node arrays on the same native sample grid."
+          ]
+        },
+        "scope": "Project-level result; selected-child signal correspondence is not established."
+      }
+    ],
+    "limits": [
+      "Root/selected schematic connectivity is not the whole flattened hierarchy.",
+      "Selected mask bounding boxes are metadata, not extraction or electrical matching.",
+      "PDK files, model/deck text, credentials and raw waveform arrays are not sent.",
+      "AI suggestions are advisory, never engine PASS or manufacturing signoff."
+    ],
+    "references": [
+      {
+        "id": "design",
+        "kind": "design",
+        "label": "[Indust QA] AI 실제 근거 · 공개 RC 필터",
+        "target": "924793dd9f3d4003b1c9cfb76796fff3"
+      },
+      {
+        "id": "connectivity",
+        "kind": "connectivity",
+        "label": "rc_lowpass",
+        "target": "rc_lowpass"
+      },
+      {
+        "id": "device:r1",
+        "kind": "device",
+        "label": "R1",
+        "target": "r1",
+        "cell_name": null
+      },
+      {
+        "id": "device:c1",
+        "kind": "device",
+        "label": "C1",
+        "target": "c1",
+        "cell_name": null
+      },
+      {
+        "id": "device:port_IN",
+        "kind": "device",
+        "label": "PORT_IN",
+        "target": "port_IN",
+        "cell_name": null
+      },
+      {
+        "id": "device:port_OUT",
+        "kind": "device",
+        "label": "PORT_OUT",
+        "target": "port_OUT",
+        "cell_name": null
+      },
+      {
+        "id": "device:port_VGND",
+        "kind": "device",
+        "label": "PORT_VGND",
+        "target": "port_VGND",
+        "cell_name": null
+      },
+      {
+        "id": "net:IN",
+        "kind": "net",
+        "label": "IN",
+        "target": "IN"
+      },
+      {
+        "id": "net:OUT",
+        "kind": "net",
+        "label": "OUT",
+        "target": "OUT"
+      },
+      {
+        "id": "net:VGND",
+        "kind": "net",
+        "label": "VGND",
+        "target": "VGND"
+      },
+      {
+        "id": "run:babcd1f7749d45268dcc6075ee2aff6b",
+        "kind": "run",
+        "label": "simulation · r1 · completed/pass",
+        "target": "babcd1f7749d45268dcc6075ee2aff6b"
+      },
+      {
+        "id": "issue:0",
+        "kind": "issue",
+        "label": "NOT_VERIFIED",
+        "target": "0"
+      },
+      {
+        "id": "issue:1",
+        "kind": "issue",
+        "label": "NOT_VERIFIED",
+        "target": "1"
+      },
+      {
+        "id": "issue:2",
+        "kind": "issue",
+        "label": "NOT_VERIFIED",
+        "target": "2"
+      }
+    ],
+    "evidence_ids": [
+      "design",
+      "connectivity",
+      "device:r1",
+      "device:c1",
+      "device:port_IN",
+      "device:port_OUT",
+      "device:port_VGND",
+      "net:IN",
+      "net:OUT",
+      "net:VGND",
+      "run:babcd1f7749d45268dcc6075ee2aff6b",
+      "issue:0",
+      "issue:1",
+      "issue:2"
+    ],
+    "fingerprint": "9536a26289dbc20e0340e78de2f2f4a7d6a8ab3b17d29b3130bb92accf0dacb9"
+  },
+  "checks": [
+    "Stored signed branch extrema exactly match",
+    "Same-grid node voltage drops exactly match",
+    "No provider call, raw arrays or geometry edits"
+  ],
+  "source_sha256": "13b901f32d30b55c6a2600b7da266583855a1715e48b4362ef173976a6a6164f"
+}
