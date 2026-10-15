@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "product_id": "resistor.edu",
+  "scope": "Reusable self-study bank, objective grading, AI advisory adapter and persistent cache",
+  "question_counts": {
+    "numeric": 18,
+    "explanation": 40,
+    "choice": 6,
+    "total": 64
+  },
+  "local_checks": {
+    "core_tests_before_final_additional_qa_case": [
+      111,
+      130
+    ],
+    "self_study_tests": 8,
+    "edition_mcp_tests": 8,
+    "typecheck": "passed",
+    "build": "passed",
+    "build_warning": "Existing main chunk exceeds 500kB",
+    "source_audit": "passed",
+    "docs_links": "passed",
+    "desktop_backend_bundle": "passed outside source tree with packaged edition metadata"
+  },
+  "manual_ui": {
+    "url": "http://127.0.0.1:5187/eda",
+    "purpose": "qa",
+    "checks": [
+      "open bank",
+      "wrong divider answer 0.8 V produces 0/100, reference 2.5 V",
+      "2500 mV produces 100/100",
+      "essay without AI consent remains ungraded",
+      "reopen saved answer and feedback",
+      "browser JSON download",
+      "390px horizontal overflow absent and answer/result accessible"
+    ],
+    "export": {
+      "question_count": 64,
+      "attempt_count": 4,
+      "all_attempts_qa": true,
+      "sha256": "023ddf3d699d7cc2ed2358858e82a79cad26ba56b94532f51015edfb879c1e7c"
+    },
+    "mobile": {
+      "viewport_width": 390,
+      "study_client_width": 279,
+      "study_scroll_width": 279
+    }
+  },
+  "ai_verification": {
+    "mode": "injected_provider_fixture",
+    "paid_api_calls": 0,
+    "real_model_quality_verified": false,
+    "credential_reused_by_reference": true,
+    "credential_copied": false,
+    "study_budget_usd": 0,
+    "shared_budget_usd": 1,
+    "cases": [
+      "strict response schema",
+      "question set reuse",
+      "same question/version/answer feedback reuse",
+      "conservative shared and study reservations",
+      "zero budget and missing consent deny",
+      "failed response keeps raw answer without automatic retry",
+      "duplicate command/concurrency bounded",
+      "invalid rubric not accepted as score"
+    ]
+  },
+  "separation": {
+    "industry_shared_core_commit": "d2422fceffd7762a7c71bb4714b4f2914daf6be5",
+    "industry_study_available": false,
+    "student_assessment": "practice-only",
+    "engine_verification": false,
+    "education_effect_proven": false,
+    "new_installers_published": false
+  },
+  "screenshots": [
+    "desktop.png",
+    "mobile.png",
+    "mobile-answer.png"
+  ]
+}

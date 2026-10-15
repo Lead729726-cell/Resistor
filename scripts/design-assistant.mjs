@@ -5,6 +5,8 @@ import {z} from 'zod/v4';
 import {workerRpc} from './runtime.mjs';
 
 const MODEL='gpt-6-luna',MAX_OUTPUT=4096;
+// Server-side consumers share the credential reference and cumulative budget lock.
+export {credentials as readProviderCredential,configFor as providerConfig,reserve as reserveProviderBudget};
 // Conservative long-context standard rates; no cached-input discount is assumed.
 // https://developers.openai.com/api/docs/pricing (2026-10-07), USD / 1M tokens.
 export const PRICING={model:MODEL,input:0.20,output:0.75,checked:'2026-10-07'};
