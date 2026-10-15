@@ -65,3 +65,9 @@ jobs:
           python3 -B -m unittest discover -s workers/eda -p test_electrical_review.py
           MOS_WORKSPACE="$RUNNER_TEMP/selection-native" RESISTOR_EDITION=indust python3 -B tests/selection-native-test.py
           MOS_WORKSPACE="$RUNNER_TEMP/indust-review" RESISTOR_EDITION=indust python3 -B tests/industry-review-test.py
+      - name: Native assistant conversation UI with labelled local provider fixture
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ngspice
+          npx playwright install --with-deps chromium
+          npm run test:assistant-chat

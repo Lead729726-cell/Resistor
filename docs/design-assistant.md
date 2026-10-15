@@ -1,5 +1,7 @@
 # Design assistant and measured CPU execution
 
+The conversational workbench now supports server-owned multi-turn history, selected-cell/device/mask context, deterministic diagnostics and stored voltage/current/drop summaries. See the [Resistor Indust assistant guide](assistant-workbench.md) for usage, bounds and separate real-provider/native/UI evidence.
+
 Resistor keeps deterministic engineering and native engine validation separate from AI advice. The assistant reads a revision-pinned project, the selected/root cell connectivity, recent actual engine status and measurement summaries. It does not receive raw GDS, PDK/model/deck files, waveform arrays or credentials. The evidence preview shows exactly what will be sent.
 
 ## Providers

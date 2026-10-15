@@ -1,4 +1,5 @@
 export type Decimal = string;
+export type {AssistantContext,AssistantReference,AssistantFinding,AssistantReview,AssistantEvidence,AssistantProviderStatus,AssistantReviewReceipt,AssistantDiagnosis,AssistantChatReply,AssistantChatTurn,AssistantConversation,AssistantConversationSummary} from './assistant';
 export type {ReviewKind,ReviewShape,IntentConstraint,IntentResult,ReviewEvaluation,LayoutReview,ReviewReport,ReviewScene} from './layout-review';
 export interface ProductContext {schema_version:1;edition:'edu'|'indust';product_id:string;product_name?:string;project_id:string;revision:number;process:{id:string;source:string;mapping_status?:string;lock_sha256?:string};engine:{name:string;version:string;review_adapter_sha256?:string;implementation_sha256?:string}}
 export type DigitalKind = 'full_adder'|'adder4'|'cpu4'|'adder16'|'cpu16';

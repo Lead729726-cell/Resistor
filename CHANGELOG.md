@@ -4,7 +4,12 @@ This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
 `docs/evidence/` and the example READMEs. Package version: 0.27.0.
 
-## Unreleased — Resistor Indust intent review (2026-10-14)
+## Unreleased — Resistor Indust editor and assistant (2026-10-15)
+
+- Revision/evidence-pinned conversational assistant, local server-owned history, bounded validated follow-up context and evidence links to actual design/result screens.
+- Selected-cell/device/mask metadata, signed stored waveform/current statistics and same-grid node voltage drops; deterministic model-free diagnostics remain distinct from AI advice.
+- Per-question consent, bounded schemas and context, concurrent-session/budget guards, secret-input screening, stale/late response handling and failed-draft preservation.
+- Separate actual public ngspice/OpenAI evidence, explicitly labelled fixture-provider browser regression, dark/light/mobile checks and packaged Node ESM boundary verification.
 
 - Directional area selection in Layout 2D and schematics, Shift add/Alt subtract, Ctrl/Cmd+A, selection counts and a read-only CPU viewer path.
 - Atomic bounded group moves/copies/deletes with one undo step, exact mask/hole DBU selection, mixed device/wire/junction previews, preserved net names and protected-cell rejection.
@@ -19,7 +24,7 @@ history that did not previously exist. Existing detailed verification remains in
 - Exact reflected masks, rational polygon spacing, fixed-region XOR and bbox ordering using KLayout; missing electrical/process input remains unassessed.
 - Whole-mask revision comparison, explicit ID/unique exact-geometry mapping, ambiguous/deleted target handling and historical report checksums.
 - Actual engine run manifests, conditions, hashes, logs and artifact references remain independent from geometric criteria and review acceptance.
-- Local report save/reopen and stale evidence after candidate changes or engine revision; no external AI transmission or automatic repair.
+- Local intent-review report save/reopen and stale evidence after candidate changes or engine revision; no automatic AI transmission or repair. Optional assistant requests require separate per-question consent.
 - Indust MCP tools and product identity; preserve legacy data and common update compatibility while rejecting another edition.
 - Public-fixture tests and predeclared direct KLayout Python extension comparison; customer workflow time and commercial signoff unverified.
 

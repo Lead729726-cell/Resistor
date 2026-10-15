@@ -1,0 +1,524 @@
+{
+  "schema_version": 1,
+  "edition": "indust",
+  "checked_at": "2026-10-15T02:02:40.500Z",
+  "public_fixture": true,
+  "paid_calls": 1,
+  "model_inference_verified": true,
+  "foundry_signoff": false,
+  "cases": [
+    {
+      "name": "Public RC circuit completed an actual ngspice solve",
+      "pass": true
+    },
+    {
+      "name": "Waveform summaries equal the actual stored native samples",
+      "pass": true
+    },
+    {
+      "name": "Actual OpenAI response is complete and pinned to current evidence",
+      "pass": true
+    },
+    {
+      "name": "All reply citations exist in the supplied native evidence",
+      "pass": true
+    },
+    {
+      "name": "AI answer executed no geometry edits or engine jobs",
+      "pass": true
+    },
+    {
+      "name": "Existing numeric budget cap was preserved",
+      "pass": true
+    }
+  ],
+  "budget_before": {
+    "cap_usd": 1,
+    "reserved_usd": 0.010712
+  },
+  "project_id": "924793dd9f3d4003b1c9cfb76796fff3",
+  "revision": 1,
+  "run": {
+    "id": "babcd1f7749d45268dcc6075ee2aff6b",
+    "revision": 1,
+    "execution_status": "completed",
+    "analysis_result": "pass",
+    "tool": "ngspice",
+    "message": "Actual ngspice tran: 2022 samples."
+  },
+  "evidence": {
+    "schema_version": 1,
+    "product": {
+      "id": "resistor.indust",
+      "edition": "indust",
+      "name": "Resistor Indust"
+    },
+    "project": {
+      "id": "924793dd9f3d4003b1c9cfb76796fff3",
+      "name": "[Indust QA] AI 실제 근거 · 공개 RC 필터",
+      "cell": "rc_lowpass",
+      "revision": 1,
+      "pdk_id": "sky130A",
+      "testbench": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 2e-7,
+        "step_s": 1e-10,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      }
+    },
+    "context": {
+      "device_ids": [
+        "r1"
+      ]
+    },
+    "selection": {
+      "shapes": [],
+      "unavailable_shape_ids": [],
+      "layout_scope": "First 2000 native masks only; missing selections have no supplied geometry."
+    },
+    "connectivity": {
+      "devices": [
+        {
+          "id": "r1",
+          "name": "R1",
+          "kind": "resistor",
+          "pins": {
+            "+": "IN",
+            "-": "OUT"
+          },
+          "parameters": {
+            "value": 10000
+          },
+          "cell_name": "rc_lowpass",
+          "selected": true
+        },
+        {
+          "id": "c1",
+          "name": "C1",
+          "kind": "capacitor",
+          "pins": {
+            "+": "OUT",
+            "-": "VGND"
+          },
+          "parameters": {
+            "value": 1e-12
+          },
+          "cell_name": "rc_lowpass",
+          "selected": false
+        },
+        {
+          "id": "port_IN",
+          "name": "PORT_IN",
+          "kind": "port",
+          "pins": {
+            "P": "IN"
+          },
+          "parameters": {},
+          "cell_name": "rc_lowpass",
+          "selected": false
+        },
+        {
+          "id": "port_OUT",
+          "name": "PORT_OUT",
+          "kind": "port",
+          "pins": {
+            "P": "OUT"
+          },
+          "parameters": {},
+          "cell_name": "rc_lowpass",
+          "selected": false
+        },
+        {
+          "id": "port_VGND",
+          "name": "PORT_VGND",
+          "kind": "port",
+          "pins": {
+            "P": "VGND"
+          },
+          "parameters": {},
+          "cell_name": "rc_lowpass",
+          "selected": false
+        }
+      ],
+      "nets": [
+        {
+          "name": "IN",
+          "pin_count": 2,
+          "pins": [
+            {
+              "device_id": "r1",
+              "device_name": "R1",
+              "pin": "+"
+            },
+            {
+              "device_id": "port_IN",
+              "device_name": "PORT_IN",
+              "pin": "P"
+            }
+          ],
+          "selected": true
+        },
+        {
+          "name": "OUT",
+          "pin_count": 3,
+          "pins": [
+            {
+              "device_id": "r1",
+              "device_name": "R1",
+              "pin": "-"
+            },
+            {
+              "device_id": "c1",
+              "device_name": "C1",
+              "pin": "+"
+            },
+            {
+              "device_id": "port_OUT",
+              "device_name": "PORT_OUT",
+              "pin": "P"
+            }
+          ],
+          "selected": true
+        },
+        {
+          "name": "VGND",
+          "pin_count": 2,
+          "pins": [
+            {
+              "device_id": "c1",
+              "device_name": "C1",
+              "pin": "-"
+            },
+            {
+              "device_id": "port_VGND",
+              "device_name": "PORT_VGND",
+              "pin": "P"
+            }
+          ],
+          "selected": false
+        }
+      ],
+      "device_count": 5,
+      "net_count": 3,
+      "layout_status": "not-generated",
+      "scope": "selected schematic cell; layout metadata inspected over native hierarchy",
+      "truncated": false,
+      "limits": [
+        "Graph is the selected/root cell, not a flattened electrical graph of all child cells.",
+        "Advisory connectivity is not ERC/signoff.",
+        "Layout net/device annotations do not prove electrical extraction or physical validity."
+      ]
+    },
+    "issues": [
+      {
+        "code": "NOT_VERIFIED",
+        "severity": "info",
+        "kind": "drc",
+        "message": "No completed current drc evidence in the latest 12 runs."
+      },
+      {
+        "code": "NOT_VERIFIED",
+        "severity": "info",
+        "kind": "lvs",
+        "message": "No completed current lvs evidence in the latest 12 runs."
+      },
+      {
+        "code": "NOT_VERIFIED",
+        "severity": "info",
+        "kind": "pex",
+        "message": "No completed current pex evidence in the latest 12 runs."
+      }
+    ],
+    "runs": [
+      {
+        "id": "babcd1f7749d45268dcc6075ee2aff6b",
+        "revision": 1,
+        "kind": "simulation",
+        "execution_status": "completed",
+        "analysis_result": "pass",
+        "freshness": "current",
+        "tool": "ngspice",
+        "message": "Actual ngspice tran: 2022 samples.",
+        "measurements": {
+          "analysis": "tran",
+          "x_unit": "s",
+          "x_label": "time",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "post_layout": "false",
+          "samples": 2022,
+          "solver": "SPARSE 1.3",
+          "IN_min": 0,
+          "IN_max": 1.8,
+          "OUT_min": 0,
+          "OUT_max": 1.8,
+          "current_flow_status": "available",
+          "template_id": "rc_lowpass",
+          "layout_status": "not-generated",
+          "metric_source": "actual-ngspice-samples",
+          "measured_tau_s": 1.0000527327111767e-8,
+          "tau_target_fraction": 0.6321205588285577,
+          "research_metrics": {
+            "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+            "input_drivers_power": "not measured",
+            "external_bias_power": "not measured",
+            "complete_system_power_available": false,
+            "supply": {
+              "available": false,
+              "reason": "No analog supply-current trace; RTL/gate replay is not transistor power."
+            },
+            "OUT_tail": {
+              "available": true,
+              "start": 1.5e-7,
+              "end": 2e-7,
+              "integral": 8.999999394693461e-8,
+              "mean": 1.7999998789386922,
+              "rms": 1.7999998789386946,
+              "ac_rms": 9.424321830774485e-8,
+              "minimum": 1.799999393524,
+              "maximum": 1.8,
+              "peak_to_peak": 6.064760000867864e-7,
+              "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+            }
+          }
+        },
+        "waveform_summary": [
+          {
+            "name": "IN",
+            "unit": "V",
+            "x_unit": "",
+            "available": true,
+            "samples": 2022,
+            "x_start": 0,
+            "x_end": 2e-7,
+            "first": 0,
+            "last": 1.8,
+            "min": 0,
+            "max": 1.8,
+            "sample_mean": 1.782284866468845,
+            "scope": "Stored signed samples; sample mean is not a time average. Geometry does not establish current direction."
+          },
+          {
+            "name": "OUT",
+            "unit": "V",
+            "x_unit": "",
+            "available": true,
+            "samples": 2022,
+            "x_start": 0,
+            "x_end": 2e-7,
+            "first": 0,
+            "last": 1.8,
+            "min": 0,
+            "max": 1.8,
+            "sample_mean": 1.6835200706054636,
+            "scope": "Stored signed samples; sample mean is not a time average. Geometry does not establish current direction."
+          }
+        ]
+      }
+    ],
+    "limits": [
+      "Root/selected schematic connectivity is not the whole flattened hierarchy.",
+      "Selected mask bounding boxes are metadata, not extraction or electrical matching.",
+      "PDK files, model/deck text, credentials and raw waveform arrays are not sent.",
+      "AI suggestions are advisory, never engine PASS or manufacturing signoff."
+    ],
+    "references": [
+      {
+        "id": "design",
+        "kind": "design",
+        "label": "[Indust QA] AI 실제 근거 · 공개 RC 필터",
+        "target": "924793dd9f3d4003b1c9cfb76796fff3"
+      },
+      {
+        "id": "connectivity",
+        "kind": "connectivity",
+        "label": "rc_lowpass",
+        "target": "rc_lowpass"
+      },
+      {
+        "id": "device:r1",
+        "kind": "device",
+        "label": "R1",
+        "target": "r1",
+        "cell_name": null
+      },
+      {
+        "id": "device:c1",
+        "kind": "device",
+        "label": "C1",
+        "target": "c1",
+        "cell_name": null
+      },
+      {
+        "id": "device:port_IN",
+        "kind": "device",
+        "label": "PORT_IN",
+        "target": "port_IN",
+        "cell_name": null
+      },
+      {
+        "id": "device:port_OUT",
+        "kind": "device",
+        "label": "PORT_OUT",
+        "target": "port_OUT",
+        "cell_name": null
+      },
+      {
+        "id": "device:port_VGND",
+        "kind": "device",
+        "label": "PORT_VGND",
+        "target": "port_VGND",
+        "cell_name": null
+      },
+      {
+        "id": "net:IN",
+        "kind": "net",
+        "label": "IN",
+        "target": "IN"
+      },
+      {
+        "id": "net:OUT",
+        "kind": "net",
+        "label": "OUT",
+        "target": "OUT"
+      },
+      {
+        "id": "net:VGND",
+        "kind": "net",
+        "label": "VGND",
+        "target": "VGND"
+      },
+      {
+        "id": "run:babcd1f7749d45268dcc6075ee2aff6b",
+        "kind": "run",
+        "label": "simulation · r1 · completed/pass",
+        "target": "babcd1f7749d45268dcc6075ee2aff6b"
+      },
+      {
+        "id": "issue:0",
+        "kind": "issue",
+        "label": "NOT_VERIFIED",
+        "target": "0"
+      },
+      {
+        "id": "issue:1",
+        "kind": "issue",
+        "label": "NOT_VERIFIED",
+        "target": "1"
+      },
+      {
+        "id": "issue:2",
+        "kind": "issue",
+        "label": "NOT_VERIFIED",
+        "target": "2"
+      }
+    ],
+    "evidence_ids": [
+      "design",
+      "connectivity",
+      "device:r1",
+      "device:c1",
+      "device:port_IN",
+      "device:port_OUT",
+      "device:port_VGND",
+      "net:IN",
+      "net:OUT",
+      "net:VGND",
+      "run:babcd1f7749d45268dcc6075ee2aff6b",
+      "issue:0",
+      "issue:1",
+      "issue:2"
+    ],
+    "fingerprint": "158cbeeb599e7ac114d8e8cf8e1faa1bd6663021f770dbad4d0b4f5bb47c3efd"
+  },
+  "reply": {
+    "id": "741b0249-cc55-4820-a171-20c129f75fa5",
+    "question": "이 공개 RC 필터의 실제 파형 요약에 있는 OUT 전압 범위와 전류 부호를 설명해줘. 자료에 없는 전류나 전압 강하를 만들어내지 말고, DRC/LVS/PEX의 미실행 상태와 다음 확인 항목도 구분해줘.",
+    "reply": {
+      "answer": "관측된 사실: 현재 회로는 R1=10 kΩ이 IN과 OUT 사이에 있고, C1=1 pF가 OUT과 VGND 사이에 연결된 것으로 기록되어 있습니다. 실제 ngspice 과도 시뮬레이션은 완료되었으며, 제공된 파형 요약에서 OUT은 0 V에서 1.8 V 범위이고 첫 샘플 0 V, 마지막 샘플 1.8 V입니다. 이는 시뮬레이션 파형의 전압 범위이지, 별도로 명시되지 않은 전압 강하나 모든 시점의 동작을 뜻하지 않습니다. 저장된 샘플 평균값은 시간 가중 평균이 아닙니다.\n\n전류 부호: 자료에는 전류가 제공 가능하다고 표시되어 있지만, 전류 파형의 값·부호·기준 방향은 제시되지 않았습니다. 따라서 전류가 어느 방향으로 흐르는지, 부호가 양인지 음인지, 크기가 얼마인지는 설명할 수 없습니다. 회로 연결 정보만으로 실제 전류 부호를 추정하지 않았습니다.\n\n검증 상태: 현재 실행된 것은 과도 시뮬레이션이며 결과는 pass로 기록되어 있습니다. DRC, LVS, PEX는 최신 12개 실행 기록에서 완료된 현재 증거가 없다고 표시되어 있어 미검증 상태입니다. 이는 통과를 의미하지 않습니다.\n\n다음 확인: 전류 부호를 설명하려면 전류 파형의 실제 샘플과 전류 기준 방향이 필요하므로 파형을 확인하세요. 물리 구현 검증은 각각 DRC, LVS, PEX를 별도로 실행·검토해야 합니다. 레이아웃은 아직 생성되지 않았으므로 레이아웃 기반 확인 전에 레이아웃 생성 여부도 확인해야 합니다.",
+      "evidence_ids": [
+        "design",
+        "connectivity",
+        "device:r1",
+        "device:c1",
+        "net:IN",
+        "net:OUT",
+        "net:VGND",
+        "run:babcd1f7749d45268dcc6075ee2aff6b",
+        "issue:0",
+        "issue:1",
+        "issue:2"
+      ],
+      "findings": [
+        {
+          "severity": "info",
+          "title": "OUT 전압 범위",
+          "explanation": "실제 과도 시뮬레이션 요약에서 OUT의 최소값은 0 V, 최대값은 1.8 V이며 첫 샘플은 0 V, 마지막 샘플은 1.8 V입니다. 샘플 요약만으로 별도의 전압 강하를 단정할 수 없습니다.",
+          "evidence_ids": [
+            "run:babcd1f7749d45268dcc6075ee2aff6b",
+            "net:OUT"
+          ],
+          "suggested_check": "inspect_waveforms"
+        },
+        {
+          "severity": "warning",
+          "title": "전류 부호와 값은 자료에 없음",
+          "explanation": "current_flow_status가 available로 기록되어도 제공된 자료에는 전류 파형 샘플이나 기준 방향이 없습니다. 따라서 전류의 부호·방향·크기를 판단할 수 없습니다.",
+          "evidence_ids": [
+            "run:babcd1f7749d45268dcc6075ee2aff6b",
+            "device:r1"
+          ],
+          "suggested_check": "inspect_waveforms"
+        },
+        {
+          "severity": "warning",
+          "title": "DRC/LVS/PEX 미검증 및 레이아웃 미생성",
+          "explanation": "최신 12개 실행 기록에서 현재 DRC, LVS, PEX 완료 증거가 없으며, 레이아웃 상태는 not-generated입니다. 어느 항목도 통과로 볼 근거가 없습니다.",
+          "evidence_ids": [
+            "issue:0",
+            "issue:1",
+            "issue:2",
+            "connectivity"
+          ],
+          "suggested_check": "drc"
+        }
+      ],
+      "follow_up_questions": [
+        "전류 부호를 확인하려면 전류 파형 샘플과 정의된 기준 방향을 제공하거나 확인할까요?",
+        "레이아웃을 생성한 뒤 DRC/LVS/PEX를 각각 확인할 계획인가요?"
+      ],
+      "limitations": [
+        "전류 파형의 샘플, 부호 및 기준 방향이 제공되지 않았습니다.",
+        "파형 원시 배열과 PDK 모델/덱은 제공되지 않았습니다.",
+        "연결 그래프는 루트 셀 기준이며 전체 계층을 평탄화한 전기적 그래프가 아닙니다.",
+        "DRC/LVS/PEX 결과나 제조 적합성 판정을 제시할 수 없습니다."
+      ]
+    },
+    "provider": "openai",
+    "model": "gpt-6-luna",
+    "usage": {
+      "input_tokens": 2523,
+      "output_tokens": 952,
+      "total_tokens": 3475
+    },
+    "budget_reservation": {
+      "id": "61cfcd0e-0fd9-4f99-8738-73d04c835804",
+      "reserved_usd": 0.005583
+    },
+    "created_at": "2026-10-15T02:02:57.535Z"
+  },
+  "session_id": "08148b7a-3fce-4ff1-a738-c3b168d36cd5",
+  "budget_after": {
+    "cap_usd": 1,
+    "reserved_usd": 0.016295,
+    "additional_reservation_usd": 0.005583000000000001
+  },
+  "completed": true,
+  "source_sha256": "e560e5592f5bd7bd3f340a48576da92264db6c4df590e59033d284064e7468ea"
+}
