@@ -6,7 +6,7 @@ type Question={id:string;title:string;prompt:string;conditions:string[];unit:str
 type Standing={rank:number;nickname:string;member_id:string;score:number;elapsed_ms:number;days:number;self:boolean;emoji:string};
 type Attempt={id:string;day:string;deadline:number;status:string;score:number|null;correct:number|null;questions:Question[];review_available_at:number;answers:Record<string,string>|null;review:null|{questions:Question[];answers:Record<string,string>}};
 type Me={nickname:string;device_id:string;attempt:Attempt|null;standing:Standing|null;history:Attempt[];allowed_emojis:string[]};
-type Board={entries:Standing[];participants:number;mine:Standing|null;tie_break:string};
+type Board={period:'today'|'week';entries:Standing[];participants:number;mine:Standing|null;tie_break:string};
 type Info={day:string;ends_at:number;origin:string;mode:string;automatic_ai_calls:false};
 type Post={id:number;nickname:string;body:string;category:string;self:boolean;status:string;created_at:number;reactions:number;reacted:boolean;reported:boolean;reply_count:number};
 type Feed={posts:Post[];next_before:number|null};
@@ -21,7 +21,7 @@ export default function StudyLeague({initialEndpoint,identityNamespace,temporary
  const attempt=me?.attempt,expired=!!attempt&&(attempt.status==='expired'||attempt.status==='started'&&tick>=attempt.deadline);
  async function refresh(){if(!client)return;const registered=await client.hasIdentity();let snapshot:{info:Info;me:Me|null;board:Board;feed:Feed};
   try{snapshot=await client.call('league.snapshot',{period:currentPeriod.current},registered);}catch(e){if((e as {code?:string}).code!=='AUTH_REQUIRED')throw e;snapshot=await client.call('league.snapshot',{period:currentPeriod.current});}
-  if(!mounted.current||currentClient.current!==client)return;setInfo(snapshot.info);setMe(snapshot.me);setBoard(snapshot.board);setFeed(snapshot.feed);setTick(client.clock());
+  if(!mounted.current||currentClient.current!==client)return;setInfo(snapshot.info);setMe(snapshot.me);if(snapshot.board.period===currentPeriod.current)setBoard(snapshot.board);setFeed(snapshot.feed);setTick(client.clock());
  }
  useEffect(()=>{mounted.current=true;setInfo(null);setMe(null);setBoard(null);setThread(null);void refresh().then(()=>setError('')).catch(e=>setError(e.message));const timer=setInterval(()=>{if(!document.hidden&&!working.current)void refresh().catch(e=>setError(e.message));},15000);return()=>{mounted.current=false;clearInterval(timer);};},[client]);
  useEffect(()=>{if(!client)return;void client.call<Board>('league.board',{period},!!me).then(b=>{if(currentClient.current===client&&currentPeriod.current===period)setBoard(b);}).catch(e=>setError(e.message));},[period]);
