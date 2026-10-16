@@ -1,0 +1,94 @@
+name: Dedicated Edu and Indust native installers
+on:
+  workflow_dispatch:
+    inputs:
+      edu_ref:
+        description: Exact Edu source commit
+        required: true
+      indust_ref:
+        description: Exact Indust source commit
+        required: true
+      version:
+        description: Installer semantic version
+        required: true
+        default: '0.28.0'
+permissions:
+  contents: read
+concurrency:
+  group: edition-installers-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        edition: [edu, indust]
+        target:
+          - {runner: windows-2025, arch: x64, key: windows-x64}
+          - {runner: windows-11-arm, arch: arm64, key: windows-arm64}
+          - {runner: macos-15, arch: arm64, key: macos-arm64}
+          - {runner: macos-15-intel, arch: x64, key: macos-x64}
+          - {runner: ubuntu-24.04, arch: x64, key: linux-x64}
+    runs-on: ${{ matrix.target.runner }}
+    timeout-minutes: 50
+    env:
+      RESISTOR_EDITION: ${{ matrix.edition }}
+      RESISTOR_SOURCE_REVISION: ${{ matrix.edition == 'edu' && inputs.edu_ref || inputs.indust_ref }}
+      RESISTOR_BUILD_TOOLS_REVISION: ${{ github.sha }}
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.RESISTOR_SOURCE_REVISION }}
+          path: product
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          architecture: ${{ matrix.target.arch }}
+          cache: npm
+          cache-dependency-path: product/package-lock.json
+      - name: Apply explicitly recorded shared build helpers without changing product features
+        run: node scripts/edition-build-overlay.mjs product ${{ matrix.edition }} ${{ inputs.version }}
+      - name: Install source dependencies
+        working-directory: product
+        run: npm ci
+      - name: Verify native runner architecture
+        run: node -e "if(process.arch!=='${{ matrix.target.arch }}')process.exit(1)"
+      - name: Restore checksum-pinned native runtime
+        uses: actions/cache/restore@v4
+        with:
+          path: product/release/native-runtimes
+          key: edition-runtime-${{ runner.os }}-${{ matrix.target.arch }}-${{ hashFiles('scripts/native-runtime-lock.json','scripts/native-pdk-lock.json','scripts/prepare-native-runtime.mjs') }}
+      - name: Build requested edition renderer
+        working-directory: product
+        run: npm run build:${{ matrix.edition }}
+      - name: Prepare offline Python, KLayout, ngspice and public PDK
+        working-directory: product
+        run: node scripts/prepare-native-runtime.mjs
+      - uses: actions/cache/save@v4
+        with:
+          path: product/release/native-runtimes
+          key: edition-runtime-${{ runner.os }}-${{ matrix.target.arch }}-${{ hashFiles('scripts/native-runtime-lock.json','scripts/native-pdk-lock.json','scripts/prepare-native-runtime.mjs') }}
+      - name: Package, launch actual native app, verify ngspice and create installer
+        if: runner.os != 'Linux'
+        working-directory: product
+        run: node scripts/edition-native-release.mjs
+      - name: Package and verify graphical native Linux app with Xvfb
+        if: runner.os == 'Linux'
+        working-directory: product
+        run: xvfb-run -a node scripts/edition-native-release.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Resistor-${{ matrix.edition }}-${{ matrix.target.key }}
+          path: |
+            product/release/edition-installers/*
+            product/.runtime/edition-package-qa/package-*.png
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: failed-Resistor-${{ matrix.edition }}-${{ matrix.target.key }}
+          path: |
+            product/.runtime/edition-package-qa/receipt.json
+            product/.runtime/edition-package-qa/**/*.log
