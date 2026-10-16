@@ -9,12 +9,13 @@ import {getProductEdition} from './edition-workspace.mjs';
 import {stopWorker} from './worker.mjs';
 export async function verifyEditionPackage({executable,resources}){
  const edition=getProductEdition(),base=path.resolve('.runtime/edition-package-qa');await mkdir(base,{recursive:true});const workspace=await mkdtemp(path.join(base,edition.edition+'-'));
- await mkdir(path.join(workspace,'.runtime'),{recursive:true});const s=createServer();await new Promise(r=>s.listen(0,'127.0.0.1',r));const port=s.address().port;await new Promise(r=>s.close(r));
+ await mkdir(path.join(workspace,'.runtime'),{recursive:true});const s=createServer();await new Promise((resolve,reject)=>{s.once('error',reject);s.listen(edition.edition==='edu'?edition.worker_port:0,'127.0.0.1',resolve);});const port=s.address().port;await new Promise(r=>s.close(r));
  await writeFile(path.join(workspace,'.runtime/worker.json'),JSON.stringify({url:'http://127.0.0.1:'+port,token:randomBytes(32).toString('hex')}));
- const app=await _electron.launch({executablePath:executable,args:['--disable-gpu'],env:{...process.env,RESISTOR_EDITION:edition.edition,MOS_WORKSPACE:workspace,REGISTER_ENGINE_MODE:'native',REGISTER_USER_DATA:path.join(workspace,'user-data'),REGISTER_DOCKER_PATH:path.join(workspace,'no-docker'),PATH:path.dirname(process.execPath)},timeout:120000});
+ let app;
  const report={schema_version:1,product_id:edition.id,edition:edition.edition,platform:process.platform,arch:process.arch,source_revision:process.env.RESISTOR_SOURCE_REVISION||null,checked_at:new Date().toISOString(),checks:[],paid_calls:0,manufacturing_signoff:false};
  const check=(name,ok)=>{assert(ok,name);report.checks.push({name,pass:true});};
  try{
+   app=await _electron.launch({executablePath:executable,args:['--disable-gpu'],env:{...process.env,RESISTOR_EDITION:edition.edition,MOS_WORKSPACE:workspace,REGISTER_ENGINE_MODE:'native',REGISTER_USER_DATA:path.join(workspace,'user-data'),REGISTER_DOCKER_PATH:path.join(workspace,'no-docker'),PATH:path.dirname(process.execPath)},timeout:120000});
    const page=await app.firstWindow();await page.getByTestId('app-ready').waitFor({timeout:120000});if(edition.edition==='edu')await page.keyboard.press('Escape');
    const rpc=async(method,params={})=>{const r=await page.evaluate(({method,params})=>window.mos.rpc(method,params),{method,params});assert(r.ok,JSON.stringify(r.error));return r.result;};
    const context=JSON.parse(await readFile(path.join(resources,'dist/product-context.json'),'utf8')),identity=JSON.parse(await readFile(path.join(resources,'product-edition.json'),'utf8'));
@@ -32,7 +33,11 @@ export async function verifyEditionPackage({executable,resources}){
    await page.evaluate(({id,edition})=>localStorage.setItem('mos.last_project'+(edition==='edu'?'.edu':''),id),{id:p.id,edition:edition.edition});await page.reload();await page.getByTestId('app-ready').waitFor({timeout:60000});if(edition.edition==='edu')await page.keyboard.press('Escape');
    check('Project and completed result survive renderer reload',(await rpc('project.open',{project_id:p.id})).runs.some(r=>r.id===run.id));
    await page.screenshot({path:path.join(base,'package-'+edition.edition+'-'+process.platform+'-'+process.arch+'.png')});report.completed=true;
- }finally{await app.close();await stopWorker(workspace);await writeFile(path.join(base,'receipt.json'),JSON.stringify(report,null,2)+'\n');}
+ }catch(e){report.completed=false;report.error=e.message;throw e;}finally{
+   if(app){let timer;try{await Promise.race([app.close(),new Promise(resolve=>{timer=setTimeout(()=>{app.process().kill();resolve();},15000);})]);}finally{clearTimeout(timer);}}
+   try{await stopWorker(workspace);}catch(e){report.cleanup_error=e.message;}
+   await writeFile(path.join(base,'receipt.json'),JSON.stringify(report,null,2)+'\n');
+ }
  return report;
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))await verifyEditionPackage({executable:process.argv[2],resources:process.argv[3]});

@@ -17,17 +17,22 @@ on:
         type: choice
         options: [all, windows-arm64]
         default: all
+      edition:
+        description: Retry one edition or build both
+        type: choice
+        options: [both, edu, indust]
+        default: both
 permissions:
   contents: read
 concurrency:
-  group: edition-installers-${{ github.ref }}-${{ inputs.target || 'all' }}
+  group: edition-installers-${{ github.ref }}-${{ inputs.target || 'all' }}-${{ inputs.edition || 'both' }}
   cancel-in-progress: false
 jobs:
   package:
     strategy:
       fail-fast: false
       matrix:
-        edition: [edu, indust]
+        edition: ${{ fromJSON(inputs.edition == 'edu' && '["edu"]' || inputs.edition == 'indust' && '["indust"]' || '["edu","indust"]') }}
         target: ${{ fromJSON(inputs.target == 'windows-arm64' && '[{"runner":"windows-11-arm","arch":"arm64","key":"windows-arm64"}]' || '[{"runner":"windows-2025","arch":"x64","key":"windows-x64"},{"runner":"windows-11-arm","arch":"arm64","key":"windows-arm64"},{"runner":"macos-15","arch":"arm64","key":"macos-arm64"},{"runner":"macos-15-intel","arch":"x64","key":"macos-x64"},{"runner":"ubuntu-24.04","arch":"x64","key":"linux-x64"}]') }}
     runs-on: ${{ matrix.target.runner }}
     timeout-minutes: 50
