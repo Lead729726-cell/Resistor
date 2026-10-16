@@ -27,6 +27,8 @@ jobs:
           node scripts/tutorial-library-media.mjs
       - name: Validate every lesson, formula practice, mobile UI and original video
         run: npm run test:learning
+      - name: Verify distinct edition downloads and preserved common installer routes
+        run: npm run test:download-editions
   core:
     runs-on: ubuntu-latest
     timeout-minutes: 20

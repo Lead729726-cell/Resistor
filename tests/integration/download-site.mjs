@@ -14,10 +14,10 @@ if(!base){
     const redirect=config.redirects.find(r=>r.source===pathname);
     if(redirect){res.writeHead(307,{Location:redirect.destination});res.end();return;}
     const file=pathname==='/'?'index.html':pathname.slice(1);
-    if(!/^[\w.-]+$/.test(file)){res.writeHead(404);res.end();return;}
+    if(file.startsWith('.')||!/^[\w.-]+$/.test(file)){res.writeHead(404);res.end();return;}
     try{
       const body=await readFile(path.join(folder,file));
-      const types={'.html':'text/html; charset=utf-8','.js':'text/javascript','.json':'application/json','.svg':'image/svg+xml','.png':'image/png'};
+      const types={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png'};
       // The first rule now belongs to VTT subtitles; apply only global rules
       // to ordinary files, preserving their actual MIME types.
       const globalHeaders=config.headers.find(h=>h.source==='/(.*)')?.headers||[];

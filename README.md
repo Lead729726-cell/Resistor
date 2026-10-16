@@ -37,6 +37,8 @@ Mac 설치 ZIP은 두 CPU의 네이티브 뷰어·메뉴·재실행·데이터 �
 
 다운로드: https://resistor-downloads.vercel.app/
 
+[Edu 버전 다운로드](https://resistor-downloads.vercel.app/download/edu/) · [Industry 버전 다운로드](https://resistor-downloads.vercel.app/download/industry/) — 확인한 commit의 에디션별 소스 ZIP을 제공합니다. 전용 설치 파일 준비 상태와 기존 공통 설치 파일은 구분합니다. [구성과 갱신](docs/download-editions.md).
+
 [0.20 아날로그 SoC 센서 입력부 · 7개 매크로](docs/analog-soc.md): 바이어스·캐스코드 미러·Miller OTA·PGA·2극 필터·TIA·클록 동기 AFE를 제공합니다. 실제 SKY130 레이아웃과 nominal DRC/LVS/PEX/pre/post 결과, 18조건 corner sweep의 통과와 실패를 함께 제공합니다. 완성 SoC와 제조 승인은 별도입니다.
 
 [1080p 한국어 사용 가이드 · 7분 7초](https://resistor-downloads.vercel.app/tutorial/):

@@ -6,6 +6,9 @@ history that did not previously exist. Existing detailed verification remains in
 
 ## Unreleased — Resistor lecture studio, editor and assistant (2026-10-16)
 
+- Separate public Edu/Industry download pages and verified commit-pinned source ZIPs, with unpublished native-installer states and unchanged historical common installers. Validate the full static deployment list to preserve tutorials and exclude private files.
+
+
 - Shared lecture studio for Indust/Edu: public RC/layout/inverter demo plans, separate presenter notes, non-destructive focus, large controls, instructor handout and engine-linked session exports.
 - Explicit browser screen/microphone capture with local video/chapters, real source settings, permission denial and stream cleanup; OBS guidance for desktop apps. Lecture progress never changes engine verification.
 

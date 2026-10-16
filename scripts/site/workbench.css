@@ -86,6 +86,26 @@ summary { cursor: pointer; }
 .wb-editions p,.wb-editions li { color: var(--muted); font-size: 14px; }
 .wb-editions ul { padding-left: 20px; line-height: 2; }
 .wb-editions article>code { display: block; margin: 12px 0 0; padding: 10px; }
+.wb-edition-downloads { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px; }
+.wb-edition-downloads article { min-width:0;padding:22px;border:1px solid var(--line);border-radius:8px;background:var(--surface); }
+.wb-edition-downloads h3 { margin:4px 0 10px;font-size:25px;line-height:1.4;letter-spacing:-.025em; }
+.wb-edition-downloads .button { margin-top:18px; }
+.wb-edition-downloads .wb-note { margin-bottom:0; }
+.wb-edition-status { margin:24px 0;padding:16px 20px;border-left:3px solid var(--accent);background:var(--surface); }
+.wb-edition-status p { margin:6px 0 0; }
+.wb-edition-source { display:grid;grid-template-columns:1fr 1fr;gap:32px;padding:12px 0 28px; }
+.wb-edition-source>div { min-width:0; }
+.wb-edition-source h2 { font-size:20px;line-height:1.5; }
+.wb-edition-source pre { margin:14px 0; }
+.wb-edition-source code { font-size:14px;line-height:1.9; }
+.wb-edition-source .button { max-width:360px; }
+.wb-edition-platforms { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px; }
+.wb-edition-platforms article { min-width:0;padding:14px;border:1px solid var(--line);border-radius:7px; }
+.wb-edition-platforms h3 { margin:0;font-size:17px; }
+.wb-edition-platforms p { font-size:12px; }
+.wb-pending { display:inline-block;border:1px solid var(--line);border-radius:4px;padding:3px 7px;font-size:11px;color:var(--muted); }
+@media(max-width:760px) { .wb-edition-downloads,.wb-edition-source { grid-template-columns:minmax(0,1fr);gap:16px; }.wb-edition-platforms { grid-template-columns:repeat(2,minmax(0,1fr)); }.wb-edition-downloads article { padding:18px; } }
+@media(max-width:430px) { .wb-edition-platforms { grid-template-columns:minmax(0,1fr); } }
 .wb-inline-code { display: inline; }
 .wb-doc-body { padding: 0 !important; max-width: none !important; }
 .wb-doc-body>main { color: var(--text); overflow-wrap: anywhere; }
