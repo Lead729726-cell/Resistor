@@ -15,7 +15,14 @@ const artifact=files.find(p=>path.basename(p)===receipt.file);assert(artifact,'M
 await mkdir('.runtime/installer-execution',{recursive:true});const workspace=await mkdtemp(path.resolve('.runtime/installer-execution/'+edition.edition+'-')),name=edition.edition==='edu'?'Resistor Edu':'Resistor';
 let installed;
 if(process.platform==='win32'){
-  installed=path.join(workspace,'installed');await run(artifact,['/S','/D='+installed]);await access(path.join(installed,name+'.exe'));
+  // Use a fresh disposable runner's normal per-user installation path. This
+  // exercises the download's default install rather than an NSIS /D parser.
+  if(process.env.GITHUB_ACTIONS!=='true'||!process.env.LOCALAPPDATA)throw Error('Windows installer execution requires a disposable CI runner.');
+  installed=path.join(process.env.LOCALAPPDATA,'Programs',name);
+  try{await access(installed);throw Error('Refusing to replace an existing user installation during QA.');}catch(e){if(e.code!=='ENOENT')throw e;}
+  // On Windows wait for the installer and all descendant processes.
+  await run('powershell.exe',['-NoLogo','-NoProfile','-NonInteractive','-Command',"$installerProcess = Start-Process -FilePath $env:RESISTOR_QA_INSTALLER -ArgumentList '/S' -WindowStyle Hidden -Wait -PassThru; if ($installerProcess.ExitCode -ne 0) { exit $installerProcess.ExitCode }"],{...process.env,RESISTOR_QA_INSTALLER:artifact});
+  await access(path.join(installed,name+'.exe'));
 }else{
   const extracted=path.join(workspace,'extracted'),qaHome=path.join(workspace,'user');await mkdir(extracted);await mkdir(qaHome);
   if(process.platform==='darwin')await run('/usr/bin/ditto',['-x','-k',artifact,extracted]);else await run('tar',['-xzf',artifact,'-C',extracted]);
