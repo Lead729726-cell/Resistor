@@ -3,6 +3,8 @@ export interface ShortcutEvent {key:string;code?:string;ctrlKey?:boolean;metaKey
 export interface ShortcutContext {apple?:boolean;textEditing?:boolean;modalOpen?:boolean;readOnly?:boolean;pending?:boolean;drawing?:boolean}
 export interface ShortcutDefinition {id:string;scope:ShortcutScope;keys:string[];label:string;note?:string;mutates?:boolean;drawingOnly?:boolean;allowText?:boolean}
 export const shortcutDefinitions:ShortcutDefinition[]=[
+ {id:'lecture_open',scope:'global',keys:['Primary+Shift+F9'],label:'강의 스튜디오 열기',note:'강의 진행안·강사 메모·녹화 준비'},
+ {id:'lecture_focus',scope:'global',keys:['F8'],label:'강의 작업 화면 집중 전환',note:'탐색·속성·하단 결과를 잠시 접습니다. 해제하면 원래 설정으로 돌아갑니다.'},
  {id:'help',scope:'global',keys:['F1','?','Primary+/'],label:'단축키 안내',note:'F1은 입력 칸에서도 안내를 엽니다.'},
  {id:'new',scope:'global',keys:['Primary+N'],label:'새 프로젝트'},
  {id:'open',scope:'global',keys:['Primary+O'],label:'프로젝트 열기'},

@@ -4,7 +4,10 @@ This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
 `docs/evidence/` and the example READMEs. Package version: 0.27.0.
 
-## Unreleased — Resistor Indust editor and assistant (2026-10-15)
+## Unreleased — Resistor lecture studio, editor and assistant (2026-10-16)
+
+- Shared lecture studio for Indust/Edu: public RC/layout/inverter demo plans, separate presenter notes, non-destructive focus, large controls, instructor handout and engine-linked session exports.
+- Explicit browser screen/microphone capture with local video/chapters, real source settings, permission denial and stream cleanup; OBS guidance for desktop apps. Lecture progress never changes engine verification.
 
 - Revision/evidence-pinned conversational assistant, local server-owned history, bounded validated follow-up context and evidence links to actual design/result screens.
 - Selected-cell/device/mask metadata, signed stored waveform/current statistics and same-grid node voltage drops; deterministic model-free diagnostics remain distinct from AI advice.
