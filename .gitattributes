@@ -16,6 +16,12 @@
 *.jpg binary
 *.webm binary
 *.glb binary
+# Solver evidence and downloadable copies retain the exact native output bytes.
+examples/oscillator-lab/** -text whitespace=cr-at-eol,-blank-at-eof
+platform/download-site/oscillator-assets/** -text whitespace=cr-at-eol,-blank-at-eof
+examples/oscillator-lab/**/*.dat binary
+platform/download-site/oscillator-assets/**/*.dat binary
+workers/eda/literature.json text eol=lf
 # Native artifact checksums describe bytes, including original line endings.
 examples/physical-library/** -text whitespace=-blank-at-eof
 examples/physical-library/**/lvs.log -whitespace

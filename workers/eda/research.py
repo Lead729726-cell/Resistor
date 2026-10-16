@@ -16,6 +16,8 @@ def sources():
 
 
 def references(kind):
+    if kind.startswith('osc_'):
+        return ['ti-schmitt-2025', 'ti-relaxation-2024']
     if kind.startswith('cell_') or kind == 'mux4':
         return ['ez130-2026', 'zlibboost-2026']
     if kind in ('full_adder', 'adder4', 'adder16', 'cpu4', 'cpu16'):
@@ -33,7 +35,7 @@ def record(kind):
     document = sources()
     by_id = {p['id']: p for p in document['papers']}
     ids = references(kind)
-    return dict(schema_version=1, review_version=VERSION, reviewed_at=document['reviewed_at'],
+    return dict(schema_version=1, review_version=VERSION, reviewed_at='2026-10-16' if kind.startswith('osc_') else document['reviewed_at'],
                 reference_ids=ids, references=[copy.deepcopy(by_id[i]) for i in ids],
                 relationship='method-inspired review; existing owned circuits, not a reproduction of the cited chips',
                 paper_performance_reproduced=False,

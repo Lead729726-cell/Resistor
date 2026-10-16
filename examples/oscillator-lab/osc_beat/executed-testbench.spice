@@ -1,0 +1,103 @@
+Resistor actual oscillator osc_beat
+.options method=gear maxord=2
+.include "D:/Coldbrew/Resistor/.runtime/oscillator-lab/run-56zT85/.runtime/eda/runs/7f8975245125426683143670abb55614/supported-tt.spice"
+.option scale=1e-6
+.include "D:/Coldbrew/Resistor/.runtime/oscillator-lab/run-56zT85/.runtime/eda/runs/7f8975245125426683143670abb55614/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+.ic v(xu.REFERENCE.Q0)=0.18 v(xu.REFERENCE.Q1)=1.62
+.ic v(xu.SENSOR.Q0)=0.36 v(xu.SENSOR.Q1)=1.62
+XU REF SENSE XOR OUT VPWR VGND osc_beat
+.control
+save v(OUT) i(VDD) v(REF) v(SENSE) v(XOR) i(v.xu.vregister_cf_100664637cea0b0f) i(v.xu.vregister_cf_e15ed6c1990868dc) i(v.xu.xphase_detector.xn1.vregister_cf_377cff7a8fc053f0) i(v.xu.xphase_detector.xn1.vregister_cf_12c0ec391985518a) i(v.xu.xphase_detector.xn1.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xphase_detector.xn1.vregister_cf_092f3ee2a80b5958) i(v.xu.xphase_detector.xn2.vregister_cf_377cff7a8fc053f0) i(v.xu.xphase_detector.xn2.vregister_cf_12c0ec391985518a) i(v.xu.xphase_detector.xn2.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xphase_detector.xn2.vregister_cf_092f3ee2a80b5958) i(v.xu.xphase_detector.xn3.vregister_cf_377cff7a8fc053f0) i(v.xu.xphase_detector.xn3.vregister_cf_12c0ec391985518a) i(v.xu.xphase_detector.xn3.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xphase_detector.xn3.vregister_cf_092f3ee2a80b5958) i(v.xu.xphase_detector.xn4.vregister_cf_377cff7a8fc053f0) i(v.xu.xphase_detector.xn4.vregister_cf_12c0ec391985518a) i(v.xu.xphase_detector.xn4.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xphase_detector.xn4.vregister_cf_092f3ee2a80b5958) i(v.xu.xreference.vregister_cf_23e282ac17be3594) i(v.xu.xreference.vregister_cf_e7f12d16de0f538b) i(v.xu.xreference.vregister_cf_10397456457a35b8) i(v.xu.xreference.vregister_cf_0a1393b5fb2bb13d) i(v.xu.xreference.vregister_cf_1cd8b50ed0c1ca16) i(v.xu.xreference.vregister_cf_c8a4c7e0398c946d) i(v.xu.xreference.vregister_cf_9086f9b0fca90efa) i(v.xu.xreference.vregister_cf_df1bf854d7cfbb66) i(v.xu.xreference.vregister_cf_03ac3cf24c77c11f) i(v.xu.xreference.vregister_cf_9c20b02c5b18222f) i(v.xu.xreference.vregister_cf_9f1987f08c5c902e) i(v.xu.xreference.vregister_cf_b758beab8752c363) i(v.xu.xreference.vregister_cf_a76f1b72797051fd) i(v.xu.xreference.vregister_cf_914a306a1dc94b2f) i(v.xu.xreference.vregister_cf_d8b24bb7272a392a) i(v.xu.xsensor.vregister_cf_7114c8d0c69fb239) i(v.xu.xsensor.vregister_cf_fc6d95da015806e6) i(v.xu.xsensor.vregister_cf_4a54e3a68f9a2fe7) i(v.xu.xsensor.vregister_cf_c95579e3fdc19a80) i(v.xu.xsensor.vregister_cf_9de517ac4758d6ed) i(v.xu.xsensor.vregister_cf_0c1f5dafa43d9c71) i(v.xu.xsensor.vregister_cf_688614c17e6f2c3a) i(v.xu.xsensor.vregister_cf_2c3225541e85b135) i(v.xu.xsensor.vregister_cf_8446d7094663325f) i(v.xu.xsensor.vregister_cf_2d9e689011f58c06) i(v.xu.xsensor.vregister_cf_1f316d32eed4b6a8) i(v.xu.xsensor.vregister_cf_f55c3908212c7afd) i(v.xu.xsensor.vregister_cf_ba8d8797eac2604c) i(v.xu.xsensor.vregister_cf_d34a458f6dcc7984) i(v.xu.xsensor.vregister_cf_df2cd43d67050c80) i(VGND) v(VGND) v(XU.XPHASE_DETECTOR.N1) v(XU.XPHASE_DETECTOR.XN1.N1) v(VPWR) v(XU.XPHASE_DETECTOR.N2) v(XU.XPHASE_DETECTOR.XN2.N1) v(XU.XPHASE_DETECTOR.N3) v(XU.XPHASE_DETECTOR.XN3.N1) v(XU.XPHASE_DETECTOR.XN4.N1) v(XU.XREFERENCE.Q0) v(XU.XREFERENCE.Q1) v(XU.XREFERENCE.Q2) v(XU.XREFERENCE.Q3) v(XU.XSENSOR.Q0) v(XU.XSENSOR.Q1) v(XU.XSENSOR.Q2) v(XU.XSENSOR.Q3)
+set num_threads=1
+set numdgt=17
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 5e-10 2e-06 uic
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(REF)
+let mos_wave_3 = v(SENSE)
+let mos_wave_4 = v(XOR)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3 mos_wave_4
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_100664637cea0b0f)
+let register_flow_1 = i(v.xu.vregister_cf_e15ed6c1990868dc)
+let register_flow_2 = i(v.xu.xphase_detector.xn1.vregister_cf_377cff7a8fc053f0)
+let register_flow_3 = i(v.xu.xphase_detector.xn1.vregister_cf_12c0ec391985518a)
+let register_flow_4 = i(v.xu.xphase_detector.xn1.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_5 = i(v.xu.xphase_detector.xn1.vregister_cf_092f3ee2a80b5958)
+let register_flow_6 = i(v.xu.xphase_detector.xn2.vregister_cf_377cff7a8fc053f0)
+let register_flow_7 = i(v.xu.xphase_detector.xn2.vregister_cf_12c0ec391985518a)
+let register_flow_8 = i(v.xu.xphase_detector.xn2.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_9 = i(v.xu.xphase_detector.xn2.vregister_cf_092f3ee2a80b5958)
+let register_flow_10 = i(v.xu.xphase_detector.xn3.vregister_cf_377cff7a8fc053f0)
+let register_flow_11 = i(v.xu.xphase_detector.xn3.vregister_cf_12c0ec391985518a)
+let register_flow_12 = i(v.xu.xphase_detector.xn3.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_13 = i(v.xu.xphase_detector.xn3.vregister_cf_092f3ee2a80b5958)
+let register_flow_14 = i(v.xu.xphase_detector.xn4.vregister_cf_377cff7a8fc053f0)
+let register_flow_15 = i(v.xu.xphase_detector.xn4.vregister_cf_12c0ec391985518a)
+let register_flow_16 = i(v.xu.xphase_detector.xn4.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_17 = i(v.xu.xphase_detector.xn4.vregister_cf_092f3ee2a80b5958)
+let register_flow_18 = i(v.xu.xreference.vregister_cf_23e282ac17be3594)
+let register_flow_19 = i(v.xu.xreference.vregister_cf_e7f12d16de0f538b)
+let register_flow_20 = i(v.xu.xreference.vregister_cf_10397456457a35b8)
+let register_flow_21 = i(v.xu.xreference.vregister_cf_0a1393b5fb2bb13d)
+let register_flow_22 = i(v.xu.xreference.vregister_cf_1cd8b50ed0c1ca16)
+let register_flow_23 = i(v.xu.xreference.vregister_cf_c8a4c7e0398c946d)
+let register_flow_24 = i(v.xu.xreference.vregister_cf_9086f9b0fca90efa)
+let register_flow_25 = i(v.xu.xreference.vregister_cf_df1bf854d7cfbb66)
+let register_flow_26 = i(v.xu.xreference.vregister_cf_03ac3cf24c77c11f)
+let register_flow_27 = i(v.xu.xreference.vregister_cf_9c20b02c5b18222f)
+let register_flow_28 = i(v.xu.xreference.vregister_cf_9f1987f08c5c902e)
+let register_flow_29 = i(v.xu.xreference.vregister_cf_b758beab8752c363)
+let register_flow_30 = i(v.xu.xreference.vregister_cf_a76f1b72797051fd)
+let register_flow_31 = i(v.xu.xreference.vregister_cf_914a306a1dc94b2f)
+let register_flow_32 = i(v.xu.xreference.vregister_cf_d8b24bb7272a392a)
+let register_flow_33 = i(v.xu.xsensor.vregister_cf_7114c8d0c69fb239)
+let register_flow_34 = i(v.xu.xsensor.vregister_cf_fc6d95da015806e6)
+let register_flow_35 = i(v.xu.xsensor.vregister_cf_4a54e3a68f9a2fe7)
+let register_flow_36 = i(v.xu.xsensor.vregister_cf_c95579e3fdc19a80)
+let register_flow_37 = i(v.xu.xsensor.vregister_cf_9de517ac4758d6ed)
+let register_flow_38 = i(v.xu.xsensor.vregister_cf_0c1f5dafa43d9c71)
+let register_flow_39 = i(v.xu.xsensor.vregister_cf_688614c17e6f2c3a)
+let register_flow_40 = i(v.xu.xsensor.vregister_cf_2c3225541e85b135)
+let register_flow_41 = i(v.xu.xsensor.vregister_cf_8446d7094663325f)
+let register_flow_42 = i(v.xu.xsensor.vregister_cf_2d9e689011f58c06)
+let register_flow_43 = i(v.xu.xsensor.vregister_cf_1f316d32eed4b6a8)
+let register_flow_44 = i(v.xu.xsensor.vregister_cf_f55c3908212c7afd)
+let register_flow_45 = i(v.xu.xsensor.vregister_cf_ba8d8797eac2604c)
+let register_flow_46 = i(v.xu.xsensor.vregister_cf_d34a458f6dcc7984)
+let register_flow_47 = i(v.xu.xsensor.vregister_cf_df2cd43d67050c80)
+let register_flow_48 = i(VGND)
+let register_flow_49 = i(VDD)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13 register_flow_14 register_flow_15 register_flow_16 register_flow_17 register_flow_18 register_flow_19 register_flow_20 register_flow_21 register_flow_22 register_flow_23 register_flow_24 register_flow_25 register_flow_26 register_flow_27 register_flow_28 register_flow_29 register_flow_30 register_flow_31 register_flow_32 register_flow_33 register_flow_34 register_flow_35 register_flow_36 register_flow_37 register_flow_38 register_flow_39 register_flow_40 register_flow_41 register_flow_42 register_flow_43 register_flow_44 register_flow_45 register_flow_46 register_flow_47 register_flow_48 register_flow_49
+let register_voltage_0 = v(OUT)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(XOR)
+let register_voltage_3 = v(XU.XPHASE_DETECTOR.N1)
+let register_voltage_4 = v(XU.XPHASE_DETECTOR.XN1.N1)
+let register_voltage_5 = v(REF)
+let register_voltage_6 = v(SENSE)
+let register_voltage_7 = v(VPWR)
+let register_voltage_8 = v(XU.XPHASE_DETECTOR.N2)
+let register_voltage_9 = v(XU.XPHASE_DETECTOR.XN2.N1)
+let register_voltage_10 = v(XU.XPHASE_DETECTOR.N3)
+let register_voltage_11 = v(XU.XPHASE_DETECTOR.XN3.N1)
+let register_voltage_12 = v(XU.XPHASE_DETECTOR.XN4.N1)
+let register_voltage_13 = v(XU.XREFERENCE.Q0)
+let register_voltage_14 = v(XU.XREFERENCE.Q1)
+let register_voltage_15 = v(XU.XREFERENCE.Q2)
+let register_voltage_16 = v(XU.XREFERENCE.Q3)
+let register_voltage_17 = v(XU.XSENSOR.Q0)
+let register_voltage_18 = v(XU.XSENSOR.Q1)
+let register_voltage_19 = v(XU.XSENSOR.Q2)
+let register_voltage_20 = v(XU.XSENSOR.Q3)
+let register_voltage_21 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11 register_voltage_12 register_voltage_13 register_voltage_14 register_voltage_15 register_voltage_16 register_voltage_17 register_voltage_18 register_voltage_19 register_voltage_20 register_voltage_21
+quit
+.endc
+.end

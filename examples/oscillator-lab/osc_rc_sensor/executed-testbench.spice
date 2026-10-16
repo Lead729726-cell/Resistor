@@ -1,0 +1,50 @@
+Resistor actual oscillator osc_rc_sensor
+.options method=gear maxord=2
+.include "D:/Coldbrew/Resistor/.runtime/oscillator-lab/run-56zT85/.runtime/eda/runs/63b24ef967dd4faa8599ae4142c20bdb/supported-tt.spice"
+.option scale=1e-6
+.include "D:/Coldbrew/Resistor/.runtime/oscillator-lab/run-56zT85/.runtime/eda/runs/63b24ef967dd4faa8599ae4142c20bdb/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+.ic v(CAP)=0 v(xu.HYST)=0
+XU OUT CAP VPWR VGND osc_rc_sensor
+.control
+save v(OUT) i(VDD) v(CAP) v(xu.HYST) v(xu.SUM) i(v.xu.vregister_cf_184685c24c786b9b) i(v.xu.vregister_cf_d7dc8e03636ddbea) i(v.xu.vregister_cf_61e42e5265765546) i(v.xu.vregister_cf_e677eaf029fc858e) i(v.xu.vregister_cf_e12078a1bc3f10ba) i(v.xu.vregister_cf_8fa5d742f172ca89) i(v.xu.vregister_cf_3d31ef0a8fa1d409) i(v.xu.vregister_cf_386ce7435c096b63) i(v.xu.vregister_cf_5b198fadcc5607fe) i(v.xu.vregister_cf_49bd0a3c65099150) i(VGND) v(VGND) v(XU.MID) v(XU.SUM) v(VPWR) v(XU.HYST)
+set num_threads=1
+set numdgt=17
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 4e-09 4e-05 uic
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(CAP)
+let mos_wave_3 = v(xu.HYST)
+let mos_wave_4 = v(xu.SUM)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3 mos_wave_4
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_184685c24c786b9b)
+let register_flow_1 = i(v.xu.vregister_cf_d7dc8e03636ddbea)
+let register_flow_2 = i(v.xu.vregister_cf_61e42e5265765546)
+let register_flow_3 = i(v.xu.vregister_cf_e677eaf029fc858e)
+let register_flow_4 = i(v.xu.vregister_cf_e12078a1bc3f10ba)
+let register_flow_5 = i(v.xu.vregister_cf_8fa5d742f172ca89)
+let register_flow_6 = i(v.xu.vregister_cf_3d31ef0a8fa1d409)
+let register_flow_7 = i(v.xu.vregister_cf_386ce7435c096b63)
+let register_flow_8 = i(v.xu.vregister_cf_5b198fadcc5607fe)
+let register_flow_9 = i(v.xu.vregister_cf_49bd0a3c65099150)
+let register_flow_10 = i(VGND)
+let register_flow_11 = i(VDD)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11
+let register_voltage_0 = v(CAP)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(XU.MID)
+let register_voltage_3 = v(XU.SUM)
+let register_voltage_4 = v(VPWR)
+let register_voltage_5 = v(XU.HYST)
+let register_voltage_6 = v(OUT)
+let register_voltage_7 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7
+quit
+.endc
+.end

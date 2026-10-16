@@ -6,6 +6,10 @@ history that did not previously exist. Existing detailed verification remains in
 
 ## Unreleased — Resistor lecture studio, editor and assistant (2026-10-16)
 
+- Add four shared SKY130 oscillator projects: five-stage ring, resistor-feedback RC capacitance sensor, dual-ring XOR beat detector and enable-controlled burst clock. Expose them in Indust starter/template UI with actual frequency, duty, switching-level and signed-power measurements.
+- Qualify 19 native oscillator/sensor runs plus a PDK-free ideal RC regression; exercise TT/SS/FF, editable bundle reruns, C/load trends and stale revision handling. Preserve named waveform criteria separately from unexecuted physical/noise/signoff checks.
+- Publish project ZIPs, original solver data, a recorded real app workflow and the oscillator tutorial. These require the latest source adapter; existing 0.28 installers are unchanged.
+
 - Separate public Edu/Industry download pages and verified commit-pinned source ZIPs, with unpublished native-installer states and unchanged historical common installers. Validate the full static deployment list to preserve tutorials and exclude private files.
 
 

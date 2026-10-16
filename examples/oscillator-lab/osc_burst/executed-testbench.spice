@@ -1,0 +1,63 @@
+Resistor actual oscillator osc_burst
+.options method=gear maxord=2
+.include "D:/Coldbrew/Resistor/.runtime/oscillator-lab/run-56zT85/.runtime/eda/runs/bb399326f9be42a095720fe39875e28e/supported-tt.spice"
+.option scale=1e-6
+.include "D:/Coldbrew/Resistor/.runtime/oscillator-lab/run-56zT85/.runtime/eda/runs/bb399326f9be42a095720fe39875e28e/current-probe.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VPWR VGND 1.8
+.ic v(xu.Q0)=0.18 v(xu.Q1)=1.62 v(OUT)=0.36
+VEN EN VGND PWL(0 0 4e-07 0 4.008e-07 1.8 2.8e-06 1.8 2.8008e-06 0 4e-06 0 4.0008e-06 1.8 6.4e-06 1.8 6.4008e-06 0 8e-06 0)
+XU EN OUT VPWR VGND osc_burst
+.control
+save v(OUT) i(VDD) v(EN) v(xu.Q0) v(xu.Q1) v(xu.Q2) v(xu.Q3) i(v.xu.vregister_cf_d88cd6bc0d72e552) i(v.xu.vregister_cf_a81057a9e5a7a057) i(v.xu.vregister_cf_f05d625564f9350b) i(v.xu.vregister_cf_2eb224fcda972b3f) i(v.xu.vregister_cf_e31332786c8f7cd3) i(v.xu.vregister_cf_f23f0b94addcc47e) i(v.xu.vregister_cf_7cfde47fe05b0dcb) i(v.xu.vregister_cf_a3e30b4178eb1045) i(v.xu.vregister_cf_45d16f769c15c555) i(v.xu.vregister_cf_0cc6e1ed864a85b4) i(v.xu.vregister_cf_603767cf8cb3e51a) i(v.xu.vregister_cf_86aaa4cbb741424d) i(v.xu.vregister_cf_65ab36a42126edba) i(v.xu.xenable_gate.vregister_cf_377cff7a8fc053f0) i(v.xu.xenable_gate.vregister_cf_12c0ec391985518a) i(v.xu.xenable_gate.vregister_cf_1c0f6f4ae9f406c8) i(v.xu.xenable_gate.vregister_cf_092f3ee2a80b5958) i(VGND) i(VEN) v(XU.Q0) v(VGND) v(XU.Q1) v(XU.Q2) v(XU.Q3) v(VPWR) v(XU.XENABLE_GATE.N1)
+set num_threads=1
+set numdgt=17
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 8e-10 8e-06 uic
+let mos_wave_0 = v(OUT)
+let mos_wave_1 = -i(VDD)
+let mos_wave_2 = v(EN)
+let mos_wave_3 = v(xu.Q0)
+let mos_wave_4 = v(xu.Q1)
+let mos_wave_5 = v(xu.Q2)
+let mos_wave_6 = v(xu.Q3)
+wrdata waveform.dat mos_wave_0 mos_wave_1 mos_wave_2 mos_wave_3 mos_wave_4 mos_wave_5 mos_wave_6
+write waveform.raw all
+let register_flow_0 = i(v.xu.vregister_cf_d88cd6bc0d72e552)
+let register_flow_1 = i(v.xu.vregister_cf_a81057a9e5a7a057)
+let register_flow_2 = i(v.xu.vregister_cf_f05d625564f9350b)
+let register_flow_3 = i(v.xu.vregister_cf_2eb224fcda972b3f)
+let register_flow_4 = i(v.xu.vregister_cf_e31332786c8f7cd3)
+let register_flow_5 = i(v.xu.vregister_cf_f23f0b94addcc47e)
+let register_flow_6 = i(v.xu.vregister_cf_7cfde47fe05b0dcb)
+let register_flow_7 = i(v.xu.vregister_cf_a3e30b4178eb1045)
+let register_flow_8 = i(v.xu.vregister_cf_45d16f769c15c555)
+let register_flow_9 = i(v.xu.vregister_cf_0cc6e1ed864a85b4)
+let register_flow_10 = i(v.xu.vregister_cf_603767cf8cb3e51a)
+let register_flow_11 = i(v.xu.vregister_cf_86aaa4cbb741424d)
+let register_flow_12 = i(v.xu.vregister_cf_65ab36a42126edba)
+let register_flow_13 = i(v.xu.xenable_gate.vregister_cf_377cff7a8fc053f0)
+let register_flow_14 = i(v.xu.xenable_gate.vregister_cf_12c0ec391985518a)
+let register_flow_15 = i(v.xu.xenable_gate.vregister_cf_1c0f6f4ae9f406c8)
+let register_flow_16 = i(v.xu.xenable_gate.vregister_cf_092f3ee2a80b5958)
+let register_flow_17 = i(VGND)
+let register_flow_18 = i(VDD)
+let register_flow_19 = i(VEN)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11 register_flow_12 register_flow_13 register_flow_14 register_flow_15 register_flow_16 register_flow_17 register_flow_18 register_flow_19
+let register_voltage_0 = v(XU.Q0)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(XU.Q1)
+let register_voltage_3 = v(XU.Q2)
+let register_voltage_4 = v(XU.Q3)
+let register_voltage_5 = v(OUT)
+let register_voltage_6 = v(VPWR)
+let register_voltage_7 = v(XU.XENABLE_GATE.N1)
+let register_voltage_8 = v(EN)
+let register_voltage_9 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9
+quit
+.endc
+.end

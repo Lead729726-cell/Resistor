@@ -1,0 +1,22 @@
+.subckt NAND2 A0 A1 Y VPWR VGND
+XMN0 Y A0 N1 VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMN1 N1 A1 VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMP0 Y A0 VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XMP1 Y A1 VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+.ends NAND2
+.subckt osc_burst EN OUT VPWR VGND
+CC_STAGE0 Q0 VGND 2e-12
+CC_STAGE1 Q1 VGND 2e-12
+CC_STAGE2 Q2 VGND 2e-12
+CC_STAGE3 Q3 VGND 2e-12
+CC_STAGE4 OUT VGND 2e-12
+XENABLE_GATE OUT EN Q0 VPWR VGND NAND2
+XINV1N Q1 Q0 VGND VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+XINV1P Q1 Q0 VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+XINV2N Q2 Q1 VGND VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+XINV2P Q2 Q1 VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+XINV3N Q3 Q2 VGND VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+XINV3P Q3 Q2 VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+XINV4N OUT Q3 VGND VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+XINV4P OUT Q3 VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+.ends osc_burst

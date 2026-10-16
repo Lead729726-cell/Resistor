@@ -26,6 +26,7 @@ import analog_soc
 import floorplan
 import sar_adc
 import research
+import oscillator_projects
 
 S = None
 VERSION = 'register-design-tools-2'
@@ -241,6 +242,7 @@ CATALOG.update(sigma_delta.CATALOG)
 CATALOG.update(analog_soc.CATALOG)
 sar_adc.populate_catalog()
 CATALOG.update(sar_adc.CATALOG)
+CATALOG.update(oscillator_projects.CATALOG)
 
 def catalog():
     return {'schema_version':1,'literature':research.inventory([dict(id=k,**v) for k,v in CATALOG.items()],digital_units.CATALOG),'templates':[{'id':key,**copy.deepcopy(value),'research':research.record(key),'limits':['Actual native schematic and public ngspice models; no commercial execution claim.','Empty layout is not physically verified.','Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library.']} for key,value in CATALOG.items()]}
@@ -258,6 +260,7 @@ def _parameters(template,raw):
     if template=='mux4':
         if not .5<=values['slot_ns']<=1000 or not .01<=values['rise_ns']<=values['slot_ns']*.1:raise EDAError('PARAMETER_RANGE','MUX slot must be 0.5..1000ns and rise 0.01ns..10% of slot.')
     if 'w_um' in values:native.validate_device({'id':'probe','name':'N','kind':'nmos','model':'sky130_fd_pr__nfet_01v8','pins':dict.fromkeys(('D','G','S','B'),'0'),'parameters':{'w_um':values['w_um'],'l_um':values['l_um'],'nf':1,'m':1}})
+    if template in oscillator_projects.CATALOG:return oscillator_projects.parameters(template,values)
     if template in sigma_delta.CATALOG:return sigma_delta.parameters(template,values)
     if template in analog_soc.CATALOG:return analog_soc.parameters(template,values)
     if template in sar_adc.CATALOG:return sar_adc.parameters(template,values)
@@ -265,6 +268,7 @@ def _parameters(template,raw):
     return chip_references.parameters(template,values) if template in chip_references.CATALOG else values
 
 def _schematic(template,params):
+    if template in oscillator_projects.CATALOG:return oscillator_projects.schematic(template,params)
     if template in sar_adc.CATALOG:return sar_adc.schematic(template,params)
     if template in analog_soc.CATALOG:return analog_soc.schematic(template,params)
     if template in sigma_delta.CATALOG:return sigma_delta.schematic(template,params)
@@ -330,7 +334,7 @@ def create_template(params):
             new_physical=new_physical or (template in sar_adc.CATALOG and sar_adc.CATALOG[template]['physical_supported'])
             if physical and not new_physical and template not in ('current_mirror','differential_pair','mux4'):raise EDAError('UNSUPPORTED_PHYSICAL','No physical adapter for this template.')
             if physical and not new_physical and (values['w_um']!=.65 or values['l_um']!=.15):raise EDAError('UNSUPPORTED_PHYSICAL','Legacy core requires exact fixed W=0.65um L=0.15um.')
-            model_resources('tt')
+            if template!='rc_lowpass':model_resources('tt')
             name=params.get('name',CATALOG[template]['name'])
             if not isinstance(name,str) or not 1<=len(name)<=160 or any(ord(c)<32 for c in name):raise EDAError('INVALID_NAME','Project name must be a bounded plain string.')
             pid=uuid.uuid4().hex;cell=template;layout=k.Layout();layout.dbu=.001;layout.create_cell(cell);layout.layer(68,20)
@@ -368,6 +372,9 @@ def create_template(params):
             if template in sar_adc.CATALOG:
                 p['testbench']=sar_adc.recommended_settings(values)
                 meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True,adc_output_bits=8,adc_effective_resolution='not-measured',adc_architecture='charge-redistribution-SAR')
+            if template in oscillator_projects.CATALOG:
+                p['testbench']=native.testbench(oscillator_projects.settings(template,values))
+                meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True,subsystem='oscillator-sensor-lab',startup='explicit-initial-conditions',phase_noise='not-measured')
             if starter:
                 p.update(testbench=copy.deepcopy(starter['testbench']),semiconductor_starter=copy.deepcopy(starter['metadata']))
             return S.commit(p,layout)
@@ -410,6 +417,7 @@ def _stimuli(p,settings):
     return sources,names,vectors,units,sweep
 
 def pvt_sources(p):
+    if p.get('design_template',{}).get('id') in oscillator_projects.CATALOG:return {'bindings':[{'kind':'testbench','source_names':['VDD']}],'analyses':['tran'],'source':'owned-oscillator-stimuli','limits':['Ideal external R/C do not acquire MOS process variation. Explicit startup seeds; deterministic period variation is not stochastic jitter. Sensor sensitivity and noise require separate calibration.']}
     if p.get('design_template',{}).get('id') in sar_adc.CATALOG:return {'bindings':[{'kind':'testbench','source_names':['VDD']}],'analyses':['tran'],'source':'owned-sar-stimuli','limits':['External VREF and BIAS remain fixed; VCM follows supply/2. Mixed RTL replay does not establish digital transistor timing.']}
     meta=validate_template_project(p);kind=meta['id']
     if kind in analog_soc.CATALOG:return {'bindings':[{'kind':'testbench','source_names':['VDD']}],'analyses':CATALOG[kind]['analyses'],'source':'owned-analog-soc-stimuli','limits':['External BIAS is fixed at 0.9V; SoC AFE/bias macro generates its own bias. VCM and signal common mode follow VDD/2. Cascode DC sweeps VOUT, not VDD. RC corner remains typical.']}
@@ -434,11 +442,13 @@ def spice_tb(p,folder,params,netlist):
         fields=line.split()
         if len(fields)>=2 and fields[0].lower()=='.subckt' and fields[1].lower()==p['cell'].lower():sub=fields[2:];break
     if sub is None or len(sub)!=len(p['ports']) or len(set(sub))!=len(sub) or set(sub)!=set(p['ports']):raise EDAError('PORT_MISMATCH','Actual emitted/extracted subcircuit ports differ from explicit template declarations.')
+    if meta['id'] in oscillator_projects.CATALOG:return oscillator_projects.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     if meta['id'] in analog_soc.CATALOG:return analog_soc.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     if meta['id'] in chip_references.CATALOG:return chip_references.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     if meta['id'] in physical_library.CATALOG:return physical_library.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
-    sources,names,vectors,units,sweep=_stimuli(p,settings);deck=supported_model_deck(folder,settings['corner'])
-    lines=['Register actual native '+meta['id'],f'.include "{deck}"','.option scale=1e-6',f'.include "{netlist}"',f'.temp {settings["temperature_C"]}',*sources,'XU '+' '.join(sub)+' '+p['cell'],'.control','set num_threads=1','set noaskquit','set wr_singlescale','set wr_vecnames']
+    sources,names,vectors,units,sweep=_stimuli(p,settings)
+    model_lines=[] if meta['id']=='rc_lowpass' else [f'.include "{supported_model_deck(folder,settings["corner"])}"','.option scale=1e-6']
+    lines=['Register actual native '+meta['id'],*model_lines,f'.include "{netlist}"',f'.temp {settings["temperature_C"]}',*sources,'XU '+' '.join(sub)+' '+p['cell'],'.control','set num_threads=1','set noaskquit','set wr_singlescale','set wr_vecnames']
     if meta['id']=='mux4':lines.insert(1,'.options method=gear maxord=2')
     if analysis=='tran':lines.append(f'tran {settings["step_s"]:.12g} {settings["duration_s"]:.12g}');xunit='s';xlabel='time'
     elif analysis=='op':lines+=['op','let mos_sample_index=0','setscale mos_sample_index'];xunit='point';xlabel='operating point'
@@ -459,6 +469,8 @@ def measurements(p,run,params):
     if not p.get('design_template'):return
     meta=validate_template_project(p);waves={w['name']:w for w in run.get('waveforms',[])};m=run.setdefault('measurements',{});m['template_id']=meta['id'];m['layout_status']=meta['layout_status'];m['metric_source']='actual-ngspice-samples'
     analysis=params.get('analysis',p['testbench']['analysis']);kind=meta['id']
+    if kind in oscillator_projects.CATALOG:
+        oscillator_projects.measurements(p,run,params);return
     if kind in analog_soc.CATALOG:
         analog_soc.measurements(p,run,params);return
     if kind in physical_library.CATALOG:

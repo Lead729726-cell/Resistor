@@ -9,6 +9,7 @@ import ChipEnvelope,{ChipLimitFields,defaultChipLimits} from './ChipEnvelope';
 import SarAdcLibrary from './SarAdcLibrary';
 import ResearchLibrary from './ResearchLibrary';
 import ConversionWorkbench from './ConversionWorkbench';
+import OscillatorLibrary from './OscillatorLibrary';
 
 export interface IntegratedToolsProps {
   project: Project | null; scene: Scene | null; transport?: typeof rpc; readOnly?: boolean; shared?: boolean;
@@ -167,6 +168,7 @@ function DesignTools({ project, scene, transport = rpc, readOnly = false, shared
   const sourceCell = cellName ? project?.schematic.cells?.[cellName] : project?.schematic;
   return <section className="it-panel" data-testid="integrated-design"><div className="it-intro"><h4>실제 회로와 현재 물리 도형의 연결 탐색</h4><p>회로 graph에서 해결된 net·pin을 읽고, 현재 로드된 layout의 동일 net metadata를 나란히 확인합니다. 물리 매핑이 검증되지 않은 경우 그 상태를 유지합니다.</p></div>{error && <div className="it-error" data-testid="design-error" role="alert">{error}</div>}<div className="it-notice" data-testid="design-notice">{notice}</div>
     <div className="it-toolbar"><button data-testid="design-load-catalog" disabled={busy} onClick={() => void execute(async token => { const result = await transport<DesignCatalog>('design.catalog'); if (!active(token)) return; setCatalog(result); applyTemplate(result.templates[0]?.id || '', result); setNotice(`${result.templates.length}개 실제 backend 회로 template 지원 범위를 읽었습니다.`); })}>회로 template 지원 범위 읽기</button><span>{shared ? '공유 설계에서는 새 로컬 template 생성이 비활성화됩니다.' : '새 template는 별도 프로젝트를 만듭니다.'}</span></div>
+    {catalog && <OscillatorLibrary catalog={catalog} disabled={busy||readOnly||shared} onSelect={id=>{applyTemplate(id);setName(catalog.templates.find(t=>t.id===id)?.name||'새 발진기');}}/>}
     {catalog && <AnalogSocLibrary catalog={catalog} transport={transport} readOnly={readOnly} shared={shared} onProject={onProject}/>}
     {catalog && <details><summary>SAR ADC · 8개 블록 라이브러리</summary><SarAdcLibrary catalog={catalog} transport={transport} readOnly={readOnly} shared={shared} onProject={onProject}/></details>}
     <ChipEnvelope project={project} transport={transport} readOnly={readOnly} shared={shared} onProject={onProject}/>

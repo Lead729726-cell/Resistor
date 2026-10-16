@@ -11,6 +11,7 @@ import profile
 import design_tools
 import chip_references
 import physical_library
+import oscillator_projects
 
 S = None
 VERSION = 'register-semiconductor-starters-1'
@@ -82,6 +83,11 @@ for key, row in chip_references.CATALOG.items():
         'category':'물리 칩 레퍼런스','physical_core':True,'layout':'physical',
         'features':['실제 MOS W/L와 핀 배선','DRC → LVS → PEX 실행','회로/기생 추출 후 결과 비교'],
         'observe':['회로와 실제 레이아웃을 비교하세요. 이상적 RC는 dimensioned PDK 소자로 바뀝니다.','DRC·LVS를 각각 실행하고 실패 원인과 report를 확인하세요.','PEX와 Post-layout 해석으로 기생 성분의 영향을 확인하세요.']}
+for key,row in oscillator_projects.CATALOG.items():
+    PRESETS[key]={'title':row['name'],'subtitle':row['scope'],'category':'발진기·센서 프로젝트',
+        'template_id':key,'parameters':copy.deepcopy(row['parameter_defaults']),'physical_core':False,'layout':'schematic',
+        'features':row['targets'],'observe':['외부 클록 없이 실제 MOS 해석으로 만들어진 파형을 읽습니다. EN은 버스트 프로젝트의 외부 입력입니다.','주파수·듀티·공급 전력과 명시된 파형 기준을 확인합니다.','R/C를 바꾸고 다시 해석하세요. 초기 조건은 물리 잡음·센서 보정을 대체하지 않습니다.'],
+        'testbench':oscillator_projects.settings(key,row['parameter_defaults'])}
 for key,row in physical_library.CATALOG.items():
     PRESETS[key]={'title':row['name'],'subtitle':row['scope'],'category':'기본 로직 셀','template_id':key,
         'parameters':{},'physical_core':True,'layout':'physical','features':row['targets'],

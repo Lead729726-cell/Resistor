@@ -1,0 +1,311 @@
+{
+  "schema_version": 1,
+  "edition": "Resistor Indust",
+  "templates": [
+    {
+      "id": "osc_ring5",
+      "name": "발진 · 5단 CMOS 링 클록",
+      "ports": [
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "parameter_defaults": {
+        "stage_F": 2e-12
+      },
+      "category": "발진기·센서",
+      "scope": "10개 실제 SKY130 MOS · 5단 지연 링 · 외부 클록 없음 · 이상적 단계 부하",
+      "targets": [
+        "발진 시작과 5개 단계 파형",
+        "실제 주파수·듀티·단계 지연",
+        "부하와 PVT에 따른 변화"
+      ],
+      "analyses": [
+        "tran"
+      ],
+      "physical_status": "not-generated",
+      "model_scope": "SKY130 MOS with ideal external R/C; deterministic transient, no noise/jitter qualification",
+      "research": {
+        "schema_version": 1,
+        "review_version": "literature-review-20261013-v1",
+        "reviewed_at": "2026-10-16",
+        "reference_ids": [
+          "ti-schmitt-2025",
+          "ti-relaxation-2024"
+        ],
+        "references": [
+          {
+            "id": "ti-schmitt-2025",
+            "title": "Understanding Schmitt Triggers (SCEA046B)",
+            "authors": "Texas Instruments",
+            "date": "2025-04",
+            "venue": "Official application brief, not a silicon result",
+            "doi": null,
+            "url": "https://www.ti.com/lit/pdf/scea046",
+            "read_scope": "Full PDF pages 1-3, hysteresis thresholds and slow-input current discussion, accessed 2026-10-16",
+            "technology": "Commercial logic-family explanation; our custom SKY130 topology is independently authored",
+            "adopted": "Separate measured upper/lower switching levels and include real supply current; avoid assuming ideal noise immunity.",
+            "not_reproduced": "TI device topology, threshold specifications, phase noise, jitter, ESD or measured silicon performance."
+          },
+          {
+            "id": "ti-relaxation-2024",
+            "title": "Relaxation Oscillator Circuit (SNOA998A)",
+            "authors": "Jaskaran Atwal; Texas Instruments",
+            "date": "2024-10",
+            "venue": "Official Analog Engineer circuit note, not a research reproduction",
+            "doi": null,
+            "url": "https://www.ti.com/lit/pdf/snoa998",
+            "read_scope": "Full PDF, design description and RC/threshold equations, accessed 2026-10-16",
+            "technology": "5V discrete comparator design; not our 1.8V CMOS circuit",
+            "adopted": "Independently derive exponential RC period using measured switching levels; expose feedback loading and MOS delay assumptions.",
+            "not_reproduced": "TLV3201 comparator, 1MHz specification, component values or published performance. Our resistor-feedback MOS circuit differs."
+          }
+        ],
+        "relationship": "method-inspired review; existing owned circuits, not a reproduction of the cited chips",
+        "paper_performance_reproduced": false,
+        "qualification": "not-run; actual revision-bound engine results are required",
+        "pending": [
+          "Thermal/flicker noise and mismatch yield except explicitly executed studies.",
+          "Full PVT/RC, EM/IR, ESD, antenna/density, foundry signoff.",
+          "Complete sequential timing, STA/Liberty and physical CPU/ADC-controller closure."
+        ]
+      },
+      "limits": [
+        "Actual native schematic and public ngspice models; no commercial execution claim.",
+        "Empty layout is not physically verified.",
+        "Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library."
+      ]
+    },
+    {
+      "id": "osc_rc_sensor",
+      "name": "센서 · 정전용량 → 주파수",
+      "ports": [
+        "OUT",
+        "CAP",
+        "VPWR",
+        "VGND"
+      ],
+      "parameter_defaults": {
+        "timing_Ohm": 100000,
+        "sense_F": 1e-11
+      },
+      "category": "발진기·센서",
+      "scope": "6개 실제 MOS + 저항 양의 피드백 · 이상적 센서 C · 외부 클록 없음",
+      "targets": [
+        "CAP 충·방전과 출력 전환",
+        "C 변화에 따른 주파수 변화",
+        "실제 스위칭 전압과 공급 전력"
+      ],
+      "analyses": [
+        "tran"
+      ],
+      "physical_status": "not-generated",
+      "model_scope": "SKY130 MOS with ideal external R/C; deterministic transient, no noise/jitter qualification",
+      "research": {
+        "schema_version": 1,
+        "review_version": "literature-review-20261013-v1",
+        "reviewed_at": "2026-10-16",
+        "reference_ids": [
+          "ti-schmitt-2025",
+          "ti-relaxation-2024"
+        ],
+        "references": [
+          {
+            "id": "ti-schmitt-2025",
+            "title": "Understanding Schmitt Triggers (SCEA046B)",
+            "authors": "Texas Instruments",
+            "date": "2025-04",
+            "venue": "Official application brief, not a silicon result",
+            "doi": null,
+            "url": "https://www.ti.com/lit/pdf/scea046",
+            "read_scope": "Full PDF pages 1-3, hysteresis thresholds and slow-input current discussion, accessed 2026-10-16",
+            "technology": "Commercial logic-family explanation; our custom SKY130 topology is independently authored",
+            "adopted": "Separate measured upper/lower switching levels and include real supply current; avoid assuming ideal noise immunity.",
+            "not_reproduced": "TI device topology, threshold specifications, phase noise, jitter, ESD or measured silicon performance."
+          },
+          {
+            "id": "ti-relaxation-2024",
+            "title": "Relaxation Oscillator Circuit (SNOA998A)",
+            "authors": "Jaskaran Atwal; Texas Instruments",
+            "date": "2024-10",
+            "venue": "Official Analog Engineer circuit note, not a research reproduction",
+            "doi": null,
+            "url": "https://www.ti.com/lit/pdf/snoa998",
+            "read_scope": "Full PDF, design description and RC/threshold equations, accessed 2026-10-16",
+            "technology": "5V discrete comparator design; not our 1.8V CMOS circuit",
+            "adopted": "Independently derive exponential RC period using measured switching levels; expose feedback loading and MOS delay assumptions.",
+            "not_reproduced": "TLV3201 comparator, 1MHz specification, component values or published performance. Our resistor-feedback MOS circuit differs."
+          }
+        ],
+        "relationship": "method-inspired review; existing owned circuits, not a reproduction of the cited chips",
+        "paper_performance_reproduced": false,
+        "qualification": "not-run; actual revision-bound engine results are required",
+        "pending": [
+          "Thermal/flicker noise and mismatch yield except explicitly executed studies.",
+          "Full PVT/RC, EM/IR, ESD, antenna/density, foundry signoff.",
+          "Complete sequential timing, STA/Liberty and physical CPU/ADC-controller closure."
+        ]
+      },
+      "limits": [
+        "Actual native schematic and public ngspice models; no commercial execution claim.",
+        "Empty layout is not physically verified.",
+        "Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library."
+      ]
+    },
+    {
+      "id": "osc_beat",
+      "name": "센서 · 두 링 발진기의 비트 검출",
+      "ports": [
+        "REF",
+        "SENSE",
+        "XOR",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "parameter_defaults": {
+        "stage_F": 2e-12,
+        "detune_ratio": 0.15,
+        "filter_Ohm": 20000,
+        "filter_F": 5e-12
+      },
+      "category": "발진기·센서",
+      "scope": "독립 5단 링 2개 + 실제 CMOS XOR + 이상적 RC · Δf 읽기",
+      "targets": [
+        "REF와 SENSE의 독립 주파수",
+        "저역통과 후 비트 주파수",
+        "하위 셀과 주파수 차 비교"
+      ],
+      "analyses": [
+        "tran"
+      ],
+      "physical_status": "not-generated",
+      "model_scope": "SKY130 MOS with ideal external R/C; deterministic transient, no noise/jitter qualification",
+      "research": {
+        "schema_version": 1,
+        "review_version": "literature-review-20261013-v1",
+        "reviewed_at": "2026-10-16",
+        "reference_ids": [
+          "ti-schmitt-2025",
+          "ti-relaxation-2024"
+        ],
+        "references": [
+          {
+            "id": "ti-schmitt-2025",
+            "title": "Understanding Schmitt Triggers (SCEA046B)",
+            "authors": "Texas Instruments",
+            "date": "2025-04",
+            "venue": "Official application brief, not a silicon result",
+            "doi": null,
+            "url": "https://www.ti.com/lit/pdf/scea046",
+            "read_scope": "Full PDF pages 1-3, hysteresis thresholds and slow-input current discussion, accessed 2026-10-16",
+            "technology": "Commercial logic-family explanation; our custom SKY130 topology is independently authored",
+            "adopted": "Separate measured upper/lower switching levels and include real supply current; avoid assuming ideal noise immunity.",
+            "not_reproduced": "TI device topology, threshold specifications, phase noise, jitter, ESD or measured silicon performance."
+          },
+          {
+            "id": "ti-relaxation-2024",
+            "title": "Relaxation Oscillator Circuit (SNOA998A)",
+            "authors": "Jaskaran Atwal; Texas Instruments",
+            "date": "2024-10",
+            "venue": "Official Analog Engineer circuit note, not a research reproduction",
+            "doi": null,
+            "url": "https://www.ti.com/lit/pdf/snoa998",
+            "read_scope": "Full PDF, design description and RC/threshold equations, accessed 2026-10-16",
+            "technology": "5V discrete comparator design; not our 1.8V CMOS circuit",
+            "adopted": "Independently derive exponential RC period using measured switching levels; expose feedback loading and MOS delay assumptions.",
+            "not_reproduced": "TLV3201 comparator, 1MHz specification, component values or published performance. Our resistor-feedback MOS circuit differs."
+          }
+        ],
+        "relationship": "method-inspired review; existing owned circuits, not a reproduction of the cited chips",
+        "paper_performance_reproduced": false,
+        "qualification": "not-run; actual revision-bound engine results are required",
+        "pending": [
+          "Thermal/flicker noise and mismatch yield except explicitly executed studies.",
+          "Full PVT/RC, EM/IR, ESD, antenna/density, foundry signoff.",
+          "Complete sequential timing, STA/Liberty and physical CPU/ADC-controller closure."
+        ]
+      },
+      "limits": [
+        "Actual native schematic and public ngspice models; no commercial execution claim.",
+        "Empty layout is not physically verified.",
+        "Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library."
+      ]
+    },
+    {
+      "id": "osc_burst",
+      "name": "저전력 · 이벤트 구동 버스트 클록",
+      "ports": [
+        "EN",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "parameter_defaults": {
+        "stage_F": 2e-12
+      },
+      "category": "발진기·센서",
+      "scope": "NAND + 인버터 4단 링 · 외부 EN 2개 구간 · 발진 출력은 실제 MOS 해석",
+      "targets": [
+        "EN에 따른 시작·정지·재시작",
+        "켜진 구간 주파수와 꺼진 구간 정지",
+        "구간별 공급 전력 비교"
+      ],
+      "analyses": [
+        "tran"
+      ],
+      "physical_status": "not-generated",
+      "model_scope": "SKY130 MOS with ideal external R/C; deterministic transient, no noise/jitter qualification",
+      "research": {
+        "schema_version": 1,
+        "review_version": "literature-review-20261013-v1",
+        "reviewed_at": "2026-10-16",
+        "reference_ids": [
+          "ti-schmitt-2025",
+          "ti-relaxation-2024"
+        ],
+        "references": [
+          {
+            "id": "ti-schmitt-2025",
+            "title": "Understanding Schmitt Triggers (SCEA046B)",
+            "authors": "Texas Instruments",
+            "date": "2025-04",
+            "venue": "Official application brief, not a silicon result",
+            "doi": null,
+            "url": "https://www.ti.com/lit/pdf/scea046",
+            "read_scope": "Full PDF pages 1-3, hysteresis thresholds and slow-input current discussion, accessed 2026-10-16",
+            "technology": "Commercial logic-family explanation; our custom SKY130 topology is independently authored",
+            "adopted": "Separate measured upper/lower switching levels and include real supply current; avoid assuming ideal noise immunity.",
+            "not_reproduced": "TI device topology, threshold specifications, phase noise, jitter, ESD or measured silicon performance."
+          },
+          {
+            "id": "ti-relaxation-2024",
+            "title": "Relaxation Oscillator Circuit (SNOA998A)",
+            "authors": "Jaskaran Atwal; Texas Instruments",
+            "date": "2024-10",
+            "venue": "Official Analog Engineer circuit note, not a research reproduction",
+            "doi": null,
+            "url": "https://www.ti.com/lit/pdf/snoa998",
+            "read_scope": "Full PDF, design description and RC/threshold equations, accessed 2026-10-16",
+            "technology": "5V discrete comparator design; not our 1.8V CMOS circuit",
+            "adopted": "Independently derive exponential RC period using measured switching levels; expose feedback loading and MOS delay assumptions.",
+            "not_reproduced": "TLV3201 comparator, 1MHz specification, component values or published performance. Our resistor-feedback MOS circuit differs."
+          }
+        ],
+        "relationship": "method-inspired review; existing owned circuits, not a reproduction of the cited chips",
+        "paper_performance_reproduced": false,
+        "qualification": "not-run; actual revision-bound engine results are required",
+        "pending": [
+          "Thermal/flicker noise and mismatch yield except explicitly executed studies.",
+          "Full PVT/RC, EM/IR, ESD, antenna/density, foundry signoff.",
+          "Complete sequential timing, STA/Liberty and physical CPU/ADC-controller closure."
+        ]
+      },
+      "limits": [
+        "Actual native schematic and public ngspice models; no commercial execution claim.",
+        "Empty layout is not physically verified.",
+        "Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library."
+      ]
+    }
+  ]
+}
