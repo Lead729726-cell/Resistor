@@ -20,7 +20,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: edition-installers-${{ github.ref }}
+  group: edition-installers-${{ github.ref }}-${{ inputs.target || 'all' }}
   cancel-in-progress: false
 jobs:
   package:

@@ -1,0 +1,59 @@
+name: Execute edition installers on native OS and CPU
+on:
+  workflow_dispatch:
+    inputs:
+      primary_run:
+        description: Native build artifact run for x64 and Mac targets
+        required: true
+      arm_run:
+        description: Native Windows ARM64 build artifact run
+        required: true
+permissions:
+  contents: read
+  actions: read
+jobs:
+  install:
+    strategy:
+      fail-fast: false
+      matrix:
+        edition: [edu, indust]
+        target:
+          - {runner: windows-2025, arch: x64, key: windows-x64}
+          - {runner: windows-11-arm, arch: arm64, key: windows-arm64}
+          - {runner: macos-15, arch: arm64, key: macos-arm64}
+          - {runner: macos-15-intel, arch: x64, key: macos-x64}
+          - {runner: ubuntu-24.04, arch: x64, key: linux-x64}
+    runs-on: ${{ matrix.target.runner }}
+    timeout-minutes: 20
+    env:
+      RESISTOR_EDITION: ${{ matrix.edition }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          architecture: ${{ matrix.target.arch }}
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: Resistor-${{ matrix.edition }}-${{ matrix.target.key }}
+          run-id: ${{ matrix.target.key == 'windows-arm64' && inputs.arm_run || inputs.primary_run }}
+          github-token: ${{ github.token }}
+          path: .runtime/installer-input
+      - if: runner.os != 'Linux'
+        run: node scripts/verify-edition-installer.mjs
+      - if: runner.os == 'Linux'
+        run: xvfb-run -a node scripts/verify-edition-installer.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verified-Resistor-${{ matrix.edition }}-${{ matrix.target.key }}
+          path: .runtime/verified-installers/*
+          include-hidden-files: true
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: failed-install-${{ matrix.edition }}-${{ matrix.target.key }}
+          path: .runtime/edition-package-qa/receipt.json
+          include-hidden-files: true
