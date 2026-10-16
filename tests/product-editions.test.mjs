@@ -54,8 +54,8 @@ test('desktop rejects another edition renderer rather than mislabeling it',async
  await writeFile(path.join(root,'dist-edu/product-context.json'),JSON.stringify({product_id:indust.id}));assert.throws(()=>rendererDirectory(root,edu),/another edition/);
 });
 test('Edu updater cannot download or apply a historical Indust installer',async t=>{
- const root=await fixture(t);let requests=0,installs=0;const updater=new DesktopUpdater({edition:'edu',version:'0.27.0',userData:root,packaged:true,fetchImpl:async()=>{requests++;throw Error('must not fetch Indust feed');},install:async()=>{installs++;}});
- await updater.initialize();await updater.check();assert.equal(updater.status().status,'unsupported');await assert.rejects(updater.download(),/Edu/);await assert.rejects(updater.apply(),/Edu/);assert.equal(requests,0);assert.equal(installs,0);
+ const root=await fixture(t);let requests=0,installs=0;const updater=new DesktopUpdater({edition:'edu',version:'0.27.0',userData:root,packaged:true,fetchImpl:async()=>{requests++;return new Response(JSON.stringify([{tag_name:'v0.99.0',draft:false,prerelease:true,assets:[]}]));},install:async()=>{installs++;}});
+ await updater.initialize();await updater.check();assert.equal(updater.status().status,'current');assert.equal(updater.status().edition,'edu');await assert.rejects(updater.download(),/새 버전/);await assert.rejects(updater.apply(),/검증된/);assert.equal(requests,1);assert.equal(installs,0);
 });
 for(const edition of [edu,indust])test('real MCP handshake identifies '+edition.name+' without exposing credentials',async t=>{
  const workspace=await fixture(t);const transport=new StdioClientTransport({command:process.execPath,args:[path.resolve(process.env.REGISTER_MCP_ENTRY||'scripts/mcp.mjs')],env:{RESISTOR_EDITION:edition.edition,MOS_WORKSPACE:workspace},stderr:'pipe'});

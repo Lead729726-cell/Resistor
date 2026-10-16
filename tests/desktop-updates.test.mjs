@@ -1,3 +1,4 @@
+import {editionRelease} from './fixtures/edition-release.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp,mkdir,writeFile,readFile,lstat,symlink,access} from 'node:fs/promises';
@@ -12,8 +13,9 @@ const body=Buffer.from('real deterministic download fixture'),digest=createHash(
 function release(version='0.23.0',options={}){const tag='v'+version;return {tag_name:tag,html_url:`https://github.com/${REPOSITORY}/releases/tag/${tag}`,draft:false,prerelease:true,published_at:'2026-10-13T00:00:00Z',body:'Release notes',assets:[{name:`Resistor-${version}-win-x64.exe`,size:body.length,digest:'sha256:'+digest,browser_download_url:`https://github.com/${REPOSITORY}/releases/download/${tag}/Resistor-${version}-win-x64.exe`}],...options};}
 const choose=(data,options={})=>selectRelease(data,{currentVersion:'0.22.0',platform:'windows',...options});
 async function fixture(t,{data=[release()],response=()=>new Response(body),installer=async()=>true}={}){
+  const editions=data.map(r=>editionRelease({version:r.tag_name.slice(1),body}));
   const userData=await mkdtemp(path.join(os.tmpdir(),'resistor-update-test-'));let downloads=0;
-  const manager=new DesktopUpdater({version:'0.22.0',platform:'win32',arch:'x64',userData,install:installer,fetchImpl:async(url)=>{if(url===RELEASES_URL)return new Response(JSON.stringify(data));downloads++;return response();}});
+  const manager=new DesktopUpdater({version:'0.22.0',platform:'win32',arch:'x64',userData,install:installer,fetchImpl:async(url)=>{if(url===RELEASES_URL)return new Response(JSON.stringify(editions.map(f=>f.release)));if(url.endsWith('.json'))return new Response(editions.find(f=>f.release.assets[1].browser_download_url===url).receiptBody);downloads++;return response();}});
   await manager.initialize();await manager.check();return {manager,userData,downloadCount:()=>downloads};
 }
 test('versions compare numerically, never lexically; draft, same and older releases cannot update',()=>{
@@ -35,7 +37,7 @@ test('newest revision of the correct Mac architecture is selected',()=>{
 });
 test('download bytes and SHA must both match before ready; verified cached file survives restart',async t=>{
   const {manager,userData}=await fixture(t);assert.equal(manager.status().status,'available');await manager.download();assert.equal(manager.status().status,'ready');assert.deepEqual(await readFile(manager.file),body);
-  const restarted=new DesktopUpdater({version:'0.22.0',platform:'win32',arch:'x64',userData,fetchImpl:async()=>new Response(JSON.stringify([release()]))});await restarted.initialize();await restarted.check();assert.equal(restarted.status().status,'ready');
+  const restarted=new DesktopUpdater({version:'0.22.0',platform:'win32',arch:'x64',userData,fetchImpl:manager.fetchImpl});await restarted.initialize();await restarted.check();assert.equal(restarted.status().status,'ready');
 });
 test('corrupt and truncated downloads never enable installation',async t=>{
   for(const bytes of [Buffer.from('corrupt'),Buffer.alloc(body.length,0)]){const {manager}=await fixture(t,{response:()=>new Response(bytes)});await manager.download();assert.equal(manager.status().status,'error');assert.equal(manager.file,null);await assert.rejects(manager.apply());}
@@ -64,7 +66,7 @@ test('IPC never accepts arbitrary paths, URLs, commands or unknown actions',asyn
 test('preferences persist; auto checks are opt-out and throttled',async t=>{
   const {manager}=await fixture(t);await manager.preferences({automatic:false,channel:'stable'});let calls=0;manager.fetchImpl=async()=>{calls++;return new Response('[]');};await manager.check({automatic:true});assert.equal(calls,0);
   await manager.preferences({automatic:true,channel:'preview'});manager.lastAuto=0;await manager.check({automatic:true});await manager.check({automatic:true});assert.equal(calls,1);
-  const r=new DesktopUpdater({version:'0.22.0',platform:'win32',arch:'x64',userData:path.dirname(manager.folder)});await r.initialize();assert.deepEqual(r.status().settings,{automatic:true,channel:'preview'});
+  const r=new DesktopUpdater({version:'0.22.0',platform:'win32',arch:'x64',userData:path.dirname(path.dirname(manager.folder))});await r.initialize();assert.deepEqual(r.status().settings,{automatic:true,channel:'preview'});
 });
 test('archive traversal, absolute paths and unrelated roots are rejected; normal framework links retained',()=>{
   for(const entry of ['../outside','/outside','Resistor.app/../outside','Resistor.app\\bad','Other.app/x'])assert.throws(()=>safeArchiveEntries('Resistor.app/a\n'+entry,'Resistor.app',{mac:true}));
