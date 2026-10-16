@@ -38,10 +38,12 @@ if(edition.edition==='edu'){
  const study=async(method,p={})=>{const r=await studyRpc(config,method,p,{edition:'edu'});if(!r.ok)throw Error(r.error.message);return r.result;};
  tool('register_study_bank','Read reusable Edu questions and cache/budget metadata. Never calls AI. Reference answers are hidden until explicit reveal.',{},()=>study('study.catalog'));
  for(const [name,method,description,readOnly] of [
-  ['register_study_puzzles','study.puzzle.catalog','Read reusable virtual circuit missions and saved Edu session summaries. Static ideal calculations, no simulation or AI call.',true],
+  ['register_study_puzzle_simulate','study.puzzle.simulate','Run actual shared ngspice for the placed and pin-connected Edu RC/NMOS board. Saves project/revision/run references; no DRC/LVS/PEX claim.',false],
+  ['register_study_puzzle_refresh','study.puzzle.refresh','Refresh queued actual puzzle simulation and retain previous board results as historical.',false],
+  ['register_study_puzzles','study.puzzle.catalog','Read reusable resistor/RC/NMOS missions and saved Edu session summaries. Catalog lookup does not run simulation or AI.',true],
   ['register_study_puzzle_create','study.puzzle.create','Create a separate guided circuit puzzle. Mark automated testing as qa, never a human submission.',false],
   ['register_study_puzzle_open','study.puzzle.open','Reopen saved placement, raw explanation, coach turns and revision-bound puzzle checks.',true],
-  ['register_study_puzzle_act','study.puzzle.act','Place/remove an available resistor, undo/redo, inspect, get hint or save the human explanation. These are practice checks, never engine verification.',false],
+  ['register_study_puzzle_act','study.puzzle.act','Place/remove a supported resistor/capacitor/NMOS, connect declared pins, undo/redo, inspect, get hint or save the human explanation. Practice checks never substitute for engine execution.',false],
   ['register_study_puzzle_tutor','study.puzzle.tutor','Ask the free authored coach or reuse a cached AI reply. A new AI call requires explicit human approval and budget; never infer approval or fabricate student questions.',false]
  ])tool(name,description,puzzleSchemas[method].shape,p=>study(method,p),{readOnly,openWorld:method.endsWith('tutor')});
  tool('register_study_history','Reopen raw self-study answers and cached advisory feedback. These are not official submissions or engine PASS.',{},()=>study('study.history'));

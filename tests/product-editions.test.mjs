@@ -60,8 +60,14 @@ test('Edu updater cannot download or apply a historical Indust installer',async 
 for(const edition of [edu,indust])test('real MCP handshake identifies '+edition.name+' without exposing credentials',async t=>{
  const workspace=await fixture(t);const transport=new StdioClientTransport({command:process.execPath,args:[path.resolve(process.env.REGISTER_MCP_ENTRY||'scripts/mcp.mjs')],env:{RESISTOR_EDITION:edition.edition,MOS_WORKSPACE:workspace},stderr:'pipe'});
  const client=new Client({name:'edition-qa',version:'1.0.0'});t.after(()=>client.close());await client.connect(transport);
- assert.equal(client.getServerVersion().name,edition.mcp_name);const tools=await client.listTools();assert.equal(tools.tools.length,edition.edition==='edu'?69:48);
+ assert.equal(client.getServerVersion().name,edition.mcp_name);const tools=await client.listTools();assert.equal(tools.tools.length,edition.edition==='edu'?71:48);
  for(const name of ['register_edu_assignments','register_edu_references','register_study_bank','register_study_generate','register_study_submit','register_study_history'])assert.equal(tools.tools.some(t=>t.name===name),edition.edition==='edu','Course material belongs to the Edu tool surface.');
  if(edition.edition==='edu'){const bank=await client.callTool({name:'register_study_bank',arguments:{}});assert.equal(bank.isError,undefined);assert.equal(bank.structuredContent.result.questions.length,64);assert.equal(bank.structuredContent.context.engine.id,'shared-calculator-and-study-rubric');assert.equal(bank.structuredContent.context.project_id,null);}
  const result=await client.callTool({name:'register_product_context',arguments:{}});assert.equal(result.isError,undefined);assert.equal(result.structuredContent.result.product_id,edition.id);assert.equal(result.structuredContent.product.id,edition.id);assert.equal(result.structuredContent.result.workspace,workspace);assert.equal(result.structuredContent.result.foundry_signoff,false);assert(!JSON.stringify(result).includes('token'));
+});
+
+test('installed Edu tutorial opens only its fixed packaged MP4 and never starts an engine',async()=>{
+ const {openEduTutorial}=await import('../apps/desktop/edu-tutorial.cjs');const stage=await mkdtemp(path.join(os.tmpdir(),'edu-tutorial-'));
+ try{await mkdir(path.join(stage,'edu-study-tutorial'));const file=path.join(stage,'edu-study-tutorial','Resistor-Edu-AI-Study-KO.mp4');let opened=[];const openPath=async p=>{opened.push(p);return '';};await assert.rejects(openEduTutorial({rendererRoot:stage,edition:'edu',openPath}),/영상 파일/);await writeFile(file,'fixture-media');await assert.rejects(openEduTutorial({rendererRoot:stage,edition:'indust',openPath}),/Edu/);assert.equal(opened.length,0);assert.equal((await openEduTutorial({rendererRoot:stage,edition:'edu',openPath})).opened,true);assert.deepEqual(opened,[file]);await assert.rejects(openEduTutorial({rendererRoot:stage,edition:'edu',openPath:async()=> 'fixture-player-error'}),/플레이어/);}
+ finally{await rm(stage,{recursive:true,force:true});}
 });

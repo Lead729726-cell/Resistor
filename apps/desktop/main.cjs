@@ -68,6 +68,7 @@ async function boot(){
     if(JSON.stringify(payload).length>32*1024*1024)throw new Error('IPC request too large');
     try{
       if(payload.method==='desktop.product'){if(Object.keys(payload.params??{}).length)throw Error('Product context takes no parameters');return {ok:true,result:{...productEdition,workspace}};}
+      if(payload.method==='desktop.study.tutorial'){if(Object.keys(payload.params??{}).length)throw Error('Tutorial takes no parameters');return {ok:true,result:await require('./edu-tutorial.cjs').openEduTutorial({rendererRoot,edition:productEdition.edition,openPath:file=>shell.openPath(file)})};}
       if(payload.method==='desktop.learning.guide'){const id=payload.params?.lesson_id;if(Object.keys(payload.params||{}).length!==1||typeof id!=='string'||!/^[a-z0-9-]{1,80}$/.test(id))throw Error('Invalid lesson ID');await shell.openExternal('https://resistor-downloads.vercel.app/tutorial/learn/'+id+'/');return {ok:true,result:{opened:true,product_id:productEdition.id}};}
       if(typeof payload.method==='string'&&payload.method.startsWith('desktop.update.')){
         if(['desktop.update.website','desktop.update.notes'].includes(payload.method)){

@@ -4,6 +4,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import {z} from 'zod/v4';
 import {getProductEdition} from './edition-workspace.mjs';
 import {initialStudyQuestions,studyReferences,studyVersion,gradeObjective} from '../packages/education/src/self-study.ts';
+import {workerRpc} from './runtime.mjs';
 import {puzzleSchemas,interactiveStudy} from './interactive-study.mjs';
 import {structuredStatus,structuredEstimate,requestStructured} from './structured-ai.mjs';
 
@@ -25,7 +26,7 @@ function gradeFeedback(raw,q){
 export async function studyRpc(config,method,params={},options={}){
  try{return {ok:true,result:await execute(config,method,params,options)};}catch(e){return {ok:false,error:{code:e.code||'STUDY_ERROR',message:e instanceof z.ZodError?'학습 입력 형식·길이를 확인하세요.':e.message}};}
 }
-async function execute(config,method,params,{edition=getProductEdition({root}).edition,fetcher=fetch}={}){
+async function execute(config,method,params,{edition=getProductEdition({root}).edition,fetcher=fetch,invoke=workerRpc}={}){
  if(edition!=='edu')throw error('Resistor Edu에서만 사용하는 자율학습 기능입니다.');
  const schemas={...puzzleSchemas,
   'study.catalog':z.object({}).strict(),
@@ -54,7 +55,7 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
   const unavailable={configured:false,model:'gpt-6-luna',budget_usd:0,remaining_usd:0};
   let provider=unavailable;try{if(source)provider=await structuredStatus(source);}catch{provider={...unavailable,reason:'기존 키 또는 공통 예산 설정을 읽을 수 없습니다. 저장된 문제는 계속 사용할 수 있습니다.'};}
   const limits={...provider,study_budget_usd:state.budget_usd,study_reserved_usd:state.reserved_usd,study_remaining_usd:Math.max(0,state.budget_usd-state.reserved_usd),automatic_calls:false,credential_mode:source?'existing-workspace-reference':'not_configured'};
-  if(method.startsWith('study.puzzle.'))return result(await interactiveStudy(state,method,p,{save,limits,source,provider,fetcher,context}));
+  if(method.startsWith('study.puzzle.'))return result(await interactiveStudy(state,method,p,{save,limits,source,provider,fetcher,context,config,invoke}));
   const get=()=>{const q=state.questions[p.question_id];if(!q)throw error('저장된 문제를 찾을 수 없습니다.');return q;};
   const assistanceKey=id=>(p.purpose||'practice')+':'+id;
   const helped=id=>state.revealed.includes(assistanceKey(id))||(p.purpose!=='qa'&&state.revealed.includes(id));

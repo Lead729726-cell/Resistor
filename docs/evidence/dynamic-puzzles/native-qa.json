@@ -1,0 +1,876 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "created_at": "2026-10-16T03:18:15.599Z",
+  "session_ids": [
+    "1e0bf395-5d8a-4e98-bd68-d5f78bb35b50",
+    "fd1ce337-880f-41e6-8fa2-f4397e758dab"
+  ],
+  "checks": [
+    "RC finite-rise analytical voltage within 5 mV",
+    "capacitor charging positive / discharging negative",
+    "actual resistor and capacitor KCL within 10 nA",
+    "larger RC capacitor slows charge",
+    "SKY130 NMOS pulls output low with positive drain current",
+    "larger MOS load slows pull-up",
+    "gate grounded control stays high",
+    "reopen retains exact runs"
+  ],
+  "runs": [
+    {
+      "id": "311ee68e-4bf7-4105-b153-08ef76a68db9",
+      "board_revision": 7,
+      "status": "completed",
+      "waveforms": [
+        {
+          "name": "IN",
+          "unit": "V",
+          "samples": 2024,
+          "min": 0,
+          "max": 1.8
+        },
+        {
+          "name": "OUT",
+          "unit": "V",
+          "samples": 2024,
+          "min": 0,
+          "max": 1.8
+        },
+        {
+          "name": "I(C1)",
+          "unit": "A",
+          "samples": 2024,
+          "min": -0.00171293422,
+          "max": 0.00171296811
+        },
+        {
+          "name": "I(R1)",
+          "unit": "A",
+          "samples": 2024,
+          "min": -0.00171293422,
+          "max": 0.00171296811
+        }
+      ],
+      "placements": {
+        "R1": "r1k",
+        "C1": "c1n"
+      },
+      "connections": {
+        "R1": {
+          "+": "IN",
+          "-": "OUT"
+        },
+        "C1": {
+          "+": "OUT",
+          "-": "GND"
+        }
+      },
+      "created_at": "2026-10-16T03:17:56.068Z",
+      "recipe": {
+        "devices": [
+          {
+            "id": "input",
+            "name": "INPUT",
+            "kind": "voltage",
+            "pins": {
+              "+": "IN",
+              "-": "0"
+            },
+            "parameters": {
+              "dc": 0
+            },
+            "stimulus": {
+              "kind": "pulse",
+              "low": 0,
+              "high": 1.8,
+              "delay_s": 0.000001,
+              "rise_s": 1e-7,
+              "fall_s": 1e-7,
+              "width_s": 0.00002,
+              "period_s": 0.00004
+            },
+            "x": 100,
+            "y": 100
+          },
+          {
+            "id": "R1",
+            "name": "R1",
+            "kind": "resistor",
+            "pins": {
+              "+": "IN",
+              "-": "OUT"
+            },
+            "parameters": {
+              "value": 1000
+            },
+            "x": 400,
+            "y": 260
+          },
+          {
+            "id": "C1",
+            "name": "C1",
+            "kind": "capacitor",
+            "pins": {
+              "+": "OUT",
+              "-": "0"
+            },
+            "parameters": {
+              "value": 1e-9
+            },
+            "x": 400,
+            "y": 420
+          }
+        ],
+        "settings": {
+          "analysis": "tran",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "duration_s": 0.00004,
+          "step_s": 2e-8,
+          "post_layout": false
+        },
+        "input_signature": "9b7afb32ec2e051d0e7edbb7eb858fc27de55fefa96ada67ec07e4f3c6e5acf1",
+        "model": "ideal-R-C",
+        "process": null
+      },
+      "verification": {
+        "drc": "not_run",
+        "lvs": "not_run",
+        "pex": "not_run"
+      },
+      "engine": {
+        "id": "ngspice",
+        "version": "** ngspice-42 : Circuit level simulation program"
+      },
+      "process": {
+        "id": null,
+        "version": null
+      },
+      "project_id": "c8fb25113efd4706868b70587fc0673f",
+      "project_revision": 4,
+      "run_id": "538eb1eca3ea427799020cab68f19486",
+      "manifest_path": "/workspace/.runtime/eda/runs/538eb1eca3ea427799020cab68f19486/manifest.json",
+      "analysis_result": "unknown",
+      "message": "Actual ngspice tran: 2024 samples.; reference criteria 0/0"
+    },
+    {
+      "id": "44deb514-9e88-4538-87ec-afcfdad3f476",
+      "board_revision": 8,
+      "status": "completed",
+      "waveforms": [
+        {
+          "name": "IN",
+          "unit": "V",
+          "samples": 2024,
+          "min": 0,
+          "max": 1.8
+        },
+        {
+          "name": "OUT",
+          "unit": "V",
+          "samples": 2024,
+          "min": 0,
+          "max": 1.76735948
+        },
+        {
+          "name": "I(C1)",
+          "unit": "A",
+          "samples": 2024,
+          "min": -0.0017501199,
+          "max": 0.00178212113
+        },
+        {
+          "name": "I(R1)",
+          "unit": "A",
+          "samples": 2024,
+          "min": -0.0017501199,
+          "max": 0.00178212113
+        }
+      ],
+      "placements": {
+        "R1": "r1k",
+        "C1": "c5n"
+      },
+      "connections": {
+        "R1": {
+          "+": "IN",
+          "-": "OUT"
+        },
+        "C1": {
+          "+": "OUT",
+          "-": "GND"
+        }
+      },
+      "created_at": "2026-10-16T03:17:58.780Z",
+      "recipe": {
+        "devices": [
+          {
+            "id": "input",
+            "name": "INPUT",
+            "kind": "voltage",
+            "pins": {
+              "+": "IN",
+              "-": "0"
+            },
+            "parameters": {
+              "dc": 0
+            },
+            "stimulus": {
+              "kind": "pulse",
+              "low": 0,
+              "high": 1.8,
+              "delay_s": 0.000001,
+              "rise_s": 1e-7,
+              "fall_s": 1e-7,
+              "width_s": 0.00002,
+              "period_s": 0.00004
+            },
+            "x": 100,
+            "y": 100
+          },
+          {
+            "id": "R1",
+            "name": "R1",
+            "kind": "resistor",
+            "pins": {
+              "+": "IN",
+              "-": "OUT"
+            },
+            "parameters": {
+              "value": 1000
+            },
+            "x": 400,
+            "y": 260
+          },
+          {
+            "id": "C1",
+            "name": "C1",
+            "kind": "capacitor",
+            "pins": {
+              "+": "OUT",
+              "-": "0"
+            },
+            "parameters": {
+              "value": 5e-9
+            },
+            "x": 400,
+            "y": 420
+          }
+        ],
+        "settings": {
+          "analysis": "tran",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "duration_s": 0.00004,
+          "step_s": 2e-8,
+          "post_layout": false
+        },
+        "input_signature": "afeac8e2d22820ec616a19891132a2563c55dcf99556aa5939df57550e8a1bb5",
+        "model": "ideal-R-C",
+        "process": null
+      },
+      "verification": {
+        "drc": "not_run",
+        "lvs": "not_run",
+        "pex": "not_run"
+      },
+      "engine": {
+        "id": "ngspice",
+        "version": "** ngspice-42 : Circuit level simulation program"
+      },
+      "process": {
+        "id": null,
+        "version": null
+      },
+      "project_id": "ce45f9bdf64b434a8d5b53da10c279b7",
+      "project_revision": 4,
+      "run_id": "19f4998ec28445e2a76c673e3b2f3f0d",
+      "manifest_path": "/workspace/.runtime/eda/runs/19f4998ec28445e2a76c673e3b2f3f0d/manifest.json",
+      "message": "Actual ngspice tran: 2024 samples.; reference criteria 0/0",
+      "analysis_result": "unknown"
+    },
+    {
+      "id": "567a12d8-8319-4c2c-ab6b-12fc3131a1ec",
+      "board_revision": 12,
+      "status": "completed",
+      "waveforms": [
+        {
+          "name": "IN",
+          "unit": "V",
+          "samples": 2026,
+          "min": 0,
+          "max": 1.8
+        },
+        {
+          "name": "OUT",
+          "unit": "V",
+          "samples": 2026,
+          "min": 0.200164257,
+          "max": 1.80288808
+        },
+        {
+          "name": "VCC",
+          "unit": "V",
+          "samples": 2026,
+          "min": 1.8,
+          "max": 1.8
+        },
+        {
+          "name": "I(C1)",
+          "unit": "A",
+          "samples": 2026,
+          "min": -0.0000428538855,
+          "max": 0.0000374310902
+        },
+        {
+          "name": "I(M1)",
+          "unit": "A",
+          "samples": 2026,
+          "min": -3.30617033e-7,
+          "max": 0.00017525443
+        },
+        {
+          "name": "I(R1)",
+          "unit": "A",
+          "samples": 2026,
+          "min": -2.88807772e-7,
+          "max": 0.000159983574
+        }
+      ],
+      "placements": {
+        "R1": "r10k",
+        "C1": "c10f",
+        "M1": "mn-small"
+      },
+      "connections": {
+        "R1": {
+          "+": "VCC",
+          "-": "OUT"
+        },
+        "C1": {
+          "+": "OUT",
+          "-": "GND"
+        },
+        "M1": {
+          "D": "OUT",
+          "G": "IN",
+          "S": "GND",
+          "B": "GND"
+        }
+      },
+      "created_at": "2026-10-16T03:18:03.103Z",
+      "recipe": {
+        "devices": [
+          {
+            "id": "input",
+            "name": "INPUT",
+            "kind": "voltage",
+            "pins": {
+              "+": "IN",
+              "-": "0"
+            },
+            "parameters": {
+              "dc": 0
+            },
+            "stimulus": {
+              "kind": "pulse",
+              "low": 0,
+              "high": 1.8,
+              "delay_s": 1e-8,
+              "rise_s": 1e-9,
+              "fall_s": 1e-9,
+              "width_s": 8e-8,
+              "period_s": 1.6e-7
+            },
+            "x": 100,
+            "y": 100
+          },
+          {
+            "id": "supply",
+            "name": "SUPPLY",
+            "kind": "voltage",
+            "pins": {
+              "+": "VCC",
+              "-": "0"
+            },
+            "parameters": {
+              "dc": 1.8
+            },
+            "x": 100,
+            "y": 300
+          },
+          {
+            "id": "R1",
+            "name": "R1",
+            "kind": "resistor",
+            "pins": {
+              "+": "VCC",
+              "-": "OUT"
+            },
+            "parameters": {
+              "value": 10000
+            },
+            "x": 400,
+            "y": 420
+          },
+          {
+            "id": "C1",
+            "name": "C1",
+            "kind": "capacitor",
+            "pins": {
+              "+": "OUT",
+              "-": "0"
+            },
+            "parameters": {
+              "value": 1e-14
+            },
+            "x": 400,
+            "y": 580
+          },
+          {
+            "id": "M1",
+            "name": "M1",
+            "kind": "nmos",
+            "pins": {
+              "D": "OUT",
+              "G": "IN",
+              "S": "0",
+              "B": "0"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "model": "sky130_fd_pr__nfet_01v8",
+            "x": 400,
+            "y": 740
+          }
+        ],
+        "settings": {
+          "analysis": "tran",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "duration_s": 2e-7,
+          "step_s": 1e-10,
+          "post_layout": false
+        },
+        "input_signature": "21d6c2fe6b7f058d164214bdbaadf94401a330ceb380ba677538f5e5a1c1178e",
+        "model": "sky130_fd_pr__nfet_01v8:tt",
+        "process": "sky130A"
+      },
+      "verification": {
+        "drc": "not_run",
+        "lvs": "not_run",
+        "pex": "not_run"
+      },
+      "engine": {
+        "id": "ngspice",
+        "version": "** ngspice-42 : Circuit level simulation program"
+      },
+      "process": {
+        "id": "sky130A",
+        "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb"
+      },
+      "project_id": "bc7fb8fbe8e4445fb280fc88aa2c583a",
+      "project_revision": 6,
+      "run_id": "92e5eb7a53034cf9b270a9a83721a87a",
+      "manifest_path": "/workspace/.runtime/eda/runs/92e5eb7a53034cf9b270a9a83721a87a/manifest.json",
+      "analysis_result": "unknown",
+      "message": "Actual ngspice tran: 2026 samples.; reference criteria 0/0"
+    },
+    {
+      "id": "4c22c358-bad9-452d-9a51-20e37ce48e9e",
+      "board_revision": 13,
+      "status": "completed",
+      "waveforms": [
+        {
+          "name": "IN",
+          "unit": "V",
+          "samples": 2026,
+          "min": 0,
+          "max": 1.8
+        },
+        {
+          "name": "OUT",
+          "unit": "V",
+          "samples": 2026,
+          "min": 0.200294099,
+          "max": 1.80007534
+        },
+        {
+          "name": "VCC",
+          "unit": "V",
+          "samples": 2026,
+          "min": 1.8,
+          "max": 1.8
+        },
+        {
+          "name": "I(C1)",
+          "unit": "A",
+          "samples": 2026,
+          "min": -0.000321825317,
+          "max": 0.000153718055
+        },
+        {
+          "name": "I(M1)",
+          "unit": "A",
+          "samples": 2026,
+          "min": -3.31511653e-7,
+          "max": 0.000331156363
+        },
+        {
+          "name": "I(R1)",
+          "unit": "A",
+          "samples": 2026,
+          "min": -7.5337566e-9,
+          "max": 0.00015997059
+        }
+      ],
+      "placements": {
+        "R1": "r10k",
+        "C1": "c1p",
+        "M1": "mn-small"
+      },
+      "connections": {
+        "R1": {
+          "+": "VCC",
+          "-": "OUT"
+        },
+        "C1": {
+          "+": "OUT",
+          "-": "GND"
+        },
+        "M1": {
+          "D": "OUT",
+          "G": "IN",
+          "S": "GND",
+          "B": "GND"
+        }
+      },
+      "created_at": "2026-10-16T03:18:07.255Z",
+      "recipe": {
+        "devices": [
+          {
+            "id": "input",
+            "name": "INPUT",
+            "kind": "voltage",
+            "pins": {
+              "+": "IN",
+              "-": "0"
+            },
+            "parameters": {
+              "dc": 0
+            },
+            "stimulus": {
+              "kind": "pulse",
+              "low": 0,
+              "high": 1.8,
+              "delay_s": 1e-8,
+              "rise_s": 1e-9,
+              "fall_s": 1e-9,
+              "width_s": 8e-8,
+              "period_s": 1.6e-7
+            },
+            "x": 100,
+            "y": 100
+          },
+          {
+            "id": "supply",
+            "name": "SUPPLY",
+            "kind": "voltage",
+            "pins": {
+              "+": "VCC",
+              "-": "0"
+            },
+            "parameters": {
+              "dc": 1.8
+            },
+            "x": 100,
+            "y": 300
+          },
+          {
+            "id": "R1",
+            "name": "R1",
+            "kind": "resistor",
+            "pins": {
+              "+": "VCC",
+              "-": "OUT"
+            },
+            "parameters": {
+              "value": 10000
+            },
+            "x": 400,
+            "y": 420
+          },
+          {
+            "id": "C1",
+            "name": "C1",
+            "kind": "capacitor",
+            "pins": {
+              "+": "OUT",
+              "-": "0"
+            },
+            "parameters": {
+              "value": 1e-12
+            },
+            "x": 400,
+            "y": 580
+          },
+          {
+            "id": "M1",
+            "name": "M1",
+            "kind": "nmos",
+            "pins": {
+              "D": "OUT",
+              "G": "IN",
+              "S": "0",
+              "B": "0"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "model": "sky130_fd_pr__nfet_01v8",
+            "x": 400,
+            "y": 740
+          }
+        ],
+        "settings": {
+          "analysis": "tran",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "duration_s": 2e-7,
+          "step_s": 1e-10,
+          "post_layout": false
+        },
+        "input_signature": "f6a9c392587baf470855ffc96b3b07efef802df116f3e1bd55df2e7e702db229",
+        "model": "sky130_fd_pr__nfet_01v8:tt",
+        "process": "sky130A"
+      },
+      "verification": {
+        "drc": "not_run",
+        "lvs": "not_run",
+        "pex": "not_run"
+      },
+      "engine": {
+        "id": "ngspice",
+        "version": "** ngspice-42 : Circuit level simulation program"
+      },
+      "process": {
+        "id": "sky130A",
+        "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb"
+      },
+      "project_id": "8dfe3eb224c34dd6bef02a926641d81e",
+      "project_revision": 6,
+      "run_id": "aafefe2a9714495ca13dbbff6e854e28",
+      "manifest_path": "/workspace/.runtime/eda/runs/aafefe2a9714495ca13dbbff6e854e28/manifest.json",
+      "analysis_result": "unknown",
+      "message": "Actual ngspice tran: 2026 samples.; reference criteria 0/0"
+    },
+    {
+      "id": "4bb38b77-f38b-45d1-b678-774945bd2342",
+      "board_revision": 14,
+      "status": "completed",
+      "waveforms": [
+        {
+          "name": "IN",
+          "unit": "V",
+          "samples": 2026,
+          "min": 0,
+          "max": 1.8
+        },
+        {
+          "name": "OUT",
+          "unit": "V",
+          "samples": 2026,
+          "min": 1.79999998,
+          "max": 1.79999998
+        },
+        {
+          "name": "VCC",
+          "unit": "V",
+          "samples": 2026,
+          "min": 1.8,
+          "max": 1.8
+        },
+        {
+          "name": "I(C1)",
+          "unit": "A",
+          "samples": 2026,
+          "min": -1.11022302e-16,
+          "max": 5.55111512e-17
+        },
+        {
+          "name": "I(M1)",
+          "unit": "A",
+          "samples": 2026,
+          "min": 1.92563815e-12,
+          "max": 1.92563841e-12
+        },
+        {
+          "name": "I(R1)",
+          "unit": "A",
+          "samples": 2026,
+          "min": 1.92563771e-12,
+          "max": 1.92563841e-12
+        }
+      ],
+      "placements": {
+        "R1": "r10k",
+        "C1": "c1p",
+        "M1": "mn-small"
+      },
+      "connections": {
+        "R1": {
+          "+": "VCC",
+          "-": "OUT"
+        },
+        "C1": {
+          "+": "OUT",
+          "-": "GND"
+        },
+        "M1": {
+          "D": "OUT",
+          "G": "GND",
+          "S": "GND",
+          "B": "GND"
+        }
+      },
+      "created_at": "2026-10-16T03:18:11.788Z",
+      "recipe": {
+        "devices": [
+          {
+            "id": "input",
+            "name": "INPUT",
+            "kind": "voltage",
+            "pins": {
+              "+": "IN",
+              "-": "0"
+            },
+            "parameters": {
+              "dc": 0
+            },
+            "stimulus": {
+              "kind": "pulse",
+              "low": 0,
+              "high": 1.8,
+              "delay_s": 1e-8,
+              "rise_s": 1e-9,
+              "fall_s": 1e-9,
+              "width_s": 8e-8,
+              "period_s": 1.6e-7
+            },
+            "x": 100,
+            "y": 100
+          },
+          {
+            "id": "supply",
+            "name": "SUPPLY",
+            "kind": "voltage",
+            "pins": {
+              "+": "VCC",
+              "-": "0"
+            },
+            "parameters": {
+              "dc": 1.8
+            },
+            "x": 100,
+            "y": 300
+          },
+          {
+            "id": "R1",
+            "name": "R1",
+            "kind": "resistor",
+            "pins": {
+              "+": "VCC",
+              "-": "OUT"
+            },
+            "parameters": {
+              "value": 10000
+            },
+            "x": 400,
+            "y": 420
+          },
+          {
+            "id": "C1",
+            "name": "C1",
+            "kind": "capacitor",
+            "pins": {
+              "+": "OUT",
+              "-": "0"
+            },
+            "parameters": {
+              "value": 1e-12
+            },
+            "x": 400,
+            "y": 580
+          },
+          {
+            "id": "M1",
+            "name": "M1",
+            "kind": "nmos",
+            "pins": {
+              "D": "OUT",
+              "G": "0",
+              "S": "0",
+              "B": "0"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "model": "sky130_fd_pr__nfet_01v8",
+            "x": 400,
+            "y": 740
+          }
+        ],
+        "settings": {
+          "analysis": "tran",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "duration_s": 2e-7,
+          "step_s": 1e-10,
+          "post_layout": false
+        },
+        "input_signature": "ae1f67d83c83df2e1f68ce99152b3d160e84f370be36307d89211af449082b4b",
+        "model": "sky130_fd_pr__nfet_01v8:tt",
+        "process": "sky130A"
+      },
+      "verification": {
+        "drc": "not_run",
+        "lvs": "not_run",
+        "pex": "not_run"
+      },
+      "engine": {
+        "id": "ngspice",
+        "version": "** ngspice-42 : Circuit level simulation program"
+      },
+      "process": {
+        "id": "sky130A",
+        "version": "d400e26845538beaeb7cc5fdb9bfc06c30ea27cb"
+      },
+      "project_id": "167b0fc3e94e4e4f8008730ea7c19107",
+      "project_revision": 6,
+      "run_id": "24474b428f1c47ba93899ffbdae403b8",
+      "manifest_path": "/workspace/.runtime/eda/runs/24474b428f1c47ba93899ffbdae403b8/manifest.json",
+      "analysis_result": "unknown",
+      "message": "Actual ngspice tran: 2026 samples.; reference criteria 0/0"
+    }
+  ],
+  "paid_ai_calls": 0,
+  "drc": "not_run",
+  "lvs": "not_run",
+  "pex": "not_run",
+  "manufacturing_signoff": false
+}

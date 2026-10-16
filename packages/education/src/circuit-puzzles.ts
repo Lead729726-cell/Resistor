@@ -1,9 +1,10 @@
+import {dynamicPuzzles,assessDynamic,validateConnections,type Connections} from './dynamic-puzzles.ts';
 import {getCalculator} from '../../calculators/src/index.ts';
 
 export const puzzleVersion='edu-circuit-puzzles-v1';
-export type Part={id:string;ohms:number;watts:number;label:string};
+export type Part={id:string;label:string;kind?:'resistor'|'capacitor'|'nmos';ohms?:number;watts?:number;farads?:number;w_um?:number;l_um?:number};
 export type Placement=Record<string,string>;
-export type Puzzle={id:string;title:string;level:number;kind:'divider'|'series'|'parallel'|'led';goal:string;vin:number;target:number;unit:'V'|'A'|'ohm';slots:{id:string;label:string;nodes:[string,string]}[];parts:Part[];initial:Placement;hints:string[];conditions:string[];max_current?:number;vf?:number};
+export type Puzzle={id:string;title:string;level:number;kind:'divider'|'series'|'parallel'|'led'|'rc'|'nmos';goal:string;vin:number;target:number;unit:'V'|'A'|'ohm'|'s';slots:{id:string;label:string;nodes:string[];accepts?:Part['kind'];pins?:{pin:string;expected:string;options:string[]}[]}[];parts:Part[];initial:Placement;hints:string[];conditions:string[];max_current?:number;vf?:number};
 const parts:Part[]=[{id:'r1k-a',ohms:1000,watts:.25,label:'1 kΩ · A'},{id:'r1k-b',ohms:1000,watts:.25,label:'1 kΩ · B'},{id:'r2k',ohms:2000,watts:.25,label:'2 kΩ'},{id:'r5k',ohms:5000,watts:.25,label:'5 kΩ'},{id:'r10k-a',ohms:10000,watts:.25,label:'10 kΩ · A'},{id:'r10k-b',ohms:10000,watts:.25,label:'10 kΩ · B'},{id:'r100-small',ohms:100,watts:.125,label:'100 Ω · ⅛ W'},{id:'r100-power',ohms:100,watts:.5,label:'100 Ω · ½ W'}];
 const slots=[{id:'R1',label:'위쪽 자리',nodes:['VCC','OUT'] as [string,string]},{id:'R2',label:'아래쪽 자리',nodes:['OUT','GND'] as [string,string]},{id:'X1',label:'열린 가지',nodes:['OUT','OPEN'] as [string,string]}];
 const conditions=['가상 연결 퍼즐 · 이상 저항·이상 전압원 · 상온/공정/공차 모델 없음','수치는 기존 공통 계산기의 정적 수식 결과이며 ngspice 실행·실물 측정·DRC/LVS/PEX가 아닙니다.'];
@@ -17,21 +18,24 @@ export const circuitPuzzles:Puzzle[]=[
  {...base,id:'led-current',title:'06 · LED 앞에 저항 꽂기',level:1,kind:'led',goal:'Vf = 2 V인 이상 LED에 3 mA를 흘리세요.',vin:5,vf:2,target:.003,unit:'A',slots:[slots[0],slots[2]],conditions:[...conditions,'LED는 일정한 순방향 전압 2 V로 가정합니다. 실제 I–V·온도·광출력·역전압 검증은 포함하지 않습니다.'],hints:['LED와 직렬인 VCC → OUT 자리에 전류 제한 저항을 놓으세요.','저항에는 5 − 2 = 3 V가 걸린다고 가정합니다. I = (Vin − Vf) / R.','3 V / 3 mA = 1 kΩ입니다.']},
  {...base,id:'power-rating',title:'07 · 값이 같아도 뜨거워진다',level:2,kind:'divider',goal:'OUT = 2.5 V를 유지하면서 전체 전류 50 mA 이하, 저항 정격 전력 조건을 만족하세요.',vin:10,target:2.5,unit:'V',max_current:.05,parts:[...parts,{id:'r300',ohms:300,watts:.5,label:'300 Ω · ½ W'},{id:'r300-power',ohms:300,watts:1,label:'300 Ω · 1 W'}],hints:['전압비뿐 아니라 전류와 각 저항의 P = I²R도 확인합니다.','전류 상한 50 mA를 넘지 않아야 하며 각 저항의 정격이 계산 전력 이상이어야 합니다.','아래 100 Ω, 위 300 Ω이면 I=25 mA입니다. 위 저항에는 0.1875 W, 아래에는 0.0625 W가 걸립니다.']},
  {...base,id:'thermal-trap',title:'08 · 작은 저항의 함정',level:3,kind:'series',goal:'전체 100 Ω, 50 mA 경로를 만들고 정격 전력도 만족하세요.',vin:5,target:.05,unit:'A',parts:[...parts,{id:'r50-small',ohms:50,watts:.0625,label:'50 Ω · ¹⁄₁₆ W'},{id:'r50-a',ohms:50,watts:.25,label:'50 Ω · ¼ W · A'},{id:'r50-b',ohms:50,watts:.25,label:'50 Ω · ¼ W · B'}],hints:['전류가 맞아도 정격 전력이 부족하면 이 퍼즐의 조건을 만족하지 않습니다.','50 mA가 50 Ω를 통과하면 P = (0.05 A)² × 50 Ω = 0.125 W입니다.','각 50 Ω 자리에는 0.125 W 이상의 정격이 필요합니다.']}
+ ,...dynamicPuzzles
 ];
 
 export function getPuzzle(id:string){const p=circuitPuzzles.find(p=>p.id===id);if(!p)throw Error('지원하지 않는 회로 퍼즐입니다.');return p;}
 export function placePuzzlePart(p:Puzzle,current:Placement,slot:string,part:string):Placement{
  if(!p.slots.some(s=>s.id===slot)||!p.parts.some(x=>x.id===part))throw Error('이 문제에 있는 부품과 자리만 선택하세요.');
+ const socket=p.slots.find(s=>s.id===slot)!,component=p.parts.find(x=>x.id===part)!;if(socket.accepts&&socket.accepts!==(component.kind||'resistor'))throw Error('이 자리에는 '+socket.accepts+' 부품을 놓으세요.');
  const next={...current};for(const [key,id] of Object.entries(next))if(id===part)delete next[key];next[slot]=part;return next;
 }
 export function validatePlacement(p:Puzzle,placement:Placement){
  if(!placement||Array.isArray(placement)||Object.keys(placement).length>p.slots.length)throw Error('배치 형식이 올바르지 않습니다.');
- const seen=new Set();for(const [slot,part] of Object.entries(placement)){if(!p.slots.some(s=>s.id===slot)||!p.parts.some(x=>x.id===part)||seen.has(part))throw Error('알 수 없거나 중복된 부품·자리입니다.');seen.add(part);}
+ const seen=new Set();for(const [slot,part] of Object.entries(placement)){if(!p.slots.some(s=>s.id===slot)||!p.parts.some(x=>x.id===part)||seen.has(part))throw Error('알 수 없거나 중복된 부품·자리입니다.');if(p.slots.find(s=>s.id===slot)?.accepts&&p.slots.find(s=>s.id===slot)!.accepts!==(p.parts.find(x=>x.id===part)!.kind||'resistor'))throw Error('부품 종류가 자리와 맞지 않습니다.');seen.add(part);}
 }
 function calculate(id:string,inputs:Record<string,number|string>){const calculator=getCalculator(id);if(!calculator)throw Error('공통 계산기를 찾을 수 없습니다: '+id);return calculator.calculate(inputs);}
-export type PuzzleAssessment={status:'incomplete'|'needs-change'|'goal-met';scope:'ideal-static-calculation';engine_verification:false;formula:string;observations:string[];missing:string[];value:number|null;unit:string;current_A:number|null;output_V:number|null;powers:{slot:string;watts:number;rating:number;within_rating:boolean}[];target_met:boolean;power_met:boolean;topology_complete:boolean};
-export function assessPuzzle(p:Puzzle,placement:Placement):PuzzleAssessment{
+export type PuzzleAssessment={status:'incomplete'|'needs-change'|'goal-met'|'ready-to-run';scope:'ideal-static-calculation'|'connection-check';engine_verification:false;formula:string;observations:string[];missing:string[];value:number|null;unit:string;current_A:number|null;output_V:number|null;powers:{slot:string;watts:number;rating:number;within_rating:boolean}[];target_met:boolean;power_met:boolean;topology_complete:boolean};
+export function assessPuzzle(p:Puzzle,placement:Placement,connections:Connections={}):PuzzleAssessment{
  validatePlacement(p,placement);
+ if(p.kind==='rc'||p.kind==='nmos'){validateConnections(p,connections);return assessDynamic(p,placement,connections);}
  const required=p.kind==='led'?['R1']:['R1','R2'],missing=required.filter(s=>!placement[s]);
  const a:PuzzleAssessment={status:'incomplete',scope:'ideal-static-calculation',engine_verification:false,formula:'',observations:[],missing,value:null,unit:p.unit,current_A:null,output_V:null,powers:[],target_met:false,power_met:false,topology_complete:false};
  if(placement.X1)a.observations.push('X1은 OPEN으로 끝나는 열린 가지입니다. 필수 경로의 저항 자리를 대신할 수 없습니다.');
@@ -43,14 +47,14 @@ export function assessPuzzle(p:Puzzle,placement:Placement):PuzzleAssessment{
  if(p.kind==='led'){
   const expected=calculate('led-resistor',{supply:p.vin,forward:p.vf!,current_ma:p.target*1000});
   // This shared calculator uses mA input; the observed current follows Ohm's law at the assumed constant Vf.
-  i=(p.vin-p.vf!)/r1.ohms;vout=p.vf!;value=i;a.formula=`I = (Vin − Vf) / R; R목표 = ${expected.primaryValue} Ω`;
+  i=(p.vin-p.vf!)/r1.ohms!;vout=p.vf!;value=i;a.formula=`I = (Vin − Vf) / R; R목표 = ${expected.primaryValue} Ω`;
  }else if(p.kind==='parallel'){
-  const eq=calculate('parallel-resistor',{r1:r1.ohms,r2:r2!.ohms,r3:0,r4:0});value=Number(eq.primaryValue);i=p.vin/value;vout=p.vin;a.formula='1 / Req = 1 / R1 + 1 / R2';
+  const eq=calculate('parallel-resistor',{r1:r1.ohms!,r2:r2!.ohms!,r3:0,r4:0});value=Number(eq.primaryValue);i=p.vin/value;vout=p.vin;a.formula='1 / Req = 1 / R1 + 1 / R2';
  }else{
-  const divider=calculate('voltage-divider',{vin:p.vin,r1:r1.ohms,r2:r2!.ohms});vout=Number(divider.primaryValue);i=p.vin/(r1.ohms+r2!.ohms);value=p.kind==='series'?i:vout;a.formula=p.kind==='series'?'I = Vin / (R1 + R2)':'Vout = Vin × R2 / (R1 + R2)';
+  const divider=calculate('voltage-divider',{vin:p.vin,r1:r1.ohms!,r2:r2!.ohms!});vout=Number(divider.primaryValue);i=p.vin/(r1.ohms!+r2!.ohms!);value=p.kind==='series'?i:vout;a.formula=p.kind==='series'?'I = Vin / (R1 + R2)':'Vout = Vin × R2 / (R1 + R2)';
  }
  a.value=value;a.current_A=i;a.output_V=vout;
- a.powers=required.map(slot=>{const r=p.parts.find(x=>x.id===placement[slot])!,power=p.kind==='parallel'?p.vin*p.vin/r.ohms:i*i*r.ohms;return {slot,watts:power,rating:r.watts,within_rating:power<=r.watts+Number.EPSILON};});
+ a.powers=required.map(slot=>{const r=p.parts.find(x=>x.id===placement[slot])!,power=p.kind==='parallel'?p.vin*p.vin/r.ohms!:i*i*r.ohms!;return {slot,watts:power,rating:r.watts!,within_rating:power<=r.watts!+Number.EPSILON};});
  a.target_met=Math.abs(value-p.target)<=Math.abs(p.target)*.01;
  a.power_met=a.powers.every(x=>x.within_rating)&&(p.max_current===undefined||i<=p.max_current);
  a.status=a.target_met&&a.power_met?'goal-met':'needs-change';
@@ -58,8 +62,9 @@ export function assessPuzzle(p:Puzzle,placement:Placement):PuzzleAssessment{
  if(!a.power_met)a.observations.push('전력 정격 또는 전류 상한 조건을 벗어납니다.');
  return a;
 }
-export function puzzleCoach(p:Puzzle,placement:Placement,question:string,hintLevel=0){
- const a=assessPuzzle(p,placement),normalized=question.toLowerCase();
+export function puzzleCoach(p:Puzzle,placement:Placement,question:string,hintLevel=0,connections:Connections={}){
+ const a=assessPuzzle(p,placement,connections),normalized=question.toLowerCase();
+ if(p.kind==='rc'||p.kind==='nmos')return {observed_facts:a.observations.join(' '),applied_model:a.formula,reasoning:'현재 보드는 연결 상태만 확인했습니다. 실제 ngspice 결과와 그 보드 revision을 확인하세요. 형상·배치만으로 전류를 만들지 않습니다.',next_experiment:p.hints[Math.min(hintLevel,p.hints.length-1)],question:p.kind==='rc'?'C가 커지면 충전 속도와 전류의 변화는 어떻게 달라질까요?':'G를 GND로 바꾸면 OUT과 M1 전류는 어떻게 될까요?',source:'curated-coach',engine_verification:false};
  const hint=p.hints[Math.min(Math.max(hintLevel,0),p.hints.length-1)];
  let rule=/공식|수식|formula|왜|전압|출력/.test(normalized)?(a.formula||'닫힌 연결 경로를 먼저 확인한 뒤 '+(p.kind==='parallel'?'1/Req = 1/R1 + 1/R2':p.kind==='led'?'I = (Vin − Vf)/R':'Vout = Vin × R2/(R1+R2), I = Vin/(R1+R2)')):hint;
  if(/전력|뜨거|정격/.test(normalized))rule='P = I²R. 각 저항의 계산 전력이 표시된 정격 이하인지 각각 비교합니다. 열 방출·실물 안전은 별도 모델·측정이 필요합니다.';
