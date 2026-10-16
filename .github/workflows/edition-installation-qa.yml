@@ -2,8 +2,11 @@ name: Execute edition installers on native OS and CPU
 on:
   workflow_dispatch:
     inputs:
-      primary_run:
-        description: Native build artifact run for x64 and Mac targets
+      indust_run:
+        description: Indust build artifacts for x64 and Mac targets
+        required: true
+      edu_run:
+        description: Edu build artifacts for all targets
         required: true
       arm_run:
         description: Native Windows ARM64 build artifact run
@@ -38,7 +41,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: Resistor-${{ matrix.edition }}-${{ matrix.target.key }}
-          run-id: ${{ matrix.target.key == 'windows-arm64' && inputs.arm_run || inputs.primary_run }}
+          run-id: ${{ matrix.edition == 'edu' && inputs.edu_run || matrix.target.key == 'windows-arm64' && inputs.arm_run || inputs.indust_run }}
           github-token: ${{ github.token }}
           path: .runtime/installer-input
       - if: runner.os != 'Linux'
