@@ -66,5 +66,16 @@ test('QA assistance stays outside learner progress; subsequent learner retries a
 test('desktop self-study bundle runs outside the source tree without copying keys',()=>fixture(async({workspace})=>{
  const stage=path.join(workspace,'packaged'),outfile=path.join(stage,'scripts/self-study-service.mjs');await mkdir(path.join(stage,'apps/desktop'),{recursive:true});for(const name of ['product-edition.cjs','product-editions.json'])await cp(path.join('apps/desktop',name),path.join(stage,'apps/desktop',name));await writeFile(path.join(stage,'product-edition.json'),JSON.stringify({schema_version:1,edition:'edu'}));
  await build({entryPoints:['scripts/self-study-service.mjs'],outfile,bundle:true,platform:'node',target:'node24',format:'esm',banner:{js:"import {createRequire as __studyCreateRequire} from 'node:module'; const require=__studyCreateRequire(import.meta.url);"}});
- const bundled=await import(pathToFileURL(outfile));const response=await bundled.studyRpc({workspace},'study.catalog',{}, {edition:'edu'});assert.equal(response.ok,true,response.error?.message);assert.equal(response.result.questions.length,64);assert.equal(response.result.engine_verification,false);assert.equal(response.result.limits.configured,true);await assert.rejects(access(path.join(workspace,'.env.local')));
+ const bundled=await import(pathToFileURL(outfile));const response=await bundled.studyRpc({workspace},'study.catalog',{}, {edition:'edu'});assert.equal(response.ok,true,response.error?.message);assert.equal(response.result.questions.length,76);assert.equal(response.result.engine_verification,false);assert.equal(response.result.limits.configured,true);await assert.rejects(access(path.join(workspace,'.env.local')));
+}));
+test('adaptive study uses independent objective practice only, reuses stored questions and explains its decision without a provider call',()=>fixture(async({api,calls})=>{
+ let bank=await api('study.catalog');const original=initialStudyQuestions(),ones=bank.questions.filter(q=>q.kind==='numeric'&&q.level===1).slice(0,5).map(q=>({...original.find(o=>o.title===q.title),id:q.id}));
+ await api('study.submit',{...submit(ones[0],String(ones[0].expected)),purpose:'qa'});
+ await api('study.reveal',{question_id:ones[1].id});await api('study.submit',submit(ones[1],String(ones[1].expected)));
+ assert.equal((await api('study.recommend')).recommendation.evidence_count,0);
+ for(const q of ones.slice(2))await api('study.submit',submit(q,String(q.expected)+' '+q.unit));
+ const rec=(await api('study.recommend')).recommendation;assert.equal(rec.level,2);assert.equal(rec.tokens_used,0);assert.equal(rec.sample_count,3);assert.ok(rec.reason.includes('80'));assert.equal(rec.question.level,2);
+ await api('study.submit',submit(ones[2],String(ones[2].expected)));assert.equal((await api('study.recommend')).recommendation.evidence_count,3);
+ bank=await api('study.catalog');assert.equal(bank.difficulty.level,2);assert.equal(bank.questions.length,76);assert.ok(bank.questions.some(q=>q.level===3&&q.kind==='numeric'));
+ assert.ok(!JSON.stringify(rec.question).includes('numerical_trace'));assert.equal(calls.length,0);
 }));

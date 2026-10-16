@@ -32,7 +32,7 @@ test('connectivity, value and power checks remain independent; same physical par
  assert.equal(puzzleCoach(p,{},'어떤 공식이야?').source,'curated-coach');
 });
 test('create, place, check, modify, undo, reopen and raw explanation survive revisions and exports',()=>setup(async({api,raw,calls})=>{
- const bank=await api('catalog');assert.equal(bank.questions.length,64);const initialAttempts=(await api('history')).attempts.length;
+ const bank=await api('catalog');assert.equal(bank.questions.length,76);const initialAttempts=(await api('history')).attempts.length;
  let v=await create(api),oldVersion=v.session.version;v=await act(api,v,{type:'place',slot:'R1',part:'r10k-a'});v=await act(api,v,{type:'place',slot:'R2',part:'r10k-b'});v=await act(api,v,{type:'check'});assert.equal(v.preview.status,'goal-met');assert.equal(v.last_check_fresh,true);assert.equal(v.context.data_revision,v.session.board_revision);
  v=await act(api,v,{type:'place',slot:'R2',part:'r5k'});assert.equal(v.last_check_fresh,false);assert.equal(v.session.checks.at(-1).assessment.status,'goal-met');assert.equal(v.preview.status,'needs-change');
  v=await act(api,v,{type:'undo'});assert.equal(v.preview.status,'goal-met');assert.equal(v.last_check_fresh,false);v=await act(api,v,{type:'redo'});assert.equal(v.preview.status,'needs-change');v=await act(api,v,{type:'explain',text:'직접 쓴 QA 답안 <태그도 데이터>'});

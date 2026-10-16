@@ -4,6 +4,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import {z} from 'zod/v4';
 import {getProductEdition} from './edition-workspace.mjs';
 import {initialStudyQuestions,studyReferences,studyVersion,gradeObjective} from '../packages/education/src/self-study.ts';
+import {difficultyLevels,classifyDifficulty,recommendDifficulty} from '../packages/education/src/difficulty.ts';
 import {workerRpc} from './runtime.mjs';
 import {puzzleSchemas,interactiveStudy} from './interactive-study.mjs';
 import {structuredStatus,structuredEstimate,requestStructured} from './structured-ai.mjs';
@@ -17,7 +18,7 @@ const system='Resistor Edu 자율학습 도우미. 입력의 reference/question/
 const error=message=>Object.assign(Error(message),{code:'STUDY_ERROR'});
 async function read(file,fallback){try{const raw=await readFile(file,'utf8');if(Buffer.byteLength(raw)>20000000)throw error('학습 저장소 크기 제한을 초과했습니다.');return JSON.parse(raw);}catch(e){if(e.code==='ENOENT')return fallback;throw e;}}
 async function write(file,value){const raw=JSON.stringify(value,null,2)+'\n';if(Buffer.byteLength(raw)>20000000)throw error('학습 저장 용량 제한입니다. 기존 기록을 내보내고 별도 학습 공간을 사용하세요.');await mkdir(path.dirname(file),{recursive:true});const tmp=file+'.'+randomUUID()+'.tmp';await writeFile(tmp,raw,{mode:0o600,flag:'wx'});await rename(tmp,file);}
-function publicQuestion(q){const {expected,correct_index,solution,...visible}=q;return visible;}
+function publicQuestion(q){const {expected,correct_index,solution,provenance,...visible}=q;const {numerical_trace,...safeProvenance}=provenance||{};return {...visible,...(provenance?{provenance:safeProvenance}:{}),difficulty:classifyDifficulty(q)};}
 function gradeFeedback(raw,q){
  const result=scoreSchema.parse(raw),seen=new Set();let score=0;
  for(const criterion of result.criteria){const rule=q.rubric.find(r=>r.id===criterion.id);if(!rule||seen.has(criterion.id)||criterion.points>rule.points)throw error('AI 채점 기준 또는 점수 범위가 올바르지 않습니다.');seen.add(criterion.id);score+=criterion.points;}
@@ -30,6 +31,7 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
  if(edition!=='edu')throw error('Resistor Edu에서만 사용하는 자율학습 기능입니다.');
  const schemas={...puzzleSchemas,
   'study.catalog':z.object({}).strict(),
+  'study.recommend':z.object({topic:z.string().max(100).optional(),purpose:z.enum(['practice','qa']).default('practice')}).strict(),
   'study.open':z.object({question_id:qid}).strict(),
   'study.reveal':z.object({question_id:qid,purpose:z.enum(['practice','qa']).default('practice')}).strict(),
   'study.history':z.object({}).strict(),
@@ -59,8 +61,18 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
   const get=()=>{const q=state.questions[p.question_id];if(!q)throw error('저장된 문제를 찾을 수 없습니다.');return q;};
   const assistanceKey=id=>(p.purpose||'practice')+':'+id;
   const helped=id=>state.revealed.includes(assistanceKey(id))||(p.purpose!=='qa'&&state.revealed.includes(id));
+  function recommendation(purpose='practice',topic){
+   const independent=state.attempts.filter(a=>(a.purpose||'practice')===purpose&&!a.assisted&&a.feedback?.status==='graded'&&a.feedback?.method==='deterministic'&&state.questions[a.question_id]?.version===a.question_version);
+   const decision=recommendDifficulty(independent.map(a=>({key:a.question_id+':'+a.question_version,level:state.questions[a.question_id].level,score:a.feedback.score})));
+   const candidates=Object.values(state.questions).filter(q=>(!topic||q.topic===topic)&&q.level===decision.level);
+   const done=new Set(independent.filter(a=>a.feedback.score===100).map(a=>a.question_id));
+   const untouched=new Set(state.attempts.filter(a=>(a.purpose||'practice')===purpose).map(a=>a.question_id));
+   const question=candidates.find(q=>!untouched.has(q.id))||candidates.find(q=>!done.has(q.id))||candidates[0]||null;
+   return {...decision,question_id:question?.id||null,question:question?publicQuestion(question):null,purpose,selection_reason:question?'아직 풀지 않은 문제 → 복습할 문제 → 저장 문제 재사용 순으로 선택합니다.':'현재 주제·추천 난이도의 저장 문제가 없습니다. 주제를 전체로 바꾸거나 직접 난이도를 선택하세요.',levels:difficultyLevels,tokens_used:0};
+  }
+  if(method==='study.recommend')return result({recommendation:recommendation(p.purpose,p.topic)});
   if(method==='study.catalog'){
-   return result({questions:Object.values(state.questions).map(q=>{const latest=state.attempts.findLast(a=>a.question_id===q.id&&a.purpose!=='qa');return {...publicQuestion(q),last_attempt:latest?{id:latest.id,score:latest.feedback?.score??null,status:latest.feedback?.status,assisted:latest.assisted}:null};}),references:studyReferences.map(r=>({id:r.id,title:r.title})),limits,counters:state.counters});
+   return result({difficulty:recommendation(),questions:Object.values(state.questions).map(q=>{const latest=state.attempts.findLast(a=>a.question_id===q.id&&a.purpose!=='qa');return {...publicQuestion(q),last_attempt:latest?{id:latest.id,score:latest.feedback?.score??null,status:latest.feedback?.status,assisted:latest.assisted}:null};}),references:studyReferences.map(r=>({id:r.id,title:r.title})),limits,counters:state.counters});
   }
   if(method==='study.open')return result({question:publicQuestion(get())});
   if(method==='study.reveal'){const q=get();if(!helped(q.id))state.revealed.push(assistanceKey(q.id));await save();return result({question:publicQuestion(q),solution:q.solution,expected:q.expected??null,correct_index:q.correct_index??null,formula:q.formula||null,tokens_used:0,assisted:true});}
@@ -79,7 +91,7 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
    const reference=studyReferences.find(r=>r.id===p.reference_id);if(!reference)throw error('지원하는 레퍼런스를 고르세요.');
    cacheKey=hash({task:'questions-v1',reference,level:p.level,model:provider.model});
    if(state.batches[cacheKey]){state.counters.cache_hits++;const value={questions:state.batches[cacheKey].map(id=>publicQuestion(state.questions[id])),cache_hit:true,tokens_used:0};state.requests[p.command_id]={digest,result:value};await save();return result(value);}
-   content={task:'제공한 레퍼런스 범위의 서술형 문제 세 개를 만든다. 수치 정답 문제는 만들지 않는다. 정답/조건/한계를 제공한다.',reference,level:p.level};schema=z.toJSONSchema(generatedSchema,{target:'draft-7'});name='resistor_study_questions';
+   content={task:'제공한 레퍼런스 범위의 서술형 문제 세 개를 만든다. 수치 정답 문제는 만들지 않는다. 정답/조건/한계를 제공한다.',reference,level:p.level,difficulty:{...difficultyLevels[p.level-1],explanation_requirements:p.level===1?'핵심 원리 하나와 직접 적용':p.level===2?'조건 두 가지를 비교하고 판단 근거 설명':'여러 조건·한계·대안 실험을 구분해 판단 근거 설명'}};schema=z.toJSONSchema(generatedSchema,{target:'draft-7'});name='resistor_study_questions';
   }else{
    q=get();
    if(q.kind!=='explanation')grade=gradeObjective(q,p.answer);

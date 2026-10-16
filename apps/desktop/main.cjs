@@ -96,7 +96,7 @@ async function boot(){
         }
         return {ok:true,result:await engineSettings(workspace)};
       }
-      const runtime=await ensureRuntime();
+      const runtime=typeof payload.method==='string'&&payload.method.startsWith('study.')&&payload.method!=='study.puzzle.simulate'?await runtimeConfig(workspace):await ensureRuntime();
       if(typeof payload.method==='string'&&payload.method.startsWith('study.'))return await (await import(pathToFileURL(path.join(root,'scripts/self-study-service.mjs')))).studyRpc(runtime,payload.method,payload.params??{}, {edition:productEdition.edition});
       if(typeof payload.method==='string'&&payload.method.startsWith('learning.'))return await (await import(pathToFileURL(path.join(root,'scripts/education-service.mjs')))).educationRpc(runtime,payload.method,payload.params??{}, {edition:productEdition.edition});
       if(typeof payload.method==='string'&&payload.method.startsWith('assistant.'))return await assistantRpc(runtime,payload.method,payload.params??{});

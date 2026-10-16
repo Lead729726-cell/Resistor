@@ -15,9 +15,9 @@ function readProgress():Record<string,RecordEntry>{
   }return clean;
  }catch{return{};}
 }
-export default function EducationLab({project,runs,doctor,busy,disabledReason,onCreate,onProject,onTool,onView,onGuide}:{project:Project|null;runs:Run[];doctor?:Doctor|null;busy:boolean;onProject:(p:Project)=>Promise<void>;disabledReason?:string;onCreate:(course:EducationCourse)=>Promise<Project>;onTool:(tool:'integrated-tools'|'digital-workbench')=>void;onView:(view:'schematic'|'layout2d'|'simulation')=>void;onGuide:(id:string)=>void}){
+export default function EducationLab({onStudyMode,project,runs,doctor,busy,disabledReason,onCreate,onProject,onTool,onView,onGuide}:{onStudyMode?:()=>void;project:Project|null;runs:Run[];doctor?:Doctor|null;busy:boolean;onProject:(p:Project)=>Promise<void>;disabledReason?:string;onCreate:(course:EducationCourse)=>Promise<Project>;onTool:(tool:'integrated-tools'|'digital-workbench')=>void;onView:(view:'schematic'|'layout2d'|'simulation')=>void;onGuide:(id:string)=>void}){
  const [section,setSection]=useState<'library'|'study'|'courses'>('library');
- const navigation=<div className="education-actions" style={{padding:'0 20px'}}>{([['library','과제·레퍼런스'],['study','AI 자율학습'],['courses','기존 8개 실습·체크 기록']] as const).map(([id,label])=><button key={id} className="button small" aria-pressed={section===id} onClick={()=>setSection(id)}>{label}</button>)}</div>;
+ const navigation=<div className="education-actions" style={{padding:'0 20px'}}>{([['library','과제·레퍼런스'],['study','AI 자율학습'],['courses','기존 8개 실습·체크 기록']] as const).map(([id,label])=><button key={id} className="button small" aria-pressed={section===id} onClick={()=>id==='study'&&onStudyMode?onStudyMode():setSection(id)}>{label}</button>)}</div>;
  const [selected,setSelected]=useState(educationCourses[0].id),[progress,setProgress]=useState(readProgress),[error,setError]=useState('');
  const course=educationCourses.find(c=>c.id===selected)!,entry=progress[selected]||{checked:[]};
  const checked=Array.isArray(entry.checked)?entry.checked:[];

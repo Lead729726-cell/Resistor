@@ -53,3 +53,9 @@ test('every displayed binding resolves to its documented action without collisio
  };
  for(const d of shortcutDefinitions)for(const combo of d.keys)assert.equal(resolveShortcut(d.scope,events(combo),{drawing:true})?.id,d.id,`${d.scope} ${combo}`);
 });
+test('block placement B is canvas-only and preserves IME, text editing and read-only guards',()=>{
+ assert.equal(resolveShortcut('schematic',key('b'))?.id,'block_palette');
+ assert.equal(resolveShortcut('layout',key('b')),null);
+ for(const c of [{textEditing:true},{modalOpen:true},{readOnly:true},{pending:true}])assert.equal(resolveShortcut('schematic',key('b'),c),null);
+ assert.equal(resolveShortcut('schematic',key('Process',{isComposing:true,code:'KeyB'})),null);
+});

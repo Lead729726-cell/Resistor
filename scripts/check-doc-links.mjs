@@ -7,7 +7,7 @@ import path from 'node:path';
 const tracked = new Set(execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard', '-z'], { encoding: 'utf8' }).split('\0').filter(Boolean));
 const documents = ['README.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'SECURITY.md', 'docs/open-source.md', 'docs/precision-workbench.md','docs/online-updates.md','docs/analog-soc.md','docs/sar-adc.md','examples/bounded-sar/README.md','examples/analog-soc/README.md',...Array.from(tracked).filter(f=>/^examples\/(?:analog-soc\/soc_[^/]+|bounded-sar\/(?:soc_[^/]+|sar8_analog))\/README\.md$/.test(f))];
 const missing = [];
-documents.push('docs/literature-update-2026.md','docs/edu-study-league.md');
+documents.push('docs/literature-update-2026.md','docs/edu-study-league.md','docs/edu-learning-workflow.md','docs/edu-inverter-lab.md','docs/edu-self-study.md');
 documents.push('docs/native-runtime.md','docs/schematic-quickstart.md','docs/gds-schematic-conversion.md','docs/workbench-usability.md');
 documents.push('docs/physical-tools.md');
 documents.push('docs/logic-composition.md','docs/logic-transient.md');

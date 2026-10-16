@@ -63,3 +63,18 @@ test('automatic pin route bends between devices rather than across the opposite 
   assert.deepEqual(route,[[200,56],[200,144],end]);
   assert.deepEqual(pinBridge([100,56],[100,56],'x-first'),[]);
 });
+import {blockPlacementReason,makePlacedBlock} from '../packages/ui/src/schematic-blocks';
+
+test('hierarchical placement preserves ports, snaps once, uses unique names and rejects recursive or missing cells',()=>{
+ const cells={leaf:{ports:['IN','OUT','VDD','VSS'],devices:[]},parent:{ports:[],devices:[{id:'b',name:'X1',kind:'block' as const,cell_name:'leaf',pins:{},parameters:{},x:0,y:0}]}};
+ assert.equal(blockPlacementReason(cells,'leaf','parent'),null);
+ assert.match(blockPlacementReason(cells,'parent','leaf')!,/순환/);
+ assert.match(blockPlacementReason(cells,'leaf','leaf')!,/순환/);
+ assert.match(blockPlacementReason(cells,'missing',null)!,/찾을 수/);
+ const d=makePlacedBlock('leaf',cells.leaf,[],[123,-46],'preview',90,true);
+ assert.equal(d.x,120);assert.equal(d.y,-50);assert.equal(d.rotation,90);assert.equal(d.mirror,true);assert.equal(d.cell_name,'leaf');
+ assert.deepEqual(d.pins,{IN:'',OUT:'',VDD:'',VSS:''});assert.ok(!d.pin_roles);
+ const duplicate=makePlacedBlock('leaf',cells.leaf,[{...d,name:'xLEAF_1'}],[0,0],'second');assert.equal(duplicate.name,'Xleaf_2');
+ assert.deepEqual(cells.leaf.devices,[]);assert.throws(()=>makePlacedBlock('leaf',cells.leaf,[],[Infinity,0],'bad'));
+ const cyclic={a:{devices:[{...d,cell_name:'b'}]},b:{devices:[{...d,cell_name:'a'}]}};assert.match(blockPlacementReason(cyclic,'a',null)!,/순환/);
+});

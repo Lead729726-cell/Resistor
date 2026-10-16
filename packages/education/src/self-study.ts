@@ -1,3 +1,4 @@
+import {leagueQuestion,leagueKinds} from './league-problems.ts';
 import {calculators} from '../../calculators/src/index.ts';
 import {studentReferences,catalogVersion} from './assignment-catalog.ts';
 
@@ -20,21 +21,8 @@ export function initialStudyQuestions():Draft[]{
   ['centroid','아날로그 매칭','common-centroid 배치에 대한 올바른 판단은 무엇입니까?',['항상 최적이며 추출이 불필요','모든 랜덤 불일치가 0이 된다','기울기·대칭·배선·환경 등의 조건과 기생 영향을 함께 평가한다'],2,'common-centroid·더미는 목적과 조건이 있는 기법입니다. 기하 대칭만으로 전기적 매칭을 확정하지 않습니다.'],
   ['timing','동적 지연','파형의 시간 표본이 지연 한도를 판정하기에 너무 거칠다면?',['보간값이 작으면 무조건 통과','판정 불가로 두고 더 작은 최대 시간 간격에서 수렴을 확인','샘플 개수만 임의로 늘려 통과'],1,'표본 사이에 있는 한도나 짧은 글리치는 점 추정만으로 확정할 수 없습니다. 실제 엔진의 시간 간격을 줄여야 합니다.']
  ] as const;
- return [...numeric,...explanation,...choices.map(([key,title,prompt,options,correct,solution])=>({schema_version:1,version:studyVersion,kind:'choice',title,topic:'검증·설계 판단',level:1,prompt,conditions:['제시한 범위에서 가장 타당한 설명 한 개를 선택합니다.'],choices:[...options],correct_index:correct,solution,hints:['실행한 검사와 아직 알 수 없는 범위를 구분하세요.'],rubric:[],source_ids:['resistor-edu-curated-v1'],origin:'curated',reference_id:key} as Draft))];
+ const applied=[2,3].flatMap(level=>leagueKinds.map((kind,index)=>{const {id,...q}=leagueQuestion({kind,variants:[index,2,3]},index,level as 2|3);return {...q,title:q.title+' · '+(level===2?'응용':'심화')+' 실습',origin:'shared-calculator'} as Draft;}));
+ return [...numeric,...applied,...explanation,...choices.map(([key,title,prompt,options,correct,solution])=>({schema_version:1,version:studyVersion,kind:'choice',title,topic:'검증·설계 판단',level:1,prompt,conditions:['제시한 범위에서 가장 타당한 설명 한 개를 선택합니다.'],choices:[...options],correct_index:correct,solution,hints:['실행한 검사와 아직 알 수 없는 범위를 구분하세요.'],rubric:[],source_ids:['resistor-edu-curated-v1'],origin:'curated',reference_id:key} as Draft))];
 }
 
-const units:Record<string,[string,number]>={'': ['ratio',1],'Ω':['ohm',1],ohm:['ohm',1],V:['V',1],A:['A',1],W:['W',1],s:['s',1],Hz:['Hz',1],H:['H',1],F:['F',1],C:['C',1],J:['J',1],dB:['dB',1],'V/code':['V/code',1],'V/V':['ratio',1],bits:['bits',1],bit:['bits',1]};
-const prefixes:Record<string,number>={p:1e-12,n:1e-9,u:1e-6,'µ':1e-6,'μ':1e-6,m:1e-3,k:1e3,M:1e6,G:1e9};
-function unit(value:string):[string,number]{const u=value.replaceAll('Ω','Ω');if(units[u])return units[u];if(u.length>1&&prefixes[u[0]]&&units[u.slice(1)])return [units[u.slice(1)][0],prefixes[u[0]]*units[u.slice(1)][1]];throw Error('표시된 단위 또는 같은 차원의 SI 접두 단위를 사용하세요.');}
-export function parseStudyNumber(answer:string,expectedUnit:string){
- const m=answer.normalize('NFKC').trim().match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)\s*(\S*)$/);if(!m)throw Error('수치와 단위를 입력하세요. 예: 0.9 V, 900 mV, 1e-3 A.');
- const n=Number(m[1]),from=unit(m[2]||expectedUnit),to=unit(expectedUnit);if(!Number.isFinite(n)||from[0]!==to[0])throw Error('유한한 수치와 문제에 맞는 단위를 사용하세요.');const value=n*from[1]/to[1];if(!Number.isFinite(value))throw Error('수치 범위를 초과했습니다.');return value;
-}
-export function gradeObjective(q:StudyQuestion,answer:string){
- if(q.kind==='explanation')throw Error('서술형은 모델 피드백 또는 해설 비교가 필요합니다.');
- const actual=q.kind==='numeric'?parseStudyNumber(answer,q.unit||''):Number(answer);
- if(q.kind==='choice'&&(!/^\d+$/.test(answer)||!Number.isInteger(actual)||actual<0||actual>=q.choices!.length))throw Error('제시된 선택지 한 개를 고르세요.');
- const expected=q.kind==='numeric'?q.expected!:q.correct_index!,tolerance=q.kind==='numeric'?Math.max(Math.abs(expected)*.001,Number.EPSILON*Math.max(Math.abs(expected),Number.MIN_VALUE)*8):0;
- const correct=Math.abs(actual-expected)<=tolerance;
- return {status:'graded',score:correct?100:0,correct,method:'deterministic',feedback:correct?'저장된 기준과 일치합니다.':'저장된 기준과 다릅니다. 수식·입력 조건·단위를 다시 확인하세요.',actual,expected,tolerance,unit:q.unit||'',solution:q.solution,formula:q.formula||null,advisory_only:true,engine_verification:false};
-}
+export {parseStudyNumber,gradeObjective} from './study-grading.ts';

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdtemp,rm,readFile,mkdir,writeFile} from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import {createHash,generateKeyPairSync,randomUUID,sign} from 'node:crypto';
+import {createHash,generateKeyPairSync,randomUUID,sign,randomBytes,createCipheriv} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
 import {canonical,leagueEmojis} from '../packages/education/src/league-protocol.ts';
 import {leagueQuestion,buildLeagueQuestions,gradeLeague,publicLeagueQuestion,leagueKinds} from '../packages/education/src/league-problems.ts';
@@ -18,7 +18,7 @@ const recipes=leagueKinds.slice(0,5).map(kind=>({kind,variants:[0,0,0]}));
 function device(){const {publicKey,privateKey}=generateKeyPairSync('ec',{namedCurve:'prime256v1'}),der=publicKey.export({format:'der',type:'spki'});return {public_key:der.toString('base64url'),id:createHash('sha256').update(der).digest('hex'),privateKey};}
 function envelope(d,method,params,now,nonce=randomUUID()){const e={schema_version:1,device_id:d.id,method,params:method==='league.enroll'?{public_key:d.public_key,...params}:params,issued_at:now,nonce};return {...e,signature:sign('sha256',Buffer.from(canonical(e)),{key:d.privateKey,dsaEncoding:'ieee-p1363'}).toString('base64url')};}
 const good=r=>{assert.equal(r.ok,true,r.error?.code+': '+r.error?.message);return r.result;};
-async function fixture(fn){const directory=await mkdtemp(path.join(os.tmpdir(),'resistor-league-'));let clock=Date.parse('2026-10-16T10:00:00+09:00'),service=await createLeague({directory,now:()=>clock,mode:'qa',maxEnrollmentsPerIP:3});const api=(method,params={},d)=>service.request(d?envelope(d,method,params,clock):{method,params},{ip:d?.id||'public'});const enroll=(d=device())=>{good(api('league.enroll',{},d));return d;};try{await fn({directory,get service(){return service;},api,enroll,clock:()=>clock,advance:ms=>{clock+=ms;},setClock:v=>{clock=v;},reopen:async()=>{service.close();service=await createLeague({directory,now:()=>clock,mode:'qa',maxEnrollmentsPerIP:3});}});}finally{service.close();await rm(directory,{recursive:true,force:true});}}
+async function fixture(fn){const directory=await mkdtemp(path.join(os.tmpdir(),'resistor-league-'));let clock=Date.parse('2026-10-16T10:00:00+09:00'),service=await createLeague({directory,now:()=>clock,mode:'qa',maxEnrollmentsPerIP:3});const api=(method,params={},d)=>service.request(d?envelope(d,method,params,clock):{method,params},{ip:d?.id||'public'});const enroll=(d=device())=>{good(api('league.enroll',{},d));return d;};try{await fn({directory,get service(){return service;},api,enroll,clock:()=>clock,advance:ms=>{clock+=ms;},setClock:v=>{clock=v;},reopen:async()=>{service.close();service=await createLeague({directory,now:()=>clock,mode:'qa',maxEnrollmentsPerIP:3});}});}finally{service.close();await rm(directory,{recursive:true,force:true,maxRetries:5,retryDelay:100});}}
 const answers=()=>Object.fromEntries(buildLeagueQuestions(recipes).map(q=>[q.id,`${q.expected} ${q.unit}`]));
 
 test('league formulas reuse known equations, declared units and SI conversion across every variant',()=>{
@@ -101,7 +101,7 @@ test('standalone HTTP shares actual signed submissions and serves only the leagu
   assert.equal((await fetch(app.url+'/api/league',{method:'POST',headers:{'Content-Type':'application/json'},body:'x'.repeat(40000)})).status,413);
   assert.equal((await fetch(app.url+'/api/league',{method:'POST',body:'bad'})).status,415);
   assert.equal(good(await call({method:'league.info',params:{}})).automatic_ai_calls,false);
- }finally{await app.close();await rm(directory,{recursive:true,force:true});}
+ }finally{await app.close();await rm(directory,{recursive:true,force:true,maxRetries:5,retryDelay:100});}
 });
 test('public site packaging follows only league dependencies and excludes maps and EDA files',async()=>{
  const dir=await mkdtemp(path.join(os.tmpdir(),'resistor-league-site-')),build=path.join(dir,'build'),target=path.join(dir,'site');try{await mkdir(path.join(build,'assets'),{recursive:true});await writeFile(path.join(build,'league.html'),'<script type="module" src="./assets/league-123.js"></script><link rel="stylesheet" href="./assets/league-123.css">');await writeFile(path.join(build,'assets/league-123.js'),'import{x}from"./shared-123.js";\n//# sourceMappingURL=private.map');await writeFile(path.join(build,'assets/shared-123.js'),'export const x=1;');await writeFile(path.join(build,'assets/league-123.css'),'body{}');await writeFile(path.join(build,'assets/app-private.js'),'EDA source');const r=await prepareLeagueSite({buildDirectory:build,targetDirectory:target,endpoint:'https://study.example.org/api/league'});assert.equal(r.files,6);assert.deepEqual(r.assets,['league-123.css','league-123.js','shared-123.js']);assert.ok(!(await readFile(path.join(target,'assets/league-123.js'),'utf8')).includes('sourceMappingURL'));await assert.rejects(readFile(path.join(target,'assets/app-private.js')));const c=JSON.parse(await readFile(path.join(target,'league-config.json'),'utf8'));assert.equal(c.edition,'edu');assert.ok(c.identity_namespace);await assert.rejects(prepareLeagueSite({buildDirectory:build,targetDirectory:target,endpoint:'http://remote.example.org/api/league'}));}finally{await rm(dir,{recursive:true,force:true});}
@@ -122,3 +122,47 @@ test('browser client uses a nonextractable signing key, synchronizes server time
   let sent=0;globalThis.fetch=async()=>{sent++;throw Error('Network uncertain');};await assert.rejects(client.call('community.post',{body:'QA only',category:'tip'},true),/새로고침/);assert.equal(sent,1);
  }finally{globalThis.fetch=originalFetch;if(originalIDB===undefined)delete globalThis.indexedDB;else globalThis.indexedDB=originalIDB;}
 }));
+test('tier settings are revision guarded, locked on start and shared packs rank only within each difficulty',()=>fixture(async f=>{
+ const ds=[f.enroll(),f.enroll(),f.enroll()];
+ for(let i=0;i<3;i++){
+  const d=ds[i],level=i+1;const setting=good(f.api('league.difficulty',{mode:'manual',level,expected_revision:0},d)).difficulty;assert.equal(setting.selected_level,level);
+  assert.equal(f.api('league.difficulty',{mode:'manual',level:1,expected_revision:0},d).error.code,'REVISION_CONFLICT');
+  f.service.publish(calendar(f.clock()).day,recipes,'tier-fixture',level);
+  const a=good(f.api('league.start',{},d)).attempt;assert.equal(a.level,level);assert.ok(a.questions.every(q=>q.level===level));
+  assert.equal(f.api('league.difficulty',{mode:'auto',expected_revision:1},d).error.code,'DIFFICULTY_LOCKED');
+  const values=Object.fromEntries(buildLeagueQuestions(recipes,level).map(q=>[q.id,`${q.expected} ${q.unit}`]));
+  good(f.api('league.submit',{attempt_id:a.id,answers:values},d));good(f.api('league.emoji',{emoji:'🔬'},d));
+ }
+ for(const level of [1,2,3])for(const period of ['today','week']){
+  const board=good(f.api('league.board',{period,level},ds[level-1]));assert.equal(board.participants,1);assert.equal(board.mine.rank,1);assert.equal(board.mine.score,100);assert.equal(board.level,level);
+ }
+ const d=f.enroll(),saved=good(f.api('league.difficulty',{mode:'manual',level:3,expected_revision:0},d));assert.equal(saved.difficulty.selected_level,3);
+ const a=good(f.api('league.start',{},d)).attempt,b=good(f.api('league.me',{},ds[2])).attempt;assert.deepEqual(a.questions,b.questions);assert.equal(a.level,3);
+ assert.equal(f.api('league.difficulty',{mode:'manual',level:4,expected_revision:0},d).error.code,'INVALID_INPUT');
+ await f.reopen();assert.equal(good(f.api('league.me',{},d)).attempt.level,3);
+}));
+test('league automatic level follows completed independent days and snapshots its reason',()=>fixture(async f=>{
+ const d=f.enroll();for(let i=0;i<3;i++){f.service.publish(calendar(f.clock()).day,recipes);const a=good(f.api('league.start',{},d)).attempt;assert.equal(a.level,1);good(f.api('league.submit',{attempt_id:a.id,answers:answers()},d));f.advance(86400000);}
+ const recommendation=good(f.api('league.me',{},d)).difficulty;assert.equal(recommendation.selected_level,2);assert.equal(recommendation.recommendation.sample_count,3);
+ const a=good(f.api('league.start',{},d)).attempt;assert.equal(a.level,2);assert.equal(a.difficulty_mode,'auto');assert.ok(a.difficulty_context.recommendation.reason.includes('80'));
+ assert.equal(good(f.api('league.board',{period:'week',level:1},d)).mine.days,3);assert.equal(good(f.api('league.board',{period:'week',level:2},d)).mine,null);
+}));
+test('approved AI recipe caching is independent per day and tier, never controlled by participants',()=>fixture(async f=>{
+ await mkdir(path.join(f.directory,'.runtime/education/study'),{recursive:true});await writeFile(path.join(f.directory,'.runtime/education/study/provider.json'),JSON.stringify({credential_workspace:'fixture'}));let calls=0;
+ const provider=async(_workspace,request)=>{calls++;assert.equal(request.content.difficulty.level,3);return {value:{problems:recipes},receipt:{provider:'fixture'}};},statusReader=async()=>({configured:true,remaining_usd:1});
+ const args={league:f.service,workspace:f.directory,day:'2026-10-17',level:3,cap:.05,approved:true};await generateLeaguePack(args,{provider,statusReader});await assert.rejects(generateLeaguePack(args,{provider,statusReader}));assert.equal(calls,1);
+ await assert.rejects(generateLeaguePack({...args,level:4},{provider,statusReader}));assert.equal(calls,1);
+ f.advance(86400000);const d=f.enroll();good(f.api('league.difficulty',{mode:'manual',level:3,expected_revision:0},d));assert.equal(good(f.api('league.snapshot',{},d)).info.origin,'openai-recipe-selection');assert.equal(good(f.api('league.start',{},d)).attempt.level,3);assert.equal(calls,1);
+}));
+test('schema v1 migration preserves immutable identity, encrypted original questions, submissions and one attempt per day',async()=>{
+ const directory=await mkdtemp(path.join(os.tmpdir(),'resistor-league-v1-')),d=device(),secret=randomBytes(32),day='2026-10-16',attemptID=randomUUID(),clock=Date.parse(day+'T10:00:00+09:00');let service;
+ const seal=(value,aad)=>{const iv=randomBytes(12),cipher=createCipheriv('aes-256-gcm',secret,iv);cipher.setAAD(Buffer.from(aad));const body=Buffer.concat([cipher.update(JSON.stringify(value),'utf8'),cipher.final()]);return Buffer.concat([iv,cipher.getAuthTag(),body]).toString('base64');};
+ const questions=buildLeagueQuestions(recipes).map(q=>({...q,version:'edu-league-math-v1'})),packCipher=seal({schema_version:1,version:'edu-league-math-v1',day,origin:'legacy-fixture',questions},'pack:'+day),answerCipher=seal(answers(),'answers:'+attemptID);
+ try{
+  await writeFile(path.join(directory,'server-secret'),secret);const db=new DatabaseSync(path.join(directory,'league.sqlite3'));db.exec(`CREATE TABLE meta(key TEXT PRIMARY KEY,value TEXT NOT NULL);INSERT INTO meta VALUES('schema_version','1');CREATE TABLE devices(id TEXT PRIMARY KEY,public_key TEXT NOT NULL,nickname TEXT NOT NULL UNIQUE,created_at INTEGER NOT NULL,blocked INTEGER NOT NULL DEFAULT 0);CREATE TABLE packs(day TEXT PRIMARY KEY,version TEXT NOT NULL,origin TEXT NOT NULL,cipher TEXT NOT NULL,created_at INTEGER NOT NULL);CREATE TABLE attempts(id TEXT PRIMARY KEY,day TEXT NOT NULL REFERENCES packs(day),device_id TEXT NOT NULL REFERENCES devices(id),started_at INTEGER NOT NULL,deadline INTEGER NOT NULL,status TEXT NOT NULL,score INTEGER,correct INTEGER,elapsed_ms INTEGER,finished_at INTEGER,answers_cipher TEXT,UNIQUE(day,device_id));`);
+  db.prepare('INSERT INTO devices VALUES(?,?,?,?,0)').run(d.id,d.public_key,'반짝이는 바지 #6384',clock);db.prepare('INSERT INTO packs VALUES(?,?,?,?,?)').run(day,'edu-league-math-v1','legacy-fixture',packCipher,clock);db.prepare('INSERT INTO attempts VALUES(?,?,?,?,?,?,?,?,?,?,?)').run(attemptID,day,d.id,clock,clock+600000,'submitted',100,5,10000,clock+10000,answerCipher);db.close();
+  service=await createLeague({directory,now:()=>clock+20000,mode:'qa'});const api=(method,params={})=>service.request(envelope(d,method,params,clock+20000),{ip:d.id});
+  const me=good(api('league.me'));assert.equal(me.nickname,'반짝이는 바지 #6384');assert.equal(me.attempt.id,attemptID);assert.equal(me.attempt.level,1);assert.equal(me.attempt.difficulty_mode,'legacy');assert.equal(me.attempt.problem_version,'edu-league-math-v1');assert.equal(me.attempt.score,100);assert.deepEqual(me.attempt.answers,answers());assert.equal(good(api('league.start')).attempt.id,attemptID);assert.equal(api('league.difficulty',{mode:'manual',level:2,expected_revision:0}).error.code,'DIFFICULTY_LOCKED');
+  service.close();service=null;const migrated=new DatabaseSync(path.join(directory,'league.sqlite3'));assert.equal(migrated.prepare("SELECT value FROM meta WHERE key='schema_version'").get().value,'2');assert.equal(migrated.prepare('SELECT cipher FROM packs').get().cipher,packCipher);assert.equal(migrated.prepare('SELECT answers_cipher FROM attempts').get().answers_cipher,answerCipher);migrated.close();assert.deepEqual(await readFile(path.join(directory,'server-secret')),secret);
+ }finally{service?.close();await rm(directory,{recursive:true,force:true,maxRetries:5,retryDelay:100});}
+});

@@ -35,6 +35,7 @@ export const shortcutDefinitions:ShortcutDefinition[]=[
  {id:'wire',scope:'schematic',keys:['W'],label:'배선 도구',mutates:true},
  {id:'junction',scope:'schematic',keys:['J'],label:'접점 도구',mutates:true},
  {id:'pan',scope:'schematic',keys:['H'],label:'화면 이동 도구'},
+ {id:'block_palette',scope:'schematic',keys:['B'],label:'계층 블록 검색·배치',mutates:true,note:'셀 검색 → 선택 → 클릭으로 반복 배치. R 회전 · M 반전 · Esc 취소. 핀은 미연결 상태로 시작합니다.'},
  {id:'rotate',scope:'schematic',keys:['R'],label:'90° 회전',mutates:true,note:'배치 중 소자 또는 선택 소자를 회전합니다.'},
  {id:'mirror',scope:'schematic',keys:['M'],label:'좌우 반전',mutates:true},
  {id:'duplicate',scope:'schematic',keys:['Primary+D'],label:'선택 소자·배선 복제',mutates:true},

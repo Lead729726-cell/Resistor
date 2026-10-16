@@ -37,6 +37,7 @@ tool('register_product_context','Identify Resistor Edu/Indust, the selected work
 if(edition.edition==='edu'){
  const study=async(method,p={})=>{const r=await studyRpc(config,method,p,{edition:'edu'});if(!r.ok)throw Error(r.error.message);return r.result;};
  tool('register_study_bank','Read reusable Edu questions and cache/budget metadata. Never calls AI. Reference answers are hidden until explicit reveal.',{},()=>study('study.catalog'));
+ tool('register_study_recommend','Recommend a stored Edu question using independent objective practice. Returns difficulty, reasons and zero-token reuse. QA/assisted/AI-advisory scores never increase learner difficulty.',{topic:z.string().max(100).optional(),purpose:z.enum(['practice','qa']).default('practice')},p=>study('study.recommend',p));
  for(const [name,method,description,readOnly] of [
   ['register_study_puzzle_simulate','study.puzzle.simulate','Run actual shared ngspice for the placed and pin-connected Edu RC/NMOS board. Saves project/revision/run references; no DRC/LVS/PEX claim.',false],
   ['register_study_puzzle_refresh','study.puzzle.refresh','Refresh queued actual puzzle simulation and retain previous board results as historical.',false],
