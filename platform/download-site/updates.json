@@ -1,18 +1,19 @@
 {
   "schema_version": 1,
   "minimum_updater_version": "0.23.0",
-  "release": "v0.27.0",
+  "minimum_edition_updater_version": "0.29.0",
+  "legacy_release": "v0.27.0",
   "feed": "https://api.github.com/repos/Lead729726-cell/Resistor/releases?per_page=30",
+  "edition_isolated": true,
+  "editions": [
+    "edu",
+    "indust"
+  ],
   "automatic_check": true,
-  "automatic_download": false,
+  "automatic_download": true,
   "automatic_install": false,
   "interval_hours": 6,
-  "installer_modes": {
-    "windows": "verified NSIS wizard",
-    "macos": "user application atomic replacement with backup",
-    "macos-intel": "user application atomic replacement with backup",
-    "linux": "user version directory and desktop launcher"
-  },
+  "initial_manual_install_before": "0.29.0",
   "notarized": false,
   "authenticode_signed": false
 }
