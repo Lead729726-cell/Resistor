@@ -5,6 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
+import {unzipSync} from 'fflate';
 import {runNative} from './native-worker.mjs';
 
 const digest=b=>createHash('sha256').update(b).digest('hex');
@@ -14,7 +15,21 @@ async function download(item,cache){
   if(!bytes||digest(bytes)!==item.sha256){const response=await fetch(item.url,{signal:AbortSignal.timeout(180000)});if(!response.ok)throw Error(`Native resource download failed: HTTP ${response.status}`);bytes=Buffer.from(await response.arrayBuffer());if(digest(bytes)!==item.sha256)throw Error(`Native resource checksum mismatch: ${name}`);await writeFile(file,bytes);}
   return file;
 }
-async function unpack(archive,destination){await mkdir(destination,{recursive:true});await runNative('tar',['-xf',archive,'-C',destination],{timeout:120000});}
+async function unpack(archive,destination){
+  await mkdir(destination,{recursive:true});
+  if(process.platform==='win32'&&archive.endsWith('.zip')){
+    const entries=unzipSync(await readFile(archive));
+    for(const [name,bytes]of Object.entries(entries)){
+      if(name.includes('\\')||name.startsWith('/')||name.split('/').includes('..')||name.includes(':'))throw Error('Unsafe SDK ZIP path');
+      const file=path.join(destination,name);if(name.endsWith('/'))await mkdir(file,{recursive:true});else{await mkdir(path.dirname(file),{recursive:true});await writeFile(file,bytes);}
+    }return;
+  }
+  if(process.platform==='win32'&&archive.endsWith('.7z')){
+    const sevenZip=path.join(process.env.ProgramFiles||'C:/Program Files','7-Zip','7z.exe');
+    try{await access(sevenZip);await runNative(sevenZip,['x','-y','-o'+destination,archive],{timeout:120000});return;}catch(e){if(e.code!=='ENOENT')throw e;}
+  }
+  try{await runNative('tar',['-xf',archive,'-C',destination],{timeout:120000});}catch(e){throw Error('Could not extract '+path.basename(archive)+': '+e.message);}
+}
 export async function prepareNativeRuntime({workspace=process.cwd(),pdkDirectory=process.env.REGISTER_NATIVE_PDK_DIR}={}){
   if(!pdkDirectory&&!process.argv.includes('--core-only')){const {prepareNativePdk}=await import('./prepare-native-pdk.mjs');pdkDirectory=await prepareNativePdk({workspace});}
   const key=process.platform+'-'+process.arch,lock=JSON.parse(await readFile(new URL('./native-runtime-lock.json',import.meta.url),'utf8'));
