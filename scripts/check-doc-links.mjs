@@ -11,7 +11,7 @@ documents.push('docs/literature-update-2026.md','docs/edu-study-league.md','docs
 documents.push('docs/native-runtime.md','docs/schematic-quickstart.md','docs/gds-schematic-conversion.md','docs/workbench-usability.md');
 documents.push('docs/physical-tools.md');
 documents.push('docs/logic-composition.md','docs/logic-transient.md');
-documents.push('docs/product-editions.md','docs/website-design.md','docs/edu-homepage.md');
+documents.push('docs/product-editions.md','docs/website-design.md','docs/edu-homepage.md','docs/edu-program-navigation.md','docs/edition-updates.md');
 documents.push('docs/tutorial-library.md','docs/tutorial-site.md','docs/integrated-design.md');
 let checked = 0;
 for (const document of documents) {

@@ -11,8 +11,9 @@ const write=(name:string,value:unknown)=>{try{localStorage.setItem(name,JSON.str
 async function openStoredLesson(id:string):Promise<View>{
  for(let attempt=0;;attempt++)try{return await rpc<View>('learning.open',{lesson_id:id});}catch(e){if(attempt>=3||(e as {code?:string}).code!=='LEARNING_BUSY')throw e;await new Promise(resolve=>setTimeout(resolve,300*(attempt+1)));}
 }
-export default function InverterLesson({project,selectedDeviceId,selectedShapeId,onProject,onView,onInspect,onCourses,disabledReason}:{selectedDeviceId:string|null;selectedShapeId:string|null;disabledReason?:string;project:Project|null;onProject:(p:Project)=>Promise<void>;onView:(view:'schematic'|'layout2d'|'layout3d'|'simulation'|'section')=>void;onInspect:(deviceId:string,shapeId?:string)=>void;onCourses:()=>void}){
- const [view,setView]=useState<View|null>(null),[records,setRecords]=useState<{id:string;updated_at:string;revision:number;submitted:boolean}[]>([]),[selected,setSelected]=useState(''),[busy,setBusy]=useState(false),[error,setError]=useState(''),[load,setLoad]=useState('50'),[device,setDevice]=useState(selectedDeviceId||'mn1'),[explanation,setExplanation]=useState(''),[pre,setPre]=useState<Record<string,string>>({}),[post,setPost]=useState<Record<string,string>>({}),[saved,setSaved]=useState(false),[step,setStep]=useState(1);
+export default function InverterLesson({project,selectedDeviceId,selectedShapeId,onProject,onView,onInspect,onCourses,disabledReason,currentStep,onStep}:{currentStep?:number;onStep?:(step:number)=>void;selectedDeviceId:string|null;selectedShapeId:string|null;disabledReason?:string;project:Project|null;onProject:(p:Project)=>Promise<void>;onView:(view:'schematic'|'layout2d'|'layout3d'|'simulation'|'section')=>void;onInspect:(deviceId:string,shapeId?:string)=>void;onCourses:()=>void}){
+ const [view,setView]=useState<View|null>(null),[records,setRecords]=useState<{id:string;updated_at:string;revision:number;submitted:boolean}[]>([]),[selected,setSelected]=useState(''),[busy,setBusy]=useState(false),[error,setError]=useState(''),[load,setLoad]=useState('50'),[device,setDevice]=useState(selectedDeviceId||'mn1'),[explanation,setExplanation]=useState(''),[pre,setPre]=useState<Record<string,string>>({}),[post,setPost]=useState<Record<string,string>>({}),[saved,setSaved]=useState(false),[localStep,setLocalStep]=useState(1);
+ const step=currentStep??localStep,setStep=(next:number|((value:number)=>number))=>{const value=typeof next==='function'?next(step):next;if(onStep)onStep(value);else setLocalStep(value);};
  const root=useRef<HTMLDivElement>(null),pageTitle=useRef<HTMLHeadingElement>(null),openSequence=useRef(0);
  const list=async()=>{const r=await rpc<{records:typeof records}>('learning.list');setRecords(r.records);};
  const receive=async(v:View,restore=false)=>{
@@ -22,7 +23,7 @@ export default function InverterLesson({project,selectedDeviceId,selectedShapeId
    const validDraft=draft?.base_saved_at===baseline&&typeof draft?.explanation==='string'&&draft?.pre&&draft?.post;
    const draftDiffers=validDraft&&(draft.explanation!==v.record.student.explanation||JSON.stringify(draft.pre)!==JSON.stringify(v.record.student.pre_answers)||JSON.stringify(draft.post)!==JSON.stringify(v.record.student.post_answers));
    setExplanation(validDraft?draft.explanation:v.record.student.explanation);setPre(validDraft?draft.pre:v.record.student.pre_answers);setPost(validDraft?draft.post:v.record.student.post_answers);setLoad(validDraft&&typeof draft.load==='string'?draft.load:'50');setSaved(!!baseline&&!draftDiffers);
-   const position=read(key+'.page.'+v.record.id);setStep(Number.isInteger(position)&&position>=1&&position<=7?position:1);
+   const position=read(key+'.page.'+v.record.id);if(currentStep===undefined&&!onStep)setStep(Number.isInteger(position)&&position>=1&&position<=7?position:1);
   }
   await onProject(v.project);
  };
@@ -45,6 +46,7 @@ export default function InverterLesson({project,selectedDeviceId,selectedShapeId
   {record&&<p className="edu-context" data-testid="edu-project-context">edition edu · schema {record.schema_version} · project {record.project_id} · 현재 r{view!.project.revision}<br/>엔진 {view!.context.engine.id||'알 수 없음'} · 공정 {view!.context.process.id} · {view!.context.process.version||'버전 미확인'}</p>}
   <section className="edu-step-page" data-testid="edu-step-page" data-step={step} aria-labelledby="edu-step-title">
    <h4 id="edu-step-title" ref={pageTitle} tabIndex={-1}>{step}. {steps[step-1]}</h4>
+   {step>1&&!view&&<p role="status">실습 기록을 불러오거나 1단계에서 새 실습을 시작하세요. 실행 결과를 임의로 생성하지 않습니다.</p>}
    {step===1&&<>
     <p>새 실습은 별도 프로젝트 사본을 만듭니다. 기존 설계와 학생 기록을 덮어쓰지 않습니다.</p>
     <div className="education-actions"><button data-testid="edu-create-inverter" className="button primary" disabled={busy} onClick={()=>void act('learning.create',{command_id:crypto.randomUUID()},true).then(ok=>{if(ok)setStep(2);})}>새 인버터 실습 시작</button>{project?.example==='inverter'&&<button className="button" disabled={busy} onClick={()=>void act('learning.create',{command_id:crypto.randomUUID(),source_project_id:project.id},true).then(ok=>{if(ok)setStep(2);})}>현재 인버터의 사본으로 시작</button>}</div>
