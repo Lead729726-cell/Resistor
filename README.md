@@ -1,5 +1,7 @@
 # Resistor
 
+**Resistor Edu · 오늘의 공부 리그**: 매일 같은 5문제, 서버 채점과 일일·7일 순위, 기기 키에 고정한 닉네임, TOP 3 이모지와 질문·답글 커뮤니티를 제공합니다. [리그 열기](https://lead729726-cell.github.io/Resistor/) · [실행·보안 범위·검증](docs/edu-study-league.md). 공개 화면은 GitHub Pages이며 현재 해석과 별개의 리그 서버는 운영 PC·무료 임시 터널이 실행 중이어야 합니다.
+
 **Resistor Edu · CMOS inverter 연결 실습**: 실제 공개 회로·레이아웃에서 출력 부하 하나를 바꾸고 ngspice 전후 파형·지연을 비교합니다. 학생 설명·조건·run·revision을 저장하고 다시 엽니다. [실행·측정 결과·지원 범위](docs/edu-inverter-lab.md).
 
 **Resistor Edu / Industry**: 교육용과 전문 작업용을 브랜치·저장 폴더·Codex 작업 공간으로 나눕니다. Edu에는 8개 단계별 실습과 학습 기록·보고서를 추가했습니다. [구성·실행·MCP 연동](docs/product-editions.md) · [버전 선택](https://resistor-downloads.vercel.app/editions/). 현재 v0.27.0 설치 파일과 새 소스 버전을 구분합니다.

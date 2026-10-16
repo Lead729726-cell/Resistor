@@ -3,6 +3,7 @@ import {rpc} from '@mos/contracts';
 import type {StudyQuestion} from '../../education/src/self-study';
 import './self-study.css';
 import CircuitPuzzleLab from './CircuitPuzzleLab';
+import StudyLeague from './StudyLeague';
 
 type Question=Omit<StudyQuestion,'expected'|'correct_index'|'solution'>&{last_attempt?:{score:number|null;status:string;assisted:boolean}|null};
 type Feedback={status:string;score:number|null;method:string;feedback?:string;solution?:string;formula?:string;expected?:number;unit?:string;observed_facts?:string;applied_model?:string;reasoning?:string;next_experiment?:string;uncertainties?:string[];criteria?:{id:string;points:number;reason:string}[]};
@@ -11,8 +12,8 @@ type Catalog={study_revision:number;questions:Question[];references:{id:string;t
 const kindName={numeric:'수치',choice:'선택',explanation:'서술'};
 export default function SelfStudy(){
  const [catalog,setCatalog]=useState<Catalog|null>(null),[selected,setSelected]=useState(''),[answer,setAnswer]=useState(''),[topic,setTopic]=useState(''),[filter,setFilter]=useState('all'),[history,setHistory]=useState<Attempt[]>([]),[feedback,setFeedback]=useState<Feedback|null>(null),[reference,setReference]=useState(''),[level,setLevel]=useState('2'),[approved,setApproved]=useState(false),[generationApproved,setGenerationApproved]=useState(false),[budget,setBudget]=useState('0'),[busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState(''),[hint,setHint]=useState(false);
- const [panel,setPanel]=useState<'puzzles'|'questions'>('puzzles');
- const tabs=<div className="study-mode-tabs"><button className="button" aria-pressed={panel==='puzzles'} onClick={()=>setPanel('puzzles')}>회로 퍼즐·대화 코치</button><button className="button" aria-pressed={panel==='questions'} onClick={()=>{setPanel('questions');void load().catch(e=>setError(String(e.message||e)));}}>문제 은행·AI 자율학습</button></div>;
+ const [panel,setPanel]=useState<'puzzles'|'questions'|'league'>('puzzles');
+ const tabs=<div className="study-mode-tabs"><button className="button" aria-pressed={panel==='puzzles'} onClick={()=>setPanel('puzzles')}>회로 퍼즐·대화 코치</button><button className="button" aria-pressed={panel==='questions'} onClick={()=>{setPanel('questions');void load().catch(e=>setError(String(e.message||e)));}}>문제 은행·AI 자율학습</button><button className="button" aria-pressed={panel==='league'} onClick={()=>setPanel('league')}>오늘의 리그·커뮤니티</button></div>;
  const initialized=useRef(false),[purpose,setPurpose]=useState<'practice'|'qa'>('practice');
  const q=catalog?.questions.find(x=>x.id===selected);
  const load=async()=>{const c=await rpc<Catalog>('study.catalog');const h=await rpc<{attempts:Attempt[]}>('study.history');setCatalog(c);setBudget(String(c.limits.study_budget_usd));setSelected(x=>x||c.questions[0]?.id||'');setReference(x=>x||c.references[0]?.id||'');setHistory(h.attempts);};
@@ -24,6 +25,7 @@ export default function SelfStudy(){
  const reveal=()=>action(async()=>{if(!q)return;const v=await rpc<{solution:string;formula:string;expected:number|null;correct_index:number|null}>('study.reveal',{question_id:q.id,purpose});setFeedback({status:'ungraded',score:null,method:'reference-comparison',solution:v.solution,formula:v.formula,feedback:v.expected!==null?`기준값: ${v.expected} ${q.unit||''}`:v.correct_index!==null?`기준 선택지: ${v.correct_index+1}`:'해설과 자신의 설명을 비교하세요.'});setNotice('해설을 먼저 확인한 이후 답안은 도움받음으로 기록합니다.');});
  const download=()=>action(async()=>{const value=await rpc('study.export');const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)+'\n'],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='Resistor-Edu-self-study.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
  const visible=(catalog?.questions||[]).filter(x=>(!topic||x.topic===topic)&&(filter==='all'||filter==='wrong'&&x.last_attempt?.score!==null&&x.last_attempt?.score!==undefined&&x.last_attempt.score<100||filter==='unanswered'&&!x.last_attempt));
+ if(panel==='league')return <>{tabs}<StudyLeague/></>;
  if(panel==='puzzles')return <>{tabs}{catalog?<CircuitPuzzleLab onBank={()=>{setPanel('questions');void load().catch(e=>setError(String(e.message||e)));}}/>:<div className="self-study">{error?<p role="alert">{error}</p>:'학습 기록을 불러오는 중…'}</div>}</>;
  return <>{tabs}<div className="self-study" data-testid="self-study"><header><div><h3>AI 자율학습</h3><p>문제는 저장해서 다시 풀고, 같은 답안의 피드백도 재사용합니다.</p></div><button className="button small" disabled={busy} onClick={()=>void download()}>학습 기록 내보내기</button></header>
   {error&&<p className="inline-error" role="alert">{error}</p>}{notice&&<p role="status" className="study-notice">{notice}</p>}
