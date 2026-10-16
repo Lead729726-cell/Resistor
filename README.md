@@ -4,13 +4,13 @@
 
 **설계 대화·AI 검토 강화**: 현재 셀·선택 소자/마스크·실제 실행 근거로 연속 질문하고 로컬 대화를 복원합니다. 모델 없는 빠른 점검, 실제 전압·부호 있는 전류·동일 격자의 전압 강하 통계, 근거 위치 열기를 제공합니다. AI 제안과 실제 검증은 분리하고 매 전송 승인·비용 예약·이전 근거 차단을 유지합니다. [사용법과 실제 OpenAI/native/UI 검증](docs/assistant-workbench.md).
 
-**Resistor Edu / Indust**: 교육용과 전문 작업용을 브랜치·저장 폴더·Codex 작업 공간으로 나눕니다. Edu에는 단계별 실습과 학습 기록·보고서를 제공합니다. [구성·실행·MCP 연동](docs/product-editions.md) · [버전 선택](https://resistor-downloads.vercel.app/editions/). 현재 v0.27.0 설치 파일과 새 소스 버전을 구분합니다.
+**Resistor Edu / Indust**: 교육용과 전문 작업용을 브랜치·저장 폴더·Codex 작업 공간으로 나눕니다. Edu에는 단계별 실습과 학습 기록·보고서를 제공합니다. [구성·실행·MCP 연동](docs/product-editions.md) · [버전 선택](https://resistor.kr/editions/). 현재 v0.27.0 설치 파일과 새 소스 버전을 구분합니다.
 
 **Resistor Indust의 첫 검토 흐름**: 원본을 유지하는 레이아웃 작업 사본에서 사용자 지정 대칭·간격·고정 영역·상대 위치를 실제 KLayout 기하로 검사합니다. 변경 revision, 대상 매핑, 실제 엔진 manifest, 미평가 항목과 검토 결정을 로컬 보고서에 연결하고 재열기·checksum·STALE를 확인합니다. [실행·지원 범위·비교 결과](docs/industry-layout-review.md). [실제 공개 OTA 전기적 검사](docs/industry-qualification.md)는 3개 PVT 조건의 추출 전후 192개 표본과 DRC/LVS/PEX를 확인합니다. 임의 소자 쌍 매칭·수율, 실제 상용 실행, 고객 가치와 제조 signoff는 별도 근거가 필요합니다.
 
 **드래그 영역 선택과 묶음 편집**: 레이아웃 2D와 현재 회로도 셀에서 Shift 추가·Alt 제외, 그룹 이동/복제/삭제, 한 번에 실행 취소를 지원합니다. BigInt 마스크/hole 판정·잠금·보호된 PCell·원자적 오류 거절을 유지합니다. [사용법·단축키·실제 조작 녹화](docs/area-selection.md).
 
-[전체 튜토리얼](https://resistor-downloads.vercel.app/tutorial/library/): 최근 설치·업데이트·편집 개선 35개 작업 흐름, 모든 template/가산기/CPU 59종과 계산기 18종을 실습으로 제공합니다. 포트·실제 하위 셀·입력·결과·오류 복구·원본 기록을 연결하고 기존 한국어 영상 3편은 촬영 버전 그대로 보존합니다. [구성·검증·갱신](docs/tutorial-library.md).
+[전체 튜토리얼](https://resistor.kr/tutorial/library/): 최근 설치·업데이트·편집 개선 35개 작업 흐름, 모든 template/가산기/CPU 59종과 계산기 18종을 실습으로 제공합니다. 포트·실제 하위 셀·입력·결과·오류 복구·원본 기록을 연결하고 기존 한국어 영상 3편은 촬영 버전 그대로 보존합니다. [구성·검증·갱신](docs/tutorial-library.md).
 
 **v0.27 작업 흐름 개선**: 빈 회로도 시작, 이름·공정으로 프로젝트 열기, 50개씩 목록 표시와 키보드 대화창 이동을 지원합니다. **다음 실행**에서 준비 사항을 확인하고, 실행 목록·파형·로그를 같은 결과에 맞춥니다. 이전 결과의 원인을 표시하며 수치의 최신성과 기능적 PASS/FAIL을 구분합니다. [사용 안내와 실제 검증](docs/workbench-usability.md).
 
@@ -35,13 +35,13 @@ Mac 설치 ZIP은 두 CPU의 네이티브 뷰어·메뉴·재실행·데이터 �
 
 제품 이름은 저항을 뜻하는 **Resistor**입니다. 0.16.1부터 앱·설치 파일·바로가기의 이름을 Resistor로 통일합니다. 이전 Register 배포본의 파일과 검증 기록은 그대로 보존합니다. 기존 설계·설정은 이전 앱의 저장 경로를 계속 사용하며, 프로젝트 ZIP과 해석 결과 형식도 유지합니다.
 
-다운로드: https://resistor-downloads.vercel.app/
+다운로드: https://resistor.kr/
 
-[Edu 버전 다운로드](https://resistor-downloads.vercel.app/download/edu/) · [Industry 버전 다운로드](https://resistor-downloads.vercel.app/download/industry/) — 확인한 commit의 에디션별 소스 ZIP을 제공합니다. 전용 설치 파일 준비 상태와 기존 공통 설치 파일은 구분합니다. [구성과 갱신](docs/download-editions.md).
+[Edu 버전 다운로드](https://resistor.kr/download/edu/) · [Industry 버전 다운로드](https://resistor.kr/download/industry/) — 확인한 commit의 에디션별 소스 ZIP을 제공합니다. 전용 설치 파일 준비 상태와 기존 공통 설치 파일은 구분합니다. [구성과 갱신](docs/download-editions.md).
 
 [0.20 아날로그 SoC 센서 입력부 · 7개 매크로](docs/analog-soc.md): 바이어스·캐스코드 미러·Miller OTA·PGA·2극 필터·TIA·클록 동기 AFE를 제공합니다. 실제 SKY130 레이아웃과 nominal DRC/LVS/PEX/pre/post 결과, 18조건 corner sweep의 통과와 실패를 함께 제공합니다. 완성 SoC와 제조 승인은 별도입니다.
 
-[1080p 한국어 사용 가이드 · 7분 7초](https://resistor-downloads.vercel.app/tutorial/):
+[1080p 한국어 사용 가이드 · 7분 7초](https://resistor.kr/tutorial/):
 실제 앱 조작으로 CMOS 인버터, 전압·전류 파형, 신호 시험, DRC/LVS와 GDS 뷰어를
 따라갑니다. 10개 챕터, 한국어 음성·자막과 실습 프로젝트를 제공합니다.
 촬영 화면은 이름 변경 전 Register 0.16.0이며 현재 제품명은 Resistor입니다.
@@ -52,9 +52,9 @@ INV, NAND2, NOR2, AND2, OR2, XOR2, XNOR2, MUX2와 LDO, DC-DC, VCO, PLL, OTA, 비
 실행했고, 기생 후 이름 있는 동작 기준은 13개 통과했습니다. PLL의 잠금 FAIL과 원본
 파형은 보존했습니다. TT/27°C/1.8V 및 typical RC 범위이며 제조 승인은 별도입니다.
 
-[기본 셀 제작 영상](https://resistor-downloads.vercel.app/tutorial/physical-logic) ·
-[6개 칩 물리 설계 영상](https://resistor-downloads.vercel.app/tutorial/physical-chips) ·
-[설계·파형 모음](https://resistor-downloads.vercel.app/references/).
+[기본 셀 제작 영상](https://resistor.kr/tutorial/physical-logic) ·
+[6개 칩 물리 설계 영상](https://resistor.kr/tutorial/physical-chips) ·
+[설계·파형 모음](https://resistor.kr/references/).
 실제 앱 조작을 녹화한 1080p 한국어 음성·자막 영상과 셀별 제작 절차, 편집 프로젝트,
 GDS/OASIS, 회로, 원본 검사·추출 보고서와 전후 파형을 제공합니다.
 기존 회로 전용 레퍼런스는 아래와 같이 보존합니다.
@@ -93,7 +93,7 @@ v0.15는 로컬 Ollama / OpenAI 설계 검토, 근거·비용·승인 표시, �
 측정을 추가합니다. AI는 검사 제안이며 엔진 검증 결과와 구분합니다.
 [설정과 검증 범위](docs/design-assistant.md) · [직접 만든 CPU 예제](examples/cpu4-assistant/README.md).
 
-[운영체제별 다운로드](https://resistor-downloads.vercel.app)에서 Windows x64 EXE,
+[운영체제별 다운로드](https://resistor.kr)에서 Windows x64 EXE,
 Mac Apple Silicon ZIP, Linux x64 tar.gz를 받을 수 있습니다. 설치 파일은 GitHub
 Releases가 전달하며 SHA-256과 검증 범위를 표시합니다. Mac과 Linux는 **preview**이며
 일반 데스크톱 실기기 실행은 미확인입니다. Apple Developer ID/notarization도 미완료입니다.
@@ -126,7 +126,7 @@ npm run dev:calculators
 첫 엔진 이미지 다운로드에는 시간과 저장 공간이 필요합니다.
 [설치 안내와 Mac 검증 범위](docs/desktop-installation.md)를 확인하세요.
 
-다운로드 사이트는 [Vercel 고정 주소](https://resistor-downloads.vercel.app)입니다.
+다운로드 사이트는 [Vercel 고정 주소](https://resistor.kr)입니다.
 EDA 엔진과 사용자 설계 서버는 로컬에서 실행합니다.
 
 ![Precision Workbench · EDA](docs/evidence/precision-workbench/eda-dark.png)
@@ -359,7 +359,7 @@ npm run test:ui
 
 ## 8-bit Sigma Delta ADC
 
-[19개 전체 하위 블록과 편집 예제](examples/sigma-delta8/README.md): 실제 SKY130 모듈레이터와 CIC2 ×256 디지털 필터. 1MHz / 3.90625kS/s, 8-bit CODE + VALID, 실제 SPICE/RTL/gate 비교와 coherent SINAD/ENOB. TT·27°C·1.8V·0.6V 진폭에서 측정 ENOB 7.34bit이며 8 ENOB·마스크·제조 승인을 주장하지 않습니다. `npm run test:adc`는 수식·단위·reset·포화·계층·실제 RTL/gate API를 검사합니다. [공개 ADC 가이드](https://resistor-downloads.vercel.app/tutorial/sigma-delta8/) · [예제 ZIP](examples/Resistor-Sigma-Delta8-Library.zip).
+[19개 전체 하위 블록과 편집 예제](examples/sigma-delta8/README.md): 실제 SKY130 모듈레이터와 CIC2 ×256 디지털 필터. 1MHz / 3.90625kS/s, 8-bit CODE + VALID, 실제 SPICE/RTL/gate 비교와 coherent SINAD/ENOB. TT·27°C·1.8V·0.6V 진폭에서 측정 ENOB 7.34bit이며 8 ENOB·마스크·제조 승인을 주장하지 않습니다. `npm run test:adc`는 수식·단위·reset·포화·계층·실제 RTL/gate API를 검사합니다. [공개 ADC 가이드](https://resistor.kr/tutorial/sigma-delta8/) · [예제 ZIP](examples/Resistor-Sigma-Delta8-Library.zip).
 
 기본 CMOS 블록을 회로도에서 배치·연결하고 실제 OP를 실행하는 [로직 조합 안내](docs/logic-composition.md)를 확인하세요.
 

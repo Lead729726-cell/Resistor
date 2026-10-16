@@ -2,8 +2,8 @@
 
 공개 사이트의 다운로드 첫 영역에서 두 에디션을 선택합니다.
 
-- [Resistor Edu 다운로드](https://resistor-downloads.vercel.app/download/edu/): 교육·실습용 소스 ZIP과 `npm run dev:edu` 실행 안내.
-- [Resistor Industry 다운로드](https://resistor-downloads.vercel.app/download/industry/): 전문 설계용 소스 ZIP과 `npm run dev:indust` 실행 안내. 앱의 제품 이름은 Resistor Indust입니다.
+- [Resistor Edu 다운로드](https://resistor.kr/download/edu/): 교육·실습용 소스 ZIP과 `npm run dev:edu` 실행 안내.
+- [Resistor Industry 다운로드](https://resistor.kr/download/industry/): 전문 설계용 소스 ZIP과 `npm run dev:indust` 실행 안내. 앱의 제품 이름은 Resistor Indust입니다.
 
 각 ZIP은 공개 브랜치의 `product-edition.json`을 실제 확인한 commit SHA로 고정합니다.
 브랜치가 나중에 바뀌어도 표시한 source revision과 다운로드 파일이 달라지지 않습니다.

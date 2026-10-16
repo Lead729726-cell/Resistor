@@ -1,6 +1,6 @@
 # Resistor 설치와 실행 · v0.26
 
-[다운로드 사이트](https://resistor-downloads.vercel.app/)에서 현재 설치 파일과 SHA-256을 확인하세요.
+[다운로드 사이트](https://resistor.kr/)에서 현재 설치 파일과 SHA-256을 확인하세요.
 기본 설치는 Docker 없이 회로·레이아웃·GDS/OASIS·ngspice를 실행합니다.
 Python·KLayout·공개 SKY130 자료를 포함하며 사용자 설계 폴더는 앱과 분리합니다.
 

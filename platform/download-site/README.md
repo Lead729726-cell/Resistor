@@ -1,6 +1,6 @@
 # Resistor public download portal
 
-Live: https://resistor-downloads.vercel.app
+Live: https://resistor.kr
 
 This is a static Vercel project. Desktop installers are delivered by the public
 GitHub Releases assets; the portal never deploys the EDA engine, user workspace,
@@ -36,7 +36,7 @@ The v0.16 Mac CI run failed some viewer/menu checks; it is preserved in
 After deployment, verify the public portal and complete downloads:
 
 ```sh
-REGISTER_DOWNLOAD_URL=https://resistor-downloads.vercel.app npm run test:download-site
+REGISTER_DOWNLOAD_URL=https://resistor.kr npm run test:download-site
 node tests/integration/download-assets.mjs
 ```
 
