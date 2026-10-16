@@ -11,6 +11,11 @@ on:
       arm_run:
         description: Native Windows ARM64 build artifact run
         required: true
+      edition:
+        description: Verify both editions or an already-built edition
+        type: choice
+        options: [both, edu, indust]
+        default: both
 permissions:
   contents: read
   actions: read
@@ -19,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        edition: [edu, indust]
+        edition: ${{ fromJSON(inputs.edition == 'edu' && '["edu"]' || inputs.edition == 'indust' && '["indust"]' || '["edu","indust"]') }}
         target:
           - {runner: windows-2025, arch: x64, key: windows-x64}
           - {runner: windows-11-arm, arch: arm64, key: windows-arm64}
