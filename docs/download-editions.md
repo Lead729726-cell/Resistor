@@ -2,17 +2,18 @@
 
 공개 사이트의 다운로드 첫 영역에서 두 에디션을 선택합니다.
 
-- [Resistor Edu 다운로드](https://resistor.kr/download/edu/): 교육·실습용 소스 ZIP과 `npm run dev:edu` 실행 안내.
-- [Resistor Industry 다운로드](https://resistor.kr/download/industry/): 전문 설계용 소스 ZIP과 `npm run dev:indust` 실행 안내. 앱의 제품 이름은 Resistor Indust입니다.
+- [Resistor Edu 다운로드](https://resistor.kr/download/edu/): 교육·실습용 전용 설치 파일 5종과 개발자용 소스 ZIP.
+- [Resistor Industry 다운로드](https://resistor.kr/download/industry/): 전문 설계용 전용 설치 파일 5종과 개발자용 소스 ZIP. 앱의 제품 이름은 Resistor Indust입니다.
 
 각 ZIP은 공개 브랜치의 `product-edition.json`을 실제 확인한 commit SHA로 고정합니다.
 브랜치가 나중에 바뀌어도 표시한 source revision과 다운로드 파일이 달라지지 않습니다.
 소스 ZIP은 Node.js 24와 최초 공개 엔진 준비가 필요합니다. 두 에디션의 사용자 폴더·엔진·키 분리는 유지합니다.
 
-Windows x64, Apple Silicon Mac, Intel Mac, Linux x64 전용 설치 파일은 아직 공개되지 않았으므로
-준비 상태로 표시합니다. 기존 v0.27.0 공통 설치 파일 네 개는 홈의 별도 영역에서 기존 URL·크기·SHA-256을 유지합니다.
+0.28.0 미리보기는 각 에디션에 Windows x64·Windows 11 ARM64·macOS 15+ Apple Silicon / Intel·Linux x64 설치 파일을 제공합니다.
+실제 해당 OS/CPU의 앱과 설치 후 앱에서 ngspice 0.9V 분압·GDS·저장 재열기를 확인했습니다. 기존 v0.27.0 공통 설치 파일 네 개는 홈의 별도 영역에서 기존 URL·크기·SHA-256을 유지합니다.
 공통판을 Edu 또는 Industry 전용 설치 파일로 바꿔 표시하지 않습니다.
-새 네이티브 설치 파일 발행·서명·Apple 공증·제조 검증은 이 사이트 변경으로 완료되지 않습니다.
+Apple 공증·Windows Authenticode·제조 승인은 설치 실행 검사와 구분하며 미완료입니다.
+[검증 절차](native-edition-release.md)와 [10종 공개 파일 대조](evidence/edition-installers/public-verification.json)를 확인하세요.
 
 ## 갱신과 배포
 
@@ -29,7 +30,7 @@ node scripts/verify-static-deployment.mjs
 npx vercel deploy --prod --yes --project resistor-downloads --scope seokhyeongs-projects --cwd platform/download-site
 ```
 
-`edition-downloads.json`은 에디션별 source identity·SHA·ZIP URL·전용 설치 파일 미공개 상태를 기록합니다.
+`edition-downloads.json`은 에디션별 source identity·SHA·ZIP URL·전용 설치 파일의 버전·최소 OS·CPU·크기·SHA-256·검증 receipt를 기록합니다.
 임의 다운로드 호스트, 다른 edition, common installer 재분류는 validator에서 거절합니다.
 `/download/indust/`는 `/download/industry/`로 연결합니다.
 기존 `/download/windows`, `/download/macos`, `/download/macos-intel`, `/download/linux`는 그대로 유지합니다.

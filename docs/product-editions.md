@@ -61,12 +61,12 @@ npm run desktop:indust
 }
 ```
 
-これは 로컬 stdio MCP 구성입니다. 인터넷 ChatGPT에 연결 가능한 공개 MCP 서버를 배포하거나 계정에 자동 등록한 것은 아닙니다. Codex의 두 작업 폴더·Git checkout은 실제로 분리하고 ChatGPT에는 별도 참고 Space를 구성합니다. 현재 워크스페이스의 실제 도구 설치 상태를 확인하세요. Windows 기본 번들에 Magic/Netgen이 없을 때 DRC/LVS/PEX는 미실행으로 유지합니다.
+이 설정은 로컬 stdio MCP 구성입니다. 인터넷 ChatGPT에 연결 가능한 공개 MCP 서버를 배포하거나 계정에 자동 등록한 것은 아닙니다. Codex의 두 작업 폴더·Git checkout은 실제로 분리하고 ChatGPT에는 별도 참고 Space를 구성합니다. 현재 워크스페이스의 실제 도구 설치 상태를 확인하세요. Windows 기본 번들에 Magic/Netgen이 없을 때 DRC/LVS/PEX는 미실행으로 유지합니다.
 
 ## 검증과 공개 안내
 
 `npm run test:editions`는 workspace·데이터 보존, CPU와 무관한 product ID, 실제 MCP handshake, 잘못된 renderer 거절, Edu의 다른 제품 업데이트 거절을 검사합니다. 공통 회귀 검사는 `npm run test:core`, 타입 검사는 `npm run typecheck`입니다. Source validation은 main과 두 edition 브랜치에서 실행합니다.
 
-[버전 선택 안내](https://resistor-downloads.vercel.app/editions/) · [전체 튜토리얼](https://resistor-downloads.vercel.app/tutorial/library/) · [네이티브 엔진](native-runtime.md) · [원본 회로 작성](schematic-quickstart.md)
+[버전 선택 안내](https://resistor.kr/editions/) · [전체 튜토리얼](https://resistor.kr/tutorial/library/) · [네이티브 엔진](native-runtime.md) · [원본 회로 작성](schematic-quickstart.md)
 
 Industry는 전문 작업 흐름의 이름입니다. 공개 PDK·도구 검사, 실측 공정 지형, 상용 도구 라이선스, 제조 signoff는 각각 실제 검증 범위를 따릅니다.

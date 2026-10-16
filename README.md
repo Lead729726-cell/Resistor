@@ -4,7 +4,7 @@
 
 **설계 대화·AI 검토 강화**: 현재 셀·선택 소자/마스크·실제 실행 근거로 연속 질문하고 로컬 대화를 복원합니다. 모델 없는 빠른 점검, 실제 전압·부호 있는 전류·동일 격자의 전압 강하 통계, 근거 위치 열기를 제공합니다. AI 제안과 실제 검증은 분리하고 매 전송 승인·비용 예약·이전 근거 차단을 유지합니다. [사용법과 실제 OpenAI/native/UI 검증](docs/assistant-workbench.md).
 
-**Resistor Edu / Indust**: 교육용과 전문 작업용을 브랜치·저장 폴더·Codex 작업 공간으로 나눕니다. Edu에는 단계별 실습과 학습 기록·보고서를 제공합니다. [구성·실행·MCP 연동](docs/product-editions.md) · [버전 선택](https://resistor.kr/editions/). 현재 v0.27.0 설치 파일과 새 소스 버전을 구분합니다.
+**Resistor Edu / Indust**: 교육용과 전문 작업용을 브랜치·저장 폴더·Codex 작업 공간으로 나눕니다. Edu에는 단계별 실습과 학습 기록·보고서를 제공합니다. [구성·실행·MCP 연동](docs/product-editions.md) · [버전 선택](https://resistor.kr/editions/). 전용 0.28.0 미리보기 설치 파일 10종과 기존 v0.27.0 공통판을 구분합니다.
 
 **Resistor Indust의 첫 검토 흐름**: 원본을 유지하는 레이아웃 작업 사본에서 사용자 지정 대칭·간격·고정 영역·상대 위치를 실제 KLayout 기하로 검사합니다. 변경 revision, 대상 매핑, 실제 엔진 manifest, 미평가 항목과 검토 결정을 로컬 보고서에 연결하고 재열기·checksum·STALE를 확인합니다. [실행·지원 범위·비교 결과](docs/industry-layout-review.md). [실제 공개 OTA 전기적 검사](docs/industry-qualification.md)는 3개 PVT 조건의 추출 전후 192개 표본과 DRC/LVS/PEX를 확인합니다. 임의 소자 쌍 매칭·수율, 실제 상용 실행, 고객 가치와 제조 signoff는 별도 근거가 필요합니다.
 
@@ -37,7 +37,7 @@ Mac 설치 ZIP은 두 CPU의 네이티브 뷰어·메뉴·재실행·데이터 �
 
 다운로드: https://resistor.kr/
 
-[Edu 버전 다운로드](https://resistor.kr/download/edu/) · [Industry 버전 다운로드](https://resistor.kr/download/industry/) — 확인한 commit의 에디션별 소스 ZIP을 제공합니다. 전용 설치 파일 준비 상태와 기존 공통 설치 파일은 구분합니다. [구성과 갱신](docs/download-editions.md).
+[Edu 버전 다운로드](https://resistor.kr/download/edu/) · [Industry 버전 다운로드](https://resistor.kr/download/industry/) — Windows x64·Windows 11 ARM64·macOS 15+ Apple Silicon / Intel·Linux x64 전용 설치 파일을 제공합니다. 파일별 실제 설치·ngspice·GDS 검사와 SHA-256을 연결합니다. [구성과 갱신](docs/download-editions.md) · [네이티브 설치 검증](docs/native-edition-release.md).
 
 [0.20 아날로그 SoC 센서 입력부 · 7개 매크로](docs/analog-soc.md): 바이어스·캐스코드 미러·Miller OTA·PGA·2극 필터·TIA·클록 동기 AFE를 제공합니다. 실제 SKY130 레이아웃과 nominal DRC/LVS/PEX/pre/post 결과, 18조건 corner sweep의 통과와 실패를 함께 제공합니다. 완성 SoC와 제조 승인은 별도입니다.
 
@@ -93,8 +93,8 @@ v0.15는 로컬 Ollama / OpenAI 설계 검토, 근거·비용·승인 표시, �
 측정을 추가합니다. AI는 검사 제안이며 엔진 검증 결과와 구분합니다.
 [설정과 검증 범위](docs/design-assistant.md) · [직접 만든 CPU 예제](examples/cpu4-assistant/README.md).
 
-[운영체제별 다운로드](https://resistor.kr)에서 Windows x64 EXE,
-Mac Apple Silicon ZIP, Linux x64 tar.gz를 받을 수 있습니다. 설치 파일은 GitHub
+[운영체제별 다운로드](https://resistor.kr)에서 Windows x64·ARM64 EXE,
+macOS 15+ Apple Silicon / Intel ZIP, Linux x64 tar.gz를 받을 수 있습니다. 설치 파일은 GitHub
 Releases가 전달하며 SHA-256과 검증 범위를 표시합니다. Mac과 Linux는 **preview**이며
 일반 데스크톱 실기기 실행은 미확인입니다. Apple Developer ID/notarization도 미완료입니다.
 
@@ -126,7 +126,7 @@ npm run dev:calculators
 첫 엔진 이미지 다운로드에는 시간과 저장 공간이 필요합니다.
 [설치 안내와 Mac 검증 범위](docs/desktop-installation.md)를 확인하세요.
 
-다운로드 사이트는 [Vercel 고정 주소](https://resistor.kr)입니다.
+정식 다운로드 사이트는 [resistor.kr](https://resistor.kr)이며 www는 정식 주소로 이동합니다. 기존 Vercel 주소도 호환 주소로 유지합니다.
 EDA 엔진과 사용자 설계 서버는 로컬에서 실행합니다.
 
 ![Precision Workbench · EDA](docs/evidence/precision-workbench/eda-dark.png)

@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "product_id": "resistor.indust",
+  "edition": "indust",
+  "version": "0.28.0",
+  "platform": "macos",
+  "arch": "arm64",
+  "source_revision": "134f3c06ddea092abdaebf796b48658e2b3f5600",
+  "build_tools_revision": "285ec74d271a66e0e4c80f99d2ad48b685755baa",
+  "build_overlay": {
+    "schema_version": 1,
+    "edition": "indust",
+    "source_revision": "134f3c06ddea092abdaebf796b48658e2b3f5600",
+    "source_version": "0.27.0",
+    "release_version": "0.28.0",
+    "build_helpers_sha256": {
+      "scripts/package.mjs": "7573f8236c02dbaffa16c8bc99a32f9724ab2ee04a163a999f44cdf5de1095fc",
+      "scripts/prepare-native-runtime.mjs": "8ba9b271306169d489f368a51f06fa1ef5632643958eea94ab16f5f665c9011b",
+      "scripts/edition-native-release.mjs": "6cd9bfd2710db831f9689cc5ec9e92e7d9e9ee37698b33f77dd33000b47643f6",
+      "scripts/edition-native-qa.mjs": "cea548899262966530492e614d6402794705589d93d27b05660a209259c5d041",
+      "scripts/edition-install.cjs": "faa80b9c77ff6439cd59f3d4357ad4606b8050d6cd3c014fd7a2d45932fb07df"
+    }
+  },
+  "file": "Resistor-Indust-0.28.0-macos-arm64.zip",
+  "bytes": 244321180,
+  "sha256": "02bea49cf17cd0343c7765b76954993b5d0741c9c466685d8e6d9f5ddf8002c2",
+  "native_qa": {
+    "schema_version": 1,
+    "product_id": "resistor.indust",
+    "edition": "indust",
+    "platform": "darwin",
+    "arch": "arm64",
+    "source_revision": "134f3c06ddea092abdaebf796b48658e2b3f5600",
+    "checked_at": "2026-10-16T03:18:53.763Z",
+    "checks": [
+      {
+        "name": "Packaged renderer and main identify the requested edition",
+        "pass": true
+      },
+      {
+        "name": "Actual Electron process matches native target",
+        "pass": true
+      },
+      {
+        "name": "Bundled ngspice available without Docker/system Python",
+        "pass": true
+      },
+      {
+        "name": "Actual ngspice divider result is 0.9 V with an unknown functional verdict",
+        "pass": true
+      },
+      {
+        "name": "Bundled KLayout exports an actual GDS mask",
+        "pass": true
+      },
+      {
+        "name": "Project and completed result survive renderer reload",
+        "pass": true
+      }
+    ],
+    "paid_calls": 0,
+    "manufacturing_signoff": false,
+    "runtime_arch": "arm64",
+    "requires_emulation": false,
+    "run": {
+      "id": "9c09e9dca07b412c813f6b4ea447016a",
+      "project_id": "618ccb03506a4debb06865ab77d19fc4",
+      "revision": 4,
+      "execution_status": "completed",
+      "analysis_result": "unknown",
+      "voltage_V": 0.9
+    },
+    "completed": true
+  },
+  "code_signing": {
+    "developer_id_signed": false,
+    "apple_notarized": false,
+    "windows_authenticode_signed": false
+  },
+  "runtime_arch": "arm64",
+  "requires_emulation": false,
+  "manufacturing_signoff": false,
+  "installation_qa": {
+    "completed": true,
+    "platform": "darwin",
+    "arch": "arm64",
+    "checked_at": "2026-10-16T03:45:13.216Z",
+    "method": "Extracted ZIP and bundled command helper",
+    "app_execution": {
+      "schema_version": 1,
+      "product_id": "resistor.indust",
+      "edition": "indust",
+      "platform": "darwin",
+      "arch": "arm64",
+      "source_revision": "134f3c06ddea092abdaebf796b48658e2b3f5600",
+      "checked_at": "2026-10-16T03:45:06.552Z",
+      "checks": [
+        {
+          "name": "Packaged renderer and main identify the requested edition",
+          "pass": true
+        },
+        {
+          "name": "Actual Electron process matches native target",
+          "pass": true
+        },
+        {
+          "name": "Bundled ngspice available without Docker/system Python",
+          "pass": true
+        },
+        {
+          "name": "Actual ngspice divider result is 0.9 V with an unknown functional verdict",
+          "pass": true
+        },
+        {
+          "name": "Bundled KLayout exports an actual GDS mask",
+          "pass": true
+        },
+        {
+          "name": "Project and completed result survive renderer reload",
+          "pass": true
+        }
+      ],
+      "paid_calls": 0,
+      "manufacturing_signoff": false,
+      "runtime_arch": "arm64",
+      "requires_emulation": false,
+      "run": {
+        "id": "9b7b529e0da64e4a9a6afe9b55667c71",
+        "project_id": "35edbd49849949959952c41a8208ed48",
+        "revision": 4,
+        "execution_status": "completed",
+        "analysis_result": "unknown",
+        "voltage_V": 0.9
+      },
+      "completed": true
+    }
+  }
+}

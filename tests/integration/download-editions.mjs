@@ -33,7 +33,10 @@ try{
     await context.addInitScript(profile=>{Object.defineProperty(navigator,'userAgent',{value:profile.userAgent});Object.defineProperty(navigator,'platform',{value:profile.platform});Object.defineProperty(navigator,'userAgentData',{value:profile.hints?{platform:profile.hints.platform,getHighEntropyValues:async()=>profile.hints}:undefined});},profile);
     const p=await context.newPage();await p.goto(base+'/download/edu/',{waitUntil:'networkidle'});await p.locator('[data-system-label]').filter({hasNotText:'확인 중'}).waitFor();
     check(name+' picks only the matching native platform',expected?await p.locator('[data-recommended]').getAttribute('data-platform-target')===expected:await p.locator('[data-recommended]').count()===0);
+    const published=editions.editions.find(e=>e.edition==='edu').native_installer.status==='published';check(name+' offers only an available installer for the detected system',expected&&published?await p.locator('[data-system-action]').getAttribute('href')===base+'/download/edu/'+expected:await p.locator('[data-system-action]').isHidden());
     await p.getByLabel('설치할 시스템',{exact:true}).selectOption('macos-arm64');check(name+' permits manual Mac selection',await p.locator('[data-recommended]').getAttribute('data-platform-target')==='macos-arm64');
+    await p.goto(base+'/download/industry/',{waitUntil:'networkidle'});check(name+' keeps the manual target between edition pages',await p.getByLabel('설치할 시스템',{exact:true}).inputValue()==='macos-arm64'&&await p.locator('[data-recommended]').getAttribute('data-platform-target')==='macos-arm64');
+    if(editions.editions.find(e=>e.edition==='indust').native_installer.status==='published')check(name+' manual download preserves the chosen edition',await p.locator('[data-system-action]').getAttribute('href')===base+'/download/industry/macos-arm64');
     await p.getByLabel('설치할 시스템',{exact:true}).selectOption('');check(name+' restores automatic detection',await p.locator('[data-recommended]').count()===(expected?1:0));
     await context.close();
   }

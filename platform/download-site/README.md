@@ -20,8 +20,8 @@ and Linux x64 are labelled separately, with release byte sizes and SHA-256 from
 GitHub. Archive checks are kept distinct from native GUI execution and signing.
 
 Edu and Industry now have separate download entry points at `/download/edu/`
-and `/download/industry/`. These provide commit-pinned edition source ZIPs;
-dedicated native installers remain unpublished. Historical common installers
+and `/download/industry/`. These provide dedicated 0.28.0 preview installers for five OS/CPU targets per edition,
+plus commit-pinned edition source ZIPs. Each native asset has installed-app execution evidence and a GitHub-computed SHA-256 digest. macOS requires 15+ for the bundled ngspice. Windows ARM64 uses a native shell and an emulated x64 engine. Historical common installers
 keep their existing URLs under a clearly labelled section.
 Run `npm run download:editions` to refresh verified public source identities,
 then `node scripts/download-workbench.mjs` to regenerate the pages.

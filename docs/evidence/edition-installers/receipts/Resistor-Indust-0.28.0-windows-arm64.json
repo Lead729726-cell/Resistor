@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "product_id": "resistor.indust",
+  "edition": "indust",
+  "version": "0.28.0",
+  "platform": "windows",
+  "arch": "arm64",
+  "source_revision": "134f3c06ddea092abdaebf796b48658e2b3f5600",
+  "build_tools_revision": "1cce781a0a5b394abe924b60ee5396c92a18bd41",
+  "build_overlay": {
+    "schema_version": 1,
+    "edition": "indust",
+    "source_revision": "134f3c06ddea092abdaebf796b48658e2b3f5600",
+    "source_version": "0.27.0",
+    "release_version": "0.28.0",
+    "build_helpers_sha256": {
+      "scripts/package.mjs": "1f86906f0fe873e736091d5dd57dd7a3021015cacfe9c54c63b92976e52c3b1d",
+      "scripts/prepare-native-runtime.mjs": "23d38010c2f9b59d1690ed3acf203e56cf4dd6d21284d74febaed43b25837e50",
+      "scripts/edition-native-release.mjs": "9b35f7bce0b6e6d5d173c40f454f2c6206b0a6d2f0830e4fd2c769d4947e57f1",
+      "scripts/edition-native-qa.mjs": "82193314671e7e1bacafb1f7b89640efe56ef6ce104fa6d58c0d8975a71ec8f0",
+      "scripts/edition-install.cjs": "bdb67b6a4579affe451530482549a1dd4e342c4fd67771ebc7f1e501402d66ee",
+      "scripts/windows-arm-installer.mjs": "9f033535f24503c92e1cd039249e8eec123cde003dc8dd725ead8e8f3e11119a"
+    }
+  },
+  "file": "Resistor-Indust-0.28.0-windows-arm64.exe",
+  "bytes": 216272290,
+  "sha256": "af5fe1911fd37d391905c878ba14c168d93cddcdb10124e725a7e2d1c615c133",
+  "native_qa": {
+    "schema_version": 1,
+    "product_id": "resistor.indust",
+    "edition": "indust",
+    "platform": "win32",
+    "arch": "arm64",
+    "source_revision": "134f3c06ddea092abdaebf796b48658e2b3f5600",
+    "checked_at": "2026-10-16T03:57:19.997Z",
+    "checks": [
+      {
+        "name": "Packaged renderer and main identify the requested edition",
+        "pass": true
+      },
+      {
+        "name": "Actual Electron process matches native target",
+        "pass": true
+      },
+      {
+        "name": "Bundled ngspice available without Docker/system Python",
+        "pass": true
+      },
+      {
+        "name": "Actual ngspice divider result is 0.9 V with an unknown functional verdict",
+        "pass": true
+      },
+      {
+        "name": "Bundled KLayout exports an actual GDS mask",
+        "pass": true
+      },
+      {
+        "name": "Project and completed result survive renderer reload",
+        "pass": true
+      }
+    ],
+    "paid_calls": 0,
+    "manufacturing_signoff": false,
+    "runtime_arch": "x64",
+    "requires_emulation": true,
+    "run": {
+      "id": "ceb0e5006ba54e17b2e352fba07e4234",
+      "project_id": "9b0b1caf9ae64a22bd641efc883fb805",
+      "revision": 4,
+      "execution_status": "completed",
+      "analysis_result": "unknown",
+      "voltage_V": 0.9
+    },
+    "completed": true
+  },
+  "code_signing": {
+    "developer_id_signed": false,
+    "apple_notarized": false,
+    "windows_authenticode_signed": false
+  },
+  "runtime_arch": "x64",
+  "requires_emulation": true,
+  "manufacturing_signoff": false,
+  "installer_kind": "inno",
+  "default_directory": "Resistor ARM64",
+  "installation_qa": {
+    "completed": true,
+    "platform": "win32",
+    "arch": "arm64",
+    "checked_at": "2026-10-16T04:02:38.313Z",
+    "method": "Inno per-user default install",
+    "app_execution": {
+      "schema_version": 1,
+      "product_id": "resistor.indust",
+      "edition": "indust",
+      "platform": "win32",
+      "arch": "arm64",
+      "source_revision": "134f3c06ddea092abdaebf796b48658e2b3f5600",
+      "checked_at": "2026-10-16T04:02:14.369Z",
+      "checks": [
+        {
+          "name": "Packaged renderer and main identify the requested edition",
+          "pass": true
+        },
+        {
+          "name": "Actual Electron process matches native target",
+          "pass": true
+        },
+        {
+          "name": "Bundled ngspice available without Docker/system Python",
+          "pass": true
+        },
+        {
+          "name": "Actual ngspice divider result is 0.9 V with an unknown functional verdict",
+          "pass": true
+        },
+        {
+          "name": "Bundled KLayout exports an actual GDS mask",
+          "pass": true
+        },
+        {
+          "name": "Project and completed result survive renderer reload",
+          "pass": true
+        }
+      ],
+      "paid_calls": 0,
+      "manufacturing_signoff": false,
+      "runtime_arch": "x64",
+      "requires_emulation": true,
+      "run": {
+        "id": "1d7cb4783d424c44aa8ae9edc6d1f8a8",
+        "project_id": "9068340304644da090a5fd922b2fd6bf",
+        "revision": 4,
+        "execution_status": "completed",
+        "analysis_result": "unknown",
+        "voltage_V": 0.9
+      },
+      "completed": true
+    }
+  }
+}

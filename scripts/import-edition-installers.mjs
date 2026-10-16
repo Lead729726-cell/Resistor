@@ -6,7 +6,7 @@ import {createHash} from 'node:crypto';
 import path from 'node:path';
 import {targets} from './site/system-detection.mjs';
 import {validateEditionDownloads} from './download-editions.mjs';
-const root=path.resolve(process.argv[2]||'.runtime/edition-verified'),out=path.resolve('.runtime/edition-release/0.28.0');await mkdir(out,{recursive:true});
+const root=path.resolve(process.argv.slice(2).find(arg=>!arg.startsWith('--'))||'.runtime/edition-verified'),out=path.resolve('.runtime/edition-release/0.28.0');await mkdir(out,{recursive:true});
 const files=[];async function walk(dir){for(const e of await readdir(dir,{withFileTypes:true})){const p=path.join(dir,e.name);if(e.isDirectory())await walk(p);else files.push(p);}}await walk(root);
 const manifest=JSON.parse(await readFile('platform/download-site/edition-downloads.json','utf8')),definitions=JSON.parse(await readFile('apps/desktop/product-editions.json','utf8')),sum=[];
 for(const e of manifest.editions){const downloads=[];
@@ -16,17 +16,21 @@ for(const e of manifest.editions){const downloads=[];
     const artifact=path.join(path.dirname(jsonPath),r.file),b=await readFile(artifact);assert.equal(b.length,r.bytes);assert.equal(createHash('sha256').update(b).digest('hex'),r.sha256);
     await cp(artifact,path.join(out,r.file));await cp(jsonPath,path.join(out,path.basename(jsonPath)));sum.push(r.sha256+'  '+r.file);
     const base='https://github.com/Lead729726-cell/Resistor/releases/download/editions-v'+r.version+'/';
-    downloads.push({target,name:r.file,url:base+r.file,product_id:r.product_id,version:r.version,bytes:r.bytes,sha256:r.sha256,receipt_url:base+path.basename(jsonPath),receipt_sha256:createHash('sha256').update(receiptBytes).digest('hex'),source_revision:r.source_revision,build_tools_revision:r.build_tools_revision,runtime_arch:r.runtime_arch,requires_emulation:r.requires_emulation,qa_completed:true});
+    downloads.push({target,name:r.file,url:base+r.file,product_id:r.product_id,version:r.version,bytes:r.bytes,sha256:r.sha256,receipt_url:base+path.basename(jsonPath),receipt_sha256:createHash('sha256').update(receiptBytes).digest('hex'),source_revision:r.source_revision,build_tools_revision:r.build_tools_revision,runtime_arch:r.runtime_arch,requires_emulation:r.requires_emulation,qa_completed:true,minimum_os:target.startsWith('macos')?'15.0':target==='windows-arm64'?'11.0':target==='windows-x64'?'10.0':null});
   }
   e.native_installer={status:'published',files:downloads};
 }
 validateEditionDownloads(manifest,definitions);
 await writeFile(path.join(out,'SHA256SUMS.txt'),sum.join('\n')+'\n');
 if(process.argv.includes('--published')){
+  const releaseResponse=await fetch('https://api.github.com/repos/Lead729726-cell/Resistor/releases/tags/editions-v0.28.0',{signal:AbortSignal.timeout(30000)});assert(releaseResponse.ok,'Public release metadata unavailable');const release=await releaseResponse.json(),verified=[];
   for(const e of manifest.editions)for(const f of e.native_installer.files){
-    const response=await fetch(f.url,{method:'HEAD',signal:AbortSignal.timeout(90000)});assert(response.ok,'Published installer unavailable: '+f.name);const length=response.headers.get('content-length');assert(length&&Number(length)===f.bytes,'Published installer size mismatch');
+    const asset=release.assets.find(a=>a.name===f.name);assert(asset&&asset.state==='uploaded'&&asset.size===f.bytes&&asset.browser_download_url===f.url,'Public asset identity or size mismatch');assert.equal(asset.digest,'sha256:'+f.sha256,'GitHub-computed published installer digest differs from verified bytes');
+    const response=await fetch(f.url,{method:'HEAD',signal:AbortSignal.timeout(90000)});assert(response.ok,'Published installer unavailable: '+f.name);const length=response.headers.get('content-length');if(length)assert.equal(Number(length),f.bytes,'Published installer size mismatch');
     const receipt=await fetch(f.receipt_url,{signal:AbortSignal.timeout(90000)});assert(receipt.ok);assert.equal(createHash('sha256').update(Buffer.from(await receipt.arrayBuffer())).digest('hex'),f.receipt_sha256);
+    verified.push({edition:e.edition,target:f.target,file:f.name,bytes:f.bytes,sha256:f.sha256,github_computed_digest_verified:true,receipt_sha256:f.receipt_sha256,public_status:response.status,installed_app_verification:true});
   }
+  await mkdir('docs/evidence/edition-installers',{recursive:true});await writeFile('docs/evidence/edition-installers/public-verification.json',JSON.stringify({schema_version:1,checked_at:new Date().toISOString(),release_url:release.html_url,completed:true,installers:verified,manufacturing_signoff:false},null,2)+'\n');
   manifest.checked_at=new Date().toISOString();await writeFile('platform/download-site/edition-downloads.json',JSON.stringify(manifest,null,2)+'\n');
   console.log('Verified 10 published edition installers and exact build receipts.');
 }else console.log('Staged 10 hashed installers. Public manifest has not been changed.');

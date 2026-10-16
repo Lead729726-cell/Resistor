@@ -1,13 +1,39 @@
-# Resistor 설치와 실행 · v0.26
+# Resistor 설치와 실행
 
 [다운로드 사이트](https://resistor.kr/)에서 현재 설치 파일과 SHA-256을 확인하세요.
 기본 설치는 Docker 없이 회로·레이아웃·GDS/OASIS·ngspice를 실행합니다.
 Python·KLayout·공개 SKY130 자료를 포함하며 사용자 설계 폴더는 앱과 분리합니다.
 
 - Windows x64: EXE 설치 파일. 사용자 계정에 설치하며 제거 시 설계 폴더를 삭제하지 않습니다.
-- M1 이후 Mac: arm64 ZIP. macOS 13 이상이 필요합니다.
-- Intel Mac: x64 ZIP. macOS 13 이상이 필요합니다.
+- M1 이후 Mac: arm64 ZIP. 전용 0.28.0의 내장 해석기는 macOS 15 이상이 필요합니다.
+- Intel Mac: x64 ZIP. 전용 0.28.0의 내장 해석기는 macOS 15 이상이 필요합니다.
 - Linux x64: tar.gz 전체를 풀고 `./install.sh`. GTK 3·NSS·Chromium sandbox가 필요합니다.
+
+## Edu / Industry 전용판
+
+[Edu](https://resistor.kr/download/edu/)와 [Industry](https://resistor.kr/download/industry/)에서
+각 에디션의 파일 공개 상태·정확한 버전·SHA-256·실제 실행 검증 기록을 확인하세요.
+전용 설치 파일은 source ZIP과 구분합니다. ZIP 소스를 내려받은 것만으로 앱이 설치되지는 않습니다.
+
+Windows ARM64는 Windows 11용 네이티브 ARM64 앱이며, 포함된 Python·KLayout·ngspice는
+Windows의 x64 에뮬레이션으로 실행합니다. 전용 ARM 설치기는 Inno Setup을 사용하며
+앱은 사용자 Programs 폴더의 `Resistor ARM64` 또는 `Resistor Edu ARM64`에 설치합니다. x64 엔진을 ARM64 네이티브 엔진으로 표시하지 않습니다.
+다른 모든 대상은 각 OS와 CPU에서 내장 엔진을 빌드합니다.
+
+Mac 전용판은 압축을 모두 풀고 `Install Resistor Edu.command` 또는
+`Install Resistor Indust.command`를 실행합니다. 도우미는 포함된 런타임을 사용하므로
+별도 Node.js가 필요하지 않습니다. Edu는 `~/Applications/Resistor Edu.app`,
+Indust는 기존 호환 경로 `~/Applications/Resistor.app`에 설치합니다.
+기존 앱을 백업하고 복사한 앱의 자체 서명을 확인한 뒤 해당 앱에만 quarantine 해제를 적용합니다.
+Apple Developer ID 서명·공증은 제공하지 않으므로 최초 다운로드 경고는 나타날 수 있습니다.
+
+Linux 전용판은 tar.gz 전체를 풀고 그 폴더의 `./install.sh`를 실행합니다.
+사용자 계정의 `~/.local/opt/resistor-edu/버전` 또는 `resistor-indust/버전`과
+서로 다른 데스크톱 실행기를 사용합니다. sudo나 Docker를 요구하지 않습니다.
+기존 Indust 설계 폴더는 유지하고 Edu에 프로젝트·키를 복사하지 않습니다.
+
+전용판의 현재 업데이트는 다운로드 사이트에서 같은 에디션의 새 설치 파일을 받는 방식입니다.
+앱의 기존 공통판 업데이트 기능을 Edu 전용 자동 업데이트로 안내하지 않습니다.
 
 ## Mac 설치와 Apple 경고
 
