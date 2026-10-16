@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "product_id": "resistor.edu",
+  "project_id": null,
+  "data_revision": 7,
+  "engine": {
+    "id": "shared-calculator-template",
+    "version": "edu-circuit-puzzles-v1"
+  },
+  "process": {
+    "id": null,
+    "scope": "가상 이상 저항 회로 · 정적 수식 계산"
+  },
+  "engine_verification": false,
+  "context": {
+    "schema_version": 1,
+    "edition": "edu",
+    "product_id": "resistor.edu",
+    "project_id": null,
+    "data_revision": 7,
+    "engine": {
+      "id": "shared-calculator-template",
+      "version": "edu-circuit-puzzles-v1"
+    },
+    "process": {
+      "id": null,
+      "scope": "가상 이상 저항 회로 · 정적 수식 계산"
+    },
+    "engine_verification": false
+  },
+  "study_revision": 19,
+  "session": {
+    "schema_version": 1,
+    "edition": "edu",
+    "id": "33887f6b-4557-4ade-8b6e-875b9d7fed31",
+    "puzzle_id": "half-voltage",
+    "puzzle_version": "edu-circuit-puzzles-v1",
+    "purpose": "qa",
+    "version": 13,
+    "board_revision": 7,
+    "placements": {
+      "R1": "r10k-a",
+      "R2": "r10k-b"
+    },
+    "history": [
+      {},
+      {
+        "X1": "r10k-a"
+      },
+      {},
+      {
+        "R1": "r10k-a"
+      }
+    ],
+    "future": [
+      {
+        "R1": "r10k-a",
+        "R2": "r5k"
+      }
+    ],
+    "checks": [
+      {
+        "board_revision": 4,
+        "assessment": {
+          "status": "incomplete",
+          "scope": "ideal-static-calculation",
+          "engine_verification": false,
+          "formula": "",
+          "observations": [
+            "필수 경로에서 비어 있는 자리: R2"
+          ],
+          "missing": [
+            "R2"
+          ],
+          "value": null,
+          "unit": "V",
+          "current_A": null,
+          "output_V": null,
+          "powers": [],
+          "target_met": false,
+          "power_met": false,
+          "topology_complete": false
+        },
+        "at": "2026-10-16T01:00:36.132Z",
+        "assisted": true
+      },
+      {
+        "board_revision": 5,
+        "assessment": {
+          "status": "goal-met",
+          "scope": "ideal-static-calculation",
+          "engine_verification": false,
+          "formula": "Vout = Vin × R2 / (R1 + R2)",
+          "observations": [
+            "목표 수치의 ±1% 범위입니다."
+          ],
+          "missing": [],
+          "value": 2.5,
+          "unit": "V",
+          "current_A": 0.00025,
+          "output_V": 2.5,
+          "powers": [
+            {
+              "slot": "R1",
+              "watts": 0.000625,
+              "rating": 0.25,
+              "within_rating": true
+            },
+            {
+              "slot": "R2",
+              "watts": 0.000625,
+              "rating": 0.25,
+              "within_rating": true
+            }
+          ],
+          "target_met": true,
+          "power_met": true,
+          "topology_complete": true
+        },
+        "at": "2026-10-16T01:04:40.554Z",
+        "assisted": true
+      },
+      {
+        "board_revision": 7,
+        "assessment": {
+          "status": "goal-met",
+          "scope": "ideal-static-calculation",
+          "engine_verification": false,
+          "formula": "Vout = Vin × R2 / (R1 + R2)",
+          "observations": [
+            "목표 수치의 ±1% 범위입니다."
+          ],
+          "missing": [],
+          "value": 2.5,
+          "unit": "V",
+          "current_A": 0.00025,
+          "output_V": 2.5,
+          "powers": [
+            {
+              "slot": "R1",
+              "watts": 0.000625,
+              "rating": 0.25,
+              "within_rating": true
+            },
+            {
+              "slot": "R2",
+              "watts": 0.000625,
+              "rating": 0.25,
+              "within_rating": true
+            }
+          ],
+          "target_met": true,
+          "power_met": true,
+          "topology_complete": true
+        },
+        "at": "2026-10-16T01:11:10.397Z",
+        "assisted": true
+      }
+    ],
+    "hint_level": 0,
+    "explanation": "[기능 QA · 학생 제출 아님] R1과 R2를 각각 10 kΩ로 놓아 5 V × 10k/(10k+10k) = 2.5 V가 된다. R2를 5 kΩ로 바꾸니 약 1.6667 V가 되었고 이전 확인은 이전 배치로 남았다. 다음에는 정격이 부족한 부품을 비교하겠다.",
+    "turns": [
+      {
+        "id": "dd85620f-9384-455e-9dd5-3b05fe80c3c4",
+        "question": "어디부터 연결하지?",
+        "mode": "coach",
+        "board_revision": 1,
+        "created_at": "2026-10-16T00:58:47.908Z",
+        "status": "completed",
+        "answer": {
+          "observed_facts": "필수 경로에서 비어 있는 자리: R1, R2",
+          "applied_model": "VCC → OUT → GND로 닫힌 경로가 필요합니다. OPEN은 측정 입력이 연결되지 않은 열린 끝입니다.",
+          "reasoning": "배치 정보만으로 누락된 연결의 전류를 계산했다고 주장하지 않습니다.",
+          "next_experiment": "VCC → OUT → GND로 닫힌 경로가 필요합니다. OPEN은 측정 입력이 연결되지 않은 열린 끝입니다.",
+          "question": "어느 노드 사이에 저항이 연결돼야 하는지, 바꾸기 전 먼저 설명해볼까요?",
+          "source": "curated-coach",
+          "engine_verification": false
+        },
+        "error": null,
+        "cache_hit": false,
+        "receipt": null
+      },
+      {
+        "id": "7477a59b-27bf-4994-ae22-e38943799d50",
+        "question": "어떤 공식이야?",
+        "mode": "coach",
+        "board_revision": 7,
+        "created_at": "2026-10-16T01:11:10.681Z",
+        "status": "completed",
+        "answer": {
+          "observed_facts": "목표 수치의 ±1% 범위입니다.",
+          "applied_model": "Vout = Vin × R2 / (R1 + R2)",
+          "reasoning": "표시한 이상 모델의 계산값은 2.5000 V, 전원 전류는 0.25000 mA입니다. 공차·공정·실물 동작의 증거는 없습니다.",
+          "next_experiment": "저항 하나를 다른 값으로 바꾼 뒤 변화 방향을 예측하고 다시 계산해보세요.",
+          "question": "아래쪽 저항을 키우면 OUT 전압은 어느 방향으로 변할까요?",
+          "source": "curated-coach",
+          "engine_verification": false
+        },
+        "error": null,
+        "cache_hit": false,
+        "receipt": null
+      }
+    ],
+    "created_at": "2026-10-16T00:58:41.356Z",
+    "updated_at": "2026-10-16T01:11:20.587Z"
+  },
+  "puzzle": {
+    "parts": [
+      {
+        "id": "r1k-a",
+        "ohms": 1000,
+        "watts": 0.25,
+        "label": "1 kΩ · A"
+      },
+      {
+        "id": "r1k-b",
+        "ohms": 1000,
+        "watts": 0.25,
+        "label": "1 kΩ · B"
+      },
+      {
+        "id": "r2k",
+        "ohms": 2000,
+        "watts": 0.25,
+        "label": "2 kΩ"
+      },
+      {
+        "id": "r5k",
+        "ohms": 5000,
+        "watts": 0.25,
+        "label": "5 kΩ"
+      },
+      {
+        "id": "r10k-a",
+        "ohms": 10000,
+        "watts": 0.25,
+        "label": "10 kΩ · A"
+      },
+      {
+        "id": "r10k-b",
+        "ohms": 10000,
+        "watts": 0.25,
+        "label": "10 kΩ · B"
+      },
+      {
+        "id": "r100-small",
+        "ohms": 100,
+        "watts": 0.125,
+        "label": "100 Ω · ⅛ W"
+      },
+      {
+        "id": "r100-power",
+        "ohms": 100,
+        "watts": 0.5,
+        "label": "100 Ω · ½ W"
+      }
+    ],
+    "slots": [
+      {
+        "id": "R1",
+        "label": "위쪽 자리",
+        "nodes": [
+          "VCC",
+          "OUT"
+        ]
+      },
+      {
+        "id": "R2",
+        "label": "아래쪽 자리",
+        "nodes": [
+          "OUT",
+          "GND"
+        ]
+      },
+      {
+        "id": "X1",
+        "label": "열린 가지",
+        "nodes": [
+          "OUT",
+          "OPEN"
+        ]
+      }
+    ],
+    "initial": {},
+    "conditions": [
+      "가상 연결 퍼즐 · 이상 저항·이상 전압원 · 상온/공정/공차 모델 없음",
+      "수치는 기존 공통 계산기의 정적 수식 결과이며 ngspice 실행·실물 측정·DRC/LVS/PEX가 아닙니다."
+    ],
+    "id": "half-voltage",
+    "title": "01 · 전압을 절반으로",
+    "level": 1,
+    "kind": "divider",
+    "goal": "5 V에서 OUT을 2.5 V로 만드세요.",
+    "vin": 5,
+    "target": 2.5,
+    "unit": "V",
+    "hints": [
+      "VCC → OUT → GND로 닫힌 경로가 필요합니다. OPEN은 측정 입력이 연결되지 않은 열린 끝입니다.",
+      "OUT = Vin × R아래 / (R위 + R아래). 위·아래 저항의 비를 생각하세요.",
+      "위·아래에 같은 저항값을 놓으면 OUT은 전원의 절반입니다. 같은 부품을 두 자리에 동시에 쓸 수는 없습니다."
+    ]
+  },
+  "preview": {
+    "status": "goal-met",
+    "scope": "ideal-static-calculation",
+    "engine_verification": false,
+    "formula": "Vout = Vin × R2 / (R1 + R2)",
+    "observations": [
+      "목표 수치의 ±1% 범위입니다."
+    ],
+    "missing": [],
+    "value": 2.5,
+    "unit": "V",
+    "current_A": 0.00025,
+    "output_V": 2.5,
+    "powers": [
+      {
+        "slot": "R1",
+        "watts": 0.000625,
+        "rating": 0.25,
+        "within_rating": true
+      },
+      {
+        "slot": "R2",
+        "watts": 0.000625,
+        "rating": 0.25,
+        "within_rating": true
+      }
+    ],
+    "target_met": true,
+    "power_met": true,
+    "topology_complete": true
+  },
+  "limits": {
+    "configured": true,
+    "model": "gpt-6-luna",
+    "budget_usd": 1,
+    "reserved_usd": 0.016295,
+    "remaining_usd": 0.983705,
+    "pricing": {
+      "model": "gpt-6-luna",
+      "input": 0.2,
+      "output": 0.75,
+      "checked": "2026-10-07"
+    },
+    "study_budget_usd": 0,
+    "study_reserved_usd": 0,
+    "study_remaining_usd": 0,
+    "automatic_calls": false,
+    "credential_mode": "existing-workspace-reference"
+  },
+  "last_check_fresh": true,
+  "exported_at": "2026-10-16T01:11:26.069Z",
+  "contains_credentials": false
+}

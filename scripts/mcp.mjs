@@ -5,6 +5,7 @@ import {runtimeConfig,workerRpc} from './runtime.mjs';
 import {getProductEdition,prepareEditionWorkspace} from './edition-workspace.mjs';
 import {readFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
+import {puzzleSchemas} from './interactive-study.mjs';
 import {studyRpc} from './self-study-service.mjs';
 import {educationRpc} from './education-service.mjs';
 import {runtimeIdentity,workspaceId} from './native-worker.mjs';
@@ -36,6 +37,13 @@ tool('register_product_context','Identify Resistor Edu/Indust, the selected work
 if(edition.edition==='edu'){
  const study=async(method,p={})=>{const r=await studyRpc(config,method,p,{edition:'edu'});if(!r.ok)throw Error(r.error.message);return r.result;};
  tool('register_study_bank','Read reusable Edu questions and cache/budget metadata. Never calls AI. Reference answers are hidden until explicit reveal.',{},()=>study('study.catalog'));
+ for(const [name,method,description,readOnly] of [
+  ['register_study_puzzles','study.puzzle.catalog','Read reusable virtual circuit missions and saved Edu session summaries. Static ideal calculations, no simulation or AI call.',true],
+  ['register_study_puzzle_create','study.puzzle.create','Create a separate guided circuit puzzle. Mark automated testing as qa, never a human submission.',false],
+  ['register_study_puzzle_open','study.puzzle.open','Reopen saved placement, raw explanation, coach turns and revision-bound puzzle checks.',true],
+  ['register_study_puzzle_act','study.puzzle.act','Place/remove an available resistor, undo/redo, inspect, get hint or save the human explanation. These are practice checks, never engine verification.',false],
+  ['register_study_puzzle_tutor','study.puzzle.tutor','Ask the free authored coach or reuse a cached AI reply. A new AI call requires explicit human approval and budget; never infer approval or fabricate student questions.',false]
+ ])tool(name,description,puzzleSchemas[method].shape,p=>study(method,p),{readOnly,openWorld:method.endsWith('tutor')});
  tool('register_study_history','Reopen raw self-study answers and cached advisory feedback. These are not official submissions or engine PASS.',{},()=>study('study.history'));
  tool('register_study_generate','Reuse the saved reference/level question set. A missing set needs explicit human API approval and configured budget; never set approved yourself.',{reference_id:z.string().max(100),level:z.number().int().min(1).max(3),approved:z.boolean().default(false),command_id:z.string().uuid()},p=>study('study.generate',p),{readOnly:false,openWorld:true});
  tool('register_study_submit','Save only the human-provided practice answer. Objective grading uses shared math. Same essay answer reuses cached feedback. New AI grading requires explicit human approval. Do not synthesize student work.',{question_id:z.string().regex(/^[a-f0-9]{64}$/),answer:z.string().min(1).max(6000),approved:z.boolean().default(false),command_id:z.string().uuid(),purpose:z.enum(['practice','qa']).default('practice')},p=>study('study.submit',p),{readOnly:false,openWorld:true});

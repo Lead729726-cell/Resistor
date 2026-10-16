@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "product_id": "resistor.edu",
+  "source_scope": "circuit puzzle templates and state-aware learning coach",
+  "missions": 8,
+  "calculations": "shared deterministic calculator / declared ideal static topology",
+  "engine_verification": false,
+  "manufacturing_signoff": false,
+  "paid_api_calls": 0,
+  "actual_model_execution_verified": false,
+  "ai_provider_verification": "injected fetch fixture only",
+  "checks": {
+    "study_tests": 15,
+    "edition_mcp_tests": 8,
+    "prior_full_core_groups": [
+      119,
+      130
+    ],
+    "additional_final_cache_test": true,
+    "typecheck": "passed",
+    "build": "passed",
+    "existing_chunk_size_warning": true,
+    "source_audit": "passed",
+    "documentation_links": "passed"
+  },
+  "manual_ui": {
+    "session_id": "33887f6b-4557-4ade-8b6e-875b9d7fed31",
+    "purpose": "qa",
+    "board_revision": 7,
+    "operations": [
+      "create new mission",
+      "free coach question",
+      "click part into OPEN branch and inspect incomplete connectivity",
+      "remove part and place R1",
+      "native pointer drag 10 kohm B from tray to R2",
+      "observe 2.5 V and 0.25 mA and confirm mission",
+      "keyboard Enter changes R2 to 5 kohm, observes 1.6667 V",
+      "historical result remains at its original revision",
+      "undo and recheck current placement",
+      "ask formula, receive authored state-aware reply",
+      "save original QA explanation",
+      "reload app and reopen placement/checks/chat/explanation",
+      "download JSON through browser UI"
+    ],
+    "export_sha256": "a573584f0649d04a19781b7db1e7bc3895fd87d8eec7dbd426dab4d333f0ba9a",
+    "desktop": {
+      "viewport": [
+        1366,
+        900
+      ],
+      "layout_columns": 2,
+      "client_width": 949,
+      "scroll_width": 949
+    },
+    "mobile": {
+      "viewport": [
+        390,
+        844
+      ],
+      "layout_columns": 1,
+      "client_width": 279,
+      "scroll_width": 279,
+      "node_labels_readable": true
+    },
+    "physical_mobile_device_tested": false
+  },
+  "ai_cache_cases": [
+    "same board and question reuses reply without consent or new call",
+    "equivalent placement order and normalized whitespace reuses cache",
+    "changed board cannot reuse unrelated reply",
+    "budget and consent prevent new calls",
+    "failure preserves question and reservation",
+    "same command does not retry",
+    "AI never determines puzzle verdict"
+  ],
+  "storage": "optional additive puzzle_sessions and puzzle_tutor_cache fields in existing schema 1; old bank and answers preserved",
+  "scope_limits": [
+    "fixed virtual circuits, not arbitrary wiring or breadboard hardware",
+    "ideal resistors and constant LED Vf; no tolerance/temperature/parasitic model",
+    "no SPICE, DRC, LVS, PEX or hardware measurement performed for these puzzles",
+    "advisory AI quality and education effects not evaluated",
+    "source/local app update, no new edition installer published"
+  ],
+  "screenshots": [
+    "desktop.png",
+    "desktop-work.png",
+    "mobile.png"
+  ]
+}

@@ -4,6 +4,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import {z} from 'zod/v4';
 import {getProductEdition} from './edition-workspace.mjs';
 import {initialStudyQuestions,studyReferences,studyVersion,gradeObjective} from '../packages/education/src/self-study.ts';
+import {puzzleSchemas,interactiveStudy} from './interactive-study.mjs';
 import {structuredStatus,structuredEstimate,requestStructured} from './structured-ai.mjs';
 
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
@@ -26,7 +27,7 @@ export async function studyRpc(config,method,params={},options={}){
 }
 async function execute(config,method,params,{edition=getProductEdition({root}).edition,fetcher=fetch}={}){
  if(edition!=='edu')throw error('Resistor Edu에서만 사용하는 자율학습 기능입니다.');
- const schemas={
+ const schemas={...puzzleSchemas,
   'study.catalog':z.object({}).strict(),
   'study.open':z.object({question_id:qid}).strict(),
   'study.reveal':z.object({question_id:qid,purpose:z.enum(['practice','qa']).default('practice')}).strict(),
@@ -53,6 +54,7 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
   const unavailable={configured:false,model:'gpt-6-luna',budget_usd:0,remaining_usd:0};
   let provider=unavailable;try{if(source)provider=await structuredStatus(source);}catch{provider={...unavailable,reason:'기존 키 또는 공통 예산 설정을 읽을 수 없습니다. 저장된 문제는 계속 사용할 수 있습니다.'};}
   const limits={...provider,study_budget_usd:state.budget_usd,study_reserved_usd:state.reserved_usd,study_remaining_usd:Math.max(0,state.budget_usd-state.reserved_usd),automatic_calls:false,credential_mode:source?'existing-workspace-reference':'not_configured'};
+  if(method.startsWith('study.puzzle.'))return result(await interactiveStudy(state,method,p,{save,limits,source,provider,fetcher,context}));
   const get=()=>{const q=state.questions[p.question_id];if(!q)throw error('저장된 문제를 찾을 수 없습니다.');return q;};
   const assistanceKey=id=>(p.purpose||'practice')+':'+id;
   const helped=id=>state.revealed.includes(assistanceKey(id))||(p.purpose!=='qa'&&state.revealed.includes(id));
@@ -62,7 +64,7 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
   if(method==='study.open')return result({question:publicQuestion(get())});
   if(method==='study.reveal'){const q=get();if(!helped(q.id))state.revealed.push(assistanceKey(q.id));await save();return result({question:publicQuestion(q),solution:q.solution,expected:q.expected??null,correct_index:q.correct_index??null,formula:q.formula||null,tokens_used:0,assisted:true});}
   if(method==='study.history')return result({attempts:state.attempts.toReversed(),counters:state.counters,limits});
-  if(method==='study.export')return result({exported_at:stamp(),purpose:'self-study-not-official-submission',questions:state.questions,attempts:state.attempts,counters:state.counters,contains_credentials:false});
+  if(method==='study.export')return result({exported_at:stamp(),purpose:'self-study-not-official-submission',questions:state.questions,attempts:state.attempts,puzzle_sessions:state.puzzle_sessions||{},counters:state.counters,contains_credentials:false});
   if(method==='study.settings'){
    if(p.expected_revision!==state.revision)throw error('학습 설정이 변경되었습니다. 새로 읽고 다시 저장하세요.');
    if(p.budget_usd>provider.budget_usd||p.budget_usd<state.reserved_usd)throw error('공통 API 상한 이하, 이미 예약한 비용 이상으로 지정하세요.');
