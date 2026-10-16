@@ -6,6 +6,7 @@
   } catch { /* The system theme remains available without browser storage. */ }
 
   const ready = () => {
+    if(document.querySelector('[data-system-detection]'))import('/system-detection.mjs').catch(()=>{const status=document.querySelector('[data-system-label]');if(status)status.textContent='자동 감지 불가 · 직접 선택하세요';});
     const button = document.querySelector('button[data-theme]');
     const dark = () => document.documentElement.dataset.theme
       ? document.documentElement.dataset.theme === 'dark'

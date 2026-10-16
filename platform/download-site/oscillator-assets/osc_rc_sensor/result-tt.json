@@ -1,0 +1,159 @@
+{
+  "template": "osc_rc_sensor",
+  "parameters": {
+    "timing_Ohm": 100000,
+    "sense_F": 1e-11
+  },
+  "condition": {
+    "analysis": "tran",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "duration_s": 0.000039999999999999996,
+    "step_s": 3.9999999999999994e-9,
+    "load_F": 5e-15,
+    "vds_V": 1.8,
+    "vbs_V": 0
+  },
+  "run_id": "63b24ef967dd4faa8599ae4142c20bdb",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "freshness": "current",
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "false",
+    "samples": 10213,
+    "solver": "SPARSE 1.3",
+    "OUT_min": -0.0004282231429213467,
+    "OUT_max": 1.7978576129027553,
+    "supply_current_min": -0.0000034027295395602786,
+    "supply_current_max": 0.0006999890142480036,
+    "CAP_min": 0.0000017765527703887308,
+    "CAP_max": 1.2883315054608058,
+    "HYST_min": 0.0000019750514984463296,
+    "HYST_max": 1.8054088759060267,
+    "SUM_min": 0.2495663747445288,
+    "SUM_max": 1.2878212945132563,
+    "current_flow_status": "available",
+    "template_id": "osc_rc_sensor",
+    "layout_status": "not-generated",
+    "metric_source": "actual-ngspice-samples",
+    "supply_observation": {
+      "available": true,
+      "start_s": 0.000016,
+      "end_s": 0.000039999999999999996,
+      "energy_J": 8.857759542454373e-10,
+      "average_current_A": 0.00002050407301494068,
+      "peak_current_A": 0.00015970131130002563,
+      "minimum_current_A": 6.544422184728838e-8,
+      "average_power_W": 0.000036907331426893224,
+      "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+    },
+    "average_supply_power_W": 0.000036907331426893224,
+    "average_supply_current_A": 0.00002050407301494068,
+    "output_cycles": {
+      "available": true,
+      "complete_cycles": 7,
+      "frequency_Hz": 342115.62066331966,
+      "duty": 0.3888519971295219,
+      "period_min_s": 0.0000029217000151166407,
+      "period_max_s": 0.000002923822306575404,
+      "deterministic_period_span_s": 2.1222914587632293e-9,
+      "max_sample_step_s": 4.0000000000019946e-9,
+      "crossing_threshold_V": 0.9,
+      "crossing_hysteresis_half_width_V": 0,
+      "period_scope": "Deterministic transient only; not random jitter or phase noise."
+    },
+    "output_frequency_Hz": 342115.62066331966,
+    "duty_cycle": 0.3888519971295219,
+    "cap_switch_low_V": 0.22082806454587114,
+    "cap_switch_high_V": 1.287742372541119,
+    "timing_RC_s": 0.000001,
+    "unloaded_RC_reference_frequency_Hz": 346129.78912006924,
+    "RC_reference_scope": "Uses measured thresholds in the ideal unloaded exponential RC equation; feedback loading, MOS delay/leakage and parasitics cause differences.",
+    "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+    "research_metrics": {
+      "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+      "input_drivers_power": "not measured",
+      "external_bias_power": "not measured",
+      "complete_system_power_available": false,
+      "supply": {
+        "available": true,
+        "start_s": 4.0000000000000004e-11,
+        "end_s": 0.00004,
+        "energy_J": 1.502199682231551e-9,
+        "average_current_A": 0.000020863905339343546,
+        "peak_current_A": 0.0006999890142480036,
+        "minimum_current_A": -0.0000034027295395602786,
+        "average_power_W": 0.000037555029610818384,
+        "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+        "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+      },
+      "OUT_tail": {
+        "available": true,
+        "start": 0.000030000000000000004,
+        "end": 0.00004,
+        "integral": 0.000007206070623815843,
+        "mean": 0.7206070623815843,
+        "rms": 1.137046729435806,
+        "ac_rms": 0.8795457501269882,
+        "minimum": 0.0003384437786450426,
+        "maximum": 1.79785761269843,
+        "peak_to_peak": 1.797519168919785,
+        "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+      }
+    }
+  },
+  "reference_verification": {
+    "schema_version": 1,
+    "kind": "osc_rc_sensor",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "Complete requested transient interval",
+        "pass": true,
+        "observed": 0.00004
+      },
+      {
+        "name": "Required actual node and current traces present",
+        "pass": true,
+        "observed": 5
+      },
+      {
+        "name": "Output has at least 3 resolved complete cycles",
+        "pass": true,
+        "observed": 7
+      },
+      {
+        "name": "Output reaches both logic rails",
+        "pass": true,
+        "observed": [
+          0.000335797565736116,
+          1.7978576129027553
+        ]
+      },
+      {
+        "name": "Duty within 10..90 percent",
+        "pass": true,
+        "observed": 0.3888519971295219
+      },
+      {
+        "name": "CAP crosses separated switching levels",
+        "pass": true,
+        "observed": [
+          0.22082806454587114,
+          1.287742372541119
+        ]
+      }
+    ],
+    "pass": true,
+    "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+  },
+  "manifest_sha256": "7743996f94c0daecad9ac23f7b2ae8649b3c2711d4bdcbebea59c115e2889e63"
+}

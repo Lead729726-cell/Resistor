@@ -1,0 +1,12 @@
+.subckt osc_rc_sensor OUT CAP VPWR VGND
+CC_SENSOR CAP VGND 1e-11
+XINV0N MID SUM VGND VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+XINV0P MID SUM VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+XINV1N HYST MID VGND VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+XINV1P HYST MID VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+XINV2N OUT HYST VGND VGND sky130_fd_pr__nfet_01v8 w=4 l=0.15 nf=1 m=1
+XINV2P OUT HYST VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=8 l=0.15 nf=1 m=1
+RR_FEEDBACK HYST SUM 20000000
+RR_INPUT CAP SUM 10000000
+RR_TIMING OUT CAP 100000
+.ends osc_rc_sensor
