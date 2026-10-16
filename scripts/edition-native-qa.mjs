@@ -13,16 +13,26 @@ export async function verifyEditionPackage({executable,resources}){
  await writeFile(path.join(workspace,'.runtime/worker.json'),JSON.stringify({url:'http://127.0.0.1:'+port,token:randomBytes(32).toString('hex')}));
  let app;
  const report={schema_version:1,product_id:edition.id,edition:edition.edition,platform:process.platform,arch:process.arch,source_revision:process.env.RESISTOR_SOURCE_REVISION||null,checked_at:new Date().toISOString(),checks:[],paid_calls:0,manufacturing_signoff:false};
- const check=(name,ok)=>{assert(ok,name);report.checks.push({name,pass:true});};
+ const check=(name,ok)=>{assert(ok,name);report.checks.push({name,pass:true});console.log('Verified: '+name);};
  try{
    app=await _electron.launch({executablePath:executable,args:['--disable-gpu'],env:{...process.env,RESISTOR_EDITION:edition.edition,MOS_WORKSPACE:workspace,REGISTER_ENGINE_MODE:'native',REGISTER_USER_DATA:path.join(workspace,'user-data'),REGISTER_DOCKER_PATH:path.join(workspace,'no-docker'),PATH:path.dirname(process.execPath)},timeout:120000});
-   const page=await app.firstWindow();await page.getByTestId('app-ready').waitFor({timeout:120000});if(edition.edition==='edu')await page.keyboard.press('Escape');
+   const page=await app.firstWindow();
+   if(edition.edition==='edu'){
+     // A fresh Edu session intentionally waits for the learner's choice.
+     // Exercise that real UI instead of expecting an auto-created project.
+     await page.getByTestId('edu-create-inverter').click({timeout:120000});
+   }
+   await page.getByTestId('app-ready').waitFor({timeout:120000});if(edition.edition==='edu')await page.keyboard.press('Escape');
    const rpc=async(method,params={})=>{const r=await page.evaluate(({method,params})=>window.mos.rpc(method,params),{method,params});assert(r.ok,JSON.stringify(r.error));return r.result;};
    const context=JSON.parse(await readFile(path.join(resources,'dist/product-context.json'),'utf8')),identity=JSON.parse(await readFile(path.join(resources,'product-edition.json'),'utf8'));
    check('Packaged renderer and main identify the requested edition',context.product_id===edition.id&&identity.edition===edition.edition&&await page.title()===edition.name);
    const shell=await app.evaluate(()=>({arch:process.arch,platform:process.platform}));check('Actual Electron process matches native target',shell.arch===process.arch&&shell.platform===process.platform);
    const runtime=JSON.parse(await readFile(path.join(resources,'native-runtime/manifest.json'),'utf8'));report.runtime_arch=runtime.runtime_arch||runtime.arch;report.requires_emulation=runtime.requires_emulation===true;
    const doctor=await rpc('toolchain.doctor');check('Bundled ngspice available without Docker/system Python',doctor.tools.some(t=>t.name==='ngspice'&&t.available)&&doctor.runner==='native-'+process.platform);
+   if(edition.edition==='edu'){
+     const lessons=await rpc('learning.list'),study=await rpc('study.catalog');
+     check('Installed Edu includes real lesson records and deterministic self-study without a paid call',lessons.edition==='edu'&&lessons.records.length===1&&study.questions?.length>0);
+   }
    let p=await rpc('project.create',{example:'schematic',name:'[Release QA] 1.8V divider'});
    for(const device of [{id:'v1',name:'V1',kind:'voltage',pins:{'+':'VDD','-':'0'},parameters:{dc:1.8},x:100,y:100},{id:'r1',name:'R1',kind:'resistor',pins:{'+':'VDD','-':'OUT'},parameters:{value:10000},x:240,y:100},{id:'r2',name:'R2',kind:'resistor',pins:{'+':'OUT','-':'0'},parameters:{value:10000},x:240,y:240}])p=await rpc('schematic.apply_command',{project_id:p.id,expected_revision:p.revision,command_id:crypto.randomUUID(),command:{type:'add_device',device}});
    let run=await rpc('simulation.run',{project_id:p.id,analysis:'op'});const deadline=Date.now()+120000;
@@ -33,7 +43,7 @@ export async function verifyEditionPackage({executable,resources}){
    await page.evaluate(({id,edition})=>localStorage.setItem('mos.last_project'+(edition==='edu'?'.edu':''),id),{id:p.id,edition:edition.edition});await page.reload();await page.getByTestId('app-ready').waitFor({timeout:60000});if(edition.edition==='edu')await page.keyboard.press('Escape');
    check('Project and completed result survive renderer reload',(await rpc('project.open',{project_id:p.id})).runs.some(r=>r.id===run.id));
    await page.screenshot({path:path.join(base,'package-'+edition.edition+'-'+process.platform+'-'+process.arch+'.png')});report.completed=true;
- }catch(e){report.completed=false;report.error=e.message;throw e;}finally{
+ }catch(e){report.completed=false;report.error=e.message;if(app){const p=await app.firstWindow().catch(()=>null);if(p){report.renderer_text=(await p.locator('body').innerText().catch(()=>'' )).slice(0,5000);await p.screenshot({path:path.join(base,'failure.png')}).catch(()=>{});}}throw e;}finally{
    if(app){let timer;try{await Promise.race([app.close(),new Promise(resolve=>{timer=setTimeout(()=>{app.process().kill();resolve();},15000);})]);}finally{clearTimeout(timer);}}
    try{await stopWorker(workspace);}catch(e){report.cleanup_error=e.message;}
    await writeFile(path.join(base,'receipt.json'),JSON.stringify(report,null,2)+'\n');
