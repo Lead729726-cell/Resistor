@@ -19,7 +19,7 @@ async function boot(){
   if(!updater){
     const {DesktopUpdater}=await import(pathToFileURL(path.join(__dirname,'updates.mjs')));
     updater=new DesktopUpdater({edition:productEdition.edition,version:app.isPackaged?app.getVersion():require(path.join(root,'package.json')).version,userData:app.getPath('userData'),packaged:app.isPackaged,fetchImpl:makeUpdateFetch(net),install:async({file,update,folder})=>{
-      const choice=await dialog.showMessageBox(mainWindow,{type:'question',title:'Resistor 업데이트',message:`Resistor ${update.version}를 설치할까요?`,detail:'입력 중인 설정과 브라우저 로컬 뷰어 파일을 먼저 저장하세요. 기존 설계 저장 폴더와 실행 중인 Docker 해석은 보존됩니다. Windows는 설치 안내를 열고, Mac·Linux는 사용자 앱 폴더에 설치한 뒤 다시 시작합니다.',buttons:['취소','설치'],defaultId:0,cancelId:0});
+      const choice=await dialog.showMessageBox(mainWindow,{type:'question',title:productEdition.name+' 업데이트',message:`${productEdition.name} ${update.version}를 설치할까요?`,detail:'입력 중인 설정과 브라우저 로컬 뷰어 파일을 먼저 저장하세요. 기존 설계 저장 폴더와 실행 중인 Docker 해석은 보존됩니다. Windows는 설치 안내를 열고, Mac·Linux는 사용자 앱 폴더에 설치한 뒤 다시 시작합니다.',buttons:['취소','설치'],defaultId:0,cancelId:0});
       if(choice.response!==1)return false;
       // Native interpreters and modules live in the installed app. Finish jobs
       // before stopping this owned worker so the installer can replace them.
@@ -72,7 +72,7 @@ async function boot(){
       if(typeof payload.method==='string'&&payload.method.startsWith('desktop.update.')){
         if(['desktop.update.website','desktop.update.notes'].includes(payload.method)){
           if(Object.keys(payload.params??{}).length)return {ok:false,error:{code:'UPDATE_ERROR',message:'업데이트 링크는 주소를 받지 않습니다.'}};
-          const url=payload.method==='desktop.update.website'?'https://resistor-downloads.vercel.app/':updater.status().update?.releaseUrl;
+          const url=payload.method==='desktop.update.website'?'https://resistor-downloads.vercel.app/download/'+(productEdition.edition==='edu'?'edu':'industry')+'/':updater.status().update?.releaseUrl;
           if(!url)return {ok:false,error:{code:'UPDATE_ERROR',message:'확인된 릴리스가 없습니다.'}};
           await shell.openExternal(url);return {ok:true,result:updater.status()};
         }
