@@ -18,11 +18,15 @@ if(process.platform==='win32'){
   // Use a fresh disposable runner's normal per-user installation path. This
   // exercises the download's default install rather than an NSIS /D parser.
   if(process.env.GITHUB_ACTIONS!=='true'||!process.env.LOCALAPPDATA)throw Error('Windows installer execution requires a disposable CI runner.');
-  installed=path.join(process.env.LOCALAPPDATA,'Programs',name);
+  const inno=receipt.installer_kind==='inno';if(inno)assert.equal(receipt.default_directory,name+' ARM64');
+  installed=path.join(process.env.LOCALAPPDATA,'Programs',inno?receipt.default_directory:name);
   try{await access(installed);throw Error('Refusing to replace an existing user installation during QA.');}catch(e){if(e.code!=='ENOENT')throw e;}
   // On Windows wait for the installer and all descendant processes.
-  await run('powershell.exe',['-NoLogo','-NoProfile','-NonInteractive','-Command',"$installerProcess = Start-Process -FilePath $env:RESISTOR_QA_INSTALLER -ArgumentList '/S' -WindowStyle Hidden -Wait -PassThru; if ($installerProcess.ExitCode -ne 0) { exit $installerProcess.ExitCode }"],{...process.env,RESISTOR_QA_INSTALLER:artifact});
-  await access(path.join(installed,name+'.exe'));
+  const log=path.join(workspace,'setup.log');
+  try{
+    await run('powershell.exe',['-NoLogo','-NoProfile','-NonInteractive','-Command',"$installerProcess = Start-Process -FilePath $env:RESISTOR_QA_INSTALLER -ArgumentList $env:RESISTOR_QA_INSTALL_ARGS -WindowStyle Hidden -Wait -PassThru; if ($installerProcess.ExitCode -ne 0) { exit $installerProcess.ExitCode }"],{...process.env,RESISTOR_QA_INSTALLER:artifact,RESISTOR_QA_INSTALL_ARGS:inno?'/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /LOG="'+log+'"':'/S'});
+    await access(path.join(installed,name+'.exe'));
+  }catch(e){console.error((await readFile(log,'utf8').catch(()=>'' )).slice(-6000));throw e;}
 }else{
   const extracted=path.join(workspace,'extracted'),qaHome=path.join(workspace,'user');await mkdir(extracted);await mkdir(qaHome);
   if(process.platform==='darwin')await run('/usr/bin/ditto',['-x','-k',artifact,extracted]);else await run('tar',['-xzf',artifact,'-C',extracted]);
@@ -36,6 +40,6 @@ if(process.platform==='win32'){
 process.env.RESISTOR_SOURCE_REVISION=receipt.source_revision;
 const app=process.platform==='darwin',resources=path.join(installed,app?'Contents/Resources/app':'resources/app'),executable=path.join(installed,app?'Contents/MacOS/'+name:name+(process.platform==='win32'?'.exe':''));
 const qa=await verifyEditionPackage({executable,resources});assert.equal(qa.completed,true);
-receipt.installation_qa={completed:true,platform:process.platform,arch:process.arch,checked_at:new Date().toISOString(),method:process.platform==='win32'?'NSIS silent install':app?'Extracted ZIP and bundled command helper':'Extracted tar.gz and bundled shell helper',app_execution:qa};
+receipt.installation_qa={completed:true,platform:process.platform,arch:process.arch,checked_at:new Date().toISOString(),method:process.platform==='win32'?(receipt.installer_kind==='inno'?'Inno per-user default install':'NSIS per-user default install'):app?'Extracted ZIP and bundled command helper':'Extracted tar.gz and bundled shell helper',app_execution:qa};
 await cp(artifact,path.join(output,receipt.file));await writeFile(path.join(output,path.basename(receiptPath)),JSON.stringify(receipt,null,2)+'\n');
 console.log(JSON.stringify({edition:edition.edition,target,installer_executed:true,installed_app_qa:true}));

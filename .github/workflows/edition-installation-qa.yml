@@ -49,7 +49,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: Resistor-${{ matrix.edition }}-${{ matrix.target.key }}
-          run-id: ${{ matrix.target.key == 'linux-x64' && inputs.linux_run || matrix.edition == 'edu' && inputs.edu_run || matrix.target.key == 'windows-arm64' && inputs.arm_run || inputs.indust_run }}
+          run-id: ${{ matrix.target.key == 'linux-x64' && inputs.linux_run || matrix.target.key == 'windows-arm64' && inputs.arm_run || matrix.edition == 'edu' && inputs.edu_run || inputs.indust_run }}
           github-token: ${{ github.token }}
           path: .runtime/installer-input
       - if: runner.os != 'Linux'
