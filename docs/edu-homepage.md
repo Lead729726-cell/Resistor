@@ -66,6 +66,11 @@ node scripts/verify-edu-homepage.mjs
 [공개 홈페이지 화면](evidence/edu-homepage/public-home.png) ·
 [모바일 밝은 테마 화면](evidence/edu-homepage/mobile-light.png)
 
+구현 커밋 `8b1916027bf5ce778d326fd5a14bd66d2a322e36`의
+[전체 소스 CI](https://github.com/Lead729726-cell/Resistor/actions/runs/38863480813)가
+성공했다. 핵심 검사·두 edition 빌드와 기존 튜토리얼 전체의 UI·수식·영상 검사를
+포함한다. [확인 영수증](evidence/edu-homepage/source-ci.json)은 실행한 검사 범위를 보존한다.
+
 전체 설치 파일을 다시 다운로드하거나 새 엔진 실행·제조 signoff·교육 효과 평가를
 수행한 기록은 아니다. 기존 앱 구현 및 실제 실행 근거는
 [학습 흐름 검증 기록](edu-learning-workflow.md)에서 확인한다.
