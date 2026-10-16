@@ -19,6 +19,11 @@ on:
         type: choice
         options: [both, edu, indust]
         default: both
+      target:
+        description: Verify all systems or Windows ARM64 only
+        type: choice
+        options: [all, windows-arm64]
+        default: all
 permissions:
   contents: read
   actions: read
@@ -28,12 +33,7 @@ jobs:
       fail-fast: false
       matrix:
         edition: ${{ fromJSON(inputs.edition == 'edu' && '["edu"]' || inputs.edition == 'indust' && '["indust"]' || '["edu","indust"]') }}
-        target:
-          - {runner: windows-2025, arch: x64, key: windows-x64}
-          - {runner: windows-11-arm, arch: arm64, key: windows-arm64}
-          - {runner: macos-15, arch: arm64, key: macos-arm64}
-          - {runner: macos-15-intel, arch: x64, key: macos-x64}
-          - {runner: ubuntu-24.04, arch: x64, key: linux-x64}
+        target: ${{ fromJSON(inputs.target == 'windows-arm64' && '[{"runner":"windows-11-arm","arch":"arm64","key":"windows-arm64"}]' || '[{"runner":"windows-2025","arch":"x64","key":"windows-x64"},{"runner":"windows-11-arm","arch":"arm64","key":"windows-arm64"},{"runner":"macos-15","arch":"arm64","key":"macos-arm64"},{"runner":"macos-15-intel","arch":"x64","key":"macos-x64"},{"runner":"ubuntu-24.04","arch":"x64","key":"linux-x64"}]') }}
     runs-on: ${{ matrix.target.runner }}
     timeout-minutes: 20
     env:
@@ -45,7 +45,11 @@ jobs:
           node-version: '24'
           architecture: ${{ matrix.target.arch }}
           cache: npm
-      - run: npm ci
+      - name: Install the verification client without downloading a second Electron
+        run: |
+          node -e "const fs=require('node:fs');fs.mkdirSync('.runtime/installer-qa-deps',{recursive:true});fs.writeFileSync('.runtime/installer-qa-deps/package.json',JSON.stringify({private:true}));"
+          npm install --prefix .runtime/installer-qa-deps --no-save --package-lock=false --ignore-scripts --no-audit --no-fund @playwright/test@1.63.0
+          node -e "require('node:fs').cpSync('.runtime/installer-qa-deps/node_modules','node_modules',{recursive:true});"
       - uses: actions/download-artifact@v4
         with:
           name: Resistor-${{ matrix.edition }}-${{ matrix.target.key }}
