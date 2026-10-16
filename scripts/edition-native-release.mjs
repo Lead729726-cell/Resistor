@@ -25,7 +25,7 @@ if(process.platform==='win32'){
  const bundle=path.resolve('.runtime/edition-distribution/'+basename);await mkdir(bundle,{recursive:true});await cp(app,path.join(bundle,name+(process.platform==='darwin'?'.app':'')),{recursive:true,verbatimSymlinks:true});
  await cp('scripts/edition-install.cjs',path.join(bundle,'install.cjs'));
  await writeFile(path.join(bundle,'edition-installer.json'),JSON.stringify({edition:edition.edition,name:edition.name,package_name:name,version:pkg.version,bundle_id:edition.bundle_id},null,2)+'\n');
- const isMac=process.platform==='darwin',interpreter=isMac?'./'+name+'.app/Contents/MacOS/'+name:'./'+name;
+ const isMac=process.platform==='darwin',interpreter=isMac?'./'+name+'.app/Contents/MacOS/'+name:'./'+name+'/'+name;
  const helper=isMac?'Install '+edition.name+'.command':'install.sh';
  const body=(isMac?'#!/bin/zsh':'#!/bin/sh')+'\nset -eu\nlocation=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)\ncd "$location"\nexport ELECTRON_RUN_AS_NODE=1\nexec "'+interpreter+'" "$location/install.cjs"\n';
  await writeFile(path.join(bundle,helper),body);await chmod(path.join(bundle,helper),0o755);
