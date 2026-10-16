@@ -33,3 +33,16 @@ node scripts/edition-update-feed-qa.mjs
 특히 Edu 업데이트가 차단된 기존 앱은 이 변경이 포함된 설치 파일로 한 번 교체해야 한다.
 소스 빌드의 성공을 새 설치 파일 공개로 표시하지 않는다. 공개 Mac 앱의 Developer ID와
 Apple 공증, Windows Authenticode 서명 상태도 빌드 영수증에서 별도로 확인한다.
+
+## 독립 배포
+
+기존 `edition-installers.yml`은 `edition=edu` / `indust` / `both`를 받는다.
+각자의 정확한 소스 commit을 입력하고 native 실행·설치 QA를 먼저 완료한다.
+`scripts/import-edition-installers.mjs`의 `--version=X.Y.Z`와
+`--edition=edu|indust|both`로 검증한 결과만 모은다. 단일 edition이면 다른 edition의
+다운로드와 소스·설정·설치 파일을 변경하지 않는다.
+
+공동 릴리스는 `editions-vX.Y.Z`, 단독 릴리스는 `edu-vX.Y.Z` 또는
+`indust-vX.Y.Z`를 사용한다. SHA-256과 빌드 영수증을 가진 모든 파일의 업로드가
+완료된 후 드래프트를 공개하고 `--published`로 GitHub가 계산한 해시와 공개 전달을
+확인한다. 버전별 파일을 기존 태그에 덮어쓰지 않는다.

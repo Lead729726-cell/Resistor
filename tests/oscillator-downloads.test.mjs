@@ -38,8 +38,14 @@ test('guide distinguishes latest source from existing installers and from physic
   assert.match(await readFile(site+'/index.html','utf8'),/href="\/tutorial\/oscillators\/"/);
 });
 
-test('new lab does not relabel an old native installer as a new circuit release',async()=>{
-  const editions=await json(site+'/edition-downloads.json');
-  assert.equal(editions.editions.length,2);
-  for(const edition of editions.editions){assert.equal(edition.native_installer.files.length,5);for(const file of edition.native_installer.files)assert.equal(file.version,'0.28.0');}
+test('native installer versions and bytes match actual publication evidence while historical receipts remain intact',async()=>{
+  const editions=await json(site+'/edition-downloads.json'),published=await json('docs/evidence/edition-installers/public-verification.json'),historical=await json('docs/evidence/edition-installers/0.28.0/public-verification.json');
+  assert.equal(editions.editions.length,2);assert.equal(published.completed,true);assert.equal(published.manufacturing_signoff,false);
+  for(const edition of editions.editions){assert.equal(edition.native_installer.files.length,5);for(const file of edition.native_installer.files){
+    const matches=published.installers.filter(r=>r.edition===edition.edition&&r.target===file.target);assert.equal(matches.length,1);
+    const receipt=matches[0];for(const key of ['bytes','sha256','receipt_sha256'])assert.equal(file[key],receipt[key]);
+    assert.equal(file.name,receipt.file);assert(file.name.includes('-'+file.version+'-'));
+    assert.equal(receipt.github_computed_digest_verified,true);assert.equal(receipt.installed_app_verification,true);assert.equal(receipt.public_status,200);
+  }}
+  assert.equal(historical.completed,true);assert.equal(historical.installers.length,10);for(const receipt of historical.installers)assert(receipt.file.includes('-0.28.0-'));
 });
