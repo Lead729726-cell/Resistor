@@ -1,12 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readEduRoute,eduHash} from '../packages/ui/src/edu-navigation';
+import {readEduRoute,eduHash,readEduResume,eduRouteLabel} from '../packages/ui/src/edu-navigation';
 import {validateLeagueConfiguration} from '../packages/ui/src/league-connection';
 test('Edu starts at the mode junction and round-trips seven design pages and the in-app league',()=>{
  for(const hash of ['', '#design/0','#design/8','#design/2?x=1','#invalid'])assert.deepEqual(readEduRoute(hash),{mode:'home'});
  for(let step=1;step<=7;step++)assert.deepEqual(readEduRoute(eduHash({mode:'design',step})),{mode:'design',step});
  assert.deepEqual(readEduRoute('#quiz/league'),{mode:'quiz',panel:'league'});assert.deepEqual(readEduRoute('#quiz'),{mode:'quiz',panel:'questions'});
  assert.equal(eduHash({mode:'design',step:99}),'#design/7');assert.equal(eduHash({mode:'design',step:NaN}),'#design/1');
+});
+
+test('resume data is a validated Edu screen pointer, never an engine verification or auto-open instruction',()=>{
+ const r={schema_version:1,edition:'edu',hash:'#design/6',updated_at:'2026-10-19T00:00:00Z'};
+ assert.deepEqual(readEduResume({...r,verified:true}),r);assert.equal(eduRouteLabel(readEduRoute(r.hash)),'설계 6/7 · 재해석·비교');
+ for(const patch of [{edition:'indust'},{schema_version:2},{hash:'#home'},{hash:'#quiz'},{hash:'#design/8'},{hash:'https://example.com'},{updated_at:'bad'}])assert.equal(readEduResume({...r,...patch}),null);
 });
 test('published league discovery requires Edu schema, stable identity and bounded HTTPS endpoint',()=>{
  const c={schema_version:1,edition:'edu',endpoint:'https://league.example/api/league',identity_namespace:'resistor-edu-public'};
