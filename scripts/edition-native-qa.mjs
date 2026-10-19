@@ -20,7 +20,16 @@ export async function verifyEditionPackage({executable,resources}){
    if(edition.edition==='edu'){
      // A fresh Edu session intentionally waits for the learner's choice.
      // Exercise that real UI instead of expecting an auto-created project.
+     await page.locator('[data-testid="edu-home"], [data-testid="edu-create-inverter"]').first().waitFor({timeout:120000});
+     if(await page.getByTestId('edu-home').isVisible()){
+       check('Edu starts at a quiz/design choice without auto-creating a learning project',await page.getByRole('heading',{name:'오늘은 어떻게 배워볼까요?',exact:true}).isVisible());
+       await page.getByRole('button',{name:'설계·시뮬레이션 학습',exact:true}).click();
+     }
      await page.getByTestId('edu-create-inverter').click({timeout:120000});
+     if(await page.getByTestId('edu-design-flow').isVisible()){
+       check('Edu design exposes one settings page at a time',await page.getByTestId('edu-step-page').count()===1);
+       await page.getByRole('button',{name:'회로도 열기',exact:true}).click({timeout:120000});
+     }
    }
    await page.getByTestId('app-ready').waitFor({timeout:120000});if(edition.edition==='edu')await page.keyboard.press('Escape');
    const rpc=async(method,params={})=>{const r=await page.evaluate(({method,params})=>window.mos.rpc(method,params),{method,params});assert(r.ok,JSON.stringify(r.error));return r.result;};
@@ -40,7 +49,7 @@ export async function verifyEditionPackage({executable,resources}){
    const voltage=run.waveforms?.find(w=>w.name==='OUT')?.y[0];check('Actual ngspice divider result is 0.9 V with an unknown functional verdict',run.execution_status==='completed'&&run.analysis_result==='unknown'&&Math.abs(voltage-.9)<1e-8);report.run={id:run.id,project_id:p.id,revision:p.revision,execution_status:run.execution_status,analysis_result:run.analysis_result,voltage_V:voltage};
    const layout=await rpc('project.create',{example:'layout',name:'[Release QA] exact DBU mask'});await rpc('layout.apply_command',{project_id:layout.id,expected_revision:layout.revision,command_id:crypto.randomUUID(),command:{type:'add_box',layer_id:'68/20',box:['0','0','1000','1000'],net:'OUT'}});
    const gds=await rpc('layout.export',{project_id:layout.id,format:'gds'});check('Bundled KLayout exports an actual GDS mask',!!gds);
-   await page.evaluate(({id,edition})=>localStorage.setItem('mos.last_project'+(edition==='edu'?'.edu':''),id),{id:p.id,edition:edition.edition});await page.reload();await page.getByTestId('app-ready').waitFor({timeout:60000});if(edition.edition==='edu')await page.keyboard.press('Escape');
+   await page.evaluate(({id,edition})=>localStorage.setItem('mos.last_project'+(edition==='edu'?'.edu':''),id),{id:p.id,edition:edition.edition});await page.reload();if(edition.edition==='edu'){await page.getByTestId('edu-step-page').waitFor({timeout:120000});if(await page.getByTestId('edu-design-flow').isVisible())await page.getByRole('button',{name:'회로도 열기',exact:true}).click({timeout:120000});}await page.getByTestId('app-ready').waitFor({timeout:60000});if(edition.edition==='edu')await page.keyboard.press('Escape');
    check('Project and completed result survive renderer reload',(await rpc('project.open',{project_id:p.id})).runs.some(r=>r.id===run.id));
    await page.screenshot({path:path.join(base,'package-'+edition.edition+'-'+process.platform+'-'+process.arch+'.png')});report.completed=true;
  }catch(e){report.completed=false;report.error=e.message;if(app){const p=await app.firstWindow().catch(()=>null);if(p){report.renderer_text=(await p.locator('body').innerText().catch(()=>'' )).slice(0,5000);await p.screenshot({path:path.join(base,'failure.png')}).catch(()=>{});}}throw e;}finally{

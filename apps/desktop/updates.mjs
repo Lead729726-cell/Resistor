@@ -1,10 +1,11 @@
+import {selectEditionRelease,editionPlatform,assertEditionUpdate,validateEditionReceipt} from './edition-updates.mjs';
 import {mkdir,readFile,writeFile,rename,unlink,lstat} from 'node:fs/promises';
 import {createReadStream,createWriteStream} from 'node:fs';
 import {Readable,Transform} from 'node:stream';
 import {pipeline} from 'node:stream/promises';
 import {createHash,randomUUID} from 'node:crypto';
 import path from 'node:path';
-import {RELEASES_URL,REPOSITORY,selectRelease,platformKey,validateAsset} from './update-feed.mjs';
+import {RELEASES_URL,REPOSITORY} from './update-feed.mjs';
 const networkFailure=e=>e instanceof TypeError||['TimeoutError','AbortError'].includes(e.name)||/ERR_(INTERNET_DISCONNECTED|NETWORK_CHANGED|NAME_NOT_RESOLVED|CONNECTION|TIMED_OUT)|ENOTFOUND|ECONNRESET|EAI_AGAIN/.test(e.message);
 export async function hashFile(file){const h=createHash('sha256');for await(const b of createReadStream(file))h.update(b);return h.digest('hex');}
 export async function verifiedFile(file,asset){try{const s=await lstat(file);return s.isFile()&&!s.isSymbolicLink()&&s.size===asset.bytes&&(await hashFile(file))===asset.sha256;}catch{return false;}}
@@ -20,13 +21,13 @@ async function publicFetch(url,{fetchImpl,signal}){
 export class DesktopUpdater{
   constructor({version,edition='indust',platform=process.platform,arch=process.arch,userData,fetchImpl=fetch,packaged=true,install,clock=Date.now}){
     if(!['edu','indust'].includes(edition))throw Error('Unknown product edition');this.edition=edition;
-    this.platform=platformKey(platform,arch);this.fetchImpl=fetchImpl;this.folder=path.join(userData,'updates');this.install=install;this.clock=clock;this.packaged=packaged;this.active=null;this.abort=null;this.file=null;this.lastAuto=0;
-    this.state={status:this.platform?'idle':'unsupported',currentVersion:version,platform:this.platform,settings:{automatic:true,channel:'preview'},update:null,downloadedBytes:0,totalBytes:0,message:'',checkedAt:null,packaged,receipt:null};
+    this.platform=editionPlatform(platform,arch);this.fetchImpl=fetchImpl;this.folder=path.join(userData,'updates',edition);this.install=install;this.clock=clock;this.packaged=packaged;this.active=null;this.abort=null;this.file=null;this.lastAuto=0;
+    this.state={edition,product_id:'resistor.'+edition,status:this.platform?'idle':'unsupported',currentVersion:version,platform:this.platform,settings:{automatic:true,channel:'preview'},update:null,downloadedBytes:0,totalBytes:0,message:'',checkedAt:null,packaged,receipt:null};
   }
   status(){return structuredClone(this.state);}
   async initialize(){
     await safeFolder(this.folder);
-    try{const p=JSON.parse(await readFile(path.join(this.folder,'preferences.json'),'utf8'));if(typeof p.automatic==='boolean'&&['preview','stable'].includes(p.channel))this.state.settings=p;}catch{}
+    try{let p;try{p=JSON.parse(await readFile(path.join(this.folder,'preferences.json'),'utf8'));}catch(e){if(e.code!=='ENOENT'||this.edition!=='indust')throw e;p=JSON.parse(await readFile(path.join(path.dirname(this.folder),'preferences.json'),'utf8'));}if(typeof p.automatic==='boolean'&&['preview','stable'].includes(p.channel))this.state.settings={automatic:p.automatic,channel:p.channel};}catch{}
     try{const r=JSON.parse(await readFile(path.join(this.folder,'receipt.json'),'utf8'));if(['installed','failed'].includes(r.status))this.state.receipt={...r,versionVerified:r.status==='installed'&&r.version===this.state.currentVersion};}catch{}
     return this.status();
   }
@@ -37,26 +38,26 @@ export class DesktopUpdater{
     this.state.settings={automatic:p.automatic,channel:p.channel};this.state.update=null;this.file=null;this.state.status='idle';return this.status();
   }
   async check({automatic=false}={}){
-    if(this.edition==='edu'){this.state.status='unsupported';this.state.update=null;this.file=null;this.state.message='Resistor Edu 전용 설치 파일·업데이트는 아직 공개되지 않았습니다. Indust 설치 파일로 교육용 앱을 교체하지 않습니다.';return this.status();}
     if(!this.platform)return this.status();if(this.active)return this.status();
-    if(automatic&&(!this.state.settings.automatic||this.clock()-this.lastAuto<15*60*1000))return this.status();
+    if(automatic&&(!this.state.settings.automatic||this.clock()-this.lastAuto<15*60*1000&&!['offline','error'].includes(this.state.status)))return this.status();
     this.lastAuto=this.clock();this.state.status='checking';this.state.message='';this.state.update=null;this.file=null;
     this.active=(async()=>{
       try{
         const r=await this.fetchImpl(RELEASES_URL,{signal:AbortSignal.timeout(20000),headers:{Accept:'application/vnd.github+json','User-Agent':'Resistor-Updater'}});
         if(!r.ok)throw Error(r.status===403||r.status===429?'GitHub 확인 요청 한도에 도달했습니다. 잠시 뒤 다시 확인하세요.':'버전 확인 서버가 응답하지 않습니다.');
         const body=await r.text();if(body.length>2*1024*1024)throw Error('업데이트 정보가 너무 큽니다.');
-        this.state.update=selectRelease(JSON.parse(body),{currentVersion:this.state.currentVersion,platform:this.platform,channel:this.state.settings.channel});
+        this.state.update=selectEditionRelease(JSON.parse(body),{currentVersion:this.state.currentVersion,platform:this.platform,edition:this.edition,channel:this.state.settings.channel});
+        if(this.state.update){const u=this.state.update,r=await publicFetch(u.receipt.url,{fetchImpl:this.fetchImpl,signal:AbortSignal.timeout(20000)});if(!r.ok)throw Error('빌드 영수증을 가져올 수 없습니다.');const bytes=Buffer.from(await r.arrayBuffer());if(bytes.length!==u.receipt.bytes||bytes.length>1024*1024||createHash('sha256').update(bytes).digest('hex')!==u.receipt.sha256)throw Error('빌드 영수증의 SHA-256이 다릅니다.');Object.assign(u,validateEditionReceipt(JSON.parse(bytes.toString('utf8')),u));}
         this.state.checkedAt=new Date(this.clock()).toISOString();this.state.status=this.state.update?'available':'current';
         if(this.state.update){const candidate=path.join(this.folder,this.state.update.asset.name);if(await verifiedFile(candidate,this.state.update.asset)){this.file=candidate;this.state.status='ready';}}
-      }catch(e){this.state.status=networkFailure(e)?'offline':'error';this.state.message=networkFailure(e)?'인터넷·서버 연결을 확인한 뒤 다시 시도하세요.':e.message;}
+      }catch(e){this.state.update=null;this.file=null;this.state.status=networkFailure(e)?'offline':'error';this.state.message=networkFailure(e)?'인터넷·서버 연결을 확인한 뒤 다시 시도하세요.':e.message;}
       return this.status();
-    })();try{return await this.active;}finally{this.active=null;}
+    })();let result;try{result=await this.active;}finally{this.active=null;}if(automatic&&this.state.settings.automatic&&this.state.status==='available')return this.download();return result;
   }
   async download(){
-    if(this.edition==='edu')throw Error('Edu 전용 업데이트 파일이 필요합니다.');
+
     if(this.active)return this.status();if(!this.state.update||!['available','error','offline','ready'].includes(this.state.status))throw Error('새 버전을 먼저 확인하세요.');
-    const {asset,tag}=this.state.update;validateAsset({name:asset.name,browser_download_url:asset.url.replace(/\?download=1$/,''),size:asset.bytes,digest:'sha256:'+asset.sha256},tag,this.platform);
+    const {asset}=this.state.update;assertEditionUpdate(this.state.update,this.edition,this.platform);
     this.abort=new AbortController();const signal=AbortSignal.any([this.abort.signal,AbortSignal.timeout(15*60*1000)]);
     this.state.status='downloading';this.state.downloadedBytes=0;this.state.totalBytes=asset.bytes;this.state.message='';this.file=null;
     const destination=path.join(this.folder,asset.name),partial=path.join(this.folder,asset.name+'.'+randomUUID()+'.partial');
@@ -77,9 +78,10 @@ export class DesktopUpdater{
   }
   cancel(){this.abort?.abort();return this.status();}
   async apply(){
-    if(this.edition==='edu')throw Error('Edu를 Indust 설치 파일로 교체할 수 없습니다.');
+
     if(this.active||this.state.status!=='ready'||!this.file||!this.state.update)throw Error('검증된 다운로드가 준비되어야 합니다.');
     if(!this.packaged)throw Error('소스 실행 환경에서는 설치 앱을 교체하지 않습니다. 다운로드 사이트에서 설치하세요.');
+    assertEditionUpdate(this.state.update,this.edition,this.platform);
     this.active=(async()=>{try{
       if(!await verifiedFile(this.file,this.state.update.asset))throw Error('다운로드 이후 파일이 변경되었습니다. 다시 다운로드하세요.');
       this.state.status='installing';const started=await this.install({file:this.file,update:structuredClone(this.state.update),folder:this.folder});

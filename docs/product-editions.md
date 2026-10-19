@@ -30,7 +30,7 @@ npm run desktop:edu
 npm run desktop:indust
 ```
 
-두 빌드는 `dist-edu`와 `dist-indust`에 따로 생성되므로 다른 버전의 결과를 지우지 않습니다. 데스크톱은 renderer의 product ID를 확인하며 다른 버전의 화면을 이름만 바꿔 열지 않습니다. 현재 릴리스 v0.27.0의 설치 파일은 공통판입니다. 새 Edu/Industry 전용 설치 파일은 이번 작업에서 발행하지 않았습니다. Edu 업데이트 기능은 기존 Industry 설치 파일을 받거나 적용하지 않습니다.
+두 빌드는 `dist-edu`와 `dist-indust`에 따로 생성되므로 다른 버전의 결과를 지우지 않습니다. 데스크톱은 renderer의 product ID를 확인하며 다른 버전의 화면을 이름만 바꿔 열지 않습니다. 공개 전용 설치 파일과 소스 revision은 다운로드 사이트의 `edition-downloads.json`과 각 빌드 영수증을 기준으로 확인합니다. v0.29부터 두 버전의 자동 확인·다운로드·설정·캐시·설치 경로를 분리하며, 다른 버전이나 과거 공통 설치 파일로 교체하지 않습니다. v0.28 이하에서는 새 updater가 포함된 전용 설치판을 한 번 직접 설치해야 합니다. 자세한 정책은 [에디션별 업데이트](edition-updates.md)를 확인하세요.
 
 ## 교육용 실습
 
