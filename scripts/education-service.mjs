@@ -6,15 +6,16 @@ import {workerRpc} from './runtime.mjs';
 import {getProductEdition} from './edition-workspace.mjs';
 import {runtimeIdentity} from './native-worker.mjs';
 import {inverterLesson,loadFromFemtoFarads,metricsFromRun,compareTrials} from '../packages/education/src/inverter.ts';
+import {summarizeLearning} from '../packages/education/src/learning-dashboard.ts';
 const root=fileURLToPath(new URL('../',import.meta.url)),uuid=/^[a-f0-9-]{36}$/,pid=/^[a-f0-9]{32}$/;
-const methods=new Set(['learning.list','learning.create','learning.open','learning.change','learning.run','learning.refresh','learning.save','learning.observe']);
+const methods=new Set(['learning.list','learning.dashboard','learning.create','learning.open','learning.change','learning.run','learning.refresh','learning.save','learning.observe']);
 const circuitHash=project=>createHash('sha256').update(JSON.stringify({schematic:project.schematic,ports:project.ports,pdk_id:project.pdk_id})).digest('hex');
 
 function strict(params,keys){if(!params||Array.isArray(params)||Object.keys(params).some(k=>!keys.includes(k)))throw Error('지원하지 않는 실습 입력입니다.');}
 export async function educationRpc(config,method,params={},options={}){
  try{return {ok:true,result:await execute(config,method,params,options)};}catch(e){return {ok:false,error:{code:e.code||'LEARNING_ERROR',message:e.message}};}
 }
-async function execute(config,method,params,{invoke=workerRpc,identity=runtimeIdentity,edition=getProductEdition({root}).edition}={}){
+async function execute(config,method,params,{invoke=workerRpc,identity=runtimeIdentity,edition=getProductEdition({root}).edition,dashboardTimeoutMs=5000}={}){
  if(edition!=='edu')throw Error('Resistor Edu 작업 공간에서만 실습 기록을 변경할 수 있습니다.');
  if(!methods.has(method))throw Error('지원하지 않는 실습 작업입니다.');
  const directory=path.join(config.workspace,'.runtime/education');await mkdir(directory,{recursive:true});
@@ -22,9 +23,24 @@ async function execute(config,method,params,{invoke=workerRpc,identity=runtimeId
  const context=async(project,doctor)=>{let instance=null;try{instance=await identity(config);}catch{}return {schema_version:1,edition:'edu',product_id:'resistor.edu',project_id:project.id,data_revision:project.revision,engine:{id:instance?.runtime_kind||doctor.runner||null,code_sha256:instance?.engine_code_sha256||null,tool_versions:Object.fromEntries(doctor.tools.map(t=>[t.name,t.version||null]))},process:{id:project.pdk_id,version:doctor.pdk.version||null,model_scope:'public SKY130 nfet_01v8 / pfet_01v8_hvt · supported application subset'}};};
  const save=async record=>{record.updated_at=new Date().toISOString();record.version++;const temporary=path.join(directory,record.id+'.'+randomUUID()+'.tmp');await writeFile(temporary,JSON.stringify(record,null,2)+'\n',{flag:'wx',mode:0o600});await rename(temporary,path.join(directory,record.id+'.json'));};
  const withLock=async(id,fn)=>{if(typeof id!=='string'||!uuid.test(id)&&!/^create-[a-f0-9-]{36}$/.test(id))throw Error('Invalid lesson ID');const file=path.join(directory,id+'.lock');let lock;try{lock=await open(file,'wx');}catch(e){if(e.code==='EEXIST')throw Object.assign(Error('이 실습 기록을 저장 중입니다. 잠시 후 다시 시도하세요.'),{code:'LEARNING_BUSY'});throw e;}try{return await fn();}finally{await lock.close();await unlink(file);}};
- const get=async id=>{if(typeof id!=='string'||!uuid.test(id))throw Error('실습 ID가 올바르지 않습니다.');const record=JSON.parse(await readFile(path.join(directory,id+'.json'),'utf8'));if(record.schema_version!==1||record.edition!=='edu'||record.course_id!==inverterLesson.id||!pid.test(record.project_id))throw Error('이 버전이 지원하는 Edu 실습 기록이 아닙니다.');return record;};
+ const get=async id=>{if(typeof id!=='string'||!uuid.test(id))throw Error('실습 ID가 올바르지 않습니다.');const record=JSON.parse(await readFile(path.join(directory,id+'.json'),'utf8'));if(record.schema_version!==1||record.edition!=='edu'||record.course_id!==inverterLesson.id||record.id!==id||!Array.isArray(record.trials)||!record.student||!record.context||typeof record.updated_at!=='string'||!pid.test(record.project_id))throw Error('이 버전이 지원하는 Edu 실습 기록이 아닙니다.');return record;};
  const view=async record=>{const project=await api('project.snapshot',{project_id:record.project_id}),scene=await api('view.get_scene',{project_id:project.id,max_shapes:2000}),doctor=await api('toolchain.doctor');const ctx=await context(project,doctor);const visibleRecord={...record,trials:record.trials.map(t=>{const run=project.runs.find(r=>r.id===t.run_id&&r.project_id===t.project_id&&r.revision===t.revision);return {...t,freshness:run?.freshness??t.freshness??'stale'};})};return {schema_version:1,edition:'edu',project_id:project.id,data_revision:project.revision,context:ctx,record:visibleRecord,project:{...project,edition:'edu',product_context:ctx},scene,doctor,comparison:compareTrials(visibleRecord,project.revision),definition:inverterLesson,stack:{representation:'layer_extrusion',z_scale:1,physical_process_simulation:false,layers:scene.layers},verification:Object.fromEntries(['drc','lvs','pex'].map(kind=>{const run=[...project.runs].reverse().find(r=>r.kind===kind),needed=kind==='lvs'?['magic','netgen']:['magic'],missing=needed.filter(name=>!doctor.tools.find(t=>t.name.toLowerCase()===name)?.available);return [kind,{run_id:run?.id??null,revision:run?.revision??null,execution_status:run?.execution_status??(missing.length?'unavailable':'not_run'),analysis_result:run?.analysis_result??'unknown',freshness:run?.freshness??null,reason:missing.length?'미설치 도구: '+missing.join(', '):'실제 별도 job 결과만 판정합니다.'}];}))};};
- if(method==='learning.list'){strict(params,[]);const records=[];for(const name of await readdir(directory)){if(!/^[a-f0-9-]{36}\.json$/.test(name))continue;const r=await get(name.slice(0,-5));records.push({id:r.id,project_id:r.project_id,course_id:r.course_id,updated_at:r.updated_at,version:r.version,revision:r.context.data_revision,submitted:!!(r.student.saved_at||r.student.submitted_at)});}return {schema_version:1,edition:'edu',records:records.sort((a,b)=>b.updated_at.localeCompare(a.updated_at))};}
+ const readRecords=async()=>{const records=[],warnings=[];for(const name of await readdir(directory)){if(!/^[a-f0-9-]{36}\.json$/.test(name))continue;try{records.push(await get(name.slice(0,-5)));}catch{warnings.push({lesson_id:name.slice(0,-5),reason:'저장 기록 형식을 읽지 못했습니다. 원본 파일은 보존했습니다.'});}}return {records:records.sort((a,b)=>String(b.updated_at).localeCompare(String(a.updated_at))),warnings};};
+ if(method==='learning.list'){strict(params,[]);const {records,warnings}=await readRecords();return {schema_version:1,edition:'edu',records:records.map(r=>({id:r.id,project_id:r.project_id,course_id:r.course_id,updated_at:r.updated_at,version:r.version,revision:r.context.data_revision,purpose:r.purpose||'unspecified',submitted:!!(r.student.saved_at||r.student.submitted_at)})),warnings};}
+ if(method==='learning.dashboard'){
+  strict(params,['include_qa','offset','limit']);const {include_qa=false,offset=0,limit=20}=params;
+  if(typeof include_qa!=='boolean'||!Number.isSafeInteger(offset)||offset<0||offset>100000||!Number.isSafeInteger(limit)||limit<1||limit>50)throw Error('대시보드 조회 범위가 올바르지 않습니다.');
+  const {records,warnings}=await readRecords(),visible=records.filter(r=>include_qa||r.purpose!=='qa'),page=visible.slice(offset,offset+limit),snapshots=new Map(),deadline=Date.now()+dashboardTimeoutMs;
+  const bounded=async(fn)=>{let timer;try{const remaining=deadline-Date.now();if(remaining<=0)throw Error('엔진 조회 시간이 초과되었습니다. 다시 연결하세요.');return await Promise.race([fn(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('엔진 조회 시간이 초과되었습니다. 다시 연결하세요.')),remaining);})]);}finally{clearTimeout(timer);}};
+  const tools=page.length?bounded(()=>api('toolchain.doctor')).catch(()=>null):Promise.resolve(null);
+  const ids=[...new Set(page.map(r=>r.project_id))];
+  for(let i=0;i<ids.length;i+=4)await Promise.all(ids.slice(i,i+4).map(async id=>{
+   try{const project=await bounded(()=>api('project.snapshot',{project_id:id}));snapshots.set(id,{project,reason:''});}
+   catch(e){snapshots.set(id,{project:null,reason:e.message||'엔진에 연결할 수 없습니다.'});}
+  }));
+  const doctor=await tools,summaries=[];for(const record of page)try{const {project,reason}=snapshots.get(record.project_id);summaries.push(summarizeLearning(record,project,reason,doctor));}catch{warnings.push({lesson_id:record.id,reason:'실습 요약을 읽지 못했습니다. 원본 기록은 보존했습니다.'});}
+  return {schema_version:1,edition:'edu',product_id:'resistor.edu',checked_at:new Date().toISOString(),records:summaries,warnings,total:visible.length,offset,limit,has_more:offset+limit<visible.length,qa_hidden:records.filter(r=>r.purpose==='qa').length,read_only:true};
+ }
  if(method==='learning.create'){
   strict(params,['command_id','source_project_id','purpose']);if(params.purpose!==undefined&&!['practice','qa'].includes(params.purpose))throw Error('Invalid lesson purpose');if(!uuid.test(params.command_id||''))throw Error('실습 생성 command_id가 필요합니다.');if(params.source_project_id&&!pid.test(params.source_project_id))throw Error('원본 프로젝트 ID가 올바르지 않습니다.');
   return withLock('create-'+params.command_id,async()=>{

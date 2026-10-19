@@ -19,3 +19,9 @@ test('published league discovery requires Edu schema, stable identity and bounde
  assert.equal(validateLeagueConfiguration(c).identity_namespace,c.identity_namespace);
  for(const patch of [{schema_version:2},{edition:'indust'},{endpoint:'http://127.0.0.1/api/league'},{endpoint:'https://user:password@league.example/api/league'},{endpoint:'https://league.example/rpc'},{identity_namespace:'bad / value'}])assert.throws(()=>validateLeagueConfiguration({...c,...patch}));
 });
+
+test('project dashboard deep links select one lesson and survive reload, resume and step changes',()=>{
+ const lessonId='2e053569-8076-40dc-8016-7056dbbc2c61';assert.deepEqual(readEduRoute('#projects'),{mode:'projects'});
+ for(let step=1;step<=7;step++){const r={mode:'design' as const,step,lessonId};assert.deepEqual(readEduRoute(eduHash(r)),r);assert(readEduResume({schema_version:1,edition:'edu',hash:eduHash(r),updated_at:'2026-10-19T00:00:00Z'}));}
+ for(const id of ['../../outside','a'.repeat(36),'bad','2e053569-8076-40dc-8016-7056dbbc2c61/extra'])assert.deepEqual(readEduRoute('#design/2/lesson/'+id),{mode:'home'});
+});
