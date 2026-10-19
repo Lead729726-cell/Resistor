@@ -12,6 +12,7 @@ import {demoDefinitions,validateCourse,buildCourseKit,sha} from './course-kit.mj
 import {createCourseServer} from './course-server.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+if(process.env.RESISTOR_EDITION&&process.env.RESISTOR_EDITION!=='indust')throw Error('This private filming kit targets Resistor Indust. Keep Edu in its separate workspace.');
 const command=process.argv[2]||'prepare';
 const base=path.resolve(root,process.argv.find(a=>a.startsWith('--base='))?.slice(7)||'teaching-private/inflearn-resistor');
 if(!base.startsWith(path.join(root,'teaching-private')+path.sep))throw Error('Use a private directory below teaching-private/.');
@@ -23,6 +24,9 @@ const course=validateCourse(await json(path.join(base,'course.json')));
 const stateFile=path.join(base,'preparation-state.json'),readyFile=path.join(base,'demo-readiness.json');
 let started=false,vite,server;
 await mkdir(path.join(workspace,'.runtime'),{recursive:true});
+const marker=path.join(workspace,'.runtime/product-context.json');
+if(await exists(marker)){const context=await json(marker);if(context.product_id!=='resistor.indust'||context.edition!=='indust')throw Error('This course workspace belongs to a different edition.');}
+else await save(marker,{schema_version:1,product_id:'resistor.indust',edition:'indust',workspace});
 if(!await exists(path.join(workspace,'.runtime/worker.json'))){
   const listener=createServer();await new Promise(r=>listener.listen(0,'127.0.0.1',r));const port=listener.address().port;await new Promise(r=>listener.close(r));
   await save(path.join(workspace,'.runtime/worker.json'),{url:`http://127.0.0.1:${port}`,token:randomUUID()+randomUUID()});
