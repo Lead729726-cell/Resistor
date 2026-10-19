@@ -9,6 +9,7 @@ const documents = ['README.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'SECURITY.md'
 const missing = [];
 documents.push('docs/oscillator-lab.md','examples/oscillator-lab/README.md',...Array.from(tracked).filter(f=>/^examples\/oscillator-lab\/osc_[^/]+\/README\.md$/.test(f)));
 documents.push('docs/literature-update-2026.md');
+documents.push('docs/instructor-course.md');
 documents.push('docs/native-runtime.md','docs/schematic-quickstart.md','docs/gds-schematic-conversion.md','docs/workbench-usability.md');
 documents.push('docs/physical-tools.md');
 documents.push('docs/logic-composition.md','docs/logic-transient.md');

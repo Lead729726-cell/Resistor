@@ -49,7 +49,7 @@ import type {EducationCourse} from './education-courses';
 import './workbench-usability.css';
 import './precision-workbench.css';
 import LectureStudio from './LectureStudio';
-import type {LecturePlan} from './lecture-model';
+import {lectureProjectRequest,requestedLectureProject,lecturePlans,type LecturePlan} from './lecture-model';
 import { applyPdk, parsePdkLayers, type PdkDisplay } from '@mos/importer';
 
 type WorkspaceTab = 'schematic' | 'layout2d' | 'layout3d' | 'simulation';
@@ -194,6 +194,8 @@ function DesignWorkspace({onViewer}:{onViewer:()=>void}) {
       }
       if (remoteClient) { setModal('collaboration'); return; }
       const nextDoctor = await rpc<Doctor>('toolchain.doctor'); if (canceled) return; setDoctor(nextDoctor);
+      const requested=requestedLectureProject(location.search);
+      if(requested){try{const selected=await rpc<Project>('project.open',{project_id:requested});if(!canceled){await load(selected);if(lecturePlans.some(p=>p.id===new URLSearchParams(location.search).get('lecture')))setModal('lecture');}return;}catch{if(!canceled)setNotice('요청한 로컬 프로젝트를 열 수 없어 최근 작업으로 돌아갑니다. 작업 공간과 프로젝트 ID를 확인하세요.');}}
       const last = localStorage.getItem(editionStorageKey('mos.last_project'));
       if (last) { try { const previous = await rpc<Project>('project.open', { project_id: last }); if (!canceled) await load(previous); return; } catch { localStorage.removeItem(editionStorageKey('mos.last_project')); } }
       const initial = await rpc<Project>('project.create', educationMode ? {name:'[Edu] 첫 실습 · 빈 회로',example:'schematic'} : nextDoctor.pdk.available ? { name: 'CMOS inverter', example: 'inverter' } : {name:'새 회로 · 직접 설계',example:'schematic'}); if (!canceled) {await load(initial);if(!nextDoctor.pdk.available)setTab('schematic');}
@@ -360,7 +362,8 @@ function DesignWorkspace({onViewer}:{onViewer:()=>void}) {
     if (collaboration?.room || remoteClient || readOnly || busy.length) throw Error('로컬 편집 가능한 상태에서 새 강의 데모를 만드세요.');
     let created=false;
     await action('create',async()=>{
-      const next=await rpc<Project>(plan.example==='rc_lowpass'?'design.create_template':'project.create',plan.example==='rc_lowpass'?{template_id:'rc_lowpass',name:'[강의] '+plan.title,command_id:crypto.randomUUID()}:{example:plan.example,name:'[강의] '+plan.title});
+      const request=lectureProjectRequest(plan,crypto.randomUUID());
+      const next=await rpc<Project>(request.method,request.params);
       await load(next);setTab(plan.example==='layout'?'layout2d':'schematic');created=true;setNotice('별도 강의 데모를 생성했습니다. 실제 해석은 Simulate로 실행하세요.');
     },true);
     if(!created)throw Error('강의 데모 생성이 완료되지 않았습니다. 도구 연결과 오류를 확인하세요.');

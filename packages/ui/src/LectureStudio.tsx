@@ -7,7 +7,7 @@ import {LectureRecorder,type LectureRecording,type CaptureState} from './lecture
 import './lecture-studio.css';
 
 const KEY=editionStorageKey('resistor.lecture.v1');
-function savedSettings(){try{const p=JSON.parse(localStorage.getItem(KEY)||'{}');return {plan:lecturePlans.some(c=>c.id===p.plan)?p.plan:'rc',notes:typeof p.notes==='string'?p.notes.slice(0,12000):'',large:p.large===true};}catch{return {plan:'rc',notes:'',large:false};}}
+function savedSettings(){try{const p=JSON.parse(localStorage.getItem(KEY)||'{}'),requested=new URLSearchParams(location.search).get('lecture');return {plan:lecturePlans.some(c=>c.id===requested)?requested!:lecturePlans.some(c=>c.id===p.plan)?p.plan:'rc',notes:typeof p.notes==='string'?p.notes.slice(0,12000):'',large:p.large===true};}catch{return {plan:'rc',notes:'',large:false};}}
 function download(data:Blob|string,name:string,type='text/plain;charset=utf-8'){
   const url=URL.createObjectURL(typeof data==='string'?new Blob([data],{type}):data),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);
 }

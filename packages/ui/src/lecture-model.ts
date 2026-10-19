@@ -1,8 +1,10 @@
 import type {Project, Run} from '@mos/contracts';
+import {oscillatorLecturePlans} from './oscillator-lecture-plans';
 
 export type LectureView = 'schematic'|'layout2d'|'layout3d'|'simulation';
 export interface LectureStep {title:string;view:LectureView;minutes:number;action:string;notes:string;observe:string}
-export interface LecturePlan {id:string;title:string;requirements:string;example:'rc_lowpass'|'layout'|'inverter';steps:LectureStep[]}
+export type LectureExample='schematic'|'rc_lowpass'|'layout'|'inverter'|'osc_ring5'|'osc_rc_sensor'|'osc_beat'|'osc_burst';
+export interface LecturePlan {id:string;title:string;requirements:string;example:LectureExample;steps:LectureStep[]}
 export const lecturePlans:LecturePlan[] = [
   {id:'rc',title:'첫 강의 · RC 회로와 실제 신호',requirements:'기본 ngspice · PDK 없이 실행 가능',example:'rc_lowpass',steps:[
     {title:'회로의 목적과 연결',view:'schematic',minutes:2,action:'새 RC 데모를 만들고 IN → R1 → OUT, C1 → VGND 연결을 가리킵니다.',notes:'입력의 빠른 변화가 저항과 커패시터를 거쳐 어떻게 완만해지는지 보겠습니다. 핀과 노드 이름을 먼저 읽어 주세요. IN의 자극과 VGND 기준은 템플릿의 해석 설정으로 연결됩니다.',observe:'화면의 실제 R·C·단위와 해석 조건을 읽습니다. 아직 실행 결과는 없습니다.'},
@@ -26,6 +28,24 @@ export const lecturePlans:LecturePlan[] = [
     {title:'복습·수강생 과제',view:'schematic',minutes:2,action:'부하를 바꾸어 출력 전환을 비교하는 과제를 제시하고 재현 자료를 저장합니다.',notes:'지연을 예상한 뒤 실제 파형으로 비교하게 하세요. 조건과 한계를 함께 적도록 합니다.',observe:'예상값과 측정값을 별도로 기록합니다.'}
   ]}
 ];
+lecturePlans.push(...oscillatorLecturePlans);
+lecturePlans.push({id:'divider',title:'분압기 · 빈 회로에서 동작점까지',requirements:'기본 ngspice · 명시적 전원과 접지 · PDK 불필요',example:'schematic',steps:[
+  {title:'빈 회로와 소자 배치',view:'schematic',minutes:3,action:'현재 준비된 회로를 읽거나 새 빈 데모에서 VDD 전압원과 저항 두 개를 배치합니다.',notes:'전압원 1.8V, 위아래 저항은 각각 10kΩ입니다. 새 데모는 빈 회로이며 직접 배치해야 합니다.',observe:'생성이나 화면 전환은 해석을 실행하지 않습니다.'},
+  {title:'노드와 전압 기준',view:'schematic',minutes:3,action:'VDD+를 VDD, VDD−를 0, Rtop을 VDD→OUT, Rbottom을 OUT→0으로 연결합니다.',notes:'노드 이름이 같은 단자만 연결됩니다. Vout=Vin×Rbottom/(Rtop+Rbottom)=0.9V, I=1.8V/20kΩ=90µA를 예상합니다.',observe:'단위와 핀, 명시적 접지 0을 확인합니다.'},
+  {title:'실제 OP와 비교',view:'simulation',minutes:3,action:'OP를 선택하고 실제 실행 후 OUT과 저항 양단 전압을 읽습니다.',notes:'실행 완료와 분석 판정은 다릅니다. 기준이 없는 일반 회로는 unknown일 수 있습니다. 전류는 실제 해석 항목 또는 해결된 전압과 저항으로 계산한 값을 구분해 설명합니다.',observe:'실제 OUT, 현재 revision, 로그를 읽고 미실행 물리 검증은 그대로 둡니다.'}
+]});
+
+export function lectureProjectRequest(plan:LecturePlan,commandId:string){
+  const templates=new Set<LectureExample>(['rc_lowpass','osc_ring5','osc_rc_sensor','osc_beat','osc_burst']);
+  return templates.has(plan.example)
+    ? {method:'design.create_template' as const,params:{template_id:plan.example,name:'[강의] '+plan.title,command_id:commandId}}
+    : {method:'project.create' as const,params:{example:plan.example,name:'[강의] '+plan.title}};
+}
+
+export function requestedLectureProject(search:string):string|null{
+  const id=new URLSearchParams(search).get('project');
+  return id&&/^[a-f0-9]{32}$/i.test(id)?id:null;
+}
 
 export interface LectureMarker {seconds:number;title:string;project_id:string|null;revision:number|null;view:LectureView}
 export const lectureTime=(seconds:number)=>{const n=Math.max(0,Math.floor(Number.isFinite(seconds)?seconds:0));return [Math.floor(n/3600),Math.floor(n/60)%60,n%60].map(v=>v.toString().padStart(2,'0')).join(':');};

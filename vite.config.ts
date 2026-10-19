@@ -16,8 +16,8 @@ export default defineConfig({
   define:{__RESISTOR_EDITION__:JSON.stringify(edition.edition)},
   base:'./',resolve:{alias:{'@mos/contracts':path.resolve('packages/contracts/src/index.ts'),'@mos/ui':path.resolve('packages/ui/src/index.ts'),'@mos/viewer':path.resolve('packages/viewer/src/index.ts'),'@mos/cloud':path.resolve('packages/cloud/src/index.ts'),'@mos/importer':path.resolve('packages/importer/src/index.ts')}},
   esbuild:{jsx:'automatic'}, build:{outDir:process.env.RESISTOR_BUILD_DIR||'dist',sourcemap:true},server:{host:'127.0.0.1',port:devPort,strictPort:true,cors:false,
-    watch:{ignored:['**/release/**','**/.runtime/**','**/test-results/**','**/docs/evidence/**','**/examples/**']},
-    fs:{deny:['.env','.env.*','*.{crt,pem}','**/.git/**','**/.runtime/**','**/.tools/**','**/release/**']}},
+    watch:{ignored:['**/release/**','**/.runtime/**','**/test-results/**','**/docs/evidence/**','**/examples/**','**/teaching-private/**']},
+    fs:{deny:['.env','.env.*','*.{crt,pem}','**/.git/**','**/.runtime/**','**/.tools/**','**/release/**','**/teaching-private/**']}},
   plugins:[{name:'product-context',generateBundle(){this.emitFile({type:'asset',fileName:'product-context.json',source:JSON.stringify({schema_version:1,product_id:edition.id,edition:edition.edition,name:edition.name})+'\n'});}},{name:'authenticated-local-worker',async configureServer(server){const {prepareEditionWorkspace}=await import(pathToFileURL(path.resolve('scripts/edition-workspace.mjs')).href);const workspace=await prepareEditionWorkspace({edition,workspace:process.env.MOS_WORKSPACE});server.middlewares.use('/api/rpc',async(req,res)=>{
     const origin=req.headers.origin;if(req.method!=='POST'||(origin&&origin!==localOrigin)||req.headers['sec-fetch-site']==='cross-site'){res.writeHead(403);res.end();return;}
     if(!req.headers['content-type']?.startsWith('application/json')){res.writeHead(415);res.end();return;}

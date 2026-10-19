@@ -1,12 +1,21 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {lecturePlans,lectureTime,chapterText,lectureHandout,lectureEvidence} from '../packages/ui/src/lecture-model';
+import {lecturePlans,lectureTime,chapterText,lectureHandout,lectureEvidence,lectureProjectRequest,requestedLectureProject} from '../packages/ui/src/lecture-model';
 import type {Project,Run} from '../packages/contracts/src/index';
 import {LectureRecorder} from '../packages/ui/src/lecture-recorder';
 
 test('lecture plans point at existing public demos and contain actions, limits and presenter notes',()=>{
-  assert.deepEqual(lecturePlans.map(p=>p.example),['rc_lowpass','layout','inverter']);
-  for(const p of lecturePlans){assert(p.requirements);assert.equal(p.steps.length,5);for(const s of p.steps)assert(s.action&&s.notes&&s.observe&&s.minutes>0);const text=lectureHandout(p,'Resistor Indust','내 메모');assert(text.includes('내 메모'));assert(text.includes('강의 단계 이동과 학습 완료는 실제 엔진 실행'));}
+  assert.deepEqual(lecturePlans.slice(0,3).map(p=>p.example),['rc_lowpass','layout','inverter']);
+  assert.deepEqual(lecturePlans.slice(3,7).map(p=>p.example),['osc_ring5','osc_rc_sensor','osc_beat','osc_burst']);
+  assert.equal(lecturePlans[7].example,'schematic');
+  for(const p of lecturePlans){assert(p.requirements);assert(p.steps.length>=3&&p.steps.length<=10);for(const s of p.steps)assert(s.action&&s.notes&&s.observe&&s.minutes>0);const text=lectureHandout(p,'Resistor Indust','내 메모');assert(text.includes('내 메모'));assert(text.includes('강의 단계 이동과 학습 완료는 실제 엔진 실행'));}
+});
+test('lecture demos route through their actual engine API without auto simulation',()=>{
+  for(const p of lecturePlans){const r=lectureProjectRequest(p,'test-command');assert.equal(r.method,['layout','inverter','schematic'].includes(p.example)?'project.create':'design.create_template');assert(!('analysis' in r.params));if(r.method==='design.create_template')assert.equal(r.params.command_id,'test-command');}
+});
+test('project links accept only a bounded local project ID',()=>{
+  const id='a'.repeat(32);assert.equal(requestedLectureProject('?project='+id),id);
+  for(const query of ['?project=../outside','?project=https://example.com','?project='+id.repeat(4),'?project=',''])assert.equal(requestedLectureProject(query),null);
 });
 test('chapter timestamps roll over hours and strip injected newlines',()=>{
   assert.equal(lectureTime(427.367),'00:07:07');assert.equal(lectureTime(3601),'01:00:01');assert.equal(lectureTime(NaN),'00:00:00');assert.equal(lectureTime(-1),'00:00:00');
