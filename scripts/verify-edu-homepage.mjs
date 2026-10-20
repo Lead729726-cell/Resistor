@@ -23,6 +23,7 @@ for(const base of bases){
  assert.deepEqual(remoteEditions,editions);assert.deepEqual(remoteCommon.files,common.files);
  checked(base+' all 10 dedicated and 4 historical native metadata preserved',true);
  checked(base+' source / installer distinction',updates.native_installer_rebuilt===false&&updates.engine_executed_on_website===false&&guide.includes(updates.source_revision.slice(0,12)));
+ checked(base+' guide identifies published installer source',updates.published_native_installers?.matches_guide_source===editions.editions.find(e=>e.edition==='edu').native_installer.files.every(f=>f.source_revision===updates.source_revision)&&updates.native_installer_rebuilt_scope==='this-static-guide-generator-does-not-build-native-apps');
  const routes=['/edu','/tutorial/edu','/tutorial/edu/','/download/edu/','/download/industry/','/tutorial/library/','/pdk-links.html','/tutorial/oscillators/'];
  for(const route of routes){const res=await get(base+route);checked(base+route+' is public',res.status===200);await res.body?.cancel();}
  for(const file of ['edu-guide.mjs','edu-guide.css','edu-assets/inverter-desktop.png','edu-assets/block-preview.png','edu-assets/quiz-mobile.png']){
