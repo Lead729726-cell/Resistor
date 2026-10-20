@@ -1,0 +1,577 @@
+{
+  "schema_version": 1,
+  "id": "2184bb89ace741e8a59fa52eb1956fda",
+  "name": "Hardware QA · c",
+  "pdk_id": "sky130A",
+  "revision": 2,
+  "cell": "schematic",
+  "dbu_um": 0.001,
+  "grid_dbu": 5,
+  "source": "pdk",
+  "example": "schematic",
+  "layers": [],
+  "schematic": {
+    "ports": [],
+    "devices": [],
+    "wires": [],
+    "junctions": [],
+    "cells": {},
+    "connectivity_mode": "explicit"
+  },
+  "testbench": {
+    "analysis": "op",
+    "corner": "tt",
+    "temperature_C": 27.0,
+    "supply_V": 1.8,
+    "duration_s": 3e-08,
+    "step_s": 2e-11,
+    "load_F": 5e-15,
+    "vds_V": 1.8,
+    "vbs_V": 0.0
+  },
+  "runs": [
+    {
+      "id": "5d84feab86ba4ce49c3ad458d7250454",
+      "project_id": "2184bb89ace741e8a59fa52eb1956fda",
+      "kind": "hdl-simulate",
+      "revision": 2,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "input_signature": "4e745a072d879c5978b9c4e2b3703ce26a6e1e9d5b47276df7062dc1d39140f3",
+      "artifacts": {
+        "hdl_report": "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/5d84feab86ba4ce49c3ad458d7250454/hdl-report.json",
+        "vcd": "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/5d84feab86ba4ce49c3ad458d7250454/digital.vcd",
+        "stdout": "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/5d84feab86ba4ce49c3ad458d7250454/stdout.log"
+      },
+      "manifest_path": "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/5d84feab86ba4ce49c3ad458d7250454/manifest.json",
+      "started_at": "2026-10-20T05:26:47.031595+00:00",
+      "tool": "Yosys + C uint32 frontend",
+      "measurements": {
+        "vectors": 68,
+        "assertions": 68,
+        "c_oracle_checked": true,
+        "scope": "Actual source-level/native-translated digital vectors, not transistor timing or physical signoff."
+      },
+      "message": "Actual digital vector execution completed; 68 output assertions.",
+      "ended_at": "2026-10-20T05:26:48.253781+00:00",
+      "elapsed_s": 1.2234432540135458
+    }
+  ],
+  "ports": [],
+  "redo_stack": [],
+  "undo_stack": [
+    1
+  ],
+  "next_revision": 3,
+  "layout_parameter_policy": "manual_layout",
+  "user_cells": [
+    "schematic"
+  ],
+  "edition": "indust",
+  "project_id": "2184bb89ace741e8a59fa52eb1956fda",
+  "product_id": "resistor.indust",
+  "engine": {
+    "name": "KLayout",
+    "version": "0.30.5"
+  },
+  "process": {
+    "id": "sky130A",
+    "source": "pdk"
+  },
+  "hdl_design": {
+    "top": "c_alu",
+    "files": [
+      {
+        "name": "c_alu.c",
+        "language": "c",
+        "text": "#include <stdint.h>\nuint32_t c_alu(uint32_t a, uint32_t b, uint32_t sel) {\n  uint32_t y = (a + b) & 15u;\n  if (sel != 0u) y = (a ^ b) & 15u;\n  return y;\n}\n"
+      }
+    ],
+    "step_ns": 10,
+    "vectors": [
+      {
+        "inputs": {
+          "a": "15",
+          "b": "2",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "2",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4294967295",
+          "b": "1",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "5",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "920370032",
+          "b": "3761641487",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2252023330",
+          "b": "1475571481",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2340457892",
+          "b": "1600748723",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1240767094",
+          "b": "2297155421",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1696368920",
+          "b": "551123351",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1839942154",
+          "b": "1218163169",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1412407756",
+          "b": "1245541051",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2978433246",
+          "b": "1157896869",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4200532928",
+          "b": "4155575327",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2319969010",
+          "b": "3679735209",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2351512308",
+          "b": "2312645059",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1897382982",
+          "b": "2645413613",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3017401192",
+          "b": "1682108327",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1721805018",
+          "b": "4079510129",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1237186844",
+          "b": "1163723",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1029680302",
+          "b": "1444285493",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2509746192",
+          "b": "1993950255",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2134451138",
+          "b": "4102492217",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "223509572",
+          "b": "3922090707",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "38576662",
+          "b": "3071144573",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3304526264",
+          "b": "1761749431",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2164849578",
+          "b": "4056119041",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "64971884",
+          "b": "1062606043",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3380626558",
+          "b": "1133158853",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3005917280",
+          "b": "3322921023",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1476120722",
+          "b": "1737799369",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2574340500",
+          "b": "623185891",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1892692966",
+          "b": "4247075341",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2545488904",
+          "b": "2744657863",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "225526394",
+          "b": "2308304785",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1537795004",
+          "b": "1813736427",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "818286670",
+          "b": "949672789",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "989656240",
+          "b": "3925180495",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1992094050",
+          "b": "516309337",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "742046436",
+          "b": "572868851",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4078926262",
+          "b": "38577565",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "279243352",
+          "b": "2898651607",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3014032714",
+          "b": "3993553953",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3278862092",
+          "b": "850577147",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2035159070",
+          "b": "314554597",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2721289472",
+          "b": "2473296991",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2095679026",
+          "b": "3131355113",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2191767604",
+          "b": "389547523",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1391948678",
+          "b": "1394423085",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1233097896",
+          "b": "1368158183",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1119202330",
+          "b": "3502574769",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2529697372",
+          "b": "2544707083",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2759148526",
+          "b": "4054989429",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "993233232",
+          "b": "798149743",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "456036098",
+          "b": "569967225",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1793149316",
+          "b": "2601404179",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3176472918",
+          "b": "107997373",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3779990264",
+          "b": "2737617399",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2162937578",
+          "b": "4055085377",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1787287980",
+          "b": "131827995",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2128128958",
+          "b": "3345702917",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2241974688",
+          "b": "4157364351",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3782806482",
+          "b": "298596617",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "342388436",
+          "b": "3029928995",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2457174822",
+          "b": "1297989709",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1280664904",
+          "b": "120047623",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4225099194",
+          "b": "2935863761",
+          "sel": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1556326652",
+          "b": "1750003755",
+          "sel": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1884637070",
+          "b": "3894684053",
+          "sel": "1"
+        }
+      }
+    ],
+    "chip_limits": {
+      "width_um": 1000,
+      "height_um": 1000,
+      "max_area_um2": 1000000,
+      "edge_um": 10
+    }
+  }
+}

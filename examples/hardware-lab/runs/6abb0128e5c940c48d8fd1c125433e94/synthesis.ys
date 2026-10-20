@@ -1,0 +1,11 @@
+read_verilog -sv rom4.v
+hierarchy -check -top rom4
+proc
+flatten
+synth -top rom4 -noabc
+dffunmap
+abc -g simple
+clean
+check -assert
+write_json synthesized.json
+write_verilog -noattr gates.v

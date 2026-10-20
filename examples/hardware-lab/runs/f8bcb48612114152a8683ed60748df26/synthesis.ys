@@ -1,0 +1,12 @@
+read_verilog -sv vhdl-generated.v
+read_verilog -sv mixed_top.sv
+hierarchy -check -top mixed_top
+proc
+flatten
+synth -top mixed_top -noabc
+dffunmap
+abc -g simple
+clean
+check -assert
+write_json synthesized.json
+write_verilog -noattr gates.v

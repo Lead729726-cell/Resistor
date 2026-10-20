@@ -11,6 +11,7 @@ for (const method of ['database.catalog','database.list_sources','database.regis
 for (const method of ['starter.catalog','starter.create','pvt.create','pvt.start','pvt.sources','pvt.status','pvt.list','pvt.cancel','design.catalog','design.create_template','design.routing_rules','design.route_preview','design.route_search','design.route_apply','design.connectivity','design.check']) METHODS.add(method);
 export const IMAGE = 'hpretl/iic-osic-tools@sha256:92961478ad3c4f508efb42d9ccdba12ab262eb42a14926d2bd49862230ba8521';
 for (const method of ['digital.catalog','digital.create','hierarchy.sources','hierarchy.preview','hierarchy.apply']) METHODS.add(method);
+for (const method of ['hdl.catalog','hdl.create','hdl.save','hdl.run','hdl.result','hdl.apply','hdl.analog_test','hdl.artifact','hdl.new_assembly']) METHODS.add(method);
 for (const method of ['design.floorplan_preview','design.floorplan_apply']) METHODS.add(method);
 for (const method of ['conversion.catalog','conversion.reverse','conversion.forward','conversion.result','conversion.apply']) METHODS.add(method);
 for (const method of ['review.catalog','review.create','review.list','review.status','review.scene','review.add_constraint','review.update_constraint','review.remove_constraint','review.evaluate','review.save_report','review.open_report']) METHODS.add(method);

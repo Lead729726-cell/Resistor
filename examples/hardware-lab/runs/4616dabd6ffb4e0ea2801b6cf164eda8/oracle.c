@@ -1,0 +1,80 @@
+typedef unsigned int uint32_t;
+
+uint32_t c_alu(uint32_t a, uint32_t b, uint32_t sel) {
+  uint32_t y = (a + b) & 15u;
+  if (sel != 0u) y = (a ^ b) & 15u;
+  return y;
+}
+
+#include <stdio.h>
+_Static_assert(sizeof(unsigned int)==4,"Host oracle requires 32-bit unsigned int");
+int main(void){
+printf("%u\n", (unsigned)c_alu(15u,2u,0u));
+printf("%u\n", (unsigned)c_alu(15u,2u,1u));
+printf("%u\n", (unsigned)c_alu(4294967295u,1u,0u));
+printf("%u\n", (unsigned)c_alu(10u,5u,1u));
+printf("%u\n", (unsigned)c_alu(920370032u,3761641487u,0u));
+printf("%u\n", (unsigned)c_alu(2252023330u,1475571481u,1u));
+printf("%u\n", (unsigned)c_alu(2340457892u,1600748723u,0u));
+printf("%u\n", (unsigned)c_alu(1240767094u,2297155421u,1u));
+printf("%u\n", (unsigned)c_alu(1696368920u,551123351u,0u));
+printf("%u\n", (unsigned)c_alu(1839942154u,1218163169u,1u));
+printf("%u\n", (unsigned)c_alu(1412407756u,1245541051u,0u));
+printf("%u\n", (unsigned)c_alu(2978433246u,1157896869u,1u));
+printf("%u\n", (unsigned)c_alu(4200532928u,4155575327u,0u));
+printf("%u\n", (unsigned)c_alu(2319969010u,3679735209u,1u));
+printf("%u\n", (unsigned)c_alu(2351512308u,2312645059u,0u));
+printf("%u\n", (unsigned)c_alu(1897382982u,2645413613u,1u));
+printf("%u\n", (unsigned)c_alu(3017401192u,1682108327u,0u));
+printf("%u\n", (unsigned)c_alu(1721805018u,4079510129u,1u));
+printf("%u\n", (unsigned)c_alu(1237186844u,1163723u,0u));
+printf("%u\n", (unsigned)c_alu(1029680302u,1444285493u,1u));
+printf("%u\n", (unsigned)c_alu(2509746192u,1993950255u,0u));
+printf("%u\n", (unsigned)c_alu(2134451138u,4102492217u,1u));
+printf("%u\n", (unsigned)c_alu(223509572u,3922090707u,0u));
+printf("%u\n", (unsigned)c_alu(38576662u,3071144573u,1u));
+printf("%u\n", (unsigned)c_alu(3304526264u,1761749431u,0u));
+printf("%u\n", (unsigned)c_alu(2164849578u,4056119041u,1u));
+printf("%u\n", (unsigned)c_alu(64971884u,1062606043u,0u));
+printf("%u\n", (unsigned)c_alu(3380626558u,1133158853u,1u));
+printf("%u\n", (unsigned)c_alu(3005917280u,3322921023u,0u));
+printf("%u\n", (unsigned)c_alu(1476120722u,1737799369u,1u));
+printf("%u\n", (unsigned)c_alu(2574340500u,623185891u,0u));
+printf("%u\n", (unsigned)c_alu(1892692966u,4247075341u,1u));
+printf("%u\n", (unsigned)c_alu(2545488904u,2744657863u,0u));
+printf("%u\n", (unsigned)c_alu(225526394u,2308304785u,1u));
+printf("%u\n", (unsigned)c_alu(1537795004u,1813736427u,0u));
+printf("%u\n", (unsigned)c_alu(818286670u,949672789u,1u));
+printf("%u\n", (unsigned)c_alu(989656240u,3925180495u,0u));
+printf("%u\n", (unsigned)c_alu(1992094050u,516309337u,1u));
+printf("%u\n", (unsigned)c_alu(742046436u,572868851u,0u));
+printf("%u\n", (unsigned)c_alu(4078926262u,38577565u,1u));
+printf("%u\n", (unsigned)c_alu(279243352u,2898651607u,0u));
+printf("%u\n", (unsigned)c_alu(3014032714u,3993553953u,1u));
+printf("%u\n", (unsigned)c_alu(3278862092u,850577147u,0u));
+printf("%u\n", (unsigned)c_alu(2035159070u,314554597u,1u));
+printf("%u\n", (unsigned)c_alu(2721289472u,2473296991u,0u));
+printf("%u\n", (unsigned)c_alu(2095679026u,3131355113u,1u));
+printf("%u\n", (unsigned)c_alu(2191767604u,389547523u,0u));
+printf("%u\n", (unsigned)c_alu(1391948678u,1394423085u,1u));
+printf("%u\n", (unsigned)c_alu(1233097896u,1368158183u,0u));
+printf("%u\n", (unsigned)c_alu(1119202330u,3502574769u,1u));
+printf("%u\n", (unsigned)c_alu(2529697372u,2544707083u,0u));
+printf("%u\n", (unsigned)c_alu(2759148526u,4054989429u,1u));
+printf("%u\n", (unsigned)c_alu(993233232u,798149743u,0u));
+printf("%u\n", (unsigned)c_alu(456036098u,569967225u,1u));
+printf("%u\n", (unsigned)c_alu(1793149316u,2601404179u,0u));
+printf("%u\n", (unsigned)c_alu(3176472918u,107997373u,1u));
+printf("%u\n", (unsigned)c_alu(3779990264u,2737617399u,0u));
+printf("%u\n", (unsigned)c_alu(2162937578u,4055085377u,1u));
+printf("%u\n", (unsigned)c_alu(1787287980u,131827995u,0u));
+printf("%u\n", (unsigned)c_alu(2128128958u,3345702917u,1u));
+printf("%u\n", (unsigned)c_alu(2241974688u,4157364351u,0u));
+printf("%u\n", (unsigned)c_alu(3782806482u,298596617u,1u));
+printf("%u\n", (unsigned)c_alu(342388436u,3029928995u,0u));
+printf("%u\n", (unsigned)c_alu(2457174822u,1297989709u,1u));
+printf("%u\n", (unsigned)c_alu(1280664904u,120047623u,0u));
+printf("%u\n", (unsigned)c_alu(4225099194u,2935863761u,1u));
+printf("%u\n", (unsigned)c_alu(1556326652u,1750003755u,0u));
+printf("%u\n", (unsigned)c_alu(1884637070u,3894684053u,1u));
+return 0;}

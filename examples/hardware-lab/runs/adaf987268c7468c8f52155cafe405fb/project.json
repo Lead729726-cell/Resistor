@@ -1,0 +1,2405 @@
+{
+  "schema_version": 1,
+  "id": "afb22c9ecff1448fa25a4545cf512b83",
+  "name": "Hardware QA · vhdl",
+  "pdk_id": "sky130A",
+  "revision": 2,
+  "cell": "schematic",
+  "dbu_um": 0.001,
+  "grid_dbu": 5,
+  "source": "pdk",
+  "example": "schematic",
+  "layers": [],
+  "schematic": {
+    "ports": [],
+    "devices": [],
+    "wires": [],
+    "junctions": [],
+    "cells": {},
+    "connectivity_mode": "explicit"
+  },
+  "testbench": {
+    "analysis": "op",
+    "corner": "tt",
+    "temperature_C": 27.0,
+    "supply_V": 1.8,
+    "duration_s": 3e-08,
+    "step_s": 2e-11,
+    "load_F": 5e-15,
+    "vds_V": 1.8,
+    "vbs_V": 0.0
+  },
+  "runs": [
+    {
+      "id": "9f00fc5dab2a4a16afc7d24c220e4dcd",
+      "project_id": "afb22c9ecff1448fa25a4545cf512b83",
+      "kind": "hdl-simulate",
+      "revision": 2,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "input_signature": "4e745a072d879c5978b9c4e2b3703ce26a6e1e9d5b47276df7062dc1d39140f3",
+      "artifacts": {
+        "hdl_report": "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/9f00fc5dab2a4a16afc7d24c220e4dcd/hdl-report.json",
+        "vcd": "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/9f00fc5dab2a4a16afc7d24c220e4dcd/digital.vcd",
+        "stdout": "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/9f00fc5dab2a4a16afc7d24c220e4dcd/stdout.log"
+      },
+      "manifest_path": "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/9f00fc5dab2a4a16afc7d24c220e4dcd/manifest.json",
+      "started_at": "2026-10-20T05:26:43.813762+00:00",
+      "tool": "Yosys + GHDL",
+      "measurements": {
+        "vectors": 256,
+        "assertions": 256,
+        "c_oracle_checked": false,
+        "scope": "Actual source-level/native-translated digital vectors, not transistor timing or physical signoff."
+      },
+      "message": "Actual digital vector execution completed; 256 output assertions.",
+      "ended_at": "2026-10-20T05:26:44.915235+00:00",
+      "elapsed_s": 1.1027508899569511
+    }
+  ],
+  "ports": [],
+  "redo_stack": [],
+  "undo_stack": [
+    1
+  ],
+  "next_revision": 3,
+  "layout_parameter_policy": "manual_layout",
+  "user_cells": [
+    "schematic"
+  ],
+  "edition": "indust",
+  "project_id": "afb22c9ecff1448fa25a4545cf512b83",
+  "product_id": "resistor.indust",
+  "engine": {
+    "name": "KLayout",
+    "version": "0.30.5"
+  },
+  "process": {
+    "id": "sky130A",
+    "source": "pdk"
+  },
+  "hdl_design": {
+    "top": "vhdl_adder",
+    "files": [
+      {
+        "name": "vhdl_adder.vhd",
+        "language": "vhdl",
+        "text": "library ieee;\nuse ieee.std_logic_1164.all;\nuse ieee.numeric_std.all;\nentity vhdl_adder is\n  port(a,b: in std_logic_vector(3 downto 0); sum: out std_logic_vector(4 downto 0));\nend entity;\narchitecture rtl of vhdl_adder is begin\n  sum <= std_logic_vector(resize(unsigned(a),5) + resize(unsigned(b),5));\nend architecture;\n"
+      }
+    ],
+    "step_ns": 10,
+    "vectors": [
+      {
+        "inputs": {
+          "a": "0",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "2"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "3"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "4"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "5"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "6"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "7"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "8"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "9"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "10"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "11"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "0"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "2"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "3"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "4"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "5"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "6"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "7"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "8"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "9"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "10"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "11"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "1"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "2"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "3"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "4"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "5"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "6"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "7"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "8"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "9"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "10"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "11"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "2"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "3"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "4"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "5"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "6"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "7"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "8"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "9"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "10"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "11"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "3"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "4"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "5"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "6"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "7"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "8"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "9"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "10"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "11"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "4"
+        },
+        "expect": {
+          "sum": "19"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "5"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "6"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "7"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "8"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "9"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "10"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "11"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "19"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "5"
+        },
+        "expect": {
+          "sum": "20"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "6"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "7"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "8"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "9"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "10"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "11"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "19"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "20"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "6"
+        },
+        "expect": {
+          "sum": "21"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "7"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "8"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "9"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "10"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "11"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "19"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "20"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "21"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "7"
+        },
+        "expect": {
+          "sum": "22"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "8"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "9"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "10"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "11"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "19"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "20"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "21"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "22"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "8"
+        },
+        "expect": {
+          "sum": "23"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "9"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "10"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "11"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "19"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "20"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "21"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "22"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "23"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "9"
+        },
+        "expect": {
+          "sum": "24"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "10"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "11"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "19"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "20"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "21"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "22"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "23"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "24"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "10"
+        },
+        "expect": {
+          "sum": "25"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "11"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "19"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "20"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "21"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "22"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "23"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "24"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "25"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "11"
+        },
+        "expect": {
+          "sum": "26"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "12"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "19"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "20"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "21"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "22"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "23"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "24"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "25"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "26"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "12"
+        },
+        "expect": {
+          "sum": "27"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "13"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "19"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "20"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "21"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "22"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "23"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "24"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "25"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "26"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "27"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "13"
+        },
+        "expect": {
+          "sum": "28"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "14"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "19"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "20"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "21"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "22"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "23"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "24"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "25"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "26"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "27"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "28"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "14"
+        },
+        "expect": {
+          "sum": "29"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "15"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "16"
+        }
+      },
+      {
+        "inputs": {
+          "a": "2",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "17"
+        }
+      },
+      {
+        "inputs": {
+          "a": "3",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "18"
+        }
+      },
+      {
+        "inputs": {
+          "a": "4",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "19"
+        }
+      },
+      {
+        "inputs": {
+          "a": "5",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "20"
+        }
+      },
+      {
+        "inputs": {
+          "a": "6",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "21"
+        }
+      },
+      {
+        "inputs": {
+          "a": "7",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "22"
+        }
+      },
+      {
+        "inputs": {
+          "a": "8",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "23"
+        }
+      },
+      {
+        "inputs": {
+          "a": "9",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "24"
+        }
+      },
+      {
+        "inputs": {
+          "a": "10",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "25"
+        }
+      },
+      {
+        "inputs": {
+          "a": "11",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "26"
+        }
+      },
+      {
+        "inputs": {
+          "a": "12",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "27"
+        }
+      },
+      {
+        "inputs": {
+          "a": "13",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "28"
+        }
+      },
+      {
+        "inputs": {
+          "a": "14",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "29"
+        }
+      },
+      {
+        "inputs": {
+          "a": "15",
+          "b": "15"
+        },
+        "expect": {
+          "sum": "30"
+        }
+      }
+    ],
+    "chip_limits": {
+      "width_um": 1000,
+      "height_um": 1000,
+      "max_area_um2": 1000000,
+      "edge_um": 10
+    }
+  }
+}

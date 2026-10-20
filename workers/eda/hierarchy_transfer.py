@@ -29,7 +29,17 @@ def name(value):
     if not isinstance(value,str) or not IDENT.fullmatch(value):raise EDAError('INVALID_NAME','Cell/namespace name must be a bounded identifier.')
     return value
 
-def fingerprint(p,layout):return digest({'id':p['id'],'revision':p['revision'],'cell':p['cell'],'ports':p['ports'],'schematic':p['schematic'],'identity':G.identity_hash(layout),'dbu':layout.dbu})
+def hdl_pin_roles(project):
+    """Use recorded compiler directions and the exact scalar mapping, never spelling."""
+    meta=project.get('hdl_implementation') or {};roles={};mapping=meta.get('port_mapping',{})
+    for name,port in meta.get('ports',{}).items():
+        if port.get('direction') not in ('input','output'):return None
+        for bit in mapping.get(name,[]):roles[bit]=port['direction']
+    if not roles:return None
+    roles.update(VPWR='power',VGND='power')
+    return roles if set(roles)==set(project.get('ports',[])) else None
+
+def fingerprint(p,layout):return digest({'id':p['id'],'revision':p['revision'],'cell':p['cell'],'ports':p['ports'],'schematic':p['schematic'],'identity':G.identity_hash(layout),'dbu':layout.dbu,'hdl_design':p.get('hdl_design'),'integration_bindings':p.get('integration_bindings',[])})
 
 def sources(params):
     if set(params)-{'query'}:raise EDAError('INVALID_PARAMETER','Sources accept a search query only.')
@@ -134,6 +144,8 @@ def plan(params):
         old_cells=copy.deepcopy(p['schematic'].get('cells',{}));old_cells[old]=child
         block_name='MAIN';pins={port:port for port in p['ports']}
         p['schematic']={'schema_version':1,'connectivity_mode':'explicit','devices':[{'id':uuid.uuid5(uuid.NAMESPACE_URL,p['id']+parent).hex,'name':block_name,'kind':'block','cell_name':old,'pins':pins,'parameters':{},'x':400,'y':250}],'wires':[],'junctions':[],'cells':old_cells}
+        roles=hdl_pin_roles(p)
+        if roles:p['schematic']['devices'][0]['pin_roles']=roles
         top=layout.create_cell(parent);instance=top.insert(k.CellInstArray(layout.cell(old).cell_index(),k.Trans()));instance.set_property(1,uuid.uuid5(uuid.NAMESPACE_URL,p['id']+parent+'physical').hex)
         # Copy the actual top-level port declarations onto the parent. Mask geometry stays in the child.
         for li in layout.layer_indices():
@@ -182,6 +194,8 @@ def plan(params):
             xy=params.get('schematic_position',[400,250])
             if not isinstance(xy,list) or len(xy)!=2:raise EDAError('INVALID_PARAMETER','Schematic position needs x/y.')
             device={'id':uuid.uuid5(uuid.NAMESPACE_URL,p['id']+namespace+'block').hex,'name':block_name,'kind':'block','cell_name':imported[selected],'pins':{port:pin_map[port] for port in ports},'parameters':{},'x':native.num(xy[0]),'y':native.num(xy[1])}
+            roles=hdl_pin_roles(src) if selected==src['cell'] else None
+            if roles:device['pin_roles']=roles
             native.validate_device(device);target_ir['devices'].append(device)
         if scope!='schematic':
             shape_count(physical_src);copy_tree(src_layout,physical_src,layout,imported,p['id']+namespace)
@@ -193,6 +207,11 @@ def plan(params):
             for value in (bb.left,bb.bottom,bb.right,bb.top):G.coord(str(value))
         if scope=='schematic':warnings.append('Schematic-only copy: current physical layout is unchanged and has no new block geometry.')
         if scope=='layout':warnings.append('Layout-only copy: no schematic block or electrical connections are added.')
+        if src.get('hdl_design') and selected==src['cell']:
+            if len(p.get('integration_bindings',[]))>=128:raise EDAError('INTEGRATION_LIMIT','An assembly supports at most 128 tracked HDL source bindings.')
+            binding={'instance':namespace,'target_cell':target_cell,'source_project':src['id'],'source_revision':src['revision'],'source_cell':selected,'mapped_cell':imported[selected],'scope':scope,'hdl_design':copy.deepcopy(src['hdl_design']),'hdl_implementation':copy.deepcopy(src.get('hdl_implementation')),'pin_mapping':copy.deepcopy(pin_map),'physical_transform':{key:copy.deepcopy(params.get(key)) for key in ('position','rotation','mirror')},'assembly_verification':'not-run'}
+            p['integration_bindings']=p.get('integration_bindings',[])+[binding]
+            warnings.append('HDL sources and the exact source revision are preserved with this instance. Combined electrical simulation and physical inter-block wiring are not inferred.')
     check=native.validate(p['schematic'])
     if not check['valid']:raise EDAError('SCHEMATIC_INVALID','Proposed hierarchy is invalid; nothing was changed.',check)
     shape_count(layout.cell(p['cell']))

@@ -1,0 +1,77 @@
+{
+  "source_hash": "9831d90f768c54afd140023a8d3cff18bf2d4ac9683f22fb5de9cc1e2538854f",
+  "action": "simulate",
+  "ports": {
+    "addr": {
+      "direction": "input",
+      "bits": [
+        2,
+        3
+      ]
+    },
+    "data": {
+      "direction": "output",
+      "bits": [
+        4,
+        5,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3
+      ]
+    }
+  },
+  "traces": [
+    {
+      "name": "data",
+      "width": 8,
+      "events": [
+        [
+          0.0,
+          "11"
+        ],
+        [
+          1e-08,
+          "1010101"
+        ],
+        [
+          2e-08,
+          "10101010"
+        ],
+        [
+          3e-08,
+          "11111111"
+        ]
+      ],
+      "end_s": 4e-08
+    },
+    {
+      "name": "addr",
+      "width": 2,
+      "events": [
+        [
+          0.0,
+          "0"
+        ],
+        [
+          1e-08,
+          "1"
+        ],
+        [
+          2e-08,
+          "10"
+        ],
+        [
+          3e-08,
+          "11"
+        ]
+      ],
+      "end_s": 4e-08
+    }
+  ],
+  "assertions": 4,
+  "verification_scope": "Actual source-level/native-translated digital vectors, not transistor timing or physical signoff.",
+  "manufacturing_signoff": false
+}

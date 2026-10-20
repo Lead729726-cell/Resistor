@@ -1,0 +1,35 @@
+{
+  "top": "rtlil_inv",
+  "files": [
+    {
+      "name": "rtlil_inv.il",
+      "language": "rtlil",
+      "text": "autoidx 1\nmodule \\rtlil_inv\n  wire input 1 \\a\n  wire output 2 \\y\n  cell $_NOT_ \\g\n    connect \\A \\a\n    connect \\Y \\y\n  end\nend\n"
+    }
+  ],
+  "step_ns": 10,
+  "vectors": [
+    {
+      "inputs": {
+        "a": "0"
+      },
+      "expect": {
+        "y": "1"
+      }
+    },
+    {
+      "inputs": {
+        "a": "1"
+      },
+      "expect": {
+        "y": "0"
+      }
+    }
+  ],
+  "chip_limits": {
+    "width_um": 1000,
+    "height_um": 1000,
+    "max_area_um2": 1000000,
+    "edge_um": 10
+  }
+}

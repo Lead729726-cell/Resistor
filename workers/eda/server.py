@@ -48,6 +48,7 @@ import custom_circuit
 import project_index
 import runtime_resources
 import layout_review
+import hdl_workbench
 from toolchain_diagnostics import ToolchainDiagnostics
 from job_evidence import write_job_evidence
 
@@ -567,6 +568,7 @@ def start_job(params,kind):
     if (template or digital) and (kind!='simulation' or params.get('post_layout')) and not any(not cell.is_empty() for cell in load_layout(p).each_cell()):
         raise EDAError('NO_PHYSICAL_LAYOUT','This circuit template has no physical layout. Create actual PDK geometry before physical verification or post-layout analysis.')
     if kind=='simulation':
+        if params.get('post_layout') and p.get('mixed_signal',{}).get('physical_interface_complete') is False:raise EDAError('MIXED_INTERFACE_UNROUTED','The ideal external RC has no physical mask. Run the pre-layout mixed test, or complete/configure actual analog geometry before post-layout analysis.')
         if 'characterization' in params:
             import characterization
             characterization.configuration(p,params)
@@ -589,11 +591,12 @@ def start_job(params,kind):
     if kind=='simulation':run['analysis_stage']='post-layout' if params.get('post_layout') else 'pre-layout'
     put_run(run); POOL.submit(execute_job,run,p,copy.deepcopy(params),folder); return run
 
-def process(run,folder,cmd,name,manifest,timeout=120):
+def process(run,folder,cmd,name,manifest,timeout=120,stdout_path=None):
     manifest['commands'].append({'argv':cmd,'cwd':str(folder),'timeout_s':timeout})
     if get_run(run['id'])['execution_status']=='canceled': raise EDAError('CANCELED','Job canceled.')
-    with (folder/f'{name}.log').open('w') as f:
-        proc=subprocess.Popen(cmd,cwd=folder,stdout=f,stderr=subprocess.STDOUT,start_new_session=os.name!='nt',creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
+    if stdout_path is not None and Path(stdout_path).resolve().parent!=folder.resolve():raise EDAError('INVALID_ARTIFACT','Compiler output must stay inside its run directory.')
+    with (folder/f'{name}.log').open('w') as f, (Path(stdout_path).open('w') if stdout_path is not None else open(os.devnull,'w')) as output:
+        proc=subprocess.Popen(cmd,cwd=folder,stdout=output if stdout_path is not None else f,stderr=f if stdout_path is not None else subprocess.STDOUT,start_new_session=os.name!='nt',creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
         with LOCK: PROCESSES[run['id']]=proc
         try: code=proc.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
@@ -925,7 +928,8 @@ def execute_job(run,p,params,folder):
     try:
         manifest.update(layout_hash=profile.sha(folder/'input.oas'),schematic_hash=hashlib.sha256(json.dumps(p['schematic'],sort_keys=True).encode()).hexdigest(),pdk=profile.provenance(),
                         toolchain=doctor(),tool_binaries=tool_hashes(),model_files=initial_models())
-        if params.get('_conversion'):conversion.execute(run,p,folder,manifest,params['_conversion'])
+        if params.get('_hdl'):hdl_workbench.execute(run,p,folder,manifest,params['_hdl'])
+        elif params.get('_conversion'):conversion.execute(run,p,folder,manifest,params['_conversion'])
         elif params.get('_pvt'):pvt.execute(run,p,folder,manifest,params)
         elif params.get('_configured'):configured_analysis.execute(run,p,folder,manifest,params)
         elif run['kind']=='simulation': run['tool']='ngspice'; simulation(run,p,folder,manifest,params)
@@ -957,6 +961,7 @@ def rpc(method,params):
         if STOPPING:raise EDAError('ENGINE_STOPPING','Local engine is shutting down; reconnect after it closes.')
     if any(str(key).startswith('_') for key in params):raise EDAError('PRIVATE_PARAMETER','Internal engine settings cannot be supplied through public RPC.')
     if method.startswith('review.'):return layout_review.rpc(method,params)
+    if method.startswith('hdl.'):return hdl_workbench.rpc(method,params)
     if method.startswith('conversion.'):return conversion.rpc(method,params)
     if method.startswith('pvt.'):return pvt.rpc(method,params)
     if method.startswith('design.'):return design_tools.rpc(method,params)
@@ -1102,6 +1107,7 @@ design_tools.configure(sys.modules[__name__])
 semiconductor_starters.configure(sys.modules[__name__])
 digital_units.configure(sys.modules[__name__])
 hierarchy_transfer.configure(sys.modules[__name__])
+hdl_workbench.configure(sys.modules[__name__])
 conversion.configure(sys.modules[__name__])
 layout_review.configure(sys.modules[__name__])
 

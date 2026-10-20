@@ -1,0 +1,35 @@
+{
+  "top": "blif_inv",
+  "files": [
+    {
+      "name": "blif_inv.blif",
+      "language": "blif",
+      "text": ".model blif_inv\n.inputs a\n.outputs y\n.names a y\n0 1\n.end\n"
+    }
+  ],
+  "step_ns": 10,
+  "vectors": [
+    {
+      "inputs": {
+        "a": "0"
+      },
+      "expect": {
+        "y": "1"
+      }
+    },
+    {
+      "inputs": {
+        "a": "1"
+      },
+      "expect": {
+        "y": "0"
+      }
+    }
+  ],
+  "chip_limits": {
+    "width_um": 1000,
+    "height_um": 1000,
+    "max_area_um2": 1000000,
+    "edge_um": 10
+  }
+}

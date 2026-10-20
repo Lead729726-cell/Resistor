@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "id": "d00c3ec1522d4de9915b20698a72a6b3",
+  "name": "Hardware QA · counter",
+  "pdk_id": "sky130A",
+  "revision": 2,
+  "cell": "schematic",
+  "dbu_um": 0.001,
+  "grid_dbu": 5,
+  "source": "pdk",
+  "example": "schematic",
+  "layers": [],
+  "schematic": {
+    "ports": [],
+    "devices": [],
+    "wires": [],
+    "junctions": [],
+    "cells": {},
+    "connectivity_mode": "explicit"
+  },
+  "testbench": {
+    "analysis": "op",
+    "corner": "tt",
+    "temperature_C": 27.0,
+    "supply_V": 1.8,
+    "duration_s": 3e-08,
+    "step_s": 2e-11,
+    "load_F": 5e-15,
+    "vds_V": 1.8,
+    "vbs_V": 0.0
+  },
+  "runs": [
+    {
+      "id": "f1fc70244407473eb0de608bf5487abd",
+      "project_id": "d00c3ec1522d4de9915b20698a72a6b3",
+      "kind": "hdl-simulate",
+      "revision": 2,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "input_signature": "4e745a072d879c5978b9c4e2b3703ce26a6e1e9d5b47276df7062dc1d39140f3",
+      "artifacts": {
+        "hdl_report": "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/f1fc70244407473eb0de608bf5487abd/hdl-report.json",
+        "vcd": "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/f1fc70244407473eb0de608bf5487abd/digital.vcd",
+        "stdout": "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/f1fc70244407473eb0de608bf5487abd/stdout.log"
+      },
+      "manifest_path": "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/f1fc70244407473eb0de608bf5487abd/manifest.json",
+      "started_at": "2026-10-20T05:26:41.454956+00:00",
+      "tool": "Yosys",
+      "measurements": {
+        "vectors": 6,
+        "assertions": 5,
+        "c_oracle_checked": false,
+        "scope": "Actual source-level/native-translated digital vectors, not transistor timing or physical signoff."
+      },
+      "message": "Actual digital vector execution completed; 5 output assertions.",
+      "ended_at": "2026-10-20T05:26:42.290636+00:00",
+      "elapsed_s": 0.8370008109486662
+    }
+  ],
+  "ports": [],
+  "redo_stack": [],
+  "undo_stack": [
+    1
+  ],
+  "next_revision": 3,
+  "layout_parameter_policy": "manual_layout",
+  "user_cells": [
+    "schematic"
+  ],
+  "edition": "indust",
+  "project_id": "d00c3ec1522d4de9915b20698a72a6b3",
+  "product_id": "resistor.indust",
+  "engine": {
+    "name": "KLayout",
+    "version": "0.30.5"
+  },
+  "process": {
+    "id": "sky130A",
+    "source": "pdk"
+  },
+  "hdl_design": {
+    "top": "counter4",
+    "files": [
+      {
+        "name": "counter4.v",
+        "language": "verilog",
+        "text": "module counter4(input clk, rst, output reg [3:0] q);\n  always @(posedge clk) if(rst) q <= 0; else q <= q + 1;\nendmodule\n"
+      }
+    ],
+    "step_ns": 10,
+    "vectors": [
+      {
+        "inputs": {
+          "clk": "0",
+          "rst": "1"
+        }
+      },
+      {
+        "inputs": {
+          "clk": "1",
+          "rst": "1"
+        },
+        "expect": {
+          "q": "0"
+        }
+      },
+      {
+        "inputs": {
+          "clk": "0",
+          "rst": "0"
+        },
+        "expect": {
+          "q": "0"
+        }
+      },
+      {
+        "inputs": {
+          "clk": "1",
+          "rst": "0"
+        },
+        "expect": {
+          "q": "1"
+        }
+      },
+      {
+        "inputs": {
+          "clk": "0",
+          "rst": "0"
+        },
+        "expect": {
+          "q": "1"
+        }
+      },
+      {
+        "inputs": {
+          "clk": "1",
+          "rst": "0"
+        },
+        "expect": {
+          "q": "2"
+        }
+      }
+    ],
+    "chip_limits": {
+      "width_um": 1000,
+      "height_um": 1000,
+      "max_area_um2": 1000000,
+      "edge_um": 10
+    }
+  }
+}

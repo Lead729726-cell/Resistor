@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "id": "86d69c7cfbc84f44b702b7ca30b4ecc8",
+  "name": "Hardware QA · wrong-output",
+  "pdk_id": "sky130A",
+  "revision": 2,
+  "cell": "schematic",
+  "dbu_um": 0.001,
+  "grid_dbu": 5,
+  "source": "pdk",
+  "example": "schematic",
+  "layers": [],
+  "schematic": {
+    "ports": [],
+    "devices": [],
+    "wires": [],
+    "junctions": [],
+    "cells": {},
+    "connectivity_mode": "explicit"
+  },
+  "testbench": {
+    "analysis": "op",
+    "corner": "tt",
+    "temperature_C": 27.0,
+    "supply_V": 1.8,
+    "duration_s": 3e-08,
+    "step_s": 2e-11,
+    "load_F": 5e-15,
+    "vds_V": 1.8,
+    "vbs_V": 0.0
+  },
+  "runs": [],
+  "ports": [],
+  "redo_stack": [],
+  "undo_stack": [
+    1
+  ],
+  "next_revision": 3,
+  "layout_parameter_policy": "manual_layout",
+  "user_cells": [
+    "schematic"
+  ],
+  "edition": "indust",
+  "project_id": "86d69c7cfbc84f44b702b7ca30b4ecc8",
+  "product_id": "resistor.indust",
+  "engine": {
+    "name": "KLayout",
+    "version": "0.30.5"
+  },
+  "process": {
+    "id": "sky130A",
+    "source": "pdk"
+  },
+  "hdl_design": {
+    "top": "logic_inv",
+    "files": [
+      {
+        "name": "logic_inv.v",
+        "language": "verilog",
+        "text": "module logic_inv(input a, output y);\n  assign y = ~a;\nendmodule\n"
+      }
+    ],
+    "step_ns": 50,
+    "vectors": [
+      {
+        "inputs": {
+          "a": "0"
+        },
+        "expect": {
+          "y": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1"
+        },
+        "expect": {
+          "y": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0"
+        },
+        "expect": {
+          "y": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1"
+        },
+        "expect": {
+          "y": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0"
+        },
+        "expect": {
+          "y": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1"
+        },
+        "expect": {
+          "y": "0"
+        }
+      },
+      {
+        "inputs": {
+          "a": "0"
+        },
+        "expect": {
+          "y": "1"
+        }
+      },
+      {
+        "inputs": {
+          "a": "1"
+        },
+        "expect": {
+          "y": "0"
+        }
+      }
+    ],
+    "chip_limits": {
+      "width_um": 1000,
+      "height_um": 1000,
+      "max_area_um2": 1000000,
+      "edge_um": 10
+    }
+  }
+}

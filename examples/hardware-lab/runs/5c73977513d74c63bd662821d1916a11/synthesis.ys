@@ -1,0 +1,11 @@
+read_blif blif_inv.blif
+hierarchy -check -top blif_inv
+proc
+flatten
+synth -top blif_inv -noabc
+dffunmap
+abc -g simple
+clean
+check -assert
+write_json synthesized.json
+write_verilog -noattr gates.v

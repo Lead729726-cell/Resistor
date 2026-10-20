@@ -1,0 +1,11 @@
+read_verilog -sv logic_inv.v
+hierarchy -check -top logic_inv
+proc
+flatten
+synth -top logic_inv -noabc
+dffunmap
+abc -g simple
+clean
+check -assert
+write_json synthesized.json
+write_verilog -noattr gates.v

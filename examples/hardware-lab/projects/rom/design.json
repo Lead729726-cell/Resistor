@@ -1,0 +1,56 @@
+{
+  "top": "rom4",
+  "files": [
+    {
+      "name": "rom4.v",
+      "language": "verilog",
+      "text": "module rom4(input [1:0] addr, output [7:0] data);\nreg [7:0] rom[0:3];\ninitial $readmemh(\"rom.mem\",rom);\nassign data=rom[addr];\nendmodule\n"
+    },
+    {
+      "name": "rom.mem",
+      "language": "data",
+      "text": "03\n55\naa\nff\n"
+    }
+  ],
+  "step_ns": 10,
+  "vectors": [
+    {
+      "inputs": {
+        "addr": "0"
+      },
+      "expect": {
+        "data": "3"
+      }
+    },
+    {
+      "inputs": {
+        "addr": "1"
+      },
+      "expect": {
+        "data": "85"
+      }
+    },
+    {
+      "inputs": {
+        "addr": "2"
+      },
+      "expect": {
+        "data": "170"
+      }
+    },
+    {
+      "inputs": {
+        "addr": "3"
+      },
+      "expect": {
+        "data": "255"
+      }
+    }
+  ],
+  "chip_limits": {
+    "width_um": 1000,
+    "height_um": 1000,
+    "max_area_um2": 1000000,
+    "edge_um": 10
+  }
+}

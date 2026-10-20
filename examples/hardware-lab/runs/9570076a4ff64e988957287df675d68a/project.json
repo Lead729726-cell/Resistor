@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "id": "7fd13c1eb1e44ccfba0f5d74b20365ea",
+  "name": "Hardware QA · rom",
+  "pdk_id": "sky130A",
+  "revision": 2,
+  "cell": "schematic",
+  "dbu_um": 0.001,
+  "grid_dbu": 5,
+  "source": "pdk",
+  "example": "schematic",
+  "layers": [],
+  "schematic": {
+    "ports": [],
+    "devices": [],
+    "wires": [],
+    "junctions": [],
+    "cells": {},
+    "connectivity_mode": "explicit"
+  },
+  "testbench": {
+    "analysis": "op",
+    "corner": "tt",
+    "temperature_C": 27.0,
+    "supply_V": 1.8,
+    "duration_s": 3e-08,
+    "step_s": 2e-11,
+    "load_F": 5e-15,
+    "vds_V": 1.8,
+    "vbs_V": 0.0
+  },
+  "runs": [],
+  "ports": [],
+  "redo_stack": [],
+  "undo_stack": [
+    1
+  ],
+  "next_revision": 3,
+  "layout_parameter_policy": "manual_layout",
+  "user_cells": [
+    "schematic"
+  ],
+  "edition": "indust",
+  "project_id": "7fd13c1eb1e44ccfba0f5d74b20365ea",
+  "product_id": "resistor.indust",
+  "engine": {
+    "name": "KLayout",
+    "version": "0.30.5"
+  },
+  "process": {
+    "id": "sky130A",
+    "source": "pdk"
+  },
+  "hdl_design": {
+    "top": "rom4",
+    "files": [
+      {
+        "name": "rom4.v",
+        "language": "verilog",
+        "text": "module rom4(input [1:0] addr, output [7:0] data);\nreg [7:0] rom[0:3];\ninitial $readmemh(\"rom.mem\",rom);\nassign data=rom[addr];\nendmodule\n"
+      },
+      {
+        "name": "rom.mem",
+        "language": "data",
+        "text": "03\n55\naa\nff\n"
+      }
+    ],
+    "step_ns": 10,
+    "vectors": [
+      {
+        "inputs": {
+          "addr": "0"
+        },
+        "expect": {
+          "data": "3"
+        }
+      },
+      {
+        "inputs": {
+          "addr": "1"
+        },
+        "expect": {
+          "data": "85"
+        }
+      },
+      {
+        "inputs": {
+          "addr": "2"
+        },
+        "expect": {
+          "data": "170"
+        }
+      },
+      {
+        "inputs": {
+          "addr": "3"
+        },
+        "expect": {
+          "data": "255"
+        }
+      }
+    ],
+    "chip_limits": {
+      "width_um": 1000,
+      "height_um": 1000,
+      "max_area_um2": 1000000,
+      "edge_um": 10
+    }
+  }
+}

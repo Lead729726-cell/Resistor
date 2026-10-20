@@ -1,0 +1,119 @@
+{
+  "creator": "Yosys 0.33 (git sha1 2584903a060)",
+  "modules": {
+    "rom4": {
+      "attributes": {
+        "top": "00000000000000000000000000000001",
+        "src": "rom4.v:1.1-5.10"
+      },
+      "ports": {
+        "addr": {
+          "direction": "input",
+          "bits": [ 2, 3 ]
+        },
+        "data": {
+          "direction": "output",
+          "bits": [ 4, 5, 2, 3, 2, 3, 2, 3 ]
+        }
+      },
+      "cells": {
+        "$abc$98$auto$blifparse.cc:386:parse_blif$100": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 3 ],
+            "Y": [ 6 ]
+          }
+        },
+        "$abc$98$auto$blifparse.cc:386:parse_blif$101": {
+          "hide_name": 1,
+          "type": "$_OR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "B": [ 6 ],
+            "Y": [ 4 ]
+          }
+        },
+        "$abc$98$auto$blifparse.cc:386:parse_blif$102": {
+          "hide_name": 1,
+          "type": "$_OR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 7 ],
+            "B": [ 3 ],
+            "Y": [ 5 ]
+          }
+        },
+        "$abc$98$auto$blifparse.cc:386:parse_blif$99": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "Y": [ 7 ]
+          }
+        }
+      },
+      "netnames": {
+        "$abc$98$new_n5_": {
+          "hide_name": 1,
+          "bits": [ 7 ],
+          "attributes": {
+          }
+        },
+        "$abc$98$new_n6_": {
+          "hide_name": 1,
+          "bits": [ 6 ],
+          "attributes": {
+          }
+        },
+        "addr": {
+          "hide_name": 0,
+          "bits": [ 2, 3 ],
+          "attributes": {
+            "src": "rom4.v:1.25-1.29"
+          }
+        },
+        "data": {
+          "hide_name": 0,
+          "bits": [ 4, 5, 2, 3, 2, 3, 2, 3 ],
+          "attributes": {
+            "src": "rom4.v:1.44-1.48"
+          }
+        }
+      }
+    }
+  }
+}

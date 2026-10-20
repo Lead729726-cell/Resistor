@@ -1,0 +1,70 @@
+{
+  "top": "counter4",
+  "files": [
+    {
+      "name": "counter4.v",
+      "language": "verilog",
+      "text": "module counter4(input clk, rst, output reg [3:0] q);\n  always @(posedge clk) if(rst) q <= 0; else q <= q + 1;\nendmodule\n"
+    }
+  ],
+  "step_ns": 10,
+  "vectors": [
+    {
+      "inputs": {
+        "clk": "0",
+        "rst": "1"
+      }
+    },
+    {
+      "inputs": {
+        "clk": "1",
+        "rst": "1"
+      },
+      "expect": {
+        "q": "0"
+      }
+    },
+    {
+      "inputs": {
+        "clk": "0",
+        "rst": "0"
+      },
+      "expect": {
+        "q": "0"
+      }
+    },
+    {
+      "inputs": {
+        "clk": "1",
+        "rst": "0"
+      },
+      "expect": {
+        "q": "1"
+      }
+    },
+    {
+      "inputs": {
+        "clk": "0",
+        "rst": "0"
+      },
+      "expect": {
+        "q": "1"
+      }
+    },
+    {
+      "inputs": {
+        "clk": "1",
+        "rst": "0"
+      },
+      "expect": {
+        "q": "2"
+      }
+    }
+  ],
+  "chip_limits": {
+    "width_um": 1000,
+    "height_um": 1000,
+    "max_area_um2": 1000000,
+    "edge_um": 10
+  }
+}
