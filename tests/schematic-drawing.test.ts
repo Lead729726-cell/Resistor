@@ -4,6 +4,20 @@ import {makePlacedDevice,pinOffsets,orthogonalBridge,pinBridge,engineeringValue}
 import {isLocalWorkbench} from '../packages/contracts/src/index';
 import {wirePins,nearestWirePin,wireNetConflict} from '../packages/ui/src/schematic-wiring';
 import {logicPreview,connectionCommand} from '../packages/ui/src/logic-composition';
+import {schematicViewport} from '../packages/ui/src/schematic-viewport';
+
+test('fit contains long SAR hierarchy pins after rotation/mirroring and distant routes',()=>{
+ const pins=Object.fromEntries(Array.from({length:40},(_,i)=>['P'+i,'N'+i]));
+ const d={id:'block',name:'SAR12_CONTROL',kind:'block' as const,cell_name:'SAR12',pins,parameters:{},x:100,y:200};
+ for(const rotation of [0,90,180,270]as const)for(const mirror of [false,true]){
+  const device={...d,rotation,mirror},v=schematicViewport([device],[],[]);
+  for(const [x,y]of Object.values(pinOffsets(device))){assert(v.left<d.x+x&&d.x+x<v.left+v.width);assert(v.top<d.y+y&&d.y+y<v.top+v.height);}
+  assert(rotation===90||rotation===270?v.width>1000:v.height>1000);
+ }
+ const v=schematicViewport([d],[{id:'wire',net:'N',points:[[-2000,-3000],[2500,3500]]}],[]);
+ assert(v.left< -2000&&v.top< -3000&&v.left+v.width>2500&&v.top+v.height>3500);
+ assert.equal(schematicViewport([],[],[]).width,500);
+});
 
 test('wire target snapping uses actual terminals after transforms and refuses ambiguous overlap',()=>{
   const d=makePlacedDevice('resistor',[],[100,200],'r',90,true);

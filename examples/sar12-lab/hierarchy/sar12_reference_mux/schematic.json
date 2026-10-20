@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "VIN",
+    "REF",
+    "SAMPLE",
+    "SAMPLEB",
+    "OUT",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "ACQUIRE",
+      "name": "ACQUIRE",
+      "kind": "block",
+      "cell_name": "SAR12_TG",
+      "pins": {
+        "A": "VIN",
+        "Y": "OUT",
+        "EN": "SAMPLE",
+        "ENB": "SAMPLEB",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 170
+    },
+    {
+      "id": "CONVERT",
+      "name": "CONVERT",
+      "kind": "block",
+      "cell_name": "SAR12_TG",
+      "pins": {
+        "A": "REF",
+        "Y": "OUT",
+        "EN": "SAMPLEB",
+        "ENB": "SAMPLE",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 170
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {
+    "SAR12_TG": {
+      "schema_version": 1,
+      "ports": [
+        "A",
+        "Y",
+        "EN",
+        "ENB",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "N",
+          "name": "N",
+          "kind": "nmos",
+          "pins": {
+            "D": "A",
+            "G": "EN",
+            "S": "Y",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 8,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "P",
+          "name": "P",
+          "kind": "pmos",
+          "pins": {
+            "D": "A",
+            "G": "ENB",
+            "S": "Y",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 12,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 420,
+          "y": 170,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    }
+  }
+}

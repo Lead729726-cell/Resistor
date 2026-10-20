@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "edition": "Resistor Indust",
+  "captured_at": "2026-10-20T02:04:24.988Z",
+  "core_regressions": {
+    "passed": 269,
+    "failed": 0,
+    "log_sha256": "e22aa13271807dc360fb53d19611a7586f315fbd7f45c59d394fc75960e34c0a"
+  },
+  "formula_and_parser_fixtures": {
+    "sar12_sar8_research": 27,
+    "shared_pex_reduction": 6
+  },
+  "controller": [
+    {
+      "implementation": "rtl",
+      "all_codes": 4096,
+      "assertions": 159751,
+      "passed": true
+    },
+    {
+      "implementation": "gate",
+      "all_codes": 4096,
+      "assertions": 159751,
+      "passed": true
+    },
+    {
+      "implementation": "editable_ir",
+      "all_codes": 4096,
+      "assertions": 159751,
+      "passed": true
+    }
+  ],
+  "unknown_comparator_fault": {
+    "unknown_comparator_rejected": true,
+    "returncode": 1
+  },
+  "actual_ui_cases": [
+    {
+      "name": "Actual 339131 mask shapes inside the bounded analog macro; full geometry requested",
+      "passed": true
+    },
+    {
+      "name": "12 actual editable blocks appear through the app catalog, preserving SAR8",
+      "passed": true
+    },
+    {
+      "name": "Full SAR_ADC12 hierarchy opens from the real UI and all long-block terminals fit",
+      "passed": true
+    },
+    {
+      "name": "Unexecuted controller does not inherit analog PASS or measured ENOB",
+      "passed": true
+    }
+  ],
+  "native_runs": [
+    {
+      "label": "drc",
+      "id": "c384b1bd3b784686b070b1b862f3dc4b",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current"
+    },
+    {
+      "label": "lvs",
+      "id": "ffebf48e94944fc0bf02fd465fc95470",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current"
+    },
+    {
+      "label": "pex",
+      "id": "7720713187ea404db3d2e224720f396c",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current"
+    },
+    {
+      "label": "directed",
+      "id": "d2937073af124a519ebaa3fb05b03260",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current"
+    },
+    {
+      "label": "coherent64",
+      "id": "287ded48f737402c90b4ad194d94824b",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current"
+    },
+    {
+      "label": "imported",
+      "id": "1de63a5347d64a649dea184614ee383a",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current"
+    },
+    {
+      "label": "ss-smoke",
+      "id": "5ad396cea0a84e1bbf99d48fa71f18b9",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current"
+    },
+    {
+      "label": "ff-smoke",
+      "id": "08e16d781e99415e963051e380867f72",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current"
+    },
+    {
+      "label": "post-single",
+      "id": "8a098651639f4123b3e5251749efa44c",
+      "execution": "failed",
+      "analysis": "unknown",
+      "freshness": "current"
+    },
+    {
+      "label": "historical-drc-gap",
+      "id": "16d272a0b00a4514913b50c198ce8af9",
+      "execution": "completed",
+      "analysis": "fail",
+      "freshness": "stale"
+    },
+    {
+      "label": "historical-post-parser",
+      "id": "742717a3a46149ccbec5f0caae6f0fb8",
+      "execution": "failed",
+      "analysis": "unknown",
+      "freshness": "stale"
+    }
+  ],
+  "build": "completed; existing script/chunk-size warnings retained",
+  "post_layout_qualified": false,
+  "manufacturing_signoff": false,
+  "full_controller_physical": false,
+  "source_sha256": {
+    "packages/ui/src/SchematicEditor.tsx": "7d8c1f6e9becc0e8e31f84d4c0e0134eb85ece82bbad7a93be795dc160d5bd85",
+    "packages/ui/src/schematic-viewport.ts": "31fec4b9c335781fe7bbe2419e5c87864ebeaa9cdd27a184a83e04007d1ce358",
+    "packages/ui/src/SarAdcLibrary.tsx": "07b9dc11a0b7a3937547fd22be79ce816ebb41a7177cbf4de42eba543f89a5e9",
+    "packages/ui/src/ChipReferenceResults.tsx": "4db23a0dd50a12d1f720df93db06446f675957d1878e73c4fd1e02f69bf649a3",
+    "workers/eda/sar12.py": "6cec22e738b3f560ca79cbeb0a35e793e5a1e7f985fd0a77e9b888a8c8bb659b",
+    "workers/eda/sar12_metrics.py": "e746e6c6e67c7f3b02ad09cd17d1d261b97556019544c862fce1838dad0b7dca",
+    "workers/eda/sar12_physical.py": "6b88e4d0447cf910b23e7d7e45d8d74ee529d2da39e57361661e361b3fe4cbdd",
+    "workers/eda/pex_reduce.py": "6c45fe91eebd60d4a145173e5f29ebddda660a78c5cc356b9b225ac83e97becf"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "kind": "sar12_analog",
+  "source": "continuous ngspice MOS/charge decisions and independent RTL/gate/IR replay",
+  "checks": [
+    {
+      "name": "Actual comparator trials match RTL, synthesized gates and editable CMOS logic",
+      "pass": true,
+      "observed": null
+    },
+    {
+      "name": "Both comparator outputs reach complementary logic levels",
+      "pass": true,
+      "observed": null
+    },
+    {
+      "name": "Native directed codes within one nominal 12-bit LSB",
+      "pass": true,
+      "observed": null
+    }
+  ],
+  "frames": [
+    {
+      "frame": 0,
+      "input_differential_V": 0.00029296875,
+      "code": 2047,
+      "expected_code": 2048,
+      "error_codes": -1
+    }
+  ],
+  "ambiguous_decisions": 0,
+  "scope": "Noiseless deterministic transient; external ideal VREF/VCM and finite-RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+  "pass": true
+}

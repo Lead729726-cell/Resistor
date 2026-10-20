@@ -548,6 +548,7 @@ def testbench_validator(p):
     kind=p.get('design_template',{}).get('id')
     if kind in design_tools.sigma_delta.CATALOG:return design_tools.sigma_delta.settings
     if kind in design_tools.sar_adc.CATALOG:return design_tools.sar_adc.settings
+    if kind in design_tools.sar12.CATALOG:return design_tools.sar12.settings
     return native.testbench
 
 def start_job(params,kind):
@@ -569,7 +570,7 @@ def start_job(params,kind):
         if 'characterization' in params:
             import characterization
             characterization.configuration(p,params)
-        adc=p.get('design_template',{}).get('id') in {**design_tools.sigma_delta.CATALOG,**design_tools.sar_adc.CATALOG}
+        adc=p.get('design_template',{}).get('id') in {**design_tools.sigma_delta.CATALOG,**design_tools.sar_adc.CATALOG,**design_tools.sar12.CATALOG}
         settings=testbench_validator(p)({**p.get('testbench',{}),**{key:params[key] for key in native.TESTBENCH if key in params}})
         params={**params,**settings}
         if not template and not digital and p['example'] not in {'inverter','mosfet','wire','current_mirror','differential_pair','schematic','converted'}: raise EDAError('UNSUPPORTED','No testbench for this cell.')
@@ -799,6 +800,8 @@ def simulation(run,p,folder,manifest,params):
     if custom:p=custom_circuit.prepare(p)
     if p.get('design_template',{}).get('id') in design_tools.sar_adc.CATALOG:
         return design_tools.sar_adc.execute(sys.modules[__name__],run,p,folder,manifest,params)
+    if p.get('design_template',{}).get('id') in design_tools.sar12.CATALOG:
+        return design_tools.sar12.execute(sys.modules[__name__],run,p,folder,manifest,params)
     if p.get('design_template',{}).get('id') in design_tools.sigma_delta.CATALOG:
         return design_tools.sigma_delta.execute(sys.modules[__name__],run,p,folder,manifest,params)
     manifest['settings']['ngspice_num_threads']=1

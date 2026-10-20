@@ -1,0 +1,166 @@
+{
+  "id": "1de63a5347d64a649dea184614ee383a",
+  "project_id": "0e757c9c85f540b187c5cfbf98307add",
+  "kind": "simulation",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "freshness": "current",
+  "artifacts": {
+    "rtl_replay": "/workspace/.runtime/eda/runs/1de63a5347d64a649dea184614ee383a/rtl-replay.csv",
+    "gate_replay": "/workspace/.runtime/eda/runs/1de63a5347d64a649dea184614ee383a/gate-replay.csv",
+    "ir_replay": "/workspace/.runtime/eda/runs/1de63a5347d64a649dea184614ee383a/ir-replay.csv",
+    "testbench": "/workspace/.runtime/eda/runs/1de63a5347d64a649dea184614ee383a/testbench.spice",
+    "native_decisions": "/workspace/.runtime/eda/runs/1de63a5347d64a649dea184614ee383a/decisions.csv",
+    "waveform_data": "/workspace/.runtime/eda/runs/1de63a5347d64a649dea184614ee383a/waveform.dat",
+    "sar12_verification": "/workspace/.runtime/eda/runs/1de63a5347d64a649dea184614ee383a/sar12-verification.json",
+    "stdout": "/workspace/.runtime/eda/runs/1de63a5347d64a649dea184614ee383a/stdout.log"
+  },
+  "manifest_path": "/workspace/.runtime/eda/runs/1de63a5347d64a649dea184614ee383a/manifest.json",
+  "input_signature": "cceef71668f5de01dd046fcfe60b3a2b1ac52bc526c6b34be35d0c1e72b871cc",
+  "analysis_stage": "pre-layout",
+  "started_at": "2026-10-20T01:46:03.351582+00:00",
+  "tool": "ngspice + Icarus Verilog",
+  "reference_verification": {
+    "schema_version": 1,
+    "kind": "sar12_analog",
+    "source": "continuous ngspice MOS/charge decisions and independent RTL/gate/IR replay",
+    "checks": [
+      {
+        "name": "Actual comparator trials match RTL, synthesized gates and editable CMOS logic",
+        "pass": true,
+        "observed": null
+      },
+      {
+        "name": "Both comparator outputs reach complementary logic levels",
+        "pass": true,
+        "observed": null
+      },
+      {
+        "name": "Native directed codes within one nominal 12-bit LSB",
+        "pass": true,
+        "observed": null
+      }
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "input_differential_V": 0.00029296875,
+        "code": 2048,
+        "expected_code": 2048,
+        "error_codes": 0
+      }
+    ],
+    "ambiguous_decisions": 0,
+    "scope": "Noiseless deterministic transient; external ideal VREF/VCM and finite-RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+    "pass": true
+  },
+  "message": "Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.",
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "output_bits": 12,
+    "frames": 1,
+    "max_code_error": 0,
+    "ambiguous_decisions": 0,
+    "rtl_gate_replay_match": true,
+    "lsb_V": 0.0005859375,
+    "conversion_s": 0.00001005,
+    "sample_rate_Hz": 99502.48756218905,
+    "effective_resolution": "not measured",
+    "physical_unit_count": 508,
+    "scope": "Noiseless deterministic transient; external ideal VREF/VCM and finite-RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+    "raw_sample_count": 12493,
+    "display_sample_count": 2212,
+    "start_s": 0,
+    "end_s": 0.00001055,
+    "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+    "source_energy": {
+      "9": {
+        "energy_J": 6.118303416220733e-10,
+        "average_power_W": 0.00005799339731014912,
+        "minimum_current_A": 7.053163002933988e-7,
+        "peak_current_A": 0.00036799114570366655,
+        "source_voltage_V": 1.8
+      },
+      "10": {
+        "energy_J": 1.08804461406382e-10,
+        "average_power_W": 0.00001031321909065232,
+        "minimum_current_A": -0.0000019783659824801347,
+        "peak_current_A": 0.0012124276864730055,
+        "source_voltage_V": 1.2
+      }
+    },
+    "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+    "source_energy_scope": "All raw analog-core VDD and VREF samples. External control-driver energy and synthesized-controller power are not measured.",
+    "research_metrics": {
+      "source": "native raw-source integration; display decimation is not used for energy",
+      "input_drivers_power": "not measured",
+      "external_bias_power": "not measured",
+      "complete_system_power_available": false,
+      "supply": {
+        "available": true,
+        "start_s": 0,
+        "end_s": 0.00001055,
+        "energy_J": 6.118303416220733e-10,
+        "average_current_A": 0.000032218554061193954,
+        "peak_current_A": 0.00036799114570366655,
+        "minimum_current_A": 7.053163002933988e-7,
+        "average_power_W": 0.00005799339731014912,
+        "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+        "sample_scope": "Every original adaptive-step analog VDD sample, integrated before display thinning. External driver/digital-controller power excluded."
+      }
+    }
+  },
+  "literature_review": {
+    "schema_version": 1,
+    "review_version": "literature-review-20261013-v1",
+    "reviewed_at": "2026-10-20",
+    "reference_ids": [
+      "vibe-tapeout-2026",
+      "clock-gating-2026"
+    ],
+    "references": [
+      {
+        "id": "vibe-tapeout-2026",
+        "title": "The Era of Vibe Tapeout: Dark Age or Golden Age for Analog Circuit Design?",
+        "authors": "Kentaro Yoshioka",
+        "date": "2026-10-11",
+        "venue": "arXiv preprint v1",
+        "doi": "10.48550/arXiv.2610.15240",
+        "url": "https://arxiv.org/abs/2610.15240",
+        "read_scope": "Full HTML v1: benchmark specification, CDAC coupling, comparator asymmetry, independent post-PEX verification and extraction caveats",
+        "technology": "Paper benchmark: 11-bit SKY130 SAR. This implementation is a new 12-bit, 6+6 split-CDAC research prototype.",
+        "adopted": "Actual retained-charge decisions; independent raw-code and RTL/gate/IR checks; shared unit centroids; explicit signal-coupling audit and unqualified extraction completeness.",
+        "not_reproduced": "Paper circuit, 5.12 MS/s benchmark, area/power/SNDR claims, porting process or tapeout. This prototype uses a slower external control bridge and an analog-only physical adapter."
+      },
+      {
+        "id": "clock-gating-2026",
+        "title": "Clock-Gating Insertion Strategies on an Open-Source MSP430 Core: A Reproducible PPA Study and a Gate-Level Simulation Caveat",
+        "authors": "Xingran Huang; Qiming Guo; Jinwen Tang; Wenqi Jia; Dongzheng Wang",
+        "date": "2026-08-31",
+        "venue": "arXiv preprint v1; authors report acceptance at IEEE UEMCON 2026",
+        "doi": "10.48550/arXiv.2608.30954",
+        "url": "https://arxiv.org/abs/2608.30954",
+        "read_scope": "Full HTML, sections IV-B–D and V-G",
+        "technology": "openMSP430, commercial 32 nm synthesis flow; not this accumulator CPU",
+        "adopted": "Keep RTL/gate/CMOS replay and transistor timing as distinct evidence; explicitly report unavailable clock-gating/STA closure.",
+        "not_reproduced": "ICG insertion, MSP430 architecture, SDF/STA closure or reported PPA savings."
+      }
+    ],
+    "relationship": "method-inspired review; existing owned circuits, not a reproduction of the cited chips",
+    "paper_performance_reproduced": false,
+    "qualification": "See actual engine verdict; literature review cannot establish PASS.",
+    "pending": [
+      "Thermal/flicker noise and mismatch yield except explicitly executed studies.",
+      "Full PVT/RC, EM/IR, ESD, antenna/density, foundry signoff.",
+      "Complete sequential timing, STA/Liberty and physical CPU/ADC-controller closure."
+    ],
+    "revision": 1,
+    "project_id": "0e757c9c85f540b187c5cfbf98307add",
+    "run_id": "1de63a5347d64a649dea184614ee383a"
+  },
+  "ended_at": "2026-10-20T01:46:33.607140+00:00",
+  "elapsed_s": 30.26568785199197
+}

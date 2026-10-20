@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "edition": "Resistor Indust",
+  "blocks": [
+    {
+      "id": "sar12_switch",
+      "project_id": "5b6d83ef9b7b4a8a9ae917de0a565a94",
+      "name": "SAR12 · CMOS 전송 게이트",
+      "ports": [
+        "A",
+        "Y",
+        "EN",
+        "ENB",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [],
+      "physical_supported": false
+    },
+    {
+      "id": "sar12_reference_mux",
+      "project_id": "474c504c232648da84b46be463a52620",
+      "name": "SAR12 · 샘플링·기준 전환",
+      "ports": [
+        "VIN",
+        "REF",
+        "SAMPLE",
+        "SAMPLEB",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "SAR12_TG"
+      ],
+      "physical_supported": false
+    },
+    {
+      "id": "sar12_bit_mux",
+      "project_id": "de31880fd2b449929e1c783790102877",
+      "name": "SAR12 · bit bottom-plate 스위치",
+      "ports": [
+        "HI",
+        "LO",
+        "BIT",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "INV",
+        "SAR12_TG"
+      ],
+      "physical_supported": false
+    },
+    {
+      "id": "sar12_unit_cap",
+      "project_id": "403c2c0bcbaa4653a0613d8df16c4e99",
+      "name": "SAR12 · 200fF 동일 단위 C",
+      "ports": [
+        "TOP",
+        "BOTTOM"
+      ],
+      "dependencies": [],
+      "physical_supported": false
+    },
+    {
+      "id": "sar12_bridge",
+      "project_id": "c7b951f9e2224e89b3393ad666a8a0a9",
+      "name": "SAR12 · 6+6 분할 bridge C",
+      "ports": [
+        "TOP",
+        "FINE"
+      ],
+      "dependencies": [],
+      "physical_supported": false
+    },
+    {
+      "id": "sar12_cdac",
+      "project_id": "7f899c8b8ab4455f988e953aece40564",
+      "name": "SAR12 · 차동 6+6 분할·508 unit + 2 bridge CDAC",
+      "ports": [
+        "VINP",
+        "VINN",
+        "VREF",
+        "VCM",
+        "SAMPLE",
+        "TOPP",
+        "TOPN",
+        "B0",
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6",
+        "B7",
+        "B8",
+        "B9",
+        "B10",
+        "B11",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "INV",
+        "SAR12_REFMUX",
+        "SAR12_TG",
+        "SAR12_BRIDGE",
+        "SAR12_BITMUX",
+        "SAR12_UNIT"
+      ],
+      "physical_supported": false
+    },
+    {
+      "id": "sar12_preamp",
+      "project_id": "08588f3ac4dd460280a649dc034f9705",
+      "name": "SAR12 · 차동 전치 증폭기",
+      "ports": [
+        "INP",
+        "INN",
+        "BIAS",
+        "OUTP",
+        "OUTN",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [],
+      "physical_supported": false
+    },
+    {
+      "id": "sar12_latch",
+      "project_id": "23f8c70b34d6457182da42d6a967002e",
+      "name": "SAR12 · 대칭 동적 래치",
+      "ports": [
+        "INP",
+        "INN",
+        "EVAL",
+        "OUTP",
+        "OUTN",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "INV"
+      ],
+      "physical_supported": false
+    },
+    {
+      "id": "sar12_comparator",
+      "project_id": "ae4e2f830e164a5c96474a6602481a69",
+      "name": "SAR12 · 2단 전치 증폭·동적 래치 비교기",
+      "ports": [
+        "INP",
+        "INN",
+        "EVAL",
+        "OUTP",
+        "OUTN",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "SAR12_PREAMP",
+        "SAR12_LATCH",
+        "INV"
+      ],
+      "physical_supported": false
+    },
+    {
+      "id": "sar12_analog",
+      "project_id": "738be80d188f4d83a424895e9597e253",
+      "name": "SAR12 · 12bit 샘플링·CDAC·비교기 코어",
+      "ports": [
+        "VINP",
+        "VINN",
+        "VREF",
+        "VCM",
+        "SAMPLE",
+        "EVAL",
+        "TOPP",
+        "TOPN",
+        "COMP",
+        "COMPN",
+        "B0",
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6",
+        "B7",
+        "B8",
+        "B9",
+        "B10",
+        "B11",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "SAR12_CDAC",
+        "INV",
+        "SAR12_REFMUX",
+        "SAR12_TG",
+        "SAR12_BRIDGE",
+        "SAR12_BITMUX",
+        "SAR12_UNIT",
+        "SAR12_COMPARATOR",
+        "SAR12_PREAMP",
+        "SAR12_LATCH"
+      ],
+      "physical_supported": true
+    },
+    {
+      "id": "sar12_controller",
+      "project_id": "662a4a72475248aa8a56145ae3011eda",
+      "name": "SAR12 · 12bit 합성 제어·EVAL·CODE/VALID",
+      "ports": [
+        "CLK",
+        "RESET",
+        "START",
+        "COMPARATOR",
+        "SAMPLE",
+        "EVAL",
+        "BUSY",
+        "VALID",
+        "TRIAL0",
+        "TRIAL1",
+        "TRIAL2",
+        "TRIAL3",
+        "TRIAL4",
+        "TRIAL5",
+        "TRIAL6",
+        "TRIAL7",
+        "TRIAL8",
+        "TRIAL9",
+        "TRIAL10",
+        "TRIAL11",
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "CODE8",
+        "CODE9",
+        "CODE10",
+        "CODE11",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "AND2",
+        "NAND2",
+        "INV",
+        "OR2",
+        "NOR2",
+        "MUX2",
+        "XOR2",
+        "DFF"
+      ],
+      "physical_supported": false
+    },
+    {
+      "id": "sar_adc12",
+      "project_id": "a6cf404e358f4f678083e519da6935a2",
+      "name": "SAR12 · 12bit SAR 통합 회로",
+      "ports": [
+        "VINP",
+        "VINN",
+        "VREF",
+        "VCM",
+        "CLK",
+        "RESET",
+        "START",
+        "TOPP",
+        "TOPN",
+        "COMP",
+        "COMPN",
+        "SAMPLE",
+        "EVAL",
+        "BUSY",
+        "VALID",
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "CODE8",
+        "CODE9",
+        "CODE10",
+        "CODE11",
+        "VPWR",
+        "VGND"
+      ],
+      "dependencies": [
+        "SAR12_ANALOG",
+        "SAR12_CDAC",
+        "INV",
+        "SAR12_REFMUX",
+        "SAR12_TG",
+        "SAR12_BRIDGE",
+        "SAR12_BITMUX",
+        "SAR12_UNIT",
+        "SAR12_COMPARATOR",
+        "SAR12_PREAMP",
+        "SAR12_LATCH",
+        "SAR12_CONTROLLER",
+        "AND2",
+        "NAND2",
+        "OR2",
+        "NOR2",
+        "MUX2",
+        "XOR2",
+        "DFF"
+      ],
+      "physical_supported": false
+    }
+  ]
+}

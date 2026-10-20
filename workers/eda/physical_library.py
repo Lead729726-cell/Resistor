@@ -51,12 +51,13 @@ def gate(kind,values=None):
 
 def quantize(v):return round(v/0.005)*0.005
 
-def materialize(ir,body_net='VGND'):
+def materialize(ir,body_net='VGND',*,max_primitives=512):
     """Return a new flat physical schematic and auditable nominal replacements."""
+    if max_primitives not in (512,768):raise EDAError('PHYSICAL_LIMIT','Only the default 512 or bounded SAR12 768-primitive adapter is supported.')
     flat=digital_units.flattened({**ir,'cells':ir.get('cells',{})});rows=[];result=[]
     for d in flat['devices']:
         if d['kind'] not in ('resistor','capacitor') or d.get('model'):
-            if len(result)>=512:raise EDAError('PHYSICAL_LIMIT','Physical reference is limited to 512 primitives total, including MOS and pre-modeled passives.')
+            if len(result)>=max_primitives:raise EDAError('PHYSICAL_LIMIT','Physical reference exceeds its bounded primitive budget.')
             result.append(d);continue
         value=native.num(d['parameters']['value']);a=d['pins']['+'];b=d['pins']['-']
         if d['kind']=='capacitor':
@@ -74,7 +75,7 @@ def materialize(ir,body_net='VGND'):
                 chain=[a]+[d['name']+f'_R{row}_N{i}' for i in range(series-1)]+[b]
                 pieces.extend((chain[i],chain[i+1],RES_WIDTH,length) for i in range(series))
             nominal=series*(RES_CONTACT+RES_SLOPE*length)/parallel
-        if len(pieces)>256 or len(result)+len(pieces)>512:raise EDAError('PHYSICAL_LIMIT','Physical reference is limited to 256 instances per passive and 512 primitives total; use a separate bounded custom implementation.')
+        if len(pieces)>256 or len(result)+len(pieces)>max_primitives:raise EDAError('PHYSICAL_LIMIT','Physical reference exceeds its bounded per-passive or total primitive budget.')
         for i,(p,n,w,l) in enumerate(pieces):
             target=value/len(pieces) if d['kind']=='capacitor' else value*parallel/series
             item=copy.deepcopy(d);item.update(id=d['id']+f':p{i}',name=d['name']+f'_P{i}',model=CAP if d['kind']=='capacitor' else RES,pins={'+':p,'-':n,**({'B':body_net} if d['kind']=='resistor' else {})},parameters={'value':target,'w_um':w,'l_um':l},x=d.get('x',0)+(i%4)*170,y=d.get('y',0)+(i//4)*160)
@@ -123,16 +124,27 @@ def physical(folder,ir,cell_name,ports,chip_limits=None):
     if chip_limits is not None:return bounded_physical(folder,ir,cell_name,ports,chip_limits)
     return _single_row(folder,ir,cell_name,ports)
 
-def _single_row(folder,ir,cell_name,ports,rail_width=400):
+def _routing_vias(folder):
+    v1=templates.via(folder/'via1','via1_core','via1');v2=templates.via(folder/'via2','via2_core','via2',280,280)
+    f=folder/'via3';f.mkdir(exist_ok=True);t=f/'make.tcl';t.write_text('load via3_core\nbox 0um 0um 0.32um 0.32um\nsky130::via3_draw\nbox -0.14um -0.14um 0.46um 0.46um\npaint m3\npaint m4\nsave via3_core\ngds write via3_core.gds\nquit -noprompt\n')
+    r=subprocess.run(['magic','-dnull','-noconsole','-rcfile',str(profile.MAGIC_RC),str(t)],cwd=f,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=60)
+    (f/'generator.log').write_text(r.stdout)
+    if r.returncode or not (f/'via3_core.gds').exists():raise EDAError('ENGINE_FAILED','Public via3 helper failed.')
+    v3=k.Layout();v3.read(str(f/'via3_core.gds'));return [v1,v2,v3]
+
+def _single_row(folder,ir,cell_name,ports,rail_width=400,*,primitive_cache=None,via_cache=None,slots=None,rail_pitch=1200):
     folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
     ir=copy.deepcopy(ir);devices=[d for d in ir['devices'] if d['kind']!='port']
     if len(devices)>512:raise EDAError('PHYSICAL_LIMIT','Physical routing is bounded to 512 actual primitives.')
     if not devices or any(d['kind'] not in ('nmos','pmos','resistor','capacitor') or not d.get('model') for d in devices):raise EDAError('UNSUPPORTED_PHYSICAL','Physical reference requires dimensioned supported MOS/poly/MIM primitives, with sources in the testbench.')
-    cache={};placed=[];cursor=0
+    cache=primitive_cache if primitive_cache is not None else {};placed=[];cursor=0
+    if slots is not None:
+        if set(slots)!={d['id'] for d in devices} or any(isinstance(s,bool) or not isinstance(s,int) or not 0<=s<64 for s in slots.values()) or len(set(slots.values()))!=len(slots):raise EDAError('INVALID_GEOMETRY','Explicit unit slots must be unique integer positions within one bounded row.')
+        if len({(d['model'],d['parameters']['w_um'],d['parameters']['l_um']) for d in devices})!=1:raise EDAError('INVALID_GEOMETRY','Slotted capacitor rows need identical unit geometry.')
     for d in devices:
         native.validate_device(d);key=(d['model'],d['parameters']['w_um'],d['parameters']['l_um'])
         if key not in cache:cache[key]=_base(folder,d)
-        base=cache[key];bb=base[1].bbox();cx=cursor-bb.left
+        base=cache[key];bb=base[1].bbox();cx=(slots[d['id']]*(bb.width()+5000) if slots is not None else cursor)-bb.left
         placed.append((d,base,cx));cursor=cx+bb.right+5000
     ymax=max(base[1].bbox().top for _,base,_ in placed);ymin=min(base[1].bbox().bottom for _,base,_ in placed)
     nets=sorted({n for d in devices for n in d['pins'].values()});xs={n:[] for n in nets}
@@ -147,11 +159,13 @@ def _single_row(folder,ir,cell_name,ports,rail_width=400):
             xs[d['pins'][pin]].append(x)
     spans={n:(-1800 if n in ports else min(v)-300,max(v)+300) for n,v in xs.items()}
     tracks,track_count=interval_tracks({n:spans[n] for n in nets if n not in ('VGND','VPWR')})
-    rails={net:ymax+3000+track*1200 for net,track in tracks.items()}
-    rails.update({n:y for n,y in [('VGND',ymin-3000),('VPWR',ymin-4500)] if n in spans})
+    if rail_pitch not in (1200,4000):raise EDAError('INVALID_GEOMETRY','Use the native M3 pitch or the bounded M5 fan-out pitch.')
+    rails={net:ymax+3000+track*rail_pitch for net,track in tracks.items()}
+    power_gap=max(1500,rail_pitch)
+    rails.update({n:y for n,y in [('VGND',ymin-3000),('VPWR',ymin-3000-power_gap)] if n in spans})
     # MIM terminals are on M4: supply tracks must also lie above the array,
     # otherwise an M4 descent crosses the other electrode's contact landing.
-    if any(d['model']==CAP for d in devices):rails.update({n:y for n,y in [('VGND',ymax+3000+track_count*1200),('VPWR',ymax+4500+track_count*1200)] if n in spans})
+    if any(d['model']==CAP for d in devices):rails.update({n:y for n,y in [('VGND',ymax+3000+track_count*rail_pitch),('VPWR',ymax+3000+power_gap+track_count*rail_pitch)] if n in spans})
     import json
     groups={}
     for d,(_,_,anchors,_),cx in placed:
@@ -166,13 +180,9 @@ def _single_row(folder,ir,cell_name,ports,rail_width=400):
         valid_pair=roles==['A','B'] and sum(u['role']=='A' for u in units)==sum(u['role']=='B' for u in units)>=2
         matching.append({'group':key,'units':units,'centroids_dbu':centroids,'max_centroid_delta_dbu':delta,'equal_unit_geometry':identical,'nominal_centroid_match':valid_pair and identical and delta==0,'scope':'ABBA row cancels nominal first spatial moment; no dummies/guard-ring/substrate/random-yield signoff'})
     (folder/'routing-report.json').write_text(json.dumps({'algorithm':'interval-heap-v2','primitive_count':len(devices),'signal_track_count':track_count,'track_clearance_dbu':800,'tracks':tracks,'matching_groups':matching,'scope':'single-row PCell reference; no full-chip density/antenna/foundry signoff'},sort_keys=True,indent=2))
-    v1=templates.via(folder/'via1','via1_core','via1');v2=templates.via(folder/'via2','via2_core','via2',280,280)
-    # Installed via3 helper, with explicit M3/M4 area-compliant landings.
-    f=folder/'via3';f.mkdir(exist_ok=True);t=f/'make.tcl';t.write_text('load via3_core\nbox 0um 0um 0.32um 0.32um\nsky130::via3_draw\nbox -0.14um -0.14um 0.46um 0.46um\npaint m3\npaint m4\nsave via3_core\ngds write via3_core.gds\nquit -noprompt\n')
-    r=subprocess.run(['magic','-dnull','-noconsole','-rcfile',str(profile.MAGIC_RC),str(t)],cwd=f,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=60)
-    (f/'generator.log').write_text(r.stdout)
-    if r.returncode or not (f/'via3_core.gds').exists():raise EDAError('ENGINE_FAILED','Public via3 helper failed.')
-    v3=k.Layout();v3.read(str(f/'via3_core.gds'))
+    if via_cache is None:via_cache=_routing_vias(folder)
+    elif not via_cache:via_cache.extend(_routing_vias(folder))
+    v1,v2,v3=via_cache
     layout=k.Layout();layout.dbu=.001;top=layout.create_cell(cell_name)
     def shape(layer,p,net='',ident=None):
         s=top.shapes(layout.layer(*layer)).insert(p);s.set_property(2,net)

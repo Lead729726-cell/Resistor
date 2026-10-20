@@ -1,0 +1,7504 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "VINP",
+    "VINN",
+    "VREF",
+    "VCM",
+    "SAMPLE",
+    "TOPP",
+    "TOPN",
+    "B0",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B7",
+    "B8",
+    "B9",
+    "B10",
+    "B11",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "SAMPLE_INV",
+      "name": "SAMPLE_INV",
+      "kind": "block",
+      "cell_name": "INV",
+      "pins": {
+        "A": "SAMPLE",
+        "Y": "SAMPLEB",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 170
+    },
+    {
+      "id": "REF_HIP",
+      "name": "REF_HIP",
+      "kind": "block",
+      "cell_name": "SAR12_REFMUX",
+      "pins": {
+        "VIN": "VINP",
+        "REF": "VREF",
+        "SAMPLE": "SAMPLE",
+        "SAMPLEB": "SAMPLEB",
+        "OUT": "HIP",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 170
+    },
+    {
+      "id": "REF_LOP",
+      "name": "REF_LOP",
+      "kind": "block",
+      "cell_name": "SAR12_REFMUX",
+      "pins": {
+        "VIN": "VINP",
+        "REF": "VGND",
+        "SAMPLE": "SAMPLE",
+        "SAMPLEB": "SAMPLEB",
+        "OUT": "LOP",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 170
+    },
+    {
+      "id": "RESET_TOPP",
+      "name": "RESET_TOPP",
+      "kind": "block",
+      "cell_name": "SAR12_TG",
+      "pins": {
+        "A": "VCM",
+        "Y": "TOPP",
+        "EN": "SAMPLE",
+        "ENB": "SAMPLEB",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 170
+    },
+    {
+      "id": "RESET_FINEP",
+      "name": "RESET_FINEP",
+      "kind": "block",
+      "cell_name": "SAR12_TG",
+      "pins": {
+        "A": "VCM",
+        "Y": "FINEP",
+        "EN": "SAMPLE",
+        "ENB": "SAMPLEB",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 420
+    },
+    {
+      "id": "BRIDGEP",
+      "name": "BRIDGEP",
+      "kind": "block",
+      "cell_name": "SAR12_BRIDGE",
+      "pins": {
+        "TOP": "TOPP",
+        "FINE": "FINEP"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 420
+    },
+    {
+      "id": "P_COARSE_B0_SW",
+      "name": "P_COARSE_B0_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "HIP",
+        "LO": "LOP",
+        "BIT": "B6",
+        "OUT": "P_COARSE_B0",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 420
+    },
+    {
+      "id": "P_COARSE_B0_U0",
+      "name": "P_COARSE_B0_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B0"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 420
+    },
+    {
+      "id": "P_COARSE_B0_U1",
+      "name": "P_COARSE_B0_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B0"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 670
+    },
+    {
+      "id": "P_COARSE_B1_SW",
+      "name": "P_COARSE_B1_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "HIP",
+        "LO": "LOP",
+        "BIT": "B7",
+        "OUT": "P_COARSE_B1",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 670
+    },
+    {
+      "id": "P_COARSE_B1_U0",
+      "name": "P_COARSE_B1_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B1"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 670
+    },
+    {
+      "id": "P_COARSE_B1_U1",
+      "name": "P_COARSE_B1_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B1"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 670
+    },
+    {
+      "id": "P_COARSE_B1_U2",
+      "name": "P_COARSE_B1_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B1"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 920
+    },
+    {
+      "id": "P_COARSE_B1_U3",
+      "name": "P_COARSE_B1_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B1"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 920
+    },
+    {
+      "id": "P_COARSE_B2_SW",
+      "name": "P_COARSE_B2_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "HIP",
+        "LO": "LOP",
+        "BIT": "B8",
+        "OUT": "P_COARSE_B2",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 920
+    },
+    {
+      "id": "P_COARSE_B2_U0",
+      "name": "P_COARSE_B2_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 920
+    },
+    {
+      "id": "P_COARSE_B2_U1",
+      "name": "P_COARSE_B2_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 1170
+    },
+    {
+      "id": "P_COARSE_B2_U2",
+      "name": "P_COARSE_B2_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 1170
+    },
+    {
+      "id": "P_COARSE_B2_U3",
+      "name": "P_COARSE_B2_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 1170
+    },
+    {
+      "id": "P_COARSE_B2_U4",
+      "name": "P_COARSE_B2_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 1170
+    },
+    {
+      "id": "P_COARSE_B2_U5",
+      "name": "P_COARSE_B2_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 1420
+    },
+    {
+      "id": "P_COARSE_B2_U6",
+      "name": "P_COARSE_B2_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 1420
+    },
+    {
+      "id": "P_COARSE_B2_U7",
+      "name": "P_COARSE_B2_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 1420
+    },
+    {
+      "id": "P_COARSE_B3_SW",
+      "name": "P_COARSE_B3_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "HIP",
+        "LO": "LOP",
+        "BIT": "B9",
+        "OUT": "P_COARSE_B3",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 1420
+    },
+    {
+      "id": "P_COARSE_B3_U0",
+      "name": "P_COARSE_B3_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 1670
+    },
+    {
+      "id": "P_COARSE_B3_U1",
+      "name": "P_COARSE_B3_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 1670
+    },
+    {
+      "id": "P_COARSE_B3_U2",
+      "name": "P_COARSE_B3_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 1670
+    },
+    {
+      "id": "P_COARSE_B3_U3",
+      "name": "P_COARSE_B3_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 1670
+    },
+    {
+      "id": "P_COARSE_B3_U4",
+      "name": "P_COARSE_B3_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 1920
+    },
+    {
+      "id": "P_COARSE_B3_U5",
+      "name": "P_COARSE_B3_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 1920
+    },
+    {
+      "id": "P_COARSE_B3_U6",
+      "name": "P_COARSE_B3_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 1920
+    },
+    {
+      "id": "P_COARSE_B3_U7",
+      "name": "P_COARSE_B3_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 1920
+    },
+    {
+      "id": "P_COARSE_B3_U8",
+      "name": "P_COARSE_B3_U8",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 2170
+    },
+    {
+      "id": "P_COARSE_B3_U9",
+      "name": "P_COARSE_B3_U9",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 2170
+    },
+    {
+      "id": "P_COARSE_B3_U10",
+      "name": "P_COARSE_B3_U10",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 2170
+    },
+    {
+      "id": "P_COARSE_B3_U11",
+      "name": "P_COARSE_B3_U11",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 2170
+    },
+    {
+      "id": "P_COARSE_B3_U12",
+      "name": "P_COARSE_B3_U12",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 2420
+    },
+    {
+      "id": "P_COARSE_B3_U13",
+      "name": "P_COARSE_B3_U13",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 2420
+    },
+    {
+      "id": "P_COARSE_B3_U14",
+      "name": "P_COARSE_B3_U14",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 2420
+    },
+    {
+      "id": "P_COARSE_B3_U15",
+      "name": "P_COARSE_B3_U15",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 2420
+    },
+    {
+      "id": "P_COARSE_B4_SW",
+      "name": "P_COARSE_B4_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "HIP",
+        "LO": "LOP",
+        "BIT": "B10",
+        "OUT": "P_COARSE_B4",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 2670
+    },
+    {
+      "id": "P_COARSE_B4_U0",
+      "name": "P_COARSE_B4_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 2670
+    },
+    {
+      "id": "P_COARSE_B4_U1",
+      "name": "P_COARSE_B4_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 2670
+    },
+    {
+      "id": "P_COARSE_B4_U2",
+      "name": "P_COARSE_B4_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 2670
+    },
+    {
+      "id": "P_COARSE_B4_U3",
+      "name": "P_COARSE_B4_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 2920
+    },
+    {
+      "id": "P_COARSE_B4_U4",
+      "name": "P_COARSE_B4_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 2920
+    },
+    {
+      "id": "P_COARSE_B4_U5",
+      "name": "P_COARSE_B4_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 2920
+    },
+    {
+      "id": "P_COARSE_B4_U6",
+      "name": "P_COARSE_B4_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 2920
+    },
+    {
+      "id": "P_COARSE_B4_U7",
+      "name": "P_COARSE_B4_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 3170
+    },
+    {
+      "id": "P_COARSE_B4_U8",
+      "name": "P_COARSE_B4_U8",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 3170
+    },
+    {
+      "id": "P_COARSE_B4_U9",
+      "name": "P_COARSE_B4_U9",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 3170
+    },
+    {
+      "id": "P_COARSE_B4_U10",
+      "name": "P_COARSE_B4_U10",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 3170
+    },
+    {
+      "id": "P_COARSE_B4_U11",
+      "name": "P_COARSE_B4_U11",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 3420
+    },
+    {
+      "id": "P_COARSE_B4_U12",
+      "name": "P_COARSE_B4_U12",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 3420
+    },
+    {
+      "id": "P_COARSE_B4_U13",
+      "name": "P_COARSE_B4_U13",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 3420
+    },
+    {
+      "id": "P_COARSE_B4_U14",
+      "name": "P_COARSE_B4_U14",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 3420
+    },
+    {
+      "id": "P_COARSE_B4_U15",
+      "name": "P_COARSE_B4_U15",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 3670
+    },
+    {
+      "id": "P_COARSE_B4_U16",
+      "name": "P_COARSE_B4_U16",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 3670
+    },
+    {
+      "id": "P_COARSE_B4_U17",
+      "name": "P_COARSE_B4_U17",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 3670
+    },
+    {
+      "id": "P_COARSE_B4_U18",
+      "name": "P_COARSE_B4_U18",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 3670
+    },
+    {
+      "id": "P_COARSE_B4_U19",
+      "name": "P_COARSE_B4_U19",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 3920
+    },
+    {
+      "id": "P_COARSE_B4_U20",
+      "name": "P_COARSE_B4_U20",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 3920
+    },
+    {
+      "id": "P_COARSE_B4_U21",
+      "name": "P_COARSE_B4_U21",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 3920
+    },
+    {
+      "id": "P_COARSE_B4_U22",
+      "name": "P_COARSE_B4_U22",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 3920
+    },
+    {
+      "id": "P_COARSE_B4_U23",
+      "name": "P_COARSE_B4_U23",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 4170
+    },
+    {
+      "id": "P_COARSE_B4_U24",
+      "name": "P_COARSE_B4_U24",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 4170
+    },
+    {
+      "id": "P_COARSE_B4_U25",
+      "name": "P_COARSE_B4_U25",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 4170
+    },
+    {
+      "id": "P_COARSE_B4_U26",
+      "name": "P_COARSE_B4_U26",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 4170
+    },
+    {
+      "id": "P_COARSE_B4_U27",
+      "name": "P_COARSE_B4_U27",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 4420
+    },
+    {
+      "id": "P_COARSE_B4_U28",
+      "name": "P_COARSE_B4_U28",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 4420
+    },
+    {
+      "id": "P_COARSE_B4_U29",
+      "name": "P_COARSE_B4_U29",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 4420
+    },
+    {
+      "id": "P_COARSE_B4_U30",
+      "name": "P_COARSE_B4_U30",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 4420
+    },
+    {
+      "id": "P_COARSE_B4_U31",
+      "name": "P_COARSE_B4_U31",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 4670
+    },
+    {
+      "id": "P_COARSE_B5_SW",
+      "name": "P_COARSE_B5_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "HIP",
+        "LO": "LOP",
+        "BIT": "B11",
+        "OUT": "P_COARSE_B5",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 4670
+    },
+    {
+      "id": "P_COARSE_B5_U0",
+      "name": "P_COARSE_B5_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 4670
+    },
+    {
+      "id": "P_COARSE_B5_U1",
+      "name": "P_COARSE_B5_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 4670
+    },
+    {
+      "id": "P_COARSE_B5_U2",
+      "name": "P_COARSE_B5_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 4920
+    },
+    {
+      "id": "P_COARSE_B5_U3",
+      "name": "P_COARSE_B5_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 4920
+    },
+    {
+      "id": "P_COARSE_B5_U4",
+      "name": "P_COARSE_B5_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 4920
+    },
+    {
+      "id": "P_COARSE_B5_U5",
+      "name": "P_COARSE_B5_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 4920
+    },
+    {
+      "id": "P_COARSE_B5_U6",
+      "name": "P_COARSE_B5_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 5170
+    },
+    {
+      "id": "P_COARSE_B5_U7",
+      "name": "P_COARSE_B5_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 5170
+    },
+    {
+      "id": "P_COARSE_B5_U8",
+      "name": "P_COARSE_B5_U8",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 5170
+    },
+    {
+      "id": "P_COARSE_B5_U9",
+      "name": "P_COARSE_B5_U9",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 5170
+    },
+    {
+      "id": "P_COARSE_B5_U10",
+      "name": "P_COARSE_B5_U10",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 5420
+    },
+    {
+      "id": "P_COARSE_B5_U11",
+      "name": "P_COARSE_B5_U11",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 5420
+    },
+    {
+      "id": "P_COARSE_B5_U12",
+      "name": "P_COARSE_B5_U12",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 5420
+    },
+    {
+      "id": "P_COARSE_B5_U13",
+      "name": "P_COARSE_B5_U13",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 5420
+    },
+    {
+      "id": "P_COARSE_B5_U14",
+      "name": "P_COARSE_B5_U14",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 5670
+    },
+    {
+      "id": "P_COARSE_B5_U15",
+      "name": "P_COARSE_B5_U15",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 5670
+    },
+    {
+      "id": "P_COARSE_B5_U16",
+      "name": "P_COARSE_B5_U16",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 5670
+    },
+    {
+      "id": "P_COARSE_B5_U17",
+      "name": "P_COARSE_B5_U17",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 5670
+    },
+    {
+      "id": "P_COARSE_B5_U18",
+      "name": "P_COARSE_B5_U18",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 5920
+    },
+    {
+      "id": "P_COARSE_B5_U19",
+      "name": "P_COARSE_B5_U19",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 5920
+    },
+    {
+      "id": "P_COARSE_B5_U20",
+      "name": "P_COARSE_B5_U20",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 5920
+    },
+    {
+      "id": "P_COARSE_B5_U21",
+      "name": "P_COARSE_B5_U21",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 5920
+    },
+    {
+      "id": "P_COARSE_B5_U22",
+      "name": "P_COARSE_B5_U22",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 6170
+    },
+    {
+      "id": "P_COARSE_B5_U23",
+      "name": "P_COARSE_B5_U23",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 6170
+    },
+    {
+      "id": "P_COARSE_B5_U24",
+      "name": "P_COARSE_B5_U24",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 6170
+    },
+    {
+      "id": "P_COARSE_B5_U25",
+      "name": "P_COARSE_B5_U25",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 6170
+    },
+    {
+      "id": "P_COARSE_B5_U26",
+      "name": "P_COARSE_B5_U26",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 6420
+    },
+    {
+      "id": "P_COARSE_B5_U27",
+      "name": "P_COARSE_B5_U27",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 6420
+    },
+    {
+      "id": "P_COARSE_B5_U28",
+      "name": "P_COARSE_B5_U28",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 6420
+    },
+    {
+      "id": "P_COARSE_B5_U29",
+      "name": "P_COARSE_B5_U29",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 6420
+    },
+    {
+      "id": "P_COARSE_B5_U30",
+      "name": "P_COARSE_B5_U30",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 6670
+    },
+    {
+      "id": "P_COARSE_B5_U31",
+      "name": "P_COARSE_B5_U31",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 6670
+    },
+    {
+      "id": "P_COARSE_B5_U32",
+      "name": "P_COARSE_B5_U32",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 6670
+    },
+    {
+      "id": "P_COARSE_B5_U33",
+      "name": "P_COARSE_B5_U33",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 6670
+    },
+    {
+      "id": "P_COARSE_B5_U34",
+      "name": "P_COARSE_B5_U34",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 6920
+    },
+    {
+      "id": "P_COARSE_B5_U35",
+      "name": "P_COARSE_B5_U35",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 6920
+    },
+    {
+      "id": "P_COARSE_B5_U36",
+      "name": "P_COARSE_B5_U36",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 6920
+    },
+    {
+      "id": "P_COARSE_B5_U37",
+      "name": "P_COARSE_B5_U37",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 6920
+    },
+    {
+      "id": "P_COARSE_B5_U38",
+      "name": "P_COARSE_B5_U38",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 7170
+    },
+    {
+      "id": "P_COARSE_B5_U39",
+      "name": "P_COARSE_B5_U39",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 7170
+    },
+    {
+      "id": "P_COARSE_B5_U40",
+      "name": "P_COARSE_B5_U40",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 7170
+    },
+    {
+      "id": "P_COARSE_B5_U41",
+      "name": "P_COARSE_B5_U41",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 7170
+    },
+    {
+      "id": "P_COARSE_B5_U42",
+      "name": "P_COARSE_B5_U42",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 7420
+    },
+    {
+      "id": "P_COARSE_B5_U43",
+      "name": "P_COARSE_B5_U43",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 7420
+    },
+    {
+      "id": "P_COARSE_B5_U44",
+      "name": "P_COARSE_B5_U44",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 7420
+    },
+    {
+      "id": "P_COARSE_B5_U45",
+      "name": "P_COARSE_B5_U45",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 7420
+    },
+    {
+      "id": "P_COARSE_B5_U46",
+      "name": "P_COARSE_B5_U46",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 7670
+    },
+    {
+      "id": "P_COARSE_B5_U47",
+      "name": "P_COARSE_B5_U47",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 7670
+    },
+    {
+      "id": "P_COARSE_B5_U48",
+      "name": "P_COARSE_B5_U48",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 7670
+    },
+    {
+      "id": "P_COARSE_B5_U49",
+      "name": "P_COARSE_B5_U49",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 7670
+    },
+    {
+      "id": "P_COARSE_B5_U50",
+      "name": "P_COARSE_B5_U50",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 7920
+    },
+    {
+      "id": "P_COARSE_B5_U51",
+      "name": "P_COARSE_B5_U51",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 7920
+    },
+    {
+      "id": "P_COARSE_B5_U52",
+      "name": "P_COARSE_B5_U52",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 7920
+    },
+    {
+      "id": "P_COARSE_B5_U53",
+      "name": "P_COARSE_B5_U53",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 7920
+    },
+    {
+      "id": "P_COARSE_B5_U54",
+      "name": "P_COARSE_B5_U54",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 8170
+    },
+    {
+      "id": "P_COARSE_B5_U55",
+      "name": "P_COARSE_B5_U55",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 8170
+    },
+    {
+      "id": "P_COARSE_B5_U56",
+      "name": "P_COARSE_B5_U56",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 8170
+    },
+    {
+      "id": "P_COARSE_B5_U57",
+      "name": "P_COARSE_B5_U57",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 8170
+    },
+    {
+      "id": "P_COARSE_B5_U58",
+      "name": "P_COARSE_B5_U58",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 8420
+    },
+    {
+      "id": "P_COARSE_B5_U59",
+      "name": "P_COARSE_B5_U59",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 8420
+    },
+    {
+      "id": "P_COARSE_B5_U60",
+      "name": "P_COARSE_B5_U60",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 8420
+    },
+    {
+      "id": "P_COARSE_B5_U61",
+      "name": "P_COARSE_B5_U61",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 8420
+    },
+    {
+      "id": "P_COARSE_B5_U62",
+      "name": "P_COARSE_B5_U62",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 8670
+    },
+    {
+      "id": "P_COARSE_B5_U63",
+      "name": "P_COARSE_B5_U63",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPP",
+        "BOTTOM": "P_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 8670
+    },
+    {
+      "id": "P_FINE_B0_SW",
+      "name": "P_FINE_B0_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "HIP",
+        "LO": "LOP",
+        "BIT": "B0",
+        "OUT": "P_FINE_B0",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 8670
+    },
+    {
+      "id": "P_FINE_B0_U0",
+      "name": "P_FINE_B0_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B0"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 8670
+    },
+    {
+      "id": "P_FINE_B0_U1",
+      "name": "P_FINE_B0_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B0"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 8920
+    },
+    {
+      "id": "P_FINE_B1_SW",
+      "name": "P_FINE_B1_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "HIP",
+        "LO": "LOP",
+        "BIT": "B1",
+        "OUT": "P_FINE_B1",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 8920
+    },
+    {
+      "id": "P_FINE_B1_U0",
+      "name": "P_FINE_B1_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B1"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 8920
+    },
+    {
+      "id": "P_FINE_B1_U1",
+      "name": "P_FINE_B1_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B1"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 8920
+    },
+    {
+      "id": "P_FINE_B1_U2",
+      "name": "P_FINE_B1_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B1"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 9170
+    },
+    {
+      "id": "P_FINE_B1_U3",
+      "name": "P_FINE_B1_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B1"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 9170
+    },
+    {
+      "id": "P_FINE_B2_SW",
+      "name": "P_FINE_B2_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "HIP",
+        "LO": "LOP",
+        "BIT": "B2",
+        "OUT": "P_FINE_B2",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 9170
+    },
+    {
+      "id": "P_FINE_B2_U0",
+      "name": "P_FINE_B2_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B2"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 9170
+    },
+    {
+      "id": "P_FINE_B2_U1",
+      "name": "P_FINE_B2_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B2"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 9420
+    },
+    {
+      "id": "P_FINE_B2_U2",
+      "name": "P_FINE_B2_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B2"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 9420
+    },
+    {
+      "id": "P_FINE_B2_U3",
+      "name": "P_FINE_B2_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B2"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 9420
+    },
+    {
+      "id": "P_FINE_B2_U4",
+      "name": "P_FINE_B2_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B2"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 9420
+    },
+    {
+      "id": "P_FINE_B2_U5",
+      "name": "P_FINE_B2_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B2"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 9670
+    },
+    {
+      "id": "P_FINE_B2_U6",
+      "name": "P_FINE_B2_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B2"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 9670
+    },
+    {
+      "id": "P_FINE_B2_U7",
+      "name": "P_FINE_B2_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B2"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 9670
+    },
+    {
+      "id": "P_FINE_B3_SW",
+      "name": "P_FINE_B3_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "HIP",
+        "LO": "LOP",
+        "BIT": "B3",
+        "OUT": "P_FINE_B3",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 9670
+    },
+    {
+      "id": "P_FINE_B3_U0",
+      "name": "P_FINE_B3_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 9920
+    },
+    {
+      "id": "P_FINE_B3_U1",
+      "name": "P_FINE_B3_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 9920
+    },
+    {
+      "id": "P_FINE_B3_U2",
+      "name": "P_FINE_B3_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 9920
+    },
+    {
+      "id": "P_FINE_B3_U3",
+      "name": "P_FINE_B3_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 9920
+    },
+    {
+      "id": "P_FINE_B3_U4",
+      "name": "P_FINE_B3_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 10170
+    },
+    {
+      "id": "P_FINE_B3_U5",
+      "name": "P_FINE_B3_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 10170
+    },
+    {
+      "id": "P_FINE_B3_U6",
+      "name": "P_FINE_B3_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 10170
+    },
+    {
+      "id": "P_FINE_B3_U7",
+      "name": "P_FINE_B3_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 10170
+    },
+    {
+      "id": "P_FINE_B3_U8",
+      "name": "P_FINE_B3_U8",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 10420
+    },
+    {
+      "id": "P_FINE_B3_U9",
+      "name": "P_FINE_B3_U9",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 10420
+    },
+    {
+      "id": "P_FINE_B3_U10",
+      "name": "P_FINE_B3_U10",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 10420
+    },
+    {
+      "id": "P_FINE_B3_U11",
+      "name": "P_FINE_B3_U11",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 10420
+    },
+    {
+      "id": "P_FINE_B3_U12",
+      "name": "P_FINE_B3_U12",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 10670
+    },
+    {
+      "id": "P_FINE_B3_U13",
+      "name": "P_FINE_B3_U13",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 10670
+    },
+    {
+      "id": "P_FINE_B3_U14",
+      "name": "P_FINE_B3_U14",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 10670
+    },
+    {
+      "id": "P_FINE_B3_U15",
+      "name": "P_FINE_B3_U15",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 10670
+    },
+    {
+      "id": "P_FINE_B4_SW",
+      "name": "P_FINE_B4_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "HIP",
+        "LO": "LOP",
+        "BIT": "B4",
+        "OUT": "P_FINE_B4",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 10920
+    },
+    {
+      "id": "P_FINE_B4_U0",
+      "name": "P_FINE_B4_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 10920
+    },
+    {
+      "id": "P_FINE_B4_U1",
+      "name": "P_FINE_B4_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 10920
+    },
+    {
+      "id": "P_FINE_B4_U2",
+      "name": "P_FINE_B4_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 10920
+    },
+    {
+      "id": "P_FINE_B4_U3",
+      "name": "P_FINE_B4_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 11170
+    },
+    {
+      "id": "P_FINE_B4_U4",
+      "name": "P_FINE_B4_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 11170
+    },
+    {
+      "id": "P_FINE_B4_U5",
+      "name": "P_FINE_B4_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 11170
+    },
+    {
+      "id": "P_FINE_B4_U6",
+      "name": "P_FINE_B4_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 11170
+    },
+    {
+      "id": "P_FINE_B4_U7",
+      "name": "P_FINE_B4_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 11420
+    },
+    {
+      "id": "P_FINE_B4_U8",
+      "name": "P_FINE_B4_U8",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 11420
+    },
+    {
+      "id": "P_FINE_B4_U9",
+      "name": "P_FINE_B4_U9",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 11420
+    },
+    {
+      "id": "P_FINE_B4_U10",
+      "name": "P_FINE_B4_U10",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 11420
+    },
+    {
+      "id": "P_FINE_B4_U11",
+      "name": "P_FINE_B4_U11",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 11670
+    },
+    {
+      "id": "P_FINE_B4_U12",
+      "name": "P_FINE_B4_U12",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 11670
+    },
+    {
+      "id": "P_FINE_B4_U13",
+      "name": "P_FINE_B4_U13",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 11670
+    },
+    {
+      "id": "P_FINE_B4_U14",
+      "name": "P_FINE_B4_U14",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 11670
+    },
+    {
+      "id": "P_FINE_B4_U15",
+      "name": "P_FINE_B4_U15",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 11920
+    },
+    {
+      "id": "P_FINE_B4_U16",
+      "name": "P_FINE_B4_U16",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 11920
+    },
+    {
+      "id": "P_FINE_B4_U17",
+      "name": "P_FINE_B4_U17",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 11920
+    },
+    {
+      "id": "P_FINE_B4_U18",
+      "name": "P_FINE_B4_U18",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 11920
+    },
+    {
+      "id": "P_FINE_B4_U19",
+      "name": "P_FINE_B4_U19",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 12170
+    },
+    {
+      "id": "P_FINE_B4_U20",
+      "name": "P_FINE_B4_U20",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 12170
+    },
+    {
+      "id": "P_FINE_B4_U21",
+      "name": "P_FINE_B4_U21",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 12170
+    },
+    {
+      "id": "P_FINE_B4_U22",
+      "name": "P_FINE_B4_U22",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 12170
+    },
+    {
+      "id": "P_FINE_B4_U23",
+      "name": "P_FINE_B4_U23",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 12420
+    },
+    {
+      "id": "P_FINE_B4_U24",
+      "name": "P_FINE_B4_U24",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 12420
+    },
+    {
+      "id": "P_FINE_B4_U25",
+      "name": "P_FINE_B4_U25",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 12420
+    },
+    {
+      "id": "P_FINE_B4_U26",
+      "name": "P_FINE_B4_U26",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 12420
+    },
+    {
+      "id": "P_FINE_B4_U27",
+      "name": "P_FINE_B4_U27",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 12670
+    },
+    {
+      "id": "P_FINE_B4_U28",
+      "name": "P_FINE_B4_U28",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 12670
+    },
+    {
+      "id": "P_FINE_B4_U29",
+      "name": "P_FINE_B4_U29",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 12670
+    },
+    {
+      "id": "P_FINE_B4_U30",
+      "name": "P_FINE_B4_U30",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 12670
+    },
+    {
+      "id": "P_FINE_B4_U31",
+      "name": "P_FINE_B4_U31",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 12920
+    },
+    {
+      "id": "P_FINE_B5_SW",
+      "name": "P_FINE_B5_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "HIP",
+        "LO": "LOP",
+        "BIT": "B5",
+        "OUT": "P_FINE_B5",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 12920
+    },
+    {
+      "id": "P_FINE_B5_U0",
+      "name": "P_FINE_B5_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 12920
+    },
+    {
+      "id": "P_FINE_B5_U1",
+      "name": "P_FINE_B5_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 12920
+    },
+    {
+      "id": "P_FINE_B5_U2",
+      "name": "P_FINE_B5_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 13170
+    },
+    {
+      "id": "P_FINE_B5_U3",
+      "name": "P_FINE_B5_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 13170
+    },
+    {
+      "id": "P_FINE_B5_U4",
+      "name": "P_FINE_B5_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 13170
+    },
+    {
+      "id": "P_FINE_B5_U5",
+      "name": "P_FINE_B5_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 13170
+    },
+    {
+      "id": "P_FINE_B5_U6",
+      "name": "P_FINE_B5_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 13420
+    },
+    {
+      "id": "P_FINE_B5_U7",
+      "name": "P_FINE_B5_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 13420
+    },
+    {
+      "id": "P_FINE_B5_U8",
+      "name": "P_FINE_B5_U8",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 13420
+    },
+    {
+      "id": "P_FINE_B5_U9",
+      "name": "P_FINE_B5_U9",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 13420
+    },
+    {
+      "id": "P_FINE_B5_U10",
+      "name": "P_FINE_B5_U10",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 13670
+    },
+    {
+      "id": "P_FINE_B5_U11",
+      "name": "P_FINE_B5_U11",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 13670
+    },
+    {
+      "id": "P_FINE_B5_U12",
+      "name": "P_FINE_B5_U12",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 13670
+    },
+    {
+      "id": "P_FINE_B5_U13",
+      "name": "P_FINE_B5_U13",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 13670
+    },
+    {
+      "id": "P_FINE_B5_U14",
+      "name": "P_FINE_B5_U14",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 13920
+    },
+    {
+      "id": "P_FINE_B5_U15",
+      "name": "P_FINE_B5_U15",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 13920
+    },
+    {
+      "id": "P_FINE_B5_U16",
+      "name": "P_FINE_B5_U16",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 13920
+    },
+    {
+      "id": "P_FINE_B5_U17",
+      "name": "P_FINE_B5_U17",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 13920
+    },
+    {
+      "id": "P_FINE_B5_U18",
+      "name": "P_FINE_B5_U18",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 14170
+    },
+    {
+      "id": "P_FINE_B5_U19",
+      "name": "P_FINE_B5_U19",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 14170
+    },
+    {
+      "id": "P_FINE_B5_U20",
+      "name": "P_FINE_B5_U20",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 14170
+    },
+    {
+      "id": "P_FINE_B5_U21",
+      "name": "P_FINE_B5_U21",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 14170
+    },
+    {
+      "id": "P_FINE_B5_U22",
+      "name": "P_FINE_B5_U22",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 14420
+    },
+    {
+      "id": "P_FINE_B5_U23",
+      "name": "P_FINE_B5_U23",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 14420
+    },
+    {
+      "id": "P_FINE_B5_U24",
+      "name": "P_FINE_B5_U24",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 14420
+    },
+    {
+      "id": "P_FINE_B5_U25",
+      "name": "P_FINE_B5_U25",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 14420
+    },
+    {
+      "id": "P_FINE_B5_U26",
+      "name": "P_FINE_B5_U26",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 14670
+    },
+    {
+      "id": "P_FINE_B5_U27",
+      "name": "P_FINE_B5_U27",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 14670
+    },
+    {
+      "id": "P_FINE_B5_U28",
+      "name": "P_FINE_B5_U28",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 14670
+    },
+    {
+      "id": "P_FINE_B5_U29",
+      "name": "P_FINE_B5_U29",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 14670
+    },
+    {
+      "id": "P_FINE_B5_U30",
+      "name": "P_FINE_B5_U30",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 14920
+    },
+    {
+      "id": "P_FINE_B5_U31",
+      "name": "P_FINE_B5_U31",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 14920
+    },
+    {
+      "id": "P_FINE_B5_U32",
+      "name": "P_FINE_B5_U32",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 14920
+    },
+    {
+      "id": "P_FINE_B5_U33",
+      "name": "P_FINE_B5_U33",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 14920
+    },
+    {
+      "id": "P_FINE_B5_U34",
+      "name": "P_FINE_B5_U34",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 15170
+    },
+    {
+      "id": "P_FINE_B5_U35",
+      "name": "P_FINE_B5_U35",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 15170
+    },
+    {
+      "id": "P_FINE_B5_U36",
+      "name": "P_FINE_B5_U36",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 15170
+    },
+    {
+      "id": "P_FINE_B5_U37",
+      "name": "P_FINE_B5_U37",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 15170
+    },
+    {
+      "id": "P_FINE_B5_U38",
+      "name": "P_FINE_B5_U38",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 15420
+    },
+    {
+      "id": "P_FINE_B5_U39",
+      "name": "P_FINE_B5_U39",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 15420
+    },
+    {
+      "id": "P_FINE_B5_U40",
+      "name": "P_FINE_B5_U40",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 15420
+    },
+    {
+      "id": "P_FINE_B5_U41",
+      "name": "P_FINE_B5_U41",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 15420
+    },
+    {
+      "id": "P_FINE_B5_U42",
+      "name": "P_FINE_B5_U42",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 15670
+    },
+    {
+      "id": "P_FINE_B5_U43",
+      "name": "P_FINE_B5_U43",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 15670
+    },
+    {
+      "id": "P_FINE_B5_U44",
+      "name": "P_FINE_B5_U44",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 15670
+    },
+    {
+      "id": "P_FINE_B5_U45",
+      "name": "P_FINE_B5_U45",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 15670
+    },
+    {
+      "id": "P_FINE_B5_U46",
+      "name": "P_FINE_B5_U46",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 15920
+    },
+    {
+      "id": "P_FINE_B5_U47",
+      "name": "P_FINE_B5_U47",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 15920
+    },
+    {
+      "id": "P_FINE_B5_U48",
+      "name": "P_FINE_B5_U48",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 15920
+    },
+    {
+      "id": "P_FINE_B5_U49",
+      "name": "P_FINE_B5_U49",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 15920
+    },
+    {
+      "id": "P_FINE_B5_U50",
+      "name": "P_FINE_B5_U50",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 16170
+    },
+    {
+      "id": "P_FINE_B5_U51",
+      "name": "P_FINE_B5_U51",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 16170
+    },
+    {
+      "id": "P_FINE_B5_U52",
+      "name": "P_FINE_B5_U52",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 16170
+    },
+    {
+      "id": "P_FINE_B5_U53",
+      "name": "P_FINE_B5_U53",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 16170
+    },
+    {
+      "id": "P_FINE_B5_U54",
+      "name": "P_FINE_B5_U54",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 16420
+    },
+    {
+      "id": "P_FINE_B5_U55",
+      "name": "P_FINE_B5_U55",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 16420
+    },
+    {
+      "id": "P_FINE_B5_U56",
+      "name": "P_FINE_B5_U56",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 16420
+    },
+    {
+      "id": "P_FINE_B5_U57",
+      "name": "P_FINE_B5_U57",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 16420
+    },
+    {
+      "id": "P_FINE_B5_U58",
+      "name": "P_FINE_B5_U58",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 16670
+    },
+    {
+      "id": "P_FINE_B5_U59",
+      "name": "P_FINE_B5_U59",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 16670
+    },
+    {
+      "id": "P_FINE_B5_U60",
+      "name": "P_FINE_B5_U60",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 16670
+    },
+    {
+      "id": "P_FINE_B5_U61",
+      "name": "P_FINE_B5_U61",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 16670
+    },
+    {
+      "id": "P_FINE_B5_U62",
+      "name": "P_FINE_B5_U62",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 16920
+    },
+    {
+      "id": "P_FINE_B5_U63",
+      "name": "P_FINE_B5_U63",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "P_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 16920
+    },
+    {
+      "id": "P_FINE_DUMMY_U0",
+      "name": "P_FINE_DUMMY_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "LOP"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 16920
+    },
+    {
+      "id": "P_FINE_DUMMY_U1",
+      "name": "P_FINE_DUMMY_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEP",
+        "BOTTOM": "LOP"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 16920
+    },
+    {
+      "id": "REF_HIN",
+      "name": "REF_HIN",
+      "kind": "block",
+      "cell_name": "SAR12_REFMUX",
+      "pins": {
+        "VIN": "VINN",
+        "REF": "VREF",
+        "SAMPLE": "SAMPLE",
+        "SAMPLEB": "SAMPLEB",
+        "OUT": "HIN",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 17170
+    },
+    {
+      "id": "REF_LON",
+      "name": "REF_LON",
+      "kind": "block",
+      "cell_name": "SAR12_REFMUX",
+      "pins": {
+        "VIN": "VINN",
+        "REF": "VGND",
+        "SAMPLE": "SAMPLE",
+        "SAMPLEB": "SAMPLEB",
+        "OUT": "LON",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 17170
+    },
+    {
+      "id": "RESET_TOPN",
+      "name": "RESET_TOPN",
+      "kind": "block",
+      "cell_name": "SAR12_TG",
+      "pins": {
+        "A": "VCM",
+        "Y": "TOPN",
+        "EN": "SAMPLE",
+        "ENB": "SAMPLEB",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 17170
+    },
+    {
+      "id": "RESET_FINEN",
+      "name": "RESET_FINEN",
+      "kind": "block",
+      "cell_name": "SAR12_TG",
+      "pins": {
+        "A": "VCM",
+        "Y": "FINEN",
+        "EN": "SAMPLE",
+        "ENB": "SAMPLEB",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 17170
+    },
+    {
+      "id": "BRIDGEN",
+      "name": "BRIDGEN",
+      "kind": "block",
+      "cell_name": "SAR12_BRIDGE",
+      "pins": {
+        "TOP": "TOPN",
+        "FINE": "FINEN"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 17420
+    },
+    {
+      "id": "N_COARSE_B0_SW",
+      "name": "N_COARSE_B0_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "LON",
+        "LO": "HIN",
+        "BIT": "B6",
+        "OUT": "N_COARSE_B0",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 17420
+    },
+    {
+      "id": "N_COARSE_B0_U0",
+      "name": "N_COARSE_B0_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B0"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 17420
+    },
+    {
+      "id": "N_COARSE_B0_U1",
+      "name": "N_COARSE_B0_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B0"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 17420
+    },
+    {
+      "id": "N_COARSE_B1_SW",
+      "name": "N_COARSE_B1_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "LON",
+        "LO": "HIN",
+        "BIT": "B7",
+        "OUT": "N_COARSE_B1",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 17670
+    },
+    {
+      "id": "N_COARSE_B1_U0",
+      "name": "N_COARSE_B1_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B1"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 17670
+    },
+    {
+      "id": "N_COARSE_B1_U1",
+      "name": "N_COARSE_B1_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B1"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 17670
+    },
+    {
+      "id": "N_COARSE_B1_U2",
+      "name": "N_COARSE_B1_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B1"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 17670
+    },
+    {
+      "id": "N_COARSE_B1_U3",
+      "name": "N_COARSE_B1_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B1"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 17920
+    },
+    {
+      "id": "N_COARSE_B2_SW",
+      "name": "N_COARSE_B2_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "LON",
+        "LO": "HIN",
+        "BIT": "B8",
+        "OUT": "N_COARSE_B2",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 17920
+    },
+    {
+      "id": "N_COARSE_B2_U0",
+      "name": "N_COARSE_B2_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 17920
+    },
+    {
+      "id": "N_COARSE_B2_U1",
+      "name": "N_COARSE_B2_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 17920
+    },
+    {
+      "id": "N_COARSE_B2_U2",
+      "name": "N_COARSE_B2_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 18170
+    },
+    {
+      "id": "N_COARSE_B2_U3",
+      "name": "N_COARSE_B2_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 18170
+    },
+    {
+      "id": "N_COARSE_B2_U4",
+      "name": "N_COARSE_B2_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 18170
+    },
+    {
+      "id": "N_COARSE_B2_U5",
+      "name": "N_COARSE_B2_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 18170
+    },
+    {
+      "id": "N_COARSE_B2_U6",
+      "name": "N_COARSE_B2_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 18420
+    },
+    {
+      "id": "N_COARSE_B2_U7",
+      "name": "N_COARSE_B2_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B2"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 18420
+    },
+    {
+      "id": "N_COARSE_B3_SW",
+      "name": "N_COARSE_B3_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "LON",
+        "LO": "HIN",
+        "BIT": "B9",
+        "OUT": "N_COARSE_B3",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 18420
+    },
+    {
+      "id": "N_COARSE_B3_U0",
+      "name": "N_COARSE_B3_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 18420
+    },
+    {
+      "id": "N_COARSE_B3_U1",
+      "name": "N_COARSE_B3_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 18670
+    },
+    {
+      "id": "N_COARSE_B3_U2",
+      "name": "N_COARSE_B3_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 18670
+    },
+    {
+      "id": "N_COARSE_B3_U3",
+      "name": "N_COARSE_B3_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 18670
+    },
+    {
+      "id": "N_COARSE_B3_U4",
+      "name": "N_COARSE_B3_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 18670
+    },
+    {
+      "id": "N_COARSE_B3_U5",
+      "name": "N_COARSE_B3_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 18920
+    },
+    {
+      "id": "N_COARSE_B3_U6",
+      "name": "N_COARSE_B3_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 18920
+    },
+    {
+      "id": "N_COARSE_B3_U7",
+      "name": "N_COARSE_B3_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 18920
+    },
+    {
+      "id": "N_COARSE_B3_U8",
+      "name": "N_COARSE_B3_U8",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 18920
+    },
+    {
+      "id": "N_COARSE_B3_U9",
+      "name": "N_COARSE_B3_U9",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 19170
+    },
+    {
+      "id": "N_COARSE_B3_U10",
+      "name": "N_COARSE_B3_U10",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 19170
+    },
+    {
+      "id": "N_COARSE_B3_U11",
+      "name": "N_COARSE_B3_U11",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 19170
+    },
+    {
+      "id": "N_COARSE_B3_U12",
+      "name": "N_COARSE_B3_U12",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 19170
+    },
+    {
+      "id": "N_COARSE_B3_U13",
+      "name": "N_COARSE_B3_U13",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 19420
+    },
+    {
+      "id": "N_COARSE_B3_U14",
+      "name": "N_COARSE_B3_U14",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 19420
+    },
+    {
+      "id": "N_COARSE_B3_U15",
+      "name": "N_COARSE_B3_U15",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 19420
+    },
+    {
+      "id": "N_COARSE_B4_SW",
+      "name": "N_COARSE_B4_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "LON",
+        "LO": "HIN",
+        "BIT": "B10",
+        "OUT": "N_COARSE_B4",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 19420
+    },
+    {
+      "id": "N_COARSE_B4_U0",
+      "name": "N_COARSE_B4_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 19670
+    },
+    {
+      "id": "N_COARSE_B4_U1",
+      "name": "N_COARSE_B4_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 19670
+    },
+    {
+      "id": "N_COARSE_B4_U2",
+      "name": "N_COARSE_B4_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 19670
+    },
+    {
+      "id": "N_COARSE_B4_U3",
+      "name": "N_COARSE_B4_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 19670
+    },
+    {
+      "id": "N_COARSE_B4_U4",
+      "name": "N_COARSE_B4_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 19920
+    },
+    {
+      "id": "N_COARSE_B4_U5",
+      "name": "N_COARSE_B4_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 19920
+    },
+    {
+      "id": "N_COARSE_B4_U6",
+      "name": "N_COARSE_B4_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 19920
+    },
+    {
+      "id": "N_COARSE_B4_U7",
+      "name": "N_COARSE_B4_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 19920
+    },
+    {
+      "id": "N_COARSE_B4_U8",
+      "name": "N_COARSE_B4_U8",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 20170
+    },
+    {
+      "id": "N_COARSE_B4_U9",
+      "name": "N_COARSE_B4_U9",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 20170
+    },
+    {
+      "id": "N_COARSE_B4_U10",
+      "name": "N_COARSE_B4_U10",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 20170
+    },
+    {
+      "id": "N_COARSE_B4_U11",
+      "name": "N_COARSE_B4_U11",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 20170
+    },
+    {
+      "id": "N_COARSE_B4_U12",
+      "name": "N_COARSE_B4_U12",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 20420
+    },
+    {
+      "id": "N_COARSE_B4_U13",
+      "name": "N_COARSE_B4_U13",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 20420
+    },
+    {
+      "id": "N_COARSE_B4_U14",
+      "name": "N_COARSE_B4_U14",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 20420
+    },
+    {
+      "id": "N_COARSE_B4_U15",
+      "name": "N_COARSE_B4_U15",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 20420
+    },
+    {
+      "id": "N_COARSE_B4_U16",
+      "name": "N_COARSE_B4_U16",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 20670
+    },
+    {
+      "id": "N_COARSE_B4_U17",
+      "name": "N_COARSE_B4_U17",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 20670
+    },
+    {
+      "id": "N_COARSE_B4_U18",
+      "name": "N_COARSE_B4_U18",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 20670
+    },
+    {
+      "id": "N_COARSE_B4_U19",
+      "name": "N_COARSE_B4_U19",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 20670
+    },
+    {
+      "id": "N_COARSE_B4_U20",
+      "name": "N_COARSE_B4_U20",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 20920
+    },
+    {
+      "id": "N_COARSE_B4_U21",
+      "name": "N_COARSE_B4_U21",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 20920
+    },
+    {
+      "id": "N_COARSE_B4_U22",
+      "name": "N_COARSE_B4_U22",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 20920
+    },
+    {
+      "id": "N_COARSE_B4_U23",
+      "name": "N_COARSE_B4_U23",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 20920
+    },
+    {
+      "id": "N_COARSE_B4_U24",
+      "name": "N_COARSE_B4_U24",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 21170
+    },
+    {
+      "id": "N_COARSE_B4_U25",
+      "name": "N_COARSE_B4_U25",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 21170
+    },
+    {
+      "id": "N_COARSE_B4_U26",
+      "name": "N_COARSE_B4_U26",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 21170
+    },
+    {
+      "id": "N_COARSE_B4_U27",
+      "name": "N_COARSE_B4_U27",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 21170
+    },
+    {
+      "id": "N_COARSE_B4_U28",
+      "name": "N_COARSE_B4_U28",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 21420
+    },
+    {
+      "id": "N_COARSE_B4_U29",
+      "name": "N_COARSE_B4_U29",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 21420
+    },
+    {
+      "id": "N_COARSE_B4_U30",
+      "name": "N_COARSE_B4_U30",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 21420
+    },
+    {
+      "id": "N_COARSE_B4_U31",
+      "name": "N_COARSE_B4_U31",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 21420
+    },
+    {
+      "id": "N_COARSE_B5_SW",
+      "name": "N_COARSE_B5_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "LON",
+        "LO": "HIN",
+        "BIT": "B11",
+        "OUT": "N_COARSE_B5",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 21670
+    },
+    {
+      "id": "N_COARSE_B5_U0",
+      "name": "N_COARSE_B5_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 21670
+    },
+    {
+      "id": "N_COARSE_B5_U1",
+      "name": "N_COARSE_B5_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 21670
+    },
+    {
+      "id": "N_COARSE_B5_U2",
+      "name": "N_COARSE_B5_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 21670
+    },
+    {
+      "id": "N_COARSE_B5_U3",
+      "name": "N_COARSE_B5_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 21920
+    },
+    {
+      "id": "N_COARSE_B5_U4",
+      "name": "N_COARSE_B5_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 21920
+    },
+    {
+      "id": "N_COARSE_B5_U5",
+      "name": "N_COARSE_B5_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 21920
+    },
+    {
+      "id": "N_COARSE_B5_U6",
+      "name": "N_COARSE_B5_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 21920
+    },
+    {
+      "id": "N_COARSE_B5_U7",
+      "name": "N_COARSE_B5_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 22170
+    },
+    {
+      "id": "N_COARSE_B5_U8",
+      "name": "N_COARSE_B5_U8",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 22170
+    },
+    {
+      "id": "N_COARSE_B5_U9",
+      "name": "N_COARSE_B5_U9",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 22170
+    },
+    {
+      "id": "N_COARSE_B5_U10",
+      "name": "N_COARSE_B5_U10",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 22170
+    },
+    {
+      "id": "N_COARSE_B5_U11",
+      "name": "N_COARSE_B5_U11",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 22420
+    },
+    {
+      "id": "N_COARSE_B5_U12",
+      "name": "N_COARSE_B5_U12",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 22420
+    },
+    {
+      "id": "N_COARSE_B5_U13",
+      "name": "N_COARSE_B5_U13",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 22420
+    },
+    {
+      "id": "N_COARSE_B5_U14",
+      "name": "N_COARSE_B5_U14",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 22420
+    },
+    {
+      "id": "N_COARSE_B5_U15",
+      "name": "N_COARSE_B5_U15",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 22670
+    },
+    {
+      "id": "N_COARSE_B5_U16",
+      "name": "N_COARSE_B5_U16",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 22670
+    },
+    {
+      "id": "N_COARSE_B5_U17",
+      "name": "N_COARSE_B5_U17",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 22670
+    },
+    {
+      "id": "N_COARSE_B5_U18",
+      "name": "N_COARSE_B5_U18",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 22670
+    },
+    {
+      "id": "N_COARSE_B5_U19",
+      "name": "N_COARSE_B5_U19",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 22920
+    },
+    {
+      "id": "N_COARSE_B5_U20",
+      "name": "N_COARSE_B5_U20",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 22920
+    },
+    {
+      "id": "N_COARSE_B5_U21",
+      "name": "N_COARSE_B5_U21",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 22920
+    },
+    {
+      "id": "N_COARSE_B5_U22",
+      "name": "N_COARSE_B5_U22",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 22920
+    },
+    {
+      "id": "N_COARSE_B5_U23",
+      "name": "N_COARSE_B5_U23",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 23170
+    },
+    {
+      "id": "N_COARSE_B5_U24",
+      "name": "N_COARSE_B5_U24",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 23170
+    },
+    {
+      "id": "N_COARSE_B5_U25",
+      "name": "N_COARSE_B5_U25",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 23170
+    },
+    {
+      "id": "N_COARSE_B5_U26",
+      "name": "N_COARSE_B5_U26",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 23170
+    },
+    {
+      "id": "N_COARSE_B5_U27",
+      "name": "N_COARSE_B5_U27",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 23420
+    },
+    {
+      "id": "N_COARSE_B5_U28",
+      "name": "N_COARSE_B5_U28",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 23420
+    },
+    {
+      "id": "N_COARSE_B5_U29",
+      "name": "N_COARSE_B5_U29",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 23420
+    },
+    {
+      "id": "N_COARSE_B5_U30",
+      "name": "N_COARSE_B5_U30",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 23420
+    },
+    {
+      "id": "N_COARSE_B5_U31",
+      "name": "N_COARSE_B5_U31",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 23670
+    },
+    {
+      "id": "N_COARSE_B5_U32",
+      "name": "N_COARSE_B5_U32",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 23670
+    },
+    {
+      "id": "N_COARSE_B5_U33",
+      "name": "N_COARSE_B5_U33",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 23670
+    },
+    {
+      "id": "N_COARSE_B5_U34",
+      "name": "N_COARSE_B5_U34",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 23670
+    },
+    {
+      "id": "N_COARSE_B5_U35",
+      "name": "N_COARSE_B5_U35",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 23920
+    },
+    {
+      "id": "N_COARSE_B5_U36",
+      "name": "N_COARSE_B5_U36",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 23920
+    },
+    {
+      "id": "N_COARSE_B5_U37",
+      "name": "N_COARSE_B5_U37",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 23920
+    },
+    {
+      "id": "N_COARSE_B5_U38",
+      "name": "N_COARSE_B5_U38",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 23920
+    },
+    {
+      "id": "N_COARSE_B5_U39",
+      "name": "N_COARSE_B5_U39",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 24170
+    },
+    {
+      "id": "N_COARSE_B5_U40",
+      "name": "N_COARSE_B5_U40",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 24170
+    },
+    {
+      "id": "N_COARSE_B5_U41",
+      "name": "N_COARSE_B5_U41",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 24170
+    },
+    {
+      "id": "N_COARSE_B5_U42",
+      "name": "N_COARSE_B5_U42",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 24170
+    },
+    {
+      "id": "N_COARSE_B5_U43",
+      "name": "N_COARSE_B5_U43",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 24420
+    },
+    {
+      "id": "N_COARSE_B5_U44",
+      "name": "N_COARSE_B5_U44",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 24420
+    },
+    {
+      "id": "N_COARSE_B5_U45",
+      "name": "N_COARSE_B5_U45",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 24420
+    },
+    {
+      "id": "N_COARSE_B5_U46",
+      "name": "N_COARSE_B5_U46",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 24420
+    },
+    {
+      "id": "N_COARSE_B5_U47",
+      "name": "N_COARSE_B5_U47",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 24670
+    },
+    {
+      "id": "N_COARSE_B5_U48",
+      "name": "N_COARSE_B5_U48",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 24670
+    },
+    {
+      "id": "N_COARSE_B5_U49",
+      "name": "N_COARSE_B5_U49",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 24670
+    },
+    {
+      "id": "N_COARSE_B5_U50",
+      "name": "N_COARSE_B5_U50",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 24670
+    },
+    {
+      "id": "N_COARSE_B5_U51",
+      "name": "N_COARSE_B5_U51",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 24920
+    },
+    {
+      "id": "N_COARSE_B5_U52",
+      "name": "N_COARSE_B5_U52",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 24920
+    },
+    {
+      "id": "N_COARSE_B5_U53",
+      "name": "N_COARSE_B5_U53",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 24920
+    },
+    {
+      "id": "N_COARSE_B5_U54",
+      "name": "N_COARSE_B5_U54",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 24920
+    },
+    {
+      "id": "N_COARSE_B5_U55",
+      "name": "N_COARSE_B5_U55",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 25170
+    },
+    {
+      "id": "N_COARSE_B5_U56",
+      "name": "N_COARSE_B5_U56",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 25170
+    },
+    {
+      "id": "N_COARSE_B5_U57",
+      "name": "N_COARSE_B5_U57",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 25170
+    },
+    {
+      "id": "N_COARSE_B5_U58",
+      "name": "N_COARSE_B5_U58",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 25170
+    },
+    {
+      "id": "N_COARSE_B5_U59",
+      "name": "N_COARSE_B5_U59",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 25420
+    },
+    {
+      "id": "N_COARSE_B5_U60",
+      "name": "N_COARSE_B5_U60",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 25420
+    },
+    {
+      "id": "N_COARSE_B5_U61",
+      "name": "N_COARSE_B5_U61",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 25420
+    },
+    {
+      "id": "N_COARSE_B5_U62",
+      "name": "N_COARSE_B5_U62",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 25420
+    },
+    {
+      "id": "N_COARSE_B5_U63",
+      "name": "N_COARSE_B5_U63",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "TOPN",
+        "BOTTOM": "N_COARSE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 25670
+    },
+    {
+      "id": "N_FINE_B0_SW",
+      "name": "N_FINE_B0_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "LON",
+        "LO": "HIN",
+        "BIT": "B0",
+        "OUT": "N_FINE_B0",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 25670
+    },
+    {
+      "id": "N_FINE_B0_U0",
+      "name": "N_FINE_B0_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B0"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 25670
+    },
+    {
+      "id": "N_FINE_B0_U1",
+      "name": "N_FINE_B0_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B0"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 25670
+    },
+    {
+      "id": "N_FINE_B1_SW",
+      "name": "N_FINE_B1_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "LON",
+        "LO": "HIN",
+        "BIT": "B1",
+        "OUT": "N_FINE_B1",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 25920
+    },
+    {
+      "id": "N_FINE_B1_U0",
+      "name": "N_FINE_B1_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B1"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 25920
+    },
+    {
+      "id": "N_FINE_B1_U1",
+      "name": "N_FINE_B1_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B1"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 25920
+    },
+    {
+      "id": "N_FINE_B1_U2",
+      "name": "N_FINE_B1_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B1"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 25920
+    },
+    {
+      "id": "N_FINE_B1_U3",
+      "name": "N_FINE_B1_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B1"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 26170
+    },
+    {
+      "id": "N_FINE_B2_SW",
+      "name": "N_FINE_B2_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "LON",
+        "LO": "HIN",
+        "BIT": "B2",
+        "OUT": "N_FINE_B2",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 26170
+    },
+    {
+      "id": "N_FINE_B2_U0",
+      "name": "N_FINE_B2_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B2"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 26170
+    },
+    {
+      "id": "N_FINE_B2_U1",
+      "name": "N_FINE_B2_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B2"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 26170
+    },
+    {
+      "id": "N_FINE_B2_U2",
+      "name": "N_FINE_B2_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B2"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 26420
+    },
+    {
+      "id": "N_FINE_B2_U3",
+      "name": "N_FINE_B2_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B2"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 26420
+    },
+    {
+      "id": "N_FINE_B2_U4",
+      "name": "N_FINE_B2_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B2"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 26420
+    },
+    {
+      "id": "N_FINE_B2_U5",
+      "name": "N_FINE_B2_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B2"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 26420
+    },
+    {
+      "id": "N_FINE_B2_U6",
+      "name": "N_FINE_B2_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B2"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 26670
+    },
+    {
+      "id": "N_FINE_B2_U7",
+      "name": "N_FINE_B2_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B2"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 26670
+    },
+    {
+      "id": "N_FINE_B3_SW",
+      "name": "N_FINE_B3_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "LON",
+        "LO": "HIN",
+        "BIT": "B3",
+        "OUT": "N_FINE_B3",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 26670
+    },
+    {
+      "id": "N_FINE_B3_U0",
+      "name": "N_FINE_B3_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 26670
+    },
+    {
+      "id": "N_FINE_B3_U1",
+      "name": "N_FINE_B3_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 26920
+    },
+    {
+      "id": "N_FINE_B3_U2",
+      "name": "N_FINE_B3_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 26920
+    },
+    {
+      "id": "N_FINE_B3_U3",
+      "name": "N_FINE_B3_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 26920
+    },
+    {
+      "id": "N_FINE_B3_U4",
+      "name": "N_FINE_B3_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 26920
+    },
+    {
+      "id": "N_FINE_B3_U5",
+      "name": "N_FINE_B3_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 27170
+    },
+    {
+      "id": "N_FINE_B3_U6",
+      "name": "N_FINE_B3_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 27170
+    },
+    {
+      "id": "N_FINE_B3_U7",
+      "name": "N_FINE_B3_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 27170
+    },
+    {
+      "id": "N_FINE_B3_U8",
+      "name": "N_FINE_B3_U8",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 27170
+    },
+    {
+      "id": "N_FINE_B3_U9",
+      "name": "N_FINE_B3_U9",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 27420
+    },
+    {
+      "id": "N_FINE_B3_U10",
+      "name": "N_FINE_B3_U10",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 27420
+    },
+    {
+      "id": "N_FINE_B3_U11",
+      "name": "N_FINE_B3_U11",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 27420
+    },
+    {
+      "id": "N_FINE_B3_U12",
+      "name": "N_FINE_B3_U12",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 27420
+    },
+    {
+      "id": "N_FINE_B3_U13",
+      "name": "N_FINE_B3_U13",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 27670
+    },
+    {
+      "id": "N_FINE_B3_U14",
+      "name": "N_FINE_B3_U14",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 27670
+    },
+    {
+      "id": "N_FINE_B3_U15",
+      "name": "N_FINE_B3_U15",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B3"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 27670
+    },
+    {
+      "id": "N_FINE_B4_SW",
+      "name": "N_FINE_B4_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "LON",
+        "LO": "HIN",
+        "BIT": "B4",
+        "OUT": "N_FINE_B4",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 27670
+    },
+    {
+      "id": "N_FINE_B4_U0",
+      "name": "N_FINE_B4_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 27920
+    },
+    {
+      "id": "N_FINE_B4_U1",
+      "name": "N_FINE_B4_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 27920
+    },
+    {
+      "id": "N_FINE_B4_U2",
+      "name": "N_FINE_B4_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 27920
+    },
+    {
+      "id": "N_FINE_B4_U3",
+      "name": "N_FINE_B4_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 27920
+    },
+    {
+      "id": "N_FINE_B4_U4",
+      "name": "N_FINE_B4_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 28170
+    },
+    {
+      "id": "N_FINE_B4_U5",
+      "name": "N_FINE_B4_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 28170
+    },
+    {
+      "id": "N_FINE_B4_U6",
+      "name": "N_FINE_B4_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 28170
+    },
+    {
+      "id": "N_FINE_B4_U7",
+      "name": "N_FINE_B4_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 28170
+    },
+    {
+      "id": "N_FINE_B4_U8",
+      "name": "N_FINE_B4_U8",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 28420
+    },
+    {
+      "id": "N_FINE_B4_U9",
+      "name": "N_FINE_B4_U9",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 28420
+    },
+    {
+      "id": "N_FINE_B4_U10",
+      "name": "N_FINE_B4_U10",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 28420
+    },
+    {
+      "id": "N_FINE_B4_U11",
+      "name": "N_FINE_B4_U11",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 28420
+    },
+    {
+      "id": "N_FINE_B4_U12",
+      "name": "N_FINE_B4_U12",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 28670
+    },
+    {
+      "id": "N_FINE_B4_U13",
+      "name": "N_FINE_B4_U13",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 28670
+    },
+    {
+      "id": "N_FINE_B4_U14",
+      "name": "N_FINE_B4_U14",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 28670
+    },
+    {
+      "id": "N_FINE_B4_U15",
+      "name": "N_FINE_B4_U15",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 28670
+    },
+    {
+      "id": "N_FINE_B4_U16",
+      "name": "N_FINE_B4_U16",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 28920
+    },
+    {
+      "id": "N_FINE_B4_U17",
+      "name": "N_FINE_B4_U17",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 28920
+    },
+    {
+      "id": "N_FINE_B4_U18",
+      "name": "N_FINE_B4_U18",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 28920
+    },
+    {
+      "id": "N_FINE_B4_U19",
+      "name": "N_FINE_B4_U19",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 28920
+    },
+    {
+      "id": "N_FINE_B4_U20",
+      "name": "N_FINE_B4_U20",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 29170
+    },
+    {
+      "id": "N_FINE_B4_U21",
+      "name": "N_FINE_B4_U21",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 29170
+    },
+    {
+      "id": "N_FINE_B4_U22",
+      "name": "N_FINE_B4_U22",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 29170
+    },
+    {
+      "id": "N_FINE_B4_U23",
+      "name": "N_FINE_B4_U23",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 29170
+    },
+    {
+      "id": "N_FINE_B4_U24",
+      "name": "N_FINE_B4_U24",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 29420
+    },
+    {
+      "id": "N_FINE_B4_U25",
+      "name": "N_FINE_B4_U25",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 29420
+    },
+    {
+      "id": "N_FINE_B4_U26",
+      "name": "N_FINE_B4_U26",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 29420
+    },
+    {
+      "id": "N_FINE_B4_U27",
+      "name": "N_FINE_B4_U27",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 29420
+    },
+    {
+      "id": "N_FINE_B4_U28",
+      "name": "N_FINE_B4_U28",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 29670
+    },
+    {
+      "id": "N_FINE_B4_U29",
+      "name": "N_FINE_B4_U29",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 29670
+    },
+    {
+      "id": "N_FINE_B4_U30",
+      "name": "N_FINE_B4_U30",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 29670
+    },
+    {
+      "id": "N_FINE_B4_U31",
+      "name": "N_FINE_B4_U31",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B4"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 29670
+    },
+    {
+      "id": "N_FINE_B5_SW",
+      "name": "N_FINE_B5_SW",
+      "kind": "block",
+      "cell_name": "SAR12_BITMUX",
+      "pins": {
+        "HI": "LON",
+        "LO": "HIN",
+        "BIT": "B5",
+        "OUT": "N_FINE_B5",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 29920
+    },
+    {
+      "id": "N_FINE_B5_U0",
+      "name": "N_FINE_B5_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 29920
+    },
+    {
+      "id": "N_FINE_B5_U1",
+      "name": "N_FINE_B5_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 29920
+    },
+    {
+      "id": "N_FINE_B5_U2",
+      "name": "N_FINE_B5_U2",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 29920
+    },
+    {
+      "id": "N_FINE_B5_U3",
+      "name": "N_FINE_B5_U3",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 30170
+    },
+    {
+      "id": "N_FINE_B5_U4",
+      "name": "N_FINE_B5_U4",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 30170
+    },
+    {
+      "id": "N_FINE_B5_U5",
+      "name": "N_FINE_B5_U5",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 30170
+    },
+    {
+      "id": "N_FINE_B5_U6",
+      "name": "N_FINE_B5_U6",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 30170
+    },
+    {
+      "id": "N_FINE_B5_U7",
+      "name": "N_FINE_B5_U7",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 30420
+    },
+    {
+      "id": "N_FINE_B5_U8",
+      "name": "N_FINE_B5_U8",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 30420
+    },
+    {
+      "id": "N_FINE_B5_U9",
+      "name": "N_FINE_B5_U9",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 30420
+    },
+    {
+      "id": "N_FINE_B5_U10",
+      "name": "N_FINE_B5_U10",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 30420
+    },
+    {
+      "id": "N_FINE_B5_U11",
+      "name": "N_FINE_B5_U11",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 30670
+    },
+    {
+      "id": "N_FINE_B5_U12",
+      "name": "N_FINE_B5_U12",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 30670
+    },
+    {
+      "id": "N_FINE_B5_U13",
+      "name": "N_FINE_B5_U13",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 30670
+    },
+    {
+      "id": "N_FINE_B5_U14",
+      "name": "N_FINE_B5_U14",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 30670
+    },
+    {
+      "id": "N_FINE_B5_U15",
+      "name": "N_FINE_B5_U15",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 30920
+    },
+    {
+      "id": "N_FINE_B5_U16",
+      "name": "N_FINE_B5_U16",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 30920
+    },
+    {
+      "id": "N_FINE_B5_U17",
+      "name": "N_FINE_B5_U17",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 30920
+    },
+    {
+      "id": "N_FINE_B5_U18",
+      "name": "N_FINE_B5_U18",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 30920
+    },
+    {
+      "id": "N_FINE_B5_U19",
+      "name": "N_FINE_B5_U19",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 31170
+    },
+    {
+      "id": "N_FINE_B5_U20",
+      "name": "N_FINE_B5_U20",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 31170
+    },
+    {
+      "id": "N_FINE_B5_U21",
+      "name": "N_FINE_B5_U21",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 31170
+    },
+    {
+      "id": "N_FINE_B5_U22",
+      "name": "N_FINE_B5_U22",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 31170
+    },
+    {
+      "id": "N_FINE_B5_U23",
+      "name": "N_FINE_B5_U23",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 31420
+    },
+    {
+      "id": "N_FINE_B5_U24",
+      "name": "N_FINE_B5_U24",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 31420
+    },
+    {
+      "id": "N_FINE_B5_U25",
+      "name": "N_FINE_B5_U25",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 31420
+    },
+    {
+      "id": "N_FINE_B5_U26",
+      "name": "N_FINE_B5_U26",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 31420
+    },
+    {
+      "id": "N_FINE_B5_U27",
+      "name": "N_FINE_B5_U27",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 31670
+    },
+    {
+      "id": "N_FINE_B5_U28",
+      "name": "N_FINE_B5_U28",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 31670
+    },
+    {
+      "id": "N_FINE_B5_U29",
+      "name": "N_FINE_B5_U29",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 31670
+    },
+    {
+      "id": "N_FINE_B5_U30",
+      "name": "N_FINE_B5_U30",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 31670
+    },
+    {
+      "id": "N_FINE_B5_U31",
+      "name": "N_FINE_B5_U31",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 31920
+    },
+    {
+      "id": "N_FINE_B5_U32",
+      "name": "N_FINE_B5_U32",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 31920
+    },
+    {
+      "id": "N_FINE_B5_U33",
+      "name": "N_FINE_B5_U33",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 31920
+    },
+    {
+      "id": "N_FINE_B5_U34",
+      "name": "N_FINE_B5_U34",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 31920
+    },
+    {
+      "id": "N_FINE_B5_U35",
+      "name": "N_FINE_B5_U35",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 32170
+    },
+    {
+      "id": "N_FINE_B5_U36",
+      "name": "N_FINE_B5_U36",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 32170
+    },
+    {
+      "id": "N_FINE_B5_U37",
+      "name": "N_FINE_B5_U37",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 32170
+    },
+    {
+      "id": "N_FINE_B5_U38",
+      "name": "N_FINE_B5_U38",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 32170
+    },
+    {
+      "id": "N_FINE_B5_U39",
+      "name": "N_FINE_B5_U39",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 32420
+    },
+    {
+      "id": "N_FINE_B5_U40",
+      "name": "N_FINE_B5_U40",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 32420
+    },
+    {
+      "id": "N_FINE_B5_U41",
+      "name": "N_FINE_B5_U41",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 32420
+    },
+    {
+      "id": "N_FINE_B5_U42",
+      "name": "N_FINE_B5_U42",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 32420
+    },
+    {
+      "id": "N_FINE_B5_U43",
+      "name": "N_FINE_B5_U43",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 32670
+    },
+    {
+      "id": "N_FINE_B5_U44",
+      "name": "N_FINE_B5_U44",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 32670
+    },
+    {
+      "id": "N_FINE_B5_U45",
+      "name": "N_FINE_B5_U45",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 32670
+    },
+    {
+      "id": "N_FINE_B5_U46",
+      "name": "N_FINE_B5_U46",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 32670
+    },
+    {
+      "id": "N_FINE_B5_U47",
+      "name": "N_FINE_B5_U47",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 32920
+    },
+    {
+      "id": "N_FINE_B5_U48",
+      "name": "N_FINE_B5_U48",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 32920
+    },
+    {
+      "id": "N_FINE_B5_U49",
+      "name": "N_FINE_B5_U49",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 32920
+    },
+    {
+      "id": "N_FINE_B5_U50",
+      "name": "N_FINE_B5_U50",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 32920
+    },
+    {
+      "id": "N_FINE_B5_U51",
+      "name": "N_FINE_B5_U51",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 33170
+    },
+    {
+      "id": "N_FINE_B5_U52",
+      "name": "N_FINE_B5_U52",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 33170
+    },
+    {
+      "id": "N_FINE_B5_U53",
+      "name": "N_FINE_B5_U53",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 33170
+    },
+    {
+      "id": "N_FINE_B5_U54",
+      "name": "N_FINE_B5_U54",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 33170
+    },
+    {
+      "id": "N_FINE_B5_U55",
+      "name": "N_FINE_B5_U55",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 33420
+    },
+    {
+      "id": "N_FINE_B5_U56",
+      "name": "N_FINE_B5_U56",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 33420
+    },
+    {
+      "id": "N_FINE_B5_U57",
+      "name": "N_FINE_B5_U57",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 33420
+    },
+    {
+      "id": "N_FINE_B5_U58",
+      "name": "N_FINE_B5_U58",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 33420
+    },
+    {
+      "id": "N_FINE_B5_U59",
+      "name": "N_FINE_B5_U59",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 33670
+    },
+    {
+      "id": "N_FINE_B5_U60",
+      "name": "N_FINE_B5_U60",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 33670
+    },
+    {
+      "id": "N_FINE_B5_U61",
+      "name": "N_FINE_B5_U61",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 33670
+    },
+    {
+      "id": "N_FINE_B5_U62",
+      "name": "N_FINE_B5_U62",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 33670
+    },
+    {
+      "id": "N_FINE_B5_U63",
+      "name": "N_FINE_B5_U63",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "N_FINE_B5"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 33920
+    },
+    {
+      "id": "N_FINE_DUMMY_U0",
+      "name": "N_FINE_DUMMY_U0",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "HIN"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 33920
+    },
+    {
+      "id": "N_FINE_DUMMY_U1",
+      "name": "N_FINE_DUMMY_U1",
+      "kind": "block",
+      "cell_name": "SAR12_UNIT",
+      "pins": {
+        "TOP": "FINEN",
+        "BOTTOM": "HIN"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 33920
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {
+    "INV": {
+      "schema_version": 1,
+      "connectivity_mode": "explicit",
+      "ports": [
+        "A",
+        "Y",
+        "VPWR",
+        "VGND"
+      ],
+      "devices": [
+        {
+          "id": "MP",
+          "name": "MP",
+          "kind": "pmos",
+          "model": "sky130_fd_pr__pfet_01v8_hvt",
+          "pins": {
+            "D": "Y",
+            "G": "A",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 160
+        },
+        {
+          "id": "MN",
+          "name": "MN",
+          "kind": "nmos",
+          "model": "sky130_fd_pr__nfet_01v8",
+          "pins": {
+            "D": "Y",
+            "G": "A",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 370,
+          "y": 160
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "SAR12_REFMUX": {
+      "schema_version": 1,
+      "ports": [
+        "VIN",
+        "REF",
+        "SAMPLE",
+        "SAMPLEB",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "ACQUIRE",
+          "name": "ACQUIRE",
+          "kind": "block",
+          "cell_name": "SAR12_TG",
+          "pins": {
+            "A": "VIN",
+            "Y": "OUT",
+            "EN": "SAMPLE",
+            "ENB": "SAMPLEB",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 170
+        },
+        {
+          "id": "CONVERT",
+          "name": "CONVERT",
+          "kind": "block",
+          "cell_name": "SAR12_TG",
+          "pins": {
+            "A": "REF",
+            "Y": "OUT",
+            "EN": "SAMPLEB",
+            "ENB": "SAMPLE",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 170
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "SAR12_TG": {
+      "schema_version": 1,
+      "ports": [
+        "A",
+        "Y",
+        "EN",
+        "ENB",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "N",
+          "name": "N",
+          "kind": "nmos",
+          "pins": {
+            "D": "A",
+            "G": "EN",
+            "S": "Y",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 8,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 170,
+          "model": "sky130_fd_pr__nfet_01v8"
+        },
+        {
+          "id": "P",
+          "name": "P",
+          "kind": "pmos",
+          "pins": {
+            "D": "A",
+            "G": "ENB",
+            "S": "Y",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 12,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 420,
+          "y": 170,
+          "model": "sky130_fd_pr__pfet_01v8_hvt"
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "SAR12_BRIDGE": {
+      "schema_version": 1,
+      "ports": [
+        "TOP",
+        "FINE"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "C_BRIDGE",
+          "name": "C_BRIDGE",
+          "kind": "capacitor",
+          "pins": {
+            "+": "TOP",
+            "-": "FINE"
+          },
+          "parameters": {
+            "value": 4.0634920634920637e-13
+          },
+          "x": 180,
+          "y": 170
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "SAR12_BITMUX": {
+      "schema_version": 1,
+      "ports": [
+        "HI",
+        "LO",
+        "BIT",
+        "OUT",
+        "VPWR",
+        "VGND"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "INV",
+          "name": "INV",
+          "kind": "block",
+          "cell_name": "INV",
+          "pins": {
+            "A": "BIT",
+            "Y": "BITB",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 170,
+          "y": 170
+        },
+        {
+          "id": "HIGH",
+          "name": "HIGH",
+          "kind": "block",
+          "cell_name": "SAR12_TG",
+          "pins": {
+            "A": "HI",
+            "Y": "OUT",
+            "EN": "BIT",
+            "ENB": "BITB",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 400,
+          "y": 170
+        },
+        {
+          "id": "LOW",
+          "name": "LOW",
+          "kind": "block",
+          "cell_name": "SAR12_TG",
+          "pins": {
+            "A": "LO",
+            "Y": "OUT",
+            "EN": "BITB",
+            "ENB": "BIT",
+            "VPWR": "VPWR",
+            "VGND": "VGND"
+          },
+          "parameters": {},
+          "x": 630,
+          "y": 170
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    },
+    "SAR12_UNIT": {
+      "schema_version": 1,
+      "ports": [
+        "TOP",
+        "BOTTOM"
+      ],
+      "connectivity_mode": "explicit",
+      "devices": [
+        {
+          "id": "C_UNIT",
+          "name": "C_UNIT",
+          "kind": "capacitor",
+          "pins": {
+            "+": "TOP",
+            "-": "BOTTOM"
+          },
+          "parameters": {
+            "value": 2e-13
+          },
+          "x": 180,
+          "y": 170
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    }
+  }
+}

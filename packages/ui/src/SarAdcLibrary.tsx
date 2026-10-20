@@ -1,10 +1,10 @@
 import {useEffect,useRef,useState} from 'react';
 import {rpc,type DesignCatalog,type Project,type Scene} from '@mos/contracts';
 import {defaultChipLimits} from './ChipEnvelope';
-interface Props{catalog:DesignCatalog;transport:typeof rpc;readOnly:boolean;shared:boolean;onProject:(p:Project,s:Scene)=>void|Promise<void>}
-const name=(label:string)=>`SAR8 v0.22 · ${label.replace(/^SAR · /,'')}`;
-export default function SarAdcLibrary({catalog,transport,readOnly,shared,onProject}:Props){
- const blocks=catalog.templates.filter(t=>t.id.startsWith('sar8_')||t.id==='sar_adc8');
+interface Props{catalog:DesignCatalog;transport:typeof rpc;readOnly:boolean;shared:boolean;bits?:8|12;onProject:(p:Project,s:Scene)=>void|Promise<void>}
+export default function SarAdcLibrary({catalog,transport,readOnly,shared,onProject,bits=8}:Props){
+ const name=(label:string)=>bits===8?`SAR8 v0.22 · ${label.replace(/^SAR · /,'')}`:`SAR12 · ${label.replace(/^SAR12 · /,'')}`;
+ const blocks=catalog.templates.filter(t=>t.id.startsWith(`sar${bits}_`)||t.id===`sar_adc${bits}`);
  const [busy,setBusy]=useState(false),[error,setError]=useState(''),[created,setCreated]=useState<Record<string,string>>({});
  const commands=useRef<Record<string,string>>({}),alive=useRef(true);
  useEffect(()=>{alive.current=true;return()=>{alive.current=false;};},[]);
@@ -12,10 +12,10 @@ export default function SarAdcLibrary({catalog,transport,readOnly,shared,onProje
  const work=async(fn:()=>Promise<void>)=>{setBusy(true);setError('');try{await fn();}catch(c){if(alive.current)setError(c instanceof Error?c.message:String(c));}finally{if(alive.current)setBusy(false);}};
  const read=()=>work(async()=>{const projects=await transport<Project[]>('project.list',{metadata_only:true});const found:Record<string,string>={};for(const b of blocks){const p=projects.filter(p=>p.cell===b.id&&p.name===name(b.name)).at(-1);if(p)found[b.id]=p.id;}if(alive.current)setCreated(found);});
  const build=()=>work(async()=>{let root='';for(const b of blocks){if(!alive.current)return;
-   let id=created[b.id];if(!id){commands.current[b.id]??=crypto.randomUUID();const p=await transport<Project>('design.create_template',{template_id:b.id,name:name(b.name),parameters:b.parameter_defaults,physical_core:false,chip_limits:defaultChipLimits,command_id:commands.current[b.id]});id=p.id;if(alive.current)setCreated(v=>({...v,[b.id]:id}));}if(b.id==='sar_adc8')root=id;
+   let id=created[b.id];if(!id){commands.current[b.id]??=crypto.randomUUID();const p=await transport<Project>('design.create_template',{template_id:b.id,name:name(b.name),parameters:b.parameter_defaults,physical_core:false,chip_limits:defaultChipLimits,command_id:commands.current[b.id]});id=p.id;if(alive.current)setCreated(v=>({...v,[b.id]:id}));}if(b.id===`sar_adc${bits}`)root=id;
  }if(root&&alive.current)await open(root);});
  if(!blocks.length)return null;
- return <section className="it-adc-library" data-testid="sar-adc-library"><h4>8비트 SAR ADC · 샘플링부터 CODE/VALID까지</h4><p>256개 동일 단위 C · 128:64:32:16:8:4:2:1 + dummy. 실제 MOS 비교기의 MSB→LSB 판단을 RTL·합성 gate·CMOS 연결 회로와 대조합니다.</p><p className="it-muted">기본 VREF 1.2V · 1 LSB = 4.6875mV · 획득 2µs + 비트당 2µs. 8비트 출력과 ENOB는 별도입니다. analog core만 실제 물리 배치/PEX를 지원하며 전체 제어기 타이밍·칩 제작 검증은 별도입니다.</p>
+ return <section className="it-adc-library" data-testid={bits===8?'sar-adc-library':'sar12-adc-library'}><h4>{bits}비트 SAR ADC · 샘플링부터 CODE/VALID까지</h4>{bits===8?<><p>256개 동일 단위 C · 128:64:32:16:8:4:2:1 + dummy. 실제 MOS 비교기의 MSB→LSB 판단을 RTL·합성 gate·CMOS 연결 회로와 대조합니다.</p><p className="it-muted">기본 VREF 1.2V · 1 LSB = 4.6875mV · 획득 2µs + 비트당 2µs. 8비트 출력과 ENOB는 별도입니다. analog core만 실제 물리 배치/PEX를 지원하며 전체 제어기 타이밍·칩 제작 검증은 별도입니다.</p></>:<><p>차동 6+6 분할 CDAC · 508개 200fF unit + bridge 2개 · 2단 preamp·동적 래치 · 합성 12bit 제어기. 비트별 unit 쌍을 같은 중심에 배치하고 배선 기생은 실제 추출로 확인합니다.</p><p className="it-muted">차동 범위 ±1.2V · 1 LSB = 585.9375µV · 목표 영역 1,000×1,000µm, edge 10µm. 실제 12회 판단과 RTL·gate·CMOS graph를 대조합니다. 전체 제어기 마스크·잡음·편차·디지털 timing과 제조 승인은 별도입니다.</p><a href="https://arxiv.org/abs/2610.15240" target="_blank" rel="noreferrer">참고 논문과 검증 관점 ↗</a><button className="button" disabled={busy||readOnly||shared} onClick={()=>void work(async()=>{commands.current.physical??=crypto.randomUUID();const p=await transport<Project>('design.create_template',{template_id:'sar12_analog',name:'SAR12 · 영역 내 실제 아날로그 마스크',parameters:blocks.find(b=>b.id==='sar12_analog')?.parameter_defaults||{},physical_core:true,chip_limits:defaultChipLimits,command_id:commands.current.physical});await onProject(p,await transport<Scene>('view.get_scene',{project_id:p.id,max_shapes:2000}));})}>1mm² 아날로그 코어 마스크 생성</button></>}
  <button disabled={busy} onClick={()=>void read()}>기존 SAR 프로젝트 읽기</button><div className="it-table-wrap"><table><thead><tr><th>하위 블록</th><th>포트</th><th>프로젝트</th></tr></thead><tbody>{blocks.map(b=><tr key={b.id}><td>{b.name.replace(/^SAR · /,'')}</td><td><code>{b.ports.join(', ')}</code></td><td>{created[b.id]?<button disabled={busy} onClick={()=>void work(()=>open(created[b.id]))}>SAR 블록 열기</button>:'미생성'}</td></tr>)}</tbody></table></div>
- {error&&<p className="it-error" role="alert">{error}</p>}<button className="button primary" disabled={busy||readOnly||shared||Object.keys(created).length===blocks.length} onClick={()=>void build()}>{busy?'실제 회로 생성 중…':`${blocks.length}개 SAR 블록 생성 · 전체 ADC 열기`}</button></section>;
+ {error&&<p className="it-error" role="alert">{error}</p>}<button className="button primary" disabled={busy||readOnly||shared||blocks.every(b=>!!created[b.id])} onClick={()=>void build()}>{busy?'실제 회로 생성 중…':`${blocks.length}개 SAR 블록 생성 · 전체 ADC 열기`}</button></section>;
 }

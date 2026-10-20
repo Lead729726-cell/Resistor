@@ -171,6 +171,7 @@ function DesignTools({ project, scene, transport = rpc, readOnly = false, shared
     {catalog && <OscillatorLibrary catalog={catalog} disabled={busy||readOnly||shared} onSelect={id=>{applyTemplate(id);setName(catalog.templates.find(t=>t.id===id)?.name||'새 발진기');}}/>}
     {catalog && <AnalogSocLibrary catalog={catalog} transport={transport} readOnly={readOnly} shared={shared} onProject={onProject}/>}
     {catalog && <details><summary>SAR ADC · 8개 블록 라이브러리</summary><SarAdcLibrary catalog={catalog} transport={transport} readOnly={readOnly} shared={shared} onProject={onProject}/></details>}
+    {catalog && <details><summary>12bit SAR ADC · 논문 기반 분할 CDAC와 1mm² 영역</summary><SarAdcLibrary bits={12} catalog={catalog} transport={transport} readOnly={readOnly} shared={shared} onProject={onProject}/></details>}
     <ChipEnvelope project={project} transport={transport} readOnly={readOnly} shared={shared} onProject={onProject}/>
     <label className="it-check"><input type="checkbox" checked={bounded} onChange={e=>setBounded(e.target.checked)}/>새 template에 칩 영역 제한 · 여러 줄 배치 사용</label>
     {bounded&&<ChipLimitFields value={chipLimits} onChange={setChipLimits} disabled={busy||readOnly||shared}/>}

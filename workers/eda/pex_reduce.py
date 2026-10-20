@@ -12,11 +12,11 @@ import digital_units
 from geometry import EDAError
 
 SCALES={'':1,'t':1e12,'g':1e9,'meg':1e6,'k':1e3,'m':1e-3,'u':1e-6,'n':1e-9,'p':1e-12,'f':1e-15}
-def number(token):
+def number(token,*,allow_zero=False):
     m=re.fullmatch(r'([+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?)([A-Za-z]*)',token)
     if not m or m[2].lower() not in SCALES:return None
     v=float(m[1])*SCALES[m[2].lower()]
-    return v if math.isfinite(v) and v>0 else None
+    return v if math.isfinite(v) and (v>0 or allow_zero and v==0) else None
 
 def reduce_text(text,protected=()):
     keep={n.lower() for n in protected};edges={};adj=defaultdict(set);others=[];names=set();start=None;finish=None

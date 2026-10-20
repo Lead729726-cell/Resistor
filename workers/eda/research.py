@@ -16,6 +16,8 @@ def sources():
 
 
 def references(kind):
+    if kind.startswith('sar12_') or kind=='sar_adc12':
+        return ['vibe-tapeout-2026', 'clock-gating-2026']
     if kind.startswith('osc_'):
         return ['ti-schmitt-2025', 'ti-relaxation-2024']
     if kind.startswith('cell_') or kind == 'mux4':
@@ -35,7 +37,7 @@ def record(kind):
     document = sources()
     by_id = {p['id']: p for p in document['papers']}
     ids = references(kind)
-    return dict(schema_version=1, review_version=VERSION, reviewed_at='2026-10-16' if kind.startswith('osc_') else document['reviewed_at'],
+    return dict(schema_version=1, review_version=VERSION, reviewed_at='2026-10-20' if kind.startswith('sar12_') or kind=='sar_adc12' else '2026-10-16' if kind.startswith('osc_') else document['reviewed_at'],
                 reference_ids=ids, references=[copy.deepcopy(by_id[i]) for i in ids],
                 relationship='method-inspired review; existing owned circuits, not a reproduction of the cited chips',
                 paper_performance_reproduced=False,
@@ -115,6 +117,10 @@ def annotate(p, run, settings):
         w = waves['supply_current']
         metrics['supply'] = M.supply_metrics(w, w['x'][0], w['x'][-1], settings.get('supply_V', p['testbench']['supply_V']))
         metrics['supply']['sample_scope']='Integration of the returned trace; ADC raw-source energy is reported separately before display thinning.'
+        raw=run.get('measurements',{}).get('source_energy',{}).get('9') if kind.startswith('sar12_') or kind=='sar_adc12' else None
+        if raw:
+            metrics['supply'].update(energy_J=raw['energy_J'],average_power_W=raw['average_power_W'],average_current_A=raw['average_power_W']/raw['source_voltage_V'],peak_current_A=raw['peak_current_A'],minimum_current_A=raw['minimum_current_A'],sample_scope='Every original adaptive-step analog VDD sample, integrated before display thinning. External driver/digital-controller power excluded.')
+            metrics['source']='native raw-source integration; display decimation is not used for energy'
     else:
         metrics['supply'] = dict(available=False, reason='No analog supply-current trace; RTL/gate replay is not transistor power.')
     for name in ('OUT', 'Y', 'INT_OUT', 'TOP'):

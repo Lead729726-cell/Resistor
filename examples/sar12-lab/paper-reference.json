@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "review_version": "literature-review-20261013-v1",
+  "reviewed_at": "2026-10-20",
+  "reference_ids": [
+    "vibe-tapeout-2026",
+    "clock-gating-2026"
+  ],
+  "references": [
+    {
+      "id": "vibe-tapeout-2026",
+      "title": "The Era of Vibe Tapeout: Dark Age or Golden Age for Analog Circuit Design?",
+      "authors": "Kentaro Yoshioka",
+      "date": "2026-10-11",
+      "venue": "arXiv preprint v1",
+      "doi": "10.48550/arXiv.2610.15240",
+      "url": "https://arxiv.org/abs/2610.15240",
+      "read_scope": "Full HTML v1: benchmark specification, CDAC coupling, comparator asymmetry, independent post-PEX verification and extraction caveats",
+      "technology": "Paper benchmark: 11-bit SKY130 SAR. This implementation is a new 12-bit, 6+6 split-CDAC research prototype.",
+      "adopted": "Actual retained-charge decisions; independent raw-code and RTL/gate/IR checks; shared unit centroids; explicit signal-coupling audit and unqualified extraction completeness.",
+      "not_reproduced": "Paper circuit, 5.12 MS/s benchmark, area/power/SNDR claims, porting process or tapeout. This prototype uses a slower external control bridge and an analog-only physical adapter."
+    },
+    {
+      "id": "clock-gating-2026",
+      "title": "Clock-Gating Insertion Strategies on an Open-Source MSP430 Core: A Reproducible PPA Study and a Gate-Level Simulation Caveat",
+      "authors": "Xingran Huang; Qiming Guo; Jinwen Tang; Wenqi Jia; Dongzheng Wang",
+      "date": "2026-08-31",
+      "venue": "arXiv preprint v1; authors report acceptance at IEEE UEMCON 2026",
+      "doi": "10.48550/arXiv.2608.30954",
+      "url": "https://arxiv.org/abs/2608.30954",
+      "read_scope": "Full HTML, sections IV-B–D and V-G",
+      "technology": "openMSP430, commercial 32 nm synthesis flow; not this accumulator CPU",
+      "adopted": "Keep RTL/gate/CMOS replay and transistor timing as distinct evidence; explicitly report unavailable clock-gating/STA closure.",
+      "not_reproduced": "ICG insertion, MSP430 architecture, SDF/STA closure or reported PPA savings."
+    }
+  ],
+  "relationship": "method-inspired review; existing owned circuits, not a reproduction of the cited chips",
+  "paper_performance_reproduced": false,
+  "qualification": "not-run; actual revision-bound engine results are required",
+  "pending": [
+    "Thermal/flicker noise and mismatch yield except explicitly executed studies.",
+    "Full PVT/RC, EM/IR, ESD, antenna/density, foundry signoff.",
+    "Complete sequential timing, STA/Liberty and physical CPU/ADC-controller closure."
+  ]
+}

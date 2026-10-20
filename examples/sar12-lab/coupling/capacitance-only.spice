@@ -1,0 +1,2369 @@
+* NGSPICE file created from sar12_analog.ext - technology: sky130A
+
+.subckt sar12_analog VPWR VINP VINN TOPP TOPN SAMPLE EVAL COMPN B1 B0 B11 VREF VCM
++ B2 B3 COMP B4 B8 VGND B5 B6 B7 B10 B9
+X0 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X1 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X2 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X3 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X4 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X5 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X6 DAC__FINEP DAC__P_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X7 VPWR B4 DAC__N_FINE_B4_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X8 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X9 DAC__N_COARSE_B1 DAC__N_COARSE_B1_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X10 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X11 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X12 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X13 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X14 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X15 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X16 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X17 VPWR COMPARE_BIAS_RES_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X18 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X19 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X20 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X21 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X22 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X23 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X24 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X25 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X26 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X27 VPWR B10 DAC__P_COARSE_B4_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X28 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X29 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X30 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X31 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X32 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X33 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X34 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X35 DAC__N_COARSE_B4 B10 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X36 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X37 COMPARE_PRE1_LOAD_OUTP_R0_N0 COMPARE_PRE1_LOAD_OUTP_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X38 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X39 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X40 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X41 DAC__FINEP DAC__P_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X42 VPWR COMPARE__LATCH__QN COMPARE__LATCH__OUTP_B VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X43 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X44 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X45 DAC__N_FINE_B4 DAC__N_FINE_B4_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X46 DAC__FINEP SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X47 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X48 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X49 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X50 COMPARE_PRE0_LOAD_OUTN_R0_N0 COMPARE_PRE0_LOAD_OUTN_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X51 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X52 TOPP SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X53 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X54 DAC__N_FINE_B3 DAC__N_FINE_B3_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X55 VPWR SAMPLE DAC__SAMPLEB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X56 DAC__N_COARSE_B3 B9 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X57 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X58 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X59 DAC__N_COARSE_B4 DAC__N_COARSE_B4_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X60 DAC__P_FINE_B2 B2 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X61 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X62 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X63 DAC__N_FINE_B4 DAC__N_FINE_B4_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X64 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X65 VPWR COMPARE_PRE1_LOAD_OUTP_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X66 TOPN DAC__N_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X67 VGND COMPARE__LATCH__QP COMPARE__LATCH__OUTN_B VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X68 DAC__N_FINE_B1 B1 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X69 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X70 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X71 VGND EVAL COMPARE__LATCH__TAIL VGND sky130_fd_pr__nfet_01v8 ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X72 VPWR B9 DAC__N_COARSE_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X73 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X74 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X75 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X76 TOPP DAC__P_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X77 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X78 COMPARE__LATCH__TAIL COMPARE__PRE1P COMPARE__LATCH__FN VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X79 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X80 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X81 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X82 COMPARE__LATCH__FP COMPARE__LATCH__QP COMPARE__LATCH__QN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X83 DAC__HIN SAMPLE VREF VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X84 DAC__N_COARSE_B4 DAC__N_COARSE_B4_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X85 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X86 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X87 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X88 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X89 DAC__P_COARSE_B0 DAC__P_COARSE_B0_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X90 VPWR B7 DAC__P_COARSE_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X91 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X92 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X93 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X94 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X95 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X96 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X97 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X98 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X99 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X100 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X101 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X102 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X103 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X104 TOPN DAC__N_COARSE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X105 DAC__LON DAC__SAMPLEB VINN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X106 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X107 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X108 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X109 VGND B3 DAC__P_FINE_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X110 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X111 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X112 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X113 DAC__N_COARSE_B1 DAC__N_COARSE_B1_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X114 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X115 DAC__P_FINE_B4 DAC__P_FINE_B4_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X116 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X117 DAC__FINEP DAC__P_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X118 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X119 VGND B10 DAC__N_COARSE_B4_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X120 DAC__FINEP DAC__LOP sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X121 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X122 DAC__P_FINE_B1 B1 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X123 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X124 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X125 VPWR B5 DAC__P_FINE_B5_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X126 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X127 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X128 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X129 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X130 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X131 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X132 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X133 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X134 DAC__N_FINE_B2 B2 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X135 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X136 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X137 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X138 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X139 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X140 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X141 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X142 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X143 COMPARE__PRE0__TAIL TOPN COMPARE__PRE0N VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X144 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X145 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X146 VPWR B2 DAC__N_FINE_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X147 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X148 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X149 TOPP DAC__P_COARSE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X150 DAC__LOP SAMPLE VINP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X151 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X152 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X153 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X154 DAC__FINEP DAC__P_FINE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X155 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X156 VPWR B0 DAC__P_FINE_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X157 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X158 DAC__N_FINE_B2 DAC__N_FINE_B2_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X159 DAC__P_COARSE_B0 B6 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X160 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X161 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X162 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X163 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X164 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X165 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X166 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X167 DAC__N_COARSE_B1 B7 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X168 DAC__P_COARSE_B3 DAC__P_COARSE_B3_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X169 TOPN DAC__N_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X170 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X171 COMPARE_BIAS_RES_R0_N1 COMPARE__BIAS VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X172 COMPARE__LATCH__TAIL COMPARE__PRE1N COMPARE__LATCH__FP VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X173 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X174 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X175 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X176 VPWR COMPARE_PRE0_LOAD_OUTN_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X177 DAC__N_FINE_B2 DAC__N_FINE_B2_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X178 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X179 VPWR B11 DAC__N_COARSE_B5_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X180 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X181 VPWR B7 DAC__N_COARSE_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X182 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X183 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X184 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X185 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X186 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X187 DAC__FINEP DAC__P_FINE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X188 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X189 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X190 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X191 DAC__HIP DAC__SAMPLEB VREF VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X192 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X193 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X194 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X195 DAC__FINEN DAC__N_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X196 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X197 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X198 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X199 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X200 COMPARE_PRE0_LOAD_OUTP_R0_N1 COMPARE__PRE0P VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X201 DAC__P_COARSE_B2 B8 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X202 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X203 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X204 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X205 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X206 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X207 VGND B5 DAC__N_FINE_B5_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X208 DAC__P_COARSE_B2 DAC__P_COARSE_B2_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X209 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X210 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X211 VPWR EVAL COMPARE__LATCH__QN VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X212 VPWR B6 DAC__N_COARSE_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X213 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X214 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X215 VGND B2 DAC__N_FINE_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X216 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X217 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X218 VGND B9 DAC__N_COARSE_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X219 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X220 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X221 DAC__P_FINE_B1 DAC__P_FINE_B1_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X222 DAC__FINEP DAC__LOP sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X223 DAC__P_COARSE_B1 DAC__P_COARSE_B1_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X224 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X225 VPWR B4 DAC__P_FINE_B4_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X226 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X227 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X228 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X229 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X230 DAC__P_COARSE_B5 B11 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X231 DAC__P_FINE_B4 B4 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X232 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X233 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X234 VPWR B2 DAC__P_FINE_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X235 DAC__P_FINE_B5 B5 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X236 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X237 VGND B1 DAC__P_FINE_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X238 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X239 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X240 DAC__P_FINE_B1 DAC__P_FINE_B1_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X241 DAC__N_COARSE_B0 B6 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X242 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X243 TOPN DAC__N_COARSE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X244 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X245 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X246 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X247 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X248 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X249 VGND B7 DAC__N_COARSE_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X250 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X251 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X252 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X253 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X254 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X255 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X256 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X257 VGND COMPARE__BIAS COMPARE__PRE0__TAIL VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=1
+X258 DAC__P_COARSE_B4 DAC__P_COARSE_B4_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X259 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X260 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X261 DAC__P_FINE_B5 DAC__P_FINE_B5_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X262 COMPARE__PRE0__TAIL TOPP COMPARE__PRE0P VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X263 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X264 DAC__P_FINE_B1 B1 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X265 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X266 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X267 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X268 DAC__N_COARSE_B0 DAC__N_COARSE_B0_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X269 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X270 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X271 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X272 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X273 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X274 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X275 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X276 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X277 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X278 VGND B5 DAC__P_FINE_B5_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X279 DAC__P_FINE_B5 DAC__P_FINE_B5_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X280 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X281 DAC__N_FINE_B2 B2 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X282 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X283 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X284 VGND B6 DAC__N_COARSE_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X285 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X286 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X287 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X288 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X289 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X290 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X291 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X292 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X293 DAC__N_FINE_B0 DAC__N_FINE_B0_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X294 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X295 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X296 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X297 DAC__P_COARSE_B1 B7 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X298 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X299 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X300 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X301 DAC__FINEN DAC__N_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X302 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X303 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X304 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X305 DAC__LON DAC__SAMPLEB VGND VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X306 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X307 VGND B2 DAC__P_FINE_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X308 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X309 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X310 VPWR EVAL COMPARE__LATCH__QP VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X311 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X312 VGND B6 DAC__P_COARSE_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X313 DAC__N_FINE_B0 DAC__N_FINE_B0_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X314 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X315 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X316 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X317 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X318 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X319 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X320 VGND COMPARE__LATCH__OUTP_B COMP VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X321 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X322 DAC__N_COARSE_B3 DAC__N_COARSE_B3_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X323 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X324 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X325 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X326 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X327 VGND B11 DAC__N_COARSE_B5_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X328 DAC__P_COARSE_B4 B10 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X329 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X330 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X331 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X332 COMPARE_PRE0_LOAD_OUTN_R0_N1 COMPARE__PRE0N VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X333 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X334 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X335 DAC__N_FINE_B0 B0 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X336 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X337 COMPARE_PRE1_LOAD_OUTN_R0_N0 COMPARE_PRE1_LOAD_OUTN_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X338 DAC__N_FINE_B1 B1 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X339 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X340 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X341 DAC__N_COARSE_B1 B7 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X342 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X343 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X344 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X345 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X346 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X347 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X348 DAC__P_COARSE_B5 B11 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X349 VPWR B1 DAC__N_FINE_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X350 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X351 DAC__P_COARSE_B3 B9 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X352 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X353 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X354 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X355 VPWR EVAL COMPARE__LATCH__FP VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=0.15
+X356 COMPARE__LATCH__TAIL COMPARE__PRE1N COMPARE__LATCH__FP VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X357 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X358 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X359 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X360 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X361 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X362 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X363 VPWR B1 DAC__P_FINE_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X364 VGND B8 DAC__P_COARSE_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X365 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X366 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X367 VPWR COMPARE_PRE1_LOAD_OUTN_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X368 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X369 DAC__N_COARSE_B0 DAC__N_COARSE_B0_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X370 VGND B11 DAC__P_COARSE_B5_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X371 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X372 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X373 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X374 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X375 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X376 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X377 COMPARE__PRE1P VGND sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+X378 DAC__P_COARSE_B3 DAC__P_COARSE_B3_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X379 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X380 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X381 DAC__N_FINE_B5 B5 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X382 VPWR B10 DAC__N_COARSE_B4_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X383 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X384 DAC__FINEN DAC__N_FINE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X385 COMPARE_BIAS_RES_R0_N0 COMPARE_BIAS_RES_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X386 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X387 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X388 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X389 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X390 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X391 DAC__N_COARSE_B0 B6 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X392 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X393 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X394 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X395 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X396 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X397 COMPARE_PRE1_LOAD_OUTN_R0_N1 COMPARE__PRE1N VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X398 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X399 DAC__P_FINE_B3 DAC__P_FINE_B3_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X400 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X401 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X402 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X403 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X404 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X405 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X406 DAC__N_FINE_B5 DAC__N_FINE_B5_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X407 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X408 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X409 DAC__P_COARSE_B5 DAC__P_COARSE_B5_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X410 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X411 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X412 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X413 DAC__FINEN DAC__N_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X414 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X415 VGND B10 DAC__P_COARSE_B4_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X416 TOPN SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X417 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X418 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X419 DAC__P_FINE_B3 DAC__P_FINE_B3_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X420 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X421 DAC__FINEN DAC__HIN sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X422 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X423 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X424 DAC__P_FINE_B2 DAC__P_FINE_B2_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X425 VPWR COMPARE_PRE0_LOAD_OUTP_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X426 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X427 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X428 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X429 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X430 DAC__N_COARSE_B3 DAC__N_COARSE_B3_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X431 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X432 DAC__LON SAMPLE VGND VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X433 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X434 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X435 DAC__P_COARSE_B1 DAC__P_COARSE_B1_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X436 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X437 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X438 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X439 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X440 DAC__P_FINE_B3 B3 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X441 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X442 DAC__P_COARSE_B1 B7 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X443 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X444 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X445 DAC__N_COARSE_B3 B9 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X446 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X447 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X448 TOPN DAC__FINEN sky130_fd_pr__cap_mim_m3_1 l=14.07 w=14.07
+X449 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X450 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X451 COMPARE__PRE1__TAIL COMPARE__PRE0P COMPARE__PRE1N VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X452 COMPARE__LATCH__TAIL COMPARE__PRE1P COMPARE__LATCH__FN VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X453 DAC__P_COARSE_B0 B6 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X454 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X455 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X456 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X457 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X458 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X459 DAC__N_FINE_B1 DAC__N_FINE_B1_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X460 VGND B7 DAC__P_COARSE_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X461 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X462 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X463 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X464 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X465 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X466 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X467 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X468 DAC__N_FINE_B5 DAC__N_FINE_B5_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X469 VGND COMPARE__BIAS COMPARE__BIAS VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=1
+X470 DAC__HIP DAC__SAMPLEB VINP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X471 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X472 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X473 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X474 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X475 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X476 DAC__P_FINE_B0 B0 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X477 VGND COMPARE__LATCH__OUTN_B COMPN VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X478 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X479 COMPARE_PRE0_LOAD_OUTP_R0_N0 COMPARE_PRE0_LOAD_OUTP_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X480 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X481 COMPARE__PRE0__TAIL TOPN COMPARE__PRE0N VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X482 DAC__N_COARSE_B5 B11 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X483 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X484 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X485 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X486 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X487 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X488 DAC__N_FINE_B5 B5 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X489 DAC__P_COARSE_B3 B9 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X490 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X491 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X492 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X493 VPWR COMPARE__LATCH__QN COMPARE__LATCH__QP VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X494 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X495 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X496 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X497 DAC__LOP DAC__SAMPLEB VINP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X498 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X499 DAC__FINEN SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X500 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X501 DAC__N_COARSE_B5 DAC__N_COARSE_B5_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X502 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X503 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X504 TOPP DAC__P_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X505 VGND B1 DAC__N_FINE_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X506 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X507 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X508 DAC__P_FINE_B4 B4 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X509 VGND B9 DAC__P_COARSE_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X510 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X511 DAC__P_FINE_B0 B0 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X512 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X513 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X514 DAC__FINEN DAC__N_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X515 COMPARE__PRE1N VGND sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+X516 DAC__N_FINE_B3 B3 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X517 TOPN DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X518 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X519 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X520 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X521 COMPARE__PRE1__TAIL COMPARE__PRE0P COMPARE__PRE1N VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X522 DAC__P_FINE_B2 DAC__P_FINE_B2_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X523 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X524 VPWR B8 DAC__N_COARSE_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X525 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X526 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X527 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X528 VPWR B3 DAC__N_FINE_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X529 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X530 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X531 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X532 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X533 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X534 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X535 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X536 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X537 VPWR COMPARE__LATCH__OUTN_B COMPN VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X538 DAC__P_FINE_B0 DAC__P_FINE_B0_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X539 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X540 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X541 VGND B0 DAC__P_FINE_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X542 DAC__FINEN DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X543 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X544 DAC__P_COARSE_B0 DAC__P_COARSE_B0_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X545 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X546 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X547 VPWR COMPARE__LATCH__QP COMPARE__LATCH__OUTN_B VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X548 VGND B4 DAC__P_FINE_B4_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X549 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X550 DAC__P_FINE_B0 DAC__P_FINE_B0_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X551 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X552 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X553 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X554 TOPP DAC__FINEP sky130_fd_pr__cap_mim_m3_1 l=14.07 w=14.07
+X555 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X556 COMPARE__PRE1__TAIL COMPARE__PRE0N COMPARE__PRE1P VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X557 VPWR B11 DAC__P_COARSE_B5_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X558 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X559 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X560 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X561 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X562 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X563 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X564 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X565 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X566 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X567 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X568 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X569 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X570 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X571 DAC__LOP SAMPLE VGND VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X572 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X573 COMPARE_PRE1_LOAD_OUTP_R0_N1 COMPARE__PRE1P VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X574 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X575 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X576 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X577 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X578 DAC__P_FINE_B2 B2 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X579 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X580 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X581 DAC__FINEP DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X582 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X583 DAC__P_COARSE_B2 DAC__P_COARSE_B2_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X584 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X585 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X586 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X587 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X588 DAC__P_COARSE_B2 B8 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X589 DAC__FINEN DAC__HIN sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X590 DAC__N_COARSE_B2 B8 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X591 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X592 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X593 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X594 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X595 VGND B4 DAC__N_FINE_B4_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X596 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X597 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X598 DAC__N_COARSE_B5 DAC__N_COARSE_B5_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X599 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X600 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X601 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X602 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X603 DAC__HIP SAMPLE VREF VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X604 TOPN DAC__N_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X605 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X606 TOPP DAC__P_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X607 COMPARE__PRE0__TAIL TOPP COMPARE__PRE0P VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X608 VPWR B9 DAC__P_COARSE_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X609 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X610 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X611 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X612 DAC__N_FINE_B4 B4 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X613 DAC__P_COARSE_B5 DAC__P_COARSE_B5_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X614 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X615 DAC__N_COARSE_B2 DAC__N_COARSE_B2_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X616 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X617 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X618 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X619 VPWR COMPARE__LATCH__QP COMPARE__LATCH__QN VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X620 VPWR B5 DAC__N_FINE_B5_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X621 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X622 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X623 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X624 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X625 DAC__N_COARSE_B5 B11 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X626 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X627 DAC__FINEN DAC__N_FINE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X628 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X629 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X630 VGND COMPARE__BIAS COMPARE__PRE1__TAIL VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=1
+X631 DAC__N_FINE_B0 B0 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X632 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X633 DAC__P_FINE_B4 DAC__P_FINE_B4_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X634 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X635 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X636 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X637 DAC__N_COARSE_B2 DAC__N_COARSE_B2_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X638 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X639 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X640 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X641 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X642 DAC__N_FINE_B3 DAC__N_FINE_B3_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X643 DAC__P_COARSE_B4 B10 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X644 VPWR B0 DAC__N_FINE_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X645 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X646 DAC__N_COARSE_B4 B10 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X647 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X648 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X649 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X650 TOPP DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X651 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X652 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X653 DAC__N_COARSE_B2 B8 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X654 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X655 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X656 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X657 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X658 DAC__HIN SAMPLE VINN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X659 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X660 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X661 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X662 DAC__HIP SAMPLE VINP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X663 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X664 VPWR B6 DAC__P_COARSE_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X665 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X666 DAC__FINEP DAC__P_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X667 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X668 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X669 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X670 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X671 COMPARE__PRE1__TAIL COMPARE__PRE0N COMPARE__PRE1P VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X672 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X673 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X674 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X675 VGND B8 DAC__N_COARSE_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X676 DAC__N_FINE_B1 DAC__N_FINE_B1_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X677 DAC__P_FINE_B5 B5 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X678 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X679 VGND B3 DAC__N_FINE_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X680 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X681 VPWR B3 DAC__P_FINE_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X682 VPWR COMPARE__LATCH__OUTP_B COMP VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X683 DAC__HIN DAC__SAMPLEB VREF VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X684 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X685 VGND SAMPLE DAC__SAMPLEB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X686 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X687 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X688 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X689 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X690 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X691 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X692 DAC__N_FINE_B4 B4 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X693 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X694 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X695 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X696 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X697 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X698 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X699 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X700 TOPP DAC__P_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X701 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X702 VPWR EVAL COMPARE__LATCH__FN VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=0.15
+X703 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X704 DAC__HIN DAC__SAMPLEB VINN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X705 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X706 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X707 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X708 DAC__LON SAMPLE VINN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X709 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X710 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X711 DAC__LOP DAC__SAMPLEB VGND VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X712 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X713 VGND B0 DAC__N_FINE_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X714 COMPARE__LATCH__FN COMPARE__LATCH__QN COMPARE__LATCH__QP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X715 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X716 DAC__P_FINE_B3 B3 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X717 DAC__P_COARSE_B4 DAC__P_COARSE_B4_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X718 TOPN DAC__N_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X719 VGND COMPARE__LATCH__QN COMPARE__LATCH__OUTP_B VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X720 VPWR B8 DAC__P_COARSE_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X721 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X722 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X723 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X724 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X725 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X726 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X727 TOPP DAC__P_COARSE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X728 DAC__N_FINE_B3 B3 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+C0 DAC__P_FINE_B0 DAC__P_COARSE_B0 0.10739f
+C1 DAC__P_FINE_B2 DAC__FINEN 0.53365f
+C2 B7 DAC__FINEN 0.90161f
+C3 COMPARE_PRE1_LOAD_OUTN_R0_N0 B4 0.00192f
+C4 DAC__P_COARSE_B5 VREF 0.31406f
+C5 B3 B1 0.28122f
+C6 B4 B6 0.60926f
+C7 DAC__N_COARSE_B0 DAC__FINEP 0.21479f
+C8 DAC__N_FINE_B5 COMPARE_BIAS_RES_R0_N0 0
+C9 DAC__LON B4 8.84382f
+C10 VREF DAC__P_COARSE_B0_SW__BITB 0
+C11 DAC__N_COARSE_B5 DAC__P_COARSE_B2 0.57118f
+C12 TOPP B8 0.75986f
+C13 B10 B5 0.29101f
+C14 VPWR DAC__N_COARSE_B2 2.24583f
+C15 B9 VPWR 11.9787f
+C16 DAC__HIP DAC__N_COARSE_B4 0.78789f
+C17 COMPARE__LATCH__QN COMPN 3.5343f
+C18 DAC__P_COARSE_B3 B6 0.38517f
+C19 DAC__LON DAC__P_COARSE_B3 1.04283f
+C20 DAC__P_FINE_B4 DAC__P_COARSE_B1 0.32156f
+C21 VPWR COMPARE_PRE1_LOAD_OUTP_R0_N1 1.10338f
+C22 VPWR COMPARE_BIAS_RES_R0_N0 0.84749f
+C23 DAC__N_FINE_B0 TOPN 0.28495f
+C24 DAC__N_COARSE_B5 B2 0.78054f
+C25 DAC__P_FINE_B4 DAC__FINEN 0.98873f
+C26 DAC__N_COARSE_B0 DAC__P_FINE_B1 0.48046f
+C27 DAC__LOP TOPP 1.37041f
+C28 DAC__N_FINE_B0 DAC__P_FINE_B2 0.47062f
+C29 DAC__N_FINE_B0 B7 0.37461f
+C30 DAC__P_COARSE_B4 TOPP 0.47773p
+C31 B0 SAMPLE 0.56419f
+C32 DAC__N_FINE_B3 TOPN 0.7598f
+C33 DAC__N_FINE_B5 B8 0.89494f
+C34 DAC__N_FINE_B4_SW__BITB DAC__N_FINE_B3 0.08116f
+C35 B11 DAC__P_COARSE_B1 0.87755f
+C36 DAC__N_COARSE_B5 DAC__N_COARSE_B2 3.69836f
+C37 B3 DAC__P_FINE_B4_SW__BITB 3.5859f
+C38 B9 DAC__N_COARSE_B5 1.02285f
+C39 B11 DAC__FINEN 0.91809f
+C40 B7 DAC__N_FINE_B3 0.38142f
+C41 DAC__N_COARSE_B0 DAC__N_COARSE_B1 52.651f
+C42 DAC__P_FINE_B2 DAC__N_FINE_B3 0.19638f
+C43 DAC__FINEN COMPARE__LATCH__FN 0.67312f
+C44 DAC__P_COARSE_B2_SW__BITB DAC__P_COARSE_B2 15.4332f
+C45 VPWR B8 10.4876f
+C46 DAC__HIP TOPP 1.17308f
+C47 B10 DAC__N_COARSE_B4_SW__BITB 2.50048f
+C48 B0 B3 0.28122f
+C49 DAC__N_FINE_B5 DAC__LOP 1.28902f
+C50 DAC__P_FINE_B4 DAC__N_FINE_B0 0.48215f
+C51 B3 DAC__N_COARSE_B3 0.47616f
+C52 DAC__N_COARSE_B4 TOPN 0.46405p
+C53 B1 DAC__P_FINE_B0 0.63259f
+C54 VPWR COMPARE__LATCH__TAIL 1.18983f
+C55 DAC__N_FINE_B5 DAC__P_COARSE_B4 0.89926f
+C56 DAC__FINEP DAC__P_FINE_B1 41.8436f
+C57 COMPARE_PRE0_LOAD_OUTN_R0_N0 COMPARE_PRE0_LOAD_OUTP_R0_N1 3.24927f
+C58 DAC__LON DAC__N_FINE_B1 9.19148f
+C59 COMPARE__LATCH__FP COMPARE__LATCH__TAIL 2.34155f
+C60 DAC__P_FINE_B2 DAC__N_COARSE_B4 0.4704f
+C61 B7 DAC__N_COARSE_B4 0.58019f
+C62 DAC__P_FINE_B4 DAC__N_FINE_B3 0.47605f
+C63 VPWR DAC__LOP 88.8734f
+C64 DAC__P_COARSE_B1 B4 0.47112f
+C65 DAC__N_FINE_B3_SW__BITB B2 1.19173f
+C66 VPWR DAC__P_COARSE_B4 13.8442f
+C67 DAC__N_COARSE_B1_SW__BITB DAC__LON 0.34057f
+C68 B11 DAC__N_FINE_B0 2.64861f
+C69 DAC__FINEP DAC__N_COARSE_B1 0.19638f
+C70 DAC__FINEN B4 1.3336f
+C71 DAC__N_FINE_B5 DAC__HIP 0.68345f
+C72 DAC__HIN DAC__N_COARSE_B3_SW__BITB 1.41881f
+C73 DAC__N_COARSE_B5 B8 0.79097f
+C74 DAC__P_COARSE_B1 DAC__P_COARSE_B3 0.6627f
+C75 VINN TOPP 0
+C76 SAMPLE DAC__SAMPLEB 5.61774f
+C77 B10 B6 0.29101f
+C78 B11 DAC__N_FINE_B3 0.38142f
+C79 DAC__P_FINE_B4 DAC__N_COARSE_B4 0.92793f
+C80 DAC__FINEN DAC__P_COARSE_B3 0.69803f
+C81 DAC__LON B10 2.67618f
+C82 VPWR DAC__HIP 80.6509f
+C83 VPWR DAC__N_FINE_B0_SW__BITB 0.61251f
+C84 DAC__N_COARSE_B0 DAC__N_FINE_B4 0.4865f
+C85 TOPP TOPN 20.1126f
+C86 SAMPLE DAC__P_COARSE_B2 0.28946f
+C87 DAC__N_COARSE_B0 DAC__P_COARSE_B0 0.48305f
+C88 DAC__N_FINE_B4_SW__BITB TOPP 0.55844f
+C89 DAC__N_COARSE_B5 DAC__LOP 0.8377f
+C90 DAC__P_COARSE_B5 DAC__P_FINE_B0_SW__BITB 0.68423f
+C91 B3 DAC__SAMPLEB 0.28174f
+C92 DAC__N_COARSE_B1 DAC__P_FINE_B1 0.49663f
+C93 DAC__P_FINE_B2 TOPP 0.69335f
+C94 DAC__P_COARSE_B3_SW__BITB DAC__P_COARSE_B3 18.4004f
+C95 B7 TOPP 0.75986f
+C96 DAC__N_COARSE_B5 DAC__P_COARSE_B4 0.89982f
+C97 DAC__P_FINE_B3 B5 1.73958f
+C98 COMPARE__LATCH__QN COMPARE__LATCH__TAIL 0.00299f
+C99 B0 DAC__P_FINE_B0 6.8118f
+C100 DAC__N_FINE_B0 B4 0.20558f
+C101 B11 DAC__N_COARSE_B4 0.77014f
+C102 VCM SAMPLE 16.0355f
+C103 B3 DAC__P_COARSE_B2 0.47759f
+C104 COMPARE_BIAS_RES_R0_N0 COMPARE_BIAS_RES_R0_N1 1.80794f
+C105 SAMPLE B2 0.28174f
+C106 DAC__N_COARSE_B4 COMPARE__LATCH__FN 0.39496f
+C107 DAC__P_FINE_B0 DAC__N_COARSE_B3 0.50224f
+C108 EVAL COMPARE__LATCH__OUTN_B 0.18567f
+C109 DAC__P_COARSE_B2_SW__BITB B8 1.11879f
+C110 DAC__N_FINE_B0 DAC__P_COARSE_B3 0.48051f
+C111 DAC__N_FINE_B3 B4 1.99931f
+C112 DAC__N_COARSE_B5 DAC__HIP 1.02669f
+C113 DAC__N_COARSE_B5 DAC__N_FINE_B0_SW__BITB 0.07609f
+C114 DAC__P_COARSE_B5 B5 0.78589f
+C115 DAC__N_FINE_B5 TOPN 1.64535f
+C116 VPWR VINN 14.2791f
+C117 VCM B3 0.27402f
+C118 DAC__N_FINE_B5 DAC__N_FINE_B4_SW__BITB 1.99888f
+C119 DAC__P_COARSE_B1 DAC__N_FINE_B1 0.19638f
+C120 DAC__FINEP DAC__N_FINE_B4 0.74163f
+C121 B3 B2 7.06247f
+C122 B9 SAMPLE 0.28174f
+C123 DAC__P_FINE_B4 TOPP 1.06799f
+C124 COMPARE_PRE1_LOAD_OUTP_R0_N0 COMPARE__PRE1N 0.20962f
+C125 COMPARE_PRE0_LOAD_OUTP_R0_N1 COMPARE_PRE0_LOAD_OUTP_R0_N0 3.19018f
+C126 DAC__N_FINE_B5 B7 1.15329f
+C127 DAC__N_FINE_B3 DAC__P_COARSE_B3 0.47444f
+C128 DAC__FINEP DAC__P_COARSE_B0 2.0212f
+C129 DAC__N_FINE_B2 DAC__HIN 11.9776f
+C130 DAC__N_FINE_B5 DAC__P_FINE_B2 1.64879f
+C131 DAC__FINEN DAC__N_FINE_B1 41.8497f
+C132 VPWR TOPN 11.4344f
+C133 B9 DAC__P_COARSE_B4_SW__BITB 6.53907f
+C134 DAC__P_COARSE_B2_SW__BITB DAC__LOP 2.46433f
+C135 VPWR DAC__N_FINE_B4_SW__BITB 1.38914f
+C136 COMPARE__LATCH__FP TOPN 2.6161f
+C137 DAC__N_FINE_B2 DAC__P_FINE_B5 2.10673f
+C138 DAC__P_FINE_B5 DAC__HIN 1.4438f
+C139 B9 B3 0.29101f
+C140 DAC__N_COARSE_B4 B4 1.33128f
+C141 B3 DAC__N_COARSE_B2 0.48537f
+C142 VPWR DAC__P_FINE_B2 7.64504f
+C143 VPWR B7 8.99526f
+C144 B11 TOPP 1.56065f
+C145 TOPP COMPARE__LATCH__FN 0.56699f
+C146 DAC__N_FINE_B4 DAC__P_FINE_B1 0.20754f
+C147 DAC__P_COARSE_B1 B10 0.64695f
+C148 DAC__N_COARSE_B4 DAC__P_COARSE_B3 0.7184f
+C149 DAC__P_FINE_B4 DAC__N_FINE_B5 3.94212f
+C150 DAC__LON DAC__N_FINE_B2_SW__BITB 1.93359f
+C151 DAC__P_COARSE_B0 DAC__P_FINE_B1 0.09834f
+C152 DAC__SAMPLEB DAC__P_FINE_B0 0.27598f
+C153 DAC__HIP DAC__P_COARSE_B2_SW__BITB 1.14763f
+C154 DAC__FINEN B10 0.87962f
+C155 DAC__N_COARSE_B0 B1 0.39633f
+C156 VPWR DAC__P_FINE_B5_SW__BITB 6.30649f
+C157 DAC__N_FINE_B0 DAC__N_FINE_B1 30.167f
+C158 DAC__N_FINE_B4 DAC__N_COARSE_B1 0.49092f
+C159 DAC__N_COARSE_B5 TOPN 0.82389p
+C160 SAMPLE B8 0.28946f
+C161 DAC__P_FINE_B0 DAC__P_COARSE_B2 0.10754f
+C162 DAC__P_FINE_B4 VPWR 10.5898f
+C163 COMPARE__PRE0P TOPP 1.45023f
+C164 DAC__N_COARSE_B1 DAC__P_COARSE_B0 0.48953f
+C165 DAC__P_FINE_B4 COMPARE__LATCH__FP 1.40342f
+C166 VREF DAC__HIN 3.71353f
+C167 B11 DAC__N_FINE_B5 0.91198f
+C168 DAC__N_COARSE_B5 DAC__P_FINE_B2 0.4704f
+C169 DAC__N_COARSE_B5 B7 0.706f
+C170 DAC__N_FINE_B5 COMPARE__LATCH__FN 0.70583f
+C171 DAC__N_FINE_B3 DAC__N_FINE_B1 0.29364f
+C172 COMPARE__LATCH__OUTN_B COMPARE__LATCH__OUTP_B 0.34809f
+C173 TOPP B4 1.02307f
+C174 DAC__P_FINE_B3 B6 0.38424f
+C175 B3 B8 0.28122f
+C176 VCM DAC__P_FINE_B0 0.26826f
+C177 COMPARE__LATCH__QN TOPN 0.48196f
+C178 DAC__P_FINE_B0 B2 0.49755f
+C179 VREF DAC__P_FINE_B5 0.30544f
+C180 DAC__P_FINE_B3 DAC__LON 0.84166f
+C181 SAMPLE DAC__LOP 3.59595f
+C182 COMPARE_PRE1_LOAD_OUTN_R0_N1 COMPARE_PRE1_LOAD_OUTN_R0_N0 5.34962f
+C183 VPWR B11 15.9727f
+C184 VPWR COMPARE__LATCH__FN 2.07057f
+C185 DAC__N_FINE_B0 B10 0.37221f
+C186 VREF DAC__P_FINE_B2_SW__BITB 0
+C187 DAC__N_COARSE_B0 DAC__N_COARSE_B0_SW__BITB 21.5138f
+C188 TOPP DAC__P_COARSE_B3 0.15981p
+C189 SAMPLE DAC__P_COARSE_B4 0.28174f
+C190 B1 DAC__FINEP 1.31617f
+C191 COMPARE__LATCH__FP COMPARE__LATCH__FN 10.2863f
+C192 DAC__LOP DAC__P_COARSE_B4_SW__BITB 3.48718f
+C193 DAC__P_COARSE_B5 B6 0.78921f
+C194 DAC__N_COARSE_B2 DAC__P_FINE_B0 0.50257f
+C195 DAC__N_COARSE_B4 DAC__N_FINE_B1 0.47722f
+C196 DAC__P_FINE_B4 DAC__N_COARSE_B5 0.92793f
+C197 B6 DAC__P_COARSE_B0_SW__BITB 0.8169f
+C198 B9 DAC__P_FINE_B0 0.38296f
+C199 DAC__P_COARSE_B4 DAC__P_COARSE_B4_SW__BITB 21.3675f
+C200 DAC__P_COARSE_B5 DAC__LON 1.06124f
+C201 DAC__N_FINE_B3 B10 0.38142f
+C202 B3 DAC__LOP 1.44195f
+C203 COMPARE_PRE0_LOAD_OUTN_R0_N0 COMPARE_PRE0_LOAD_OUTP_R0_N0 0
+C204 VPWR COMPARE__PRE1P 2.24804f
+C205 DAC__N_FINE_B5 B4 1.34421f
+C206 B0 DAC__N_COARSE_B0 0.39015f
+C207 DAC__HIP SAMPLE 3.59137f
+C208 B3 DAC__P_COARSE_B4 0.74602f
+C209 VPWR COMPARE__PRE0P 2.70685f
+C210 COMPARE__BIAS TOPP 0.42042f
+C211 COMPARE__PRE0N TOPN 0.84427f
+C212 COMPARE__LATCH__FP COMPARE__PRE1P 1.93305f
+C213 DAC__N_COARSE_B0 DAC__N_COARSE_B3 1.93909f
+C214 DAC__P_COARSE_B2_SW__BITB B7 4.59266f
+C215 B1 DAC__P_FINE_B1 9.74219f
+C216 DAC__N_FINE_B1_SW__BITB DAC__N_FINE_B1 19.9838f
+C217 DAC__N_COARSE_B5 B11 21.3156f
+C218 DAC__HIP DAC__P_COARSE_B4_SW__BITB 1.56567f
+C219 DAC__N_FINE_B5 DAC__P_COARSE_B3 0.70486f
+C220 DAC__N_COARSE_B5 COMPARE__LATCH__FN 0.69452f
+C221 DAC__N_FINE_B4 DAC__P_COARSE_B0 0.21958f
+C222 COMPARE_PRE1_LOAD_OUTP_R0_N1 COMPARE__PRE1N 0.20962f
+C223 VPWR B4 10.8789f
+C224 DAC__HIP B3 2.56663f
+C225 DAC__N_COARSE_B4 B10 19.052f
+C226 VPWR DAC__P_COARSE_B3 12.3719f
+C227 B1 DAC__N_COARSE_B1 0.3794f
+C228 TOPP DAC__N_FINE_B1 0.47812f
+C229 COMPARE__LATCH__QN COMPARE__LATCH__FN 27.0557f
+C230 DAC__P_FINE_B0 B8 0.37825f
+C231 SAMPLE VINN 10.3415f
+C232 B0 DAC__FINEP 1.16597f
+C233 VPWR COMPARE_PRE0_LOAD_OUTN_R0_N1 0.9798f
+C234 DAC__FINEP DAC__N_COARSE_B3 0.39503f
+C235 DAC__P_FINE_B3 DAC__P_COARSE_B1 0.10739f
+C236 COMPARE__BIAS VPWR 0.9798f
+C237 DAC__N_COARSE_B5 B4 1.33538f
+C238 COMPARE__LATCH__QN COMPARE__PRE1P 0
+C239 SAMPLE TOPN 14.6349f
+C240 DAC__P_FINE_B3 DAC__FINEN 0.49781f
+C241 DAC__LOP DAC__P_FINE_B0 50.2356f
+C242 COMPARE__LATCH__QP DAC__FINEP 0.5685f
+C243 VREF DAC__P_COARSE_B1_SW__BITB 0
+C244 COMPARE__PRE1N COMPARE__LATCH__TAIL 23.6846f
+C245 DAC__P_FINE_B2 SAMPLE 0.28174f
+C246 DAC__N_COARSE_B5 DAC__P_COARSE_B3 0.70074f
+C247 SAMPLE B7 0.28946f
+C248 B10 TOPP 0.90547f
+C249 B0 DAC__P_FINE_B1 1.64746f
+C250 DAC__N_FINE_B5 DAC__N_FINE_B1 0.84928f
+C251 DAC__P_COARSE_B4 DAC__P_FINE_B0 0.22348f
+C252 DAC__P_COARSE_B5 DAC__P_COARSE_B1 2.22418f
+C253 DAC__N_COARSE_B0 DAC__P_COARSE_B2 0.46464f
+C254 B3 TOPN 0.74846f
+C255 DAC__P_FINE_B3_SW__BITB B2 2.6127f
+C256 DAC__P_FINE_B1 DAC__N_COARSE_B3 0.48382f
+C257 B3 DAC__N_FINE_B4_SW__BITB 13.46f
+C258 DAC__P_COARSE_B5 DAC__FINEN 0.9373f
+C259 VPWR DAC__N_FINE_B1 2.24583f
+C260 B3 DAC__P_FINE_B2 0.48056f
+C261 B3 B7 0.28122f
+C262 DAC__HIP DAC__P_FINE_B0 3.83996f
+C263 B0 DAC__N_COARSE_B1 0.38094f
+C264 COMPARE__PRE0N COMPARE__PRE1P 1.81847f
+C265 B1 DAC__N_FINE_B4 0.77684f
+C266 DAC__P_FINE_B0_SW__BITB DAC__P_FINE_B5 0.67132f
+C267 DAC__P_FINE_B4 SAMPLE 0.28174f
+C268 DAC__N_COARSE_B0 B2 0.38985f
+C269 COMPARE__PRE0P COMPARE__PRE0N 0.42913f
+C270 EVAL COMPARE__LATCH__QP 12.5932f
+C271 DAC__N_FINE_B0 DAC__P_FINE_B3 0.27402f
+C272 DAC__N_COARSE_B1 DAC__N_COARSE_B3 0.82992f
+C273 B1 DAC__P_COARSE_B0 0.4984f
+C274 DAC__FINEP COMPN 0.28418f
+C275 VPWR DAC__N_COARSE_B1_SW__BITB 0.63178f
+C276 DAC__N_FINE_B5 B10 0.89056f
+C277 DAC__SAMPLEB DAC__FINEP 2.72466f
+C278 DAC__N_FINE_B2 B5 0.2018f
+C279 DAC__HIN B5 1.67846f
+C280 COMPARE__PRE0N B4 0.00192f
+C281 B9 DAC__N_COARSE_B0 0.39164f
+C282 DAC__P_FINE_B3 DAC__N_FINE_B3 0.27806f
+C283 DAC__N_COARSE_B0 DAC__N_COARSE_B2 2.05863f
+C284 DAC__P_FINE_B4 B3 1.90021f
+C285 DAC__FINEP DAC__P_COARSE_B2 0.23779f
+C286 DAC__P_FINE_B5 B5 22.3278f
+C287 DAC__N_FINE_B0 DAC__P_COARSE_B5 0.65158f
+C288 VPWR B10 13.4699f
+C289 B11 SAMPLE 0.27598f
+C290 DAC__N_COARSE_B5 DAC__N_FINE_B1 1.24089f
+C291 COMPARE__LATCH__QP COMPARE__LATCH__OUTN_B 1.20003f
+C292 DAC__SAMPLEB DAC__P_FINE_B1 0.28174f
+C293 B4 COMPARE_BIAS_RES_R0_N1 0.00192f
+C294 VREF DAC__P_FINE_B0_SW__BITB 0.62479f
+C295 EVAL COMPN 0.00156f
+C296 DAC__P_COARSE_B5 DAC__N_FINE_B3 0.49285f
+C297 VCM DAC__FINEP 3.75751f
+C298 DAC__FINEP B2 0.86774f
+C299 DAC__LON DAC__N_COARSE_B3_SW__BITB 0.79362f
+C300 COMPARE_PRE0_LOAD_OUTN_R0_N1 COMPARE__PRE0N 0.28693f
+C301 DAC__P_FINE_B3 DAC__N_COARSE_B4 0.49487f
+C302 B11 B3 0.2834f
+C303 COMPARE__BIAS COMPARE__PRE0N 5.21687f
+C304 DAC__P_COARSE_B2 DAC__P_FINE_B1 0.09849f
+C305 DAC__P_FINE_B0 TOPN 0.50625f
+C306 B0 DAC__N_FINE_B4 1.4682f
+C307 DAC__N_COARSE_B2 DAC__FINEP 0.4142f
+C308 DAC__N_COARSE_B4_SW__BITB DAC__HIN 1.94869f
+C309 DAC__N_COARSE_B5 B10 3.31895f
+C310 VREF B5 5.565f
+C311 B9 DAC__FINEP 0.87589f
+C312 DAC__P_FINE_B2 DAC__P_FINE_B0 2.11731f
+C313 DAC__N_FINE_B4 DAC__N_COARSE_B3 0.4902f
+C314 B7 DAC__P_FINE_B0 1.85588f
+C315 B0 DAC__P_COARSE_B0 0.77958f
+C316 DAC__P_COARSE_B5 DAC__N_COARSE_B4 1.22418f
+C317 DAC__N_COARSE_B0 B8 0.38861f
+C318 SAMPLE B4 0.27598f
+C319 DAC__HIN DAC__N_COARSE_B2_SW__BITB 0.88893f
+C320 VCM DAC__P_FINE_B1 0.27402f
+C321 DAC__P_COARSE_B0 DAC__N_COARSE_B3 0.831f
+C322 DAC__P_COARSE_B2 DAC__N_COARSE_B1 0.47112f
+C323 B2 DAC__P_FINE_B1 0.49131f
+C324 COMPN COMPARE__LATCH__OUTN_B 2.67453f
+C325 COMPARE__BIAS COMPARE_BIAS_RES_R0_N1 0.07805f
+C326 DAC__P_FINE_B3_SW__BITB DAC__LOP 1.85326f
+C327 VPWR DAC__P_FINE_B1_SW__BITB 2.26359f
+C328 DAC__N_FINE_B5_SW__BITB B4 0.24163f
+C329 SAMPLE DAC__P_COARSE_B3 0.28174f
+C330 COMPARE__LATCH__QP DAC__N_FINE_B4 0.25717f
+C331 DAC__N_COARSE_B2 DAC__P_FINE_B1 0.52748f
+C332 B9 DAC__P_FINE_B1 0.38296f
+C333 B3 B4 9.27171f
+C334 DAC__N_COARSE_B1 B2 0.37293f
+C335 DAC__P_FINE_B4 DAC__P_FINE_B0 2.50427f
+C336 DAC__P_COARSE_B3 DAC__P_COARSE_B4_SW__BITB 0.07609f
+C337 DAC__P_FINE_B3 TOPP 0.61761f
+C338 DAC__N_COARSE_B0 DAC__LOP 3.95416f
+C339 DAC__N_COARSE_B0 DAC__P_COARSE_B4 0.46464f
+C340 DAC__HIP DAC__P_FINE_B3_SW__BITB 0.9333f
+C341 B3 DAC__P_COARSE_B3 0.75565f
+C342 B6 DAC__HIN 0.94629f
+C343 VPWR DAC__N_FINE_B2_SW__BITB 0.61251f
+C344 DAC__N_FINE_B2 DAC__LON 9.91491f
+C345 DAC__LON DAC__HIN 17.8128f
+C346 DAC__P_COARSE_B5_SW__BITB DAC__LOP 11.2045f
+C347 DAC__N_COARSE_B2 DAC__N_COARSE_B1 53.0507f
+C348 DAC__FINEP B8 0.89127f
+C349 B9 DAC__N_COARSE_B1 0.38243f
+C350 DAC__P_COARSE_B5 TOPP 0.84342p
+C351 B6 DAC__P_FINE_B5 0.78857f
+C352 B11 DAC__P_FINE_B0 0.37993f
+C353 DAC__P_COARSE_B5_SW__BITB DAC__P_COARSE_B4 0.07591f
+C354 TOPP DAC__P_COARSE_B0_SW__BITB 0
+C355 COMPN COMPARE__LATCH__OUTP_B 0.00308f
+C356 DAC__LON DAC__P_FINE_B5 1.08484f
+C357 DAC__P_COARSE_B5 COMP 0.29433f
+C358 DAC__P_FINE_B3 DAC__N_FINE_B5 1.70346f
+C359 DAC__SAMPLEB DAC__P_COARSE_B0 0.28174f
+C360 DAC__N_FINE_B4 DAC__P_COARSE_B2 0.20116f
+C361 COMPARE__PRE0__TAIL COMPARE_PRE0_LOAD_OUTP_R0_N0 0
+C362 DAC__LOP DAC__FINEP 23.4369f
+C363 COMPARE__PRE1N COMPARE__LATCH__FN 1.52647f
+C364 DAC__HIP DAC__P_COARSE_B5_SW__BITB 7.22403f
+C365 B0 B1 7.07227f
+C366 DAC__P_COARSE_B2 DAC__P_COARSE_B0 3.24344f
+C367 B8 DAC__P_FINE_B1 0.38296f
+C368 DAC__P_COARSE_B4 DAC__FINEP 0.70532f
+C369 VPWR DAC__P_FINE_B3 9.11741f
+C370 B1 DAC__N_COARSE_B3 0.47759f
+C371 DAC__P_COARSE_B5 DAC__N_FINE_B5 0.94588f
+C372 DAC__N_FINE_B4 B2 0.77109f
+C373 EVAL COMPARE__LATCH__TAIL 0.24977f
+C374 COMPARE_PRE1_LOAD_OUTN_R0_N1 VPWR 1.18983f
+C375 COMPARE__PRE1N COMPARE__PRE1P 0.57885f
+C376 VREF B6 0.31982f
+C377 VCM DAC__P_COARSE_B0 0.28382f
+C378 B4 DAC__P_FINE_B0 0.48804f
+C379 B3 DAC__N_FINE_B1 0.19941f
+C380 B8 DAC__N_COARSE_B1 0.38237f
+C381 COMPARE_PRE1_LOAD_OUTN_R0_N1 COMPARE__LATCH__FP 5.41503f
+C382 COMPARE__PRE1N COMPARE__PRE0P 0.84476f
+C383 B2 DAC__P_COARSE_B0 0.49601f
+C384 DAC__HIP DAC__FINEP 2.28581f
+C385 DAC__LOP DAC__P_FINE_B1 28.3343f
+C386 VPWR DAC__P_COARSE_B5 16.195f
+C387 VPWR DAC__P_COARSE_B0_SW__BITB 3.56658f
+C388 DAC__P_FINE_B2 DAC__P_FINE_B3_SW__BITB 0.07609f
+C389 DAC__P_COARSE_B5 COMPARE__LATCH__FP 0.59443f
+C390 SAMPLE B10 0.27598f
+C391 DAC__P_COARSE_B4 DAC__P_FINE_B1 0.20275f
+C392 DAC__N_COARSE_B2 DAC__N_FINE_B4 0.4902f
+C393 DAC__P_COARSE_B3 DAC__P_FINE_B0 0.22411f
+C394 B9 DAC__N_FINE_B4 0.59461f
+C395 COMPARE__PRE1N B4 0.00192f
+C396 DAC__N_COARSE_B0 TOPN 22.9501f
+C397 B9 DAC__P_COARSE_B0 0.96295f
+C398 DAC__N_COARSE_B2 DAC__P_COARSE_B0 0.48881f
+C399 DAC__N_COARSE_B5 DAC__P_FINE_B3 0.49487f
+C400 B10 DAC__P_COARSE_B4_SW__BITB 1.42068f
+C401 DAC__LOP DAC__N_COARSE_B1 0.10042f
+C402 DAC__N_COARSE_B0 DAC__P_FINE_B2 0.46703f
+C403 DAC__N_COARSE_B0 B7 0.38693f
+C404 B3 B10 0.28166f
+C405 DAC__HIP DAC__P_FINE_B1 4.04858f
+C406 DAC__P_COARSE_B1 DAC__N_FINE_B2 0.19638f
+C407 DAC__P_COARSE_B1 DAC__HIN 0.47519f
+C408 DAC__P_COARSE_B4 DAC__N_COARSE_B1 0.47112f
+C409 DAC__N_FINE_B2 DAC__FINEN 79.9518f
+C410 DAC__FINEN DAC__HIN 23.453f
+C411 B1 DAC__SAMPLEB 0.28174f
+C412 DAC__P_COARSE_B1 DAC__P_FINE_B5 1.34542f
+C413 DAC__N_COARSE_B5 DAC__P_COARSE_B5 0.93084f
+C414 B0 DAC__N_COARSE_B3 0.48067f
+C415 COMPARE__BIAS COMPARE__PRE1N 0.96492f
+C416 DAC__FINEN DAC__P_FINE_B5 1.37527f
+C417 DAC__P_COARSE_B1_SW__BITB B6 3.61946f
+C418 B1 DAC__P_COARSE_B2 0.47988f
+C419 DAC__P_FINE_B4 DAC__N_COARSE_B0 0.47845f
+C420 DAC__FINEP TOPN 0.81815f
+C421 DAC__N_FINE_B4 B8 0.58551f
+C422 COMPARE__LATCH__QN DAC__P_COARSE_B5 0.58147f
+C423 B8 DAC__P_COARSE_B0 0.55524f
+C424 DAC__P_FINE_B0 DAC__N_FINE_B1 0.9302f
+C425 DAC__P_FINE_B2 DAC__FINEP 79.9475f
+C426 B7 DAC__FINEP 0.81044f
+C427 VCM B1 0.27402f
+C428 B1 B2 0.31431f
+C429 DAC__N_FINE_B0 DAC__N_FINE_B2 2.39099f
+C430 DAC__N_FINE_B0 DAC__HIN 53.2617f
+C431 B11 DAC__N_COARSE_B0 0.38861f
+C432 VREF DAC__P_COARSE_B1 0.31982f
+C433 DAC__LOP DAC__N_FINE_B4 0.63001f
+C434 TOPN DAC__P_FINE_B1 0.51201f
+C435 DAC__N_FINE_B0 DAC__P_FINE_B5 0.87117f
+C436 EVAL TOPN 1.1845f
+C437 DAC__N_FINE_B2 DAC__N_FINE_B3 3.9047f
+C438 DAC__LOP DAC__P_COARSE_B0 4.93632f
+C439 DAC__N_FINE_B3 DAC__HIN 21.7616f
+C440 DAC__P_COARSE_B4 DAC__N_FINE_B4 0.90229f
+C441 B9 B1 0.29101f
+C442 DAC__N_COARSE_B2 B1 0.4868f
+C443 VREF VINP 1.91446f
+C444 DAC__P_FINE_B4 DAC__FINEP 0.45355p
+C445 B11 DAC__P_COARSE_B5_SW__BITB 1.61843f
+C446 DAC__P_FINE_B2 DAC__P_FINE_B1 62.5101f
+C447 DAC__P_COARSE_B4 DAC__P_COARSE_B0 1.87318f
+C448 B0 DAC__SAMPLEB 0.56419f
+C449 B7 DAC__P_FINE_B1 1.01018f
+C450 B10 DAC__P_FINE_B0 0.37993f
+C451 DAC__N_FINE_B3 DAC__P_FINE_B5 1.65742f
+C452 DAC__N_COARSE_B1 TOPN 41.6113f
+C453 DAC__P_COARSE_B3_SW__BITB VREF 0
+C454 DAC__HIP DAC__N_FINE_B4 0.40942f
+C455 B0 DAC__P_COARSE_B2 0.76117f
+C456 DAC__N_FINE_B2 DAC__N_COARSE_B4 0.47174f
+C457 DAC__N_COARSE_B4 DAC__HIN 7.79735f
+C458 DAC__HIP DAC__P_COARSE_B0 4.49525f
+C459 DAC__P_COARSE_B2 DAC__N_COARSE_B3 0.47955f
+C460 DAC__P_FINE_B2 DAC__N_COARSE_B1 0.47514f
+C461 B7 DAC__N_COARSE_B1 9.69538f
+C462 B11 DAC__FINEP 0.86703f
+C463 DAC__N_COARSE_B0 B4 1.37226f
+C464 COMPARE__LATCH__FN DAC__FINEP 0.56907f
+C465 COMPARE__LATCH__QP COMPN 8.70097f
+C466 DAC__P_FINE_B4 DAC__P_FINE_B1 1.41862f
+C467 VPWR COMPARE_PRE0_LOAD_OUTP_R0_N1 0.89335f
+C468 DAC__P_FINE_B3 SAMPLE 0.28174f
+C469 DAC__N_COARSE_B4 DAC__P_FINE_B5 0.97455f
+C470 B0 VCM 0.55856f
+C471 B0 B2 0.29101f
+C472 DAC__N_COARSE_B0 DAC__P_COARSE_B3 0.46464f
+C473 DAC__P_COARSE_B1 DAC__P_COARSE_B1_SW__BITB 12.466f
+C474 DAC__N_FINE_B1_SW__BITB DAC__HIN 3.53833f
+C475 B2 DAC__N_COARSE_B3 0.47112f
+C476 B1 B8 0.28122f
+C477 B6 B5 1.90991f
+C478 DAC__LON B5 1.06797f
+C479 DAC__P_FINE_B4 DAC__N_COARSE_B1 0.48662f
+C480 VPWR COMPARE__PRE1__TAIL 0.98026f
+C481 DAC__P_COARSE_B5 SAMPLE 0.27598f
+C482 DAC__P_FINE_B3 B3 15.0328f
+C483 VPWR DAC__N_COARSE_B3_SW__BITB 0.61251f
+C484 B0 DAC__N_COARSE_B2 0.48988f
+C485 B11 DAC__P_FINE_B1 0.37993f
+C486 B0 B9 0.58131f
+C487 DAC__P_FINE_B0 DAC__P_FINE_B1_SW__BITB 0.07609f
+C488 EVAL COMPARE__LATCH__FN 2.05761f
+C489 B9 DAC__N_COARSE_B3 15.4f
+C490 DAC__N_COARSE_B2 DAC__N_COARSE_B3 0.10762p
+C491 B4 DAC__FINEP 1.27517f
+C492 DAC__N_FINE_B2 TOPP 0.47812f
+C493 TOPP DAC__HIN 1.04638f
+C494 DAC__LOP B1 1.19286f
+C495 DAC__N_FINE_B4 TOPN 0.83748f
+C496 DAC__P_COARSE_B5 B3 1.00865f
+C497 B11 DAC__N_COARSE_B1 0.3794f
+C498 DAC__N_FINE_B4_SW__BITB DAC__N_FINE_B4 9.43007f
+C499 DAC__P_COARSE_B4 B1 0.85331f
+C500 TOPN DAC__P_COARSE_B0 0.4664f
+C501 DAC__SAMPLEB DAC__P_COARSE_B2 0.28174f
+C502 EVAL COMPARE__PRE1P 0.09475f
+C503 TOPP DAC__P_FINE_B5 1.38665f
+C504 DAC__P_COARSE_B3 DAC__FINEP 0.4739f
+C505 COMPARE_PRE1_LOAD_OUTP_R0_N0 COMPARE_PRE1_LOAD_OUTP_R0_N1 4.88459f
+C506 DAC__P_FINE_B2 DAC__N_FINE_B4 0.20251f
+C507 B7 DAC__N_FINE_B4 0.58791f
+C508 DAC__P_FINE_B5 COMP 0.29433f
+C509 DAC__P_FINE_B2 DAC__P_COARSE_B0 0.0984f
+C510 B7 DAC__P_COARSE_B0 0.55821f
+C511 DAC__N_COARSE_B0 DAC__N_FINE_B1 0.20463f
+C512 B4 DAC__P_FINE_B1 0.47883f
+C513 DAC__HIP B1 1.54059f
+C514 VCM DAC__SAMPLEB 14.1878f
+C515 DAC__SAMPLEB B2 0.28174f
+C516 DAC__LON DAC__N_COARSE_B4_SW__BITB 1.02161f
+C517 DAC__N_FINE_B5 DAC__N_FINE_B2 0.85478f
+C518 DAC__N_FINE_B5 DAC__HIN 12.6612f
+C519 B0 B8 0.56172f
+C520 DAC__LON DAC__N_COARSE_B2_SW__BITB 0.56563f
+C521 DAC__P_COARSE_B3 DAC__P_FINE_B1 0.20554f
+C522 B8 DAC__N_COARSE_B3 2.94898f
+C523 VCM DAC__P_COARSE_B2 0.28382f
+C524 DAC__P_FINE_B4 DAC__N_FINE_B4 1.01032f
+C525 DAC__P_COARSE_B2 B2 0.477f
+C526 DAC__N_FINE_B5 DAC__P_FINE_B5 6.60619f
+C527 DAC__P_FINE_B4 DAC__P_COARSE_B0 0.32123f
+C528 B4 DAC__N_COARSE_B1 0.75217f
+C529 DAC__LOP DAC__P_FINE_B4_SW__BITB 2.36468f
+C530 VPWR DAC__N_FINE_B2 2.24583f
+C531 VPWR DAC__HIN 41.4906f
+C532 B9 DAC__SAMPLEB 0.28174f
+C533 VREF TOPP 0.31406f
+C534 DAC__P_FINE_B3 DAC__P_FINE_B0 0.10979f
+C535 VPWR COMPARE_PRE0_LOAD_OUTN_R0_N0 1.05716f
+C536 COMPARE__PRE0N COMPARE_PRE0_LOAD_OUTP_R0_N1 0.20913f
+C537 DAC__N_COARSE_B0 B10 0.38861f
+C538 B0 DAC__LOP 1.33108f
+C539 DAC__N_COARSE_B2 DAC__P_COARSE_B2 0.4704f
+C540 VCM B2 0.27402f
+C541 VPWR DAC__P_FINE_B5 12.8917f
+C542 DAC__P_COARSE_B1 B5 0.48294f
+C543 B9 DAC__P_COARSE_B2 1.93153f
+C544 DAC__P_COARSE_B3 DAC__N_COARSE_B1 0.47112f
+C545 B11 DAC__N_FINE_B4 0.90378f
+C546 B0 DAC__P_COARSE_B4 2.19557f
+C547 COMPARE__LATCH__FP DAC__P_FINE_B5 2.28001f
+C548 DAC__N_FINE_B1 DAC__FINEP 0.23369f
+C549 DAC__FINEN B5 1.02526f
+C550 DAC__LOP DAC__N_COARSE_B3 0.20244f
+C551 COMPARE__LATCH__FN DAC__N_FINE_B4 0.54414f
+C552 VPWR DAC__P_FINE_B2_SW__BITB 3.20964f
+C553 DAC__HIP DAC__P_FINE_B4_SW__BITB 1.14231f
+C554 DAC__P_COARSE_B5 DAC__P_FINE_B0 8.0636f
+C555 DAC__P_COARSE_B5_SW__BITB B10 1.09415f
+C556 B11 DAC__P_COARSE_B0 0.68074f
+C557 DAC__P_COARSE_B4 DAC__N_COARSE_B3 0.47453f
+C558 COMPARE__LATCH__QP COMPARE__LATCH__TAIL 0.11382f
+C559 DAC__LON B6 3.60354f
+C560 COMPARE_PRE1_LOAD_OUTN_R0_N1 COMPARE__PRE1N 0.28742f
+C561 COMPARE__PRE0N COMPARE__PRE1__TAIL 14.9876f
+C562 B9 VCM 0.28382f
+C563 DAC__N_COARSE_B2 B2 0.48032f
+C564 B9 B2 0.29101f
+C565 B1 TOPN 0.75422f
+C566 DAC__N_COARSE_B5 DAC__N_FINE_B2 1.91847f
+C567 DAC__N_COARSE_B5 DAC__HIN 8.94619f
+C568 B0 DAC__HIP 1.09225f
+C569 B0 DAC__N_FINE_B0_SW__BITB 3.61317f
+C570 B7 B1 0.28122f
+C571 DAC__P_FINE_B2 B1 2.70425f
+C572 DAC__N_FINE_B1 DAC__P_FINE_B1 1.00412f
+C573 DAC__SAMPLEB B8 0.28174f
+C574 DAC__N_COARSE_B5 DAC__P_FINE_B5 0.97455f
+C575 B10 DAC__FINEP 0.86919f
+C576 B9 DAC__N_COARSE_B2 0.49583f
+C577 VPWR VREF 13.9455f
+C578 B4 DAC__N_FINE_B4 11.112f
+C579 B11 DAC__N_COARSE_B5_SW__BITB 3.05683f
+C580 DAC__N_FINE_B0 B5 0.21101f
+C581 B8 DAC__P_COARSE_B2 20.8542f
+C582 B4 DAC__P_COARSE_B0 0.48953f
+C583 DAC__N_FINE_B1 DAC__N_COARSE_B1 0.48909f
+C584 COMPARE__LATCH__QN DAC__P_FINE_B5 0.58147f
+C585 DAC__LOP DAC__SAMPLEB 5.05519f
+C586 DAC__P_COARSE_B3 DAC__N_FINE_B4 0.70486f
+C587 DAC__N_FINE_B3 B5 0.81405f
+C588 DAC__P_FINE_B4 B1 3.01846f
+C589 DAC__P_COARSE_B3 DAC__P_COARSE_B0 1.77651f
+C590 DAC__P_COARSE_B4 DAC__SAMPLEB 0.28174f
+C591 B8 B2 0.28122f
+C592 B10 DAC__P_FINE_B1 0.37993f
+C593 VCM B8 0.28382f
+C594 DAC__N_COARSE_B1_SW__BITB DAC__N_COARSE_B1 2.18467f
+C595 DAC__LOP DAC__P_COARSE_B2 5.33714f
+C596 VPWR COMPARE_PRE0_LOAD_OUTP_R0_N0 0.95249f
+C597 B0 TOPN 1.03204f
+C598 DAC__P_COARSE_B4 DAC__P_COARSE_B2 0.77007f
+C599 COMPARE_PRE0_LOAD_OUTN_R0_N0 COMPARE__PRE0N 0.20913f
+C600 DAC__N_FINE_B2 DAC__N_FINE_B3_SW__BITB 0.07591f
+C601 DAC__N_FINE_B3_SW__BITB DAC__HIN 11.9762f
+C602 B11 B1 0.48632f
+C603 B10 DAC__N_COARSE_B1 0.3794f
+C604 DAC__N_COARSE_B4 B5 0.9818f
+C605 TOPN DAC__N_COARSE_B3 0.15956p
+C606 DAC__N_COARSE_B2 B8 12.5963f
+C607 DAC__HIP DAC__SAMPLEB 5.05537f
+C608 B9 B8 8.45758f
+C609 VCM DAC__LOP 1.11078f
+C610 DAC__LOP B2 1.23544f
+C611 B0 B7 0.56172f
+C612 B0 DAC__P_FINE_B2 0.37375f
+C613 VPWR DAC__P_COARSE_B1_SW__BITB 4.54795f
+C614 DAC__P_COARSE_B1 B6 2.01256f
+C615 DAC__P_FINE_B3 DAC__P_FINE_B3_SW__BITB 10.7946f
+C616 VCM DAC__P_COARSE_B4 0.28382f
+C617 DAC__P_FINE_B2 DAC__N_COARSE_B3 0.4704f
+C618 DAC__HIP DAC__P_COARSE_B2 4.91329f
+C619 B7 DAC__N_COARSE_B3 0.47279f
+C620 DAC__P_COARSE_B1 DAC__LON 0.47519f
+C621 DAC__FINEN B6 0.75923f
+C622 DAC__P_COARSE_B4 B2 1.20121f
+C623 DAC__FINEN DAC__LON 13.8116f
+C624 COMPARE__LATCH__QP TOPN 0.54673f
+C625 DAC__P_FINE_B4 DAC__P_FINE_B4_SW__BITB 13.7618f
+C626 DAC__P_FINE_B0_SW__BITB TOPP 0.543f
+C627 DAC__LOP DAC__N_COARSE_B2 0.21202f
+C628 B9 DAC__LOP 1.74737f
+C629 DAC__N_FINE_B1 DAC__N_FINE_B4 1.72975f
+C630 DAC__P_FINE_B3 DAC__N_COARSE_B0 0.26826f
+C631 DAC__P_COARSE_B4 DAC__N_COARSE_B2 0.4704f
+C632 DAC__HIP B2 2.05361f
+C633 B9 DAC__P_COARSE_B4 2.32221f
+C634 VCM DAC__HIP 0.94148f
+C635 DAC__N_FINE_B1 DAC__P_COARSE_B0 0.21479f
+C636 B0 DAC__P_FINE_B4 0.86862f
+C637 DAC__P_FINE_B1_SW__BITB DAC__P_FINE_B1 4.86024f
+C638 VREF DAC__P_COARSE_B2_SW__BITB 0
+C639 DAC__P_FINE_B4 DAC__N_COARSE_B3 0.48181f
+C640 VINN DAC__SAMPLEB 0.39027f
+C641 B4 B1 0.28122f
+C642 SAMPLE DAC__HIN 17.3136f
+C643 TOPP B5 0.75963f
+C644 DAC__P_COARSE_B5 DAC__N_COARSE_B0 0.48305f
+C645 B9 DAC__HIP 3.3687f
+C646 DAC__N_COARSE_B4 DAC__N_COARSE_B4_SW__BITB 11.0822f
+C647 DAC__P_COARSE_B3 B1 0.87091f
+C648 DAC__N_FINE_B0 DAC__LON 8.67435f
+C649 DAC__SAMPLEB TOPN 17.8818f
+C650 SAMPLE DAC__P_FINE_B5 0.2794f
+C651 B0 B11 3.34756f
+C652 DAC__N_FINE_B5_SW__BITB DAC__HIN 2.45292f
+C653 B10 DAC__N_FINE_B4 0.58854f
+C654 DAC__P_COARSE_B5 DAC__P_COARSE_B5_SW__BITB 17.9424f
+C655 B3 DAC__N_FINE_B2 0.20238f
+C656 B3 DAC__HIN 1.81195f
+C657 B11 DAC__N_COARSE_B3 0.47759f
+C658 B7 DAC__SAMPLEB 0.28174f
+C659 B10 DAC__P_COARSE_B0 0.72318f
+C660 DAC__P_COARSE_B2 TOPN 0.50293f
+C661 DAC__P_FINE_B2 DAC__SAMPLEB 0.28174f
+C662 DAC__N_FINE_B3 B6 0.39193f
+C663 DAC__P_FINE_B3 DAC__FINEP 0.15546p
+C664 DAC__N_FINE_B3 DAC__LON 8.6957f
+C665 VCM VINN 0.00343f
+C666 DAC__LOP B8 1.53345f
+C667 VPWR DAC__P_FINE_B0_SW__BITB 10.1016f
+C668 B3 DAC__P_FINE_B5 0.87427f
+C669 DAC__P_FINE_B2 DAC__P_COARSE_B2 0.15225f
+C670 DAC__N_FINE_B5 B5 14.171f
+C671 COMPARE__PRE0N COMPARE_PRE0_LOAD_OUTP_R0_N0 0.20913f
+C672 TOPP COMPARE__PRE0__TAIL 9.22471f
+C673 B7 DAC__P_COARSE_B2 1.94445f
+C674 DAC__P_COARSE_B4 B8 0.47961f
+C675 COMPARE__PRE1N COMPARE__PRE1__TAIL 1.46982f
+C676 B2 TOPN 0.74846f
+C677 VCM TOPN 3.69189f
+C678 COMPARE__LATCH__QP COMPARE__LATCH__FN 1.75629f
+C679 B4 DAC__P_FINE_B4_SW__BITB 1.06848f
+C680 DAC__P_COARSE_B5 DAC__FINEP 1.38201f
+C681 DAC__FINEP DAC__P_COARSE_B0_SW__BITB 2.33928f
+C682 DAC__N_COARSE_B4 B6 0.56069f
+C683 COMPARE_PRE1_LOAD_OUTP_R0_N0 COMPARE__PRE1P 0.20999f
+C684 VREF SAMPLE 0.90597f
+C685 DAC__P_FINE_B4 DAC__SAMPLEB 0.28428f
+C686 COMPARE_PRE1_LOAD_OUTP_R0_N0 COMPARE__PRE0P 4.54765f
+C687 DAC__P_FINE_B3 DAC__P_FINE_B1 0.11202f
+C688 DAC__N_COARSE_B4 DAC__LON 7.57832f
+C689 VPWR B5 18.1492f
+C690 B0 B4 0.28122f
+C691 DAC__P_COARSE_B1 DAC__FINEN 0.47718f
+C692 VCM DAC__P_FINE_B2 0.27402f
+C693 VCM B7 0.28382f
+C694 DAC__P_FINE_B2 B2 12.0493f
+C695 DAC__HIP B8 2.85568f
+C696 B7 B2 0.28122f
+C697 B10 DAC__N_COARSE_B5_SW__BITB 3.859f
+C698 DAC__P_COARSE_B4 DAC__LOP 5.97283f
+C699 B4 DAC__N_COARSE_B3 0.80145f
+C700 DAC__N_COARSE_B2 TOPN 83.9461f
+C701 COMPARE__LATCH__QP COMPARE__PRE1P 1.58816f
+C702 B9 TOPN 0.95144f
+C703 DAC__P_FINE_B4 DAC__P_COARSE_B2 0.32223f
+C704 B1 DAC__N_FINE_B1 26.5231f
+C705 VREF DAC__P_COARSE_B4_SW__BITB 0
+C706 B0 DAC__P_COARSE_B3 1.15392f
+C707 COMPARE_PRE1_LOAD_OUTP_R0_N0 B4 0.00192f
+C708 VREF B3 0.31002f
+C709 B7 DAC__N_COARSE_B2 3.02797f
+C710 B9 DAC__P_FINE_B2 0.37524f
+C711 B9 B7 0.2932f
+C712 DAC__P_COARSE_B5 DAC__P_FINE_B1 0.92778f
+C713 DAC__N_FINE_B1_SW__BITB DAC__LON 1.70559f
+C714 DAC__P_FINE_B3 DAC__N_COARSE_B1 0.27474f
+C715 DAC__P_FINE_B2 DAC__N_COARSE_B2 0.53739f
+C716 B11 DAC__SAMPLEB 0.27598f
+C717 DAC__P_COARSE_B3 DAC__N_COARSE_B3 0.47635f
+C718 DAC__P_FINE_B4 VCM 0.27402f
+C719 DAC__HIP DAC__LOP 10.041f
+C720 DAC__P_FINE_B4 B2 0.84755f
+C721 VPWR COMPARE__PRE0__TAIL 0.77058f
+C722 DAC__HIP DAC__P_COARSE_B4 5.54765f
+C723 DAC__N_FINE_B2 DAC__P_FINE_B0 0.21903f
+C724 B11 DAC__P_COARSE_B2 1.61297f
+C725 DAC__P_FINE_B0 DAC__HIN 0.49211f
+C726 DAC__N_COARSE_B5 B5 1.01863f
+C727 DAC__N_FINE_B0 DAC__P_COARSE_B1 0.19638f
+C728 DAC__P_COARSE_B5 DAC__N_COARSE_B1 0.48953f
+C729 TOPP B6 0.76663f
+C730 B10 B1 6.30259f
+C731 DAC__LON TOPP 1.04638f
+C732 DAC__N_FINE_B0 DAC__FINEN 23.0249f
+C733 B9 DAC__P_FINE_B4 0.58689f
+C734 DAC__P_FINE_B0 DAC__P_FINE_B5 2.50967f
+C735 DAC__P_FINE_B4 DAC__N_COARSE_B2 0.59509f
+C736 VPWR DAC__N_COARSE_B4_SW__BITB 0.61251f
+C737 B11 VCM 0.27806f
+C738 DAC__P_COARSE_B1 DAC__N_FINE_B3 0.19638f
+C739 B11 B2 6.30259f
+C740 B8 TOPN 1.42248f
+C741 VPWR DAC__N_COARSE_B2_SW__BITB 0.61251f
+C742 DAC__FINEN DAC__N_FINE_B3 0.15575p
+C743 B4 DAC__SAMPLEB 0.27598f
+C744 DAC__P_FINE_B2 B8 0.37524f
+C745 B7 B8 8.44779f
+C746 VINN DAC__LOP 0
+C747 B0 DAC__N_FINE_B1 2.58276f
+C748 B11 DAC__N_COARSE_B2 0.4868f
+C749 B9 B11 0.2903f
+C750 DAC__N_FINE_B1 DAC__N_COARSE_B3 0.47654f
+C751 DAC__P_COARSE_B3 DAC__SAMPLEB 0.28174f
+C752 B4 DAC__P_COARSE_B2 0.47112f
+C753 DAC__N_FINE_B5 B6 0.78215f
+C754 DAC__N_FINE_B5 DAC__LON 5.36143f
+C755 DAC__P_FINE_B3 DAC__N_FINE_B4 0.5037f
+C756 DAC__P_COARSE_B1 DAC__N_COARSE_B4 0.47054f
+C757 DAC__LOP TOPN 0.78672f
+C758 DAC__P_FINE_B3 DAC__P_COARSE_B0 0.10739f
+C759 DAC__P_COARSE_B4 TOPN 0.88723f
+C760 VREF DAC__P_FINE_B0 0.30426f
+C761 DAC__FINEN DAC__N_COARSE_B4 1.5985f
+C762 DAC__P_COARSE_B3 DAC__P_COARSE_B2 63.1851f
+C763 VPWR COMPARE_PRE1_LOAD_OUTN_R0_N0 1.26719f
+C764 VPWR B6 23.4963f
+C765 B7 DAC__LOP 1.86355f
+C766 DAC__N_FINE_B4_SW__BITB DAC__P_COARSE_B4 0.543f
+C767 VCM B4 0.26826f
+C768 DAC__P_FINE_B2 DAC__LOP 6.55807f
+C769 DAC__P_FINE_B4 B8 0.60633f
+C770 B4 B2 0.2834f
+C771 COMPARE_PRE1_LOAD_OUTN_R0_N0 COMPARE__LATCH__FP 0.00136f
+C772 VPWR DAC__LON 39.0228f
+C773 B1 DAC__P_FINE_B1_SW__BITB 0.61565f
+C774 DAC__N_FINE_B0 DAC__N_FINE_B3 0.2741f
+C775 DAC__P_COARSE_B5 DAC__N_FINE_B4 0.94891f
+C776 DAC__P_FINE_B2 DAC__P_COARSE_B4 0.19772f
+C777 B7 DAC__P_COARSE_B4 0.47961f
+C778 B0 B10 1.40202f
+C779 B10 DAC__N_COARSE_B3 0.48056f
+C780 DAC__P_COARSE_B5 DAC__P_COARSE_B0 4.10986f
+C781 VCM DAC__P_COARSE_B3 0.28382f
+C782 DAC__HIP TOPN 2.18999f
+C783 COMPARE_PRE1_LOAD_OUTP_R0_N1 COMPARE__PRE1P 0.2877f
+C784 DAC__P_COARSE_B3 B2 2.21007f
+C785 DAC__P_COARSE_B0_SW__BITB DAC__P_COARSE_B0 9.49884f
+C786 COMPARE_PRE1_LOAD_OUTP_R0_N1 COMPARE__PRE0P 0
+C787 COMPARE_BIAS_RES_R0_N1 B5 0.00145f
+C788 B4 DAC__N_COARSE_B2 0.88573f
+C789 DAC__LOP DAC__P_FINE_B5_SW__BITB 7.47619f
+C790 B9 B4 0.29101f
+C791 DAC__P_FINE_B0_SW__BITB SAMPLE 0.55844f
+C792 DAC__HIP DAC__P_FINE_B2 4.24988f
+C793 DAC__HIP B7 2.34266f
+C794 B11 B8 0.2805f
+C795 DAC__P_FINE_B4 DAC__LOP 7.20745f
+C796 B1 DAC__N_FINE_B2_SW__BITB 6.77861f
+C797 COMPARE_PRE1_LOAD_OUTP_R0_N1 B4 0.00192f
+C798 COMPARE__PRE0N COMPARE__PRE0__TAIL 1.46932f
+C799 DAC__N_FINE_B0 DAC__N_COARSE_B4 0.49716f
+C800 DAC__P_COARSE_B3 DAC__N_COARSE_B2 0.4704f
+C801 B4 COMPARE_BIAS_RES_R0_N0 0.00192f
+C802 DAC__P_COARSE_B1 TOPP 41.8046f
+C803 B9 DAC__P_COARSE_B3 24.4205f
+C804 DAC__P_FINE_B4 DAC__P_COARSE_B4 0.56625f
+C805 DAC__N_COARSE_B5 B6 0.64973f
+C806 DAC__N_COARSE_B5 DAC__LON 8.70369f
+C807 DAC__FINEN TOPP 0.8833f
+C808 COMPARE__LATCH__FN COMPARE__LATCH__TAIL 2.17501f
+C809 SAMPLE B5 0.2826f
+C810 DAC__N_FINE_B3 DAC__N_COARSE_B4 0.49607f
+C811 DAC__FINEN COMP 0.3398f
+C812 DAC__HIP DAC__P_FINE_B5_SW__BITB 4.61731f
+C813 DAC__N_FINE_B1 DAC__P_COARSE_B2 0.19638f
+C814 COMPARE__PRE0__TAIL COMPARE_BIAS_RES_R0_N1 0
+C815 B11 DAC__LOP 2.35533f
+C816 DAC__N_FINE_B1_SW__BITB DAC__N_FINE_B0 0.07609f
+C817 DAC__P_FINE_B4 DAC__HIP 5.37363f
+C818 B11 DAC__P_COARSE_B4 1.78965f
+C819 DAC__N_FINE_B5_SW__BITB B5 0.75416f
+C820 COMPARE__LATCH__TAIL COMPARE__PRE1P 24.5461f
+C821 B0 DAC__P_FINE_B1_SW__BITB 0.66582f
+C822 DAC__N_COARSE_B0 DAC__N_FINE_B2 0.19899f
+C823 DAC__N_COARSE_B0 DAC__HIN 18.2002f
+C824 DAC__P_FINE_B3 B1 0.39121f
+C825 DAC__N_FINE_B5 DAC__P_COARSE_B1 0.22492f
+C826 DAC__N_FINE_B1 B2 0.40523f
+C827 B10 DAC__SAMPLEB 0.27598f
+C828 B3 B5 0.29248f
+C829 B4 B8 0.28122f
+C830 DAC__N_FINE_B5 DAC__FINEN 0.80717p
+C831 DAC__N_FINE_B4_SW__BITB TOPN 0.7958f
+C832 DAC__N_COARSE_B0 DAC__P_FINE_B5 0.50665f
+C833 B11 DAC__HIP 3.10458f
+C834 B11 DAC__N_FINE_B0_SW__BITB 4.8322f
+C835 DAC__N_FINE_B0 TOPP 0.62454f
+C836 DAC__P_FINE_B2 TOPN 0.50723f
+C837 B7 TOPN 0.68817f
+C838 VPWR DAC__P_COARSE_B1 9.42714f
+C839 DAC__P_COARSE_B3 B8 1.98445f
+C840 B10 DAC__P_COARSE_B2 0.64695f
+C841 DAC__P_COARSE_B5 B1 1.16422f
+C842 DAC__N_COARSE_B2 DAC__N_FINE_B1 0.4764f
+C843 B9 DAC__N_FINE_B1 0.37524f
+C844 VPWR DAC__FINEN 10.3283f
+C845 DAC__LOP B4 1.64501f
+C846 DAC__N_FINE_B3 TOPP 0.47236f
+C847 DAC__P_FINE_B2 B7 0.62465f
+C848 DAC__FINEN COMPARE__LATCH__FP 0.67094f
+C849 VPWR VINP 4.64067f
+C850 VREF DAC__P_FINE_B3_SW__BITB 0
+C851 DAC__N_FINE_B3_SW__BITB DAC__LON 7.396f
+C852 DAC__P_COARSE_B4 B4 1.01412f
+C853 VCM B10 0.27806f
+C854 B10 B2 0.2834f
+C855 DAC__LOP DAC__P_COARSE_B3 5.65956f
+C856 DAC__N_FINE_B2 DAC__FINEP 0.25285f
+C857 DAC__FINEP DAC__HIN 7.48741f
+C858 DAC__P_FINE_B4 TOPN 0.74043f
+C859 DAC__P_COARSE_B3_SW__BITB VPWR 6.44006f
+C860 DAC__P_FINE_B4 DAC__N_FINE_B4_SW__BITB 0.543f
+C861 DAC__N_FINE_B0 DAC__N_FINE_B5 1.40954f
+C862 DAC__P_FINE_B3 DAC__P_FINE_B4_SW__BITB 0.07609f
+C863 DAC__P_FINE_B0_SW__BITB DAC__P_FINE_B0 5.09222f
+C864 DAC__P_COARSE_B4 DAC__P_COARSE_B3 0.12695p
+C865 DAC__FINEP DAC__P_FINE_B5 0.80945p
+C866 DAC__N_COARSE_B5 DAC__P_COARSE_B1 0.62628f
+C867 B10 DAC__N_COARSE_B2 0.4868f
+C868 DAC__P_FINE_B4 DAC__P_FINE_B2 57.5243f
+C869 DAC__HIP B4 13.763f
+C870 DAC__P_FINE_B4 B7 0.71714f
+C871 B9 B10 0.29129f
+C872 DAC__N_COARSE_B4 TOPP 1.11798f
+C873 B0 DAC__P_FINE_B3 0.38296f
+C874 DAC__N_FINE_B5 DAC__N_FINE_B3 2.29039f
+C875 DAC__N_COARSE_B5 DAC__FINEN 1.73881f
+C876 VPWR DAC__N_FINE_B0 2.24583f
+C877 DAC__HIP DAC__P_COARSE_B3 5.23448f
+C878 VREF DAC__P_COARSE_B5_SW__BITB 0
+C879 DAC__P_FINE_B3 DAC__N_COARSE_B3 0.27402f
+C880 B11 TOPN 0.74846f
+C881 DAC__N_FINE_B2 DAC__P_FINE_B1 0.20251f
+C882 DAC__HIN DAC__P_FINE_B1 0.48305f
+C883 COMPARE__LATCH__FN TOPN 1.0609f
+C884 DAC__N_FINE_B1 B8 0.37221f
+C885 DAC__P_FINE_B0 B5 0.49893f
+C886 DAC__P_FINE_B4 DAC__P_FINE_B5_SW__BITB 0.07591f
+C887 SAMPLE B6 0.28946f
+C888 VPWR DAC__N_FINE_B3 2.24013f
+C889 DAC__P_FINE_B5 DAC__P_FINE_B1 1.39336f
+C890 SAMPLE DAC__LON 17.3181f
+C891 B0 DAC__P_COARSE_B5 3.19979f
+C892 B11 DAC__P_FINE_B2 0.37221f
+C893 COMPARE__LATCH__QN DAC__FINEN 0.84087f
+C894 B11 B7 0.2805f
+C895 EVAL DAC__P_FINE_B5 0.71409f
+C896 DAC__P_COARSE_B5 DAC__N_COARSE_B3 0.48891f
+C897 DAC__N_FINE_B5 DAC__N_COARSE_B4 4.48459f
+C898 DAC__N_FINE_B2 DAC__N_COARSE_B1 0.47155f
+C899 DAC__P_FINE_B2_SW__BITB DAC__P_FINE_B1 0.07609f
+C900 DAC__HIN DAC__N_COARSE_B1 4.91046f
+C901 VREF DAC__FINEP 0.31982f
+C902 COMPARE__PRE0P TOPN 0.90499f
+C903 DAC__N_FINE_B5_SW__BITB DAC__LON 1.45447f
+C904 DAC__LOP DAC__N_FINE_B1 0.09834f
+C905 B3 B6 0.31402f
+C906 DAC__N_COARSE_B5 DAC__N_FINE_B0 4.47724f
+C907 B3 DAC__LON 3.34477f
+C908 DAC__P_COARSE_B1 DAC__P_COARSE_B2_SW__BITB 0.07609f
+C909 B10 B8 0.28122f
+C910 DAC__P_FINE_B5 DAC__N_COARSE_B1 0.51074f
+C911 DAC__P_COARSE_B4 DAC__N_FINE_B1 0.4704f
+C912 VPWR DAC__N_COARSE_B4 2.24583f
+C913 DAC__P_COARSE_B5 COMPARE__LATCH__QP 0.58795f
+C914 DAC__P_FINE_B4 B11 0.58083f
+C915 B4 TOPN 1.44394f
+C916 DAC__N_COARSE_B4 COMPARE__LATCH__FP 0.39841f
+C917 TOPP COMP 0.29433f
+C918 DAC__N_COARSE_B5 DAC__N_FINE_B3 1.93686f
+C919 DAC__N_FINE_B4_SW__BITB B4 14.7495f
+C920 B2 DAC__N_FINE_B2_SW__BITB 4.72587f
+C921 VREF DAC__P_FINE_B1 0.31002f
+C922 DAC__P_FINE_B3 DAC__SAMPLEB 0.28219f
+C923 B7 B4 0.28166f
+C924 DAC__P_COARSE_B3 TOPN 1.06087f
+C925 DAC__P_FINE_B2 B4 0.47112f
+C926 DAC__N_FINE_B1_SW__BITB VPWR 0.61251f
+C927 DAC__LOP B10 1.95388f
+C928 DAC__N_FINE_B4_SW__BITB DAC__P_COARSE_B3 0.5626f
+C929 DAC__N_FINE_B5 TOPP 0.88856f
+C930 DAC__P_FINE_B3 DAC__P_COARSE_B2 0.10739f
+C931 DAC__P_FINE_B2 DAC__P_COARSE_B3 0.20027f
+C932 B7 DAC__P_COARSE_B3 0.38142f
+C933 DAC__P_COARSE_B4 B10 26.7577f
+C934 DAC__P_COARSE_B5 DAC__SAMPLEB 0.27598f
+C935 DAC__N_FINE_B5 COMP 1.58043f
+C936 B4 DAC__P_FINE_B5_SW__BITB 0.74676f
+C937 DAC__N_COARSE_B5 DAC__N_COARSE_B4 32.7649f
+C938 DAC__P_COARSE_B5 COMPN 0.29362f
+C939 COMPARE__BIAS TOPN 0.41492f
+C940 DAC__N_FINE_B2 DAC__N_FINE_B4 52.6799f
+C941 DAC__HIN DAC__N_FINE_B4 8.55893f
+C942 DAC__P_FINE_B4 B4 19.0783f
+C943 DAC__P_FINE_B3 VCM 0.27402f
+C944 VPWR TOPP 4.85325f
+C945 DAC__P_FINE_B3 B2 1.51675f
+C946 DAC__HIP B10 17.1805f
+C947 DAC__P_COARSE_B5 DAC__P_COARSE_B2 2.97238f
+C948 DAC__N_FINE_B2 DAC__P_COARSE_B0 0.21479f
+C949 DAC__HIN DAC__P_COARSE_B0 0.4936f
+C950 COMPARE__LATCH__FP TOPP 0.56932f
+C951 COMPARE__LATCH__FN COMPARE__PRE1P 7.65325f
+C952 VPWR COMP 0.26754f
+C953 COMPARE__LATCH__QN DAC__N_COARSE_B4 0.38545f
+C954 DAC__P_COARSE_B1 SAMPLE 0.28946f
+C955 DAC__P_FINE_B5 DAC__N_FINE_B4 4.56208f
+C956 DAC__P_FINE_B4 DAC__P_COARSE_B3 0.56795f
+C957 B6 DAC__P_FINE_B0 0.28245f
+C958 DAC__P_FINE_B5 DAC__P_COARSE_B0 0.98427f
+C959 SAMPLE DAC__FINEN 8.65146f
+C960 DAC__LON DAC__P_FINE_B0 0.49211f
+C961 DAC__P_FINE_B3 DAC__N_COARSE_B2 0.27402f
+C962 B11 B4 0.28166f
+C963 B9 DAC__P_FINE_B3 0.38445f
+C964 DAC__P_COARSE_B5 VCM 0.27806f
+C965 DAC__N_FINE_B3_SW__BITB DAC__N_FINE_B3 19.39f
+C966 SAMPLE VINP 3.14009f
+C967 DAC__P_COARSE_B5 B2 1.02741f
+C968 DAC__N_FINE_B1 TOPN 0.31863f
+C969 COMPARE__PRE1N COMPARE_PRE1_LOAD_OUTN_R0_N0 0.20962f
+C970 COMPARE__PRE0P COMPARE__PRE1P 1.27323f
+C971 B3 DAC__P_COARSE_B1 0.47759f
+C972 DAC__LOP DAC__P_FINE_B1_SW__BITB 0.83041f
+C973 VPWR DAC__N_FINE_B5 7.58008f
+C974 B11 DAC__P_COARSE_B3 2.56948f
+C975 B3 DAC__FINEN 0.90186f
+C976 B7 DAC__N_FINE_B1 0.37461f
+C977 DAC__N_COARSE_B5 TOPP 0.93605f
+C978 DAC__HIN DAC__N_COARSE_B5_SW__BITB 2.47857f
+C979 DAC__P_FINE_B2 DAC__N_FINE_B1 0.62251f
+C980 DAC__N_FINE_B5 COMPARE__LATCH__FP 0.69974f
+C981 DAC__P_COARSE_B5 DAC__N_COARSE_B2 0.48881f
+C982 COMPARE_PRE1_LOAD_OUTN_R0_N1 COMPARE_PRE1_LOAD_OUTP_R0_N1 0
+C983 B9 DAC__P_COARSE_B5 0.904f
+C984 DAC__N_COARSE_B0 B5 0.21446f
+C985 B4 COMPARE__PRE1P 0.00192f
+C986 COMPARE__PRE0P B4 0.00192f
+C987 DAC__N_COARSE_B1_SW__BITB B7 0.83327f
+C988 VREF DAC__P_COARSE_B0 0.31982f
+C989 VPWR COMPARE__LATCH__FP 2.10213f
+C990 DAC__HIP DAC__P_FINE_B1_SW__BITB 0.51527f
+C991 B10 TOPN 1.23395f
+C992 COMPARE__LATCH__QN TOPP 0.5696f
+C993 COMPARE__LATCH__QN COMP 9.72239f
+C994 DAC__P_FINE_B4 DAC__N_FINE_B1 0.5006f
+C995 DAC__P_FINE_B2 B10 0.37221f
+C996 DAC__N_COARSE_B5 DAC__N_FINE_B5 6.1949f
+C997 DAC__P_FINE_B3 B8 0.38142f
+C998 B7 B10 0.28122f
+C999 DAC__N_FINE_B0 B3 0.20861f
+C1000 COMPARE_PRE0_LOAD_OUTN_R0_N1 COMPARE__PRE0P 0.31466f
+C1001 B4 DAC__P_COARSE_B3 1.03371f
+C1002 DAC__N_COARSE_B3_SW__BITB DAC__N_COARSE_B3 8.11504f
+C1003 DAC__N_FINE_B2 B1 2.51383f
+C1004 B1 DAC__HIN 2.17f
+C1005 DAC__FINEP B5 0.84155f
+C1006 COMPARE__BIAS COMPARE__PRE0P 0.31489f
+C1007 COMPARE_PRE1_LOAD_OUTP_R0_N0 COMPARE__PRE1__TAIL 0
+C1008 DAC__N_COARSE_B5 VPWR 2.24583f
+C1009 COMPARE_PRE0_LOAD_OUTN_R0_N1 B4 0.00192f
+C1010 COMPARE__LATCH__QN DAC__N_FINE_B5 0.90006f
+C1011 DAC__P_COARSE_B5 B8 0.78243f
+C1012 B11 DAC__N_FINE_B1 0.37221f
+C1013 B1 DAC__P_FINE_B5 1.65422f
+C1014 B3 DAC__N_FINE_B3 33.7757f
+C1015 DAC__N_COARSE_B5 COMPARE__LATCH__FP 1.11514f
+C1016 COMPARE__PRE0N TOPP 0.70981f
+C1017 DAC__P_FINE_B3 DAC__LOP 4.7651f
+C1018 COMPARE__BIAS B4 0.00192f
+C1019 DAC__P_FINE_B4 B10 0.58019f
+C1020 DAC__P_COARSE_B1 DAC__P_FINE_B0 0.10739f
+C1021 DAC__P_FINE_B2_SW__BITB B1 1.63949f
+C1022 DAC__P_FINE_B3 DAC__P_COARSE_B4 0.21479f
+C1023 DAC__FINEN DAC__P_FINE_B0 0.49523f
+C1024 COMPARE__LATCH__QN VPWR 16.9139f
+C1025 DAC__P_COARSE_B1_SW__BITB DAC__P_COARSE_B0 0.07609f
+C1026 TOPP COMPARE_BIAS_RES_R0_N1 1.87335f
+C1027 B5 DAC__P_FINE_B1 0.49066f
+C1028 COMPARE__LATCH__QN COMPARE__LATCH__FP 3.86279f
+C1029 DAC__P_COARSE_B5 DAC__LOP 15.8924f
+C1030 B3 DAC__N_COARSE_B4 0.76717f
+C1031 DAC__LOP DAC__P_COARSE_B0_SW__BITB 1.44148f
+C1032 DAC__N_COARSE_B0_SW__BITB DAC__HIN 10.9357f
+C1033 DAC__P_FINE_B3 DAC__HIP 4.57314f
+C1034 B11 B10 8.19459f
+C1035 DAC__P_COARSE_B5 DAC__P_COARSE_B4 27.9666f
+C1036 COMPARE__BIAS COMPARE_PRE0_LOAD_OUTN_R0_N1 4.12908f
+C1037 VREF B1 0.31002f
+C1038 B4 DAC__N_FINE_B1 0.19638f
+C1039 B5 DAC__N_COARSE_B1 0.2018f
+C1040 VPWR DAC__P_COARSE_B2_SW__BITB 5.494f
+C1041 DAC__N_COARSE_B0 B6 38.059f
+C1042 B0 DAC__N_FINE_B2 0.37375f
+C1043 B0 DAC__HIN 1.94355f
+C1044 DAC__N_COARSE_B0 DAC__LON 4.61566f
+C1045 DAC__P_COARSE_B5 DAC__HIP 4.19236f
+C1046 SAMPLE TOPP 3.31891f
+C1047 VPWR COMPARE__PRE0N 0.97982f
+C1048 DAC__HIP DAC__P_COARSE_B0_SW__BITB 0.7296f
+C1049 DAC__N_FINE_B0 DAC__P_FINE_B0 0.50055f
+C1050 DAC__N_FINE_B2 DAC__N_COARSE_B3 0.50035f
+C1051 DAC__HIN DAC__N_COARSE_B3 6.76684f
+C1052 DAC__N_COARSE_B5 COMPARE__LATCH__QN 0.49588f
+C1053 DAC__P_COARSE_B3 DAC__N_FINE_B1 0.4802f
+C1054 VPWR DAC__N_FINE_B3_SW__BITB 0.61251f
+C1055 B0 DAC__P_FINE_B5 2.53901f
+C1056 DAC__P_FINE_B5 DAC__N_COARSE_B3 0.51002f
+C1057 DAC__N_FINE_B3 DAC__P_FINE_B0 0.2205f
+C1058 VPWR COMPARE_BIAS_RES_R0_N1 0.77013f
+C1059 B3 TOPP 0.83894f
+C1060 B10 B4 0.28122f
+C1061 COMPARE__LATCH__QP DAC__P_FINE_B5 0.58795f
+C1062 DAC__P_FINE_B3 TOPN 0.74649f
+C1063 VREF DAC__P_FINE_B4_SW__BITB 0
+C1064 B6 DAC__FINEP 0.79711f
+C1065 B10 DAC__P_COARSE_B3 0.75731f
+C1066 DAC__P_FINE_B3 DAC__N_FINE_B4_SW__BITB 0.5626f
+C1067 DAC__LON DAC__FINEP 0.02385f
+C1068 DAC__N_COARSE_B2 DAC__N_COARSE_B3_SW__BITB 0.07609f
+C1069 DAC__N_COARSE_B4 DAC__P_FINE_B0 0.50224f
+C1070 B9 DAC__N_COARSE_B3_SW__BITB 1.94413f
+C1071 DAC__P_FINE_B3 B7 0.38142f
+C1072 DAC__P_FINE_B3 DAC__P_FINE_B2 6.56211f
+C1073 B0 VREF 0.62408f
+C1074 DAC__N_FINE_B5_SW__BITB DAC__N_FINE_B5 5.67277f
+C1075 DAC__N_COARSE_B1 DAC__N_COARSE_B2_SW__BITB 0.07609f
+C1076 VPWR SAMPLE 8.00201f
+C1077 DAC__N_FINE_B4 B5 1.15191f
+C1078 DAC__P_COARSE_B5 TOPN 1.22835f
+C1079 DAC__N_FINE_B5 B3 1.08385f
+C1080 B5 DAC__P_COARSE_B0 0.50135f
+C1081 DAC__SAMPLEB DAC__HIN 18.7776f
+C1082 DAC__P_COARSE_B5 DAC__N_FINE_B4_SW__BITB 0.5626f
+C1083 VPWR DAC__P_COARSE_B4_SW__BITB 7.38611f
+C1084 DAC__P_COARSE_B5 DAC__P_FINE_B2 1.644f
+C1085 DAC__N_FINE_B5_SW__BITB VPWR 2.80679f
+C1086 B6 DAC__P_FINE_B1 0.28245f
+C1087 DAC__P_COARSE_B5 B7 0.78243f
+C1088 DAC__LON DAC__P_FINE_B1 0.4853f
+C1089 DAC__N_FINE_B2 DAC__P_COARSE_B2 0.19638f
+C1090 DAC__HIN DAC__P_COARSE_B2 0.47519f
+C1091 DAC__SAMPLEB DAC__P_FINE_B5 7.3324f
+C1092 DAC__P_FINE_B5 COMPN 0.29362f
+C1093 VPWR B3 8.67462f
+C1094 DAC__P_FINE_B4 DAC__P_FINE_B3 70.0854f
+C1095 DAC__N_COARSE_B0 DAC__P_COARSE_B1 0.46464f
+C1096 DAC__P_FINE_B5 DAC__P_COARSE_B2 2.06771f
+C1097 B6 DAC__N_COARSE_B1 0.35313f
+C1098 VCM DAC__HIN 0.38363f
+C1099 DAC__N_COARSE_B0 DAC__FINEN 0.22198f
+C1100 B10 DAC__N_FINE_B1 0.37221f
+C1101 TOPP DAC__P_FINE_B0 0.76424f
+C1102 DAC__LON DAC__N_COARSE_B1 4.69229f
+C1103 DAC__N_FINE_B2 B2 29.3234f
+C1104 DAC__HIN B2 2.43286f
+C1105 B8 DAC__N_COARSE_B3_SW__BITB 1.91259f
+C1106 DAC__P_FINE_B4 DAC__P_COARSE_B5 3.6382f
+C1107 B11 DAC__P_FINE_B3 0.38142f
+C1108 DAC__P_FINE_B5 B2 0.8773f
+C1109 VCM DAC__P_FINE_B5 0.26826f
+C1110 DAC__N_COARSE_B5 B3 0.79538f
+C1111 B9 DAC__N_FINE_B2 0.37524f
+C1112 VREF DAC__SAMPLEB 3.37896f
+C1113 B9 DAC__HIN 1.26106f
+C1114 DAC__P_FINE_B2_SW__BITB B2 0.76659f
+C1115 DAC__N_FINE_B2 DAC__N_COARSE_B2 0.49743f
+C1116 DAC__N_COARSE_B2 DAC__HIN 6.04496f
+C1117 B11 DAC__P_COARSE_B5 31.2736f
+C1118 DAC__N_COARSE_B2 DAC__P_FINE_B5 1.29303f
+C1119 DAC__P_COARSE_B1 DAC__FINEP 0.19863f
+C1120 VREF DAC__P_COARSE_B2 0.31982f
+C1121 B9 DAC__P_FINE_B5 0.89892f
+C1122 DAC__N_FINE_B5 DAC__P_FINE_B0 0.58946f
+C1123 DAC__P_COARSE_B5 COMPARE__LATCH__FN 0.58866f
+C1124 DAC__N_FINE_B0 DAC__N_COARSE_B0 0.22289f
+C1125 DAC__FINEN DAC__FINEP 21.3831f
+C1126 COMPARE_PRE1_LOAD_OUTN_R0_N1 COMPARE__PRE1P 0.31466f
+C1127 B1 B5 0.29101f
+C1128 VCM VREF 0.31406f
+C1129 DAC__P_FINE_B3 B4 2.82011f
+C1130 VREF B2 0.31002f
+C1131 VPWR DAC__P_FINE_B0 4.71531f
+C1132 DAC__N_COARSE_B0 DAC__N_FINE_B3 0.27806f
+C1133 B6 DAC__N_FINE_B4 0.49107f
+C1134 DAC__P_COARSE_B1 DAC__P_FINE_B1 0.11046f
+C1135 DAC__LON DAC__N_FINE_B4 4.83962f
+C1136 COMPARE_PRE1_LOAD_OUTN_R0_N1 B4 0.00192f
+C1137 DAC__P_FINE_B3 DAC__P_COARSE_B3 0.21782f
+C1138 B6 DAC__P_COARSE_B0 15.251f
+C1139 DAC__N_FINE_B2 B8 0.37221f
+C1140 DAC__HIN B8 1.03003f
+C1141 DAC__FINEN DAC__P_FINE_B1 0.52221f
+C1142 VPWR COMPARE__PRE1N 1.18985f
+C1143 DAC__LON DAC__P_COARSE_B0 0.4936f
+C1144 DAC__P_COARSE_B5 B4 1.05212f
+C1145 B9 VREF 0.31982f
+C1146 COMPARE__PRE1N COMPARE__LATCH__FP 9.17306f
+C1147 DAC__N_COARSE_B0 DAC__N_COARSE_B4 5.07133f
+C1148 B0 DAC__P_FINE_B0_SW__BITB 12.6741f
+C1149 DAC__N_FINE_B0 DAC__FINEP 0.20671f
+C1150 B3 DAC__N_FINE_B3_SW__BITB 5.46496f
+C1151 DAC__P_FINE_B5 B8 1.14136f
+C1152 DAC__P_COARSE_B1 DAC__N_COARSE_B1 0.47112f
+C1153 DAC__N_FINE_B1 DAC__N_FINE_B2_SW__BITB 0.07609f
+C1154 DAC__P_COARSE_B5 DAC__P_COARSE_B3 6.39661f
+C1155 COMPARE_PRE0_LOAD_OUTP_R0_N1 TOPN 0.00136f
+C1156 DAC__FINEN DAC__N_COARSE_B1 0.2047f
+C1157 DAC__N_COARSE_B5 DAC__P_FINE_B0 0.50224f
+C1158 DAC__N_FINE_B3 DAC__FINEP 0.22004f
+C1159 DAC__N_FINE_B2 DAC__LOP 0.0984f
+C1160 DAC__LOP DAC__HIN 0.50002f
+C1161 DAC__N_FINE_B2 DAC__P_COARSE_B4 0.4704f
+C1162 DAC__P_COARSE_B4 DAC__HIN 1.02323f
+C1163 B0 B5 0.29101f
+C1164 DAC__LON DAC__N_COARSE_B5_SW__BITB 1.24961f
+C1165 DAC__LOP DAC__P_FINE_B5 13.7638f
+C1166 DAC__N_FINE_B0 DAC__P_FINE_B1 0.48397f
+C1167 B5 DAC__N_COARSE_B3 0.40121f
+C1168 DAC__P_COARSE_B4 DAC__P_FINE_B5 3.39722f
+C1169 DAC__LOP DAC__P_FINE_B2_SW__BITB 1.34183f
+C1170 DAC__P_FINE_B3 DAC__N_FINE_B1 0.27402f
+C1171 DAC__N_FINE_B0_SW__BITB DAC__HIN 3.00845f
+C1172 VREF B8 0.31982f
+C1173 DAC__N_COARSE_B4 DAC__FINEP 0.61496f
+C1174 DAC__N_FINE_B3 DAC__P_FINE_B1 0.20208f
+C1175 B3 SAMPLE 0.28174f
+C1176 DAC__N_COARSE_B0 TOPP 0.47236f
+C1177 DAC__N_FINE_B0 DAC__N_COARSE_B1 0.49523f
+C1178 DAC__HIP DAC__P_FINE_B5 5.51818f
+C1179 B6 B1 0.29101f
+C1180 DAC__P_COARSE_B5 DAC__N_FINE_B1 0.49647f
+C1181 DAC__P_FINE_B0_SW__BITB DAC__SAMPLEB 0.55844f
+C1182 DAC__HIP DAC__P_FINE_B2_SW__BITB 0.72428f
+C1183 DAC__P_COARSE_B1 DAC__N_FINE_B4 0.20116f
+C1184 DAC__N_FINE_B3 DAC__N_COARSE_B1 0.27474f
+C1185 DAC__LON B1 4.27989f
+C1186 VREF DAC__LOP 0.62984f
+C1187 DAC__FINEN DAC__N_FINE_B4 0.45307p
+C1188 DAC__N_COARSE_B4 DAC__P_FINE_B1 0.48382f
+C1189 DAC__P_COARSE_B1 DAC__P_COARSE_B0 62.4566f
+C1190 VREF DAC__P_COARSE_B4 0.31982f
+C1191 DAC__P_FINE_B3 B10 0.38142f
+C1192 DAC__FINEN DAC__P_COARSE_B0 0.49559f
+C1193 VPWR DAC__P_FINE_B3_SW__BITB 4.15565f
+C1194 DAC__N_COARSE_B0 DAC__N_FINE_B5 0.86572f
+C1195 DAC__N_COARSE_B4_SW__BITB DAC__N_COARSE_B3 0.07609f
+C1196 COMPARE__PRE1N COMPARE__PRE0N 1.07854f
+C1197 VINN DAC__HIN 3.7963f
+C1198 DAC__SAMPLEB B5 0.28245f
+C1199 TOPP DAC__FINEP 24.3231f
+C1200 DAC__N_COARSE_B4 DAC__N_COARSE_B1 1.71019f
+C1201 VCM DAC__P_FINE_B0_SW__BITB 0.5528f
+C1202 DAC__HIP VREF 4.34542f
+C1203 VINN DAC__P_FINE_B5 0.12648f
+C1204 DAC__P_COARSE_B5 B10 1.07549f
+C1205 DAC__FINEP COMP 0.29433f
+C1206 DAC__N_FINE_B2 TOPN 0.33675f
+C1207 DAC__HIN TOPN 1.57288f
+C1208 VPWR DAC__N_COARSE_B0 18.2241f
+C1209 COMPARE__PRE0P COMPARE_PRE0_LOAD_OUTP_R0_N1 0.2877f
+C1210 DAC__N_COARSE_B0_SW__BITB B6 1.87001f
+C1211 B5 DAC__P_COARSE_B2 0.48294f
+C1212 DAC__N_FINE_B4_SW__BITB DAC__HIN 0.5025f
+C1213 DAC__N_COARSE_B0_SW__BITB DAC__LON 7.49699f
+C1214 DAC__N_FINE_B0 DAC__N_FINE_B4 3.40527f
+C1215 DAC__P_FINE_B5 TOPN 1.23011f
+C1216 DAC__P_FINE_B2 DAC__N_FINE_B2 0.25545f
+C1217 DAC__P_FINE_B2 DAC__HIN 0.4754f
+C1218 DAC__N_FINE_B2 B7 0.37461f
+C1219 B7 DAC__HIN 0.80439f
+C1220 DAC__N_FINE_B4_SW__BITB DAC__P_FINE_B5 0.5626f
+C1221 VPWR DAC__P_COARSE_B5_SW__BITB 8.60911f
+C1222 B4 COMPARE_PRE0_LOAD_OUTP_R0_N1 0.00192f
+C1223 DAC__N_FINE_B0 DAC__P_COARSE_B0 0.21311f
+C1224 VCM B5 0.27474f
+C1225 TOPP DAC__P_FINE_B1 0.81335f
+C1226 SAMPLE DAC__P_FINE_B0 0.27598f
+C1227 EVAL TOPP 0.59302f
+C1228 B5 B2 0.29146f
+C1229 B0 B6 0.58131f
+C1230 COMPARE__PRE1__TAIL COMPARE__PRE1P 1.58726f
+C1231 DAC__P_FINE_B2 DAC__P_FINE_B5 1.39471f
+C1232 B7 DAC__P_FINE_B5 0.88496f
+C1233 DAC__N_FINE_B5 DAC__FINEP 1.35456f
+C1234 DAC__LOP DAC__P_COARSE_B1_SW__BITB 1.9529f
+C1235 DAC__N_FINE_B3 DAC__N_FINE_B4 64.6912f
+C1236 COMPARE__PRE0P COMPARE__PRE1__TAIL 14.7315f
+C1237 B0 DAC__LON 3.74017f
+C1238 B6 DAC__N_COARSE_B3 0.48737f
+C1239 DAC__P_FINE_B2 DAC__P_FINE_B2_SW__BITB 7.82742f
+C1240 COMPARE_PRE1_LOAD_OUTP_R0_N0 COMPARE_PRE1_LOAD_OUTN_R0_N0 0
+C1241 DAC__N_FINE_B3 DAC__P_COARSE_B0 0.21479f
+C1242 DAC__LON DAC__N_COARSE_B3 6.55239f
+C1243 VREF VINN 5.96604f
+C1244 DAC__N_COARSE_B5 DAC__N_COARSE_B0 2.13242f
+C1245 DAC__P_FINE_B4 DAC__N_FINE_B2 0.48346f
+C1246 DAC__P_FINE_B4 DAC__HIN 1.03498f
+C1247 DAC__N_COARSE_B2 B5 0.41962f
+C1248 TOPP DAC__N_COARSE_B1 0.47883f
+C1249 B9 B5 0.29101f
+C1250 B3 DAC__P_FINE_B0 0.49452f
+C1251 COMPARE_PRE0_LOAD_OUTN_R0_N1 COMPARE_PRE0_LOAD_OUTP_R0_N1 0
+C1252 VPWR DAC__FINEP 4.07985f
+C1253 DAC__P_FINE_B5_SW__BITB DAC__P_FINE_B5 12.9424f
+C1254 DAC__P_COARSE_B1 B1 0.47999f
+C1255 COMPARE__LATCH__FP DAC__FINEP 1.03112f
+C1256 COMPARE__BIAS COMPARE_PRE0_LOAD_OUTP_R0_N1 0.41478f
+C1257 DAC__HIP DAC__P_COARSE_B1_SW__BITB 0.93862f
+C1258 DAC__P_FINE_B4 DAC__P_FINE_B5 40.5208f
+C1259 DAC__N_FINE_B5 DAC__P_FINE_B1 0.9322f
+C1260 DAC__FINEN B1 0.7784f
+C1261 COMPARE_BIAS_RES_R0_N0 B5 1.47602f
+C1262 DAC__N_COARSE_B4 DAC__N_FINE_B4 1.08316f
+C1263 DAC__N_COARSE_B4 DAC__P_COARSE_B0 0.48713f
+C1264 COMPARE__LATCH__OUTN_B COMP 0
+C1265 VREF DAC__P_FINE_B2 0.31002f
+C1266 VREF B7 0.31982f
+C1267 B11 DAC__N_FINE_B2 0.37221f
+C1268 COMPARE_PRE0_LOAD_OUTN_R0_N1 COMPARE__PRE1__TAIL 0
+C1269 B11 DAC__HIN 1.71401f
+C1270 VPWR DAC__P_FINE_B1 6.17267f
+C1271 EVAL VPWR 16.6426f
+C1272 COMPARE__BIAS COMPARE__PRE1__TAIL 0.25528f
+C1273 DAC__N_FINE_B5 DAC__N_COARSE_B1 1.23095f
+C1274 B11 DAC__P_FINE_B5 0.88709f
+C1275 EVAL COMPARE__LATCH__FP 3.62715f
+C1276 COMPARE__LATCH__FN DAC__P_FINE_B5 0.58658f
+C1277 DAC__N_COARSE_B5 DAC__FINEP 0.87352f
+C1278 VREF DAC__P_FINE_B5_SW__BITB 0
+C1279 B6 DAC__SAMPLEB 0.28174f
+C1280 COMPARE_PRE0_LOAD_OUTP_R0_N0 TOPN 2.85887f
+C1281 DAC__LON DAC__SAMPLEB 18.7774f
+C1282 B8 B5 0.30439f
+C1283 DAC__P_FINE_B0_SW__BITB DAC__LOP 0.31958f
+C1284 VPWR DAC__N_COARSE_B1 2.25028f
+C1285 DAC__P_FINE_B4 VREF 0.31002f
+C1286 DAC__N_COARSE_B0_SW__BITB DAC__FINEN 0.17908f
+C1287 DAC__N_FINE_B0 B1 0.38237f
+C1288 DAC__N_COARSE_B4 DAC__N_COARSE_B5_SW__BITB 0.07609f
+C1289 B9 DAC__N_COARSE_B4_SW__BITB 2.88579f
+C1290 COMPARE_PRE0_LOAD_OUTN_R0_N0 COMPARE__PRE0P 0.33505f
+C1291 B6 DAC__P_COARSE_B2 0.27474f
+C1292 DAC__P_FINE_B0_SW__BITB DAC__P_COARSE_B4 0
+C1293 COMPARE__LATCH__QN DAC__FINEP 0.56188f
+C1294 DAC__LON DAC__P_COARSE_B2 0.47519f
+C1295 DAC__N_COARSE_B2 DAC__N_COARSE_B2_SW__BITB 5.14786f
+C1296 TOPP DAC__N_FINE_B4 0.89159f
+C1297 DAC__N_FINE_B2 B4 0.19638f
+C1298 VPWR COMPARE__LATCH__OUTN_B 0.70072f
+C1299 B0 DAC__P_COARSE_B1 0.76117f
+C1300 DAC__N_FINE_B3 B1 0.38142f
+C1301 TOPP DAC__P_COARSE_B0 23.1503f
+C1302 DAC__N_COARSE_B5 DAC__P_FINE_B1 0.48382f
+C1303 COMPARE__LATCH__OUTP_B COMP 3.78042f
+C1304 B4 DAC__HIN 1.09175f
+C1305 COMPARE_PRE0_LOAD_OUTN_R0_N0 B4 0.00192f
+C1306 COMPARE__LATCH__FP COMPARE__LATCH__OUTN_B 0.00829f
+C1307 B0 DAC__FINEN 1.4811f
+C1308 DAC__P_COARSE_B1 DAC__N_COARSE_B3 0.56529f
+C1309 B11 VREF 0.31406f
+C1310 VCM B6 0.28382f
+C1311 DAC__P_FINE_B3 DAC__P_COARSE_B5 1.37098f
+C1312 DAC__LOP B5 2.65186f
+C1313 DAC__HIP DAC__P_FINE_B0_SW__BITB 0.34219f
+C1314 B6 B2 0.29101f
+C1315 B7 DAC__P_COARSE_B1_SW__BITB 0.96785f
+C1316 B4 DAC__P_FINE_B5 1.25297f
+C1317 VCM DAC__LON 0.55294f
+C1318 DAC__N_FINE_B2 DAC__P_COARSE_B3 0.4802f
+C1319 DAC__P_COARSE_B3 DAC__HIN 1.04283f
+C1320 DAC__FINEN DAC__N_COARSE_B3 1.06243f
+C1321 DAC__P_COARSE_B4 B5 0.75768f
+C1322 DAC__LON B2 18.0827f
+C1323 EVAL COMPARE__LATCH__QN 0.92193f
+C1324 DAC__N_COARSE_B5 DAC__N_COARSE_B1 1.18636f
+C1325 DAC__P_COARSE_B3 DAC__P_FINE_B5 2.44255f
+C1326 DAC__N_FINE_B5 DAC__N_FINE_B4 28.6877f
+C1327 COMPARE_PRE0_LOAD_OUTN_R0_N0 COMPARE_PRE0_LOAD_OUTN_R0_N1 3.65522f
+C1328 B9 B6 0.29146f
+C1329 DAC__N_COARSE_B4 B1 0.7686f
+C1330 DAC__N_COARSE_B2 B6 0.56637f
+C1331 DAC__FINEN COMPARE__LATCH__QP 1.50207f
+C1332 B9 DAC__LON 2.14418f
+C1333 DAC__LON DAC__N_COARSE_B2 5.83006f
+C1334 DAC__N_FINE_B5 DAC__P_COARSE_B0 10.2669f
+C1335 DAC__HIP B5 2.09931f
+C1336 COMPARE__BIAS COMPARE_PRE0_LOAD_OUTN_R0_N0 0.41487f
+C1337 COMPARE_PRE1_LOAD_OUTP_R0_N1 COMPARE_PRE1_LOAD_OUTN_R0_N0 4.94367f
+C1338 B3 DAC__P_FINE_B3_SW__BITB 0.91753f
+C1339 B8 DAC__N_COARSE_B2_SW__BITB 1.38778f
+C1340 VPWR DAC__N_FINE_B4 5.36119f
+C1341 VPWR COMPARE__LATCH__OUTP_B 0.687f
+C1342 B0 DAC__N_FINE_B0 23.7178f
+C1343 DAC__N_FINE_B1_SW__BITB B1 4.16952f
+C1344 VREF B4 0.30426f
+C1345 VPWR DAC__P_COARSE_B0 7.95477f
+C1346 COMPARE__LATCH__FP DAC__N_FINE_B4 0.40612f
+C1347 DAC__N_FINE_B0 DAC__N_COARSE_B3 0.49518f
+C1348 COMPARE__LATCH__QN COMPARE__LATCH__OUTN_B 1.55371f
+C1349 DAC__N_COARSE_B0 B3 0.40848f
+C1350 B0 DAC__N_FINE_B3 0.38296f
+C1351 DAC__P_COARSE_B1 DAC__SAMPLEB 0.28174f
+C1352 VREF DAC__P_COARSE_B3 0.31982f
+C1353 DAC__P_FINE_B0_SW__BITB TOPN 0.543f
+C1354 DAC__N_FINE_B3 DAC__N_COARSE_B3 0.27402f
+C1355 DAC__FINEN DAC__SAMPLEB 9.51309f
+C1356 DAC__FINEN COMPN 0.35363f
+C1357 DAC__N_FINE_B2 DAC__N_FINE_B1 54.4273f
+C1358 DAC__N_FINE_B1 DAC__HIN 32.5883f
+C1359 COMPARE__PRE0P COMPARE_PRE0_LOAD_OUTP_R0_N0 0.20999f
+C1360 DAC__P_COARSE_B1 DAC__P_COARSE_B2 62.8253f
+C1361 TOPP B1 0.95452f
+C1362 VINN B5 1.21362f
+C1363 VINP DAC__SAMPLEB 0.62827f
+C1364 B6 B8 0.2834f
+C1365 SAMPLE DAC__FINEP 1.80382f
+C1366 DAC__N_FINE_B1 DAC__P_FINE_B5 1.23667f
+C1367 DAC__LON B8 1.61218f
+C1368 DAC__N_COARSE_B5 DAC__N_FINE_B4 4.66741f
+C1369 DAC__FINEN DAC__P_COARSE_B2 0.47718f
+C1370 VPWR DAC__N_COARSE_B5_SW__BITB 0.61251f
+C1371 DAC__N_COARSE_B1_SW__BITB DAC__HIN 0.33167f
+C1372 B4 COMPARE_PRE0_LOAD_OUTP_R0_N0 0.00192f
+C1373 DAC__N_COARSE_B5 DAC__P_COARSE_B0 0.88265f
+C1374 B0 DAC__N_COARSE_B4 1.06198f
+C1375 B5 TOPN 0.96048f
+C1376 DAC__P_COARSE_B1 B2 0.47759f
+C1377 DAC__N_COARSE_B4 DAC__N_COARSE_B3 0.10799p
+C1378 VCM DAC__P_COARSE_B1 0.28382f
+C1379 DAC__N_FINE_B2 B10 0.37221f
+C1380 B10 DAC__HIN 1.48602f
+C1381 B3 DAC__FINEP 0.864f
+C1382 VCM DAC__FINEN 3.47369f
+C1383 COMPARE__LATCH__QN COMPARE__LATCH__OUTP_B 1.75642f
+C1384 DAC__FINEN B2 0.7784f
+C1385 DAC__P_FINE_B2 B5 0.48294f
+C1386 DAC__P_COARSE_B3_SW__BITB DAC__P_COARSE_B2 0.07609f
+C1387 B7 B5 1.02431f
+C1388 DAC__LOP B6 1.00757f
+C1389 COMPARE__LATCH__QN DAC__N_FINE_B4 1.23711f
+C1390 VCM VINP 0.00161f
+C1391 DAC__P_FINE_B4 DAC__P_FINE_B0_SW__BITB 0.40306f
+C1392 DAC__LOP DAC__LON 4.70588f
+C1393 DAC__N_FINE_B5 B1 0.79931f
+C1394 SAMPLE DAC__P_FINE_B1 0.28174f
+C1395 B0 DAC__N_FINE_B1_SW__BITB 5.8054f
+C1396 DAC__P_COARSE_B4 B6 0.48639f
+C1397 B10 DAC__P_FINE_B5 0.88646f
+C1398 DAC__P_COARSE_B1 DAC__N_COARSE_B2 0.4704f
+C1399 DAC__P_COARSE_B4 DAC__LON 1.02323f
+C1400 B9 DAC__P_COARSE_B1 1.5207f
+C1401 DAC__N_COARSE_B4 COMPARE__LATCH__QP 0.39432f
+C1402 DAC__FINEN DAC__N_COARSE_B2 0.84006f
+C1403 DAC__N_FINE_B0 DAC__P_COARSE_B2 0.19647f
+C1404 DAC__P_FINE_B5_SW__BITB B5 1.26623f
+C1405 DAC__N_COARSE_B5 DAC__N_COARSE_B5_SW__BITB 14.0494f
+C1406 B9 DAC__FINEN 0.88568f
+C1407 COMPARE__BIAS COMPARE_PRE0_LOAD_OUTP_R0_N0 0.41478f
+C1408 COMPARE__PRE0__TAIL TOPN 9.48004f
+C1409 VPWR B1 5.69785f
+C1410 DAC__HIP B6 1.82964f
+C1411 DAC__N_COARSE_B0 DAC__P_FINE_B0 0.49648f
+C1412 B3 DAC__P_FINE_B1 0.48531f
+C1413 DAC__P_FINE_B4 B5 1.05825f
+C1414 B11 DAC__P_FINE_B0_SW__BITB 11.7773f
+C1415 B0 TOPP 1.64132f
+C1416 DAC__LON DAC__N_FINE_B0_SW__BITB 1.4776f
+C1417 DAC__N_FINE_B3 DAC__P_COARSE_B2 0.19638f
+C1418 DAC__N_FINE_B0 B2 0.55669f
+C1419 TOPP DAC__N_COARSE_B3 0.50744f
+C1420 B9 DAC__P_COARSE_B3_SW__BITB 1.26973f
+C1421 B3 DAC__N_COARSE_B1 0.37797f
+C1422 VREF B10 0.31406f
+C1423 B11 B5 0.29101f
+C1424 DAC__N_FINE_B3 B2 0.37566f
+C1425 DAC__N_FINE_B0 DAC__N_COARSE_B2 0.49467f
+C1426 B9 DAC__N_FINE_B0 0.37524f
+C1427 TOPP COMPARE__LATCH__QP 0.56384f
+C1428 B7 DAC__N_COARSE_B2_SW__BITB 0.93938f
+C1429 DAC__P_COARSE_B1 B8 0.55821f
+C1430 DAC__N_COARSE_B4 DAC__P_COARSE_B2 0.47072f
+C1431 DAC__N_COARSE_B5 B1 0.79107f
+C1432 VPWR DAC__N_COARSE_B0_SW__BITB 9.48186f
+C1433 B0 DAC__N_FINE_B5 3.78041f
+C1434 DAC__P_FINE_B0 DAC__FINEP 23.0188f
+C1435 DAC__FINEN B8 0.87659f
+C1436 VPWR DAC__P_FINE_B4_SW__BITB 5.10171f
+C1437 DAC__N_FINE_B3 DAC__N_COARSE_B2 0.27402f
+C1438 VINN DAC__LON 3.41015f
+C1439 B9 DAC__N_FINE_B3 0.38445f
+C1440 DAC__N_FINE_B5 DAC__N_COARSE_B3 2.09511f
+C1441 DAC__N_COARSE_B4 B2 0.76213f
+C1442 DAC__N_FINE_B2 DAC__N_FINE_B2_SW__BITB 22.9509f
+C1443 DAC__HIN DAC__N_FINE_B2_SW__BITB 4.06821f
+C1444 B6 TOPN 0.80497f
+C1445 B0 VPWR 17.2379f
+C1446 DAC__P_COARSE_B1 DAC__LOP 5.12745f
+C1447 DAC__LON TOPN 2.24997f
+C1448 DAC__P_COARSE_B3_SW__BITB B8 5.56587f
+C1449 VPWR DAC__N_COARSE_B3 2.24583f
+C1450 DAC__P_COARSE_B1 DAC__P_COARSE_B4 0.753f
+C1451 DAC__FINEN DAC__LOP 0.50711f
+C1452 DAC__N_FINE_B4_SW__BITB DAC__LON 0.31193f
+C1453 DAC__N_FINE_B5 COMPARE__LATCH__QP 1.73608f
+C1454 TOPP DAC__SAMPLEB 6.43968f
+C1455 SAMPLE DAC__P_COARSE_B0 0.28946f
+C1456 DAC__P_FINE_B2 B6 0.27474f
+C1457 B4 B5 8.71924f
+C1458 TOPP COMPN 0.29362f
+C1459 DAC__P_FINE_B0 DAC__P_FINE_B1 33.1642f
+C1460 COMPARE_PRE1_LOAD_OUTP_R0_N0 VPWR 1.16252f
+C1461 B7 B6 7.34655f
+C1462 DAC__P_COARSE_B4 DAC__FINEN 0.90047f
+C1463 DAC__N_FINE_B5_SW__BITB DAC__N_FINE_B4 0.07591f
+C1464 DAC__N_COARSE_B4 DAC__N_COARSE_B2 6.65595f
+C1465 VINP DAC__LOP 3.41015f
+C1466 DAC__P_FINE_B2 DAC__LON 0.47758f
+C1467 B9 DAC__N_COARSE_B4 2.99807f
+C1468 B7 DAC__LON 1.08018f
+C1469 VREF DAC__P_FINE_B1_SW__BITB 0
+C1470 DAC__N_FINE_B0 B8 0.37221f
+C1471 B3 DAC__N_FINE_B4 0.87806f
+C1472 TOPP DAC__P_COARSE_B2 79.98721f
+C1473 DAC__P_COARSE_B3 B5 0.76747f
+C1474 VPWR COMPARE__LATCH__QP 17.5107f
+C1475 EVAL COMPARE__PRE1N 0.09473f
+C1476 DAC__HIP DAC__P_COARSE_B1 4.70427f
+C1477 DAC__P_COARSE_B3_SW__BITB DAC__LOP 2.97575f
+C1478 B3 DAC__P_COARSE_B0 0.49601f
+C1479 COMPARE__PRE0P COMPARE__PRE0__TAIL 1.58726f
+C1480 COMPARE__LATCH__FP COMPARE__LATCH__QP 3.73011f
+C1481 DAC__P_FINE_B0 DAC__N_COARSE_B1 0.64202f
+C1482 DAC__P_FINE_B3 DAC__N_FINE_B2 0.28382f
+C1483 DAC__P_FINE_B3 DAC__HIN 0.84166f
+C1484 DAC__HIP DAC__FINEN 0
+C1485 B0 DAC__N_COARSE_B5 1.9427f
+C1486 DAC__P_FINE_B4 B6 0.48575f
+C1487 DAC__N_FINE_B3 B8 0.38142f
+C1488 DAC__HIP VINP 3.79632f
+C1489 DAC__P_FINE_B4 DAC__LON 1.03704f
+C1490 VCM TOPP 11.1906f
+C1491 DAC__N_COARSE_B5 DAC__N_COARSE_B3 4.02637f
+C1492 TOPP B2 1.24364f
+C1493 DAC__N_FINE_B5 COMPN 0.29362f
+C1494 DAC__P_FINE_B3 DAC__P_FINE_B5 3.76803f
+C1495 DAC__N_FINE_B0 DAC__LOP 0.10739f
+C1496 DAC__P_COARSE_B5 DAC__N_FINE_B2 0.49861f
+C1497 DAC__P_COARSE_B5 DAC__HIN 1.06124f
+C1498 DAC__N_FINE_B0 DAC__P_COARSE_B4 0.49633f
+C1499 DAC__P_COARSE_B3_SW__BITB DAC__HIP 1.35665f
+C1500 DAC__N_FINE_B5 DAC__P_COARSE_B2 0.20457f
+C1501 DAC__LOP DAC__N_FINE_B3 0.11346f
+C1502 VPWR DAC__SAMPLEB 9.61668f
+C1503 VPWR COMPN 0.26754f
+C1504 DAC__N_COARSE_B5 COMPARE__LATCH__QP 0.59504f
+C1505 TOPP DAC__N_COARSE_B2 0.47812f
+C1506 B9 TOPP 1.13746f
+C1507 B11 B6 0.2903f
+C1508 DAC__N_COARSE_B4 B8 0.5778f
+C1509 DAC__P_COARSE_B5 DAC__P_FINE_B5 7.46952f
+C1510 B11 DAC__LON 3.20818f
+C1511 DAC__P_COARSE_B4 DAC__N_FINE_B3 0.46464f
+C1512 VPWR DAC__P_COARSE_B2 10.8995f
+C1513 DAC__N_FINE_B0 DAC__N_FINE_B0_SW__BITB 17.0166f
+C1514 TOPP COMPARE_BIAS_RES_R0_N0 0.00136f
+C1515 DAC__N_FINE_B5 B2 0.7895f
+C1516 COMPARE__BIAS COMPARE__PRE0__TAIL 1.24726f
+C1517 DAC__N_FINE_B1 B5 0.2018f
+C1518 COMPARE_PRE1_LOAD_OUTN_R0_N0 COMPARE__PRE1P 0.33505f
+C1519 DAC__P_COARSE_B1 TOPN 0.4664f
+C1520 SAMPLE B1 0.28174f
+C1521 COMPARE__LATCH__QN COMPARE__LATCH__QP 21.7985f
+C1522 DAC__P_FINE_B3 VREF 0.31002f
+C1523 DAC__LOP DAC__N_COARSE_B4 0.7816f
+C1524 DAC__FINEN TOPN 31.2164f
+C1525 DAC__P_FINE_B0 DAC__N_FINE_B4 0.22562f
+C1526 VPWR B2 7.18321f
+C1527 VPWR VCM 20.8456f
+C1528 DAC__N_FINE_B5 DAC__N_COARSE_B2 1.51853f
+C1529 DAC__P_COARSE_B1 B7 18.0473f
+C1530 DAC__P_COARSE_B4 DAC__N_COARSE_B4 0.93633f
+C1531 DAC__P_COARSE_B1 DAC__P_FINE_B2 0.09862f
+C1532 B9 DAC__N_FINE_B5 0.90403f
+C1533 VINP VGND 10.6135f
+C1534 B6 VGND 0.11011p
+C1535 VCM VGND 70.607f
+C1536 VREF VGND 46.5687f
+C1537 VINN VGND 40.4541f
+C1538 SAMPLE VGND 63.1784f
+C1539 B3 VGND 83.6034f
+C1540 B2 VGND 74.7662f
+C1541 B1 VGND 68.4951f
+C1542 B0 VGND 0.12042p
+C1543 B11 VGND 90.64761f
+C1544 B10 VGND 82.4576f
+C1545 B9 VGND 77.2919f
+C1546 B8 VGND 63.0053f
+C1547 B7 VGND 54.5199f
+C1548 TOPP VGND 0.28622p
+C1549 TOPN VGND 0.32119p
+C1550 B5 VGND 81.5306f
+C1551 B4 VGND 0.10217p
+C1552 COMP VGND 17.1974f
+C1553 COMPN VGND 10.6805f
+C1554 EVAL VGND 63.6401f
+C1555 VPWR VGND 1.03265p
+C1556 DAC__P_COARSE_B5 VGND 0.41302p $ **FLOATING
+C1557 DAC__P_COARSE_B5_SW__BITB VGND 37.5277f $ **FLOATING
+C1558 DAC__P_COARSE_B4 VGND 0.1934p $ **FLOATING
+C1559 DAC__P_COARSE_B4_SW__BITB VGND 32.8279f $ **FLOATING
+C1560 DAC__P_COARSE_B3 VGND 0.13459p $ **FLOATING
+C1561 DAC__P_COARSE_B3_SW__BITB VGND 28.642f $ **FLOATING
+C1562 DAC__P_COARSE_B2 VGND 69.9054f $ **FLOATING
+C1563 DAC__P_COARSE_B2_SW__BITB VGND 24.456f $ **FLOATING
+C1564 DAC__P_COARSE_B1 VGND 55.7286f $ **FLOATING
+C1565 DAC__P_COARSE_B1_SW__BITB VGND 20.27f $ **FLOATING
+C1566 DAC__P_COARSE_B0 VGND 65.3284f $ **FLOATING
+C1567 DAC__P_COARSE_B0_SW__BITB VGND 16.6923f $ **FLOATING
+C1568 DAC__FINEP VGND 0.23973p $ **FLOATING
+C1569 DAC__N_COARSE_B0 VGND 82.7423f $ **FLOATING
+C1570 DAC__N_COARSE_B0_SW__BITB VGND 43.7522f $ **FLOATING
+C1571 DAC__FINEN VGND 0.26231p $ **FLOATING
+C1572 DAC__SAMPLEB VGND 68.7828f $ **FLOATING
+C1573 DAC__P_FINE_B5 VGND 0.41929p $ **FLOATING
+C1574 DAC__P_FINE_B5_SW__BITB VGND 25.8808f $ **FLOATING
+C1575 DAC__P_FINE_B4 VGND 0.19114p $ **FLOATING
+C1576 DAC__P_FINE_B4_SW__BITB VGND 21.2649f $ **FLOATING
+C1577 DAC__P_FINE_B3 VGND 0.10901p $ **FLOATING
+C1578 DAC__P_FINE_B3_SW__BITB VGND 17.0789f $ **FLOATING
+C1579 DAC__P_FINE_B2 VGND 57.3979f $ **FLOATING
+C1580 DAC__P_FINE_B2_SW__BITB VGND 12.8929f $ **FLOATING
+C1581 DAC__P_FINE_B1 VGND 45.087f $ **FLOATING
+C1582 DAC__P_FINE_B1_SW__BITB VGND 8.70695f $ **FLOATING
+C1583 DAC__LOP VGND 0.26381p $ **FLOATING
+C1584 DAC__P_FINE_B0 VGND 46.8087f $ **FLOATING
+C1585 DAC__HIP VGND 0.21442p $ **FLOATING
+C1586 DAC__P_FINE_B0_SW__BITB VGND 43.9942f $ **FLOATING
+C1587 DAC__N_FINE_B3 VGND 0.11643p $ **FLOATING
+C1588 DAC__N_FINE_B3_SW__BITB VGND 34.1336f $ **FLOATING
+C1589 DAC__N_FINE_B2 VGND 66.38521f $ **FLOATING
+C1590 DAC__N_FINE_B2_SW__BITB VGND 30.1192f $ **FLOATING
+C1591 DAC__N_FINE_B1 VGND 52.1527f $ **FLOATING
+C1592 DAC__N_FINE_B1_SW__BITB VGND 26.4841f $ **FLOATING
+C1593 DAC__N_FINE_B0 VGND 52.7776f $ **FLOATING
+C1594 DAC__N_FINE_B0_SW__BITB VGND 22.8489f $ **FLOATING
+C1595 DAC__N_COARSE_B5 VGND 0.36771p $ **FLOATING
+C1596 DAC__N_COARSE_B5_SW__BITB VGND 19.2138f $ **FLOATING
+C1597 DAC__N_COARSE_B4 VGND 0.17933p $ **FLOATING
+C1598 DAC__N_COARSE_B4_SW__BITB VGND 15.5787f $ **FLOATING
+C1599 DAC__N_COARSE_B3 VGND 86.83421f $ **FLOATING
+C1600 DAC__N_COARSE_B3_SW__BITB VGND 11.9436f $ **FLOATING
+C1601 DAC__N_COARSE_B2 VGND 77.5499f $ **FLOATING
+C1602 DAC__N_COARSE_B2_SW__BITB VGND 8.30844f $ **FLOATING
+C1603 DAC__N_COARSE_B1 VGND 38.5904f $ **FLOATING
+C1604 DAC__N_COARSE_B1_SW__BITB VGND 4.73085f $ **FLOATING
+C1605 COMPARE__LATCH__TAIL VGND 75.8233f $ **FLOATING
+C1606 COMPARE_PRE1_LOAD_OUTN_R0_N1 VGND 37.2075f $ **FLOATING
+C1607 COMPARE_PRE1_LOAD_OUTN_R0_N0 VGND 36.2466f $ **FLOATING
+C1608 COMPARE_PRE1_LOAD_OUTP_R0_N1 VGND 34.5672f $ **FLOATING
+C1609 COMPARE_PRE1_LOAD_OUTP_R0_N0 VGND 33.5772f $ **FLOATING
+C1610 COMPARE__PRE1P VGND 0.10126p $ **FLOATING
+C1611 COMPARE__PRE1N VGND 98.7988f $ **FLOATING
+C1612 COMPARE__PRE1__TAIL VGND 51.2782f $ **FLOATING
+C1613 COMPARE_PRE0_LOAD_OUTN_R0_N1 VGND 26.878f $ **FLOATING
+C1614 COMPARE_PRE0_LOAD_OUTN_R0_N0 VGND 25.9173f $ **FLOATING
+C1615 COMPARE_PRE0_LOAD_OUTP_R0_N1 VGND 24.2379f $ **FLOATING
+C1616 COMPARE_PRE0_LOAD_OUTP_R0_N0 VGND 23.2478f $ **FLOATING
+C1617 COMPARE__PRE0P VGND 52.2307f $ **FLOATING
+C1618 COMPARE__PRE0N VGND 48.7994f $ **FLOATING
+C1619 COMPARE__PRE0__TAIL VGND 35.4751f $ **FLOATING
+C1620 COMPARE__BIAS VGND 54.6575f $ **FLOATING
+C1621 COMPARE_BIAS_RES_R0_N1 VGND 17.0153f $ **FLOATING
+C1622 COMPARE_BIAS_RES_R0_N0 VGND 16.0043f $ **FLOATING
+C1623 DAC__N_FINE_B5 VGND 0.38352p $ **FLOATING
+C1624 DAC__N_FINE_B5_SW__BITB VGND 10.7332f $ **FLOATING
+C1625 DAC__HIN VGND 0.26054p $ **FLOATING
+C1626 DAC__N_FINE_B4 VGND 0.17654p $ **FLOATING
+C1627 DAC__LON VGND 0.22546p $ **FLOATING
+C1628 DAC__N_FINE_B4_SW__BITB VGND 37.631f $ **FLOATING
+C1629 COMPARE__LATCH__OUTP_B VGND 15.9829f $ **FLOATING
+C1630 COMPARE__LATCH__OUTN_B VGND 9.79318f $ **FLOATING
+C1631 COMPARE__LATCH__FP VGND 67.0082f $ **FLOATING
+C1632 COMPARE__LATCH__QN VGND 56.1928f $ **FLOATING
+C1633 COMPARE__LATCH__FN VGND 75.76021f $ **FLOATING
+C1634 COMPARE__LATCH__QP VGND 64.89539f $ **FLOATING
+.ends

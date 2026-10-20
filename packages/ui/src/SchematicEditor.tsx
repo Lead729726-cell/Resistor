@@ -9,6 +9,7 @@ import {formatNumber} from './WavePlot';
 import './schematic-easy.css';
 import {wirePins,nearestWirePin,wireNetConflict,type WirePin} from './schematic-wiring';
 import {schematicRegion,selectionKey,type SchematicSelection} from './schematic-selection';
+import {schematicViewport} from './schematic-viewport';
 import {mergeSelection,selectionMode,type SelectionMode} from '../../viewer/src/selection';
 export {pinOffsets} from './schematic-drawing';
 
@@ -54,12 +55,7 @@ export default function SchematicEditor({ onNewLogic,onRunLogic,logicRunReason,l
   const devices = document.devices, wires = document.wires || [], junctions = document.junctions || [], mode = document.connectivity_mode || 'explicit';
   const position = (device: Device): Point => (drag?.kind === 'device' && drag.id === device.id||drag?.kind==='group'&&has('device',device.id)) ? [device.x + drag.delta[0], device.y + drag.delta[1]] : [device.x, device.y];
   const wirePoints = (wire: typeof wires[number]): Point[] => (drag?.kind === 'wire' && drag.id === wire.id||drag?.kind==='group'&&has('wire',wire.id)) ? wire.points.map(([x, y]) => [x + drag.delta[0], y + drag.delta[1]]) : wire.points;
-  const viewport = useMemo(() => {
-    const points = [...devices.map(device => [device.x, device.y] as Point), ...wires.flatMap(wire => wire.points), ...junctions.map(junction => [junction.x, junction.y] as Point)];
-    const xs = points.map(point => point[0]), ys = points.map(point => point[1]), xmin = xs.length ? Math.min(...xs) : 200, ymin = ys.length ? Math.min(...ys) : 100, xmax = xs.length ? Math.max(...xs) : 400, ymax = ys.length ? Math.max(...ys) : 300;
-    const width = Math.max(500, xmax - xmin + 360), height = Math.max(360, ymax - ymin + 190);
-    return { left: (xmin + xmax) / 2 - width / 2 + 30, top: (ymin + ymax) / 2 - height / 2, width, height };
-  }, [project.id,cellName,fitRevision]);
+  const viewport = useMemo(() => schematicViewport(devices,wires,junctions), [project.id,cellName,fitRevision]);
   const view = `${viewport.left + viewport.width * (1 - 1 / zoom) / 2 + pan[0]} ${viewport.top + viewport.height * (1 - 1 / zoom) / 2 + pan[1]} ${viewport.width / zoom} ${viewport.height / zoom}`;
   useEffect(()=>{if(document.logic_practice)setFitRevision(value=>value+1);},[project.id,document.logic_practice?.kind]);
   useEffect(() => { commitItems([]);marqueeRef.current=null;setMarquee(null);setPan([0, 0]); setZoom(1); setDraft([]); setSelectedWire(null); setSelectedJunction(null);setPlaceKind(null);setLogicGate(null);setTool('select');setDrawingError(null); }, [cellName, project.id]);

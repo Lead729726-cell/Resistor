@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import argparse
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'workers/eda'))
@@ -12,11 +13,13 @@ import chip_references as C
 import digital_units as D
 import native
 
-RTL = ROOT / 'workers/eda/rtl/sar8.v'
+parser=argparse.ArgumentParser();parser.add_argument('--bits',type=int,choices=(8,12),default=8)
+bits=parser.parse_args().bits;prefix=f'sar{bits}'
+RTL = ROOT / f'workers/eda/rtl/{prefix}.v'
 OUT = ROOT / 'workers/eda/rtl'
-TMP = ROOT / '.runtime/sar8/synthesis'
+TMP = ROOT / f'.runtime/{prefix}/synthesis'
 TMP.mkdir(parents=True, exist_ok=True)
-command = f'read_verilog {RTL}; hierarchy -top sar8_controller; proc; opt; memory; opt; techmap; opt; dffunmap; abc -g simple; opt_clean; stat; write_json {TMP}/yosys.json; write_verilog -noattr {OUT}/sar8_gate.v'
+command = f'read_verilog {RTL}; hierarchy -top {prefix}_controller; proc; opt; memory; opt; techmap; opt; dffunmap; abc -g simple; opt_clean; stat; write_json {TMP}/yosys.json; write_verilog -noattr {OUT}/{prefix}_gate.v'
 result = subprocess.run(['yosys', '-p', command], check=True, capture_output=True, text=True)
 (TMP / 'yosys.log').write_text(result.stdout)
 data = json.loads((TMP / 'yosys.json').read_text())
@@ -81,11 +84,11 @@ for name, module in data['modules'].items():
         C.block(ir, f'G{i}', target, (library[target]['ports'] if target in library else [p for key, v in data['modules'][typ]['ports'].items() for p in port_names(key, v['bits'])] + ['VPWR', 'VGND']), pins)
     library[name.upper()] = ir
 
-root = library.pop('SAR8_CONTROLLER')
+root = library.pop(prefix.upper()+'_CONTROLLER')
 root['cells'] = library
 validation = native.validate(root)
 if not validation['valid']:
     raise ValueError(validation['issues'])
-payload = {'schema_version': 1, 'rtl_sha256': hashlib.sha256(RTL.read_bytes()).hexdigest(), 'gate_rtl_sha256':hashlib.sha256((OUT/'sar8_gate.v').read_bytes()).hexdigest(), 'synthesizer': data['creator'], 'gate_counts': dict(counts), 'port_alias_buffers': aliases, 'schematic': root}
-(OUT / 'sar8_cmos.json').write_text(json.dumps(payload, indent=2) + '\n')
+payload = {'schema_version': 1, 'rtl_sha256': hashlib.sha256(RTL.read_bytes()).hexdigest(), 'gate_rtl_sha256':hashlib.sha256((OUT/f'{prefix}_gate.v').read_bytes()).hexdigest(), 'synthesizer': data['creator'], 'gate_counts': dict(counts), 'port_alias_buffers': aliases, 'schematic': root}
+(OUT / f'{prefix}_cmos.json').write_text(json.dumps(payload, indent=2) + '\n')
 print(json.dumps({k: v for k, v in payload.items() if k != 'schematic'}))

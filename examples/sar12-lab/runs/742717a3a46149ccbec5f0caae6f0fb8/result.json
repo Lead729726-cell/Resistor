@@ -1,0 +1,104 @@
+{
+  "id": "742717a3a46149ccbec5f0caae6f0fb8",
+  "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
+  "kind": "simulation",
+  "revision": 1,
+  "execution_status": "failed",
+  "analysis_result": "unknown",
+  "freshness": "stale",
+  "artifacts": {
+    "pex_netlist": "/workspace/.runtime/eda/runs/742717a3a46149ccbec5f0caae6f0fb8/pex.spice",
+    "pex_quality": "/workspace/.runtime/eda/runs/742717a3a46149ccbec5f0caae6f0fb8/pex-quality.json",
+    "pex_reduced_netlist": "/workspace/.runtime/eda/runs/742717a3a46149ccbec5f0caae6f0fb8/pex-simulation.spice",
+    "pex_reduction": "/workspace/.runtime/eda/runs/742717a3a46149ccbec5f0caae6f0fb8/pex-reduction.json",
+    "rtl_replay": "/workspace/.runtime/eda/runs/742717a3a46149ccbec5f0caae6f0fb8/rtl-replay.csv",
+    "gate_replay": "/workspace/.runtime/eda/runs/742717a3a46149ccbec5f0caae6f0fb8/gate-replay.csv",
+    "ir_replay": "/workspace/.runtime/eda/runs/742717a3a46149ccbec5f0caae6f0fb8/ir-replay.csv",
+    "stdout": "/workspace/.runtime/eda/runs/742717a3a46149ccbec5f0caae6f0fb8/stdout.log"
+  },
+  "manifest_path": "/workspace/.runtime/eda/runs/742717a3a46149ccbec5f0caae6f0fb8/manifest.json",
+  "input_signature": "bfa89b41e977ea80a16865d0bd0601fbe474885a117c35d54757bf6dab3a234f",
+  "analysis_stage": "post-layout",
+  "started_at": "2026-10-20T01:30:34.033341+00:00",
+  "tool": "ngspice + Icarus Verilog",
+  "parasitics": {
+    "resistors": 61140,
+    "capacitors": 17197
+  },
+  "message": "Unsupported extracted capacitor syntax; do not guess a capacitance.",
+  "reference_verification": {
+    "schema_version": 1,
+    "kind": "sar12_analog",
+    "source": "continuous ngspice MOS/charge decisions and independent RTL/gate/IR replay",
+    "checks": [
+      {
+        "name": "Actual comparator trials match RTL, synthesized gates and editable CMOS logic",
+        "pass": true,
+        "observed": null
+      },
+      {
+        "name": "Both comparator outputs reach complementary logic levels",
+        "pass": true,
+        "observed": null
+      },
+      {
+        "name": "Native directed codes within one nominal 12-bit LSB",
+        "pass": true,
+        "observed": null
+      }
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "input_differential_V": 0.00029296875,
+        "code": 2047,
+        "expected_code": 2048,
+        "error_codes": -1
+      }
+    ],
+    "ambiguous_decisions": 0,
+    "scope": "Noiseless deterministic transient; external ideal VREF/VCM and finite-RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+    "pass": true
+  },
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "output_bits": 12,
+    "frames": 1,
+    "max_code_error": 1,
+    "ambiguous_decisions": 0,
+    "rtl_gate_replay_match": true,
+    "lsb_V": 0.0005859375,
+    "conversion_s": 0.00001005,
+    "sample_rate_Hz": 99502.48756218905,
+    "effective_resolution": "not measured",
+    "physical_unit_count": 508,
+    "scope": "Noiseless deterministic transient; external ideal VREF/VCM and finite-RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+    "raw_sample_count": 13644,
+    "display_sample_count": 2326,
+    "start_s": 0,
+    "end_s": 0.000010549999999999999,
+    "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+    "source_energy": {
+      "9": {
+        "energy_J": 6.391358203871974e-10,
+        "average_power_W": 0.00006058159434949739,
+        "minimum_current_A": 0.00001301449893198406,
+        "peak_current_A": 0.0005714912486597405,
+        "source_voltage_V": 1.8
+      },
+      "10": {
+        "energy_J": 1.113000288737368e-10,
+        "average_power_W": 0.000010549765770022448,
+        "minimum_current_A": -0.000001953195727932844,
+        "peak_current_A": 0.0011769621313473255,
+        "source_voltage_V": 1.2
+      }
+    },
+    "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+    "source_energy_scope": "All raw analog-core VDD and VREF samples. External control-driver energy and synthesized-controller power are not measured."
+  },
+  "ended_at": "2026-10-20T01:35:20.284772+00:00",
+  "elapsed_s": 286.30537624895805
+}

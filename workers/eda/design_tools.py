@@ -25,6 +25,7 @@ import sigma_delta
 import analog_soc
 import floorplan
 import sar_adc
+import sar12
 import research
 import oscillator_projects
 
@@ -242,6 +243,8 @@ CATALOG.update(sigma_delta.CATALOG)
 CATALOG.update(analog_soc.CATALOG)
 sar_adc.populate_catalog()
 CATALOG.update(sar_adc.CATALOG)
+sar12.populate_catalog()
+CATALOG.update(sar12.CATALOG)
 CATALOG.update(oscillator_projects.CATALOG)
 
 def catalog():
@@ -254,7 +257,7 @@ def _parameters(template,raw):
         n=native.num(value)
         if key.endswith('_Ohm') and not 1<=n<=1e9:raise EDAError('PARAMETER_RANGE','Resistance must be 1..1e9 ohm.')
         if key.endswith('_F') and not 1e-18<=n<=1e-6:raise EDAError('PARAMETER_RANGE','Capacitance must be 1e-18..1e-6 F.')
-        if key.endswith('_V') and not 0<=n<=1.8:raise EDAError('PARAMETER_RANGE','Voltage must be within 0..1.8V.')
+        if key.endswith('_V') and not (template in sar12.CATALOG and key=='input_differential_V') and not 0<=n<=1.8:raise EDAError('PARAMETER_RANGE','Voltage must be within 0..1.8V.')
         if key.endswith('_A') and not 1e-9<=n<=1e-3:raise EDAError('PARAMETER_RANGE','Reference current must be 1nA..1mA.')
         values[key]=n
     if template=='mux4':
@@ -264,12 +267,14 @@ def _parameters(template,raw):
     if template in sigma_delta.CATALOG:return sigma_delta.parameters(template,values)
     if template in analog_soc.CATALOG:return analog_soc.parameters(template,values)
     if template in sar_adc.CATALOG:return sar_adc.parameters(template,values)
+    if template in sar12.CATALOG:return sar12.parameters(template,values)
     if template in physical_library.CATALOG:return physical_library.parameters(values)
     return chip_references.parameters(template,values) if template in chip_references.CATALOG else values
 
 def _schematic(template,params):
     if template in oscillator_projects.CATALOG:return oscillator_projects.schematic(template,params)
     if template in sar_adc.CATALOG:return sar_adc.schematic(template,params)
+    if template in sar12.CATALOG:return sar12.schematic(template,params)
     if template in analog_soc.CATALOG:return analog_soc.schematic(template,params)
     if template in sigma_delta.CATALOG:return sigma_delta.schematic(template,params)
     if template in physical_library.CATALOG:return physical_library.gate(template,params)
@@ -332,6 +337,7 @@ def create_template(params):
             if not isinstance(physical,bool):raise EDAError('INVALID_PARAMETER','physical_core must be boolean.')
             new_physical=template in chip_references.CATALOG or template in physical_library.CATALOG or template in analog_soc.CATALOG
             new_physical=new_physical or (template in sar_adc.CATALOG and sar_adc.CATALOG[template]['physical_supported'])
+            new_physical=new_physical or (template in sar12.CATALOG and sar12.CATALOG[template]['physical_supported'])
             if physical and not new_physical and template not in ('current_mirror','differential_pair','mux4'):raise EDAError('UNSUPPORTED_PHYSICAL','No physical adapter for this template.')
             if physical and not new_physical and (values['w_um']!=.65 or values['l_um']!=.15):raise EDAError('UNSUPPORTED_PHYSICAL','Legacy core requires exact fixed W=0.65um L=0.15um.')
             if template!='rc_lowpass':model_resources('tt')
@@ -343,8 +349,13 @@ def create_template(params):
             if physical and new_physical:
                 if template=='chip_sc_dcdc':
                     ports+=['FLYTOP','FLYBOTTOM'];schematic['ports']=ports
-                if template in chip_references.CATALOG or template in analog_soc.CATALOG or template in sar_adc.CATALOG:schematic,replacements=physical_library.materialize(schematic)
-                layout=physical_library.physical(S.STATE/'projects'/pid/'generator',digital_units.flattened(schematic),cell,ports,envelope)
+                if template in sar12.CATALOG:
+                    import sar12_physical
+                    schematic,replacements=physical_library.materialize(schematic,max_primitives=768)
+                    layout=sar12_physical.physical(S.STATE/'projects'/pid/'generator',digital_units.flattened(schematic),cell,ports,envelope)
+                else:
+                    if template in chip_references.CATALOG or template in analog_soc.CATALOG or template in sar_adc.CATALOG:schematic,replacements=physical_library.materialize(schematic)
+                    layout=physical_library.physical(S.STATE/'projects'/pid/'generator',digital_units.flattened(schematic),cell,ports,envelope)
             elif physical:
                 layout,core,ports=digital_mux.physical(S.STATE/'projects'/pid/'generator') if template=='mux4' else physical_templates.analog(S,S.STATE/'projects'/pid/'generator',template)
                 # Exact core graph is retained; visual port symbols are data-only schematic markers.
@@ -372,6 +383,9 @@ def create_template(params):
             if template in sar_adc.CATALOG:
                 p['testbench']=sar_adc.recommended_settings(values)
                 meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True,adc_output_bits=8,adc_effective_resolution='not-measured',adc_architecture='charge-redistribution-SAR')
+            if template in sar12.CATALOG:
+                p['testbench']=sar12.recommended_settings(values)
+                meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True,adc_output_bits=12,adc_effective_resolution='not-measured',adc_architecture='differential-6+6-split-SAR',reference_paper='https://arxiv.org/abs/2610.15240v1')
             if template in oscillator_projects.CATALOG:
                 p['testbench']=native.testbench(oscillator_projects.settings(template,values))
                 meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True,subsystem='oscillator-sensor-lab',startup='explicit-initial-conditions',phase_noise='not-measured')

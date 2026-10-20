@@ -1,0 +1,13 @@
+.subckt INV A Y VPWR VGND
+XMN Y A VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMP Y A VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+.ends INV
+.subckt SAR12_TG A Y EN ENB VPWR VGND
+XN A EN Y VGND sky130_fd_pr__nfet_01v8 w=8 l=0.15 nf=1 m=1
+XP A ENB Y VPWR sky130_fd_pr__pfet_01v8_hvt w=12 l=0.15 nf=1 m=1
+.ends SAR12_TG
+.subckt sar12_bit_mux HI LO BIT OUT VPWR VGND
+XHIGH HI OUT BIT BITB VPWR VGND SAR12_TG
+XINV BIT BITB VPWR VGND INV
+XLOW LO OUT BITB BIT VPWR VGND SAR12_TG
+.ends sar12_bit_mux

@@ -1,0 +1,401 @@
+{
+  "schema_version": 1,
+  "ports": [
+    "INP",
+    "INN",
+    "EVAL",
+    "OUTP",
+    "OUTN",
+    "VPWR",
+    "VGND"
+  ],
+  "connectivity_mode": "explicit",
+  "devices": [
+    {
+      "id": "TAIL",
+      "name": "TAIL",
+      "kind": "nmos",
+      "pins": {
+        "D": "TAIL",
+        "G": "EVAL",
+        "S": "VGND",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 20,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "INPUT0",
+      "name": "INPUT0",
+      "kind": "nmos",
+      "pins": {
+        "D": "FN",
+        "G": "INP",
+        "S": "TAIL",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 10,
+        "l_um": 0.5,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 420,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8",
+      "matching_group": "input-pair",
+      "matching_role": "A"
+    },
+    {
+      "id": "INPUT1",
+      "name": "INPUT1",
+      "kind": "nmos",
+      "pins": {
+        "D": "FP",
+        "G": "INN",
+        "S": "TAIL",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 10,
+        "l_um": 0.5,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 660,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8",
+      "matching_group": "input-pair",
+      "matching_role": "B"
+    },
+    {
+      "id": "INPUT2",
+      "name": "INPUT2",
+      "kind": "nmos",
+      "pins": {
+        "D": "FP",
+        "G": "INN",
+        "S": "TAIL",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 10,
+        "l_um": 0.5,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 900,
+      "y": 170,
+      "model": "sky130_fd_pr__nfet_01v8",
+      "matching_group": "input-pair",
+      "matching_role": "B"
+    },
+    {
+      "id": "INPUT3",
+      "name": "INPUT3",
+      "kind": "nmos",
+      "pins": {
+        "D": "FN",
+        "G": "INP",
+        "S": "TAIL",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 10,
+        "l_um": 0.5,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 350,
+      "model": "sky130_fd_pr__nfet_01v8",
+      "matching_group": "input-pair",
+      "matching_role": "A"
+    },
+    {
+      "id": "LN_QP",
+      "name": "LN_QP",
+      "kind": "nmos",
+      "pins": {
+        "D": "QP",
+        "G": "QN",
+        "S": "FN",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 8,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 420,
+      "y": 350,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "LP_QP",
+      "name": "LP_QP",
+      "kind": "pmos",
+      "pins": {
+        "D": "QP",
+        "G": "QN",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 4,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 660,
+      "y": 350,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "RESET_QP",
+      "name": "RESET_QP",
+      "kind": "pmos",
+      "pins": {
+        "D": "QP",
+        "G": "EVAL",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 4,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 900,
+      "y": 350,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "PRE_FN",
+      "name": "PRE_FN",
+      "kind": "pmos",
+      "pins": {
+        "D": "FN",
+        "G": "EVAL",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 2,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 530,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "LN_QN",
+      "name": "LN_QN",
+      "kind": "nmos",
+      "pins": {
+        "D": "QN",
+        "G": "QP",
+        "S": "FP",
+        "B": "VGND"
+      },
+      "parameters": {
+        "w_um": 8,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 420,
+      "y": 530,
+      "model": "sky130_fd_pr__nfet_01v8"
+    },
+    {
+      "id": "LP_QN",
+      "name": "LP_QN",
+      "kind": "pmos",
+      "pins": {
+        "D": "QN",
+        "G": "QP",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 4,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 660,
+      "y": 530,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "RESET_QN",
+      "name": "RESET_QN",
+      "kind": "pmos",
+      "pins": {
+        "D": "QN",
+        "G": "EVAL",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 4,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 900,
+      "y": 530,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "PRE_FP",
+      "name": "PRE_FP",
+      "kind": "pmos",
+      "pins": {
+        "D": "FP",
+        "G": "EVAL",
+        "S": "VPWR",
+        "B": "VPWR"
+      },
+      "parameters": {
+        "w_um": 2,
+        "l_um": 0.15,
+        "nf": 1,
+        "m": 1
+      },
+      "x": 180,
+      "y": 710,
+      "model": "sky130_fd_pr__pfet_01v8_hvt"
+    },
+    {
+      "id": "BUF0_OUTN",
+      "name": "BUF0_OUTN",
+      "kind": "block",
+      "cell_name": "INV",
+      "pins": {
+        "A": "QP",
+        "Y": "OUTN_B",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 400,
+      "y": 920
+    },
+    {
+      "id": "BUF1_OUTN",
+      "name": "BUF1_OUTN",
+      "kind": "block",
+      "cell_name": "INV",
+      "pins": {
+        "A": "OUTN_B",
+        "Y": "OUTN",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 630,
+      "y": 920
+    },
+    {
+      "id": "BUF0_OUTP",
+      "name": "BUF0_OUTP",
+      "kind": "block",
+      "cell_name": "INV",
+      "pins": {
+        "A": "QN",
+        "Y": "OUTP_B",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 860,
+      "y": 920
+    },
+    {
+      "id": "BUF1_OUTP",
+      "name": "BUF1_OUTP",
+      "kind": "block",
+      "cell_name": "INV",
+      "pins": {
+        "A": "OUTP_B",
+        "Y": "OUTP",
+        "VPWR": "VPWR",
+        "VGND": "VGND"
+      },
+      "parameters": {},
+      "x": 170,
+      "y": 1170
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {
+    "INV": {
+      "schema_version": 1,
+      "connectivity_mode": "explicit",
+      "ports": [
+        "A",
+        "Y",
+        "VPWR",
+        "VGND"
+      ],
+      "devices": [
+        {
+          "id": "MP",
+          "name": "MP",
+          "kind": "pmos",
+          "model": "sky130_fd_pr__pfet_01v8_hvt",
+          "pins": {
+            "D": "Y",
+            "G": "A",
+            "S": "VPWR",
+            "B": "VPWR"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 180,
+          "y": 160
+        },
+        {
+          "id": "MN",
+          "name": "MN",
+          "kind": "nmos",
+          "model": "sky130_fd_pr__nfet_01v8",
+          "pins": {
+            "D": "Y",
+            "G": "A",
+            "S": "VGND",
+            "B": "VGND"
+          },
+          "parameters": {
+            "w_um": 0.65,
+            "l_um": 0.15,
+            "nf": 1,
+            "m": 1
+          },
+          "x": 370,
+          "y": 160
+        }
+      ],
+      "wires": [],
+      "junctions": []
+    }
+  }
+}

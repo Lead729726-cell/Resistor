@@ -1,0 +1,9 @@
+.subckt sar12_preamp INP INN BIAS OUTP OUTN VPWR VGND
+XINPUT0 OUTN INP TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+XINPUT1 OUTP INN TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+XINPUT2 OUTP INN TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+XINPUT3 OUTN INP TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1
+RLOAD_OUTN VPWR OUTN 100000
+RLOAD_OUTP VPWR OUTP 100000
+XTAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=4 l=1 nf=1 m=1
+.ends sar12_preamp
