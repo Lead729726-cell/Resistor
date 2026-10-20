@@ -81,6 +81,8 @@ CMOS 결과를 적용하면 기존 회로도·Layout 2D·Layout 3D·DRC/LVS/PEX�
 
 ## 설치·검증·원본
 
+[확대 검증과 배선 후 해석](hardware-validation.md)에서 가산기·카운터와 실제 RC/아날로그·디지털 조립의 DRC/LVS/PEX, 포트 순서 수정, native PVT 예제를 확인할 수 있습니다. 전체 SoC 및 제조 signoff와 구분합니다.
+
 Docker 없이 설치된 native/WSL 도구를 사용합니다. Ubuntu/WSL에서는 공식 패키지의 `yosys iverilog ghdl gcc`와 native engine Python의 `pycparser==2.22`가 필요합니다. CMOS 생성/해석에는 기존 public SKY130, Magic, ngspice, Netgen 구성이 필요합니다. macOS는 동일 도구의 native 설치 경로를 연결합니다. 이 패치가 새 OS별 installer를 발행했다는 뜻은 아닙니다.
 
 ```sh

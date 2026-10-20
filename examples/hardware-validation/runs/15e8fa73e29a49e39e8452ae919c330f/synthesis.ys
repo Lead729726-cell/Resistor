@@ -1,0 +1,11 @@
+read_ilang rtlil_inv.il
+hierarchy -check -top rtlil_inv
+proc
+flatten
+synth -top rtlil_inv -noabc
+dffunmap
+abc -g simple
+clean
+check -assert
+write_json synthesized.json
+write_verilog -noattr gates.v

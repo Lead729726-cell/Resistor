@@ -9,7 +9,7 @@ case "${RESISTOR_SKIP_SYSTEM_PACKAGES:-0}" in 0|1) ;; *) echo 'RESISTOR_SKIP_SYS
 mkdir -p "$prefix" "$build"
 if [ "$(uname -s)" = Darwin ]; then
   command -v brew >/dev/null || { echo 'Install Homebrew from https://brew.sh first.'; exit 1; }
-  brew install python@3.13 tcl-tk@8 libx11 libxrender libxext cairo readline autoconf automake libtool pkg-config yosys icarus-verilog ngspice
+  brew install python@3.13 tcl-tk@8 libx11 libxrender libxext cairo readline autoconf automake libtool pkg-config yosys icarus-verilog ghdl ngspice
   tcl_root=$(brew --prefix tcl-tk@8)
   export PKG_CONFIG_PATH="$tcl_root/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
   python="$(brew --prefix python@3.13)/bin/python3.13"
@@ -18,13 +18,13 @@ else
   if [ "${RESISTOR_SKIP_SYSTEM_PACKAGES:-0}" != 1 ]; then
     if [ "$(id -u)" = 0 ]; then elevation=''; else elevation=sudo; fi
     $elevation apt-get update
-    $elevation apt-get install -y build-essential git curl python3 python3-venv tcl8.6-dev tk8.6-dev libx11-dev libxrender-dev libxext-dev libcairo2-dev libreadline-dev autoconf automake libtool pkg-config ngspice yosys iverilog xschem
+    $elevation apt-get install -y build-essential git curl python3 python3-venv tcl8.6-dev tk8.6-dev libx11-dev libxrender-dev libxext-dev libcairo2-dev libreadline-dev autoconf automake libtool pkg-config ngspice yosys iverilog ghdl xschem
   fi
   tcl_root=/usr
   python=python3
 fi
 "$python" -m venv "$engine"
-"$engine/bin/python3" -m pip install --disable-pip-version-check 'klayout==0.30.5'
+"$engine/bin/python3" -m pip install --disable-pip-version-check 'klayout==0.30.5' 'numpy==2.2.6' 'pycparser==2.22'
 build_tool() {
   name=$1
   revision=$2

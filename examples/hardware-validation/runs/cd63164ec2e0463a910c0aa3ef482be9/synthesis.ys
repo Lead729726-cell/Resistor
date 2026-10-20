@@ -1,0 +1,11 @@
+read_verilog -sv observe.v
+hierarchy -check -top observe
+proc
+flatten
+synth -top observe -noabc
+dffunmap
+abc -g simple
+clean
+check -assert
+write_json synthesized.json
+write_verilog -noattr gates.v

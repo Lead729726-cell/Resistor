@@ -1,0 +1,101 @@
+{
+  "source_hash": "c4157c4bbcced95d463f9acf13c9d3c5c0f0ee05a6bf778a5f93c2c49ced4b5a",
+  "action": "simulate",
+  "ports": {
+    "clk": {
+      "direction": "input",
+      "bits": [
+        2
+      ]
+    },
+    "rst": {
+      "direction": "input",
+      "bits": [
+        3
+      ]
+    },
+    "q": {
+      "direction": "output",
+      "bits": [
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  },
+  "traces": [
+    {
+      "name": "q",
+      "width": 4,
+      "events": [
+        [
+          0.0,
+          "x"
+        ],
+        [
+          1e-08,
+          "0"
+        ],
+        [
+          3e-08,
+          "1"
+        ],
+        [
+          5e-08,
+          "10"
+        ]
+      ],
+      "end_s": 6e-08
+    },
+    {
+      "name": "clk",
+      "width": 1,
+      "events": [
+        [
+          0.0,
+          "0"
+        ],
+        [
+          1e-08,
+          "1"
+        ],
+        [
+          2e-08,
+          "0"
+        ],
+        [
+          3e-08,
+          "1"
+        ],
+        [
+          4e-08,
+          "0"
+        ],
+        [
+          5e-08,
+          "1"
+        ]
+      ],
+      "end_s": 6e-08
+    },
+    {
+      "name": "rst",
+      "width": 1,
+      "events": [
+        [
+          0.0,
+          "1"
+        ],
+        [
+          2e-08,
+          "0"
+        ]
+      ],
+      "end_s": 6e-08
+    }
+  ],
+  "assertions": 5,
+  "verification_scope": "Actual source-level/native-translated digital vectors, not transistor timing or physical signoff.",
+  "manufacturing_signoff": false
+}

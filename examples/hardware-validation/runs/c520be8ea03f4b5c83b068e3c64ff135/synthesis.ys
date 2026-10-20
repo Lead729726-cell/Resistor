@@ -1,0 +1,11 @@
+read_verilog -sv signed8.v
+hierarchy -check -top signed8
+proc
+flatten
+synth -top signed8 -noabc
+dffunmap
+abc -g simple
+clean
+check -assert
+write_json synthesized.json
+write_verilog -noattr gates.v

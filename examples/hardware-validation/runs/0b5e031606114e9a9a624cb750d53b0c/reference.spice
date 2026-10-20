@@ -1,0 +1,20 @@
+.subckt DIGITAL_INV A Y VPWR VGND
+XMN Y A VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMP Y A VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+.ends DIGITAL_INV
+.subckt DIGITAL_BUF A Y VPWR VGND
+XI0 A N VPWR VGND DIGITAL_INV
+XI1 N Y VPWR VGND DIGITAL_INV
+.ends DIGITAL_BUF
+.subckt DIGITAL_logic_inv a y VPWR VGND
+XOUT_y_0 N_3 y VPWR VGND DIGITAL_BUF
+XG0 a N_3 VPWR VGND DIGITAL_INV
+.ends DIGITAL_logic_inv
+.subckt ANALOG_current_mirror REF OUT VGND
+XMN1 REF REF VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XMN2 OUT REF VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+.ends ANALOG_current_mirror
+.subckt SOC_TOP VPWR VGND
+XANALOG DIGITAL_OUT ANALOG_OUT VGND ANALOG_current_mirror
+XDIGITAL IN DIGITAL_OUT VPWR VGND DIGITAL_logic_inv
+.ends SOC_TOP

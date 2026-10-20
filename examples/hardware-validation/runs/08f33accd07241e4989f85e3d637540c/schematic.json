@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "connectivity_mode": "explicit",
+  "ports": [
+    "a",
+    "y",
+    "VPWR",
+    "VGND",
+    "ANALOG_OUT"
+  ],
+  "devices": [
+    {
+      "id": "G0.MP",
+      "kind": "pmos",
+      "model": "sky130_fd_pr__pfet_01v8_hvt",
+      "name": "G0_MP",
+      "parameters": {
+        "l_um": 0.15,
+        "m": 1,
+        "nf": 1,
+        "w_um": 0.65
+      },
+      "pins": {
+        "B": "VPWR",
+        "D": "N_3",
+        "G": "a",
+        "S": "VPWR"
+      },
+      "x": 180,
+      "y": 170
+    },
+    {
+      "id": "G0.MN",
+      "kind": "nmos",
+      "model": "sky130_fd_pr__nfet_01v8",
+      "name": "G0_MN",
+      "parameters": {
+        "l_um": 0.15,
+        "m": 1,
+        "nf": 1,
+        "w_um": 0.65
+      },
+      "pins": {
+        "B": "VGND",
+        "D": "N_3",
+        "G": "a",
+        "S": "VGND"
+      },
+      "x": 440,
+      "y": 170
+    },
+    {
+      "id": "OUT_y_0.I0.MP",
+      "kind": "pmos",
+      "model": "sky130_fd_pr__pfet_01v8_hvt",
+      "name": "OUT_y_0_I0_MP",
+      "parameters": {
+        "l_um": 0.15,
+        "m": 1,
+        "nf": 1,
+        "w_um": 0.65
+      },
+      "pins": {
+        "B": "VPWR",
+        "D": "OUT_y_0__N",
+        "G": "N_3",
+        "S": "VPWR"
+      },
+      "x": 700,
+      "y": 170
+    },
+    {
+      "id": "OUT_y_0.I0.MN",
+      "kind": "nmos",
+      "model": "sky130_fd_pr__nfet_01v8",
+      "name": "OUT_y_0_I0_MN",
+      "parameters": {
+        "l_um": 0.15,
+        "m": 1,
+        "nf": 1,
+        "w_um": 0.65
+      },
+      "pins": {
+        "B": "VGND",
+        "D": "OUT_y_0__N",
+        "G": "N_3",
+        "S": "VGND"
+      },
+      "x": 960,
+      "y": 170
+    },
+    {
+      "id": "OUT_y_0.I1.MP",
+      "kind": "pmos",
+      "model": "sky130_fd_pr__pfet_01v8_hvt",
+      "name": "OUT_y_0_I1_MP",
+      "parameters": {
+        "l_um": 0.15,
+        "m": 1,
+        "nf": 1,
+        "w_um": 0.65
+      },
+      "pins": {
+        "B": "VPWR",
+        "D": "y",
+        "G": "OUT_y_0__N",
+        "S": "VPWR"
+      },
+      "x": 1220,
+      "y": 170
+    },
+    {
+      "id": "OUT_y_0.I1.MN",
+      "kind": "nmos",
+      "model": "sky130_fd_pr__nfet_01v8",
+      "name": "OUT_y_0_I1_MN",
+      "parameters": {
+        "l_um": 0.15,
+        "m": 1,
+        "nf": 1,
+        "w_um": 0.65
+      },
+      "pins": {
+        "B": "VGND",
+        "D": "y",
+        "G": "OUT_y_0__N",
+        "S": "VGND"
+      },
+      "x": 180,
+      "y": 360
+    },
+    {
+      "id": "200cf9a60da645ff8f04a93298caae95:p0",
+      "kind": "resistor",
+      "name": "HDLDRV_RC_R_P0",
+      "parameters": {
+        "value": 1000.0,
+        "w_um": 1.41,
+        "l_um": 0.54
+      },
+      "pins": {
+        "+": "y",
+        "-": "ANALOG_OUT",
+        "B": "VGND"
+      },
+      "x": 440,
+      "y": 360,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41"
+    },
+    {
+      "id": "309e34d27ac4498d956d426b5876eab9:p0",
+      "kind": "capacitor",
+      "name": "HDLDRV_RC_C_P0",
+      "parameters": {
+        "value": 1e-12,
+        "w_um": 22.17,
+        "l_um": 22.17
+      },
+      "pins": {
+        "+": "ANALOG_OUT",
+        "-": "VGND"
+      },
+      "x": 700,
+      "y": 360,
+      "model": "sky130_fd_pr__cap_mim_m3_1"
+    }
+  ],
+  "wires": [],
+  "junctions": [],
+  "cells": {}
+}

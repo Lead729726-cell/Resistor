@@ -33,6 +33,7 @@ class SourceStimulusTests(unittest.TestCase):
   source_stimulus.check_resolution([d],native.testbench({'analysis':'op','step_s':1e-9}))
   p={'cell':'top','ports':['A'],'schematic':{'devices':[d]}}
   with tempfile.TemporaryDirectory() as folder:
+   (Path(folder)/'net.spice').write_text(native.emit(p['schematic'],p['cell'],p['ports']))
    tb,*_=custom_circuit.spice_tb(p,Path(folder),native.testbench({'step_s':5e-12,'duration_s':40e-9}),Path(folder)/'net.spice')
    self.assertIn('tran 5e-12 4e-08 0 5e-12',tb)
  def test_forward_layout_records_exact_external_stimulus_and_replays_it(self):
@@ -45,6 +46,7 @@ class SourceStimulusTests(unittest.TestCase):
   wave=next(d for d in sources if d['name']==original['name'])
   self.assertEqual(wave['stimulus'],original['stimulus']);self.assertIsNot(wave['stimulus'],original['stimulus'])
   with tempfile.TemporaryDirectory() as folder,patch('custom_circuit.design_tools.supported_model_deck',return_value=Path('/unit-test-model-deck')):
+   (Path(folder)/'net.spice').write_text(native.emit(result,'test',result['ports']))
    tb,*_=custom_circuit.spice_tb({'schematic':result,'ports':result['ports'],'cell':'test','conversion':{'external_sources':sources}},Path(folder),native.testbench({'step_s':5e-12,'duration_s':40e-9}),Path(folder)/'net.spice')
    self.assertIn('PULSE(0 1.8 2e-09',tb)
  def test_recipe_bounds_are_explicit_and_invalid_edits_preserve_prior_criteria(self):

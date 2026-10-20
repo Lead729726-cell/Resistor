@@ -1,0 +1,11 @@
+read_verilog -sv offset_bus.v
+hierarchy -check -top offset_bus
+proc
+flatten
+synth -top offset_bus -noabc
+dffunmap
+abc -g simple
+clean
+check -assert
+write_json synthesized.json
+write_verilog -noattr gates.v

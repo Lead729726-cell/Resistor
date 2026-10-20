@@ -370,3 +370,5 @@ npm run test:ui
 기본 CMOS 블록을 회로도에서 배치·연결하고 실제 OP를 실행하는 [로직 조합 안내](docs/logic-composition.md)를 확인하세요.
 
 PULSE/PWL 입력과 실제 ngspice 파형의 주기별 지연·논리 관계를 연결하는 [동적 신호·지연 실습](docs/logic-transient.md)을 지원합니다. 조건과 결과를 revision별로 저장하며 단일 경로 판정을 제조 검증과 구분합니다.
+
+[HDL·통합 회로 실제 배선 후 검증과 원본](docs/hardware-validation.md)

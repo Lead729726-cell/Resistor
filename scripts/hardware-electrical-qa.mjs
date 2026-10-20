@@ -1,0 +1,17 @@
+// Independent arithmetic over retained actual native waveforms; never rewrites engine verdicts.
+import {readFile,writeFile}from'node:fs/promises';import assert from'node:assert/strict';
+const state=JSON.parse(await readFile('.runtime/hardware/physical-latest.json','utf8')),cases=[];
+const at=(w,t)=>{let l=0,h=w.x.length-1;assert(t>=w.x[l]&&t<=w.x[h]);while(h-l>1){const m=(l+h)>>1;if(w.x[m]<=t)l=m;else h=m;}return w.y[l]+(w.y[h]-w.y[l])*(t-w.x[l])/(w.x[h]-w.x[l]);};
+const crossing=(w,start,end,rising)=>{for(let i=1;i<w.x.length;i++){if(w.x[i]<start||w.x[i-1]>end)continue;const a=w.y[i-1]-.9,b=w.y[i]-.9;if((rising?a<=0&&b>0:a>=0&&b<0)){const t=w.x[i-1]+(w.x[i]-w.x[i-1])*(-a)/(b-a);if(t>=start&&t<=end)return t;}}throw Error('No actual output crossing in the declared transition window');};
+for(const row of state.records.filter(r=>/^analog-(tt|ss|ff)-(pre|post)$/.test(r.label))){
+ const r=JSON.parse(await readFile('.runtime/hardware/physical/'+row.id+'.json','utf8')),waves=Object.fromEntries(r.waveforms.map(w=>[w.name,w]));
+ for(const v of [...waves.VPWR.y,...waves.VGND.y,...waves.a.y,...waves.ANALOG_OUT.y])assert(Number.isFinite(v));
+ assert(waves.VGND.y.every(v=>Math.abs(v)<1e-9));assert(waves.VPWR.y.every(v=>Math.abs(v-1.8)<1e-8));
+ const groundWaves=r.waveforms.filter(w=>w.name==='VGND'||w.name.startsWith('VGND.t'));
+ const ground_excursion=Math.max(...groundWaves.flatMap(w=>w.y.map(Math.abs)));assert(ground_excursion<.1,'Ground terminal excursions exceed this fixture budget; check actual subcircuit port order.');
+ const samples=Array.from({length:8},(_,i)=>{const t=(i+.9)*50e-9,input=at(waves.a,t),output=at(waves.ANALOG_OUT,t),expected=1-i%2;assert(Math.abs(input-1.8*(i%2))<1e-6);const passed=expected?output>=1.44:output<=.36;assert(passed,row.label+' output mismatch at vector '+i);return{vector:i,time_s:t,input_V:input,output_V:output,expected_bit:expected,passed};});
+ const delays=Array.from({length:7},(_,k)=>{const i=k+1,a=crossing(waves.a,i*50e-9,(i+.5)*50e-9,i%2===1),y=crossing(waves.ANALOG_OUT,a,(i+.9)*50e-9,i%2===0),delay=y-a;assert(delay>=0&&delay<40e-9);return{edge:i,input_midpoint_s:a,output_midpoint_s:y,delay_s:delay};});
+ cases.push({label:row.label,run_id:row.id,corner:r.measurements.corner,temperature_C:r.measurements.temperature_C,samples:r.measurements.samples,native_execution:r.execution_status,native_analysis:r.analysis_result,current_flow_status:r.measurements.current_flow_status,branch_count:r.current_flow.branches.length,ground_terminal_peak_abs_V:ground_excursion,settled_checks:samples,midpoint_delays:delays});
+}
+assert.equal(cases.length,6);const result={edition:'Resistor Indust',source_version:state.version,settled_logic_checks:48,measured_transitions:42,limits:{supply_V:1.8,low_max_V:.36,high_min_V:1.44,ground_terminal_peak_abs_max_V:.1,transition_delay_max_s:40e-9},cases,scope:'Selected native TT27/SS125/FF-40 at 1.8 V; six actual PDK runs. Fixture midpoint measurements and settle checks, not STA, PVT coverage, characterized library timing or foundry signoff.',manufacturing_signoff:false};
+await writeFile('.runtime/hardware/electrical-validation.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({settled_logic_checks:48,transitions:42,worst_fixture_delay_ns:Math.max(...cases.flatMap(c=>c.midpoint_delays.map(d=>d.delay_s)))*1e9,cases:cases.map(c=>({label:c.label,ground_peak_V:c.ground_terminal_peak_abs_V}))}));

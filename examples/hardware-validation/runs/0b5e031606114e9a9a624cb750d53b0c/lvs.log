@@ -1,0 +1,105 @@
+
+Circuit 1 cell sky130_fd_pr__nfet_01v8 and Circuit 2 cell sky130_fd_pr__nfet_01v8 are black boxes.
+Warning: Equate pins:  cell sky130_fd_pr__nfet_01v8 is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sky130_fd_pr__nfet_01v8 is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sky130_fd_pr__nfet_01v8         |Circuit 2: sky130_fd_pr__nfet_01v8         
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sky130_fd_pr__nfet_01v8 and sky130_fd_pr__nfet_01v8 are equivalent.
+
+Circuit 1 cell sky130_fd_pr__pfet_01v8_hvt and Circuit 2 cell sky130_fd_pr__pfet_01v8_hvt are black boxes.
+Warning: Equate pins:  cell sky130_fd_pr__pfet_01v8_hvt is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sky130_fd_pr__pfet_01v8_hvt is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sky130_fd_pr__pfet_01v8_hvt     |Circuit 2: sky130_fd_pr__pfet_01v8_hvt     
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sky130_fd_pr__pfet_01v8_hvt and sky130_fd_pr__pfet_01v8_hvt are equivalent.
+Flattening unmatched subcell DIGITAL_BUF in circuit DIGITAL_logic_inv (1)(1 instance)
+Flattening unmatched subcell DIGITAL_INV in circuit DIGITAL_logic_inv (1)(3 instances)
+
+Subcircuit summary:
+Circuit 1: DIGITAL_logic_inv               |Circuit 2: DIGITAL_logic_inv               
+-------------------------------------------|-------------------------------------------
+sky130_fd_pr__nfet_01v8 (3)                |sky130_fd_pr__nfet_01v8 (3)                
+sky130_fd_pr__pfet_01v8_hvt (3)            |sky130_fd_pr__pfet_01v8_hvt (3)            
+Number of devices: 6                       |Number of devices: 6                       
+Number of nets: 6                          |Number of nets: 6                          
+---------------------------------------------------------------------------------------
+Netlists match uniquely.
+
+Subcircuit pins:
+Circuit 1: DIGITAL_logic_inv               |Circuit 2: DIGITAL_logic_inv               
+-------------------------------------------|-------------------------------------------
+y                                          |y                                          
+a                                          |a                                          
+VPWR                                       |VPWR                                       
+VGND                                       |VGND                                       
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes DIGITAL_logic_inv and DIGITAL_logic_inv are equivalent.
+
+Subcircuit summary:
+Circuit 1: ANALOG_current_mirror           |Circuit 2: ANALOG_current_mirror           
+-------------------------------------------|-------------------------------------------
+sky130_fd_pr__nfet_01v8 (2)                |sky130_fd_pr__nfet_01v8 (2)                
+Number of devices: 2                       |Number of devices: 2                       
+Number of nets: 3                          |Number of nets: 3                          
+---------------------------------------------------------------------------------------
+Netlists match uniquely.
+
+Subcircuit pins:
+Circuit 1: ANALOG_current_mirror           |Circuit 2: ANALOG_current_mirror           
+-------------------------------------------|-------------------------------------------
+OUT                                        |OUT                                        
+REF                                        |REF                                        
+VGND                                       |VGND                                       
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes ANALOG_current_mirror and ANALOG_current_mirror are equivalent.
+
+Subcircuit summary:
+Circuit 1: SOC_TOP                         |Circuit 2: SOC_TOP                         
+-------------------------------------------|-------------------------------------------
+DIGITAL_logic_inv (1)                      |DIGITAL_logic_inv (1)                      
+ANALOG_current_mirror (1)                  |ANALOG_current_mirror (1)                  
+Number of devices: 2                       |Number of devices: 2                       
+Number of nets: 6 **Mismatch**             |Number of nets: 5 **Mismatch**             
+---------------------------------------------------------------------------------------
+NET mismatches: Class fragments follow (with fanout counts):
+Circuit 1: SOC_TOP                         |Circuit 2: SOC_TOP                         
+
+---------------------------------------------------------------------------------------
+Net: DIGITAL_logic_inv_0/y                 |Net: DIGITAL_OUT                           
+  DIGITAL_logic_inv/y = 1                  |  ANALOG_current_mirror/REF = 1            
+                                           |  DIGITAL_logic_inv/y = 1                  
+                                           |                                           
+Net: ANALOG_current_mirror_0/REF           |(no matching net)                          
+  ANALOG_current_mirror/REF = 1            |                                           
+---------------------------------------------------------------------------------------
+Netlists do not match.
+Port matching may fail to disambiguate symmetries.
+
+Subcircuit pins:
+Circuit 1: SOC_TOP                         |Circuit 2: SOC_TOP                         
+-------------------------------------------|-------------------------------------------
+(no pin, node is DIGITAL_logic_inv_0/VPWR) |VPWR                                       
+(no pin, node is VSUBS)                    |VGND                                       
+---------------------------------------------------------------------------------------
+Cell pin lists for SOC_TOP and SOC_TOP altered to match.
+Device classes SOC_TOP and SOC_TOP are equivalent.
+
+Final result: Top level cell failed pin matching.

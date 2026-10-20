@@ -1,0 +1,10 @@
+.subckt logic_inv a y VPWR VGND ANALOG_OUT
+XHDLDRV_RC_R_P0 y ANALOG_OUT VGND sky130_fd_pr__res_xhigh_po_1p41 l=0.54
+XHDLDRV_RC_C_P0 ANALOG_OUT VGND sky130_fd_pr__cap_mim_m3_1 w=22.17 l=22.17
+XG0_MN N_3 a VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XG0_MP N_3 a VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XOUT_y_0_I0_MN OUT_y_0__N N_3 VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XOUT_y_0_I0_MP OUT_y_0__N N_3 VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+XOUT_y_0_I1_MN y OUT_y_0__N VGND VGND sky130_fd_pr__nfet_01v8 w=0.65 l=0.15 nf=1 m=1
+XOUT_y_0_I1_MP y OUT_y_0__N VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=0.65 l=0.15 nf=1 m=1
+.ends logic_inv

@@ -1,0 +1,11 @@
+read_verilog -sv adder4.sv
+hierarchy -check -top adder4
+proc
+flatten
+synth -top adder4 -noabc
+dffunmap
+abc -g simple
+clean
+check -assert
+write_json synthesized.json
+write_verilog -noattr gates.v

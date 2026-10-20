@@ -1,0 +1,1 @@
+module wide64(input [63:0] a,b,output [63:0] sum,output carry);assign {carry,sum}={1'b0,a}+{1'b0,b};endmodule

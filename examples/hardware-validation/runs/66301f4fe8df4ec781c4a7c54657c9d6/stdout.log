@@ -1,0 +1,495 @@
+
+--- magic-pex ---
+
+Magic 8.3 revision 582 - Compiled on Wed Oct 14 14:09:02 KST 2026.
+Starting magic under Tcl interpreter
+Using the terminal as the console.
+WARNING: RLIMIT_NOFILE is above 1024 and Tcl_Version<9 this may cause runtime issues [rlim_cur=10240]
+Using NULL graphics device.
+Processing system .magicrc file
+Switching to WIRING tool.
+Switching to NETLIST tool.
+Switching to PICK tool.
+Switching to BOX tool.
+Sourcing design .magicrc for technology sky130A ...
+2 Magic internal units = 1 Lambda
+Input style sky130(): scaleFactor=2, multiplier=2
+The following types are not handled by extraction and will be treated as non-electrical types:
+    ubm 
+Scaled tech values by 2 / 1 to match internal grid scaling
+Loading sky130A Device Generator Menu ...
+Loading "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/66301f4fe8df4ec781c4a7c54657c9d6/pex.tcl" from command line.
+Warning: Calma reading is not undoable!  I hope that's OK.
+Library written using GDS-II Release 6.0
+Library name: LIB
+Reading "logic_inv".
+Error while reading cell "logic_inv" (byte position 580674): Warning:  Cell logic_inv boundary was redefined.
+Error while reading cell "logic_inv" (byte position 580674): Warning:  Cell logic_inv boundary was redefined.
+Error while reading cell "logic_inv" (byte position 580674): Warning:  Cell logic_inv boundary was redefined.
+Error while reading cell "logic_inv" (byte position 580674): Warning:  Cell logic_inv boundary was redefined.
+Error while reading cell "logic_inv" (byte position 580674): Warning:  Cell logic_inv boundary was redefined.
+Error while reading cell "logic_inv" (byte position 580674): Warning:  Cell logic_inv boundary was redefined.
+Error while reading cell "logic_inv" (byte position 580674): Warning:  Cell logic_inv boundary was redefined.
+Extracting logic_inv into logic_inv.ext:
+exttosim finished.
+Port: name = ANALOG_OUT exists, forcing drivepoint
+Location is (2010, 8024); drivepoint (2010, 8024)
+Port: name = VGND exists, forcing drivepoint
+Location is (2730, 8264); drivepoint (2730, 8264)
+Port: name = VPWR exists, forcing drivepoint
+Location is (2970, 8564); drivepoint (2970, 8564)
+Port: name = a exists, forcing drivepoint
+Location is (3210, 7064); drivepoint (3210, 7064)
+Port: name = y exists, forcing drivepoint
+Location is (3450, 7784); drivepoint (3450, 7784)
+Warning: viali at 13782 4708 smaller than extract section allows
+Couldn't find wire at 13782 3822
+Error in extracting node ANALOG_OUT
+Total Nets: 20
+Nets extracted: 7 (0.350000)
+Nets output: 6 (0.300000)
+exttospice finished.
+
+--- ngspice ---
+Warning: redefinition of .subckt sky130_fd_pr__res_generic_po, ignored
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: No compatibility mode selected!
+
+
+Circuit: resistor explicit custom flat circuit
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+a                                            0
+xu.x0.a                               0.219077
+xu.x0.b1                              0.219077
+xu.vgnd.t0                            0.219077
+xu.register_cf_node_6dac4b325cb22528        0.219077
+xu.a.t0                                      0
+xu.register_cf_node_6dac4b325cb22528_source         1.79999
+xu.vgnd.t3                            0.219077
+xu.vgnd.t4                            0.219077
+xu.n_3.t1                              1.79999
+xu.register_cf_node_e25bdb194a664265        0.219077
+xu.n_3.t2                              1.79999
+xu.register_cf_node_e25bdb194a664265_source        0.219077
+xu.vgnd.t1                            0.219077
+xu.vgnd.t2                            0.219077
+xu.out_y_0__n.t1                      0.219077
+xu.register_cf_node_19e8bb0acab9d6a2        0.219077
+xu.out_y_0__n.t2                      0.219077
+xu.register_cf_node_19e8bb0acab9d6a2_source       0.0634344
+xu.vgnd.t5                            0.219077
+xu.vgnd.t6                            0.219077
+xu.y.t2                              0.0634344
+xu.register_cf_node_aae200cba371e86d         1.77803
+xu.out_y_0__n.t3                      0.219077
+xu.register_cf_node_aae200cba371e86d_source       0.0853989
+xu.vpwr.t2                                 1.8
+xu.vpwr.t3                             1.77803
+xu.y.t1                              0.0853989
+xu.register_cf_node_22d5bbc1cca43256         1.79999
+xu.a.t1                                      0
+xu.register_cf_node_22d5bbc1cca43256_source         1.79999
+xu.vpwr.t4                                 1.8
+xu.vpwr.t5                             1.79999
+xu.n_3.t0                              1.79999
+xu.x6.xsky130_fd_pr__res_xhigh_po_1p41.ra       0.0473623
+xu.y.t0                              0.0617239
+xu.vgnd.t7                            0.219077
+xu.register_cf_node_a5b0d3e1c66956a5         1.79999
+xu.n_3.t3                              1.79999
+xu.register_cf_node_a5b0d3e1c66956a5_source        0.219077
+xu.vpwr.t0                                 1.8
+xu.vpwr.t1                             1.79999
+xu.out_y_0__n.t0                      0.219077
+xu.n_3                                 1.79999
+vgnd                                         0
+xu.out_y_0__n                         0.219077
+analog_out                           0.0634897
+vpwr                                       1.8
+xu.vgnd.n195                          0.219077
+xu.vgnd.n194                          0.219077
+xu.vgnd.n17                           0.219077
+xu.vgnd.n9                            0.219077
+xu.vgnd.n193                          0.219077
+xu.vgnd.n18                           0.219077
+xu.vgnd.n192                          0.219077
+xu.vgnd.n179                          0.219077
+xu.vgnd.n169                          0.219077
+xu.vgnd.n189                          0.219077
+xu.vgnd.n22                           0.219077
+xu.vgnd.n181                          0.219077
+xu.vgnd.n25                           0.219077
+xu.vgnd.n183                          0.219077
+xu.vgnd.n182                          0.219077
+xu.vgnd.n197                          0.219077
+xu.vgnd.n13                           0.219077
+xu.vgnd.n199                          0.219077
+xu.vgnd.n15                           0.219077
+xu.vgnd.n210                          0.219077
+xu.vgnd.n11                           0.219077
+xu.vgnd.n213                          0.219077
+xu.vgnd.n212                          0.219077
+xu.vgnd.n98                           0.219077
+xu.vgnd.n93                           0.219077
+xu.vgnd.n100                          0.219077
+xu.vgnd.n95                           0.219077
+xu.vgnd.n111                          0.219077
+xu.vgnd.n91                           0.219077
+xu.vgnd.n114                          0.219077
+xu.vgnd.n113                          0.219077
+xu.vgnd.n55                           0.219077
+xu.vgnd.n43                           0.219077
+xu.vgnd.n165                          0.219077
+xu.vgnd.n36                           0.219077
+xu.vgnd.n138                          0.219077
+xu.vgnd.n137                          0.219077
+xu.vgnd.n82                           0.219077
+xu.vgnd.n45                           0.219077
+xu.vgnd.n168                          0.219077
+xu.vgnd.n167                          0.219077
+xu.vgnd.n191                          0.219077
+xu.vgnd.n201                          0.219077
+xu.vgnd.n14                           0.219077
+xu.vgnd.n204                          0.219077
+xu.vgnd.n203                          0.219077
+xu.vgnd.n205                          0.219077
+xu.vgnd.n202                          0.219077
+xu.vgnd.n7                            0.219077
+xu.vgnd.n8                            0.219077
+xu.vgnd.n5                            0.219077
+xu.vgnd.n211                          0.219077
+xu.vgnd.n214                          0.219077
+xu.vgnd.n4                            0.219077
+xu.vgnd.n209                          0.219077
+xu.vgnd.n208                          0.219077
+xu.vgnd.n10                           0.219077
+xu.vgnd.n207                          0.219077
+xu.vgnd.n206                          0.219077
+xu.vgnd.n12                           0.219077
+xu.vgnd.n16                           0.219077
+xu.vgnd.n200                          0.219077
+xu.vgnd.n102                          0.219077
+xu.vgnd.n94                           0.219077
+xu.vgnd.n105                          0.219077
+xu.vgnd.n104                          0.219077
+xu.vgnd.n106                          0.219077
+xu.vgnd.n103                          0.219077
+xu.vgnd.n88                           0.219077
+xu.vgnd.n89                           0.219077
+xu.vgnd.n86                           0.219077
+xu.vgnd.n112                          0.219077
+xu.vgnd.n115                          0.219077
+xu.vgnd.n85                           0.219077
+xu.vgnd.n110                          0.219077
+xu.vgnd.n109                          0.219077
+xu.vgnd.n90                           0.219077
+xu.vgnd.n108                          0.219077
+xu.vgnd.n107                          0.219077
+xu.vgnd.n92                           0.219077
+xu.vgnd.n96                           0.219077
+xu.vgnd.n101                          0.219077
+xu.vgnd.n188                          0.219077
+xu.vgnd.n187                          0.219077
+xu.vgnd.n21                           0.219077
+xu.vgnd.n186                          0.219077
+xu.vgnd.n185                          0.219077
+xu.vgnd.n184                          0.219077
+xu.vgnd.n24                           0.219077
+xu.vgnd.n19                           0.219077
+xu.vgnd.n26                           0.219077
+xu.vgnd.n180                          0.219077
+xu.vgnd.n170                          0.219077
+xu.vgnd.n174                          0.219077
+xu.vgnd.n171                          0.219077
+xu.vgnd.n176                          0.219077
+xu.vgnd.n175                          0.219077
+xu.vgnd.n177                          0.219077
+xu.vgnd.n178                          0.219077
+xu.vgnd.n23                           0.219077
+xu.vgnd.n83                           0.219077
+xu.vgnd.n81                           0.219077
+xu.vgnd.n47                           0.219077
+xu.vgnd.n46                           0.219077
+xu.vgnd.n79                           0.219077
+xu.vgnd.n78                           0.219077
+xu.vgnd.n77                           0.219077
+xu.vgnd.n54                           0.219077
+xu.vgnd.n76                           0.219077
+xu.vgnd.n75                           0.219077
+xu.vgnd.n74                           0.219077
+xu.vgnd.n73                           0.219077
+xu.vgnd.n72                           0.219077
+xu.vgnd.n71                           0.219077
+xu.vgnd.n70                           0.219077
+xu.vgnd.n69                           0.219077
+xu.vgnd.n68                           0.219077
+xu.vgnd.n67                           0.219077
+xu.vgnd.n66                           0.219077
+xu.vgnd.n65                           0.219077
+xu.vgnd.n64                           0.219077
+xu.vgnd.n63                           0.219077
+xu.vgnd.n62                           0.219077
+xu.vgnd.n61                           0.219077
+xu.vgnd.n60                           0.219077
+xu.vgnd.n59                           0.219077
+xu.vgnd.n58                           0.219077
+xu.vgnd.n57                           0.219077
+xu.vgnd.n56                           0.219077
+xu.vgnd.n42                           0.219077
+xu.vgnd.n44                           0.219077
+xu.vgnd.n131                          0.219077
+xu.vgnd.n130                          0.219077
+xu.vgnd.n129                          0.219077
+xu.vgnd.n132                          0.219077
+xu.vgnd.n41                           0.219077
+xu.vgnd.n134                          0.219077
+xu.vgnd.n133                          0.219077
+xu.vgnd.n135                          0.219077
+xu.vgnd.n37                           0.219077
+xu.vgnd.n27                           0.219077
+xu.vgnd.n164                          0.219077
+xu.vgnd.n163                          0.219077
+xu.vgnd.n35                           0.219077
+xu.vgnd.n162                          0.219077
+xu.vgnd.n34                           0.219077
+xu.vgnd.n161                          0.219077
+xu.vgnd.n160                          0.219077
+xu.vgnd.n159                          0.219077
+xu.vgnd.n158                          0.219077
+xu.vgnd.n157                          0.219077
+xu.vgnd.n156                          0.219077
+xu.vgnd.n155                          0.219077
+xu.vgnd.n154                          0.219077
+xu.vgnd.n153                          0.219077
+xu.vgnd.n152                          0.219077
+xu.vgnd.n151                          0.219077
+xu.vgnd.n150                          0.219077
+xu.vgnd.n149                          0.219077
+xu.vgnd.n148                          0.219077
+xu.vgnd.n147                          0.219077
+xu.vgnd.n146                          0.219077
+xu.vgnd.n145                          0.219077
+xu.vgnd.n144                          0.219077
+xu.vgnd.n143                          0.219077
+xu.vgnd.n142                          0.219077
+xu.vgnd.n141                          0.219077
+xu.vgnd.n140                          0.219077
+xu.vgnd.n139                          0.219077
+xu.vgnd.n38                           0.219077
+xu.vgnd.n136                          0.219077
+xu.vgnd.n40                           0.219077
+y                                     0.219077
+xu.vgnd.n39                           0.219077
+xu.vgnd.n128                          0.219077
+xu.vgnd.n127                          0.219077
+xu.vgnd.n84                           0.219077
+xu.vgnd.n122                          0.219077
+xu.vgnd.n123                          0.219077
+xu.vgnd.n0                            0.219077
+xu.vgnd.n1                            0.219077
+xu.vgnd.n117                          0.219077
+xu.vgnd.n118                          0.219077
+xu.vgnd.n196                          0.219077
+xu.vgnd.n97                           0.219077
+xu.vgnd.n6                            0.219077
+xu.vgnd.n198                          0.219077
+xu.vgnd.n87                           0.219077
+xu.vgnd.n99                           0.219077
+xu.vgnd.n190                          0.219077
+xu.vgnd.n20                           0.219077
+xu.vgnd.n173                          0.219077
+xu.vgnd.n172                          0.219077
+xu.vgnd.n80                           0.219077
+xu.vgnd.n53                           0.219077
+xu.vgnd.n52                           0.219077
+xu.vgnd.n51                           0.219077
+xu.vgnd.n50                           0.219077
+xu.vgnd.n49                           0.219077
+xu.vgnd.n48                           0.219077
+xu.vgnd.n166                          0.219077
+xu.vgnd.n28                           0.219077
+xu.vgnd.n29                           0.219077
+xu.vgnd.n30                           0.219077
+xu.vgnd.n31                           0.219077
+xu.vgnd.n32                           0.219077
+xu.vgnd.n33                           0.219077
+xu.vgnd.n126                          0.219077
+xu.vgnd.n121                          0.219077
+xu.vgnd.n116                          0.219077
+xu.vgnd.n215                          0.219077
+xu.vgnd.n3                            0.219077
+xu.vgnd.n2                            0.219077
+xu.vgnd.n120                          0.219077
+xu.vgnd.n119                          0.219077
+xu.vgnd.n125                          0.219077
+xu.vgnd.n124                          0.219077
+xu.a.n0                                      0
+xu.n_3.n0                              1.79999
+xu.n_3.n7                              1.79999
+xu.n_3.n2                              1.79999
+xu.n_3.n3                              1.79999
+xu.n_3.n1                              1.79999
+xu.n_3.n6                              1.79999
+xu.n_3.n5                              1.79999
+xu.n_3.n4                              1.79999
+xu.out_y_0__n.n0                      0.219077
+xu.out_y_0__n.n7                      0.219077
+xu.out_y_0__n.n2                      0.219077
+xu.out_y_0__n.n3                      0.219077
+xu.out_y_0__n.n1                      0.219077
+xu.out_y_0__n.n6                      0.219077
+xu.out_y_0__n.n5                      0.219077
+xu.out_y_0__n.n4                      0.219077
+xu.y.n4                              0.0637406
+xu.y.n5                              0.0637406
+xu.y.n0                              0.0634344
+xu.y.n1                              0.0634344
+xu.y.n3                              0.0632634
+xu.y.n2                              0.0633905
+xu.y.n7                              0.0632928
+xu.y.n6                              0.0636257
+xu.vpwr.n57                                1.8
+xu.vpwr.n45                                1.8
+xu.vpwr.n68                                1.8
+xu.vpwr.n46                                1.8
+xu.vpwr.n70                                1.8
+xu.vpwr.n43                                1.8
+xu.vpwr.n52                                1.8
+xu.vpwr.n42                                1.8
+xu.vpwr.n20                                1.8
+xu.vpwr.n8                                 1.8
+xu.vpwr.n31                                1.8
+xu.vpwr.n9                                 1.8
+xu.vpwr.n33                                1.8
+xu.vpwr.n6                                 1.8
+xu.vpwr.n15                                1.8
+xu.vpwr.n5                                 1.8
+xu.vpwr.n94                                1.8
+xu.vpwr.n82                                1.8
+xu.vpwr.n105                               1.8
+xu.vpwr.n83                                1.8
+xu.vpwr.n107                               1.8
+xu.vpwr.n80                                1.8
+xu.vpwr.n89                                1.8
+xu.vpwr.n79                                1.8
+xu.vpwr.n73                            1.79999
+xu.vpwr.n74                            1.79999
+xu.vpwr.n36                            1.79999
+xu.vpwr.n37                            1.79999
+xu.vpwr.n0                             1.79968
+xu.vpwr.n1                             1.79968
+xu.vpwr.n64                                1.8
+xu.vpwr.n62                                1.8
+xu.vpwr.n49                                1.8
+xu.vpwr.n48                                1.8
+xu.vpwr.n27                                1.8
+xu.vpwr.n25                                1.8
+xu.vpwr.n12                                1.8
+xu.vpwr.n11                                1.8
+xu.vpwr.n101                               1.8
+xu.vpwr.n99                                1.8
+xu.vpwr.n86                                1.8
+xu.vpwr.n85                                1.8
+xu.vpwr.n55                                1.8
+xu.vpwr.n54                                1.8
+xu.vpwr.n69                                1.8
+xu.vpwr.n44                                1.8
+xu.vpwr.n18                                1.8
+xu.vpwr.n17                                1.8
+xu.vpwr.n32                                1.8
+xu.vpwr.n7                                 1.8
+xu.vpwr.n92                                1.8
+xu.vpwr.n91                                1.8
+xu.vpwr.n106                               1.8
+xu.vpwr.n81                                1.8
+xu.vpwr.n51                                1.8
+xu.vpwr.n50                                1.8
+xu.vpwr.n47                                1.8
+xu.vpwr.n58                                1.8
+xu.vpwr.n59                                1.8
+xu.vpwr.n67                                1.8
+xu.vpwr.n66                                1.8
+xu.vpwr.n65                                1.8
+xu.vpwr.n60                                1.8
+xu.vpwr.n41                                1.8
+xu.vpwr.n71                                1.8
+xu.vpwr.n40                                1.8
+xu.vpwr.n14                                1.8
+xu.vpwr.n13                                1.8
+xu.vpwr.n10                                1.8
+xu.vpwr.n21                                1.8
+xu.vpwr.n22                                1.8
+xu.vpwr.n30                                1.8
+xu.vpwr.n29                                1.8
+xu.vpwr.n28                                1.8
+xu.vpwr.n23                                1.8
+xu.vpwr.n4                                 1.8
+xu.vpwr.n34                                1.8
+xu.vpwr.n3                                 1.8
+xu.vpwr.n88                                1.8
+xu.vpwr.n87                                1.8
+xu.vpwr.n84                                1.8
+xu.vpwr.n95                                1.8
+xu.vpwr.n96                                1.8
+xu.vpwr.n104                               1.8
+xu.vpwr.n103                               1.8
+xu.vpwr.n102                               1.8
+xu.vpwr.n97                                1.8
+xu.vpwr.n78                                1.8
+xu.vpwr.n108                               1.8
+xu.vpwr.n77                                1.8
+xu.vpwr.n63                                1.8
+xu.vpwr.n61                                1.8
+xu.vpwr.n56                                1.8
+xu.vpwr.n53                                1.8
+xu.vpwr.n26                                1.8
+xu.vpwr.n24                                1.8
+xu.vpwr.n19                                1.8
+xu.vpwr.n16                                1.8
+xu.vpwr.n100                               1.8
+xu.vpwr.n98                                1.8
+xu.vpwr.n93                                1.8
+xu.vpwr.n90                                1.8
+xu.vpwr.n72                            1.79996
+xu.vpwr.n35                            1.79995
+xu.vpwr.n109                           1.79997
+xu.vpwr.n2                             1.79975
+xu.vpwr.n76                            1.79997
+xu.vpwr.n75                            1.79999
+xu.vpwr.n39                            1.79996
+xu.vpwr.n38                            1.79998
+vexternal2#branch                   6.1838e-05
+vexternal1#branch                   6.1838e-05
+vexternal0#branch                  -6.1838e-05
+v.xu.vregister_cf_a5b0d3e1c66956a5_source#branch    -1.77339e-12
+v.xu.vregister_cf_a5b0d3e1c66956a5#branch     3.27651e-14
+v.xu.vregister_cf_22d5bbc1cca43256_source#branch    -1.58222e-12
+v.xu.vregister_cf_22d5bbc1cca43256#branch     1.58221e-12
+v.xu.vregister_cf_aae200cba371e86d_source#branch     -6.1838e-05
+v.xu.vregister_cf_aae200cba371e86d#branch      6.1838e-05
+v.xu.vregister_cf_19e8bb0acab9d6a2_source#branch    -3.35699e-12
+v.xu.vregister_cf_19e8bb0acab9d6a2#branch     3.11095e-12
+v.xu.vregister_cf_e25bdb194a664265_source#branch     1.77349e-12
+v.xu.vregister_cf_e25bdb194a664265#branch    -1.77349e-12
+v.xu.vregister_cf_6dac4b325cb22528_source#branch     1.58206e-12
+v.xu.vregister_cf_6dac4b325cb22528#branch    -2.73207e-16
+
+ Reference value :  0.00000e+00
+ Reference value :  7.99500e-08
+ Reference value :  1.46850e-07
+ Reference value :  2.05350e-07
+ Reference value :  2.53250e-07
+ Reference value :  3.36850e-07
+ Reference value :  4.29050e-07
+No. of Data Rows : 4550
+binary raw file "waveform.raw"
+ngspice-42 done

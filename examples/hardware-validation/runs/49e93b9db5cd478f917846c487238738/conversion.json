@@ -1,0 +1,330 @@
+{
+  "schema_version": 1,
+  "direction": "forward",
+  "project_id": "014fc8efc5144b6c9b46bc05eeae0141",
+  "revision": 6,
+  "run_id": "49e93b9db5cd478f917846c487238738",
+  "source_layout_sha256": "4e167551c17d5fd2c7f24e64d484f0454e967968fa86fe1aafab976b99ad1162",
+  "source_schematic_sha256": "8f388316c011207a7f8d4d64c1013d8cd70877cb77c8de3aec4d082199696555",
+  "profile_id": "sky130A",
+  "profile_hash": "dc6df882753721e60ade246d2a0b0112c1c94212c2baaebe4c73817acea26bb6",
+  "settings": {
+    "chip_limits": {
+      "width_um": 1000,
+      "height_um": 1000,
+      "max_area_um2": 1000000,
+      "edge_um": 10
+    },
+    "pin_side": "left",
+    "order": "source",
+    "body_net": "VGND"
+  },
+  "limits": [
+    "PDK extraction recovers the transistor/passive net graph, not the original symbol placement, design intent or lost hierarchy.",
+    "Unsupported models/parameters and extraction errors are retained; partial graphs cannot replace a schematic.",
+    "Exact device-terminal-to-polygon mapping is unavailable in this adapter.",
+    "Forward layout supports up to 512 SKY130 MOS/poly/MIM primitives; rectangular chip envelopes and four whole-layout orientations.",
+    "Ideal passive replacement is an explicit nominal geometry estimate. DRC/LVS/PEX, noise/yield/STA and manufacturing approval remain independent."
+  ],
+  "verification": {
+    "drc": "not-run",
+    "lvs": "not-run",
+    "pex": "not-run"
+  },
+  "foundry_signoff": false,
+  "schematic": {
+    "schema_version": 1,
+    "connectivity_mode": "explicit",
+    "ports": [
+      "VPWR",
+      "VGND",
+      "IN",
+      "DIGITAL_OUT",
+      "ANALOG_OUT"
+    ],
+    "devices": [
+      {
+        "id": "DIGITAL.G0.4213a11921c65d35bce28befc625ab31",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "name": "DIGITAL_G0_MP",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VPWR",
+          "D": "DIGITAL__N_3",
+          "G": "IN",
+          "S": "VPWR"
+        },
+        "x": 180,
+        "y": 170
+      },
+      {
+        "id": "DIGITAL.G0.a246d98171395221be379833d5badc48",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "name": "DIGITAL_G0_MN",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VGND",
+          "D": "DIGITAL__N_3",
+          "G": "IN",
+          "S": "VGND"
+        },
+        "x": 440,
+        "y": 170
+      },
+      {
+        "id": "DIGITAL.OUT_y_0.I0.4213a11921c65d35bce28befc625ab31",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "name": "DIGITAL_OUT_y_0_I0_MP",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VPWR",
+          "D": "DIGITAL__OUT_y_0__N",
+          "G": "DIGITAL__N_3",
+          "S": "VPWR"
+        },
+        "x": 700,
+        "y": 170
+      },
+      {
+        "id": "DIGITAL.OUT_y_0.I0.a246d98171395221be379833d5badc48",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "name": "DIGITAL_OUT_y_0_I0_MN",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VGND",
+          "D": "DIGITAL__OUT_y_0__N",
+          "G": "DIGITAL__N_3",
+          "S": "VGND"
+        },
+        "x": 960,
+        "y": 170
+      },
+      {
+        "id": "DIGITAL.OUT_y_0.I1.4213a11921c65d35bce28befc625ab31",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "name": "DIGITAL_OUT_y_0_I1_MP",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VPWR",
+          "D": "DIGITAL_OUT",
+          "G": "DIGITAL__OUT_y_0__N",
+          "S": "VPWR"
+        },
+        "x": 1220,
+        "y": 170
+      },
+      {
+        "id": "DIGITAL.OUT_y_0.I1.a246d98171395221be379833d5badc48",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "name": "DIGITAL_OUT_y_0_I1_MN",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VGND",
+          "D": "DIGITAL_OUT",
+          "G": "DIGITAL__OUT_y_0__N",
+          "S": "VGND"
+        },
+        "x": 180,
+        "y": 360
+      },
+      {
+        "id": "ANALOG.bae1a1c8f3d7539ca6de88e76b505a87",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "name": "ANALOG_MN1",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VGND",
+          "D": "DIGITAL_OUT",
+          "G": "DIGITAL_OUT",
+          "S": "VGND"
+        },
+        "x": 440,
+        "y": 360
+      },
+      {
+        "id": "ANALOG.72c56738f9df5acb86ba3dd5e2d39e82",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "name": "ANALOG_MN2",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VGND",
+          "D": "ANALOG_OUT",
+          "G": "DIGITAL_OUT",
+          "S": "VGND"
+        },
+        "x": 700,
+        "y": 360
+      }
+    ],
+    "wires": [],
+    "junctions": [],
+    "cells": {}
+  },
+  "ports": [
+    "VPWR",
+    "VGND",
+    "IN",
+    "DIGITAL_OUT",
+    "ANALOG_OUT"
+  ],
+  "cell": "SOC_TOP",
+  "ready": true,
+  "device_count": 8,
+  "passive_replacements": [],
+  "external_sources": [],
+  "envelope": {
+    "policy": {
+      "schema_version": 1,
+      "width_um": 1000,
+      "height_um": 1000,
+      "max_area_um2": 1000000,
+      "edge_um": 10,
+      "origin_um": [
+        0.0,
+        0.0
+      ],
+      "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+    },
+    "fits": true,
+    "bbox_dbu": [
+      "10000",
+      "10000",
+      "77550",
+      "25740"
+    ],
+    "used_width_um": 67.55,
+    "used_height_um": 15.74,
+    "used_area_um2": 1063.237,
+    "chip_area_um2": 1000000,
+    "minimum_envelope_um": [
+      87.55,
+      35.74
+    ],
+    "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+  },
+  "placement_order": [
+    "DIGITAL_G0_MP",
+    "DIGITAL_G0_MN",
+    "DIGITAL_OUT_y_0_I0_MP",
+    "DIGITAL_OUT_y_0_I0_MN",
+    "DIGITAL_OUT_y_0_I1_MP",
+    "DIGITAL_OUT_y_0_I1_MN",
+    "ANALOG_MN1",
+    "ANALOG_MN2"
+  ],
+  "source": "actual-SKY130-PCells-and-bounded-routing",
+  "hierarchy": "flattened physical graph; original source remains in project history",
+  "issues": [],
+  "losses": [],
+  "routing": {
+    "algorithm": "bounded-rows-m3-m4-v1",
+    "primitive_count": 8,
+    "row_count": 1,
+    "inter_row_nets": 7,
+    "floorplan": {
+      "policy": {
+        "schema_version": 1,
+        "width_um": 1000,
+        "height_um": 1000,
+        "max_area_um2": 1000000,
+        "edge_um": 10,
+        "origin_um": [
+          0.0,
+          0.0
+        ],
+        "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+      },
+      "fits": true,
+      "bbox_dbu": [
+        "10300",
+        "10000",
+        "77850",
+        "25740"
+      ],
+      "used_width_um": 67.55,
+      "used_height_um": 15.74,
+      "used_area_um2": 1063.237,
+      "chip_area_um2": 1000000,
+      "minimum_envelope_um": [
+        87.55,
+        35.74
+      ],
+      "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+    },
+    "rows": [
+      {
+        "row": 0,
+        "translation_dbu": [
+          25400,
+          16220
+        ],
+        "algorithm": "interval-heap-v2",
+        "matching_groups": [],
+        "primitive_count": 8,
+        "scope": "single-row PCell reference; no full-chip density/antenna/foundry signoff",
+        "signal_track_count": 5,
+        "track_clearance_dbu": 800,
+        "tracks": {
+          "ANALOG_OUT": 3,
+          "DIGITAL_OUT": 4,
+          "DIGITAL__N_3": 1,
+          "DIGITAL__OUT_y_0__N": 2,
+          "IN": 0
+        }
+      }
+    ],
+    "matching_groups": [],
+    "scope": "PCell reference with bounded envelope; native DRC/LVS/PEX remain independent gates."
+  },
+  "preview_layout_sha256": "d74165b06f26d9b15945aaf4f5204f4797ba1572911f8daaf7586af063fe4028",
+  "schematic_sha256": "4aeddeb90bd97c1edf83c7a7d646c9c56b37fd52899dd15f59deb664a1ff3566",
+  "preview_hash": "a1021391cbe677558cdf0d18690e3b271f3bceef58a0c1c6d244d40a766fdbaf"
+}

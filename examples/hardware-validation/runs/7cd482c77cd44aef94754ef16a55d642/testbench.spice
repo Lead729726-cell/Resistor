@@ -1,0 +1,78 @@
+Register explicit imported-GDS port testbench
+.include "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/7cd482c77cd44aef94754ef16a55d642/supported-tt.spice"
+.option scale=1e-06
+.include "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/7cd482c77cd44aef94754ef16a55d642/current-probe.spice"
+.temp 27
+VREGISTER_PORT_0 VPWR 0 1.8
+VREGISTER_PORT_1 VGND 0 0
+VREGISTER_PORT_2 IN 0 0
+VREGISTER_PORT_4 ANALOG_OUT 0 0.9
+XU VPWR VGND IN DIGITAL_OUT ANALOG_OUT SOC_TOP
+.control
+save all i(v.xu.vregister_cf_e5471a7aaad3a83f) i(v.xu.vregister_cf_05420f0620269067) i(v.xu.vregister_cf_53de5d6bd80385ef) i(v.xu.vregister_cf_26f2109b976ced40) i(v.xu.vregister_cf_5761bdc3f2c2562e) i(v.xu.vregister_cf_5318aa212f4be129) i(v.xu.vregister_cf_31e9d578070e2483) i(v.xu.vregister_cf_45e89b87ea909723) i(VREGISTER_PORT_0) i(VREGISTER_PORT_1) i(VREGISTER_PORT_2) i(VREGISTER_PORT_4) v(XU.VGND.t3) v(XU.DIGITAL__N_3.t0) v(XU.IN.t0) v(XU.VGND.t2) v(XU.VGND.t9) v(XU.DIGITAL__OUT_y_0__N.t0) v(XU.DIGITAL__N_3.t2) v(XU.VGND.t8) v(XU.VGND.t5) v(XU.DIGITAL_OUT.t1) v(XU.DIGITAL_OUT.t0) v(XU.VGND.t4) v(XU.VGND.t1) v(XU.DIGITAL_OUT.t2) v(XU.DIGITAL__OUT_y_0__N.t2) v(XU.VGND.t0) v(XU.VPWR.t1) v(XU.DIGITAL_OUT.t3) v(XU.DIGITAL__OUT_y_0__N.t3) v(XU.VPWR.t0) v(XU.VPWR.t3) v(XU.DIGITAL__N_3.t1) v(XU.IN.t1) v(XU.VPWR.t2) v(XU.VGND.t7) v(XU.ANALOG_OUT.t0) v(XU.DIGITAL_OUT.t4) v(XU.VGND.t6) v(XU.VPWR.t5) v(XU.DIGITAL__OUT_y_0__N.t1) v(XU.DIGITAL__N_3.t3) v(XU.VPWR.t4) v(VPWR) v(VGND) v(IN) v(ANALOG_OUT)
+set num_threads=1
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+dc VREGISTER_PORT_2 0 1.8 0.1
+let register_port_0 = v(VPWR)
+let register_port_1 = v(VGND)
+let register_port_2 = v(IN)
+let register_port_3 = v(DIGITAL_OUT)
+let register_port_4 = v(ANALOG_OUT)
+wrdata waveform.dat register_port_0 register_port_1 register_port_2 register_port_3 register_port_4
+write waveform.raw
+let register_flow_0 = i(v.xu.vregister_cf_e5471a7aaad3a83f)
+let register_flow_1 = i(v.xu.vregister_cf_05420f0620269067)
+let register_flow_2 = i(v.xu.vregister_cf_53de5d6bd80385ef)
+let register_flow_3 = i(v.xu.vregister_cf_26f2109b976ced40)
+let register_flow_4 = i(v.xu.vregister_cf_5761bdc3f2c2562e)
+let register_flow_5 = i(v.xu.vregister_cf_5318aa212f4be129)
+let register_flow_6 = i(v.xu.vregister_cf_31e9d578070e2483)
+let register_flow_7 = i(v.xu.vregister_cf_45e89b87ea909723)
+let register_flow_8 = i(VREGISTER_PORT_0)
+let register_flow_9 = i(VREGISTER_PORT_1)
+let register_flow_10 = i(VREGISTER_PORT_2)
+let register_flow_11 = i(VREGISTER_PORT_4)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10 register_flow_11
+let register_voltage_0 = v(XU.VGND.t3)
+let register_voltage_1 = v(XU.DIGITAL__N_3.t0)
+let register_voltage_2 = v(XU.IN.t0)
+let register_voltage_3 = v(XU.VGND.t2)
+let register_voltage_4 = v(XU.VGND.t9)
+let register_voltage_5 = v(XU.DIGITAL__OUT_y_0__N.t0)
+let register_voltage_6 = v(XU.DIGITAL__N_3.t2)
+let register_voltage_7 = v(XU.VGND.t8)
+let register_voltage_8 = v(XU.VGND.t5)
+let register_voltage_9 = v(XU.DIGITAL_OUT.t1)
+let register_voltage_10 = v(XU.DIGITAL_OUT.t0)
+let register_voltage_11 = v(XU.VGND.t4)
+let register_voltage_12 = v(XU.VGND.t1)
+let register_voltage_13 = v(XU.DIGITAL_OUT.t2)
+let register_voltage_14 = v(XU.DIGITAL__OUT_y_0__N.t2)
+let register_voltage_15 = v(XU.VGND.t0)
+let register_voltage_16 = v(XU.VPWR.t1)
+let register_voltage_17 = v(XU.DIGITAL_OUT.t3)
+let register_voltage_18 = v(XU.DIGITAL__OUT_y_0__N.t3)
+let register_voltage_19 = v(XU.VPWR.t0)
+let register_voltage_20 = v(XU.VPWR.t3)
+let register_voltage_21 = v(XU.DIGITAL__N_3.t1)
+let register_voltage_22 = v(XU.IN.t1)
+let register_voltage_23 = v(XU.VPWR.t2)
+let register_voltage_24 = v(XU.VGND.t7)
+let register_voltage_25 = v(XU.ANALOG_OUT.t0)
+let register_voltage_26 = v(XU.DIGITAL_OUT.t4)
+let register_voltage_27 = v(XU.VGND.t6)
+let register_voltage_28 = v(XU.VPWR.t5)
+let register_voltage_29 = v(XU.DIGITAL__OUT_y_0__N.t1)
+let register_voltage_30 = v(XU.DIGITAL__N_3.t3)
+let register_voltage_31 = v(XU.VPWR.t4)
+let register_voltage_32 = v(VPWR)
+let register_voltage_33 = 0*register_flow_0
+let register_voltage_34 = v(VGND)
+let register_voltage_35 = v(IN)
+let register_voltage_36 = v(ANALOG_OUT)
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11 register_voltage_12 register_voltage_13 register_voltage_14 register_voltage_15 register_voltage_16 register_voltage_17 register_voltage_18 register_voltage_19 register_voltage_20 register_voltage_21 register_voltage_22 register_voltage_23 register_voltage_24 register_voltage_25 register_voltage_26 register_voltage_27 register_voltage_28 register_voltage_29 register_voltage_30 register_voltage_31 register_voltage_32 register_voltage_33 register_voltage_34 register_voltage_35 register_voltage_36
+quit
+.endc
+.end

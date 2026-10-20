@@ -1,0 +1,13 @@
+* NGSPICE file created from logic_inv.ext - technology: sky130A
+
+.subckt logic_inv ANALOG_OUT VGND VPWR a y
+X0 ANALOG_OUT VGND sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X1 VGND a N_3 VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X2 VGND N_3 OUT_y_0__N VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X3 VGND OUT_y_0__N y VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X4 VPWR OUT_y_0__N y VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X5 VPWR a N_3 VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X6 y ANALOG_OUT VGND sky130_fd_pr__res_xhigh_po_1p41 l=0.54
+X7 VPWR N_3 OUT_y_0__N VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+.ends
+

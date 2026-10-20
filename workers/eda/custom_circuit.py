@@ -1,5 +1,6 @@
 """Explicit source circuits: actual OP/transient with bounded numeric excitation."""
 from pathlib import Path
+import re
 import native,design_tools,conversion,source_stimulus
 from geometry import EDAError
 
@@ -28,6 +29,16 @@ def extracted_terminal_nodes(netlist,ports):
     if not nodes or len(nodes)>256:raise EDAError('CUSTOM_ANALYSIS_LIMIT','Custom PEX trace supports up to 256 actual primitive terminals and ports.')
     return sorted(nodes)
 
+def declared_ports(netlist,cell,expected):
+    # Magic may reorder ports. A positional subcircuit call must follow the
+    # actual included declaration, while preserving the named external nets.
+    text=re.sub(r'\r?\n[ \t]*\+[ \t]*',' ',Path(netlist).read_text())
+    rows=re.findall(r'^[ \t]*\.subckt[ \t]+'+re.escape(cell)+r'(?:[ \t]+([^\n]*))?$',text,re.M|re.I)
+    actual=rows[0].split() if len(rows)==1 else []
+    if len(actual)!=len(expected) or len(set(actual))!=len(actual) or set(actual)!=set(expected):
+        raise EDAError('PORT_MISMATCH','Included custom netlist ports differ from declared project ports.',{'expected':expected,'actual':actual})
+    return actual
+
 def spice_tb(p,folder,settings,netlist):
     analysis=settings['analysis']
     if analysis not in ('op','tran'):raise EDAError('CUSTOM_ANALYSIS','Direct custom-circuit analysis supports OP and PULSE/PWL/DC transient. Use port analysis setup for sweeps or AC.')
@@ -41,7 +52,8 @@ def spice_tb(p,folder,settings,netlist):
     if analysis=='tran' and any(d.get('stimulus') for d in sources) and settings['duration_s']/settings['step_s']*len(nodes)>2000000:raise EDAError('TRANSIENT_TRACE_LIMIT','Dynamic runs support at most 2 million nominal voltage samples; shorten duration, reduce scope or use an adequate larger time step.')
     modeled=any(d.get('model') for d in p['schematic']['devices'])
     deck=design_tools.supported_model_deck(folder,settings['corner']) if modeled else None
-    lines=['Resistor explicit custom flat circuit',*([f'.include "{deck.as_posix()}"'] if deck else []),'.options scale=1e-6',f'.include "{Path(netlist).as_posix()}"',f'.temp {settings["temperature_C"]}', 'XU '+' '.join(p['ports'])+' '+p['cell']]
+    actual_ports=declared_ports(netlist,p['cell'],p['ports'])
+    lines=['Resistor explicit custom flat circuit',*([f'.include "{deck.as_posix()}"'] if deck else []),'.options scale=1e-6',f'.include "{Path(netlist).as_posix()}"',f'.temp {settings["temperature_C"]}', 'XU '+' '.join(actual_ports)+' '+p['cell']]
     for i,d in enumerate(p.get('conversion',{}).get('external_sources',[])):
         lines.append(('V' if d['kind']=='voltage' else 'I')+f'EXTERNAL{i} {d["pins"]["+"]} {d["pins"]["-"]} '+source_stimulus.emission(d))
     vectors=['v('+ (n if n in p['ports'] else 'xu.'+n)+')' for n in nodes]

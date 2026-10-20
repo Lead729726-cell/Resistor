@@ -9,6 +9,7 @@ import unittest
 from types import SimpleNamespace
 import native
 import sigma_delta as A
+import runtime_resources
 from geometry import EDAError
 
 class SigmaDeltaTests(unittest.TestCase):
@@ -41,7 +42,7 @@ class SigmaDeltaTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             folder=Path(temp)
             A.replay_files(folder,bits,resets)
-            simcells='/foss/tools/yosys/share/yosys/simcells.v'
+            simcells=runtime_resources.yosys_simcells()
             (folder/'ir-replay.v').write_text(A.logic_ir_verilog(A.schematic('sdm8_filter')))
             for sources in ([A.RTL],[simcells,A.GATE_RTL],[folder/'ir-replay.v']):
                 compiled=subprocess.run(['iverilog','-g2012','-s','replay','-o','replay.vvp',*map(str,sources),'replay.v'],cwd=folder,capture_output=True,text=True)

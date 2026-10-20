@@ -1,0 +1,37 @@
+Resistor explicit custom flat circuit
+.include "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/f3de7c5aee52488aa4063b1eaca5a687/supported-tt.spice"
+.options scale=1e-6
+.include "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/f3de7c5aee52488aa4063b1eaca5a687/current-probe.spice"
+.temp 27.0
+XU a y VPWR VGND ANALOG_OUT logic_inv
+.control
+save all i(v.xu.vregister_cf_c472a0816faf869a) i(v.xu.vregister_cf_9706ba7feaa11335) i(v.xu.vregister_cf_09077c8c982fbb41) i(v.xu.vregister_cf_9b38a28a0461bce0) i(v.xu.vregister_cf_59fabd8349c1c1d6) i(v.xu.vregister_cf_5ed65c4aa7499b5b) i(v.xu.vregister_cf_00a1d2e98e637c0f) i(v.xu.vregister_cf_9cbf603810715f1f) i(v.xu.vregister_cf_de0326797105363c) i(v.xu.vregister_cf_455e42f8c4345c1c) i(v.xu.vregister_cf_ead3af34e14d53f6) v(VGND) v(a) v(VPWR) v(ANALOG_OUT) v(XU.N_3) v(XU.OUT_y_0__N) v(y)
+set wr_singlescale
+set wr_vecnames
+tran 1e-10 4.5e-07 0 1e-10
+wrdata waveform.dat v(ANALOG_OUT) v(xu.N_3) v(xu.OUT_y_0__N) v(VGND) v(VPWR) v(a) v(y)
+write waveform.raw
+let register_flow_0 = i(v.xu.vregister_cf_c472a0816faf869a)
+let register_flow_1 = i(v.xu.vregister_cf_9706ba7feaa11335)
+let register_flow_2 = i(v.xu.vregister_cf_09077c8c982fbb41)
+let register_flow_3 = i(v.xu.vregister_cf_9b38a28a0461bce0)
+let register_flow_4 = i(v.xu.vregister_cf_59fabd8349c1c1d6)
+let register_flow_5 = i(v.xu.vregister_cf_5ed65c4aa7499b5b)
+let register_flow_6 = i(v.xu.vregister_cf_00a1d2e98e637c0f)
+let register_flow_7 = i(v.xu.vregister_cf_9cbf603810715f1f)
+let register_flow_8 = i(v.xu.vregister_cf_de0326797105363c)
+let register_flow_9 = i(v.xu.vregister_cf_455e42f8c4345c1c)
+let register_flow_10 = i(v.xu.vregister_cf_ead3af34e14d53f6)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8 register_flow_9 register_flow_10
+let register_voltage_0 = v(VGND)
+let register_voltage_1 = 0*register_flow_0
+let register_voltage_2 = v(a)
+let register_voltage_3 = v(VPWR)
+let register_voltage_4 = v(ANALOG_OUT)
+let register_voltage_5 = v(XU.N_3)
+let register_voltage_6 = v(XU.OUT_y_0__N)
+let register_voltage_7 = v(y)
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7
+quit
+.endc
+.end

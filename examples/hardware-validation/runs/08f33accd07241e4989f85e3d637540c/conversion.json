@@ -1,0 +1,451 @@
+{
+  "schema_version": 1,
+  "direction": "forward",
+  "project_id": "3fa3f580856d447686a144c1d21bc9d2",
+  "revision": 1,
+  "run_id": "08f33accd07241e4989f85e3d637540c",
+  "source_layout_sha256": "4948ef18a16e84064198c9bfc1436ac8fdf55a1a8d7a8ff798e028955af7cde5",
+  "source_schematic_sha256": "a24ec9688f22136dd3878d26a440334c5545cbd702d4aab79b0d1c12ce3ef206",
+  "profile_id": "sky130A",
+  "profile_hash": "dc6df882753721e60ade246d2a0b0112c1c94212c2baaebe4c73817acea26bb6",
+  "settings": {
+    "chip_limits": {
+      "width_um": 1000,
+      "height_um": 1000,
+      "max_area_um2": 1000000,
+      "edge_um": 10
+    },
+    "pin_side": "left",
+    "order": "source",
+    "body_net": "VGND"
+  },
+  "limits": [
+    "PDK extraction recovers the transistor/passive net graph, not the original symbol placement, design intent or lost hierarchy.",
+    "Unsupported models/parameters and extraction errors are retained; partial graphs cannot replace a schematic.",
+    "Exact device-terminal-to-polygon mapping is unavailable in this adapter.",
+    "Forward layout supports up to 512 SKY130 MOS/poly/MIM primitives; rectangular chip envelopes and four whole-layout orientations.",
+    "Ideal passive replacement is an explicit nominal geometry estimate. DRC/LVS/PEX, noise/yield/STA and manufacturing approval remain independent."
+  ],
+  "verification": {
+    "drc": "not-run",
+    "lvs": "not-run",
+    "pex": "not-run"
+  },
+  "foundry_signoff": false,
+  "schematic": {
+    "schema_version": 1,
+    "connectivity_mode": "explicit",
+    "ports": [
+      "a",
+      "y",
+      "VPWR",
+      "VGND",
+      "ANALOG_OUT"
+    ],
+    "devices": [
+      {
+        "id": "G0.MP",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "name": "G0_MP",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VPWR",
+          "D": "N_3",
+          "G": "a",
+          "S": "VPWR"
+        },
+        "x": 180,
+        "y": 170
+      },
+      {
+        "id": "G0.MN",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "name": "G0_MN",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VGND",
+          "D": "N_3",
+          "G": "a",
+          "S": "VGND"
+        },
+        "x": 440,
+        "y": 170
+      },
+      {
+        "id": "OUT_y_0.I0.MP",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "name": "OUT_y_0_I0_MP",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VPWR",
+          "D": "OUT_y_0__N",
+          "G": "N_3",
+          "S": "VPWR"
+        },
+        "x": 700,
+        "y": 170
+      },
+      {
+        "id": "OUT_y_0.I0.MN",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "name": "OUT_y_0_I0_MN",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VGND",
+          "D": "OUT_y_0__N",
+          "G": "N_3",
+          "S": "VGND"
+        },
+        "x": 960,
+        "y": 170
+      },
+      {
+        "id": "OUT_y_0.I1.MP",
+        "kind": "pmos",
+        "model": "sky130_fd_pr__pfet_01v8_hvt",
+        "name": "OUT_y_0_I1_MP",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VPWR",
+          "D": "y",
+          "G": "OUT_y_0__N",
+          "S": "VPWR"
+        },
+        "x": 1220,
+        "y": 170
+      },
+      {
+        "id": "OUT_y_0.I1.MN",
+        "kind": "nmos",
+        "model": "sky130_fd_pr__nfet_01v8",
+        "name": "OUT_y_0_I1_MN",
+        "parameters": {
+          "l_um": 0.15,
+          "m": 1,
+          "nf": 1,
+          "w_um": 0.65
+        },
+        "pins": {
+          "B": "VGND",
+          "D": "y",
+          "G": "OUT_y_0__N",
+          "S": "VGND"
+        },
+        "x": 180,
+        "y": 360
+      },
+      {
+        "id": "200cf9a60da645ff8f04a93298caae95:p0",
+        "kind": "resistor",
+        "name": "HDLDRV_RC_R_P0",
+        "parameters": {
+          "value": 1000.0,
+          "w_um": 1.41,
+          "l_um": 0.54
+        },
+        "pins": {
+          "+": "y",
+          "-": "ANALOG_OUT",
+          "B": "VGND"
+        },
+        "x": 440,
+        "y": 360,
+        "model": "sky130_fd_pr__res_xhigh_po_1p41"
+      },
+      {
+        "id": "309e34d27ac4498d956d426b5876eab9:p0",
+        "kind": "capacitor",
+        "name": "HDLDRV_RC_C_P0",
+        "parameters": {
+          "value": 1e-12,
+          "w_um": 22.17,
+          "l_um": 22.17
+        },
+        "pins": {
+          "+": "ANALOG_OUT",
+          "-": "VGND"
+        },
+        "x": 700,
+        "y": 360,
+        "model": "sky130_fd_pr__cap_mim_m3_1"
+      }
+    ],
+    "wires": [],
+    "junctions": [],
+    "cells": {}
+  },
+  "ports": [
+    "a",
+    "y",
+    "VPWR",
+    "VGND",
+    "ANALOG_OUT"
+  ],
+  "cell": "logic_inv",
+  "ready": true,
+  "device_count": 8,
+  "passive_replacements": [
+    {
+      "source_device": "HDLDRV_RC_R",
+      "kind": "resistor",
+      "requested_SI": 1000.0,
+      "nominal_geometry_SI": 998.3534256828129,
+      "instances": 1,
+      "model": "sky130_fd_pr__res_xhigh_po_1p41",
+      "w_um": 1.41,
+      "l_um": 0.54,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    },
+    {
+      "source_device": "HDLDRV_RC_C",
+      "kind": "capacitor",
+      "requested_SI": 1e-12,
+      "nominal_geometry_SI": 9.998670000000003e-13,
+      "instances": 1,
+      "model": "sky130_fd_pr__cap_mim_m3_1",
+      "w_um": 22.17,
+      "l_um": 22.17,
+      "value_scope": "PCell nominal sizing estimate; voltage/temperature/process-dependent model is authoritative."
+    }
+  ],
+  "external_sources": [
+    {
+      "name": "HDLDRV_VDD",
+      "kind": "voltage",
+      "pins": {
+        "+": "VPWR",
+        "-": "0"
+      },
+      "parameters": {
+        "dc": 1.8
+      }
+    },
+    {
+      "name": "HDLDRV_GND",
+      "kind": "voltage",
+      "pins": {
+        "+": "VGND",
+        "-": "0"
+      },
+      "parameters": {
+        "dc": 0
+      }
+    },
+    {
+      "name": "HDLDRV_a",
+      "kind": "voltage",
+      "pins": {
+        "+": "a",
+        "-": "VGND"
+      },
+      "parameters": {
+        "dc": 0.0
+      },
+      "stimulus": {
+        "kind": "pwl",
+        "points": [
+          [
+            0,
+            0.0
+          ],
+          [
+            5.0000000000000004e-08,
+            0.0
+          ],
+          [
+            5.100000000000001e-08,
+            1.8
+          ],
+          [
+            1.0000000000000001e-07,
+            1.8
+          ],
+          [
+            1.01e-07,
+            0.0
+          ],
+          [
+            1.5000000000000002e-07,
+            0.0
+          ],
+          [
+            1.5100000000000002e-07,
+            1.8
+          ],
+          [
+            2.0000000000000002e-07,
+            1.8
+          ],
+          [
+            2.01e-07,
+            0.0
+          ],
+          [
+            2.5000000000000004e-07,
+            0.0
+          ],
+          [
+            2.5100000000000006e-07,
+            1.8
+          ],
+          [
+            3.0000000000000004e-07,
+            1.8
+          ],
+          [
+            3.0100000000000006e-07,
+            0.0
+          ],
+          [
+            3.5000000000000004e-07,
+            0.0
+          ],
+          [
+            3.5100000000000006e-07,
+            1.8
+          ],
+          [
+            4.5000000000000003e-07,
+            1.8
+          ]
+        ]
+      }
+    }
+  ],
+  "envelope": {
+    "policy": {
+      "schema_version": 1,
+      "width_um": 1000,
+      "height_um": 1000,
+      "max_area_um2": 1000000,
+      "edge_um": 10,
+      "origin_um": [
+        0.0,
+        0.0
+      ],
+      "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+    },
+    "fits": true,
+    "bbox_dbu": [
+      "10000",
+      "10000",
+      "99460",
+      "43370"
+    ],
+    "used_width_um": 89.46000000000001,
+    "used_height_um": 33.37,
+    "used_area_um2": 2985.2802,
+    "chip_area_um2": 1000000,
+    "minimum_envelope_um": [
+      109.46000000000001,
+      53.37
+    ],
+    "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+  },
+  "placement_order": [
+    "G0_MP",
+    "G0_MN",
+    "OUT_y_0_I0_MP",
+    "OUT_y_0_I0_MN",
+    "OUT_y_0_I1_MP",
+    "OUT_y_0_I1_MN",
+    "HDLDRV_RC_R_P0",
+    "HDLDRV_RC_C_P0"
+  ],
+  "source": "actual-SKY130-PCells-and-bounded-routing",
+  "hierarchy": "flattened physical graph; original source remains in project history",
+  "issues": [],
+  "losses": [],
+  "routing": {
+    "algorithm": "bounded-rows-m3-m4-v1",
+    "primitive_count": 8,
+    "row_count": 1,
+    "inter_row_nets": 7,
+    "floorplan": {
+      "policy": {
+        "schema_version": 1,
+        "width_um": 1000,
+        "height_um": 1000,
+        "max_area_um2": 1000000,
+        "edge_um": 10,
+        "origin_um": [
+          0.0,
+          0.0
+        ],
+        "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+      },
+      "fits": true,
+      "bbox_dbu": [
+        "10300",
+        "10000",
+        "99760",
+        "43370"
+      ],
+      "used_width_um": 89.46000000000001,
+      "used_height_um": 33.37,
+      "used_area_um2": 2985.2802,
+      "chip_area_um2": 1000000,
+      "minimum_envelope_um": [
+        109.46000000000001,
+        53.37
+      ],
+      "scope": "Actual hierarchy bbox including routes. No clipping, scaling, geometry relocation or foundry approval."
+    },
+    "rows": [
+      {
+        "row": 0,
+        "translation_dbu": [
+          25400,
+          21285
+        ],
+        "algorithm": "interval-heap-v2",
+        "matching_groups": [],
+        "primitive_count": 8,
+        "scope": "single-row PCell reference; no full-chip density/antenna/foundry signoff",
+        "signal_track_count": 5,
+        "track_clearance_dbu": 800,
+        "tracks": {
+          "ANALOG_OUT": 4,
+          "N_3": 1,
+          "OUT_y_0__N": 2,
+          "a": 0,
+          "y": 3
+        }
+      }
+    ],
+    "matching_groups": [],
+    "scope": "PCell reference with bounded envelope; native DRC/LVS/PEX remain independent gates."
+  },
+  "preview_layout_sha256": "8c51343de516810be96fae492255f4e2745da418c1dddfcaefe9641c1173a3ba",
+  "schematic_sha256": "d1e0afc4fb090095c7e44bcd3379861caf5be3460405641275534cb1b858e6b6",
+  "preview_hash": "a8bc02206479353f4958c16293b142e18891ef99221966c26582021894661aee"
+}

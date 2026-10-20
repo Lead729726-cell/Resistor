@@ -1,0 +1,37 @@
+Resistor explicit custom flat circuit
+.include "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/164dd8b0d2a64fe2b7596f9d10c54f31/supported-ss.spice"
+.options scale=1e-6
+.include "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/164dd8b0d2a64fe2b7596f9d10c54f31/current-probe.spice"
+.temp 125.0
+XU a y VPWR VGND ANALOG_OUT logic_inv
+VEXTERNAL0 VPWR 0 1.8
+VEXTERNAL1 VGND 0 0
+VEXTERNAL2 a VGND DC 0 PWL(0 0 5e-08 0 5.1e-08 1.8 1e-07 1.8 1.01e-07 0 1.5e-07 0 1.51e-07 1.8 2e-07 1.8 2.01e-07 0 2.5e-07 0 2.51e-07 1.8 3e-07 1.8 3.01e-07 0 3.5e-07 0 3.51e-07 1.8 4.5e-07 1.8)
+.control
+save all i(v.xu.vregister_cf_59fabd8349c1c1d6) i(v.xu.vregister_cf_5ed65c4aa7499b5b) i(v.xu.vregister_cf_00a1d2e98e637c0f) i(v.xu.vregister_cf_9cbf603810715f1f) i(v.xu.vregister_cf_de0326797105363c) i(v.xu.vregister_cf_455e42f8c4345c1c) i(VEXTERNAL0) i(VEXTERNAL1) i(VEXTERNAL2) v(XU.N_3) v(VGND) v(a) v(VPWR) v(XU.OUT_y_0__N) v(y)
+set wr_singlescale
+set wr_vecnames
+tran 1e-10 4.5e-07 0 1e-10
+wrdata waveform.dat v(ANALOG_OUT) v(xu.N_3) v(xu.OUT_y_0__N) v(VGND) v(VPWR) v(a) v(y)
+write waveform.raw
+let register_flow_0 = i(v.xu.vregister_cf_59fabd8349c1c1d6)
+let register_flow_1 = i(v.xu.vregister_cf_5ed65c4aa7499b5b)
+let register_flow_2 = i(v.xu.vregister_cf_00a1d2e98e637c0f)
+let register_flow_3 = i(v.xu.vregister_cf_9cbf603810715f1f)
+let register_flow_4 = i(v.xu.vregister_cf_de0326797105363c)
+let register_flow_5 = i(v.xu.vregister_cf_455e42f8c4345c1c)
+let register_flow_6 = i(VEXTERNAL0)
+let register_flow_7 = i(VEXTERNAL1)
+let register_flow_8 = i(VEXTERNAL2)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8
+let register_voltage_0 = v(XU.N_3)
+let register_voltage_1 = v(VGND)
+let register_voltage_2 = v(a)
+let register_voltage_3 = v(VPWR)
+let register_voltage_4 = v(XU.OUT_y_0__N)
+let register_voltage_5 = v(y)
+let register_voltage_6 = 0*register_flow_0
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6
+quit
+.endc
+.end

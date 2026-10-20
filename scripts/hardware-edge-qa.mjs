@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {randomUUID} from 'node:crypto';
+import {hardwareWorkspace} from './hardware-workspace.mjs';
+const {api,wait}=await hardwareWorkspace(),records=[],projects={};
+await mkdir('.runtime/hardware/edge',{recursive:true});
+async function execute(label,design,expected='pass'){
+ const p=await api('hdl.create',{name:'Hardware boundaries · '+label,design,command_id:randomUUID()});projects[label]=p.id;
+ const run=await wait(await api('hdl.run',{project_id:p.id,expected_revision:p.revision,action:'simulate'}));
+ await writeFile('.runtime/hardware/edge/'+run.id+'.json',JSON.stringify(run,null,2));
+ const record={label,project_id:p.id,id:run.id,execution:run.execution_status,analysis:run.analysis_result,message:run.message,measurements:run.measurements};records.push(record);
+ await writeFile('.runtime/hardware/edge/state.json',JSON.stringify({edition:'Resistor Indust',projects,records},null,2));console.log(JSON.stringify(record));
+ assert.equal(run.analysis_result,expected==='failed'?'unknown':expected);assert.equal(run.execution_status,expected==='failed'?'failed':'completed');
+ return {p,run};
+}
+const spec=(top,text,vectors,language='verilog')=>({top,files:[{name:top+({c:'.c',systemverilog:'.sv',verilog:'.v'}[language]),language,text}],vectors,step_ns:10});
+let seed=0x123456789abcdefn;const mask=(1n<<64n)-1n,next=()=>{seed=(seed*6364136223846793005n+1442695040888963407n)&mask;return seed;};
+const wide=Array.from({length:256},(_,i)=>{const a=i===0?mask:next(),b=i===0?1n:next();return{inputs:{a:String(a),b:String(b)},expect:{sum:String((a+b)&mask),carry:String((a+b)>>64n)}};});
+await execute('wide64',spec('wide64','module wide64(input [63:0] a,b,output [63:0] sum,output carry);assign {carry,sum}={1\'b0,a}+{1\'b0,b};endmodule',wide));
+await execute('ascending-offset',spec('offset_bus','module offset_bus(input [4:7] a, output [8:11] y);assign y=~a;endmodule',Array.from({length:16},(_,a)=>({inputs:{a:String(a)},expect:{y:String(15-a)}}))));
+await execute('signed8',spec('signed8','module signed8(input signed [7:0] a,b,output signed [7:0] y,output lt);assign y=(a >>> 2)+b;assign lt=a<b;endmodule',Array.from({length:256},(_,a)=>{const b=(a*53)&255,sa=a>127?a-256:a,sb=b>127?b-256:b;return{inputs:{a:String(a),b:String(b)},expect:{y:String(((sa>>2)+sb)&255),lt:String(Number(sa<sb))}};})));
+const c='uint32_t c_math(uint32_t a,uint32_t b,uint32_t sel){uint32_t y=a*b+012u;if(sel!=0u){y=(a<<3u)^(b>>5u);}else{y=~y;}return (a>b)?y:(a+b);}';
+const cv=Array.from({length:512},(_,i)=>({inputs:{a:String(Number(next()&0xffffffffn)),b:String(Number(next()&0xffffffffn)),sel:String(i%2)}}));
+await execute('c-math-oracle',spec('c_math',c,cv,'c'));
+await execute('no-expectation-is-unknown',spec('observe','module observe(input a,output y);assign y=~a;endmodule',[{inputs:{a:'0'}},{inputs:{a:'1'}}]),'unknown');
+const x=await execute('x-never-passes',spec('unknown_x','module unknown_x(input a,output [3:0] y);assign y=4\'bxxxx;endmodule',[{inputs:{a:'0'},expect:{y:'0'}}]),'failed');
+const raw=await api('hdl.artifact',{project_id:x.p.id,run_id:x.run.id,name:'digital.vcd'});assert.match(raw.text,/[bx]x/);
+await execute('compile-error-retained',spec('broken','module broken(input a,output y);assign y=;endmodule',[{inputs:{a:'0'},expect:{y:'1'}}]),'failed');
+await execute('input-overflow-rejected',spec('overflow','module overflow(input [3:0] a,output [3:0] y);assign y=a;endmodule',[{inputs:{a:'16'},expect:{y:'0'}}]),'failed');
+console.log(JSON.stringify({edition:'Resistor Indust',cases:records.length,assertions:records.filter(r=>r.analysis==='pass').reduce((n,r)=>n+r.measurements.assertions,0),actual_native:true,manufacturing_signoff:false}));

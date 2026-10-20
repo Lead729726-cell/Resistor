@@ -130,7 +130,13 @@
     "test:sar12:ui": "node tests/integration/sar12-lab.mjs",
     "examples:sar12": "node scripts/sar12-export.mjs",
     "test:hardware": "node --import tsx scripts/hardware-qa.mjs",
-    "test:hardware:mcp": "node --import tsx --test tests/hardware-mcp.test.mjs"
+    "test:hardware:mcp": "node --import tsx --test tests/hardware-mcp.test.mjs",
+    "test:engine:unit": "node scripts/hardware-unit-qa.mjs",
+    "test:hardware:edge": "node scripts/hardware-edge-qa.mjs",
+    "test:hardware:physical": "node scripts/hardware-physical-qa.mjs",
+    "test:hardware:digital-physical": "node scripts/hardware-digital-physical-qa.mjs",
+    "test:hardware:electrical": "node scripts/hardware-electrical-qa.mjs",
+    "test:hardware:verify": "npm run test:engine:unit && npm run test:hardware && npm run test:hardware:edge && npm run test:hardware:digital-physical && npm run test:hardware:physical && npm run test:hardware:electrical && npm run test:hardware:mcp"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.31.0",

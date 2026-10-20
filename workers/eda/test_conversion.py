@@ -6,6 +6,15 @@ import native
 from geometry import EDAError
 
 class ConversionQA(unittest.TestCase):
+    def test_complete_mask_updates_interface_without_inheriting_verification(self):
+        meta={'physical_interface_complete':False,'combined_verification':'pass','R_Ohm':1000}
+        report={'direction':'forward','ready':True,'run_id':'native','preview_hash':'hash','passive_replacements':[{'requested_SI':1000,'nominal_geometry_SI':998.3}]}
+        result=C.mixed_after_forward(meta,report)
+        self.assertFalse(meta['physical_interface_complete']);self.assertTrue(result['physical_interface_complete'])
+        self.assertEqual(result['combined_verification'],'not-run');self.assertEqual(result['R_Ohm'],1000)
+        self.assertEqual(result['physical_conversion']['passive_replacements'],report['passive_replacements'])
+        for direction,ready in [('reverse',True),('forward',False)]:
+            self.assertEqual(C.mixed_after_forward(meta,{**report,'direction':direction,'ready':ready}),meta)
     def test_ground_symbol_is_not_replayed_as_an_external_current_source(self):
         ir={'ports':['VDD','OUT'],'devices':[dict(id='r',name='R',kind='resistor',pins={'+':'VDD','-':'0'},parameters={'value':10000},x=0,y=0),dict(id='v',name='V',kind='voltage',pins={'+':'VDD','-':'0'},parameters={'dc':1.8},x=100,y=0),dict(id='g',name='G',kind='ground',pins={'G':'0'},parameters={},x=0,y=100)],'cells':{},'connectivity_mode':'explicit'}
         # OUT is not declared by a physical device, so use the actual VDD port.

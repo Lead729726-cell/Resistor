@@ -1,0 +1,1 @@
+module signed8(input signed [7:0] a,b,output signed [7:0] y,output lt);assign y=(a >>> 2)+b;assign lt=a<b;endmodule

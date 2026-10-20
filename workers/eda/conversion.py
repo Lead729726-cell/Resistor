@@ -234,6 +234,18 @@ def result(params):
     layout=k.Layout();layout.read(str(folder/'preview.oas'));p=S.get_project(run['project_id']);view={**p,'revision':run['revision'],'cell':report['cell'],'schematic':report['schematic'],'ports':report['ports'],'layers':pdk_registry.layers(layout,report['profile_id'])}
     return {'report':report,'run':run,'scene':G.scene(layout,view,view['layers'],{'max_shapes':2000})}
 
+def mixed_after_forward(metadata,report):
+    """A generated full mask enables PEX; this does not grant electrical PASS."""
+    result=copy.deepcopy(metadata)
+    if not result or report.get('direction')!='forward' or report.get('ready') is not True:return result
+    result.update(physical_interface_complete=True,inter_block_routing='generated',combined_verification='not-run',
+        layout_status='Actual MOS/passive geometry and bounded routes generated. DRC/LVS/PEX require separate native jobs.',
+        simulation='Actual PDK MOS/passive models with explicit external testbench sources; optional native PEX.',
+        physical_conversion={'run_id':report['run_id'],'preview_hash':report['preview_hash'],
+            'passive_replacements':copy.deepcopy(report.get('passive_replacements',[])),
+            'value_scope':'Requested ideal R/C values remain source intent. PCell nominal sizes and native model behavior are recorded separately.'})
+    return result
+
 def apply(params):
     keys(params,('project_id','expected_revision','command_id','run_id','preview_hash','approved'))
     if params.get('approved') is not True or not params.get('command_id') or 'expected_revision' not in params:raise EDAError('APPROVAL_REQUIRED','Review the exact preview before applying this undoable revision.')
@@ -246,6 +258,7 @@ def apply(params):
         p.update(revision=p['next_revision'],next_revision=p['next_revision']+1,undo_stack=p.get('undo_stack',[])+[old],redo_stack=[],schematic=report['schematic'],ports=report['ports'],cell=report['cell'],pdk_id=report['profile_id'],source='pdk',layout_parameter_policy='reference-layout-independent-edit',conversion={'direction':report['direction'],'run_id':run['id'],'source_revision':old,'preview_hash':report['preview_hash'],'parser_equivalence':report.get('parser_equivalence'),'physical_verification':'not-run','external_sources':report.get('external_sources',[])})
         for key in ('analysis_setup','interchange_netlist','interchange_layout','interchange_report','backend_setup','active_backend'):p.pop(key,None)
         if report['direction']=='forward':
+            if p.get('mixed_signal'):p['mixed_signal']=mixed_after_forward(p['mixed_signal'],report)
             p['chip_limits']=floorplan.policy(report['settings']['chip_limits'])
             if report['external_sources']:
                 # Internal source symbols have become explicit external bias

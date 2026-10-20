@@ -1,0 +1,1 @@
+uint32_t c_math(uint32_t a,uint32_t b,uint32_t sel){uint32_t y=a*b+012u;if(sel!=0u){y=(a<<3u)^(b>>5u);}else{y=~y;}return (a>b)?y:(a+b);}

@@ -1,8 +1,17 @@
 import unittest,tempfile
 from pathlib import Path
 import custom_circuit as C
+from geometry import EDAError
 
 class CustomCircuitQA(unittest.TestCase):
+    def test_native_port_order_and_continuations_are_authoritative(self):
+        with tempfile.TemporaryDirectory() as folder:
+            p=Path(folder)/'pex.spice';p.write_text('.subckt top OUT GND\n+ VPWR IN\n.ends top\n')
+            self.assertEqual(C.declared_ports(p,'top',['IN','OUT','VPWR','GND']),['OUT','GND','VPWR','IN'])
+            p.write_text('.subckt top OUT GND WRONG IN\n.ends top\n')
+            with self.assertRaises(EDAError):C.declared_ports(p,'top',['IN','OUT','VPWR','GND'])
+            p.write_text('.subckt top OUT OUT VPWR IN\n.ends top\n')
+            with self.assertRaises(EDAError):C.declared_ports(p,'top',['IN','OUT','VPWR','GND'])
     def test_distributed_pex_nodes_are_distinct_without_guessed_logical_voltage(self):
         with tempfile.TemporaryDirectory() as folder:
             p=Path(folder)/'pex.spice';p.write_text('.subckt top VDD\nX0 VDD OUT.t0 0 sky130_fd_pr__res_xhigh_po_1p41 l=7\nX1 OUT.t1 0.t0 0.t1 sky130_fd_pr__res_xhigh_po_1p41 l=7\nR0 OUT.t0 OUT.t1 45\n.ends\n')

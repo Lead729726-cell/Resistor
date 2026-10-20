@@ -1,0 +1,58 @@
+Resistor explicit custom flat circuit
+.include "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/2bf00be776b44f99b1c144967de39f10/supported-tt.spice"
+.options scale=1e-6
+.include "/mnt/d/Coldbrew/Resistor/.runtime/hardware/lab/.runtime/eda/runs/2bf00be776b44f99b1c144967de39f10/current-probe.spice"
+.temp 27.0
+XU ANALOG_OUT VGND VPWR a y logic_inv
+VEXTERNAL0 VPWR 0 1.8
+VEXTERNAL1 VGND 0 0
+VEXTERNAL2 a VGND DC 0 PWL(0 0 5e-08 0 5.1e-08 1.8 1e-07 1.8 1.01e-07 0 1.5e-07 0 1.51e-07 1.8 2e-07 1.8 2.01e-07 0 2.5e-07 0 2.51e-07 1.8 3e-07 1.8 3.01e-07 0 3.5e-07 0 3.51e-07 1.8 4.5e-07 1.8)
+.control
+save all i(v.xu.vregister_cf_6dac4b325cb22528) i(v.xu.vregister_cf_e25bdb194a664265) i(v.xu.vregister_cf_19e8bb0acab9d6a2) i(v.xu.vregister_cf_aae200cba371e86d) i(v.xu.vregister_cf_22d5bbc1cca43256) i(v.xu.vregister_cf_a5b0d3e1c66956a5) i(VEXTERNAL0) i(VEXTERNAL1) i(VEXTERNAL2) v(XU.VGND.t2) v(XU.N_3.t1) v(XU.a.t0) v(XU.VGND.t1) v(XU.VGND.t4) v(XU.OUT_y_0__N.t1) v(XU.N_3.t2) v(XU.VGND.t3) v(XU.VGND.t7) v(XU.y.t2) v(XU.OUT_y_0__N.t2) v(XU.VGND.t6) v(XU.VPWR.t3) v(XU.y.t1) v(XU.OUT_y_0__N.t3) v(XU.VPWR.t2) v(XU.VPWR.t5) v(XU.N_3.t0) v(XU.a.t1) v(XU.VPWR.t4) v(XU.VPWR.t1) v(XU.OUT_y_0__N.t0) v(XU.N_3.t3) v(XU.VPWR.t0) v(VPWR) v(VGND) v(a)
+set wr_singlescale
+set wr_vecnames
+tran 1e-10 4.5e-07 0 1e-10
+wrdata waveform.dat v(ANALOG_OUT) v(xu.N_3.t2) v(xu.N_3.t3) v(xu.OUT_y_0__N.t2) v(xu.OUT_y_0__N.t3) v(VGND) v(xu.VGND.t0) v(xu.VGND.t1) v(xu.VGND.t3) v(xu.VGND.t5) v(xu.VGND.t6) v(VPWR) v(xu.VPWR.t0) v(xu.VPWR.t2) v(xu.VPWR.t4) v(a) v(xu.a.t0) v(xu.a.t1) v(xu.register_cf_node_19e8bb0acab9d6a2) v(xu.register_cf_node_19e8bb0acab9d6a2_source) v(xu.register_cf_node_22d5bbc1cca43256) v(xu.register_cf_node_22d5bbc1cca43256_source) v(xu.register_cf_node_6dac4b325cb22528) v(xu.register_cf_node_6dac4b325cb22528_source) v(xu.register_cf_node_a5b0d3e1c66956a5) v(xu.register_cf_node_a5b0d3e1c66956a5_source) v(xu.register_cf_node_aae200cba371e86d) v(xu.register_cf_node_aae200cba371e86d_source) v(xu.register_cf_node_e25bdb194a664265) v(xu.register_cf_node_e25bdb194a664265_source) v(y) v(xu.y.t0)
+write waveform.raw
+let register_flow_0 = i(v.xu.vregister_cf_6dac4b325cb22528)
+let register_flow_1 = i(v.xu.vregister_cf_e25bdb194a664265)
+let register_flow_2 = i(v.xu.vregister_cf_19e8bb0acab9d6a2)
+let register_flow_3 = i(v.xu.vregister_cf_aae200cba371e86d)
+let register_flow_4 = i(v.xu.vregister_cf_22d5bbc1cca43256)
+let register_flow_5 = i(v.xu.vregister_cf_a5b0d3e1c66956a5)
+let register_flow_6 = i(VEXTERNAL0)
+let register_flow_7 = i(VEXTERNAL1)
+let register_flow_8 = i(VEXTERNAL2)
+wrdata current-flow.dat register_flow_0 register_flow_1 register_flow_2 register_flow_3 register_flow_4 register_flow_5 register_flow_6 register_flow_7 register_flow_8
+let register_voltage_0 = v(XU.VGND.t2)
+let register_voltage_1 = v(XU.N_3.t1)
+let register_voltage_2 = v(XU.a.t0)
+let register_voltage_3 = v(XU.VGND.t1)
+let register_voltage_4 = v(XU.VGND.t4)
+let register_voltage_5 = v(XU.OUT_y_0__N.t1)
+let register_voltage_6 = v(XU.N_3.t2)
+let register_voltage_7 = v(XU.VGND.t3)
+let register_voltage_8 = v(XU.VGND.t7)
+let register_voltage_9 = v(XU.y.t2)
+let register_voltage_10 = v(XU.OUT_y_0__N.t2)
+let register_voltage_11 = v(XU.VGND.t6)
+let register_voltage_12 = v(XU.VPWR.t3)
+let register_voltage_13 = v(XU.y.t1)
+let register_voltage_14 = v(XU.OUT_y_0__N.t3)
+let register_voltage_15 = v(XU.VPWR.t2)
+let register_voltage_16 = v(XU.VPWR.t5)
+let register_voltage_17 = v(XU.N_3.t0)
+let register_voltage_18 = v(XU.a.t1)
+let register_voltage_19 = v(XU.VPWR.t4)
+let register_voltage_20 = v(XU.VPWR.t1)
+let register_voltage_21 = v(XU.OUT_y_0__N.t0)
+let register_voltage_22 = v(XU.N_3.t3)
+let register_voltage_23 = v(XU.VPWR.t0)
+let register_voltage_24 = v(VPWR)
+let register_voltage_25 = 0*register_flow_0
+let register_voltage_26 = v(VGND)
+let register_voltage_27 = v(a)
+wrdata node-voltages.dat register_voltage_0 register_voltage_1 register_voltage_2 register_voltage_3 register_voltage_4 register_voltage_5 register_voltage_6 register_voltage_7 register_voltage_8 register_voltage_9 register_voltage_10 register_voltage_11 register_voltage_12 register_voltage_13 register_voltage_14 register_voltage_15 register_voltage_16 register_voltage_17 register_voltage_18 register_voltage_19 register_voltage_20 register_voltage_21 register_voltage_22 register_voltage_23 register_voltage_24 register_voltage_25 register_voltage_26 register_voltage_27
+quit
+.endc
+.end

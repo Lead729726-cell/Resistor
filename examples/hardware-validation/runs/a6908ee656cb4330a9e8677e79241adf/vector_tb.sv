@@ -1,0 +1,58 @@
+`timescale 1ns/1ps
+module resistor_vector_tb;
+reg [3:0] a;
+wire [3:0] y;
+offset_bus dut(.a(a),.y(y));
+initial begin
+$dumpfile("digital.vcd"); $dumpvars(1,resistor_vector_tb);
+a = 4'h0;
+#10;
+if (y !== 4'hf) $fatal(1,"vector 0 output y mismatch or X/Z");
+a = 4'h1;
+#10;
+if (y !== 4'he) $fatal(1,"vector 1 output y mismatch or X/Z");
+a = 4'h2;
+#10;
+if (y !== 4'hd) $fatal(1,"vector 2 output y mismatch or X/Z");
+a = 4'h3;
+#10;
+if (y !== 4'hc) $fatal(1,"vector 3 output y mismatch or X/Z");
+a = 4'h4;
+#10;
+if (y !== 4'hb) $fatal(1,"vector 4 output y mismatch or X/Z");
+a = 4'h5;
+#10;
+if (y !== 4'ha) $fatal(1,"vector 5 output y mismatch or X/Z");
+a = 4'h6;
+#10;
+if (y !== 4'h9) $fatal(1,"vector 6 output y mismatch or X/Z");
+a = 4'h7;
+#10;
+if (y !== 4'h8) $fatal(1,"vector 7 output y mismatch or X/Z");
+a = 4'h8;
+#10;
+if (y !== 4'h7) $fatal(1,"vector 8 output y mismatch or X/Z");
+a = 4'h9;
+#10;
+if (y !== 4'h6) $fatal(1,"vector 9 output y mismatch or X/Z");
+a = 4'ha;
+#10;
+if (y !== 4'h5) $fatal(1,"vector 10 output y mismatch or X/Z");
+a = 4'hb;
+#10;
+if (y !== 4'h4) $fatal(1,"vector 11 output y mismatch or X/Z");
+a = 4'hc;
+#10;
+if (y !== 4'h3) $fatal(1,"vector 12 output y mismatch or X/Z");
+a = 4'hd;
+#10;
+if (y !== 4'h2) $fatal(1,"vector 13 output y mismatch or X/Z");
+a = 4'he;
+#10;
+if (y !== 4'h1) $fatal(1,"vector 14 output y mismatch or X/Z");
+a = 4'hf;
+#10;
+if (y !== 4'h0) $fatal(1,"vector 15 output y mismatch or X/Z");
+$display("RESISTOR_VECTOR_COMPLETE checks=16"); $finish;
+end
+endmodule

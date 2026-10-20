@@ -1,0 +1,11 @@
+read_verilog -sv c-generated.v
+hierarchy -check -top c_alu
+proc
+flatten
+synth -top c_alu -noabc
+dffunmap
+abc -g simple
+clean
+check -assert
+write_json synthesized.json
+write_verilog -noattr gates.v

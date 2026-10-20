@@ -1,0 +1,1 @@
+module offset_bus(input [4:7] a, output [8:11] y);assign y=~a;endmodule
