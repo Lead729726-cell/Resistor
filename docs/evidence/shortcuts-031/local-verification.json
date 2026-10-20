@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-20T03:32:04.523Z",
+  "editions": [
+    "edu",
+    "indust"
+  ],
+  "shortcut_profile": "virtuoso-style-v1",
+  "sources": {
+    "edu": "6569e3253812a0d672e8b28d23636b21771328f0",
+    "indust": "eda48bab40a29b5916115ade5291cec270c637c3",
+    "shared": "8843aaf9cfb173dc211bbe8ddc18ef98d6f5a46b"
+  },
+  "local": {
+    "typecheck": {
+      "edu": "passed",
+      "indust": "passed"
+    },
+    "build": {
+      "edu": "passed",
+      "indust": "passed"
+    },
+    "core_tests": {
+      "edu": {
+        "passed": 326,
+        "failed": 0
+      },
+      "indust": {
+        "passed": 271,
+        "failed": 0
+      }
+    },
+    "shortcut_tests": {
+      "passed": 9,
+      "failed": 0
+    },
+    "browser_checks": [
+      {
+        "edition": "edu",
+        "project_id": "ebf577b6b1ea43b0ba39c3081a94b28e",
+        "scope": "qa copy only",
+        "checks": [
+          "pin draft Ctrl+Z removes preview at r7 without revision change",
+          "Ctrl+Shift+Z restores starting pin at r7",
+          "R actual transform increments r7 to r8; Ctrl+Z engine undo increments r8 to r9",
+          "I chooser, Q actual coordinates and parameters",
+          "layout P route / Shift+P polygon / I instance array",
+          "layout draft 1 point to 0 to 1, same r9"
+        ]
+      },
+      {
+        "edition": "indust",
+        "project_id": "380400b3adc44865954049a3281a8e95",
+        "scope": "qa project only",
+        "checks": [
+          "pin draft undo/redo at r2 without revision change",
+          "Ctrl+A selects 1 and Ctrl+D deselects 1",
+          "M drag: (320,200) to (360,190), r2 to r3",
+          "Ctrl+Z restores (320,200), r3 to r4",
+          "parameter textbox Ctrl+Z restores typed value without applying device edit",
+          "I chooser and F1 profile help on Industry source"
+        ]
+      }
+    ],
+    "screenshots": [
+      "edu.png",
+      "industry.png"
+    ],
+    "mobile": {
+      "width": 390,
+      "document_width": 390,
+      "dialog_left": 16,
+      "dialog_right": 374.286,
+      "overflow": false
+    }
+  },
+  "native": {
+    "status": "passed",
+    "build_run": 39364553877,
+    "installation_run": 39365399523,
+    "packages": 10,
+    "installers_executed": 10,
+    "mac_menu_targets": 4,
+    "report": "../edition-installers/0.31.0/native-ci.json"
+  },
+  "paid_calls": 0,
+  "engine_semantics_changed": false,
+  "manufacturing_signoff": false,
+  "unsupported": [
+    "wire stretch",
+    "DRD",
+    "automatic via routing",
+    "full proprietary Virtuoso parity"
+  ]
+}

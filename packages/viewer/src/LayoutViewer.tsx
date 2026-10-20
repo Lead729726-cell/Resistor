@@ -7,7 +7,7 @@ import { clipRange, decimalCoordinate, deltaUm, isPickable, manhattanPoints, poi
 import type { LayerDisplay, LocalFrame, ViewerDisplay } from './geometry';
 import {drawingPoint,appendDrawingPoint,drawingCommand,conductorLayers,lengthToDbu,dbuToLength,type DrawTool} from './drawing';
 import type {DecimalPoint} from './geometry';
-import {resolveShortcut,nudgeVector} from '../../shortcuts/src/index';
+import {shortcutDecision,nudgeVector} from '../../shortcuts/src/index';
 import { polygonShape } from './mesh';
 import { BatchedScene, scopedScene } from './batching';
 import { extrusionCap } from './caps';
@@ -149,8 +149,9 @@ export function LayoutViewer(props: LayoutViewerProps) {
   const boxGesture=useRef<{anchor:DecimalPoint;dragging:boolean}|null>(null);
   const drawRef=useRef({points:draft,cursor:drawCursor,layer:editLayer,width:fields.width,widthUnit,net:fields.net,order:drawOrder});drawRef.current={points:draft,cursor:drawCursor,layer:editLayer,width:fields.width,widthUnit,net:fields.net,order:drawOrder};
   const drawHistory=useRef<number[]>([]);
-  function clearDrawing(){drawHistory.current=[];boxGesture.current=null;copyRef.current=null;setCopySource(null);drawRef.current.points=[];setDraft([]);setDrawCursor(null);if(stageRef.current)disposeGroup(stageRef.current.preview);}
-  function chooseTool(next:typeof tool){clearDrawing();setTool(next);toolRef.current=next;setEditor('none');setError(null);setNote(next==='box'?'드래그 또는 대각선 두 점으로 사각형 생성 · R · Esc 취소':next==='polygon'?'꼭짓점 클릭 → Enter 또는 시작점 클릭으로 완료 · Backspace 이전 점':next==='route'?'점 클릭으로 배선 경로 지정 → Enter 완료 · Space 꺾임 변경':next==='copy'?'복사할 도형 클릭 → 새 위치 클릭 · 마스크만 복사 · Esc 취소':'선택 · 휠 확대 · 드래그 이동');stageRef.current?.renderer.domElement.focus();}
+  const previewRedo=useRef<{points:DecimalPoint[];history:number[];copy:typeof copySource}[]>([]);
+  function clearDrawing(resetRedo=true){if(resetRedo)previewRedo.current=[];drawHistory.current=[];boxGesture.current=null;copyRef.current=null;setCopySource(null);drawRef.current.points=[];setDraft([]);setDrawCursor(null);if(stageRef.current)disposeGroup(stageRef.current.preview);}
+  function chooseTool(next:typeof tool){clearDrawing();setTool(next);toolRef.current=next;setEditor('none');setError(null);setNote(next==='box'?'드래그 또는 대각선 두 점으로 사각형 생성 · R · Esc 취소':next==='polygon'?'꼭짓점 클릭 → Enter 또는 시작점 클릭으로 완료 · Ctrl/⌘+Z 이전 점':next==='route'?'점 클릭으로 배선 경로 지정 → Enter 완료 · Space 꺾임 변경':next==='copy'?'복사할 도형 클릭 → 새 위치 클릭 · 마스크만 복사 · Esc 취소':'선택 · 휠 확대 · 드래그 이동');stageRef.current?.renderer.domElement.focus();}
   async function finishDrawing(points=drawRef.current.points){
     const source=propsRef.current.scene,kind=toolRef.current;if(!source||!['box','polygon','route'].includes(kind)||pendingRef.current||propsRef.current.readOnly)return;
     const d=drawRef.current,style=displayLayer(source,displayRef.current,d.layer);
@@ -178,6 +179,8 @@ export function LayoutViewer(props: LayoutViewerProps) {
   const [buildProgress, setBuildProgress] = useState<{ built: number; total: number } | null>(null);
   const [capsBuilding, setCapsBuilding] = useState(false);
   const [advancedOpen, setAdvancedOpen] = useState(false);
+  const [advancedTool,setAdvancedTool]=useState<'polygon'|'instance'>('polygon');
+  const [propertiesOpen,setPropertiesOpen]=useState(false);
   const [flowIndex,setFlowIndex]=useState(0),[flowPlaying,setFlowPlaying]=useState(false),[flowVisible,setFlowVisible]=useState(true),[flowScale,setFlowScale]=useState(1),[flowBranchId,setFlowBranchId]=useState<string|null>(null);
   const [flowLabels,setFlowLabels]=useState<{id:string;text:string;position:THREE.Vector3;color:string}[]>([]);
   const flowLabelsRef=useRef(flowLabels);flowLabelsRef.current=flowLabels;
@@ -510,11 +513,11 @@ export function LayoutViewer(props: LayoutViewerProps) {
             const hit=pick(event),source=propsRef.current.scene,shape=source?.shapes.find(s=>s.id===hit?.id);if(!shape)return;
             if(shape.cell_path.includes('/'))throw Error('하위 셀·PCell 도형은 직접 복사할 수 없습니다. 계층 가져오기를 사용하세요.');
             if(displayLayer(source!,displayRef.current,shape.layer_id).locked)throw Error('잠긴 레이어입니다.');
-            copyRef.current={shape,anchor:p};setCopySource(copyRef.current);commitSelection([shape.id]);setDrawCursor(p);setNote('새 위치를 클릭하면 마스크 도형을 복사합니다. 미저장 미리보기입니다.');return;
+previewRedo.current=[];            copyRef.current={shape,anchor:p};setCopySource(copyRef.current);commitSelection([shape.id]);setDrawCursor(p);setNote('새 위치를 클릭하면 마스크 도형을 복사합니다. 미저장 미리보기입니다.');return;
           }
           const kind=toolRef.current as DrawTool;
           if(kind==='polygon'&&d.points.length>=3&&p[0]===d.points[0][0]&&p[1]===d.points[0][1]){void finishDrawing();return;}
-          const next=appendDrawingPoint(d.points,p,kind,d.order);if(next.length===d.points.length)return;drawHistory.current.push(d.points.length);d.points=next;setDraft(next);setDrawCursor(p);if(kind==='box'&&next.length===2)void finishDrawing(next);
+          const next=appendDrawingPoint(d.points,p,kind,d.order);if(next.length===d.points.length)return;previewRedo.current=[];drawHistory.current.push(d.points.length);d.points=next;setDraft(next);setDrawCursor(p);if(kind==='box'&&next.length===2)void finishDrawing(next);
         }catch(cause){setError(cause instanceof Error?cause.message:String(cause));}return;
       }
       const drag = dragRef.current;
@@ -530,18 +533,26 @@ export function LayoutViewer(props: LayoutViewerProps) {
     };
     const keydown = (event: KeyboardEvent) => {
       const deleteKey=event.key==='Delete'||/Mac|iPhone|iPad/.test(navigator.platform)&&event.key==='Backspace';
-      if(deleteKey&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!['box','polygon','route','copy'].includes(toolRef.current)&&!event.isComposing){event.preventDefault();event.stopPropagation();if(!propsRef.current.readOnly&&!pendingRef.current&&selectionRef.current.length)void execute({type:'selection',action:'delete',ids:selectionRef.current}).then(ok=>{if(ok)commitSelection([]);});return;}
-      const action=resolveShortcut('layout',event,{apple:/Mac|iPhone|iPad/.test(navigator.platform),readOnly:propsRef.current.readOnly,pending:pendingRef.current||!propsRef.current.scene,drawing:['box','polygon','route','copy'].includes(toolRef.current)});
-      if(!action)return;event.preventDefault();event.stopPropagation();
+      if(deleteKey&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!['box','polygon','route','copy'].includes(toolRef.current)&&!event.isComposing&&!event.repeat){event.preventDefault();event.stopPropagation();if(!propsRef.current.readOnly&&!pendingRef.current&&selectionRef.current.length)void execute({type:'selection',action:'delete',ids:selectionRef.current}).then(ok=>{if(ok)commitSelection([]);});return;}
+      const drawing=drawRef.current.points.length>0||!!copyRef.current;
+      if(event.key==='Backspace'&&drawing){event.preventDefault();event.stopPropagation();return;}
+      const decision=shortcutDecision('layout',event,{apple:/Mac|iPhone|iPad/.test(navigator.platform),readOnly:propsRef.current.readOnly,pending:pendingRef.current||!propsRef.current.scene,drawing,previewRedo:previewRedo.current.length>0});
+      if(!decision)return;event.preventDefault();event.stopPropagation();if(decision.blocked)return;const {action}=decision;
       if(action.id==='select_all'){const source=propsRef.current.scene;if(source)commitSelection(source.shapes.filter(s=>isPickable(displayLayer(source,displayRef.current,s.layer_id))).map(s=>s.id));return;}
-      if(action.id==='cancel'){cancelDrag();chooseTool('select');commitSelection([]);return;}
+      if(action.id==='cancel'||action.id==='deselect'){cancelDrag();chooseTool('select');commitSelection([]);setPropertiesOpen(false);return;}
       if(action.id==='select'){cancelDrag();chooseTool('select');return;}
       if(action.id==='finish'){if(toolRef.current==='copy')void finishCopy();else void finishDrawing();return;}
-      if(action.id==='undo_point'){if(toolRef.current==='copy'){clearDrawing();return;}const count=drawHistory.current.pop()??0;drawRef.current.points=drawRef.current.points.slice(0,count);setDraft(drawRef.current.points);return;}
+      if(action.id==='undo_point'){previewRedo.current.push({points:[...drawRef.current.points],history:[...drawHistory.current],copy:copyRef.current});boxGesture.current=null;if(toolRef.current==='copy'){clearDrawing(false);return;}const count=drawHistory.current.pop()??0;drawRef.current.points=drawRef.current.points.slice(0,count);setDraft(drawRef.current.points);return;}
+      if(action.id==='redo_point'){const next=previewRedo.current.pop();if(next){drawHistory.current=next.history;drawRef.current.points=next.points;setDraft(next.points);copyRef.current=next.copy;setCopySource(next.copy);}return;}
       if(action.id==='bend'){if(toolRef.current==='route')setDrawOrder(order=>order==='x-first'?'y-first':'x-first');return;}
       if(['box','polygon','route','move','copy','area'].includes(action.id)){if(mode==='2d'||action.id==='move')chooseTool(action.id as typeof tool);return;}
       if(action.id==='fit'){stage.focusBounds=undefined;stage.fit();return;}
       if(action.id==='layers'){setPaletteOpen(value=>!value);return;}
+      if(action.id==='display'){setPaletteOpen(true);requestAnimationFrame(()=>host.closest('.mos-viewer')?.querySelector<HTMLElement>('.mos-viewer-palette input,.mos-viewer-palette button')?.focus());return;}
+      if(action.id==='properties'){setPropertiesOpen(true);requestAnimationFrame(()=>host.closest('.mos-viewer')?.querySelector<HTMLElement>('[data-layout-properties]')?.focus());return;}
+      if(action.id==='options'){requestAnimationFrame(()=>host.closest('.mos-viewer')?.querySelector<HTMLElement>('.mos-drawing-toolbar input,.mos-drawing-toolbar select,.mos-layout-context select')?.focus());return;}
+      if(action.id==='instance'){setAdvancedTool('instance');setAdvancedOpen(true);requestAnimationFrame(()=>host.closest('.mos-viewer')?.querySelector<HTMLElement>('.mos-advanced-tools select')?.focus());return;}
+      if(action.id==='redraw'){stage.renderer.render(stage.scene,stage.camera);return;}
       if(action.id==='zoom_in'||action.id==='zoom_out'){const factor=action.id==='zoom_in'?1.2:1/1.2;if(stage.camera instanceof THREE.OrthographicCamera)stage.camera.zoom=Math.max(.01,Math.min(1000,stage.camera.zoom*factor));else{const distance=stage.camera.position.clone().sub(stage.controls.target);distance.setLength(Math.max(.001,Math.min(1e8,distance.length()/factor)));stage.camera.position.copy(stage.controls.target).add(distance);}stage.camera.updateProjectionMatrix();stage.controls.update();return;}
       const source=propsRef.current.scene,id=propsRef.current.selection;if(!source||!id)return;
       if(action.id==='nudge'&&mode==='2d'&&['select','area'].includes(toolRef.current)&&!marqueeRef.current){const [dx,dy]=nudgeVector(event.key,!!event.shiftKey,source.grid_dbu??1);void execute({type:'selection',action:'move',ids:selectionRef.current,dx:String(dx),dy:String(dy)});}
@@ -965,7 +976,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
         <button className={tool === 'select' ? 'active' : ''} onClick={() => chooseTool('select')} title="도형 선택, orbit/pan · V">선택</button>
         {mode==='2d'&&<button data-testid="layout-area-select" disabled={!scene||pending} className={tool==='area'?'active':''} onClick={()=>chooseTool('area')} title="A · 드래그 영역 선택 · Shift 추가 · Alt 제외">영역 선택</button>}
         <button className={tool === 'move' ? 'active' : ''} disabled={!scene || pending || props.readOnly} onClick={() => { chooseTool('move'); setNote('도형을 XY 방향으로 드래그하세요. 표시 Z 높이는 설계 명령에 포함되지 않습니다.'); }} title={props.readOnly ? '읽기 전용 설계 · 편집 기능 비활성화' : 'XY grid 이동 · M'}>XY 이동</button>
-        {mode==='2d'&&(['box','polygon','route','copy'] as const).map(kind=><button key={kind} data-testid={`layout-draw-${kind}`} title={kind==='box'?'드래그 또는 두 점 클릭 · R':kind==='polygon'?'꼭짓점 클릭 · P':kind==='route'?'Manhattan 배선 · W':'원본 도형과 새 위치 클릭 · C'} aria-pressed={tool===kind} className={tool===kind?'active':''} disabled={!scene||pending||props.readOnly} onClick={()=>chooseTool(kind)}>{kind==='box'?'사각형':kind==='polygon'?'다각형':kind==='route'?'배선 그리기':'복사'}</button>)}
+        {mode==='2d'&&(['box','polygon','route','copy'] as const).map(kind=><button key={kind} data-testid={`layout-draw-${kind}`} title={kind==='box'?'드래그 또는 두 점 클릭 · R':kind==='polygon'?'꼭짓점 클릭 · Shift+P':kind==='route'?'Manhattan 배선 · P / W':'원본 도형과 새 위치 클릭 · C'} aria-pressed={tool===kind} className={tool===kind?'active':''} disabled={!scene||pending||props.readOnly} onClick={()=>chooseTool(kind)}>{kind==='box'?'사각형':kind==='polygon'?'다각형':kind==='route'?'배선 그리기':'복사'}</button>)}
         <button onClick={() => { if (stageRef.current) stageRef.current.focusBounds = undefined; stageRef.current?.fit(); }} title="전체 맞춤 (F)">맞춤</button>
       </div>
       <div className="mos-toolgroup">
@@ -978,7 +989,7 @@ export function LayoutViewer(props: LayoutViewerProps) {
         <button disabled={!scene || mode !== '3d' || clipActive || !!error} onClick={() => void exportMesh()} title={clipActive ? 'clipping shader를 실제 잘린 GLB mesh로 내보내는 기능은 지원하지 않습니다. 단면을 끄세요.' : '표시용 extrusion mesh. GDS/OASIS는 프로젝트 교환 메뉴를 사용하세요.'}>GLB</button>
       </div>
     </div>
-    {mode==='2d'&&scene&&<div className="mos-layout-context"><label>작업 레이어 <select aria-label="작업 레이어" value={editLayer} disabled={pending} onChange={e=>setEditLayer(e.target.value)}>{scene.layers.map(l=><option key={l.id} value={l.id}>{l.name} · {l.id}{displayLayer(scene,display,l.id).locked?' · 잠금':''}</option>)}</select></label><span>R 사각형 · P 다각형 · W 배선 · M 이동 · C 복사 · F 맞춤 · Esc 취소</span></div>}
+    {mode==='2d'&&scene&&<div className="mos-layout-context"><label>작업 레이어 <select aria-label="작업 레이어" value={editLayer} disabled={pending} onChange={e=>setEditLayer(e.target.value)}>{scene.layers.map(l=><option key={l.id} value={l.id}>{l.name} · {l.id}{displayLayer(scene,display,l.id).locked?' · 잠금':''}</option>)}</select></label><span>R 사각형 · Shift+P 다각형 · P 배선 · M 이동 · C 복사 · F 맞춤 · Esc 취소</span></div>}
     {mode==='2d'&&['box','polygon','route'].includes(tool)&&<div className="mos-drawing-toolbar" aria-label="레이아웃 그리기 설정">
       <label>레이어<select aria-label="그리기 레이어" value={editLayer} disabled={pending} onChange={e=>setEditLayer(e.target.value)}>{scene?.layers.filter(l=>tool!=='route'||conductorLayers.has(l.id)).map(l=><option key={l.id} value={l.id}>{l.name} · {l.id}</option>)}</select></label>
       {tool==='route'&&<><label>폭<input aria-label="그리기 배선 폭" value={fields.width} disabled={pending} onChange={e=>setFields({...fields,width:e.target.value})}/></label><select aria-label="배선 폭 단위" value={widthUnit} disabled={pending} onChange={e=>{try{const v=lengthToDbu(fields.width,widthUnit,scene!.dbu_um),u=e.target.value as typeof widthUnit;setFields({...fields,width:u==='um'?dbuToLength(v,scene!.dbu_um):v});setWidthUnit(u);setError(null);}catch(cause){setError(String(cause));}}}><option value="dbu">DBU</option><option value="um">µm</option></select><button disabled={pending} onClick={()=>setDrawOrder(o=>o==='x-first'?'y-first':'x-first')}>{drawOrder==='x-first'?'X → Y':'Y → X'} · Space</button></>}
@@ -1029,11 +1040,12 @@ export function LayoutViewer(props: LayoutViewerProps) {
       <button disabled={!selection || pending || props.readOnly} title={props.readOnly ? '읽기 전용 설계 · 편집 기능 비활성화' : undefined} onClick={() => setEditor(editor === 'move' ? 'none' : 'move')}>이동 값</button>
       <button disabled={!scene || pending || props.readOnly} title={props.readOnly ? '읽기 전용 설계 · 편집 기능 비활성화' : undefined} onClick={() => setEditor(editor === 'box' ? 'none' : 'box')}>Box 추가</button>
       <button disabled={!scene || pending || props.readOnly} title={props.readOnly ? '읽기 전용 설계 · 편집 기능 비활성화' : undefined} onClick={() => setEditor(editor === 'route' ? 'none' : 'route')}>배선 추가</button>
-      <button disabled={!scene || props.readOnly} title={props.readOnly ? '읽기 전용 설계 · 편집 기능 비활성화' : undefined} onClick={() => setAdvancedOpen(!advancedOpen)}>Polygon / Cell 도구</button>
+      <button disabled={!scene || props.readOnly} title={props.readOnly ? '읽기 전용 설계 · 편집 기능 비활성화' : undefined} onClick={() => {setAdvancedTool('polygon');setAdvancedOpen(!advancedOpen);}}>Polygon / Cell 도구</button>
     </div>
     {props.currentFlow&&<CurrentFlowPanel flow={props.currentFlow} scene={scene} index={flowIndex} playing={flowPlaying} visible={flowVisible} scale={flowScale} branchId={flowBranchId} onIndex={setFlowIndex} onPlaying={setFlowPlaying} onVisible={setFlowVisible} onScale={setFlowScale} onBranch={setFlowBranchId} onFocus={focusCurrent}/>}
     {props.currentFlow&&flowBranchId&&scene&&stageRef.current&&flowStatus(props.currentFlow,scene).active&&(()=>{const branch=props.currentFlow!.branches.find(branch=>branch.id===flowBranchId),vector=branch?projectedCurrent(branch,branchCurrent(branch,sampleIndex(props.currentFlow!,flowIndex)),stageRef.current!.frame):null;return vector?<div className="mos-current-projection">선택 경로 첫 구간의 전류 투영(유도 표시): Iₓ {formatCurrent(vector.x_A)} · Iᵧ {formatCurrent(vector.y_A)}</div>:null;})()}
-    {advancedOpen && scene && <AdvancedTools scene={scene} selection={selection} onCommand={async command=>{await execute(command);}} pending={pending} readOnly={props.readOnly} onClose={() => setAdvancedOpen(false)}/>}
+    {propertiesOpen&&scene&&<div className="mos-object-properties" data-layout-properties role="region" aria-label="선택 도형 속성" tabIndex={-1}><strong>Properties · Q</strong>{(()=>{const shape=scene.shapes.find(s=>s.id===selection);return shape?<><span>Layer {shape.layer_id} · Net {shape.net||'연결 불명'} · cell {shape.cell_path}</span><code>{shape.polygon.map(p=>p.join(', ')).join(' / ')} DBU</code><small>DBU {scene.dbu_um} µm · r{scene.revision} · {shape.device_id?`device ${shape.device_id}`:'소자 대응 정보 없음'}</small></>:<span>도형을 먼저 선택하세요.</span>;})()}<button onClick={()=>{setPropertiesOpen(false);stageRef.current?.renderer.domElement.focus();}}>닫기</button></div>}
+    {advancedOpen && scene && <AdvancedTools key={advancedTool} initialTool={advancedTool} scene={scene} selection={selection} onCommand={async command=>{await execute(command);}} pending={pending} readOnly={props.readOnly} onClose={() => setAdvancedOpen(false)}/>}
     {editor !== 'none' && <div className="mos-viewer-edit" aria-label="정수 DBU 편집 명령">
       <strong>{editor === 'move' ? 'XY 이동' : editor === 'box' ? 'Box' : 'Manhattan route'} · DBU 정수</strong>
       {editor === 'move' ? <>{input('dx', 'ΔX')}{input('dy', 'ΔY')}</> : <><label>레이어<select value={editLayer} onChange={event => setEditLayer(event.target.value)}>{scene?.layers.map(layer => <option key={layer.id} value={layer.id}>{layer.name}</option>)}</select></label>{input('x1', 'X₁')}{input('y1', 'Y₁')}{input('x2', 'X₂')}{input('y2', 'Y₂')}{editor === 'route' && input('width', '폭')}{input('net', 'Net')}</>}
