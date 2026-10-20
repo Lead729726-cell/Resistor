@@ -1,6 +1,6 @@
 # Resistor Indust · 12-bit SAR ADC lab
 
-> **연구용 레퍼런스 · 배선 후 검증 미달.** 최종 post-layout 실행은 4.55µs 부근 VDD 수렴 오류로 중단됐습니다. DRC/LVS/PEX 생성과 배선 전 파형 통과는 제조용 전기적 승인을 뜻하지 않습니다.
+> **연구용 레퍼런스 · 배선 후 검증 미달.** Post-layout failed / unknown: ngspice exited with code 1. Raw log retained. DRC/LVS/PEX 생성과 배선 전 파형 통과는 제조용 전기적 승인을 뜻하지 않습니다.
 
 [사용법·계산·논문 반영 범위](../../docs/sar12.md) · [12개 편집 블록](blocks.json) · [실행 근거](qualification.json) · [파일 해시](SHA256SUMS.json)
 
