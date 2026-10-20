@@ -6,8 +6,9 @@
 
 **설계 대화·AI 검토 강화**: 현재 셀·선택 소자/마스크·실제 실행 근거로 연속 질문하고 로컬 대화를 복원합니다. 모델 없는 빠른 점검, 실제 전압·부호 있는 전류·동일 격자의 전압 강하 통계, 근거 위치 열기를 제공합니다. AI 제안과 실제 검증은 분리하고 매 전송 승인·비용 예약·이전 근거 차단을 유지합니다. [사용법과 실제 OpenAI/native/UI 검증](docs/assistant-workbench.md).
 
-**Resistor Edu / Indust**: 교육용과 전문 작업용을 브랜치·저장 폴더·Codex 작업 공간으로 나눕니다. Edu에는 단계별 실습과 학습 기록·보고서를 제공합니다. [구성·실행·MCP 연동](docs/product-editions.md) · [버전 선택](https://resistor.kr/editions/). 전용 0.28.0 미리보기 설치 파일 10종과 기존 v0.27.0 공통판을 구분합니다.
+**Resistor Edu / Indust**: 교육용과 전문 작업용을 브랜치·저장 폴더·Codex 작업 공간으로 나눕니다. Edu에는 단계별 실습과 학습 기록·보고서를 제공합니다. [구성·실행·MCP 연동](docs/product-editions.md) · [버전 선택](https://resistor.kr/editions/). 전용 0.30.0 미리보기 설치 파일 10종과 기존 v0.27.0 공통판을 구분합니다.
 
+[0.30 변경·검증 기록](docs/release-0.30.md) · [직관적인 핀 배선](docs/wiring-030.md). Edu는 프로젝트별 학습 대시보드·연결 재시도·안전한 초안 복구를 포함합니다.
 **Resistor Indust의 첫 검토 흐름**: 원본을 유지하는 레이아웃 작업 사본에서 사용자 지정 대칭·간격·고정 영역·상대 위치를 실제 KLayout 기하로 검사합니다. 변경 revision, 대상 매핑, 실제 엔진 manifest, 미평가 항목과 검토 결정을 로컬 보고서에 연결하고 재열기·checksum·STALE를 확인합니다. [실행·지원 범위·비교 결과](docs/industry-layout-review.md). [실제 공개 OTA 전기적 검사](docs/industry-qualification.md)는 3개 PVT 조건의 추출 전후 192개 표본과 DRC/LVS/PEX를 확인합니다. 임의 소자 쌍 매칭·수율, 실제 상용 실행, 고객 가치와 제조 signoff는 별도 근거가 필요합니다.
 
 **드래그 영역 선택과 묶음 편집**: 레이아웃 2D와 현재 회로도 셀에서 Shift 추가·Alt 제외, 그룹 이동/복제/삭제, 한 번에 실행 취소를 지원합니다. BigInt 마스크/hole 판정·잠금·보호된 PCell·원자적 오류 거절을 유지합니다. [사용법·단축키·실제 조작 녹화](docs/area-selection.md).

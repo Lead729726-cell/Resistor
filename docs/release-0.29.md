@@ -33,9 +33,9 @@ Do not run an old common installer to update an edition-specific application.
   persisted results. The divider produced 0.9 V; its analysis verdict remains `unknown`.
 - Public asset hashes, receipt hashes and URLs are recorded in
   [installer verification](evidence/edition-installers/0.29.0/public-verification.json).
-  [Updater feed verification](evidence/edition-updates/live-feed.json) selected the correct
+  [Updater feed verification](evidence/edition-installers/0.29.0/live-feed.json) selected the correct
   files for all ten edition/target combinations without installing them.
-- [Production delivery checks](evidence/edition-installers/portal/public-verification.json)
+- [Production delivery checks](evidence/edition-installers/0.29.0/portal-verification.json)
   passed 124 assertions across resistor.kr and the existing Vercel alias, including native
   redirects, Edu assets, oscillator assets and preserved video range responses.
   [Deployment receipt](evidence/edition-installers/0.29.0/deployment.json) and
