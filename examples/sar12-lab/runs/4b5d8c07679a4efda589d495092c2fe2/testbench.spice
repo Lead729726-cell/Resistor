@@ -1,0 +1,2673 @@
+Differential twelve-bit SAR with actual retained charge and dynamic MOS latch
+.include "/mnt/d/Coldbrew/Resistor/.runtime/sar12/lab/.runtime/eda/runs/4b5d8c07679a4efda589d495092c2fe2/supported-tt.spice"
+.option klu scale=1e-6 method=gear maxord=2 reltol=1e-5 vntol=1e-6 abstol=1e-12 chgtol=1e-16
+.include "/mnt/d/Coldbrew/Resistor/.runtime/sar12/lab/.runtime/eda/runs/4b5d8c07679a4efda589d495092c2fe2/pex-simulation.spice"
+.temp 27.0
+VGND VGND 0 0
+VDD VDD_DRV VGND 1.8
+RVDD VDD_DRV VPWR 0.1
+VINP VINP_DRV VGND PWL(0 0.900146484375 1.055e-05 0.900146484375)
+R_VINP VINP_DRV VINP 50
+VINN VINN_DRV VGND PWL(0 0.899853515625 1.055e-05 0.899853515625)
+R_VINN VINN_DRV VINN 50
+VREF VREF_DRV VGND 1.2
+RREF VREF_DRV VREF 2
+CREF VREF VGND 1n
+VCM VCM_DRV VGND 1.2
+RVCM VCM_DRV VCM 10
+CVCM VCM VGND 100p
+VD_SAMPLE DRV_SAMPLE VGND PWL(0 1.8 1.055e-05 1.8)
+RD_SAMPLE DRV_SAMPLE SAMPLE 2000
+CD_SAMPLE SAMPLE VGND 2p
+VD_EVAL DRV_EVAL VGND PWL(0 0 1.055e-05 0)
+RD_EVAL DRV_EVAL EVAL 2000
+CD_EVAL EVAL VGND 2p
+VD_B0 DRV_B0 VGND PWL(0 0 1.055e-05 0)
+RD_B0 DRV_B0 B0 2000
+CD_B0 B0 VGND 2p
+VD_B1 DRV_B1 VGND PWL(0 0 1.055e-05 0)
+RD_B1 DRV_B1 B1 2000
+CD_B1 B1 VGND 2p
+VD_B2 DRV_B2 VGND PWL(0 0 1.055e-05 0)
+RD_B2 DRV_B2 B2 2000
+CD_B2 B2 VGND 2p
+VD_B3 DRV_B3 VGND PWL(0 0 1.055e-05 0)
+RD_B3 DRV_B3 B3 2000
+CD_B3 B3 VGND 2p
+VD_B4 DRV_B4 VGND PWL(0 0 1.055e-05 0)
+RD_B4 DRV_B4 B4 2000
+CD_B4 B4 VGND 2p
+VD_B5 DRV_B5 VGND PWL(0 0 1.055e-05 0)
+RD_B5 DRV_B5 B5 2000
+CD_B5 B5 VGND 2p
+VD_B6 DRV_B6 VGND PWL(0 0 1.055e-05 0)
+RD_B6 DRV_B6 B6 2000
+CD_B6 B6 VGND 2p
+VD_B7 DRV_B7 VGND PWL(0 0 1.055e-05 0)
+RD_B7 DRV_B7 B7 2000
+CD_B7 B7 VGND 2p
+VD_B8 DRV_B8 VGND PWL(0 0 1.055e-05 0)
+RD_B8 DRV_B8 B8 2000
+CD_B8 B8 VGND 2p
+VD_B9 DRV_B9 VGND PWL(0 0 1.055e-05 0)
+RD_B9 DRV_B9 B9 2000
+CD_B9 B9 VGND 2p
+VD_B10 DRV_B10 VGND PWL(0 0 1.055e-05 0)
+RD_B10 DRV_B10 B10 2000
+CD_B10 B10 VGND 2p
+VD_B11 DRV_B11 VGND PWL(0 0 1.055e-05 0)
+RD_B11 DRV_B11 B11 2000
+CD_B11 B11 VGND 2p
+XU VPWR VINP VINN TOPP TOPN SAMPLE EVAL COMPN B1 B0 B11 VREF VCM B2 B3 COMP B4 B8 VGND B5 B6 B7 B10 B9 sar12_analog
+.tran 1e-08 1.055e-05 0 1e-08
+.control
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+save v(VINP) v(VINN) v(SAMPLE) v(EVAL) v(TOPP) v(TOPN) v(COMP) v(COMPN) v(B0) v(B1) v(B2) v(B3) v(B4) v(B5) v(B6) v(B7) v(B8) v(B9) v(B10) v(B11) i(VDD) i(VREF) v(VPWR)
+echo frame bit trial comp compn topp topn vin decision > decisions.csv
+let sar12_previous = @VINP[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0.900146484375
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VINP[pwl] = sar12_stimulus
+let sar12_previous = @VINN[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0.899853515625
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VINN[pwl] = sar12_stimulus
+let sar12_previous = @VD_SAMPLE[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_SAMPLE[pwl] = sar12_stimulus
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1e-09
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 3e-09
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+let sar12_code = 0
+stop when time = 4e-06
+stop when time = 4.05e-06
+stop when time = 4.375e-06
+stop when time = 4.55e-06
+stop when time = 4.875e-06
+stop when time = 5.05e-06
+stop when time = 5.375e-06
+stop when time = 5.55e-06
+stop when time = 5.875e-06
+stop when time = 6.05e-06
+stop when time = 6.375e-06
+stop when time = 6.55e-06
+stop when time = 6.875e-06
+stop when time = 7.05e-06
+stop when time = 7.375e-06
+stop when time = 7.55e-06
+stop when time = 7.875e-06
+stop when time = 8.05e-06
+stop when time = 8.375e-06
+stop when time = 8.55e-06
+stop when time = 8.875e-06
+stop when time = 9.05e-06
+stop when time = 9.375e-06
+stop when time = 9.55e-06
+stop when time = 9.875e-06
+stop when time = 1.005e-05
+echo actual_pause_time_s > pause-times.txt
+run
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 4e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 4e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_SAMPLE[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.001e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.003e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_SAMPLE[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 4.05e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 4.05e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_trial = sar12_code + 2048
+let sar12_drive = (floor(sar12_trial / 1) - 2*floor(sar12_trial / 2))*1.8
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2) - 2*floor(sar12_trial / 4))*1.8
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 4) - 2*floor(sar12_trial / 8))*1.8
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 8) - 2*floor(sar12_trial / 16))*1.8
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 16) - 2*floor(sar12_trial / 32))*1.8
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 32) - 2*floor(sar12_trial / 64))*1.8
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 64) - 2*floor(sar12_trial / 128))*1.8
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 128) - 2*floor(sar12_trial / 256))*1.8
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 256) - 2*floor(sar12_trial / 512))*1.8
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 512) - 2*floor(sar12_trial / 1024))*1.8
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 1024) - 2*floor(sar12_trial / 2048))*1.8
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2048) - 2*floor(sar12_trial / 4096))*1.8
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 4.375e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 4.375e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.376e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.378e-06
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 4.55e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 4.55e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_k = length(time)-1
+let sar12_cmp = v(COMP)[sar12_k]
+let sar12_cmpn = v(COMPN)[sar12_k]
+let sar12_p = v(TOPP)[sar12_k]
+let sar12_n = v(TOPN)[sar12_k]
+let sar12_decision = 0
+if sar12_cmp >= 0.9
+let sar12_code = sar12_trial
+let sar12_decision = 1
+end
+echo 0 11 $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n 0.00029296875 $&sar12_decision >> decisions.csv
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_trial = sar12_code + 1024
+let sar12_drive = (floor(sar12_trial / 1) - 2*floor(sar12_trial / 2))*1.8
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2) - 2*floor(sar12_trial / 4))*1.8
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 4) - 2*floor(sar12_trial / 8))*1.8
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 8) - 2*floor(sar12_trial / 16))*1.8
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 16) - 2*floor(sar12_trial / 32))*1.8
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 32) - 2*floor(sar12_trial / 64))*1.8
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 64) - 2*floor(sar12_trial / 128))*1.8
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 128) - 2*floor(sar12_trial / 256))*1.8
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 256) - 2*floor(sar12_trial / 512))*1.8
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 512) - 2*floor(sar12_trial / 1024))*1.8
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 1024) - 2*floor(sar12_trial / 2048))*1.8
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2048) - 2*floor(sar12_trial / 4096))*1.8
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 4.875e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 4.875e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 4.876e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 4.878e-06
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 5.05e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 5.05e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_k = length(time)-1
+let sar12_cmp = v(COMP)[sar12_k]
+let sar12_cmpn = v(COMPN)[sar12_k]
+let sar12_p = v(TOPP)[sar12_k]
+let sar12_n = v(TOPN)[sar12_k]
+let sar12_decision = 0
+if sar12_cmp >= 0.9
+let sar12_code = sar12_trial
+let sar12_decision = 1
+end
+echo 0 10 $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n 0.00029296875 $&sar12_decision >> decisions.csv
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_trial = sar12_code + 512
+let sar12_drive = (floor(sar12_trial / 1) - 2*floor(sar12_trial / 2))*1.8
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2) - 2*floor(sar12_trial / 4))*1.8
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 4) - 2*floor(sar12_trial / 8))*1.8
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 8) - 2*floor(sar12_trial / 16))*1.8
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 16) - 2*floor(sar12_trial / 32))*1.8
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 32) - 2*floor(sar12_trial / 64))*1.8
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 64) - 2*floor(sar12_trial / 128))*1.8
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 128) - 2*floor(sar12_trial / 256))*1.8
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 256) - 2*floor(sar12_trial / 512))*1.8
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 512) - 2*floor(sar12_trial / 1024))*1.8
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 1024) - 2*floor(sar12_trial / 2048))*1.8
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2048) - 2*floor(sar12_trial / 4096))*1.8
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 5.375e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 5.375e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.376e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.378e-06
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 5.55e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 5.55e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_k = length(time)-1
+let sar12_cmp = v(COMP)[sar12_k]
+let sar12_cmpn = v(COMPN)[sar12_k]
+let sar12_p = v(TOPP)[sar12_k]
+let sar12_n = v(TOPN)[sar12_k]
+let sar12_decision = 0
+if sar12_cmp >= 0.9
+let sar12_code = sar12_trial
+let sar12_decision = 1
+end
+echo 0 9 $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n 0.00029296875 $&sar12_decision >> decisions.csv
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_trial = sar12_code + 256
+let sar12_drive = (floor(sar12_trial / 1) - 2*floor(sar12_trial / 2))*1.8
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2) - 2*floor(sar12_trial / 4))*1.8
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 4) - 2*floor(sar12_trial / 8))*1.8
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 8) - 2*floor(sar12_trial / 16))*1.8
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 16) - 2*floor(sar12_trial / 32))*1.8
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 32) - 2*floor(sar12_trial / 64))*1.8
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 64) - 2*floor(sar12_trial / 128))*1.8
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 128) - 2*floor(sar12_trial / 256))*1.8
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 256) - 2*floor(sar12_trial / 512))*1.8
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 512) - 2*floor(sar12_trial / 1024))*1.8
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 1024) - 2*floor(sar12_trial / 2048))*1.8
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2048) - 2*floor(sar12_trial / 4096))*1.8
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 5.875e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 5.875e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 5.876e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 5.878e-06
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 6.05e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 6.05e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_k = length(time)-1
+let sar12_cmp = v(COMP)[sar12_k]
+let sar12_cmpn = v(COMPN)[sar12_k]
+let sar12_p = v(TOPP)[sar12_k]
+let sar12_n = v(TOPN)[sar12_k]
+let sar12_decision = 0
+if sar12_cmp >= 0.9
+let sar12_code = sar12_trial
+let sar12_decision = 1
+end
+echo 0 8 $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n 0.00029296875 $&sar12_decision >> decisions.csv
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_trial = sar12_code + 128
+let sar12_drive = (floor(sar12_trial / 1) - 2*floor(sar12_trial / 2))*1.8
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2) - 2*floor(sar12_trial / 4))*1.8
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 4) - 2*floor(sar12_trial / 8))*1.8
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 8) - 2*floor(sar12_trial / 16))*1.8
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 16) - 2*floor(sar12_trial / 32))*1.8
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 32) - 2*floor(sar12_trial / 64))*1.8
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 64) - 2*floor(sar12_trial / 128))*1.8
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 128) - 2*floor(sar12_trial / 256))*1.8
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 256) - 2*floor(sar12_trial / 512))*1.8
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 512) - 2*floor(sar12_trial / 1024))*1.8
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 1024) - 2*floor(sar12_trial / 2048))*1.8
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2048) - 2*floor(sar12_trial / 4096))*1.8
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 6.375e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 6.375e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.376e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.378e-06
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 6.55e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 6.55e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_k = length(time)-1
+let sar12_cmp = v(COMP)[sar12_k]
+let sar12_cmpn = v(COMPN)[sar12_k]
+let sar12_p = v(TOPP)[sar12_k]
+let sar12_n = v(TOPN)[sar12_k]
+let sar12_decision = 0
+if sar12_cmp >= 0.9
+let sar12_code = sar12_trial
+let sar12_decision = 1
+end
+echo 0 7 $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n 0.00029296875 $&sar12_decision >> decisions.csv
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_trial = sar12_code + 64
+let sar12_drive = (floor(sar12_trial / 1) - 2*floor(sar12_trial / 2))*1.8
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2) - 2*floor(sar12_trial / 4))*1.8
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 4) - 2*floor(sar12_trial / 8))*1.8
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 8) - 2*floor(sar12_trial / 16))*1.8
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 16) - 2*floor(sar12_trial / 32))*1.8
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 32) - 2*floor(sar12_trial / 64))*1.8
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 64) - 2*floor(sar12_trial / 128))*1.8
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 128) - 2*floor(sar12_trial / 256))*1.8
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 256) - 2*floor(sar12_trial / 512))*1.8
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 512) - 2*floor(sar12_trial / 1024))*1.8
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 1024) - 2*floor(sar12_trial / 2048))*1.8
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2048) - 2*floor(sar12_trial / 4096))*1.8
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 6.875e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 6.875e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 6.876e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 6.878e-06
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 7.05e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 7.05e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_k = length(time)-1
+let sar12_cmp = v(COMP)[sar12_k]
+let sar12_cmpn = v(COMPN)[sar12_k]
+let sar12_p = v(TOPP)[sar12_k]
+let sar12_n = v(TOPN)[sar12_k]
+let sar12_decision = 0
+if sar12_cmp >= 0.9
+let sar12_code = sar12_trial
+let sar12_decision = 1
+end
+echo 0 6 $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n 0.00029296875 $&sar12_decision >> decisions.csv
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_trial = sar12_code + 32
+let sar12_drive = (floor(sar12_trial / 1) - 2*floor(sar12_trial / 2))*1.8
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2) - 2*floor(sar12_trial / 4))*1.8
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 4) - 2*floor(sar12_trial / 8))*1.8
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 8) - 2*floor(sar12_trial / 16))*1.8
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 16) - 2*floor(sar12_trial / 32))*1.8
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 32) - 2*floor(sar12_trial / 64))*1.8
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 64) - 2*floor(sar12_trial / 128))*1.8
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 128) - 2*floor(sar12_trial / 256))*1.8
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 256) - 2*floor(sar12_trial / 512))*1.8
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 512) - 2*floor(sar12_trial / 1024))*1.8
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 1024) - 2*floor(sar12_trial / 2048))*1.8
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2048) - 2*floor(sar12_trial / 4096))*1.8
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 7.375e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 7.375e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.376e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.378e-06
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 7.55e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 7.55e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_k = length(time)-1
+let sar12_cmp = v(COMP)[sar12_k]
+let sar12_cmpn = v(COMPN)[sar12_k]
+let sar12_p = v(TOPP)[sar12_k]
+let sar12_n = v(TOPN)[sar12_k]
+let sar12_decision = 0
+if sar12_cmp >= 0.9
+let sar12_code = sar12_trial
+let sar12_decision = 1
+end
+echo 0 5 $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n 0.00029296875 $&sar12_decision >> decisions.csv
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_trial = sar12_code + 16
+let sar12_drive = (floor(sar12_trial / 1) - 2*floor(sar12_trial / 2))*1.8
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2) - 2*floor(sar12_trial / 4))*1.8
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 4) - 2*floor(sar12_trial / 8))*1.8
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 8) - 2*floor(sar12_trial / 16))*1.8
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 16) - 2*floor(sar12_trial / 32))*1.8
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 32) - 2*floor(sar12_trial / 64))*1.8
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 64) - 2*floor(sar12_trial / 128))*1.8
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 128) - 2*floor(sar12_trial / 256))*1.8
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 256) - 2*floor(sar12_trial / 512))*1.8
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 512) - 2*floor(sar12_trial / 1024))*1.8
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 1024) - 2*floor(sar12_trial / 2048))*1.8
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2048) - 2*floor(sar12_trial / 4096))*1.8
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 7.875e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 7.875e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 7.876e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 7.878e-06
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 8.05e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 8.05e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_k = length(time)-1
+let sar12_cmp = v(COMP)[sar12_k]
+let sar12_cmpn = v(COMPN)[sar12_k]
+let sar12_p = v(TOPP)[sar12_k]
+let sar12_n = v(TOPN)[sar12_k]
+let sar12_decision = 0
+if sar12_cmp >= 0.9
+let sar12_code = sar12_trial
+let sar12_decision = 1
+end
+echo 0 4 $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n 0.00029296875 $&sar12_decision >> decisions.csv
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_trial = sar12_code + 8
+let sar12_drive = (floor(sar12_trial / 1) - 2*floor(sar12_trial / 2))*1.8
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2) - 2*floor(sar12_trial / 4))*1.8
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 4) - 2*floor(sar12_trial / 8))*1.8
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 8) - 2*floor(sar12_trial / 16))*1.8
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 16) - 2*floor(sar12_trial / 32))*1.8
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 32) - 2*floor(sar12_trial / 64))*1.8
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 64) - 2*floor(sar12_trial / 128))*1.8
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 128) - 2*floor(sar12_trial / 256))*1.8
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 256) - 2*floor(sar12_trial / 512))*1.8
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 512) - 2*floor(sar12_trial / 1024))*1.8
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 1024) - 2*floor(sar12_trial / 2048))*1.8
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2048) - 2*floor(sar12_trial / 4096))*1.8
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 8.375e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 8.375e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.376e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.378e-06
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 8.55e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 8.55e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_k = length(time)-1
+let sar12_cmp = v(COMP)[sar12_k]
+let sar12_cmpn = v(COMPN)[sar12_k]
+let sar12_p = v(TOPP)[sar12_k]
+let sar12_n = v(TOPN)[sar12_k]
+let sar12_decision = 0
+if sar12_cmp >= 0.9
+let sar12_code = sar12_trial
+let sar12_decision = 1
+end
+echo 0 3 $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n 0.00029296875 $&sar12_decision >> decisions.csv
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_trial = sar12_code + 4
+let sar12_drive = (floor(sar12_trial / 1) - 2*floor(sar12_trial / 2))*1.8
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2) - 2*floor(sar12_trial / 4))*1.8
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 4) - 2*floor(sar12_trial / 8))*1.8
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 8) - 2*floor(sar12_trial / 16))*1.8
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 16) - 2*floor(sar12_trial / 32))*1.8
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 32) - 2*floor(sar12_trial / 64))*1.8
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 64) - 2*floor(sar12_trial / 128))*1.8
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 128) - 2*floor(sar12_trial / 256))*1.8
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 256) - 2*floor(sar12_trial / 512))*1.8
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 512) - 2*floor(sar12_trial / 1024))*1.8
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 1024) - 2*floor(sar12_trial / 2048))*1.8
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2048) - 2*floor(sar12_trial / 4096))*1.8
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 8.875e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 8.875e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 8.876e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 8.878e-06
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 9.05e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 9.05e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_k = length(time)-1
+let sar12_cmp = v(COMP)[sar12_k]
+let sar12_cmpn = v(COMPN)[sar12_k]
+let sar12_p = v(TOPP)[sar12_k]
+let sar12_n = v(TOPN)[sar12_k]
+let sar12_decision = 0
+if sar12_cmp >= 0.9
+let sar12_code = sar12_trial
+let sar12_decision = 1
+end
+echo 0 2 $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n 0.00029296875 $&sar12_decision >> decisions.csv
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_trial = sar12_code + 2
+let sar12_drive = (floor(sar12_trial / 1) - 2*floor(sar12_trial / 2))*1.8
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2) - 2*floor(sar12_trial / 4))*1.8
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 4) - 2*floor(sar12_trial / 8))*1.8
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 8) - 2*floor(sar12_trial / 16))*1.8
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 16) - 2*floor(sar12_trial / 32))*1.8
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 32) - 2*floor(sar12_trial / 64))*1.8
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 64) - 2*floor(sar12_trial / 128))*1.8
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 128) - 2*floor(sar12_trial / 256))*1.8
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 256) - 2*floor(sar12_trial / 512))*1.8
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 512) - 2*floor(sar12_trial / 1024))*1.8
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 1024) - 2*floor(sar12_trial / 2048))*1.8
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2048) - 2*floor(sar12_trial / 4096))*1.8
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.051e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.053e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 9.375e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 9.375e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.376e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.378e-06
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 9.55e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 9.55e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_k = length(time)-1
+let sar12_cmp = v(COMP)[sar12_k]
+let sar12_cmpn = v(COMPN)[sar12_k]
+let sar12_p = v(TOPP)[sar12_k]
+let sar12_n = v(TOPN)[sar12_k]
+let sar12_decision = 0
+if sar12_cmp >= 0.9
+let sar12_code = sar12_trial
+let sar12_decision = 1
+end
+echo 0 1 $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n 0.00029296875 $&sar12_decision >> decisions.csv
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+let sar12_trial = sar12_code + 1
+let sar12_drive = (floor(sar12_trial / 1) - 2*floor(sar12_trial / 2))*1.8
+let sar12_previous = @VD_B0[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B0[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2) - 2*floor(sar12_trial / 4))*1.8
+let sar12_previous = @VD_B1[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B1[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 4) - 2*floor(sar12_trial / 8))*1.8
+let sar12_previous = @VD_B2[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B2[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 8) - 2*floor(sar12_trial / 16))*1.8
+let sar12_previous = @VD_B3[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B3[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 16) - 2*floor(sar12_trial / 32))*1.8
+let sar12_previous = @VD_B4[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B4[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 32) - 2*floor(sar12_trial / 64))*1.8
+let sar12_previous = @VD_B5[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B5[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 64) - 2*floor(sar12_trial / 128))*1.8
+let sar12_previous = @VD_B6[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B6[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 128) - 2*floor(sar12_trial / 256))*1.8
+let sar12_previous = @VD_B7[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B7[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 256) - 2*floor(sar12_trial / 512))*1.8
+let sar12_previous = @VD_B8[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B8[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 512) - 2*floor(sar12_trial / 1024))*1.8
+let sar12_previous = @VD_B9[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B9[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 1024) - 2*floor(sar12_trial / 2048))*1.8
+let sar12_previous = @VD_B10[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B10[pwl] = sar12_stimulus
+let sar12_drive = (floor(sar12_trial / 2048) - 2*floor(sar12_trial / 4096))*1.8
+let sar12_previous = @VD_B11[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.551e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.553e-06
+let sar12_stimulus[5] = sar12_drive
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_B11[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 9.875e-06) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 9.875e-06
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 9.876e-06
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 9.878e-06
+let sar12_stimulus[5] = 1.8
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let sar12_k = length(time)-1
+if abs(time[sar12_k] - 1.005e-05) > 1e-12
+print time[sar12_k]
+echo expected_pause_time_s 1.005e-05
+echo SAR12_PAUSE_FAILED
+quit 1
+end
+print time[sar12_k] >> pause-times.txt
+let sar12_k = length(time)-1
+let sar12_cmp = v(COMP)[sar12_k]
+let sar12_cmpn = v(COMPN)[sar12_k]
+let sar12_p = v(TOPP)[sar12_k]
+let sar12_n = v(TOPN)[sar12_k]
+let sar12_decision = 0
+if sar12_cmp >= 0.9
+let sar12_code = sar12_trial
+let sar12_decision = 1
+end
+echo 0 0 $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n 0.00029296875 $&sar12_decision >> decisions.csv
+let sar12_previous = @VD_EVAL[pwl]
+let sar12_stimulus = vector(8)
+let sar12_stimulus[0] = 0
+let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]
+let sar12_stimulus[2] = 1.0051e-05
+let sar12_stimulus[3] = sar12_stimulus[1]
+let sar12_stimulus[4] = 1.0053e-05
+let sar12_stimulus[5] = 0
+let sar12_stimulus[6] = 1.055e-05
+let sar12_stimulus[7] = sar12_stimulus[5]
+alter @VD_EVAL[pwl] = sar12_stimulus
+resume
+let supply_current = -i(VDD)
+let reference_current = -i(VREF)
+wrdata waveform.dat v(VINP) v(VINN) v(SAMPLE) v(EVAL) v(TOPP) v(TOPN) v(COMP) v(COMPN) supply_current reference_current v(B0) v(B1) v(B2) v(B3) v(B4) v(B5) v(B6) v(B7) v(B8) v(B9) v(B10) v(B11) v(VPWR)
+echo SAR12_NATIVE_COMPLETE
+quit
+.endc
+.end

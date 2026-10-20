@@ -16,6 +16,8 @@ from geometry import EDAError
 HERE=Path(__file__).parent
 RTL=HERE/'rtl/sar12.v';GATE=HERE/'rtl/sar12_gate.v';CMOS=HERE/'rtl/sar12_cmos.json'
 SUPPLY=['VPWR','VGND'];BITS=[f'B{i}' for i in range(12)]
+SUPPLY_SOURCE_R_OHM=.1
+SOURCE_DELAY_S=1e-9;SOURCE_RISE_S=2e-9
 DEFAULTS={'input_differential_V':1.2/4096,'reference_V':1.2,'input_common_mode_V':.9,'unit_F':200e-15,'acquisition_s':4e-6,'hold_s':50e-9,'bit_period_s':.5e-6,'test_mode':0,'static_batch':0}
 PARTS={
  'sar12_switch':('SAR12_TG','CMOS 전송 게이트'),
@@ -142,7 +144,7 @@ def control_testbench(p,folder,deck,netlist,sub,post_layout=False):
     drivers=[]
     for node,initial in [('SAMPLE',s),('EVAL',0),*[(b,0) for b in BITS]]:drivers += [f'VD_{node} DRV_{node} VGND {initial:.12g}',f'RD_{node} DRV_{node} {node} 2000',f'CD_{node} {node} VGND 2p']
     names=['VINP','VINN','SAMPLE','EVAL','TOPP','TOPN','COMP','COMPN']
-    lines=['Differential twelve-bit SAR with actual retained charge and dynamic MOS latch',f'.include "{deck}"','.option scale=1e-6 method=gear maxord=2 reltol=1e-5 vntol=1e-6 abstol=1e-12 chgtol=1e-16',f'.include "{netlist}"',f'.temp {p["testbench"]["temperature_C"]}','VGND VGND 0 0',f'VDD VPWR VGND {s:.12g}',f'VINP VINP VGND {cm+values[0]/2:.12g}',f'VINN VINN VGND {cm-values[0]/2:.12g}',f'VREF VREF VGND {v["reference_V"]:.12g}',f'VCM VCM VGND {reset_cm:.12g}',*drivers,'XU '+' '.join(sub)+' '+p['cell'],f'.tran {step:.12g} {end:.12g} 0 {step:.12g}', '.control','set num_threads=1','set numdgt=17','set wr_singlescale','set wr_vecnames','save '+' '.join('v('+n+')' for n in names+BITS)+' i(VDD) i(VREF)','echo frame bit trial comp compn topp topn vin decision > decisions.csv']
+    lines=['Differential twelve-bit SAR with actual retained charge and dynamic MOS latch',f'.include "{deck}"','.option sparse scale=1e-6 method=gear maxord=2 reltol=1e-5 vntol=1e-6 abstol=1e-12 chgtol=1e-16',f'.include "{netlist}"',f'.temp {p["testbench"]["temperature_C"]}','VGND VGND 0 0',f'VDD VPWR VGND {s:.12g}',f'VINP VINP VGND {cm+values[0]/2:.12g}',f'VINN VINN VGND {cm-values[0]/2:.12g}',f'VREF VREF VGND {v["reference_V"]:.12g}',f'VCM VCM VGND {reset_cm:.12g}',*drivers,'XU '+' '.join(sub)+' '+p['cell'],f'.tran {step:.12g} {end:.12g} 0 {step:.12g}', '.control','set num_threads=1','set numdgt=17','set wr_singlescale','set wr_vecnames','save '+' '.join('v('+n+')' for n in names+BITS)+' i(VDD) i(VREF)','echo frame bit trial comp compn topp topn vin decision > decisions.csv']
     # Finite off-macro reference/common-mode drive prevents an unphysical
     # zero-impedance displacement-current impulse at a switch transition.
     idx=next(i for i,line in enumerate(lines) if line.startswith('VCM '));lines[idx:idx+1]=[f'VCM VCM_DRV VGND {reset_cm:.12g}','RVCM VCM_DRV VCM 10','CVCM VCM VGND 100p']
@@ -152,38 +154,52 @@ def control_testbench(p,folder,deck,netlist,sub,post_layout=False):
     # make a resumed RC-extracted deck singular at a switching boundary.
     for pin in ('VINP','VINN'):
         idx=next(i for i,line in enumerate(lines) if line.startswith(pin+' '));lines[idx]=lines[idx].replace(pin+' '+pin+' ',pin+' '+pin+'_DRV ',1);lines.insert(idx+1,f'R_{pin} {pin}_DRV {pin} 50')
+    # A finite off-macro supply impedance also isolates the ideal source's
+    # branch equation from the stiff distributed PEX capacitances. Preserve
+    # the extracted DUT and all tolerances; use the same source pre/post.
+    idx=next(i for i,line in enumerate(lines) if line.startswith('VDD '))
+    lines[idx:idx+1]=[f'VDD VDD_DRV VGND {s:.12g}',f'RVDD VDD_DRV VPWR {SUPPLY_SOURCE_R_OHM:.12g}']
+    idx=next(i for i,line in enumerate(lines) if line.startswith('save '));lines[idx]+=' v(VPWR)'
+    sources={'VINP','VINN','VD_SAMPLE','VD_EVAL',*('VD_'+b for b in BITS)}
+    for i,line in enumerate(lines):
+        f=line.split()
+        if f and f[0] in sources:lines[i]=' '.join(f[:3])+f' PWL(0 {f[3]} {end:.15g} {f[3]})'
     time=0.;first=True
-    # An isolated PWL timing marker puts every decision on a real solver event.
-    # ngspice 42 supports dynamically added relational (not equality) stops.
-    # Keep just one stop active: checking thousands on every step is quadratic.
+    def drive(source,value):
+        # Altering DC at a paused transient silently introduces a discontinuity
+        # into the accepted integration history. Schedule a continuous ramp
+        # strictly after the pause instead; capacitor state is never restarted.
+        lines.extend([f'let sar12_previous = @{source}[pwl]','let sar12_stimulus = vector(8)',
+            'let sar12_stimulus[0] = 0','let sar12_stimulus[1] = sar12_previous[length(sar12_previous)-1]',
+            f'let sar12_stimulus[2] = {time+SOURCE_DELAY_S:.15g}','let sar12_stimulus[3] = sar12_stimulus[1]',
+            f'let sar12_stimulus[4] = {time+SOURCE_DELAY_S+SOURCE_RISE_S:.15g}',f'let sar12_stimulus[5] = {value}',
+            f'let sar12_stimulus[6] = {end:.15g}','let sar12_stimulus[7] = sar12_stimulus[5]',f'alter @{source}[pwl] = sar12_stimulus'])
+    # Register every exact breakpoint before the one continuous transient.
+    # Dynamic relational stops in ngspice 42 can fire on a rejected trial step
+    # (even with an isolated PWL marker), so they cannot define sample times.
     stops=[];t=0.
     for _ in values:
         t+=acq;stops.append(t);t+=v['hold_s'];stops.append(t)
         for _ in range(12):t+=period*.65;stops.append(t);t+=period*.35;stops.append(t)
-    marker='VMARK SAR12_TIMING_MARK VGND PWL(0 0 '+' '.join(f'{stop:.15g} {i%2}' for i,stop in enumerate(stops,1))+f' {end:.15g} 0)'
-    lines[lines.index('.control'):lines.index('.control')]=[marker,'RMARK SAR12_TIMING_MARK VGND 1Meg']
     def pause(target):
         nonlocal first
-        # RC-extracted decks may reject a trial step at a relational pause.
-        # Predeclare exact equality stops there, before the one transient run.
-        if post_layout:
-            if first:lines.extend(f'stop when time = {stop:.15g}' for stop in stops)
-        else:lines.append(f'stop when time ge {target-1e-15:.15g}')
+        if first:lines.extend(f'stop when time = {stop:.15g}' for stop in stops)
         if first:lines.extend(['echo actual_pause_time_s > pause-times.txt','run'])
         else:lines.append('resume')
         lines.extend(['let sar12_k = length(time)-1',f'if abs(time[sar12_k] - {target:.15g}) > 1e-12','print time[sar12_k]',f'echo expected_pause_time_s {target:.15g}','echo SAR12_PAUSE_FAILED','quit 1','end','print time[sar12_k] >> pause-times.txt'])
-        if not post_layout:lines.append('delete all')
         first=False
     for frame,vin in enumerate(values):
-        lines += [f'alter VINP = {cm+vin/2:.12g}',f'alter VINN = {cm-vin/2:.12g}',f'alter VD_SAMPLE = {s:.12g}','alter VD_EVAL = 0',*[f'alter VD_B{i} = 0' for i in range(12)],'let sar12_code = 0']
-        time+=acq;pause(time);lines.append('alter VD_SAMPLE = 0');time+=v['hold_s'];pause(time)
+        for source,value in [('VINP',f'{cm+vin/2:.12g}'),('VINN',f'{cm-vin/2:.12g}'),('VD_SAMPLE',f'{s:.12g}'),('VD_EVAL','0'),*[('VD_B'+str(i),'0')for i in range(12)]]:drive(source,value)
+        lines.append('let sar12_code = 0')
+        time+=acq;pause(time);drive('VD_SAMPLE','0');time+=v['hold_s'];pause(time)
         for bit in reversed(range(12)):
-            lines += ['alter VD_EVAL = 0',f'let sar12_trial = sar12_code + {1<<bit}']
-            for i in range(12):lines += [f'let sar12_drive = (floor(sar12_trial / {1<<i}) - 2*floor(sar12_trial / {1<<(i+1)}))*{s:.12g}',f'alter VD_B{i} = $&sar12_drive']
-            time+=period*.65;pause(time);lines += [f'alter VD_EVAL = {s:.12g}'];time+=period*.35;pause(time)
+            drive('VD_EVAL','0');lines.append(f'let sar12_trial = sar12_code + {1<<bit}')
+            for i in range(12):
+                lines.append(f'let sar12_drive = (floor(sar12_trial / {1<<i}) - 2*floor(sar12_trial / {1<<(i+1)}))*{s:.12g}');drive('VD_B'+str(i),'sar12_drive')
+            time+=period*.65;pause(time);drive('VD_EVAL',f'{s:.12g}');time+=period*.35;pause(time)
             lines += ['let sar12_k = length(time)-1','let sar12_cmp = v(COMP)[sar12_k]','let sar12_cmpn = v(COMPN)[sar12_k]','let sar12_p = v(TOPP)[sar12_k]','let sar12_n = v(TOPN)[sar12_k]','let sar12_decision = 0',f'if sar12_cmp >= {s/2:.12g}','let sar12_code = sar12_trial','let sar12_decision = 1','end',f'echo {frame} {bit} $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n {vin:.15g} $&sar12_decision >> decisions.csv']
-        lines.append('alter VD_EVAL = 0')
-    lines+=['resume','let supply_current = -i(VDD)','let reference_current = -i(VREF)','wrdata waveform.dat '+' '.join('v('+n+')' for n in names)+' supply_current reference_current '+' '.join('v('+n+')' for n in BITS),'echo SAR12_NATIVE_COMPLETE','quit','.endc','.end']
+        drive('VD_EVAL','0')
+    lines+=['resume','let supply_current = -i(VDD)','let reference_current = -i(VREF)','wrdata waveform.dat '+' '.join('v('+n+')' for n in names)+' supply_current reference_current '+' '.join('v('+n+')' for n in BITS)+' v(VPWR)','echo SAR12_NATIVE_COMPLETE','quit','.endc','.end']
     target=Path(folder)/'testbench.spice';target.write_text('\n'.join(lines)+'\n');return target,values
 
 def parse_decisions(file,values,supply,reference):
@@ -256,6 +272,7 @@ def execute(server,run,p,folder,manifest,params):
         ir=schematic('sar12_analog');p={**copy.deepcopy(p),'cell':'sar12_analog','schematic':ir,'ports':ir['ports']}
     elif kind!='sar12_analog':raise EDAError('SAR12_BLOCK_TEST_REQUIRED','Open the analog core for whole conversion; standalone block stimulus is not silently substituted.')
     config=settings({**p['testbench'],**{k:params[k] for k in native.TESTBENCH if k in params}});p={**p,'testbench':config}
+    v={**DEFAULTS,**p['design_template']['parameters']}
     if config['analysis']!='tran':raise EDAError('SAR12_ANALYSIS','Twelve actual retained-charge decisions require transient analysis.')
     if params.get('post_layout'):
         netlist=server.extract(run,p,folder,manifest,pex=True)
@@ -265,10 +282,11 @@ def execute(server,run,p,folder,manifest,params):
     sub=A.subcircuit_ports(Path(netlist).read_text(),p['cell'])
     if sub is None or set(sub)!=set(p['ports']) or len(sub)!=len(p['ports']):raise EDAError('PORT_MISMATCH','Actual SAR12 netlist ports differ.')
     deck=server.design_tools.supported_model_deck(folder,config['corner']);tb,values=control_testbench(p,folder,deck,netlist,sub,post_layout=bool(params.get('post_layout')))
-    if params.get('post_layout'):tb.write_text(tb.read_text().replace('.option scale=1e-6','.option klu scale=1e-6',1))
-    log=server.process(run,folder,['ngspice','-b',str(tb)],'ngspice',manifest,timeout=900)
+    manifest['settings']['sar12_external_control']={'R_Ohm':2000,'C_F':2e-12,'input_source_R_Ohm_each':50,'supply_source_R_Ohm':SUPPLY_SOURCE_R_OHM,'source_transition':'continuous PWL, same pre/post','source_update_delay_s':SOURCE_DELAY_S,'source_rise_fall_s':SOURCE_RISE_S,'reference_R_Ohm':2,'reference_decoupling_F':1e-9,'common_mode_R_Ohm':10,'common_mode_decoupling_F':100e-12,'reset_common_mode_V':v['input_common_mode_V']+(config['supply_V']-v['reference_V'])/2,'digital_delay':'external bridge only; transistor controller delay not simulated'}
+    manifest['settings']['sar12_matrix_solver']='Sparse 1.3; identical accuracy tolerances pre/post'
+    log=server.process(run,folder,['ngspice','-b',str(tb)],'ngspice',manifest,timeout=1800 if params.get('post_layout') else 900)
     if 'SAR12_NATIVE_COMPLETE' not in log or any(x in log.lower() for x in ('fatal error','timestep too small','unknown subckt','singular matrix','error on line','error:','warning: upper limit','warning: lower limit')):raise EDAError('SIMULATION_FAILED','Actual SAR12 native transient failed; original log retained.')
-    v={**DEFAULTS,**p['design_template']['parameters']};rows,frames,ambiguous=parse_decisions(folder/'decisions.csv',values,config['supply_V'],v['reference_V']);matched=replay(server,run,folder,manifest,rows,frames)
+    rows,frames,ambiguous=parse_decisions(folder/'decisions.csv',values,config['supply_V'],v['reference_V']);matched=replay(server,run,folder,manifest,rows,frames)
     # Verify the complete pause schedule separately from the control script's
     # in-simulator checks; neither a restarted plot nor a missed pause can pass.
     pauses=[float(line.split('=')[-1])for line in (folder/'pause-times.txt').read_text().splitlines() if '=' in line]
@@ -279,19 +297,20 @@ def execute(server,run,p,folder,manifest,params):
         for b in range(12):expected.extend([expected[1]+(b+.65)*v['bit_period_s'],expected[1]+(b+1)*v['bit_period_s']])
         if any(abs(a-b)>1e-12 for a,b in zip(pauses[26*f:26*f+26],expected)):raise EDAError('SAR12_TIME_MISMATCH','Actual comparison time differs from the declared continuous sequence.')
     import sar12_metrics
-    selected,trace=sar12_metrics.display_trace(folder/'waveform.dat',23,power_sources={9:config['supply_V'],10:v['reference_V']})
-    names=['VINP','VINN','SAMPLE','EVAL','TOPP','TOPN','COMP','COMPN','supply_current','reference_current']+BITS
+    selected,trace=sar12_metrics.display_trace(folder/'waveform.dat',24,power_sources={9:config['supply_V'],10:v['reference_V']})
+    names=['VINP','VINN','SAMPLE','EVAL','TOPP','TOPN','COMP','COMPN','supply_current','reference_current']+BITS+['VPWR']
     # Bound RPC size. Keep actual extrema on a shared axis, never synthesize a
     # waveform; full raw samples remain the authoritative downloadable artifact.
     period=v['acquisition_s']+v['hold_s']+12*v['bit_period_s'];run['waveforms']=[dict(name=n,unit='A' if n.endswith('current') else 'V',x=[r[0] for r in selected],y=[r[i+1] for r in selected]) for i,n in enumerate(names)]+[dict(name='CODE',unit='code',x=[(f['frame']+1)*period for f in frames],y=[f['code'] for f in frames])]
     checks=[dict(name='Actual comparator trials match RTL, synthesized gates and editable CMOS logic',pass_=matched),dict(name='Both comparator outputs reach complementary logic levels',pass_=ambiguous==0),dict(name='Native directed codes within one nominal 12-bit LSB',pass_=all(abs(f['error_codes'])<=1 for f in frames))]
     checks=[{'name':c['name'],'pass':c['pass_'],'observed':None} for c in checks];passed=all(c['pass'] for c in checks)
-    report=dict(schema_version=1,kind=kind,source='continuous ngspice MOS/charge decisions and independent RTL/gate/IR replay',pass_=passed,checks=checks,frames=frames,ambiguous_decisions=ambiguous,scope='Noiseless deterministic transient; external ideal VREF/VCM and finite-RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.')
+    report=dict(schema_version=1,kind=kind,source='continuous ngspice MOS/charge decisions and independent RTL/gate/IR replay',pass_=passed,checks=checks,frames=frames,ambiguous_decisions=ambiguous,scope='Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.')
     report['pass']=report.pop('pass_');target=folder/'sar12-verification.json';target.write_text(json.dumps(report,indent=2)+'\n')
     run.update(tool='ngspice + Icarus Verilog',reference_verification=report,analysis_result='pass' if passed else 'fail',message='Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.')
-    run.setdefault('measurements',{}).update(analysis='tran',x_unit='s',x_label='time',output_bits=12,frames=len(frames),max_code_error=max(abs(f['error_codes']) for f in frames),ambiguous_decisions=ambiguous,rtl_gate_replay_match=matched,lsb_V=2*v['reference_V']/4096,conversion_s=period,sample_rate_Hz=1/period,effective_resolution='not measured',physical_unit_count=508,scope=report['scope'])
+    run.setdefault('measurements',{}).update(analysis='tran',matrix_solver='Sparse 1.3',x_unit='s',x_label='time',output_bits=12,frames=len(frames),max_code_error=max(abs(f['error_codes']) for f in frames),ambiguous_decisions=ambiguous,rtl_gate_replay_match=matched,lsb_V=2*v['reference_V']/4096,conversion_s=period,sample_rate_Hz=1/period,effective_resolution='not measured',physical_unit_count=508,scope=report['scope'])
     run['measurements'].update(trace)
-    run['measurements']['source_energy_scope']='All raw analog-core VDD and VREF samples. External control-driver energy and synthesized-controller power are not measured.'
+    run['measurements'].update(core_supply_min_V=min(r[-1] for r in selected),core_supply_max_V=max(r[-1] for r in selected),supply_source_R_Ohm=SUPPLY_SOURCE_R_OHM)
+    run['measurements']['source_energy_scope']='All raw VDD/VREF source samples, including their external series-resistor losses. External control-driver energy and synthesized-controller power are not measured.'
     if v['test_mode'] in (1,2):
         import sar12_metrics
         spectrum=sar12_metrics.coherent_spectrum([f['code'] for f in frames],1/period,7 if v['test_mode']==1 else 17)
@@ -301,4 +320,4 @@ def execute(server,run,p,folder,manifest,params):
         import sar12_metrics
         audit=sar12_metrics.coupling_audit(Path(netlist).read_text());(folder/'coupling-audit.json').write_text(json.dumps(audit,indent=2)+'\n');run['artifacts']['coupling_audit']=str(folder/'coupling-audit.json')
     run['artifacts'].update(testbench=str(tb),native_decisions=str(folder/'decisions.csv'),waveform_data=str(folder/'waveform.dat'),sar12_verification=str(target))
-    manifest['settings'].update(sar12_architecture='differential 6+6 split CDAC, 200fF unit pairs, dynamic reset/evaluate comparator',sar12_external_control={'R_Ohm':2000,'C_F':2e-12,'input_source_R_Ohm_each':50,'reference_R_Ohm':2,'reference_decoupling_F':1e-9,'common_mode_R_Ohm':10,'common_mode_decoupling_F':100e-12,'reset_common_mode_V':v['input_common_mode_V']+(config['supply_V']-v['reference_V'])/2,'digital_delay':'not simulated'},sar12_reference_paper='https://arxiv.org/abs/2610.15240v1',sar12_scope=report['scope'])
+    manifest['settings'].update(sar12_architecture='differential 6+6 split CDAC, 200fF unit pairs, dynamic reset/evaluate comparator',sar12_reference_paper='https://arxiv.org/abs/2610.15240v1',sar12_scope=report['scope'])

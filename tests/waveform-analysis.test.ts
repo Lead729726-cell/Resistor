@@ -88,6 +88,15 @@ test('pre/post comparison excludes unknown stages, imported sources and mismatch
   assert.equal(runStage({ ...a, analysis_stage: undefined }), 'unknown');
   assert.equal(axisUnit({ ...a, kind: 'simulation_ac' }), 'Hz');
 });
+
+test('native post-layout stage remains identifiable without duplicated measurement metadata', () => {
+  const post=run('post',true);
+  assert.equal(runStage(post),'post');
+  assert.equal(runStage({...post,measurements:{}}),'post');
+  assert.equal(runStage({...post,measurements:{post_layout:'false'}}),'post');
+  assert.equal(runStage({...post,analysis_stage:undefined,measurements:{post_layout:'true'}}),'post');
+  assert.equal(runStage({...post,analysis_stage:undefined,measurements:{}}),'unknown');
+});
 test('CSV cells preserve signed numbers and neutralize formula-like names', () => {
   assert.equal(csvCell(-.001), '-0.001'); assert.equal(csvCell('=SUM(A1)'), '"\'=SUM(A1)"');
   assert.equal(csvCell('v("out")'), '"v(""out"")"');

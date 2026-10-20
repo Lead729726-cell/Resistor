@@ -1,4 +1,4 @@
-import copy,math,tempfile,unittest
+import copy,math,re,tempfile,unittest
 from pathlib import Path
 import sar12 as A,sar12_metrics as M,sar12_physical as L
 import native,physical_library as P
@@ -32,14 +32,38 @@ class Sar12Tests(unittest.TestCase):
         p=dict(cell='sar12_analog',testbench=A.recommended_settings({}),design_template=dict(parameters=A.DEFAULTS))
         with tempfile.TemporaryDirectory() as f:
             file,values=A.control_testbench(p,f,'models.spice','core.spice',A.schematic('sar12_analog')['ports']);text=file.read_text();lines=text.splitlines()
-            self.assertEqual(lines.count('run'),1);self.assertEqual(lines.count('delete all'),26*len(values))
-            self.assertEqual(text.count('stop when time ge '),26*len(values));self.assertNotIn('stop when time = ',text)
-            self.assertIn('VMARK SAR12_TIMING_MARK VGND PWL(',text)
+            self.assertEqual(lines.count('run'),1);self.assertNotIn('delete all',lines)
+            self.assertEqual(text.count('stop when time = '),26*len(values));self.assertNotIn('stop when time ge ',text)
+            self.assertFalse(any(l.startswith(('VMARK ','RMARK '))for l in lines))
+            self.assertIn('.option sparse scale=1e-6 method=gear maxord=2 reltol=1e-5 vntol=1e-6 abstol=1e-12 chgtol=1e-16',text)
             self.assertEqual(text.count('SAR12_PAUSE_FAILED'),26*len(values));self.assertIn('RVCM VCM_DRV VCM 10',text)
             self.assertIn('R_VINP VINP_DRV VINP 50',text);self.assertIn('R_VINN VINN_DRV VINN 50',text)
+            self.assertIn('VDD VDD_DRV VGND 1.8\nRVDD VDD_DRV VPWR 0.1',text)
+            self.assertNotIn('VDD VPWR VGND',text)
+            self.assertTrue(next(l for l in lines if l.startswith('save ')).endswith('v(VPWR)'))
+            self.assertTrue(next(l for l in lines if l.startswith('wrdata ')).endswith('v(VPWR)'))
             post,_=A.control_testbench(p,f,'models.spice','core.spice',A.schematic('sar12_analog')['ports'],post_layout=True);lines=post.read_text().splitlines()
+            self.assertEqual(text,post.read_text(),'Pre/post use the identical continuous source and exact event schedule.')
             self.assertEqual(sum(l.startswith('stop when time = ')for l in lines),26*len(values));self.assertNotIn('delete all',lines)
             self.assertTrue(all(i<lines.index('run')for i,l in enumerate(lines)if l.startswith('stop when')))
+            self.assertFalse(any(l.startswith(('VMARK ','RMARK '))for l in lines))
+            self.assertEqual(lines.count('run'),1);self.assertEqual(lines.count('resume'),26*len(values))
+            self.assertNotIn('reset',lines);self.assertNotIn('uic',post.read_text())
+            self.assertFalse(any(re.match(r'alter [^@]',l)for l in lines))
+            self.assertIn('VINP VINP_DRV VGND PWL(',post.read_text())
+            # Every feedback-driven ramp begins after the accepted pause and
+            # ends before the declared stop time; no source changes at resume.
+            now=0.;updates=0
+            for line in lines:
+                m=re.match(r'if abs\(time\[sar12_k\] - ([\d.eE+-]+)\)',line)
+                if m:now=float(m[1])
+                m=re.match(r'let sar12_stimulus\[([246])\] = ([\d.eE+-]+)$',line)
+                if not m:continue
+                slot,value=int(m[1]),float(m[2])
+                if slot==2:self.assertAlmostEqual(value-now,A.SOURCE_DELAY_S,places=15);start=value
+                if slot==4:self.assertAlmostEqual(value-start,A.SOURCE_RISE_S,places=15);finish=value
+                if slot==6:self.assertLess(finish,value);updates+=1
+            self.assertEqual(updates,len(values)*(16+1+12*14+1))
     def test_decision_parser_rejects_forged_truncated_and_nonfinite_records(self):
         vin=A.DEFAULTS['input_differential_V'];code=0;rows=['frame bit trial comp compn topp topn vin decision']
         for bit in reversed(range(12)):

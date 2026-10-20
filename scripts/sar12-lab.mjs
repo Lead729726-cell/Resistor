@@ -18,9 +18,12 @@ await writeFile(path.join(workspace,'.runtime/engine.json'),JSON.stringify({...s
 await writeFile(path.join(workspace,'.runtime/product-context.json'),JSON.stringify({schema_version:1,product_id:'resistor.indust',edition:'indust'}));
 await startWorker(workspace,{resourcesRoot:root,mode:engineMode,prepare:false});
 const config=await runtimeConfig(workspace),api=async(method,params={})=>{const b=await workerRpc(config,method,params);assert(b.ok,method+': '+JSON.stringify(b.error));return b.result;};
-const wait=async job=>{const deadline=Date.now()+1200000;while(['queued','running'].includes(job.execution_status)){if(Date.now()>deadline)throw Error('Preserved running job '+job.id);await new Promise(r=>setTimeout(r,500));job=await api('job.status',{run_id:job.id});}return job;};
+const wait=async job=>{const deadline=Date.now()+2400000;while(['queued','running'].includes(job.execution_status)){if(Date.now()>deadline)throw Error('Preserved running job '+job.id);await new Promise(r=>setTimeout(r,500));job=await api('job.status',{run_id:job.id});}return job;};
 const physical=process.argv.includes('--physical'),mode=Number(process.argv.find(a=>a.startsWith('--mode='))?.slice(7)||0),reuse=process.argv.find(a=>a.startsWith('--reuse='))?.slice(8);
-let p=reuse?await api('project.open',{project_id:reuse}):await api('design.create_template',{template_id:'sar12_analog',name:'SAR12 · 논문 기반 분할 CDAC ['+Date.now()+']',parameters:{test_mode:mode},physical_core:physical,chip_limits:{width_um:1000,height_um:1000,max_area_um2:1000000,edge_um:10},command_id:randomUUID()});
+const input=process.argv.find(a=>a.startsWith('--input='));
+assert(!reuse||!input,'--input creates a new project; an existing project is never silently changed.');
+if(input)assert(input.slice(8).trim()!==''&&Number.isFinite(Number(input.slice(8))),'--input needs a finite differential voltage in V.');
+let p=reuse?await api('project.open',{project_id:reuse}):await api('design.create_template',{template_id:'sar12_analog',name:'SAR12 · 논문 기반 분할 CDAC ['+Date.now()+']',parameters:{test_mode:mode,...(input?{input_differential_V:Number(input.slice(8))}:{})},physical_core:physical,chip_limits:{width_um:1000,height_um:1000,max_area_um2:1000000,edge_um:10},command_id:randomUUID()});
 assert.equal(p.design_template?.id,'sar12_analog','Only an actual SAR12 analog project can be qualified here.');
 await mkdir('.runtime/sar12/results',{recursive:true});await writeFile('.runtime/sar12/latest-project.json',JSON.stringify({workspace,project_id:p.id,revision:p.revision},null,2));
 if(physical)await writeFile('.runtime/sar12/latest-physical-project.json',JSON.stringify({workspace,project_id:p.id,revision:p.revision},null,2));

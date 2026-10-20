@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "edition": "Resistor Indust",
+  "source_run": "8a098651639f4123b3e5251749efa44c",
+  "extracted_dut_sha256": "40333ad124b6e2a7b6bb662cfffefa24b585727c74b3dda83faa21723c4ad721",
+  "solver": "ngspice 42 / KLU",
+  "cases": [
+    {
+      "case": "baseline",
+      "execution_status": "failed",
+      "returncode": 1,
+      "elapsed_s": 65.70308503997512,
+      "source_unchanged": true,
+      "complete": false,
+      "files": {
+        "testbench.spice": "6fa09ac185053a251160e45af6a26a13508b3b6ce0c6caa732d3dbc595d167fc",
+        "ngspice.log": "5c690520a5539cc0dd154270f180fd0b913dc94f18a793c0fce9ca3088fe1453",
+        "decisions.csv": "0caee13dc30cc900c0451db29c5f4f5a80dd6302821ed68a98f219dc932e7521",
+        "pause-times.txt": "b4be9f5e3892ae5a21387c178308f63b01ccd613cfaae2f098cb37a6eff8f267",
+        "result.json": "8689587648061159769ef7320ac61000d2b2c5f10c4dddac69e3c0b0f5d3677a"
+      }
+    },
+    {
+      "case": "no-marker",
+      "execution_status": "failed",
+      "returncode": 1,
+      "elapsed_s": 255.2945195059874,
+      "source_unchanged": true,
+      "complete": false,
+      "files": {
+        "testbench.spice": "cff417e65841665529d26081f55757ec64e70ed081541b0188497dd78340f5bf",
+        "ngspice.log": "669339847173c6115f8e0f43d9334a9b7be184dcbcbda96304b46cfb1930d478",
+        "decisions.csv": "0c8f97f4e2fc17906b72107e2fae78658c0d083855c7d92870b81b90f47f173e",
+        "pause-times.txt": "dbc3222f62e6c59a76bcf7070f93e052e2ef113e513b2b86fd95835be842f094",
+        "result.json": "f766d0b09b58228fdebf5963e3b6f0510c139343a57d905e99216e56801a1642"
+      }
+    },
+    {
+      "case": "supply-r",
+      "execution_status": "completed",
+      "returncode": 0,
+      "elapsed_s": 328.54669275600463,
+      "source_unchanged": true,
+      "complete": true,
+      "files": {
+        "testbench.spice": "ced3b86c7aa28c1ffde2e45f450580aacff99b76b67659464f6a01a45b333f0b",
+        "ngspice.log": "622e8b82738fb4b7d656c28788d08cc778cf8387ada1c1c297a54406b5b331f4",
+        "decisions.csv": "de6e2ca3c497a1ef6c3d086fc03a40fd6aa475d0565e7773bed8ed407b74d20c",
+        "pause-times.txt": "95ba108718ed61147f71c7ca9e424c3c7066cca5360c8a5451ee277896fc0ea6",
+        "result.json": "7fa48b5b13e99fa1f0d8ae5cde7eace81390db668ca080a3b4efa8716ab1e641"
+      },
+      "frames": [
+        {
+          "frame": 0,
+          "input_differential_V": 0.00029296875,
+          "code": 2047,
+          "expected_code": 2048,
+          "error_codes": -1
+        }
+      ],
+      "ambiguous_decisions": 0,
+      "actual_pause_count": 26,
+      "raw_waveform_sha256": "3a896fe458e765ec8c8ba366925f2549539f6aafe04ecbd8fba065e652c95236"
+    }
+  ],
+  "scope": "Controlled external testbench change only; no extracted resistor, capacitor, MOS model or solver tolerance changed. These are preserved experiments, separate from revision-bound engine jobs.",
+  "finite_edge_comparison": {
+    "source_run": "d52e6edd331f4f61a400ac2fc30fc73b",
+    "extracted_dut_sha256": "a1f370c6e7e647598ffae111b8b6aaff7835b731fc07dc4ba8e9bdcf102341c4",
+    "dc_update_execution_status": "failed",
+    "pwl_update_execution_status": "completed",
+    "change": "External input/control DC changes replaced by continuous PWL; 1ns delay, 2ns rise/fall. No reset, new DUT, relaxed tolerance or capacitance change.",
+    "frames": [
+      {
+        "frame": 0,
+        "input_differential_V": -1.16220703125,
+        "code": 65,
+        "expected_code": 64,
+        "error_codes": 1
+      }
+    ],
+    "ambiguous_decisions": 0,
+    "raw_waveform_sha256": "883b9d39a1bb081a4a21c8ee43475e358c104013bac1b52ee5287cd4206531de",
+    "logic_replay": "See the formal engine jobs; this standalone experiment only validates native decisions and completion.",
+    "files": {
+      "low-dc/testbench.spice": "5288c511263ff8a947a0e03d28a66110c4d486fdd24dc63af79a12c21ba1fdfc",
+      "low-dc/ngspice.log": "e581ad4af7fc0a533faab006ef77817759d23ce8ff6eeb26c0088f0cc74629e5",
+      "low-dc/decisions.csv": "fe3b371b1df57029d5e3dc104eeda22e63b69c9a7a5deaaefee63efc3d751e92",
+      "low-dc/pause-times.txt": "5cf6098c2f962fffb8b7d47705da6e563f2a59918425d20b5a6f67068633d172",
+      "pwl-low/testbench.spice": "59d6d2f74148370edcbe56528554a556652a2ad5e6386d1dca458c3a8923caeb",
+      "pwl-low/ngspice.log": "56c53c3d41f3efb33a384ef6b1dc44c051ba30193954665554cfcb4b87c0c1c4",
+      "pwl-low/decisions.csv": "802dc2bce4f5cdaf7329ffc949e047e2eaa1007c7db5a21d829667441fc41e0e",
+      "pwl-low/pause-times.txt": "1e2a8e9e0b29931d3dcd5d7f0bae0e7c0cef8e9991ea95ddbf190445d82d96ad",
+      "pwl-low/result.json": "30615403003f8309af286ff8bc910112b0500b84899e5f119c4c6929a6a5d0c1"
+    }
+  },
+  "matrix_solver_comparison": {
+    "source_run": "4b5d8c07679a4efda589d495092c2fe2",
+    "extracted_dut_sha256": "6cd2fb91166374b1cd33c365fc694942011ad4a482fd6b9c492e042c6ef54201",
+    "klu_baseline": "failed at 4.551055534706587e-6 s",
+    "cases": [
+      {
+        "case": "iterations",
+        "execution_status": "failed",
+        "elapsed_s": 104.55917122401297,
+        "files": {
+          "testbench.spice": "983911f55c4abfbe6da887c7777bb7a3bedc26c12bdb9472e7811f683733a65f",
+          "ngspice.log": "1c764f8ede27d983ce3110534d79dbee79a40f5d0cba9c74eca24e37b09c98c6",
+          "decisions.csv": "8e42310b2893f55e6962ef6b666af661d83f78a9a58cde2e43712204eb73781c",
+          "pause-times.txt": "b4be9f5e3892ae5a21387c178308f63b01ccd613cfaae2f098cb37a6eff8f267",
+          "result.json": "29dd8c312cae1afb3b85821f180a23687e4c0706c07c4078355eb60c8c00b25f"
+        }
+      },
+      {
+        "case": "pivot",
+        "execution_status": "failed",
+        "elapsed_s": 91.15754448599182,
+        "files": {
+          "testbench.spice": "4b9958f6bbc4adca7b45003b12287a8b3ce7fe4254e0ce9010289f1db241c13a",
+          "ngspice.log": "89810d74e3523f8118603372fe223604a4c571e148f68c9ca5ca3fdf7b4405b9",
+          "decisions.csv": "fe3b371b1df57029d5e3dc104eeda22e63b69c9a7a5deaaefee63efc3d751e92",
+          "pause-times.txt": "5cf6098c2f962fffb8b7d47705da6e563f2a59918425d20b5a6f67068633d172",
+          "result.json": "e5ed29cc27e4588f4ceda095f2ff6f45da746ecd22532ba49d9260ea4df6a780"
+        }
+      },
+      {
+        "case": "sparse",
+        "execution_status": "completed",
+        "elapsed_s": 650.179258300981,
+        "files": {
+          "testbench.spice": "3c018e77392e27267a7f7b062ed10109b141ab5318c9c323a6e6c4ca8679e1cd",
+          "ngspice.log": "21a6feff593099be383fb9f123324c4f619b1d55d202bc91ec422ee2f736193e",
+          "decisions.csv": "cad2ecc551f46fdab8bb66c3ddb3ed6795a2326d2365cc822aa837ce2fb70e41",
+          "pause-times.txt": "1e2a8e9e0b29931d3dcd5d7f0bae0e7c0cef8e9991ea95ddbf190445d82d96ad",
+          "result.json": "b8d0dd68e0aee507c836b19116657777685767658e620000596861517e0bcaef"
+        },
+        "frames": [
+          {
+            "frame": 0,
+            "input_differential_V": 0.00029296875,
+            "code": 2047,
+            "expected_code": 2048,
+            "error_codes": -1
+          }
+        ],
+        "ambiguous_decisions": 0,
+        "raw_waveform_sha256": "b8c47227729f76d5cdb023799dbbe1c39af80bf6eb6bec19b65675870871b5ce"
+      }
+    ],
+    "scope": "Same immutable RC netlist and source waveforms. Only the recorded solver option changes; no accuracy tolerance is relaxed."
+  }
+}

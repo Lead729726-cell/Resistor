@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "kind": "sar12_analog",
+  "source": "continuous ngspice MOS/charge decisions and independent RTL/gate/IR replay",
+  "checks": [
+    {
+      "name": "Actual comparator trials match RTL, synthesized gates and editable CMOS logic",
+      "pass": true,
+      "observed": null
+    },
+    {
+      "name": "Both comparator outputs reach complementary logic levels",
+      "pass": true,
+      "observed": null
+    },
+    {
+      "name": "Native directed codes within one nominal 12-bit LSB",
+      "pass": true,
+      "observed": null
+    }
+  ],
+  "frames": [
+    {
+      "frame": 0,
+      "input_differential_V": 0.00029296875,
+      "code": 2048,
+      "expected_code": 2048,
+      "error_codes": 0
+    },
+    {
+      "frame": 1,
+      "input_differential_V": -1.19970703125,
+      "code": 0,
+      "expected_code": 0,
+      "error_codes": 0
+    },
+    {
+      "frame": 2,
+      "input_differential_V": -1.1991210937499999,
+      "code": 1,
+      "expected_code": 1,
+      "error_codes": 0
+    },
+    {
+      "frame": 3,
+      "input_differential_V": -1.1815429687499999,
+      "code": 31,
+      "expected_code": 31,
+      "error_codes": 0
+    },
+    {
+      "frame": 4,
+      "input_differential_V": -1.16279296875,
+      "code": 63,
+      "expected_code": 63,
+      "error_codes": 0
+    },
+    {
+      "frame": 5,
+      "input_differential_V": -1.16220703125,
+      "code": 64,
+      "expected_code": 64,
+      "error_codes": 0
+    },
+    {
+      "frame": 6,
+      "input_differential_V": -1.16162109375,
+      "code": 65,
+      "expected_code": 65,
+      "error_codes": 0
+    },
+    {
+      "frame": 7,
+      "input_differential_V": -0.6002929687499999,
+      "code": 1023,
+      "expected_code": 1023,
+      "error_codes": 0
+    },
+    {
+      "frame": 8,
+      "input_differential_V": -0.00029296875,
+      "code": 2047,
+      "expected_code": 2047,
+      "error_codes": 0
+    },
+    {
+      "frame": 9,
+      "input_differential_V": 0.0008789062499999999,
+      "code": 2049,
+      "expected_code": 2049,
+      "error_codes": 0
+    },
+    {
+      "frame": 10,
+      "input_differential_V": 0.6002929687499999,
+      "code": 3072,
+      "expected_code": 3072,
+      "error_codes": 0
+    },
+    {
+      "frame": 11,
+      "input_differential_V": 1.16220703125,
+      "code": 4030,
+      "expected_code": 4031,
+      "error_codes": -1
+    },
+    {
+      "frame": 12,
+      "input_differential_V": 1.1991210937499999,
+      "code": 4093,
+      "expected_code": 4094,
+      "error_codes": -1
+    },
+    {
+      "frame": 13,
+      "input_differential_V": 1.19970703125,
+      "code": 4094,
+      "expected_code": 4095,
+      "error_codes": -1
+    }
+  ],
+  "ambiguous_decisions": 0,
+  "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+  "pass": true
+}

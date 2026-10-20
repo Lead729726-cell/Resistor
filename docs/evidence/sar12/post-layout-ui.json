@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "edition": "Resistor Indust",
+  "captured_at": "2026-10-20T04:29:04.829Z",
+  "verification_method": "Actual CUA application operation; DOM, SVG geometry and screenshot inspected",
+  "url": "http://127.0.0.1:5193/eda",
+  "project_id": "8893e1bc80594f01922cc329248b713a",
+  "run_id": "9f7f0dd5c8c74fa08bcf3317e6eebe59",
+  "paired_pre_run": "0dfb8c66b66d4c06b62ace4735c47bc5",
+  "checks": [
+    {
+      "name": "Current native result identifies the actual post-layout stage",
+      "passed": true,
+      "observed": "PASS; Post-layout · tran · r1 · 9f7f0dd5"
+    },
+    {
+      "name": "Same-settings pre/post comparison displays actual output samples",
+      "passed": true,
+      "observed": [
+        "CODE · pre: 64 code · 실제 표본 1개",
+        "CODE · post: 65 code · 실제 표본 1개",
+        "max_code_error: 0 → 1",
+        "ambiguous_decisions: 0 → 0"
+      ]
+    },
+    {
+      "name": "Atomic differential-node preset selects exactly four source traces",
+      "passed": true,
+      "observed": "표시 4/48",
+      "svg_polylines": 4,
+      "source_point_counts": [
+        2011,
+        2011,
+        2208,
+        2208
+      ]
+    },
+    {
+      "name": "Output-code preset selects two real single-sample outputs",
+      "passed": true,
+      "observed": "표시 2/48"
+    },
+    {
+      "name": "Actual VPWR and signed source currents remain selectable",
+      "passed": true,
+      "observed": [
+        "VPWR V",
+        "supply_current A",
+        "reference_current A"
+      ]
+    },
+    {
+      "name": "Unmeasured post-layout spectrum remains unmeasured",
+      "passed": true,
+      "observed": "SNDR 미측정 · SFDR 미측정 · 무잡음 해석 ENOB 미측정"
+    },
+    {
+      "name": "Independent project verification remains independent",
+      "passed": true,
+      "observed": "This imported low-input project: DRC 미실행 / LVS 미실행 / PEX PASS; original analog project DRC/LVS evidence stored separately"
+    }
+  ],
+  "manufacturing_signoff": false,
+  "rechecked_after_upstream_integration_at": "2026-10-20T04:35:13.116Z",
+  "final_visible_view": "Same current pre/post TOPP/TOPN comparison; four actual curves visible and input/output test controls collapsed"
+}

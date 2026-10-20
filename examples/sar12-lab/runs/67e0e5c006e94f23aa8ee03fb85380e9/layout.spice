@@ -1,0 +1,735 @@
+* NGSPICE file created from sar12_analog.ext - technology: sky130A
+
+.subckt sar12_analog VPWR VINP VINN TOPP TOPN SAMPLE EVAL COMPN B1 B0 B11 VREF VCM
++ B2 B3 COMP B4 B8 VGND B5 B6 B7 B10 B9
+X0 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X1 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X2 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X3 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X4 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X5 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X6 DAC__FINEP DAC__P_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X7 VPWR B4 DAC__N_FINE_B4_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X8 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X9 DAC__N_COARSE_B1 DAC__N_COARSE_B1_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X10 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X11 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X12 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X13 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X14 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X15 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X16 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X17 VPWR COMPARE_BIAS_RES_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X18 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X19 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X20 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X21 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X22 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X23 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X24 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X25 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X26 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X27 VPWR B10 DAC__P_COARSE_B4_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X28 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X29 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X30 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X31 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X32 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X33 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X34 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X35 DAC__N_COARSE_B4 B10 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X36 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X37 COMPARE_PRE1_LOAD_OUTP_R0_N0 COMPARE_PRE1_LOAD_OUTP_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X38 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X39 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X40 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X41 DAC__FINEP DAC__P_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X42 VPWR COMPARE__LATCH__QN COMPARE__LATCH__OUTP_B VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X43 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X44 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X45 DAC__N_FINE_B4 DAC__N_FINE_B4_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X46 DAC__FINEP SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X47 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X48 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X49 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X50 COMPARE_PRE0_LOAD_OUTN_R0_N0 COMPARE_PRE0_LOAD_OUTN_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X51 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X52 TOPP SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X53 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X54 DAC__N_FINE_B3 DAC__N_FINE_B3_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X55 VPWR SAMPLE DAC__SAMPLEB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X56 DAC__N_COARSE_B3 B9 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X57 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X58 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X59 DAC__N_COARSE_B4 DAC__N_COARSE_B4_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X60 DAC__P_FINE_B2 B2 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X61 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X62 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X63 DAC__N_FINE_B4 DAC__N_FINE_B4_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X64 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X65 VPWR COMPARE_PRE1_LOAD_OUTP_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X66 TOPN DAC__N_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X67 VGND COMPARE__LATCH__QP COMPARE__LATCH__OUTN_B VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X68 DAC__N_FINE_B1 B1 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X69 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X70 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X71 VGND EVAL COMPARE__LATCH__TAIL VGND sky130_fd_pr__nfet_01v8 ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X72 VPWR B9 DAC__N_COARSE_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X73 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X74 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X75 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X76 TOPP DAC__P_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X77 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X78 COMPARE__LATCH__TAIL COMPARE__PRE1P COMPARE__LATCH__FN VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X79 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X80 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X81 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X82 COMPARE__LATCH__FP COMPARE__LATCH__QP COMPARE__LATCH__QN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X83 DAC__HIN SAMPLE VREF VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X84 DAC__N_COARSE_B4 DAC__N_COARSE_B4_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X85 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X86 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X87 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X88 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X89 DAC__P_COARSE_B0 DAC__P_COARSE_B0_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X90 VPWR B7 DAC__P_COARSE_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X91 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X92 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X93 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X94 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X95 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X96 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X97 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X98 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X99 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X100 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X101 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X102 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X103 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X104 TOPN DAC__N_COARSE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X105 DAC__LON DAC__SAMPLEB VINN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X106 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X107 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X108 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X109 VGND B3 DAC__P_FINE_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X110 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X111 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X112 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X113 DAC__N_COARSE_B1 DAC__N_COARSE_B1_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X114 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X115 DAC__P_FINE_B4 DAC__P_FINE_B4_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X116 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X117 DAC__FINEP DAC__P_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X118 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X119 VGND B10 DAC__N_COARSE_B4_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X120 DAC__FINEP DAC__LOP sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X121 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X122 DAC__P_FINE_B1 B1 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X123 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X124 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X125 VPWR B5 DAC__P_FINE_B5_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X126 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X127 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X128 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X129 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X130 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X131 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X132 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X133 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X134 DAC__N_FINE_B2 B2 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X135 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X136 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X137 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X138 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X139 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X140 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X141 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X142 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X143 COMPARE__PRE0__TAIL TOPN COMPARE__PRE0N VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X144 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X145 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X146 VPWR B2 DAC__N_FINE_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X147 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X148 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X149 TOPP DAC__P_COARSE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X150 DAC__LOP SAMPLE VINP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X151 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X152 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X153 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X154 DAC__FINEP DAC__P_FINE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X155 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X156 VPWR B0 DAC__P_FINE_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X157 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X158 DAC__N_FINE_B2 DAC__N_FINE_B2_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X159 DAC__P_COARSE_B0 B6 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X160 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X161 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X162 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X163 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X164 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X165 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X166 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X167 DAC__N_COARSE_B1 B7 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X168 DAC__P_COARSE_B3 DAC__P_COARSE_B3_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X169 TOPN DAC__N_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X170 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X171 COMPARE_BIAS_RES_R0_N1 COMPARE__BIAS VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X172 COMPARE__LATCH__TAIL COMPARE__PRE1N COMPARE__LATCH__FP VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X173 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X174 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X175 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X176 VPWR COMPARE_PRE0_LOAD_OUTN_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X177 DAC__N_FINE_B2 DAC__N_FINE_B2_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X178 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X179 VPWR B11 DAC__N_COARSE_B5_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X180 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X181 VPWR B7 DAC__N_COARSE_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X182 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X183 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X184 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X185 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X186 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X187 DAC__FINEP DAC__P_FINE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X188 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X189 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X190 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X191 DAC__HIP DAC__SAMPLEB VREF VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X192 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X193 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X194 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X195 DAC__FINEN DAC__N_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X196 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X197 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X198 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X199 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X200 COMPARE_PRE0_LOAD_OUTP_R0_N1 COMPARE__PRE0P VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X201 DAC__P_COARSE_B2 B8 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X202 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X203 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X204 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X205 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X206 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X207 VGND B5 DAC__N_FINE_B5_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X208 DAC__P_COARSE_B2 DAC__P_COARSE_B2_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X209 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X210 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X211 VPWR EVAL COMPARE__LATCH__QN VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X212 VPWR B6 DAC__N_COARSE_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X213 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X214 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X215 VGND B2 DAC__N_FINE_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X216 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X217 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X218 VGND B9 DAC__N_COARSE_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X219 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X220 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X221 DAC__P_FINE_B1 DAC__P_FINE_B1_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X222 DAC__FINEP DAC__LOP sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X223 DAC__P_COARSE_B1 DAC__P_COARSE_B1_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X224 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X225 VPWR B4 DAC__P_FINE_B4_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X226 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X227 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X228 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X229 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X230 DAC__P_COARSE_B5 B11 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X231 DAC__P_FINE_B4 B4 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X232 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X233 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X234 VPWR B2 DAC__P_FINE_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X235 DAC__P_FINE_B5 B5 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X236 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X237 VGND B1 DAC__P_FINE_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X238 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X239 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X240 DAC__P_FINE_B1 DAC__P_FINE_B1_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X241 DAC__N_COARSE_B0 B6 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X242 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X243 TOPN DAC__N_COARSE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X244 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X245 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X246 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X247 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X248 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X249 VGND B7 DAC__N_COARSE_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X250 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X251 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X252 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X253 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X254 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X255 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X256 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X257 VGND COMPARE__BIAS COMPARE__PRE0__TAIL VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=1
+X258 DAC__P_COARSE_B4 DAC__P_COARSE_B4_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X259 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X260 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X261 DAC__P_FINE_B5 DAC__P_FINE_B5_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X262 COMPARE__PRE0__TAIL TOPP COMPARE__PRE0P VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X263 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X264 DAC__P_FINE_B1 B1 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X265 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X266 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X267 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X268 DAC__N_COARSE_B0 DAC__N_COARSE_B0_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X269 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X270 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X271 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X272 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X273 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X274 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X275 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X276 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X277 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X278 VGND B5 DAC__P_FINE_B5_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X279 DAC__P_FINE_B5 DAC__P_FINE_B5_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X280 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X281 DAC__N_FINE_B2 B2 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X282 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X283 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X284 VGND B6 DAC__N_COARSE_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X285 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X286 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X287 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X288 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X289 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X290 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X291 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X292 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X293 DAC__N_FINE_B0 DAC__N_FINE_B0_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X294 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X295 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X296 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X297 DAC__P_COARSE_B1 B7 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X298 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X299 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X300 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X301 DAC__FINEN DAC__N_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X302 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X303 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X304 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X305 DAC__LON DAC__SAMPLEB VGND VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X306 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X307 VGND B2 DAC__P_FINE_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X308 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X309 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X310 VPWR EVAL COMPARE__LATCH__QP VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X311 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X312 VGND B6 DAC__P_COARSE_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X313 DAC__N_FINE_B0 DAC__N_FINE_B0_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X314 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X315 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X316 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X317 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X318 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X319 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X320 VGND COMPARE__LATCH__OUTP_B COMP VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X321 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X322 DAC__N_COARSE_B3 DAC__N_COARSE_B3_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X323 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X324 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X325 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X326 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X327 VGND B11 DAC__N_COARSE_B5_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X328 DAC__P_COARSE_B4 B10 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X329 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X330 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X331 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X332 COMPARE_PRE0_LOAD_OUTN_R0_N1 COMPARE__PRE0N VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X333 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X334 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X335 DAC__N_FINE_B0 B0 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X336 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X337 COMPARE_PRE1_LOAD_OUTN_R0_N0 COMPARE_PRE1_LOAD_OUTN_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X338 DAC__N_FINE_B1 B1 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X339 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X340 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X341 DAC__N_COARSE_B1 B7 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X342 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X343 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X344 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X345 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X346 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X347 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X348 DAC__P_COARSE_B5 B11 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X349 VPWR B1 DAC__N_FINE_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X350 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X351 DAC__P_COARSE_B3 B9 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X352 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X353 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X354 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X355 VPWR EVAL COMPARE__LATCH__FP VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=0.15
+X356 COMPARE__LATCH__TAIL COMPARE__PRE1N COMPARE__LATCH__FP VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X357 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X358 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X359 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X360 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X361 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X362 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X363 VPWR B1 DAC__P_FINE_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X364 VGND B8 DAC__P_COARSE_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X365 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X366 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X367 VPWR COMPARE_PRE1_LOAD_OUTN_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X368 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X369 DAC__N_COARSE_B0 DAC__N_COARSE_B0_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X370 VGND B11 DAC__P_COARSE_B5_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X371 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X372 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X373 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X374 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X375 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X376 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X377 COMPARE__PRE1P VGND sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+X378 DAC__P_COARSE_B3 DAC__P_COARSE_B3_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X379 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X380 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X381 DAC__N_FINE_B5 B5 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X382 VPWR B10 DAC__N_COARSE_B4_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X383 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X384 DAC__FINEN DAC__N_FINE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X385 COMPARE_BIAS_RES_R0_N0 COMPARE_BIAS_RES_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X386 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X387 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X388 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X389 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X390 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X391 DAC__N_COARSE_B0 B6 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X392 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X393 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X394 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X395 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X396 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X397 COMPARE_PRE1_LOAD_OUTN_R0_N1 COMPARE__PRE1N VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X398 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X399 DAC__P_FINE_B3 DAC__P_FINE_B3_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X400 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X401 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X402 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X403 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X404 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X405 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X406 DAC__N_FINE_B5 DAC__N_FINE_B5_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X407 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X408 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X409 DAC__P_COARSE_B5 DAC__P_COARSE_B5_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X410 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X411 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X412 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X413 DAC__FINEN DAC__N_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X414 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X415 VGND B10 DAC__P_COARSE_B4_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X416 TOPN SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X417 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X418 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X419 DAC__P_FINE_B3 DAC__P_FINE_B3_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X420 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X421 DAC__FINEN DAC__HIN sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X422 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X423 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X424 DAC__P_FINE_B2 DAC__P_FINE_B2_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X425 VPWR COMPARE_PRE0_LOAD_OUTP_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X426 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X427 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X428 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X429 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X430 DAC__N_COARSE_B3 DAC__N_COARSE_B3_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X431 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X432 DAC__LON SAMPLE VGND VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X433 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X434 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X435 DAC__P_COARSE_B1 DAC__P_COARSE_B1_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X436 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X437 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X438 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X439 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X440 DAC__P_FINE_B3 B3 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X441 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X442 DAC__P_COARSE_B1 B7 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X443 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X444 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X445 DAC__N_COARSE_B3 B9 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X446 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X447 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X448 TOPN DAC__FINEN sky130_fd_pr__cap_mim_m3_1 l=14.07 w=14.07
+X449 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X450 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X451 COMPARE__PRE1__TAIL COMPARE__PRE0P COMPARE__PRE1N VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X452 COMPARE__LATCH__TAIL COMPARE__PRE1P COMPARE__LATCH__FN VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X453 DAC__P_COARSE_B0 B6 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X454 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X455 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X456 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X457 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X458 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X459 DAC__N_FINE_B1 DAC__N_FINE_B1_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X460 VGND B7 DAC__P_COARSE_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X461 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X462 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X463 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X464 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X465 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X466 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X467 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X468 DAC__N_FINE_B5 DAC__N_FINE_B5_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X469 VGND COMPARE__BIAS COMPARE__BIAS VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=1
+X470 DAC__HIP DAC__SAMPLEB VINP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X471 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X472 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X473 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X474 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X475 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X476 DAC__P_FINE_B0 B0 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X477 VGND COMPARE__LATCH__OUTN_B COMPN VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X478 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X479 COMPARE_PRE0_LOAD_OUTP_R0_N0 COMPARE_PRE0_LOAD_OUTP_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X480 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X481 COMPARE__PRE0__TAIL TOPN COMPARE__PRE0N VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X482 DAC__N_COARSE_B5 B11 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X483 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X484 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X485 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X486 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X487 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X488 DAC__N_FINE_B5 B5 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X489 DAC__P_COARSE_B3 B9 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X490 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X491 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X492 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X493 VPWR COMPARE__LATCH__QN COMPARE__LATCH__QP VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X494 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X495 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X496 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X497 DAC__LOP DAC__SAMPLEB VINP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X498 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X499 DAC__FINEN SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X500 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X501 DAC__N_COARSE_B5 DAC__N_COARSE_B5_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X502 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X503 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X504 TOPP DAC__P_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X505 VGND B1 DAC__N_FINE_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X506 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X507 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X508 DAC__P_FINE_B4 B4 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X509 VGND B9 DAC__P_COARSE_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X510 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X511 DAC__P_FINE_B0 B0 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X512 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X513 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X514 DAC__FINEN DAC__N_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X515 COMPARE__PRE1N VGND sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+X516 DAC__N_FINE_B3 B3 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X517 TOPN DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X518 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X519 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X520 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X521 COMPARE__PRE1__TAIL COMPARE__PRE0P COMPARE__PRE1N VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X522 DAC__P_FINE_B2 DAC__P_FINE_B2_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X523 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X524 VPWR B8 DAC__N_COARSE_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X525 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X526 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X527 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X528 VPWR B3 DAC__N_FINE_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X529 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X530 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X531 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X532 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X533 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X534 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X535 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X536 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X537 VPWR COMPARE__LATCH__OUTN_B COMPN VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X538 DAC__P_FINE_B0 DAC__P_FINE_B0_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X539 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X540 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X541 VGND B0 DAC__P_FINE_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X542 DAC__FINEN DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X543 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X544 DAC__P_COARSE_B0 DAC__P_COARSE_B0_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X545 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X546 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X547 VPWR COMPARE__LATCH__QP COMPARE__LATCH__OUTN_B VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X548 VGND B4 DAC__P_FINE_B4_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X549 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X550 DAC__P_FINE_B0 DAC__P_FINE_B0_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X551 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X552 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X553 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X554 TOPP DAC__FINEP sky130_fd_pr__cap_mim_m3_1 l=14.07 w=14.07
+X555 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X556 COMPARE__PRE1__TAIL COMPARE__PRE0N COMPARE__PRE1P VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X557 VPWR B11 DAC__P_COARSE_B5_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X558 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X559 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X560 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X561 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X562 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X563 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X564 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X565 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X566 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X567 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X568 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X569 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X570 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X571 DAC__LOP SAMPLE VGND VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X572 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X573 COMPARE_PRE1_LOAD_OUTP_R0_N1 COMPARE__PRE1P VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X574 DAC__FINEP DAC__P_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X575 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X576 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X577 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X578 DAC__P_FINE_B2 B2 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X579 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X580 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X581 DAC__FINEP DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X582 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X583 DAC__P_COARSE_B2 DAC__P_COARSE_B2_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X584 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X585 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X586 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X587 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X588 DAC__P_COARSE_B2 B8 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X589 DAC__FINEN DAC__HIN sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X590 DAC__N_COARSE_B2 B8 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X591 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X592 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X593 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X594 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X595 VGND B4 DAC__N_FINE_B4_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X596 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X597 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X598 DAC__N_COARSE_B5 DAC__N_COARSE_B5_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X599 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X600 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X601 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X602 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X603 DAC__HIP SAMPLE VREF VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X604 TOPN DAC__N_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X605 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X606 TOPP DAC__P_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X607 COMPARE__PRE0__TAIL TOPP COMPARE__PRE0P VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X608 VPWR B9 DAC__P_COARSE_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X609 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X610 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X611 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X612 DAC__N_FINE_B4 B4 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X613 DAC__P_COARSE_B5 DAC__P_COARSE_B5_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X614 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X615 DAC__N_COARSE_B2 DAC__N_COARSE_B2_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X616 TOPP DAC__P_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X617 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X618 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X619 VPWR COMPARE__LATCH__QP COMPARE__LATCH__QN VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X620 VPWR B5 DAC__N_FINE_B5_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X621 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X622 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X623 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X624 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X625 DAC__N_COARSE_B5 B11 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X626 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X627 DAC__FINEN DAC__N_FINE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X628 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X629 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X630 VGND COMPARE__BIAS COMPARE__PRE1__TAIL VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=1
+X631 DAC__N_FINE_B0 B0 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X632 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X633 DAC__P_FINE_B4 DAC__P_FINE_B4_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X634 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X635 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X636 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X637 DAC__N_COARSE_B2 DAC__N_COARSE_B2_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X638 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X639 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X640 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X641 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X642 DAC__N_FINE_B3 DAC__N_FINE_B3_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X643 DAC__P_COARSE_B4 B10 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X644 VPWR B0 DAC__N_FINE_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X645 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X646 DAC__N_COARSE_B4 B10 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X647 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X648 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X649 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X650 TOPP DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X651 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X652 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X653 DAC__N_COARSE_B2 B8 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X654 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X655 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X656 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X657 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X658 DAC__HIN SAMPLE VINN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X659 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X660 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X661 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X662 DAC__HIP SAMPLE VINP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X663 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X664 VPWR B6 DAC__P_COARSE_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X665 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X666 DAC__FINEP DAC__P_FINE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X667 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X668 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X669 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X670 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X671 COMPARE__PRE1__TAIL COMPARE__PRE0N COMPARE__PRE1P VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X672 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X673 DAC__FINEN DAC__N_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X674 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X675 VGND B8 DAC__N_COARSE_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X676 DAC__N_FINE_B1 DAC__N_FINE_B1_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X677 DAC__P_FINE_B5 B5 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X678 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X679 VGND B3 DAC__N_FINE_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X680 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X681 VPWR B3 DAC__P_FINE_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X682 VPWR COMPARE__LATCH__OUTP_B COMP VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X683 DAC__HIN DAC__SAMPLEB VREF VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X684 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X685 VGND SAMPLE DAC__SAMPLEB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X686 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X687 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X688 TOPN DAC__N_COARSE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X689 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X690 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X691 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X692 DAC__N_FINE_B4 B4 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X693 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X694 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X695 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X696 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X697 TOPP DAC__P_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X698 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X699 DAC__FINEN DAC__N_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X700 TOPP DAC__P_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X701 TOPP DAC__P_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X702 VPWR EVAL COMPARE__LATCH__FN VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=0.15
+X703 DAC__FINEN DAC__N_FINE_B2 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X704 DAC__HIN DAC__SAMPLEB VINN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X705 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X706 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X707 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X708 DAC__LON SAMPLE VINN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X709 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X710 TOPN DAC__N_COARSE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X711 DAC__LOP DAC__SAMPLEB VGND VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X712 DAC__FINEP DAC__P_FINE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X713 VGND B0 DAC__N_FINE_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X714 COMPARE__LATCH__FN COMPARE__LATCH__QN COMPARE__LATCH__QP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X715 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X716 DAC__P_FINE_B3 B3 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X717 DAC__P_COARSE_B4 DAC__P_COARSE_B4_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X718 TOPN DAC__N_COARSE_B1 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X719 VGND COMPARE__LATCH__QN COMPARE__LATCH__OUTP_B VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X720 VPWR B8 DAC__P_COARSE_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X721 TOPP DAC__P_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X722 DAC__FINEN DAC__N_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X723 DAC__FINEP DAC__P_FINE_B5 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X724 TOPN DAC__N_COARSE_B3 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X725 DAC__FINEP DAC__P_FINE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X726 TOPN DAC__N_COARSE_B4 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X727 TOPP DAC__P_COARSE_B0 sky130_fd_pr__cap_mim_m3_1 l=9.81 w=9.81
+X728 DAC__N_FINE_B3 B3 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+.ends
+

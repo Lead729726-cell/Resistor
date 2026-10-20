@@ -2,7 +2,7 @@
 
 12비트 출력의 차동 6+6 split-CDAC 연구용 레퍼런스입니다. 편집 가능한 전체 계층·12개 하위 블록, 합성 제어기와 실제 SKY130 아날로그 마스크를 제공합니다. **아날로그 코어**를 기존 1,000 × 1,000 µm, 가장자리 10 µm 조건 안에 배치했습니다. 제어기 전체의 물리 배치, pad/ESD와 제조용 완성 칩은 아직 포함하지 않습니다.
 
-**배선 후 검증은 미달입니다.** 최종 RC 추출 회로의 실제 재실행은 4.55µs 부근 VDD 노드의 timestep/convergence 오류로 중단됐습니다. 배선 전 14개 지향 입력·64점 coherent 검사, DRC 0·LVS 일치·PEX 생성은 이 한계를 대체하지 않습니다. 원본 실패 결과와 로그를 함께 제공합니다.
+**배선 후 세 입력 smoke 검사를 완료했습니다.** 수렴 오류를 수정한 실제 RC 추출 회로에서 낮은·중앙·높은 입력의 최대 코드 오차는 1 LSB, 모호한 판단은 0개이며 RTL·gate·편집 CMOS 제어기 재생도 일치했습니다. [수렴 수정·입력별 결과·구동 조건](sar12-convergence.md)을 확인하세요. 전체 입력 범위와 배선 후 ENOB·제조 승인은 미완료이며, 이전 실패 로그도 보존합니다.
 
 [회로·파일 모음](../examples/sar12-lab/README.md) · [실행별 근거](../examples/sar12-lab/qualification.json) · [실제 마스크](../examples/sar12-lab/layout-and-matching.png)
 
@@ -48,11 +48,11 @@ Kentaro Yoshioka, [The Era of Vibe Tapeout: Dark Age or Golden Age for Analog Ci
 ## 실제 실행과 검사 방식
 
 - 아날로그 해석은 하나의 transient를 유지하며 `run` 뒤에는 `resume`을 사용합니다. 모든 실제 정지 시각과 12회 trial 순서, 비교기 양쪽 논리 레벨을 검사합니다. 잘못된 시각·수렴 오류·부족한 데이터는 결과로 통과시키지 않습니다.
-- 물리 추출 회로는 시작 전에 정확한 모든 정지점을 선언합니다. ngspice 42의 동적 breakpoint와 거부된 step 문제를 피하며 원본 실패 로그도 보존합니다.
+- 배선 전·후 모두 시작 전에 정확한 모든 정지점을 선언합니다. ngspice 42의 동적 relational breakpoint와 거부된 step 문제를 피하며 원본 실패 로그도 보존합니다.
 - 64/256점 모드는 coherent한 **샘플별 계단 입력**입니다. 실제 CODE를 독립 DFT로 분석합니다. 연속 정현파 입력의 track/hold 대역폭·aperture 성능을 검증한 결과가 아닙니다.
 - 4,096개 전체 코드 검사는 RTL·합성 gate·편집 CMOS 논리 그래프에 대한 **디지털 oracle 검사**입니다. 4,096개 MOS ADC 변환을 측정했다는 뜻이 아닙니다. 아날로그 전체 sweep는 `test_mode=3`, `static_batch=0..15`로 분할 실행하며 모두 실행하기 전에는 INL/DNL이나 missing-code 통과를 표시하지 않습니다.
 - GUI 파형은 같은 시간축에서 실제 극값을 골라 표시합니다. 전력은 화면용 축소 파형 대신 모든 원본 adaptive-step 샘플의 signed trapezoidal 적분을 사용합니다. VDD·VREF 원천만 포함하며 외부 제어기·VIN/VCM 구동·전체 디지털 전력은 미측정입니다.
-- 기본 reference/VCM은 외부 구동입니다. 입력 두 단자의 구동 저항은 각각 50 Ω이며 pre/post에 동일하게 적용합니다. VREF 2 Ω + 1 nF, VCM 10 Ω + 100 pF, 디지털 제어 bridge 2 kΩ + 2 pF 가정이 testbench와 manifest에 기록됩니다. 실제 reference generator나 clock timing 회로의 검증을 대체하지 않습니다.
+- 기본 reference/VCM은 외부 구동입니다. 입력 두 단자의 구동 저항은 각각 50 Ω, 전원 원천의 외부 구동 저항은 0.1 Ω이며 pre/post에 동일하게 적용합니다. 입력·제어 변화는 정지 시각 후 1 ns 지연, 2 ns 선형 상승·하강으로 구동합니다. VREF 2 Ω + 1 nF, VCM 10 Ω + 100 pF, 디지털 제어 bridge 2 kΩ + 2 pF 가정이 testbench와 manifest에 기록됩니다. 실제 reference generator나 clock timing 회로의 검증을 대체하지 않습니다. `VPWR`와 원천 전류 파형으로 실제 코어 전압과 전원 강하를 확인할 수 있습니다.
 
 ## 재실행
 
@@ -72,7 +72,7 @@ node scripts/sar12-lab.mjs --physical --checks --post --mode=4
 
 `scripts/sar12-controller-qa.py`는 Icarus 세 구현에서 각각 159,751개 assertion을 실행합니다. `workers/eda/test_sar12.py`에는 분할 가중치, 단위, 입력 제한, 잘못된 판단/데이터 주입, FFT 및 원본 전력 적분 fixture가 있습니다. 합성은 `scripts/sar-adc-synthesize.py --bits 12`로 재현하며, 기존 8-bit 기본 동작은 유지합니다.
 
-256점·전체 static sweep는 이 환경에서 완료하지 않았습니다. 현재 한 native 해석의 시간 한도는 900초이며 큰 실험은 이 한도나 2GiB raw trace 한도에 도달할 수 있습니다. 디지털 QA는 4상태 논리의 X/Z도 실패로 처리하며, 비교기에 X를 주입했을 때 실제로 실패하는 검사도 포함합니다.
+256점·전체 static sweep는 이 환경에서 완료하지 않았습니다. 한 native 해석의 시간 한도는 배선 전 900초, 배선 후 1,800초이며 큰 실험은 이 한도나 2GiB raw trace 한도에 도달할 수 있습니다. CLI는 최대 40분 동안 기다리며, 대기 시간이 끝나도 진행 중인 job은 보존합니다. 분산 RC 회로의 수치 안정성을 위해 pre/post 모두 SPARSE 1.3을 명시합니다. 디지털 QA는 4상태 논리의 X/Z도 실패로 처리하며, 비교기에 X를 주입했을 때 실제로 실패하는 검사도 포함합니다.
 
 ## 아직 입증하지 않은 것
 

@@ -10,7 +10,7 @@ const missing = [];
 documents.push('docs/oscillator-lab.md','examples/oscillator-lab/README.md',...Array.from(tracked).filter(f=>/^examples\/oscillator-lab\/osc_[^/]+\/README\.md$/.test(f)));
 documents.push('docs/literature-update-2026.md');
 documents.push('docs/instructor-course.md');
-documents.push('docs/sar12.md','examples/sar12-lab/README.md','examples/sar12-lab/NOTICE.md');
+documents.push('docs/sar12.md','docs/sar12-convergence.md','examples/sar12-lab/README.md','examples/sar12-lab/NOTICE.md');
 documents.push('docs/native-runtime.md','docs/schematic-quickstart.md','docs/gds-schematic-conversion.md','docs/workbench-usability.md');
 documents.push('docs/physical-tools.md');
 documents.push('docs/logic-composition.md','docs/logic-transient.md');

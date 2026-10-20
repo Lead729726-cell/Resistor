@@ -1,16 +1,19 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "edition": "Resistor Indust",
-  "captured_at": "2026-10-20T02:04:24.988Z",
+  "captured_at": "2026-10-20T04:35:13.103Z",
+  "supersedes": "verification-before-convergence.json",
   "core_regressions": {
-    "passed": 269,
+    "passed": 272,
     "failed": 0,
-    "log_sha256": "e22aa13271807dc360fb53d19611a7586f315fbd7f45c59d394fc75960e34c0a"
+    "log_sha256": "04c3df07d6a51942d1e6751fd6af808393e7ed0707a070333069c4a57cadee57"
   },
   "formula_and_parser_fixtures": {
     "sar12_sar8_research": 27,
     "shared_pex_reduction": 6
   },
+  "formula_fixture_log_sha256": "2d780aa1778068eebbb7575684bac802d630a90b6f273d40665e1994007e31d9",
+  "pex_fixture_log_sha256": "59753171660350c6735ee4b12925f50e7f8606c102caf33752e5551608bad819",
   "controller": [
     {
       "implementation": "rtl",
@@ -35,115 +38,186 @@
     "unknown_comparator_rejected": true,
     "returncode": 1
   },
-  "actual_ui_cases": [
-    {
-      "name": "Actual 339131 mask shapes inside the bounded analog macro; full geometry requested",
-      "passed": true
-    },
-    {
-      "name": "12 actual editable blocks appear through the app catalog, preserving SAR8",
-      "passed": true
-    },
-    {
-      "name": "Full SAR_ADC12 hierarchy opens from the real UI and all long-block terminals fit",
-      "passed": true
-    },
-    {
-      "name": "Unexecuted controller does not inherit analog PASS or measured ENOB",
-      "passed": true
-    }
-  ],
+  "actual_ui": {
+    "current": "post-layout-ui.json",
+    "prior_mask_hierarchy_verification": "verification-before-convergence.json",
+    "prior_verification_not_repeated": true
+  },
   "native_runs": [
     {
+      "label": "pex-low",
+      "id": "f08254760b4241cba53c1c5c1f802005",
+      "project_id": "8893e1bc80594f01922cc329248b713a",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current"
+    },
+    {
+      "label": "pre-low",
+      "id": "0dfb8c66b66d4c06b62ace4735c47bc5",
+      "project_id": "8893e1bc80594f01922cc329248b713a",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current",
+      "frames": 1,
+      "max_code_error": 0,
+      "ambiguous_decisions": 0
+    },
+    {
+      "label": "coherent64",
+      "id": "c6dacddd4ff440368c824a947e64b768",
+      "project_id": "cd5a4620df054e9b84b5e84499a54530",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current",
+      "frames": 64,
+      "max_code_error": 1,
+      "ambiguous_decisions": 0
+    },
+    {
+      "label": "post-single",
+      "id": "594bb26dadbc4cfa888cf32a36f18d15",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current",
+      "frames": 1,
+      "max_code_error": 1,
+      "ambiguous_decisions": 0
+    },
+    {
+      "label": "post-code-64",
+      "id": "9f7f0dd5c8c74fa08bcf3317e6eebe59",
+      "project_id": "8893e1bc80594f01922cc329248b713a",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current",
+      "frames": 1,
+      "max_code_error": 1,
+      "ambiguous_decisions": 0
+    },
+    {
+      "label": "post-code-4031",
+      "id": "ca3f51dbaac34d999e7156cee495d2fd",
+      "project_id": "ab7378e4a87c4fedae6196f01d4661f0",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current",
+      "frames": 1,
+      "max_code_error": 0,
+      "ambiguous_decisions": 0
+    },
+    {
+      "label": "directed",
+      "id": "52c15cc5b82243fea4010f2a6954a3cb",
+      "project_id": "c8a23e8b41e94bddab93fa160e110f22",
+      "execution": "completed",
+      "analysis": "pass",
+      "freshness": "current",
+      "frames": 14,
+      "max_code_error": 1,
+      "ambiguous_decisions": 0
+    },
+    {
       "label": "drc",
-      "id": "c384b1bd3b784686b070b1b862f3dc4b",
+      "id": "f2b26e9cc48d40aea401b9fcd67461c5",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
       "execution": "completed",
       "analysis": "pass",
       "freshness": "current"
     },
     {
       "label": "lvs",
-      "id": "ffebf48e94944fc0bf02fd465fc95470",
+      "id": "67e0e5c006e94f23aa8ee03fb85380e9",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
       "execution": "completed",
       "analysis": "pass",
       "freshness": "current"
     },
     {
       "label": "pex",
-      "id": "7720713187ea404db3d2e224720f396c",
-      "execution": "completed",
-      "analysis": "pass",
-      "freshness": "current"
-    },
-    {
-      "label": "directed",
-      "id": "d2937073af124a519ebaa3fb05b03260",
-      "execution": "completed",
-      "analysis": "pass",
-      "freshness": "current"
-    },
-    {
-      "label": "coherent64",
-      "id": "287ded48f737402c90b4ad194d94824b",
+      "id": "34b780f3dc694e51a261ffce71bd421d",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
       "execution": "completed",
       "analysis": "pass",
       "freshness": "current"
     },
     {
       "label": "imported",
-      "id": "1de63a5347d64a649dea184614ee383a",
+      "id": "86acb80eda584a049167346c3f15d919",
+      "project_id": "0e757c9c85f540b187c5cfbf98307add",
       "execution": "completed",
       "analysis": "pass",
-      "freshness": "current"
+      "freshness": "current",
+      "frames": 1,
+      "max_code_error": 0,
+      "ambiguous_decisions": 0
     },
     {
-      "label": "ss-smoke",
-      "id": "5ad396cea0a84e1bbf99d48fa71f18b9",
+      "label": "pre-single",
+      "id": "aa0e6d129ecd4a7da79582f9b670da1f",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
       "execution": "completed",
       "analysis": "pass",
-      "freshness": "current"
-    },
-    {
-      "label": "ff-smoke",
-      "id": "08e16d781e99415e963051e380867f72",
-      "execution": "completed",
-      "analysis": "pass",
-      "freshness": "current"
-    },
-    {
-      "label": "post-single",
-      "id": "8a098651639f4123b3e5251749efa44c",
-      "execution": "failed",
-      "analysis": "unknown",
-      "freshness": "current"
-    },
-    {
-      "label": "historical-drc-gap",
-      "id": "16d272a0b00a4514913b50c198ce8af9",
-      "execution": "completed",
-      "analysis": "fail",
-      "freshness": "stale"
-    },
-    {
-      "label": "historical-post-parser",
-      "id": "742717a3a46149ccbec5f0caae6f0fb8",
-      "execution": "failed",
-      "analysis": "unknown",
-      "freshness": "stale"
+      "freshness": "current",
+      "frames": 1,
+      "max_code_error": 0,
+      "ambiguous_decisions": 0
     }
   ],
-  "build": "completed; existing script/chunk-size warnings retained",
+  "native_adapter_source_integrity": {
+    "all_recorded_adapter_hashes_match_working_source": true,
+    "runs_checked": 12
+  },
+  "geometry": "post-layout-geometry.json",
+  "controlled_convergence_comparison": "../../../examples/sar12-lab/convergence/comparison.json",
+  "typecheck": "passed; immediately after final JSX edit",
+  "build": "passed; existing script/chunk-size warnings retained",
+  "build_log_sha256": "f2cc4a9813d917c8b40a165296dccf2f6149c2f769ce79395958157c6e07b8f2",
+  "post_layout_smoke_passed": true,
   "post_layout_qualified": false,
+  "post_layout_spectrum_measured": false,
   "manufacturing_signoff": false,
   "full_controller_physical": false,
   "source_sha256": {
-    "packages/ui/src/SchematicEditor.tsx": "7d8c1f6e9becc0e8e31f84d4c0e0134eb85ece82bbad7a93be795dc160d5bd85",
-    "packages/ui/src/schematic-viewport.ts": "31fec4b9c335781fe7bbe2419e5c87864ebeaa9cdd27a184a83e04007d1ce358",
-    "packages/ui/src/SarAdcLibrary.tsx": "07b9dc11a0b7a3937547fd22be79ce816ebb41a7177cbf4de42eba543f89a5e9",
-    "packages/ui/src/ChipReferenceResults.tsx": "4db23a0dd50a12d1f720df93db06446f675957d1878e73c4fd1e02f69bf649a3",
-    "workers/eda/sar12.py": "6cec22e738b3f560ca79cbeb0a35e793e5a1e7f985fd0a77e9b888a8c8bb659b",
+    "workers/eda/sar12.py": "0ae9c71db842dcf25724e8f433b8c2fcccb469822fa05060ff43eaad9e3aff5a",
     "workers/eda/sar12_metrics.py": "e746e6c6e67c7f3b02ad09cd17d1d261b97556019544c862fce1838dad0b7dca",
     "workers/eda/sar12_physical.py": "6b88e4d0447cf910b23e7d7e45d8d74ee529d2da39e57361661e361b3fe4cbdd",
-    "workers/eda/pex_reduce.py": "6c45fe91eebd60d4a145173e5f29ebddda660a78c5cc356b9b225ac83e97becf"
+    "workers/eda/pex_reduce.py": "6c45fe91eebd60d4a145173e5f29ebddda660a78c5cc356b9b225ac83e97becf",
+    "packages/ui/src/App.tsx": "0e7eb0f41ac700a142cc35edf0f811085340683d8206cb38e7dfa205bab6fde1",
+    "packages/ui/src/DigitalVerification.tsx": "3e1139319de3ed93e1192b61facda0170e8a5f5510b963502e2fe68aa87e3ceb",
+    "packages/ui/src/WavePlot.tsx": "ed46f50a5e1bc01f128f4fbf6b2991c6415fa90a714413964222072eb13e925f",
+    "packages/ui/src/waveform-workbench.css": "44143500ca8a00f993558f1112fca84ca5683011f5ef222b70e79261bc8d5e4e"
+  },
+  "archive": {
+    "schema_version": 1,
+    "edition": "Resistor Indust",
+    "file": "Resistor-SAR12.zip",
+    "bytes": 47441473,
+    "sha256": "1fb168ad1758fcee3252a4b8cc99323a52f389ebdd7de5e048696c7198109402",
+    "files": 457,
+    "archive_roundtrip": "every entry hash matched",
+    "post_layout_smoke_passed": true,
+    "post_layout_qualified": false,
+    "scope": "Research reference; three selected inputs are a smoke test, not full electrical or manufacturing qualification.",
+    "manufacturing_signoff": false,
+    "full_digital_physical": false
+  },
+  "documentation_links": {
+    "documents": 57,
+    "checked": 386,
+    "missing": 0
+  },
+  "source_audit": {
+    "files": 9163,
+    "archives": 184,
+    "issues": 0,
+    "log_sha256": "9fa705049d9f85a2372726d8ee2463b80aa14db51b99a6433f76c730ac86ffe5"
+  },
+  "git_integrity": "git-integrity.json",
+  "upstream_integration": {
+    "commit": "eda48bab40a29b5916115ade5291cec270c637c3",
+    "scope": "Preserved upstream editing-key changes; current build, 272 core regressions and actual pre/post UI rechecked; backend source unchanged",
+    "native_rerun_required": false
   }
 }

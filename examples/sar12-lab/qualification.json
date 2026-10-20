@@ -1,156 +1,57 @@
 {
   "schema_version": 1,
   "edition": "Resistor Indust",
-  "captured_at": "2026-10-20T02:05:22.752Z",
+  "captured_at": "2026-10-20T04:11:08.511Z",
   "reference_paper": "https://arxiv.org/abs/2610.15240v1",
   "manufacturing_signoff": false,
   "full_controller_physical": false,
   "runs": [
     {
-      "label": "drc",
-      "id": "c384b1bd3b784686b070b1b862f3dc4b",
-      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
+      "label": "pex-low",
+      "id": "f08254760b4241cba53c1c5c1f802005",
+      "project_id": "8893e1bc80594f01922cc329248b713a",
       "revision": 1,
       "execution_status": "completed",
       "analysis_result": "pass",
       "freshness": "current",
-      "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+      "message": "Actual Magic RC extraction: 61136 resistors, 17195 capacitors. Zero counts reflect native thresholds, not inserted elements.",
       "artifacts": [
         {
           "file": "manifest.json",
-          "sha256": "a0f852e5cdf8864fa85529d9f887d97248ee3209b369f7370cf3184a9321d182",
-          "bytes": 181923
-        },
-        {
-          "file": "magic-drc.log",
-          "sha256": "13c3c632bd6548e3037811e7e4db459214a190cc5a4dfdf79ed7b8271151c216",
-          "bytes": 86990
-        },
-        {
-          "file": "markers.tsv",
-          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "bytes": 0
-        },
-        {
-          "file": "drc-status.json",
-          "sha256": "efbdb95b5d6f47cd06f035a6cd5fc5e7809fbe5dd87e37f0b2a2825fc43b9bbb",
-          "bytes": 19
-        },
-        {
-          "file": "drc.tcl",
-          "sha256": "f6447671381b98d1a9a0c18b75d35b0ca44a7bfbf10ccd3307aa9f3faec230e7",
-          "bytes": 724
-        },
-        {
-          "file": "stdout.log",
-          "sha256": "fdbb656c9a7d6852c9ac62b9c33c6a8944f9b2da1ddfa69a8d4d9e8c47efd21e",
-          "bytes": 87009
-        }
-      ]
-    },
-    {
-      "label": "lvs",
-      "id": "ffebf48e94944fc0bf02fd465fc95470",
-      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
-      "revision": 1,
-      "execution_status": "completed",
-      "analysis_result": "pass",
-      "freshness": "current",
-      "message": "Actual Netgen comparison: circuits match uniquely.",
-      "artifacts": [
-        {
-          "file": "manifest.json",
-          "sha256": "54115aa08b764108bb90e14d3294d91984f5543f25f915e3888a403ce72f3a3b",
-          "bytes": 183385
-        },
-        {
-          "file": "extract-lvs.tcl",
-          "sha256": "4030b375756ba6bdf6ef6dec22dc67ebdec7e864f0dada1e6d009b6a587471d1",
-          "bytes": 459
-        },
-        {
-          "file": "layout.spice",
-          "sha256": "0ff6e298adc580acceb6f758c24485a6e93a0e8777a5bd2e96426c883e651388",
-          "bytes": 61235
-        },
-        {
-          "file": "reference.spice",
-          "sha256": "7e0a815acf4e2747bb27569d18a61e5c8955900c94634a1044e8b6e453a65bc1",
-          "bytes": 73078
-        },
-        {
-          "file": "netgen-lvs.log",
-          "sha256": "f257c7fbab1d5098655fa95b24609fdfacab5e7bd8e256db6910cdb8ac5db245",
-          "bytes": 8094
-        },
-        {
-          "file": "lvs.json",
-          "sha256": "f9bcbfb1a9b3ee73f9b41517225916b0764feb26f28bfe1332467d28a851ddb5",
-          "bytes": 1894
-        },
-        {
-          "file": "lvs.log",
-          "sha256": "853cc633447ab8dda8e2cd09f9b2fc2244861203e4338291eac01ffa3068f9a8",
-          "bytes": 7586
-        },
-        {
-          "file": "magic-extract.log",
-          "sha256": "9d7a7939fe89fda0bfa9fe6eab4a670160e2361e84c07b66909902bd44f0b0e9",
-          "bytes": 86997
-        },
-        {
-          "file": "stdout.log",
-          "sha256": "562ec7921c03437d37e9702b2087eb49018e54d2bb02c39a39e3d021327a6df9",
-          "bytes": 95134
-        }
-      ]
-    },
-    {
-      "label": "pex",
-      "id": "7720713187ea404db3d2e224720f396c",
-      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
-      "revision": 1,
-      "execution_status": "completed",
-      "analysis_result": "pass",
-      "freshness": "current",
-      "message": "Actual Magic RC extraction: 61140 resistors, 17197 capacitors. Zero counts reflect native thresholds, not inserted elements.",
-      "artifacts": [
-        {
-          "file": "manifest.json",
-          "sha256": "19958f14a3f45c2cf6e45fb4c7e1d0539f3cd0a400844aaddca11ac28487c541",
-          "bytes": 182976
+          "sha256": "ea076937a23ce288b36bf5c320f6fdff0d47eed1f5228b274f82045684624ed4",
+          "bytes": 183158
         },
         {
           "file": "pex.tcl",
-          "sha256": "dc2b9c0b0923466fa5c560fe0d7d521ab9aaaac097f4e80245e81254b0db5d84",
-          "bytes": 593
+          "sha256": "4433f8ef11aafd4dbab252203a0fbac4447c96bfa1e066d28da4c8be8538ffca",
+          "bytes": 623
         },
         {
           "file": "pex-quality.json",
-          "sha256": "5c33c7266b1d659bba9994b6f501aaed6ef9b90d4b14bd4477a0e27151e4b3fc",
+          "sha256": "1aa464d7bce7a194a3b5843a3c94c15b2233f665dcaf0408487227318f59e80b",
           "bytes": 210
         },
         {
           "file": "pex.spice.gz",
-          "original_sha256": "776fb6918aecddcfa6e932a27f0d53d8d9ec7d1f3ec5b094d8bf41058d675b98",
-          "original_bytes": 3087532
+          "original_sha256": "06e21cfd6c88bd76e7fe72f094a63de523f9a3c156937d8444c5f42174cb00c1",
+          "original_bytes": 3087209
         },
         {
           "file": "magic-pex.log",
-          "sha256": "8c91611ea373b96025249e885388ce07a29dcd0abead3530989a5bd35134f6b2",
-          "bytes": 90620
+          "sha256": "ff8529fbfe1274e19b28c03edf77a3295e164a3f247dd4c9397141b87e38d5cc",
+          "bytes": 90687
         },
         {
           "file": "stdout.log",
-          "sha256": "9f36367fe7c28bc1d3157c0972d7bfc780578de55031af04ec1f91f2e2fb5b62",
-          "bytes": 90639
+          "sha256": "0f79a8ed926fffca1cc6a4b04465db41024ab07f0cf69fa617b52041ca97cc5f",
+          "bytes": 90706
         }
       ]
     },
     {
-      "label": "directed",
-      "id": "d2937073af124a519ebaa3fb05b03260",
-      "project_id": "c8a23e8b41e94bddab93fa160e110f22",
+      "label": "pre-low",
+      "id": "0dfb8c66b66d4c06b62ace4735c47bc5",
+      "project_id": "8893e1bc80594f01922cc329248b713a",
       "revision": 1,
       "execution_status": "completed",
       "analysis_result": "pass",
@@ -158,11 +59,12 @@
       "message": "Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.",
       "measurements": {
         "analysis": "tran",
+        "matrix_solver": "Sparse 1.3",
         "x_unit": "s",
         "x_label": "time",
         "output_bits": 12,
-        "frames": 14,
-        "max_code_error": 1,
+        "frames": 1,
+        "max_code_error": 0,
         "ambiguous_decisions": 0,
         "rtl_gate_replay_match": true,
         "lsb_V": 0.0005859375,
@@ -170,30 +72,33 @@
         "sample_rate_Hz": 99502.48756218905,
         "effective_resolution": "not measured",
         "physical_unit_count": 508,
-        "scope": "Noiseless deterministic transient; external ideal VREF/VCM and finite-RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
-        "raw_sample_count": 169057,
-        "display_sample_count": 6746,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "raw_sample_count": 12572,
+        "display_sample_count": 2011,
         "start_s": 0,
-        "end_s": 0.00014119999999999996,
+        "end_s": 0.00001055,
         "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
         "source_energy": {
           "9": {
-            "energy_J": 8.200523541566885e-9,
-            "average_power_W": 0.00005807736219240005,
-            "minimum_current_A": -0.00012236592275853084,
-            "peak_current_A": 0.0005216228196339996,
+            "energy_J": 6.12460728937181e-10,
+            "average_power_W": 0.000058053149662292035,
+            "minimum_current_A": -0.0000030255785290478343,
+            "peak_current_A": 0.0003043855884463653,
             "source_voltage_V": 1.8
           },
           "10": {
-            "energy_J": 1.279765338228219e-9,
-            "average_power_W": 0.00000906349389680042,
-            "minimum_current_A": -0.00002221732250418107,
-            "peak_current_A": 0.0019976178822669333,
+            "energy_J": 1.1328967129638035e-10,
+            "average_power_W": 0.000010738357468851218,
+            "minimum_current_A": -0.000019239185945707504,
+            "peak_current_A": 0.001989774001878608,
             "source_voltage_V": 1.2
           }
         },
         "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
-        "source_energy_scope": "All raw analog-core VDD and VREF samples. External control-driver energy and synthesized-controller power are not measured.",
+        "core_supply_min_V": 1.7999695614411555,
+        "core_supply_max_V": 1.8000003025578528,
+        "supply_source_R_Ohm": 0.1,
+        "source_energy_scope": "All raw VDD/VREF source samples, including their external series-resistor losses. External control-driver energy and synthesized-controller power are not measured.",
         "research_metrics": {
           "source": "native raw-source integration; display decimation is not used for energy",
           "input_drivers_power": "not measured",
@@ -202,12 +107,12 @@
           "supply": {
             "available": true,
             "start_s": 0,
-            "end_s": 0.00014119999999999996,
-            "energy_J": 8.200523541566885e-9,
-            "average_current_A": 0.00003226520121800002,
-            "peak_current_A": 0.0005216228196339996,
-            "minimum_current_A": -0.00012236592275853084,
-            "average_power_W": 0.00005807736219240005,
+            "end_s": 0.00001055,
+            "energy_J": 6.12460728937181e-10,
+            "average_current_A": 0.000032251749812384464,
+            "peak_current_A": 0.0003043855884463653,
+            "minimum_current_A": -0.0000030255785290478343,
+            "average_power_W": 0.000058053149662292035,
             "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
             "sample_scope": "Every original adaptive-step analog VDD sample, integrated before display thinning. External driver/digital-controller power excluded."
           }
@@ -237,157 +142,71 @@
         "frames": [
           {
             "frame": 0,
-            "input_differential_V": 0.00029296875,
-            "code": 2048,
-            "expected_code": 2048,
-            "error_codes": 0
-          },
-          {
-            "frame": 1,
-            "input_differential_V": -1.19970703125,
-            "code": 0,
-            "expected_code": 0,
-            "error_codes": 0
-          },
-          {
-            "frame": 2,
-            "input_differential_V": -1.1991210937499999,
-            "code": 1,
-            "expected_code": 1,
-            "error_codes": 0
-          },
-          {
-            "frame": 3,
-            "input_differential_V": -1.1815429687499999,
-            "code": 31,
-            "expected_code": 31,
-            "error_codes": 0
-          },
-          {
-            "frame": 4,
-            "input_differential_V": -1.16279296875,
-            "code": 63,
-            "expected_code": 63,
-            "error_codes": 0
-          },
-          {
-            "frame": 5,
             "input_differential_V": -1.16220703125,
             "code": 64,
             "expected_code": 64,
             "error_codes": 0
-          },
-          {
-            "frame": 6,
-            "input_differential_V": -1.16162109375,
-            "code": 65,
-            "expected_code": 65,
-            "error_codes": 0
-          },
-          {
-            "frame": 7,
-            "input_differential_V": -0.6002929687499999,
-            "code": 1023,
-            "expected_code": 1023,
-            "error_codes": 0
-          },
-          {
-            "frame": 8,
-            "input_differential_V": -0.00029296875,
-            "code": 2047,
-            "expected_code": 2047,
-            "error_codes": 0
-          },
-          {
-            "frame": 9,
-            "input_differential_V": 0.0008789062499999999,
-            "code": 2049,
-            "expected_code": 2049,
-            "error_codes": 0
-          },
-          {
-            "frame": 10,
-            "input_differential_V": 0.6002929687499999,
-            "code": 3072,
-            "expected_code": 3072,
-            "error_codes": 0
-          },
-          {
-            "frame": 11,
-            "input_differential_V": 1.16220703125,
-            "code": 4030,
-            "expected_code": 4031,
-            "error_codes": -1
-          },
-          {
-            "frame": 12,
-            "input_differential_V": 1.1991210937499999,
-            "code": 4093,
-            "expected_code": 4094,
-            "error_codes": -1
-          },
-          {
-            "frame": 13,
-            "input_differential_V": 1.19970703125,
-            "code": 4094,
-            "expected_code": 4095,
-            "error_codes": -1
           }
         ],
         "ambiguous_decisions": 0,
-        "scope": "Noiseless deterministic transient; external ideal VREF/VCM and finite-RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
         "pass": true
       },
       "artifacts": [
         {
           "file": "manifest.json",
-          "sha256": "b0766f28008f52349322db1ea1bd0ad0401581052eab713a42e95eceafa8f882",
-          "bytes": 188994
+          "sha256": "1757e628957a355149a5a667b8f3a76a787399c5ad07d7814cd58d3e335ee0cd",
+          "bytes": 189947
         },
         {
           "file": "analog.spice",
-          "sha256": "195a9bba697076aa6a035551fda5f9c51661f5016f1334550af577c0b6f09ddb",
-          "bytes": 27211
+          "sha256": "7e0a815acf4e2747bb27569d18a61e5c8955900c94634a1044e8b6e453a65bc1",
+          "bytes": 73078
         },
         {
           "file": "testbench.spice",
-          "sha256": "18960326157c68dd3e59875993bb276169355692c2738594d423d591cd83f0e4",
-          "bytes": 392615
+          "sha256": "263d56bd4d8fb5433db8905fdeef89c7d969b52fdf9a8c7700d94881ffe30eab",
+          "bytes": 101147
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
         },
         {
           "file": "decisions.csv",
-          "sha256": "353176a13a7c2b8f0dc403308b096027c21496e271917d89a52bfc8bcfd87969",
-          "bytes": 9921
+          "sha256": "9b3bcd243d4433923d6ce9b172234c6f124183d044d4a51a110076d146164adf",
+          "bytes": 751
         },
         {
           "file": "pause-times.txt",
-          "sha256": "23379a4cb3f26a5821cb5a80a47b6ba3f41d4e70f40c2d2579fe7bb2ee469eec",
-          "bytes": 14580
+          "sha256": "1e2a8e9e0b29931d3dcd5d7f0bae0e7c0cef8e9991ea95ddbf190445d82d96ad",
+          "bytes": 1060
         },
         {
           "file": "sar12-verification.json",
-          "sha256": "9ba0121a749a555f928a740fb0b5c1f0cb2a7ecc8e51df6e5ec65c157e722ac8",
-          "bytes": 2926
+          "sha256": "632b0f5099e8091c69202852edc0336a83005b53fb73a86125a73b6108df9d97",
+          "bytes": 998
         },
         {
           "file": "rtl-replay.csv",
-          "sha256": "0ac07b5823efe36af5b149d1d39bd12802389423e76243d9ad92e869fdf31f88",
-          "bytes": 4048
+          "sha256": "742647f1ce334e9d8003994b301853b1ddda2bef6bd15ddbb1b06384188cd05f",
+          "bytes": 256
         },
         {
           "file": "gate-replay.csv",
-          "sha256": "0ac07b5823efe36af5b149d1d39bd12802389423e76243d9ad92e869fdf31f88",
-          "bytes": 4048
+          "sha256": "742647f1ce334e9d8003994b301853b1ddda2bef6bd15ddbb1b06384188cd05f",
+          "bytes": 256
         },
         {
           "file": "ir-replay.csv",
-          "sha256": "0ac07b5823efe36af5b149d1d39bd12802389423e76243d9ad92e869fdf31f88",
-          "bytes": 4048
+          "sha256": "742647f1ce334e9d8003994b301853b1ddda2bef6bd15ddbb1b06384188cd05f",
+          "bytes": 256
         },
         {
           "file": "replay.v",
-          "sha256": "bee9f5a54b9f80ab4fbaf4b9827f1c96d52845486d9c2dfb0e02e59b694654f9",
-          "bytes": 748
+          "sha256": "9309679acad0eb3c1cc678e3c5bee5f991803517fc10b32b1a0edd38d51daf1f",
+          "bytes": 746
         },
         {
           "file": "ir-controller.v",
@@ -396,13 +215,13 @@
         },
         {
           "file": "decisions.mem",
-          "sha256": "9d7e1dd746a1d417986586c8de4234c49ccb833aa822dd8b048aee250e1deeca",
-          "bytes": 336
+          "sha256": "6454e0382e9e0f4e3b45452474a34564abfaf18f52ba1511017aade4cb893526",
+          "bytes": 24
         },
         {
           "file": "ngspice.log",
-          "sha256": "5af4fb1eeb4153f38f2b6cc40d8afd68c63d54a97e4b627072c694187f5cec9a",
-          "bytes": 81146
+          "sha256": "5ed577fb2df3770fda878c22a800d425ca8655820c4f09b181f5cddb58424a06",
+          "bytes": 67847
         },
         {
           "file": "gate-compile.log",
@@ -411,8 +230,8 @@
         },
         {
           "file": "gate-replay.log",
-          "sha256": "946bb27a5b12379298446c6878146289474de0e7926e9b0d1d6ce71290c7b78b",
-          "bytes": 136
+          "sha256": "43683d65f54612041b80c2513bfd5410ed7aa665486abc3bed1c4850ea069927",
+          "bytes": 150
         },
         {
           "file": "ir-compile.log",
@@ -421,8 +240,8 @@
         },
         {
           "file": "ir-replay.log",
-          "sha256": "946bb27a5b12379298446c6878146289474de0e7926e9b0d1d6ce71290c7b78b",
-          "bytes": 136
+          "sha256": "43683d65f54612041b80c2513bfd5410ed7aa665486abc3bed1c4850ea069927",
+          "bytes": 150
         },
         {
           "file": "rtl-compile.log",
@@ -431,25 +250,26 @@
         },
         {
           "file": "rtl-replay.log",
-          "sha256": "946bb27a5b12379298446c6878146289474de0e7926e9b0d1d6ce71290c7b78b",
-          "bytes": 136
+          "sha256": "43683d65f54612041b80c2513bfd5410ed7aa665486abc3bed1c4850ea069927",
+          "bytes": 150
         },
         {
           "file": "stdout.log",
-          "sha256": "7ff01ccc0b406c161d45a829be6e3bba434ba48c3c5d40b1c7d8d9fc5c9d324d",
-          "bytes": 81693
+          "sha256": "265b36211029d8b1c0a79f47c14d65423a5c96a7dc79042e5da1ae88acc9a13b",
+          "bytes": 68436
         },
         {
-          "original_sha256": "46bacd0a823d34d4095d2c1e487ba365021f705382b520ffa0fc9cf3f85054c4",
-          "original_bytes": 97377408,
-          "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\lab\\.runtime\\eda\\runs\\d2937073af124a519ebaa3fb05b03260\\waveform.dat",
-          "repository_copy": false
+          "original_sha256": "b18ba8c9bea577883d882c9610aa51349e35d269a0bb9c8bd651bba3e9df976e",
+          "original_bytes": 7556373,
+          "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\final-post-code-64\\.runtime\\eda\\runs\\0dfb8c66b66d4c06b62ace4735c47bc5\\waveform.dat",
+          "repository_copy": true,
+          "file": "waveform.dat.gz"
         }
       ]
     },
     {
       "label": "coherent64",
-      "id": "287ded48f737402c90b4ad194d94824b",
+      "id": "c6dacddd4ff440368c824a947e64b768",
       "project_id": "cd5a4620df054e9b84b5e84499a54530",
       "revision": 1,
       "execution_status": "completed",
@@ -458,6 +278,7 @@
       "message": "Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.",
       "measurements": {
         "analysis": "tran",
+        "matrix_solver": "Sparse 1.3",
         "x_unit": "s",
         "x_label": "time",
         "output_bits": 12,
@@ -470,30 +291,33 @@
         "sample_rate_Hz": 99502.48756218905,
         "effective_resolution": "measured from deterministic raw codes; noise/mismatch/jitter excluded",
         "physical_unit_count": 508,
-        "scope": "Noiseless deterministic transient; external ideal VREF/VCM and finite-RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
-        "raw_sample_count": 770600,
-        "display_sample_count": 9057,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "raw_sample_count": 786506,
+        "display_sample_count": 8705,
         "start_s": 0,
         "end_s": 0.0006437,
         "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
         "source_energy": {
           "9": {
-            "energy_J": 3.737294295311383e-8,
-            "average_power_W": 0.00005805956649543861,
-            "minimum_current_A": -0.000046773258384547164,
-            "peak_current_A": 0.0005374968693496098,
+            "energy_J": 3.737281575205056e-8,
+            "average_power_W": 0.00005805936888620563,
+            "minimum_current_A": -0.00003869115564469894,
+            "peak_current_A": 0.0004965013671949237,
             "source_voltage_V": 1.8
           },
           "10": {
-            "energy_J": 6.147212075666556e-9,
-            "average_power_W": 0.000009549809034746865,
-            "minimum_current_A": -0.000013122924760522459,
-            "peak_current_A": 0.0019978831986273704,
+            "energy_J": 6.147109622143875e-9,
+            "average_power_W": 0.000009549649871281459,
+            "minimum_current_A": -0.000013124338335890329,
+            "peak_current_A": 0.001998055668931298,
             "source_voltage_V": 1.2
           }
         },
         "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
-        "source_energy_scope": "All raw analog-core VDD and VREF samples. External control-driver energy and synthesized-controller power are not measured.",
+        "core_supply_min_V": 1.7999503498632805,
+        "core_supply_max_V": 1.8000038691155644,
+        "supply_source_R_Ohm": 0.1,
+        "source_energy_scope": "All raw VDD/VREF source samples, including their external series-resistor losses. External control-driver energy and synthesized-controller power are not measured.",
         "SNDR_dB": 73.02948618119038,
         "SFDR_dB": 81.65279368618046,
         "ENOB_noiseless_bits": 11.838785079931956,
@@ -506,11 +330,11 @@
             "available": true,
             "start_s": 0,
             "end_s": 0.0006437,
-            "energy_J": 3.737294295311383e-8,
-            "average_current_A": 0.00003225531471968812,
-            "peak_current_A": 0.0005374968693496098,
-            "minimum_current_A": -0.000046773258384547164,
-            "average_power_W": 0.00005805956649543861,
+            "energy_J": 3.737281575205056e-8,
+            "average_current_A": 0.000032255204936780906,
+            "peak_current_A": 0.0004965013671949237,
+            "minimum_current_A": -0.00003869115564469894,
+            "average_power_W": 0.00005805936888620563,
             "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
             "sample_scope": "Every original adaptive-step analog VDD sample, integrated before display thinning. External driver/digital-controller power excluded."
           }
@@ -988,14 +812,14 @@
           }
         ],
         "ambiguous_decisions": 0,
-        "scope": "Noiseless deterministic transient; external ideal VREF/VCM and finite-RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
         "pass": true
       },
       "artifacts": [
         {
           "file": "manifest.json",
-          "sha256": "4104abfd156967833a33b2cca33c3e169a5fdf01dbb45045886e30158b291729",
-          "bytes": 189164
+          "sha256": "ab4fd0800bf6f84ef6ff68d4f07b9f6403992b26cbefe392433387b76a7acf18",
+          "bytes": 189455
         },
         {
           "file": "analog.spice",
@@ -1004,23 +828,28 @@
         },
         {
           "file": "testbench.spice.gz",
-          "original_sha256": "9ec6fc5bb56d4c9aa0274296f84e61476a181fb50b2515377f65f1bc30894666",
-          "original_bytes": 1825219
+          "original_sha256": "8b3b2af0f78cbdc02ac7d389b8bc346d2ad52c8ab17ab4c62e5e1ce07e5218a0",
+          "original_bytes": 6536473
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
         },
         {
           "file": "decisions.csv",
-          "sha256": "199caf15ce5f85566a4e884019707fc969d677b1b9a1eb185cc8361e4c12d28a",
-          "bytes": 48918
+          "sha256": "21d7c1532272a8b2907e0ec8da3e20785a7a7719ae891c01d5ea723bb3ab6070",
+          "bytes": 48824
         },
         {
           "file": "pause-times.txt",
-          "sha256": "9329f4260b0a22b5b4d3e5006358fc2164d9600a3723d027088f24a07a0cf349",
+          "sha256": "685cd7936093fb724c9b2a73dd9481e2050da24cc6d6d5c2744943a38193af9d",
           "bytes": 66580
         },
         {
           "file": "sar12-verification.json",
-          "sha256": "3384f80a8606cf5903624cdad6e1407ab01f56a345ef4f14e874625d12c41ca1",
-          "bytes": 10680
+          "sha256": "d69228f781a7968ea212585ccc1c5ad459140d16159bd797c108bea01350cab3",
+          "bytes": 10699
         },
         {
           "file": "spectrum.json",
@@ -1059,8 +888,8 @@
         },
         {
           "file": "ngspice.log",
-          "sha256": "8e77137730ff1dc65c3401a51c3ab98aac9ea6f4734057a103326f7f910c0b29",
-          "bytes": 346785
+          "sha256": "83586a95092eb2e17d43c194dcf27d632e22ab5afa4074df900bd96c659495ae",
+          "bytes": 361076
         },
         {
           "file": "gate-compile.log",
@@ -1069,7 +898,7 @@
         },
         {
           "file": "gate-replay.log",
-          "sha256": "cb688d5a5c295065ec3526a19986f12d4497522c4a0034803465fb9f215122b2",
+          "sha256": "533e0c0c65e3bad4ed7d0e890fc331bc4173bbec0de7fc319f87166b6b67dc4b",
           "bytes": 137
         },
         {
@@ -1079,7 +908,7 @@
         },
         {
           "file": "ir-replay.log",
-          "sha256": "cb688d5a5c295065ec3526a19986f12d4497522c4a0034803465fb9f215122b2",
+          "sha256": "533e0c0c65e3bad4ed7d0e890fc331bc4173bbec0de7fc319f87166b6b67dc4b",
           "bytes": 137
         },
         {
@@ -1089,26 +918,26 @@
         },
         {
           "file": "rtl-replay.log",
-          "sha256": "cb688d5a5c295065ec3526a19986f12d4497522c4a0034803465fb9f215122b2",
+          "sha256": "533e0c0c65e3bad4ed7d0e890fc331bc4173bbec0de7fc319f87166b6b67dc4b",
           "bytes": 137
         },
         {
           "file": "stdout.log",
-          "sha256": "3c3517fc523288b0a8eb399152c110a79639306ee367f6a68d01fe80bc925d60",
-          "bytes": 347335
+          "sha256": "80827aa3c129f67ff14503d5eb2a7756adb40c97bea5b6580a38b43fe303a247",
+          "bytes": 361626
         },
         {
-          "original_sha256": "cce6ed4a45d1c9c4da7a40ac7c93b93b6e7ce3c291da55fd384ca262bc8b45d0",
-          "original_bytes": 443866176,
-          "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\lab\\.runtime\\eda\\runs\\287ded48f737402c90b4ad194d94824b\\waveform.dat",
+          "original_sha256": "39d5409f9a1ba5f7c2de659e48074df5fd5d92350e4bfd473c7d2f4cad2188a8",
+          "original_bytes": 472690707,
+          "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\lab\\.runtime\\eda\\runs\\c6dacddd4ff440368c824a947e64b768\\waveform.dat",
           "repository_copy": false
         }
       ]
     },
     {
-      "label": "imported",
-      "id": "1de63a5347d64a649dea184614ee383a",
-      "project_id": "0e757c9c85f540b187c5cfbf98307add",
+      "label": "post-single",
+      "id": "594bb26dadbc4cfa888cf32a36f18d15",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
       "revision": 1,
       "execution_status": "completed",
       "analysis_result": "pass",
@@ -1116,6 +945,505 @@
       "message": "Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.",
       "measurements": {
         "analysis": "tran",
+        "matrix_solver": "Sparse 1.3",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 12,
+        "frames": 1,
+        "max_code_error": 1,
+        "ambiguous_decisions": 0,
+        "rtl_gate_replay_match": true,
+        "lsb_V": 0.0005859375,
+        "conversion_s": 0.00001005,
+        "sample_rate_Hz": 99502.48756218905,
+        "effective_resolution": "not measured",
+        "physical_unit_count": 508,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "raw_sample_count": 13268,
+        "display_sample_count": 2197,
+        "start_s": 0,
+        "end_s": 0.00001055,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 6.39133393844891e-10,
+            "average_power_W": 0.0000605813643454873,
+            "minimum_current_A": 0.000015397062803401695,
+            "peak_current_A": 0.0005714336239890372,
+            "source_voltage_V": 1.8
+          },
+          "10": {
+            "energy_J": 1.1129172132537279e-10,
+            "average_power_W": 0.000010548978324679885,
+            "minimum_current_A": -0.0000019327828344462006,
+            "peak_current_A": 0.00117697370337988,
+            "source_voltage_V": 1.2
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "core_supply_min_V": 1.799942856637601,
+        "core_supply_max_V": 1.7999984602937196,
+        "supply_source_R_Ohm": 0.1,
+        "source_energy_scope": "All raw VDD/VREF source samples, including their external series-resistor losses. External control-driver energy and synthesized-controller power are not measured.",
+        "research_metrics": {
+          "source": "native raw-source integration; display decimation is not used for energy",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 0,
+            "end_s": 0.00001055,
+            "energy_J": 6.39133393844891e-10,
+            "average_current_A": 0.000033656313525270725,
+            "peak_current_A": 0.0005714336239890372,
+            "minimum_current_A": 0.000015397062803401695,
+            "average_power_W": 0.0000605813643454873,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Every original adaptive-step analog VDD sample, integrated before display thinning. External driver/digital-controller power excluded."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "sar12_analog",
+        "source": "continuous ngspice MOS/charge decisions and independent RTL/gate/IR replay",
+        "checks": [
+          {
+            "name": "Actual comparator trials match RTL, synthesized gates and editable CMOS logic",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "Both comparator outputs reach complementary logic levels",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "Native directed codes within one nominal 12-bit LSB",
+            "pass": true,
+            "observed": null
+          }
+        ],
+        "frames": [
+          {
+            "frame": 0,
+            "input_differential_V": 0.00029296875,
+            "code": 2047,
+            "expected_code": 2048,
+            "error_codes": -1
+          }
+        ],
+        "ambiguous_decisions": 0,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "pass": true
+      },
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "c6e7c35ac5e8888f0507a78228176fe9e1e245cf697993e891f93f535c79ff56",
+          "bytes": 193068
+        },
+        {
+          "file": "testbench.spice",
+          "sha256": "5633d38babfd45acabbb6a25317cfebaa1ef3396b48c050b346ad05e0ff7d121",
+          "bytes": 101116
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
+        },
+        {
+          "file": "decisions.csv",
+          "sha256": "12aae7a0353615502d718147e445e3b95f8c5e5b97ed6ce3a6e806a2a220079d",
+          "bytes": 749
+        },
+        {
+          "file": "pause-times.txt",
+          "sha256": "1e2a8e9e0b29931d3dcd5d7f0bae0e7c0cef8e9991ea95ddbf190445d82d96ad",
+          "bytes": 1060
+        },
+        {
+          "file": "sar12-verification.json",
+          "sha256": "e110f84875bfb231642f389042116af6c0f8bf4d68e05244257277952552a4bb",
+          "bytes": 1002
+        },
+        {
+          "file": "coupling-audit.json",
+          "sha256": "6666c9f7215dc8be06c30692c9366c6bcc178d258f7765300519b82485e0ca53",
+          "bytes": 524250
+        },
+        {
+          "file": "rtl-replay.csv",
+          "sha256": "a8157c1b92f31939fc16a83ed16fa3b5177331221ad915d0ff08411ff02d7a21",
+          "bytes": 275
+        },
+        {
+          "file": "gate-replay.csv",
+          "sha256": "a8157c1b92f31939fc16a83ed16fa3b5177331221ad915d0ff08411ff02d7a21",
+          "bytes": 275
+        },
+        {
+          "file": "ir-replay.csv",
+          "sha256": "a8157c1b92f31939fc16a83ed16fa3b5177331221ad915d0ff08411ff02d7a21",
+          "bytes": 275
+        },
+        {
+          "file": "replay.v",
+          "sha256": "9309679acad0eb3c1cc678e3c5bee5f991803517fc10b32b1a0edd38d51daf1f",
+          "bytes": 746
+        },
+        {
+          "file": "ir-controller.v",
+          "sha256": "87c9bcab566241a65b5b528aacff8fe4b5e5bd42e5de7ae9dcea89057e518079",
+          "bytes": 21586
+        },
+        {
+          "file": "decisions.mem",
+          "sha256": "97b26cc14c847a1f49b21887ef66c6caa12e4bb6d7d9e423b5f2e9142bbbde12",
+          "bytes": 24
+        },
+        {
+          "file": "ngspice.log",
+          "sha256": "2f5622a78bba6cb7563bf97145e97474ff29da350e0494d13991cf95f65154bb",
+          "bytes": 982655
+        },
+        {
+          "file": "pex.tcl",
+          "sha256": "86e1d751f56f70a77f9ff9f99617fd99dbff3b5f519d86bdfd6dc3500cef48b9",
+          "bytes": 593
+        },
+        {
+          "file": "pex-quality.json",
+          "sha256": "5c33c7266b1d659bba9994b6f501aaed6ef9b90d4b14bd4477a0e27151e4b3fc",
+          "bytes": 210
+        },
+        {
+          "file": "pex-reduction.json",
+          "sha256": "baac5ea6aba25270d8dd952efa80b777d434a2e378e2b34999ad9ad2327152d0",
+          "bytes": 998
+        },
+        {
+          "file": "pex.spice.gz",
+          "original_sha256": "d568ef48fa8d2d929fd991949ee59812de540bbffef5eed46cd593f1a5e5ce7a",
+          "original_bytes": 3087533
+        },
+        {
+          "file": "pex-simulation.spice.gz",
+          "original_sha256": "7efa66f11d604a2fd140bf9577554a018083ae1c8a1e18e3ffba0ea3c2e993c6",
+          "original_bytes": 2989425
+        },
+        {
+          "file": "gate-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "gate-replay.log",
+          "sha256": "c8401265985f6af55ffb6f87edd5a0648bb7676da9cc0bf1116d67c61adabc3a",
+          "bytes": 135
+        },
+        {
+          "file": "ir-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "ir-replay.log",
+          "sha256": "c8401265985f6af55ffb6f87edd5a0648bb7676da9cc0bf1116d67c61adabc3a",
+          "bytes": 135
+        },
+        {
+          "file": "magic-pex.log",
+          "sha256": "b5823a7e20695f709a5155304f8aa4c4da29cb8aee03dc4afa0a54625605057e",
+          "bytes": 90620
+        },
+        {
+          "file": "rtl-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "rtl-replay.log",
+          "sha256": "c8401265985f6af55ffb6f87edd5a0648bb7676da9cc0bf1116d67c61adabc3a",
+          "bytes": 135
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "839d19cd4bc40651928cb2f0ba3972fb096575f8004d74b7c345aba7db73bf97",
+          "bytes": 1073838
+        },
+        {
+          "original_sha256": "20f34a39fedf46460b8abbff240418ba490b8eb38b2745a38ad0f7be5bbfb914",
+          "original_bytes": 7974669,
+          "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\lab\\.runtime\\eda\\runs\\594bb26dadbc4cfa888cf32a36f18d15\\waveform.dat",
+          "repository_copy": true,
+          "file": "waveform.dat.gz"
+        }
+      ]
+    },
+    {
+      "label": "post-code-64",
+      "id": "9f7f0dd5c8c74fa08bcf3317e6eebe59",
+      "project_id": "8893e1bc80594f01922cc329248b713a",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "message": "Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.",
+      "measurements": {
+        "analysis": "tran",
+        "matrix_solver": "Sparse 1.3",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 12,
+        "frames": 1,
+        "max_code_error": 1,
+        "ambiguous_decisions": 0,
+        "rtl_gate_replay_match": true,
+        "lsb_V": 0.0005859375,
+        "conversion_s": 0.00001005,
+        "sample_rate_Hz": 99502.48756218905,
+        "effective_resolution": "not measured",
+        "physical_unit_count": 508,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "raw_sample_count": 13610,
+        "display_sample_count": 2208,
+        "start_s": 0,
+        "end_s": 0.00001055,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 6.447532708453041e-10,
+            "average_power_W": 0.00006111405410855963,
+            "minimum_current_A": 0.000015374222027020323,
+            "peak_current_A": 0.0005769902847738706,
+            "source_voltage_V": 1.8
+          },
+          "10": {
+            "energy_J": 1.594162200728263e-10,
+            "average_power_W": 0.000015110542186997751,
+            "minimum_current_A": -0.00013587662000347223,
+            "peak_current_A": 0.0011971785003462854,
+            "source_voltage_V": 1.2
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "core_supply_min_V": 1.7999423009715225,
+        "core_supply_max_V": 1.7999984625777974,
+        "supply_source_R_Ohm": 0.1,
+        "source_energy_scope": "All raw VDD/VREF source samples, including their external series-resistor losses. External control-driver energy and synthesized-controller power are not measured.",
+        "research_metrics": {
+          "source": "native raw-source integration; display decimation is not used for energy",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 0,
+            "end_s": 0.00001055,
+            "energy_J": 6.447532708453041e-10,
+            "average_current_A": 0.00003395225228253313,
+            "peak_current_A": 0.0005769902847738706,
+            "minimum_current_A": 0.000015374222027020323,
+            "average_power_W": 0.00006111405410855963,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Every original adaptive-step analog VDD sample, integrated before display thinning. External driver/digital-controller power excluded."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "sar12_analog",
+        "source": "continuous ngspice MOS/charge decisions and independent RTL/gate/IR replay",
+        "checks": [
+          {
+            "name": "Actual comparator trials match RTL, synthesized gates and editable CMOS logic",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "Both comparator outputs reach complementary logic levels",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "Native directed codes within one nominal 12-bit LSB",
+            "pass": true,
+            "observed": null
+          }
+        ],
+        "frames": [
+          {
+            "frame": 0,
+            "input_differential_V": -1.16220703125,
+            "code": 65,
+            "expected_code": 64,
+            "error_codes": 1
+          }
+        ],
+        "ambiguous_decisions": 0,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "pass": true
+      },
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "e6d5b786dd4cd1cc5f4a6ace0f8b6b64bd52ecce89ee9461c914a56a53324ebf",
+          "bytes": 193953
+        },
+        {
+          "file": "testbench.spice",
+          "sha256": "2a6a3c5c729b37294f216bf74797b39a3a06ab40f788892a9591d2b7e98ca5bc",
+          "bytes": 101155
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
+        },
+        {
+          "file": "decisions.csv",
+          "sha256": "f39510915060a4bc72e364867624cc583c2fe066bbec4890c8a7ce7a0683606b",
+          "bytes": 757
+        },
+        {
+          "file": "pause-times.txt",
+          "sha256": "1e2a8e9e0b29931d3dcd5d7f0bae0e7c0cef8e9991ea95ddbf190445d82d96ad",
+          "bytes": 1060
+        },
+        {
+          "file": "sar12-verification.json",
+          "sha256": "4ce466ab885b96978a3ba5e86ebdd1585382819e8947af5dfc77a32c08f16ced",
+          "bytes": 998
+        },
+        {
+          "file": "coupling-audit.json",
+          "sha256": "5145b02eb70c7ca02a1b8c3d2812c40a3a881e2c57fc2b20c9779d1beca1d617",
+          "bytes": 524279
+        },
+        {
+          "file": "rtl-replay.csv",
+          "sha256": "520538333bf51f060c5fcf02626b463af26165a7d4d4220e4e6167166657326b",
+          "bytes": 256
+        },
+        {
+          "file": "gate-replay.csv",
+          "sha256": "520538333bf51f060c5fcf02626b463af26165a7d4d4220e4e6167166657326b",
+          "bytes": 256
+        },
+        {
+          "file": "ir-replay.csv",
+          "sha256": "520538333bf51f060c5fcf02626b463af26165a7d4d4220e4e6167166657326b",
+          "bytes": 256
+        },
+        {
+          "file": "replay.v",
+          "sha256": "9309679acad0eb3c1cc678e3c5bee5f991803517fc10b32b1a0edd38d51daf1f",
+          "bytes": 746
+        },
+        {
+          "file": "ir-controller.v",
+          "sha256": "87c9bcab566241a65b5b528aacff8fe4b5e5bd42e5de7ae9dcea89057e518079",
+          "bytes": 21586
+        },
+        {
+          "file": "decisions.mem",
+          "sha256": "9196d80dd179445a0c3b5ae8698c53e67986697f220963d7d1c900051a37bdae",
+          "bytes": 24
+        },
+        {
+          "file": "ngspice.log",
+          "sha256": "883e1b0bfe8e54700daa7856097104b496ef823c4983e5ce2493918dbaa2b6cb",
+          "bytes": 986576
+        },
+        {
+          "file": "pex.tcl",
+          "sha256": "f009fa4db7cc9541dc200942feb9720247e6322228f7b34f67219cc03301111b",
+          "bytes": 623
+        },
+        {
+          "file": "pex-quality.json",
+          "sha256": "5eca6bff2c29e12175ae137bbcddd1e22b20b1307ff60582ca3f62f1d39f5606",
+          "bytes": 210
+        },
+        {
+          "file": "pex-reduction.json",
+          "sha256": "bc8c4b00d098908947a6c656d03d6c0dd03c398c15c9210ea881676bbd66237e",
+          "bytes": 1028
+        },
+        {
+          "file": "pex.spice.gz",
+          "original_sha256": "1d0f5d27f2d46decfee1977b8807ab00dc57f5f71acbf772332498585ec3ea3a",
+          "original_bytes": 3087374
+        },
+        {
+          "file": "pex-simulation.spice.gz",
+          "original_sha256": "7189a8de0f7583ee2789d8e8a7990305378830d28878f1790df64bc216365807",
+          "original_bytes": 2989347
+        },
+        {
+          "file": "gate-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "gate-replay.log",
+          "sha256": "ef2174cd9de577b16ae6c0006676927ef30b15c71dc05b7a3488dc8b8e1ca24b",
+          "bytes": 150
+        },
+        {
+          "file": "ir-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "ir-replay.log",
+          "sha256": "ef2174cd9de577b16ae6c0006676927ef30b15c71dc05b7a3488dc8b8e1ca24b",
+          "bytes": 150
+        },
+        {
+          "file": "magic-pex.log",
+          "sha256": "fc94af013e7a1a9fd035f0006304edbdb43c1f17ca2bf4f04027d331db164813",
+          "bytes": 90687
+        },
+        {
+          "file": "rtl-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "rtl-replay.log",
+          "sha256": "ef2174cd9de577b16ae6c0006676927ef30b15c71dc05b7a3488dc8b8e1ca24b",
+          "bytes": 150
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "9a2332f281e062639dc62c3aaa5dc2b69ed861dd7fa1a7621caebfcbcf93cc38",
+          "bytes": 1077871
+        },
+        {
+          "original_sha256": "fc0ce359d50112221c4e56de18a539274b4b2452bb98e9e7ec8ac547156eeb28",
+          "original_bytes": 8180211,
+          "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\final-post-code-64\\.runtime\\eda\\runs\\9f7f0dd5c8c74fa08bcf3317e6eebe59\\waveform.dat",
+          "repository_copy": true,
+          "file": "waveform.dat.gz"
+        }
+      ]
+    },
+    {
+      "label": "post-code-4031",
+      "id": "ca3f51dbaac34d999e7156cee495d2fd",
+      "project_id": "ab7378e4a87c4fedae6196f01d4661f0",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "message": "Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.",
+      "measurements": {
+        "analysis": "tran",
+        "matrix_solver": "Sparse 1.3",
         "x_unit": "s",
         "x_label": "time",
         "output_bits": 12,
@@ -1128,30 +1456,33 @@
         "sample_rate_Hz": 99502.48756218905,
         "effective_resolution": "not measured",
         "physical_unit_count": 508,
-        "scope": "Noiseless deterministic transient; external ideal VREF/VCM and finite-RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
-        "raw_sample_count": 12493,
-        "display_sample_count": 2212,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "raw_sample_count": 13198,
+        "display_sample_count": 2199,
         "start_s": 0,
         "end_s": 0.00001055,
         "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
         "source_energy": {
           "9": {
-            "energy_J": 6.118303416220733e-10,
-            "average_power_W": 0.00005799339731014912,
-            "minimum_current_A": 7.053163002933988e-7,
-            "peak_current_A": 0.00036799114570366655,
+            "energy_J": 6.395574985964792e-10,
+            "average_power_W": 0.0000606215638480075,
+            "minimum_current_A": 0.000014557521719638089,
+            "peak_current_A": 0.0005517506834280539,
             "source_voltage_V": 1.8
           },
           "10": {
-            "energy_J": 1.08804461406382e-10,
-            "average_power_W": 0.00001031321909065232,
-            "minimum_current_A": -0.0000019783659824801347,
-            "peak_current_A": 0.0012124276864730055,
+            "energy_J": 9.090911790942536e-11,
+            "average_power_W": 0.000008616978000893398,
+            "minimum_current_A": -0.00005004178374112822,
+            "peak_current_A": 0.0007936713836392828,
             "source_voltage_V": 1.2
           }
         },
         "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
-        "source_energy_scope": "All raw analog-core VDD and VREF samples. External control-driver energy and synthesized-controller power are not measured.",
+        "core_supply_min_V": 1.7999448249316572,
+        "core_supply_max_V": 1.799998544247828,
+        "supply_source_R_Ohm": 0.1,
+        "source_energy_scope": "All raw VDD/VREF source samples, including their external series-resistor losses. External control-driver energy and synthesized-controller power are not measured.",
         "research_metrics": {
           "source": "native raw-source integration; display decimation is not used for energy",
           "input_drivers_power": "not measured",
@@ -1161,11 +1492,710 @@
             "available": true,
             "start_s": 0,
             "end_s": 0.00001055,
-            "energy_J": 6.118303416220733e-10,
-            "average_current_A": 0.000032218554061193954,
-            "peak_current_A": 0.00036799114570366655,
-            "minimum_current_A": 7.053163002933988e-7,
-            "average_power_W": 0.00005799339731014912,
+            "energy_J": 6.395574985964792e-10,
+            "average_current_A": 0.000033678646582226384,
+            "peak_current_A": 0.0005517506834280539,
+            "minimum_current_A": 0.000014557521719638089,
+            "average_power_W": 0.0000606215638480075,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Every original adaptive-step analog VDD sample, integrated before display thinning. External driver/digital-controller power excluded."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "sar12_analog",
+        "source": "continuous ngspice MOS/charge decisions and independent RTL/gate/IR replay",
+        "checks": [
+          {
+            "name": "Actual comparator trials match RTL, synthesized gates and editable CMOS logic",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "Both comparator outputs reach complementary logic levels",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "Native directed codes within one nominal 12-bit LSB",
+            "pass": true,
+            "observed": null
+          }
+        ],
+        "frames": [
+          {
+            "frame": 0,
+            "input_differential_V": 1.16220703125,
+            "code": 4031,
+            "expected_code": 4031,
+            "error_codes": 0
+          }
+        ],
+        "ambiguous_decisions": 0,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "pass": true
+      },
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "c1430f8286b8feb4e63c528f0f4fc1d2e61098672d2ebfba5b3ce0a34112ee64",
+          "bytes": 194071
+        },
+        {
+          "file": "testbench.spice",
+          "sha256": "a1253de46624a2684c63038e5e4e5458c44c8ba6a823bf090747a7c005d3666c",
+          "bytes": 101147
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
+        },
+        {
+          "file": "decisions.csv",
+          "sha256": "c087adccaa9be37f411c2095a1662523c4703bc8f3e1cde2eca770e2e0bec573",
+          "bytes": 754
+        },
+        {
+          "file": "pause-times.txt",
+          "sha256": "1e2a8e9e0b29931d3dcd5d7f0bae0e7c0cef8e9991ea95ddbf190445d82d96ad",
+          "bytes": 1060
+        },
+        {
+          "file": "sar12-verification.json",
+          "sha256": "16abbee599d7f0c77223a7cdc04066c291adbc0da197e8a1d7e0c78bd8b851dc",
+          "bytes": 1001
+        },
+        {
+          "file": "coupling-audit.json",
+          "sha256": "a4c6624016b8519841a0ed999363168b51b887cf64f5aae8db182c2ea035fbc8",
+          "bytes": 524368
+        },
+        {
+          "file": "rtl-replay.csv",
+          "sha256": "b9648de7650da1e1fcea4cbc415d1bac4524fef78496fba034a3ca83c6030a43",
+          "bytes": 275
+        },
+        {
+          "file": "gate-replay.csv",
+          "sha256": "b9648de7650da1e1fcea4cbc415d1bac4524fef78496fba034a3ca83c6030a43",
+          "bytes": 275
+        },
+        {
+          "file": "ir-replay.csv",
+          "sha256": "b9648de7650da1e1fcea4cbc415d1bac4524fef78496fba034a3ca83c6030a43",
+          "bytes": 275
+        },
+        {
+          "file": "replay.v",
+          "sha256": "9309679acad0eb3c1cc678e3c5bee5f991803517fc10b32b1a0edd38d51daf1f",
+          "bytes": 746
+        },
+        {
+          "file": "ir-controller.v",
+          "sha256": "87c9bcab566241a65b5b528aacff8fe4b5e5bd42e5de7ae9dcea89057e518079",
+          "bytes": 21586
+        },
+        {
+          "file": "decisions.mem",
+          "sha256": "b1213753132ab95039bfd162afd8a5f66f6de32b8505a3d4833d0801de60bd3a",
+          "bytes": 24
+        },
+        {
+          "file": "ngspice.log",
+          "sha256": "d5a0dbf891b6ddb15cfd630a071a8d4a76f413de37e01a2f765b0844876935f0",
+          "bytes": 972223
+        },
+        {
+          "file": "pex.tcl",
+          "sha256": "359349b4bd11434258bb43504a68b41e9e873bee2a3066ce8e86a276bcad71af",
+          "bytes": 627
+        },
+        {
+          "file": "pex-quality.json",
+          "sha256": "5c33c7266b1d659bba9994b6f501aaed6ef9b90d4b14bd4477a0e27151e4b3fc",
+          "bytes": 210
+        },
+        {
+          "file": "pex-reduction.json",
+          "sha256": "6a5f6e15860b755c29c9b392b3fa1fdd28a9cdc7dc69c077a1db064008abcab8",
+          "bytes": 1032
+        },
+        {
+          "file": "pex.spice.gz",
+          "original_sha256": "482437ee6862ab46cf51f44af154df322f08f729d64467b522c0d890fd148709",
+          "original_bytes": 3087536
+        },
+        {
+          "file": "pex-simulation.spice.gz",
+          "original_sha256": "194ca2bdeff320cf9a7ee25131a7abd83888dd79fd9f562e5afa2c68d8737a61",
+          "original_bytes": 2989488
+        },
+        {
+          "file": "gate-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "gate-replay.log",
+          "sha256": "ddd30d92195470f7c8ddfe554dcf4f6033f5d73a31f7f09b0c6e722f28f1a454",
+          "bytes": 152
+        },
+        {
+          "file": "ir-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "ir-replay.log",
+          "sha256": "ddd30d92195470f7c8ddfe554dcf4f6033f5d73a31f7f09b0c6e722f28f1a454",
+          "bytes": 152
+        },
+        {
+          "file": "magic-pex.log",
+          "sha256": "7ed917368bedc24552e602c552a85bacd98a6e834b4c7fabf0557af59358340b",
+          "bytes": 90689
+        },
+        {
+          "file": "rtl-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "rtl-replay.log",
+          "sha256": "ddd30d92195470f7c8ddfe554dcf4f6033f5d73a31f7f09b0c6e722f28f1a454",
+          "bytes": 152
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "0d879df86a010c0fe6368ff9a371d8de2b31c912899035b834fe0e12da3f3f5d",
+          "bytes": 1063526
+        },
+        {
+          "original_sha256": "731146b7c5f8171c085dd993e92e920390a795c8812efc40322c0bdaa6d1a25e",
+          "original_bytes": 7932599,
+          "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\final-post-code-4031\\.runtime\\eda\\runs\\ca3f51dbaac34d999e7156cee495d2fd\\waveform.dat",
+          "repository_copy": true,
+          "file": "waveform.dat.gz"
+        }
+      ]
+    },
+    {
+      "label": "directed",
+      "id": "52c15cc5b82243fea4010f2a6954a3cb",
+      "project_id": "c8a23e8b41e94bddab93fa160e110f22",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "message": "Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.",
+      "measurements": {
+        "analysis": "tran",
+        "matrix_solver": "Sparse 1.3",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 12,
+        "frames": 14,
+        "max_code_error": 1,
+        "ambiguous_decisions": 0,
+        "rtl_gate_replay_match": true,
+        "lsb_V": 0.0005859375,
+        "conversion_s": 0.00001005,
+        "sample_rate_Hz": 99502.48756218905,
+        "effective_resolution": "not measured",
+        "physical_unit_count": 508,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "raw_sample_count": 172775,
+        "display_sample_count": 6611,
+        "start_s": 0,
+        "end_s": 0.0001412,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 8.200498414384653e-9,
+            "average_power_W": 0.00005807718423785166,
+            "minimum_current_A": -0.00013666131596679065,
+            "peak_current_A": 0.0004866826799876378,
+            "source_voltage_V": 1.8
+          },
+          "10": {
+            "energy_J": 1.2797411634214036e-9,
+            "average_power_W": 0.000009063322687120423,
+            "minimum_current_A": -0.000022217742264185603,
+            "peak_current_A": 0.0019974087819424335,
+            "source_voltage_V": 1.2
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "core_supply_min_V": 1.7999513317320013,
+        "core_supply_max_V": 1.8000136661315966,
+        "supply_source_R_Ohm": 0.1,
+        "source_energy_scope": "All raw VDD/VREF source samples, including their external series-resistor losses. External control-driver energy and synthesized-controller power are not measured.",
+        "research_metrics": {
+          "source": "native raw-source integration; display decimation is not used for energy",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 0,
+            "end_s": 0.0001412,
+            "energy_J": 8.200498414384653e-9,
+            "average_current_A": 0.00003226510235436203,
+            "peak_current_A": 0.0004866826799876378,
+            "minimum_current_A": -0.00013666131596679065,
+            "average_power_W": 0.00005807718423785166,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Every original adaptive-step analog VDD sample, integrated before display thinning. External driver/digital-controller power excluded."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "sar12_analog",
+        "source": "continuous ngspice MOS/charge decisions and independent RTL/gate/IR replay",
+        "checks": [
+          {
+            "name": "Actual comparator trials match RTL, synthesized gates and editable CMOS logic",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "Both comparator outputs reach complementary logic levels",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "Native directed codes within one nominal 12-bit LSB",
+            "pass": true,
+            "observed": null
+          }
+        ],
+        "frames": [
+          {
+            "frame": 0,
+            "input_differential_V": 0.00029296875,
+            "code": 2048,
+            "expected_code": 2048,
+            "error_codes": 0
+          },
+          {
+            "frame": 1,
+            "input_differential_V": -1.19970703125,
+            "code": 0,
+            "expected_code": 0,
+            "error_codes": 0
+          },
+          {
+            "frame": 2,
+            "input_differential_V": -1.1991210937499999,
+            "code": 1,
+            "expected_code": 1,
+            "error_codes": 0
+          },
+          {
+            "frame": 3,
+            "input_differential_V": -1.1815429687499999,
+            "code": 31,
+            "expected_code": 31,
+            "error_codes": 0
+          },
+          {
+            "frame": 4,
+            "input_differential_V": -1.16279296875,
+            "code": 63,
+            "expected_code": 63,
+            "error_codes": 0
+          },
+          {
+            "frame": 5,
+            "input_differential_V": -1.16220703125,
+            "code": 64,
+            "expected_code": 64,
+            "error_codes": 0
+          },
+          {
+            "frame": 6,
+            "input_differential_V": -1.16162109375,
+            "code": 65,
+            "expected_code": 65,
+            "error_codes": 0
+          },
+          {
+            "frame": 7,
+            "input_differential_V": -0.6002929687499999,
+            "code": 1023,
+            "expected_code": 1023,
+            "error_codes": 0
+          },
+          {
+            "frame": 8,
+            "input_differential_V": -0.00029296875,
+            "code": 2047,
+            "expected_code": 2047,
+            "error_codes": 0
+          },
+          {
+            "frame": 9,
+            "input_differential_V": 0.0008789062499999999,
+            "code": 2049,
+            "expected_code": 2049,
+            "error_codes": 0
+          },
+          {
+            "frame": 10,
+            "input_differential_V": 0.6002929687499999,
+            "code": 3072,
+            "expected_code": 3072,
+            "error_codes": 0
+          },
+          {
+            "frame": 11,
+            "input_differential_V": 1.16220703125,
+            "code": 4030,
+            "expected_code": 4031,
+            "error_codes": -1
+          },
+          {
+            "frame": 12,
+            "input_differential_V": 1.1991210937499999,
+            "code": 4093,
+            "expected_code": 4094,
+            "error_codes": -1
+          },
+          {
+            "frame": 13,
+            "input_differential_V": 1.19970703125,
+            "code": 4094,
+            "expected_code": 4095,
+            "error_codes": -1
+          }
+        ],
+        "ambiguous_decisions": 0,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "pass": true
+      },
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "8bc126f66334113d9f01fb3556d5ee513a252a3bf254691abe022ccf50794281",
+          "bytes": 189285
+        },
+        {
+          "file": "analog.spice",
+          "sha256": "195a9bba697076aa6a035551fda5f9c51661f5016f1334550af577c0b6f09ddb",
+          "bytes": 27211
+        },
+        {
+          "file": "testbench.spice.gz",
+          "original_sha256": "3e021f3b749463d4667b3605e3bd16a684437f909c383f6892bff90130ec2e86",
+          "original_bytes": 1391600
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
+        },
+        {
+          "file": "decisions.csv",
+          "sha256": "8dd4d137772a8366223d9d90ef13d88cf69014db8bcb7daa2347625dc2f3f999",
+          "bytes": 9910
+        },
+        {
+          "file": "pause-times.txt",
+          "sha256": "79c4281a2bf824e6f2c3cd4cd11eb4dd1de8219bf9fa6597775aab0c6429eef7",
+          "bytes": 14580
+        },
+        {
+          "file": "sar12-verification.json",
+          "sha256": "bc4d153b28abb671dce348dafd11cbb56e96669e595e49ed968087b9539ff01b",
+          "bytes": 2945
+        },
+        {
+          "file": "rtl-replay.csv",
+          "sha256": "0ac07b5823efe36af5b149d1d39bd12802389423e76243d9ad92e869fdf31f88",
+          "bytes": 4048
+        },
+        {
+          "file": "gate-replay.csv",
+          "sha256": "0ac07b5823efe36af5b149d1d39bd12802389423e76243d9ad92e869fdf31f88",
+          "bytes": 4048
+        },
+        {
+          "file": "ir-replay.csv",
+          "sha256": "0ac07b5823efe36af5b149d1d39bd12802389423e76243d9ad92e869fdf31f88",
+          "bytes": 4048
+        },
+        {
+          "file": "replay.v",
+          "sha256": "bee9f5a54b9f80ab4fbaf4b9827f1c96d52845486d9c2dfb0e02e59b694654f9",
+          "bytes": 748
+        },
+        {
+          "file": "ir-controller.v",
+          "sha256": "87c9bcab566241a65b5b528aacff8fe4b5e5bd42e5de7ae9dcea89057e518079",
+          "bytes": 21586
+        },
+        {
+          "file": "decisions.mem",
+          "sha256": "9d7e1dd746a1d417986586c8de4234c49ccb833aa822dd8b048aee250e1deeca",
+          "bytes": 336
+        },
+        {
+          "file": "ngspice.log",
+          "sha256": "daaffffb1e14a3031c6c9e6829f88272a72f66c6ed5a079e29340f93409c52f3",
+          "bytes": 81888
+        },
+        {
+          "file": "gate-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "gate-replay.log",
+          "sha256": "0f880bed3eeadc7762865eec14afe59cb2f35ad0eac36c3da956def9789a0bab",
+          "bytes": 136
+        },
+        {
+          "file": "ir-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "ir-replay.log",
+          "sha256": "0f880bed3eeadc7762865eec14afe59cb2f35ad0eac36c3da956def9789a0bab",
+          "bytes": 136
+        },
+        {
+          "file": "rtl-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "rtl-replay.log",
+          "sha256": "0f880bed3eeadc7762865eec14afe59cb2f35ad0eac36c3da956def9789a0bab",
+          "bytes": 136
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "2f9e1dbbf4256fbe1d85835bb4315a73c40d827b8598d32ec995564d176b7d4b",
+          "bytes": 82435
+        },
+        {
+          "original_sha256": "d2675c45571d82e6e68a453292d2740a9e76455828dd287914050fbdc3d6db00",
+          "original_bytes": 103838376,
+          "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\lab\\.runtime\\eda\\runs\\52c15cc5b82243fea4010f2a6954a3cb\\waveform.dat",
+          "repository_copy": false
+        }
+      ]
+    },
+    {
+      "label": "drc",
+      "id": "f2b26e9cc48d40aea401b9fcd67461c5",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff.",
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "98bbf7661528603eee0eb98dbd36aaaa7ccf8806639ca5a15c09aa2fec8a761f",
+          "bytes": 181894
+        },
+        {
+          "file": "magic-drc.log",
+          "sha256": "265e7d2070896ecf460d91ca321ddba434ed63d05fd35ebe2daaddaf064971ff",
+          "bytes": 86990
+        },
+        {
+          "file": "markers.tsv",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "drc-status.json",
+          "sha256": "efbdb95b5d6f47cd06f035a6cd5fc5e7809fbe5dd87e37f0b2a2825fc43b9bbb",
+          "bytes": 19
+        },
+        {
+          "file": "drc.tcl",
+          "sha256": "7fc6e6d605db9e52b7322727218ed8e8a0199de912c09c444d61defbe60787cf",
+          "bytes": 724
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "a89a35f587ddd68924ffb4c2f045a4f88d9848c7c8ab7682ef0da46ab982e528",
+          "bytes": 87009
+        }
+      ]
+    },
+    {
+      "label": "lvs",
+      "id": "67e0e5c006e94f23aa8ee03fb85380e9",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "message": "Actual Netgen comparison: circuits match uniquely.",
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "c755437d362f702b298abd3d38046d7c8b9f2167b2b8350eca4d1fb3a6ea52ed",
+          "bytes": 183357
+        },
+        {
+          "file": "extract-lvs.tcl",
+          "sha256": "2c44eeed6e7342a36d6b0c4730b7e5394a8d9cfca0f6b193a0a2166e8f9810c6",
+          "bytes": 459
+        },
+        {
+          "file": "layout.spice",
+          "sha256": "0ff6e298adc580acceb6f758c24485a6e93a0e8777a5bd2e96426c883e651388",
+          "bytes": 61235
+        },
+        {
+          "file": "reference.spice",
+          "sha256": "7e0a815acf4e2747bb27569d18a61e5c8955900c94634a1044e8b6e453a65bc1",
+          "bytes": 73078
+        },
+        {
+          "file": "netgen-lvs.log",
+          "sha256": "6f37b9b5ab49397be7547b4ec9b80d5dab681c807822f4388e7b51881978e738",
+          "bytes": 8094
+        },
+        {
+          "file": "lvs.json",
+          "sha256": "f9bcbfb1a9b3ee73f9b41517225916b0764feb26f28bfe1332467d28a851ddb5",
+          "bytes": 1894
+        },
+        {
+          "file": "lvs.log",
+          "sha256": "853cc633447ab8dda8e2cd09f9b2fc2244861203e4338291eac01ffa3068f9a8",
+          "bytes": 7586
+        },
+        {
+          "file": "magic-extract.log",
+          "sha256": "4fc1f6f0e12beddbeebcf2bf3b954deef73f94aad9dd12bcc5c5c80a19ef0850",
+          "bytes": 86997
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "3dc7e1ebbaed7948c9e0e1417182926184096979ebce68c9e50d435632eab329",
+          "bytes": 95134
+        }
+      ]
+    },
+    {
+      "label": "pex",
+      "id": "34b780f3dc694e51a261ffce71bd421d",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "message": "Actual Magic RC extraction: 61140 resistors, 17197 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "40cea46566b760e5d5fba233bf832b6987515537515d7e9b636b23dcfa606015",
+          "bytes": 182946
+        },
+        {
+          "file": "pex.tcl",
+          "sha256": "058bcbf5bd978ebc3ddadc2448c938af82a3503835edeedd16e32292e72b0a40",
+          "bytes": 593
+        },
+        {
+          "file": "pex-quality.json",
+          "sha256": "5c33c7266b1d659bba9994b6f501aaed6ef9b90d4b14bd4477a0e27151e4b3fc",
+          "bytes": 210
+        },
+        {
+          "file": "pex.spice.gz",
+          "original_sha256": "f655c3271d22852a18bfbb11e9cef675115e457bce56d5fc141e369df8a5b696",
+          "original_bytes": 3087539
+        },
+        {
+          "file": "magic-pex.log",
+          "sha256": "2fa341c1b08486d6874fe56a45b40c68f1fc86f336a313119094f0d3007d22d6",
+          "bytes": 90620
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "688b1c331a14cc8e1411706155bcfb6b3dd6996515d61eab51dd31bc96ffeb10",
+          "bytes": 90639
+        }
+      ]
+    },
+    {
+      "label": "imported",
+      "id": "86acb80eda584a049167346c3f15d919",
+      "project_id": "0e757c9c85f540b187c5cfbf98307add",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "message": "Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.",
+      "measurements": {
+        "analysis": "tran",
+        "matrix_solver": "Sparse 1.3",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 12,
+        "frames": 1,
+        "max_code_error": 0,
+        "ambiguous_decisions": 0,
+        "rtl_gate_replay_match": true,
+        "lsb_V": 0.0005859375,
+        "conversion_s": 0.00001005,
+        "sample_rate_Hz": 99502.48756218905,
+        "effective_resolution": "not measured",
+        "physical_unit_count": 508,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "raw_sample_count": 12650,
+        "display_sample_count": 2082,
+        "start_s": 0,
+        "end_s": 0.00001055,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 6.118296040209999e-10,
+            "average_power_W": 0.00005799332739535544,
+            "minimum_current_A": 6.675820145574107e-7,
+            "peak_current_A": 0.00036809815788885203,
+            "source_voltage_V": 1.8
+          },
+          "10": {
+            "energy_J": 1.0880249398259865e-10,
+            "average_power_W": 0.000010313032604985653,
+            "minimum_current_A": -0.0000018848231517765157,
+            "peak_current_A": 0.0012124239798695369,
+            "source_voltage_V": 1.2
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "core_supply_min_V": 1.799963190184211,
+        "core_supply_max_V": 1.7999999332417984,
+        "supply_source_R_Ohm": 0.1,
+        "source_energy_scope": "All raw VDD/VREF source samples, including their external series-resistor losses. External control-driver energy and synthesized-controller power are not measured.",
+        "research_metrics": {
+          "source": "native raw-source integration; display decimation is not used for energy",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 0,
+            "end_s": 0.00001055,
+            "energy_J": 6.118296040209999e-10,
+            "average_current_A": 0.00003221851521964191,
+            "peak_current_A": 0.00036809815788885203,
+            "minimum_current_A": 6.675820145574107e-7,
+            "average_power_W": 0.00005799332739535544,
             "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
             "sample_scope": "Every original adaptive-step analog VDD sample, integrated before display thinning. External driver/digital-controller power excluded."
           }
@@ -1202,14 +2232,14 @@
           }
         ],
         "ambiguous_decisions": 0,
-        "scope": "Noiseless deterministic transient; external ideal VREF/VCM and finite-RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
         "pass": true
       },
       "artifacts": [
         {
           "file": "manifest.json",
-          "sha256": "233296e8a57e6b0d14dd246ee47392ecf31c972d54eda83dcfa6d2a4293c5468",
-          "bytes": 188980
+          "sha256": "d65b27a4ac61e59212535921aea8e646f2967a90eb501d8b45a52c57d13076fc",
+          "bytes": 189271
         },
         {
           "file": "analog.spice",
@@ -1218,23 +2248,28 @@
         },
         {
           "file": "testbench.spice",
-          "sha256": "1cb400150de7cd9feaada8919d72aff783b62a39bdd8c14532b5b429cfae32fd",
-          "bytes": 30127
+          "sha256": "5110d214212a51f4d673384642071444d2ec55ab6bcb1d11d2ec76ca42ec4790",
+          "bytes": 101108
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
         },
         {
           "file": "decisions.csv",
-          "sha256": "f111253958d518be3d9aa920f533d74a693dbc819700e01dcb6c7f5f352f69a6",
-          "bytes": 756
+          "sha256": "b41dbaaf220c397ca600caf3f82f0cf34ef49a6b2c500909166223dae0ec8140",
+          "bytes": 758
         },
         {
           "file": "pause-times.txt",
-          "sha256": "6a0d9b472f460fc5095656e2996c0b19a9b2059f1eb83a9b886a53e567918a5f",
+          "sha256": "1e2a8e9e0b29931d3dcd5d7f0bae0e7c0cef8e9991ea95ddbf190445d82d96ad",
           "bytes": 1060
         },
         {
           "file": "sar12-verification.json",
-          "sha256": "b12691938b6f03aa54294ea295d87f31d25d3e45849cc1e87c7b17a2360531ca",
-          "bytes": 982
+          "sha256": "5bdf54301742b0d762d4a65dfaceade00a45b09006f39ac49ff9eb5819cc81aa",
+          "bytes": 1001
         },
         {
           "file": "rtl-replay.csv",
@@ -1268,8 +2303,8 @@
         },
         {
           "file": "ngspice.log",
-          "sha256": "b422513bf1125458cc5996f892dc006d74253e706107333f1bcf340838c2cd8f",
-          "bytes": 67728
+          "sha256": "b755668d0280f7d93f5686421ffea4598d3e1dd8f58fc818b86c362aece49202",
+          "bytes": 67495
         },
         {
           "file": "gate-compile.log",
@@ -1278,7 +2313,7 @@
         },
         {
           "file": "gate-replay.log",
-          "sha256": "09e9ab32128e7bf0612e47637747f6848e4d1412b1b5e8f427fd5719988bbe46",
+          "sha256": "3f93a6f2fc8650c2601477c10546b2e6b51ae855f161fb0d6c9891e326c4fba8",
           "bytes": 135
         },
         {
@@ -1288,7 +2323,7 @@
         },
         {
           "file": "ir-replay.log",
-          "sha256": "09e9ab32128e7bf0612e47637747f6848e4d1412b1b5e8f427fd5719988bbe46",
+          "sha256": "3f93a6f2fc8650c2601477c10546b2e6b51ae855f161fb0d6c9891e326c4fba8",
           "bytes": 135
         },
         {
@@ -1298,18 +2333,237 @@
         },
         {
           "file": "rtl-replay.log",
-          "sha256": "09e9ab32128e7bf0612e47637747f6848e4d1412b1b5e8f427fd5719988bbe46",
+          "sha256": "3f93a6f2fc8650c2601477c10546b2e6b51ae855f161fb0d6c9891e326c4fba8",
           "bytes": 135
         },
         {
           "file": "stdout.log",
-          "sha256": "5c413430ca5a4d7a0ce95365f7ab00098a8a44888a5a7b2f9db3473ae45c129d",
-          "bytes": 68272
+          "sha256": "4e1344b7fa307a5df945420a3d392a0e891fc68fb8a2d8b9cb73654ae1ad14a3",
+          "bytes": 68039
         },
         {
-          "original_sha256": "ae023d0cf5ba379f69c64b336a2f896c11a650d67a59e1c44dc9c6694984e0af",
-          "original_bytes": 7196544,
-          "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\lab\\.runtime\\eda\\runs\\1de63a5347d64a649dea184614ee383a\\waveform.dat",
+          "original_sha256": "b6bb72b16a55488bb73ea1adabb2c367a5b16f182b4740227240cf43fcdd18f8",
+          "original_bytes": 7603251,
+          "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\lab\\.runtime\\eda\\runs\\86acb80eda584a049167346c3f15d919\\waveform.dat",
+          "repository_copy": true,
+          "file": "waveform.dat.gz"
+        }
+      ]
+    },
+    {
+      "label": "pre-single",
+      "id": "aa0e6d129ecd4a7da79582f9b670da1f",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "message": "Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.",
+      "measurements": {
+        "analysis": "tran",
+        "matrix_solver": "Sparse 1.3",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 12,
+        "frames": 1,
+        "max_code_error": 0,
+        "ambiguous_decisions": 0,
+        "rtl_gate_replay_match": true,
+        "lsb_V": 0.0005859375,
+        "conversion_s": 0.00001005,
+        "sample_rate_Hz": 99502.48756218905,
+        "effective_resolution": "not measured",
+        "physical_unit_count": 508,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "raw_sample_count": 12650,
+        "display_sample_count": 2082,
+        "start_s": 0,
+        "end_s": 0.00001055,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 6.118296040209999e-10,
+            "average_power_W": 0.00005799332739535544,
+            "minimum_current_A": 6.675820145574107e-7,
+            "peak_current_A": 0.00036809815788885203,
+            "source_voltage_V": 1.8
+          },
+          "10": {
+            "energy_J": 1.0880249398259865e-10,
+            "average_power_W": 0.000010313032604985653,
+            "minimum_current_A": -0.0000018848231517765157,
+            "peak_current_A": 0.0012124239798695369,
+            "source_voltage_V": 1.2
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "core_supply_min_V": 1.799963190184211,
+        "core_supply_max_V": 1.7999999332417984,
+        "supply_source_R_Ohm": 0.1,
+        "source_energy_scope": "All raw VDD/VREF source samples, including their external series-resistor losses. External control-driver energy and synthesized-controller power are not measured.",
+        "research_metrics": {
+          "source": "native raw-source integration; display decimation is not used for energy",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 0,
+            "end_s": 0.00001055,
+            "energy_J": 6.118296040209999e-10,
+            "average_current_A": 0.00003221851521964191,
+            "peak_current_A": 0.00036809815788885203,
+            "minimum_current_A": 6.675820145574107e-7,
+            "average_power_W": 0.00005799332739535544,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Every original adaptive-step analog VDD sample, integrated before display thinning. External driver/digital-controller power excluded."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "sar12_analog",
+        "source": "continuous ngspice MOS/charge decisions and independent RTL/gate/IR replay",
+        "checks": [
+          {
+            "name": "Actual comparator trials match RTL, synthesized gates and editable CMOS logic",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "Both comparator outputs reach complementary logic levels",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "Native directed codes within one nominal 12-bit LSB",
+            "pass": true,
+            "observed": null
+          }
+        ],
+        "frames": [
+          {
+            "frame": 0,
+            "input_differential_V": 0.00029296875,
+            "code": 2048,
+            "expected_code": 2048,
+            "error_codes": 0
+          }
+        ],
+        "ambiguous_decisions": 0,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "pass": true
+      },
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "c1ea42645171f3e8f835f50aaf6f932b077b403cd2c51931bd5223002d2b46b6",
+          "bytes": 189272
+        },
+        {
+          "file": "analog.spice",
+          "sha256": "7e0a815acf4e2747bb27569d18a61e5c8955900c94634a1044e8b6e453a65bc1",
+          "bytes": 73078
+        },
+        {
+          "file": "testbench.spice",
+          "sha256": "3d75c05cea4f782b116e94097bd9be834927758184879382e2fb2cb389f6013b",
+          "bytes": 101108
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
+        },
+        {
+          "file": "decisions.csv",
+          "sha256": "b41dbaaf220c397ca600caf3f82f0cf34ef49a6b2c500909166223dae0ec8140",
+          "bytes": 758
+        },
+        {
+          "file": "pause-times.txt",
+          "sha256": "1e2a8e9e0b29931d3dcd5d7f0bae0e7c0cef8e9991ea95ddbf190445d82d96ad",
+          "bytes": 1060
+        },
+        {
+          "file": "sar12-verification.json",
+          "sha256": "5bdf54301742b0d762d4a65dfaceade00a45b09006f39ac49ff9eb5819cc81aa",
+          "bytes": 1001
+        },
+        {
+          "file": "rtl-replay.csv",
+          "sha256": "1716caa03931caed5a3538f31ebd9ec9c8286ceed036cde043e9968ce9f3522b",
+          "bytes": 275
+        },
+        {
+          "file": "gate-replay.csv",
+          "sha256": "1716caa03931caed5a3538f31ebd9ec9c8286ceed036cde043e9968ce9f3522b",
+          "bytes": 275
+        },
+        {
+          "file": "ir-replay.csv",
+          "sha256": "1716caa03931caed5a3538f31ebd9ec9c8286ceed036cde043e9968ce9f3522b",
+          "bytes": 275
+        },
+        {
+          "file": "replay.v",
+          "sha256": "9309679acad0eb3c1cc678e3c5bee5f991803517fc10b32b1a0edd38d51daf1f",
+          "bytes": 746
+        },
+        {
+          "file": "ir-controller.v",
+          "sha256": "87c9bcab566241a65b5b528aacff8fe4b5e5bd42e5de7ae9dcea89057e518079",
+          "bytes": 21586
+        },
+        {
+          "file": "decisions.mem",
+          "sha256": "2a0bafaef2e0fd7bfc797306f07372217b47885922bab3ec22e4dbb47b10ac2d",
+          "bytes": 24
+        },
+        {
+          "file": "ngspice.log",
+          "sha256": "8cbea9bb4e92c1727b3c567f96569e128de2c9f480dc877d333866ddfd1b7066",
+          "bytes": 67463
+        },
+        {
+          "file": "gate-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "gate-replay.log",
+          "sha256": "c4c60871b4cc756f1eea232fb2a5811c9c198309bb0d5fcc354640d3bce05af4",
+          "bytes": 135
+        },
+        {
+          "file": "ir-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "ir-replay.log",
+          "sha256": "c4c60871b4cc756f1eea232fb2a5811c9c198309bb0d5fcc354640d3bce05af4",
+          "bytes": 135
+        },
+        {
+          "file": "rtl-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "rtl-replay.log",
+          "sha256": "c4c60871b4cc756f1eea232fb2a5811c9c198309bb0d5fcc354640d3bce05af4",
+          "bytes": 135
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "f23ea2ed562dd7eb0b3f50977757550b48eef7749e0e43515975a2cc07a33bf5",
+          "bytes": 68007
+        },
+        {
+          "original_sha256": "b6bb72b16a55488bb73ea1adabb2c367a5b16f182b4740227240cf43fcdd18f8",
+          "original_bytes": 7603251,
+          "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\lab\\.runtime\\eda\\runs\\aa0e6d129ecd4a7da79582f9b670da1f\\waveform.dat",
           "repository_copy": true,
           "file": "waveform.dat.gz"
         }
@@ -1322,7 +2576,7 @@
       "revision": 1,
       "execution_status": "completed",
       "analysis_result": "pass",
-      "freshness": "current",
+      "freshness": "stale",
       "message": "Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.",
       "measurements": {
         "analysis": "tran",
@@ -1432,6 +2686,11 @@
           "bytes": 30300
         },
         {
+          "file": "supported-ss.spice",
+          "sha256": "0f84eac6be1a6b7864f392006d9622721ebc6f3e613d93c9b6d52e1e99f540c9",
+          "bytes": 3203
+        },
+        {
           "file": "decisions.csv",
           "sha256": "17ff3c00a9aa3228d9c90cd47cdc9792e70d9d067585f36040457f6ac6195faf",
           "bytes": 770
@@ -1532,7 +2791,7 @@
       "revision": 1,
       "execution_status": "completed",
       "analysis_result": "pass",
-      "freshness": "current",
+      "freshness": "stale",
       "message": "Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.",
       "measurements": {
         "analysis": "tran",
@@ -1642,6 +2901,11 @@
           "bytes": 30128
         },
         {
+          "file": "supported-ff.spice",
+          "sha256": "207e03914b9ceeff8c6946aed0af47326a30c3c4bb204ed7f914c9e975cb26cc",
+          "bytes": 3203
+        },
+        {
           "file": "decisions.csv",
           "sha256": "da96011a0dbbf2e43b1ce559a460ce5678963b7cb07a00da10bded113e583ee3",
           "bytes": 756
@@ -1732,78 +2996,6 @@
           "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\lab\\.runtime\\eda\\runs\\08e16d781e99415e963051e380867f72\\waveform.dat",
           "repository_copy": true,
           "file": "waveform.dat.gz"
-        }
-      ]
-    },
-    {
-      "label": "post-single",
-      "id": "8a098651639f4123b3e5251749efa44c",
-      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
-      "revision": 1,
-      "execution_status": "failed",
-      "analysis_result": "unknown",
-      "freshness": "current",
-      "message": "ngspice exited with code 1. Raw log retained.",
-      "artifacts": [
-        {
-          "file": "manifest.json",
-          "sha256": "891013895a35356aa99112f8b62617d5d5bcfef3384240ba4bb8d2059250fe5d",
-          "bytes": 186030
-        },
-        {
-          "file": "testbench.spice",
-          "sha256": "6fa09ac185053a251160e45af6a26a13508b3b6ce0c6caa732d3dbc595d167fc",
-          "bytes": 29654
-        },
-        {
-          "file": "decisions.csv",
-          "sha256": "0caee13dc30cc900c0451db29c5f4f5a80dd6302821ed68a98f219dc932e7521",
-          "bytes": 110
-        },
-        {
-          "file": "pause-times.txt",
-          "sha256": "b4be9f5e3892ae5a21387c178308f63b01ccd613cfaae2f098cb37a6eff8f267",
-          "bytes": 180
-        },
-        {
-          "file": "ngspice.log",
-          "sha256": "0c3d6bb248e5ae28c3bd4a2e243a79e4cdf4452f0df4621646e1607c59cc68fc",
-          "bytes": 888565
-        },
-        {
-          "file": "pex.tcl",
-          "sha256": "ccdb01167164ac26e3dc7d728f520e6b1db5a912c016e363f114dc53125c8abf",
-          "bytes": 593
-        },
-        {
-          "file": "pex-quality.json",
-          "sha256": "5c33c7266b1d659bba9994b6f501aaed6ef9b90d4b14bd4477a0e27151e4b3fc",
-          "bytes": 210
-        },
-        {
-          "file": "pex-reduction.json",
-          "sha256": "c72a8d3d4ea1890371a12ad309fd7015ab06b3da3048fef545e9f860c3d5f445",
-          "bytes": 998
-        },
-        {
-          "file": "pex.spice.gz",
-          "original_sha256": "efed6497b09372c58097e161187df9a4e698d201885253d3374b3a414e12ab5a",
-          "original_bytes": 3087539
-        },
-        {
-          "file": "pex-simulation.spice.gz",
-          "original_sha256": "40333ad124b6e2a7b6bb662cfffefa24b585727c74b3dda83faa21723c4ad721",
-          "original_bytes": 2989434
-        },
-        {
-          "file": "magic-pex.log",
-          "sha256": "733d7392e723ea9f7b0d5d2291192672009d8e146cb73dcae362f5b86bbb2390",
-          "bytes": 90620
-        },
-        {
-          "file": "stdout.log",
-          "sha256": "f639bc9b89bf8e8c8d8f2829ec6709172437ff458421753fa133dafbd5475883",
-          "bytes": 979275
         }
       ]
     },
@@ -1943,6 +3135,11 @@
           "bytes": 29654
         },
         {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
+        },
+        {
           "file": "decisions.csv",
           "sha256": "8aafd65cc580fde31cb772fb16c63a93ef37ab6fd381f54e139b6469f39ddca2",
           "bytes": 757
@@ -2065,8 +3262,619 @@
           "file": "waveform.dat.gz"
         }
       ]
+    },
+    {
+      "label": "historical-post-ideal-source",
+      "id": "8a098651639f4123b3e5251749efa44c",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
+      "revision": 1,
+      "execution_status": "failed",
+      "analysis_result": "unknown",
+      "freshness": "stale",
+      "message": "ngspice exited with code 1. Raw log retained.",
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "891013895a35356aa99112f8b62617d5d5bcfef3384240ba4bb8d2059250fe5d",
+          "bytes": 186030
+        },
+        {
+          "file": "testbench.spice",
+          "sha256": "6fa09ac185053a251160e45af6a26a13508b3b6ce0c6caa732d3dbc595d167fc",
+          "bytes": 29654
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
+        },
+        {
+          "file": "decisions.csv",
+          "sha256": "0caee13dc30cc900c0451db29c5f4f5a80dd6302821ed68a98f219dc932e7521",
+          "bytes": 110
+        },
+        {
+          "file": "pause-times.txt",
+          "sha256": "b4be9f5e3892ae5a21387c178308f63b01ccd613cfaae2f098cb37a6eff8f267",
+          "bytes": 180
+        },
+        {
+          "file": "ngspice.log",
+          "sha256": "0c3d6bb248e5ae28c3bd4a2e243a79e4cdf4452f0df4621646e1607c59cc68fc",
+          "bytes": 888565
+        },
+        {
+          "file": "pex.tcl",
+          "sha256": "ccdb01167164ac26e3dc7d728f520e6b1db5a912c016e363f114dc53125c8abf",
+          "bytes": 593
+        },
+        {
+          "file": "pex-quality.json",
+          "sha256": "5c33c7266b1d659bba9994b6f501aaed6ef9b90d4b14bd4477a0e27151e4b3fc",
+          "bytes": 210
+        },
+        {
+          "file": "pex-reduction.json",
+          "sha256": "c72a8d3d4ea1890371a12ad309fd7015ab06b3da3048fef545e9f860c3d5f445",
+          "bytes": 998
+        },
+        {
+          "file": "pex.spice.gz",
+          "original_sha256": "efed6497b09372c58097e161187df9a4e698d201885253d3374b3a414e12ab5a",
+          "original_bytes": 3087539
+        },
+        {
+          "file": "pex-simulation.spice.gz",
+          "original_sha256": "40333ad124b6e2a7b6bb662cfffefa24b585727c74b3dda83faa21723c4ad721",
+          "original_bytes": 2989434
+        },
+        {
+          "file": "magic-pex.log",
+          "sha256": "733d7392e723ea9f7b0d5d2291192672009d8e146cb73dcae362f5b86bbb2390",
+          "bytes": 90620
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "f639bc9b89bf8e8c8d8f2829ec6709172437ff458421753fa133dafbd5475883",
+          "bytes": 979275
+        }
+      ]
+    },
+    {
+      "label": "historical-post-low-dc",
+      "id": "d52e6edd331f4f61a400ac2fc30fc73b",
+      "project_id": "fff72b4d42254b65a3ebb30483ef64ec",
+      "revision": 1,
+      "execution_status": "failed",
+      "analysis_result": "unknown",
+      "freshness": "stale",
+      "message": "ngspice exited with code 1. Raw log retained.",
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "51c8e08cdce1eae322e2a62e2c18c0009a8afe4509e27a7742e88eef112f1bf4",
+          "bytes": 186409
+        },
+        {
+          "file": "testbench.spice",
+          "sha256": "5288c511263ff8a947a0e03d28a66110c4d486fdd24dc63af79a12c21ba1fdfc",
+          "bytes": 29325
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
+        },
+        {
+          "file": "decisions.csv",
+          "sha256": "fe3b371b1df57029d5e3dc104eeda22e63b69c9a7a5deaaefee63efc3d751e92",
+          "bytes": 50
+        },
+        {
+          "file": "pause-times.txt",
+          "sha256": "5cf6098c2f962fffb8b7d47705da6e563f2a59918425d20b5a6f67068633d172",
+          "bytes": 100
+        },
+        {
+          "file": "ngspice.log",
+          "sha256": "e581ad4af7fc0a533faab006ef77817759d23ce8ff6eeb26c0088f0cc74629e5",
+          "bytes": 887017
+        },
+        {
+          "file": "pex.tcl",
+          "sha256": "6c9a3ad322c6d2f4f1a57ba98b9cec0cfa000c334e9c6214df11fbce1e1895e4",
+          "bytes": 593
+        },
+        {
+          "file": "pex-quality.json",
+          "sha256": "5c33c7266b1d659bba9994b6f501aaed6ef9b90d4b14bd4477a0e27151e4b3fc",
+          "bytes": 210
+        },
+        {
+          "file": "pex-reduction.json",
+          "sha256": "58fb96ceca9093a9a941f29b10cd0f74797c34415a766571af3dafc9b6b7c0e4",
+          "bytes": 998
+        },
+        {
+          "file": "pex.spice.gz",
+          "original_sha256": "2ecca2ab1fdb70cd579391b8910b02cbf2c7931b2fbd7c2ec200b5dc60da87b2",
+          "original_bytes": 3087540
+        },
+        {
+          "file": "pex-simulation.spice.gz",
+          "original_sha256": "a1f370c6e7e647598ffae111b8b6aaff7835b731fc07dc4ba8e9bdcf102341c4",
+          "original_bytes": 2989414
+        },
+        {
+          "file": "magic-pex.log",
+          "sha256": "f4c53b6d121ad82e34655b9e0dbcf94a079481cc2924700f1c616141aca1f63d",
+          "bytes": 90620
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "ba91ecf6785ae4b6df96b34a34fd197232ba4d0e3d9615ecdd6762d64cf4d7c5",
+          "bytes": 977727
+        }
+      ]
+    },
+    {
+      "label": "historical-post-high-dc",
+      "id": "45c3000c7cfc43e099746e1bcbfbdb77",
+      "project_id": "65174f90f5514f4a95d550db2ce499db",
+      "revision": 1,
+      "execution_status": "failed",
+      "analysis_result": "unknown",
+      "freshness": "stale",
+      "message": "ngspice exited with code 1. Raw log retained.",
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "dca3016f8a085cb6a1d3054e9f4c4ae2b8ae8f42a873c721cabb8dcfac060f3c",
+          "bytes": 186409
+        },
+        {
+          "file": "testbench.spice",
+          "sha256": "1ee0d6caf3c996360c1ba5969e2e04f747da7683e8d76f13376fed923acee087",
+          "bytes": 29313
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
+        },
+        {
+          "file": "decisions.csv",
+          "sha256": "df419b1da26c18a3764fb5726ee9e7dabcc12a55e4560488466ae053ebe04f07",
+          "bytes": 285
+        },
+        {
+          "file": "pause-times.txt",
+          "sha256": "10a59baaf5d7711e88ff368752fa6402c874afdf48f0c014d7d8cf8d9df097db",
+          "bytes": 420
+        },
+        {
+          "file": "ngspice.log",
+          "sha256": "99f1716aace70e59a384ed0b23d52ec00c83393a6837e65a5cc6d89257e89c22",
+          "bytes": 899316
+        },
+        {
+          "file": "pex.tcl",
+          "sha256": "9f10b694012e68d58db8c529bafe6f53adf0c63d1c5258f21357d48dc6589f60",
+          "bytes": 593
+        },
+        {
+          "file": "pex-quality.json",
+          "sha256": "eef9fcc579038d973367bf60108f94fc5b6e02f0885c96ce9e7e5db0028c5c2b",
+          "bytes": 210
+        },
+        {
+          "file": "pex-reduction.json",
+          "sha256": "20cb8adcd6caa8946b19d8f774d6073f5972d68149b2da1e4b4e53e206ceec4d",
+          "bytes": 998
+        },
+        {
+          "file": "pex.spice.gz",
+          "original_sha256": "e8e13fcf2fef2ce91f7f2d11f90b465c09591d48ba13da1277cf00257bc1aeec",
+          "original_bytes": 3087704
+        },
+        {
+          "file": "pex-simulation.spice.gz",
+          "original_sha256": "0916b720366c770bdd116771b75cd9b44f5cf5d3b78c83e2548ae3a692d0ab4d",
+          "original_bytes": 2989532
+        },
+        {
+          "file": "magic-pex.log",
+          "sha256": "750c0050bb4d8e779fdf94631489c85e3648e21586bd6f97c8eab89d56ebefd2",
+          "bytes": 90620
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "1420c3451d4ef66bc849c1dc4e34abbdb627e4ea241f70f92389bc7bbeb3fc00",
+          "bytes": 990026
+        }
+      ]
+    },
+    {
+      "label": "historical-post-mid-resistive-dc",
+      "id": "2d98972a4a3b4b10984ec1c1790fe1a7",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "stale",
+      "message": "Actual twelve-bit split-CDAC/latch decisions and RTL/gate/IR replay completed.",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 12,
+        "frames": 1,
+        "max_code_error": 1,
+        "ambiguous_decisions": 0,
+        "rtl_gate_replay_match": true,
+        "lsb_V": 0.0005859375,
+        "conversion_s": 0.00001005,
+        "sample_rate_Hz": 99502.48756218905,
+        "effective_resolution": "not measured",
+        "physical_unit_count": 508,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "raw_sample_count": 13617,
+        "display_sample_count": 2233,
+        "start_s": 0,
+        "end_s": 0.00001055,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 6.391300516118107e-10,
+            "average_power_W": 0.00006058104754614319,
+            "minimum_current_A": 0.000013018127082986553,
+            "peak_current_A": 0.000571420340327311,
+            "source_voltage_V": 1.8
+          },
+          "10": {
+            "energy_J": 1.1130106903945933e-10,
+            "average_power_W": 0.000010549864363929793,
+            "minimum_current_A": -0.0000019528703036897355,
+            "peak_current_A": 0.0011769649031697638,
+            "source_voltage_V": 1.2
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "core_supply_min_V": 1.7999428579659673,
+        "core_supply_max_V": 1.7999986981872917,
+        "supply_source_R_Ohm": 0.1,
+        "source_energy_scope": "All raw VDD/VREF source samples, including their external series-resistor losses. External control-driver energy and synthesized-controller power are not measured.",
+        "research_metrics": {
+          "source": "native raw-source integration; display decimation is not used for energy",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 0,
+            "end_s": 0.00001055,
+            "energy_J": 6.391300516118107e-10,
+            "average_current_A": 0.000033656137525635104,
+            "peak_current_A": 0.000571420340327311,
+            "minimum_current_A": 0.000013018127082986553,
+            "average_power_W": 0.00006058104754614319,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Every original adaptive-step analog VDD sample, integrated before display thinning. External driver/digital-controller power excluded."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "sar12_analog",
+        "source": "continuous ngspice MOS/charge decisions and independent RTL/gate/IR replay",
+        "checks": [
+          {
+            "name": "Actual comparator trials match RTL, synthesized gates and editable CMOS logic",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "Both comparator outputs reach complementary logic levels",
+            "pass": true,
+            "observed": null
+          },
+          {
+            "name": "Native directed codes within one nominal 12-bit LSB",
+            "pass": true,
+            "observed": null
+          }
+        ],
+        "frames": [
+          {
+            "frame": 0,
+            "input_differential_V": 0.00029296875,
+            "code": 2047,
+            "expected_code": 2048,
+            "error_codes": -1
+          }
+        ],
+        "ambiguous_decisions": 0,
+        "scope": "Noiseless deterministic transient; external finite-impedance supply, input, VREF/VCM and RC control bridge. Full digital transistor timing, mismatch, calibrated accuracy and foundry signoff are not established.",
+        "pass": true
+      },
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "8b082ee61130b7f3950387bdea1f6f1b1a8aed0b3e6e2f4349bf145645aab4ce",
+          "bytes": 192804
+        },
+        {
+          "file": "testbench.spice",
+          "sha256": "d840bd7a188a1a7911908e4f24c2dc2d73a6eda66a45096c23be2d47e587d251",
+          "bytes": 29315
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
+        },
+        {
+          "file": "decisions.csv",
+          "sha256": "cc0653f2f4313142b3223a2be5fd0e0fda0daa0bbf86a79302fc9cbbc0fc4eb0",
+          "bytes": 755
+        },
+        {
+          "file": "pause-times.txt",
+          "sha256": "1e2a8e9e0b29931d3dcd5d7f0bae0e7c0cef8e9991ea95ddbf190445d82d96ad",
+          "bytes": 1060
+        },
+        {
+          "file": "sar12-verification.json",
+          "sha256": "e110f84875bfb231642f389042116af6c0f8bf4d68e05244257277952552a4bb",
+          "bytes": 1002
+        },
+        {
+          "file": "coupling-audit.json",
+          "sha256": "e76b303b54920db89827b0b01c421034136b1261fb8abfda9050e8772830664b",
+          "bytes": 524366
+        },
+        {
+          "file": "rtl-replay.csv",
+          "sha256": "a8157c1b92f31939fc16a83ed16fa3b5177331221ad915d0ff08411ff02d7a21",
+          "bytes": 275
+        },
+        {
+          "file": "gate-replay.csv",
+          "sha256": "a8157c1b92f31939fc16a83ed16fa3b5177331221ad915d0ff08411ff02d7a21",
+          "bytes": 275
+        },
+        {
+          "file": "ir-replay.csv",
+          "sha256": "a8157c1b92f31939fc16a83ed16fa3b5177331221ad915d0ff08411ff02d7a21",
+          "bytes": 275
+        },
+        {
+          "file": "replay.v",
+          "sha256": "9309679acad0eb3c1cc678e3c5bee5f991803517fc10b32b1a0edd38d51daf1f",
+          "bytes": 746
+        },
+        {
+          "file": "ir-controller.v",
+          "sha256": "87c9bcab566241a65b5b528aacff8fe4b5e5bd42e5de7ae9dcea89057e518079",
+          "bytes": 21586
+        },
+        {
+          "file": "decisions.mem",
+          "sha256": "97b26cc14c847a1f49b21887ef66c6caa12e4bb6d7d9e423b5f2e9142bbbde12",
+          "bytes": 24
+        },
+        {
+          "file": "ngspice.log",
+          "sha256": "435f77f5306ffa98c29f32c5a67aa38148b9f813d7af026cb450035a014370c4",
+          "bytes": 925720
+        },
+        {
+          "file": "pex.tcl",
+          "sha256": "a58cb9977e14a838d43d78d1a97387b6fda9df7f2f7591f7734014d231535e8f",
+          "bytes": 593
+        },
+        {
+          "file": "pex-quality.json",
+          "sha256": "5c33c7266b1d659bba9994b6f501aaed6ef9b90d4b14bd4477a0e27151e4b3fc",
+          "bytes": 210
+        },
+        {
+          "file": "pex-reduction.json",
+          "sha256": "391a8085b56a618977b291b9730c16f2e208c25afa7e946e7cc574e44fa57a30",
+          "bytes": 998
+        },
+        {
+          "file": "pex.spice.gz",
+          "original_sha256": "20e3b3a56599ecd031d5755b7be42c1dc7b68d18e527d2563ca74e5e1d26499f",
+          "original_bytes": 3087540
+        },
+        {
+          "file": "pex-simulation.spice.gz",
+          "original_sha256": "80db69d9499004c44bd49c60ed4e1001d1ba284651a6506f013e2d0bf11366f2",
+          "original_bytes": 2989434
+        },
+        {
+          "file": "gate-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "gate-replay.log",
+          "sha256": "083fd97ad1bda532978302d35cc7663295a219e7f7ddfff45e7881432d7b0843",
+          "bytes": 135
+        },
+        {
+          "file": "ir-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "ir-replay.log",
+          "sha256": "083fd97ad1bda532978302d35cc7663295a219e7f7ddfff45e7881432d7b0843",
+          "bytes": 135
+        },
+        {
+          "file": "magic-pex.log",
+          "sha256": "669431f079fd194fb1e21e19812dd308e3d289fb57ad02b10bf7d568db5de352",
+          "bytes": 90620
+        },
+        {
+          "file": "rtl-compile.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "file": "rtl-replay.log",
+          "sha256": "083fd97ad1bda532978302d35cc7663295a219e7f7ddfff45e7881432d7b0843",
+          "bytes": 135
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "1ecad42ba4f965ce7a6fdd79ffabe80b3320c4f7c6e13624d853fcd96e335169",
+          "bytes": 1016903
+        },
+        {
+          "original_sha256": "a5a95f6b32407c69429748d9cfe55ac5cb14482d7bd85906ea71357b8cdd4ed6",
+          "original_bytes": 8184418,
+          "retained_at": "D:\\Coldbrew\\Resistor\\.runtime\\sar12\\lab\\.runtime\\eda\\runs\\2d98972a4a3b4b10984ec1c1790fe1a7\\waveform.dat",
+          "repository_copy": true,
+          "file": "waveform.dat.gz"
+        }
+      ]
+    },
+    {
+      "label": "historical-pre64-relational-stop",
+      "id": "82178192368547de8aeb81fbc5cf6b4b",
+      "project_id": "cd5a4620df054e9b84b5e84499a54530",
+      "revision": 1,
+      "execution_status": "failed",
+      "analysis_result": "unknown",
+      "freshness": "stale",
+      "message": "ngspice exited with code 1. Raw log retained.",
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "226401246acc649bb956223ade5eb17291822fcd93a4a0506db6c67164ae6298",
+          "bytes": 182986
+        },
+        {
+          "file": "analog.spice",
+          "sha256": "195a9bba697076aa6a035551fda5f9c51661f5016f1334550af577c0b6f09ddb",
+          "bytes": 27211
+        },
+        {
+          "file": "testbench.spice.gz",
+          "original_sha256": "09b077440dadcc437ecf5d766b98aedd284bdfeb737ffa021436ab41fe6bebe3",
+          "original_bytes": 6592883
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
+        },
+        {
+          "file": "decisions.csv",
+          "sha256": "79bb6dc32d292373df43836a435a9d46c19efe2e740a5f60be51d7cab8fda791",
+          "bytes": 35115
+        },
+        {
+          "file": "pause-times.txt",
+          "sha256": "02e3ec862ab3f7f2ef66a89ed135af199a95c921c66a450b07cae3df6301050c",
+          "bytes": 48060
+        },
+        {
+          "file": "ngspice.log",
+          "sha256": "90e7c9c4bbff1adb7b11217ce48d538fa9df89f3ce32321e452d1c6b7404447a",
+          "bytes": 252669
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "2f0460a0f0ff0540b94e50a91f43c42d38e0c5071040c25ace2af8617b9aae40",
+          "bytes": 252740
+        }
+      ]
+    },
+    {
+      "label": "historical-post-klu-repeat",
+      "id": "4b5d8c07679a4efda589d495092c2fe2",
+      "project_id": "03bec2c7ef964e49bfa8c1fdfb2670b8",
+      "revision": 1,
+      "execution_status": "failed",
+      "analysis_result": "unknown",
+      "freshness": "stale",
+      "message": "ngspice exited with code 1. Raw log retained.",
+      "artifacts": [
+        {
+          "file": "manifest.json",
+          "sha256": "f6ddddd9758e7707d9678d8cdae29e8aaeb25a02610c9debc8a0965fbd15fcab",
+          "bytes": 186593
+        },
+        {
+          "file": "testbench.spice",
+          "sha256": "e51ecd344273c9bffb871f4e549ecfdb299060da7040023405e586eec5cb53ba",
+          "bytes": 101113
+        },
+        {
+          "file": "supported-tt.spice",
+          "sha256": "4943a2798831689b8c571fe6343b998c6beecb5463446998dc7148b9d58079be",
+          "bytes": 3203
+        },
+        {
+          "file": "decisions.csv",
+          "sha256": "8e42310b2893f55e6962ef6b666af661d83f78a9a58cde2e43712204eb73781c",
+          "bytes": 110
+        },
+        {
+          "file": "pause-times.txt",
+          "sha256": "b4be9f5e3892ae5a21387c178308f63b01ccd613cfaae2f098cb37a6eff8f267",
+          "bytes": 180
+        },
+        {
+          "file": "ngspice.log",
+          "sha256": "f5294f4a22b7a44e39decf6029d15fb167728d59ed64b872dcb2c3f11a3fc60a",
+          "bytes": 890002
+        },
+        {
+          "file": "pex.tcl",
+          "sha256": "d8d67bf649892f2655a237c19e972fcabddbe673a0c8a838aecec9f5445c6a68",
+          "bytes": 593
+        },
+        {
+          "file": "pex-quality.json",
+          "sha256": "eef9fcc579038d973367bf60108f94fc5b6e02f0885c96ce9e7e5db0028c5c2b",
+          "bytes": 210
+        },
+        {
+          "file": "pex-reduction.json",
+          "sha256": "c30348f9035ebd509fb1e8f0d44084c770256f1c3d02eed366f85bc31f6da7c2",
+          "bytes": 998
+        },
+        {
+          "file": "pex.spice.gz",
+          "original_sha256": "b8398ac5093783197dac25f95ff7af941d607c9962d0e8ab531fa4b6f24b7f24",
+          "original_bytes": 3087695
+        },
+        {
+          "file": "pex-simulation.spice.gz",
+          "original_sha256": "6cd2fb91166374b1cd33c365fc694942011ad4a482fd6b9c492e042c6ef54201",
+          "original_bytes": 2989560
+        },
+        {
+          "file": "magic-pex.log",
+          "sha256": "98a9ef8e34a83dffa5b626898ebcb1cb34f57e4488f61f890169426d93885487",
+          "bytes": 90620
+        },
+        {
+          "file": "stdout.log",
+          "sha256": "afa4440b639e5742ea89b8dc0fe80e58005a23a51c63547f852b012b1c24adc2",
+          "bytes": 980712
+        }
+      ]
     }
   ],
   "raw_scope": "Native decision records, logs, manifests and available traces. Large raw traces stay in the isolated local workspace with exact hashes; no synthetic waveform or inherited verification.",
-  "post_layout_qualified": false
+  "post_layout_smoke_passed": true,
+  "post_layout_smoke_scope": "Three independent TT single-input conversions; 36 actual comparator decisions. Not a continuous full-range or spectral characterization.",
+  "post_layout_qualified": false,
+  "post_layout_qualification_scope": "Full-range/PVT/noise/mismatch characterization and manufacturing approval not completed."
 }

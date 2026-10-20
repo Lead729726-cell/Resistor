@@ -68,4 +68,20 @@ for run in report['runs']:
     fig,ax=plt.subplots(figsize=(10,4),layout='constrained');ax.stem([p['frequency_Hz']/1000 for p in rows],[10*math.log10(max(p['power_code2'],1e-30)/maximum)for p in rows],bottom=-120,basefmt=' ')
     ax.set(ylim=(-115,3),xlabel='Frequency (kHz)',ylabel='dBc',title=f"Actual {s['sample_count']}-code coherent DFT · SNDR {s['SNDR_dB']:.2f} dB · noiseless ENOB {s['ENOB_noiseless_bits']:.2f}\nNoise / mismatch / jitter excluded; no silicon ENOB claim")
     ax.grid(alpha=.15);fig.savefig(OUT/'native-spectrum.png',dpi=140);plt.close(fig)
+posts=[next((r for r in report['runs']if r['label']==label),None)for label in ('post-code-64','post-single','post-code-4031')]
+if all(r and r['execution_status']=='completed' and (OUT/'runs'/r['id']/'waveforms.json.gz').exists()for r in posts):
+    fig,axs=plt.subplots(5,3,figsize=(15,11),sharex=True,layout='constrained')
+    for col,run in enumerate(posts):
+        waves={w['name']:w for w in json.loads(gzip.decompress((OUT/'runs'/run['id']/'waveforms.json.gz').read_bytes()))}
+        frame=run['reference_verification']['frames'][0]
+        for row,names in enumerate((('VINP','VINN'),('TOPP','TOPN'),('COMP','COMPN'),('EVAL','B11','B6'),('VPWR',))):
+            ax=axs[row,col]
+            for name in names:
+                w=waves[name];values=[(run['measurements']['source_energy']['9']['source_voltage_V']-y)*1e6 for y in w['y']]if name=='VPWR'else w['y']
+                ax.plot([x*1e6 for x in w['x']],values,label='VDD source − VPWR'if name=='VPWR'else name,linewidth=.7)
+            ax.grid(alpha=.15);ax.legend(fontsize=7,loc='upper right');ax.set_ylabel('µV drop'if row==4 else 'V')
+        axs[0,col].set_title(f"VINdiff {frame['input_differential_V']:.9g} V\nCODE {frame['code']} / expected {frame['expected_code']} · error {frame['error_codes']:+d}")
+        axs[-1,col].set_xlabel('Actual ngspice time (µs)')
+    fig.suptitle('Resistor Indust · Native RC-extracted SAR12 smoke tests\nSame finite-source / continuous-PWL bridge; noiseless TT only, not full-range or silicon ENOB',fontsize=13)
+    fig.savefig(OUT/'post-layout-waveforms.png',dpi=140);plt.close(fig)
 print('Rendered actual masks, positions and available native vectors')
