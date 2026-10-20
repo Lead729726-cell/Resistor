@@ -41,6 +41,7 @@ export async function verifyEditionPackage({executable,resources}){
    if(edition.edition==='edu'){
      const lessons=await rpc('learning.list'),study=await rpc('study.catalog');
      check('Installed Edu includes real lesson records and deterministic self-study without a paid call',lessons.edition==='edu'&&lessons.records.length===1&&study.questions?.length>0);
+     const dashboard=await rpc('learning.dashboard');check('Installed Edu dashboard reads current revision and isolates QA records',dashboard.edition==='edu'&&Array.isArray(dashboard.records)&&dashboard.read_only===true);
    }
    let p=await rpc('project.create',{example:'schematic',name:'[Release QA] 1.8V divider'});
    for(const device of [{id:'v1',name:'V1',kind:'voltage',pins:{'+':'VDD','-':'0'},parameters:{dc:1.8},x:100,y:100},{id:'r1',name:'R1',kind:'resistor',pins:{'+':'VDD','-':'OUT'},parameters:{value:10000},x:240,y:100},{id:'r2',name:'R2',kind:'resistor',pins:{'+':'OUT','-':'0'},parameters:{value:10000},x:240,y:240}])p=await rpc('schematic.apply_command',{project_id:p.id,expected_revision:p.revision,command_id:crypto.randomUUID(),command:{type:'add_device',device}});
@@ -51,6 +52,21 @@ export async function verifyEditionPackage({executable,resources}){
    const gds=await rpc('layout.export',{project_id:layout.id,format:'gds'});check('Bundled KLayout exports an actual GDS mask',!!gds);
    await page.evaluate(({id,edition})=>localStorage.setItem('mos.last_project'+(edition==='edu'?'.edu':''),id),{id:p.id,edition:edition.edition});await page.reload();if(edition.edition==='edu'){await page.getByTestId('edu-step-page').waitFor({timeout:120000});if(await page.getByTestId('edu-design-flow').isVisible())await page.getByRole('button',{name:'회로도 열기',exact:true}).click({timeout:120000});}await page.getByTestId('app-ready').waitFor({timeout:60000});if(edition.edition==='edu')await page.keyboard.press('Escape');
    check('Project and completed result survive renderer reload',(await rpc('project.open',{project_id:p.id})).runs.some(r=>r.id===run.id));
+   // Exercise the shipped wiring UI on this disposable native QA workspace.
+   const editingId=await page.locator('.app-shell').getAttribute('data-project-id');
+   let editing=await rpc('project.open',{project_id:editingId});
+   for(const [id,name,x,y] of [['qa-wire-r1','QA_WIRE1',700,100],['qa-wire-r2','QA_WIRE2',920,220]])editing=await rpc('schematic.apply_command',{project_id:editingId,expected_revision:editing.revision,command_id:crypto.randomUUID(),command:{type:'add_device',device:{id,name,kind:'resistor',pins:{'+':'','-':''},parameters:{value:1000},x,y}}});
+   await page.reload();
+   if(edition.edition==='edu')await page.getByRole('button',{name:'회로도 열기',exact:true}).click({timeout:120000});
+   await page.getByTestId('app-ready').waitFor({timeout:120000});await page.getByRole('tab',{name:'회로도 / Schematic',exact:true}).click();
+   await page.getByTestId('schematic-pin-QA_WIRE1-+').press('Enter');
+   check('Wiring names the selected terminal and exposes explicit cancellation',(await page.locator('.schematic-easy-guide').innerText()).includes('QA_WIRE1.+')&&await page.getByTestId('schematic-wire-cancel').isVisible());
+   await page.getByTestId('schematic-wire-cancel').click();
+   check('Cancelling a preview does not change the project revision',(await rpc('project.open',{project_id:editingId})).revision===editing.revision);
+   await page.getByTestId('schematic-pin-QA_WIRE1-+').press('Enter');await page.getByTestId('schematic-pin-QA_WIRE2-+').press('Enter');
+   await page.waitForFunction(()=>document.querySelector('[data-testid="schematic-pin-QA_WIRE1-+"]')?.textContent.includes('N_'),undefined,{timeout:30000});
+   const wired=await rpc('project.open',{project_id:editingId}),r1=wired.schematic.devices.find(d=>d.id==='qa-wire-r1'),r2=wired.schematic.devices.find(d=>d.id==='qa-wire-r2');
+   check('Installed pin-to-pin wiring saves exactly one revision with matching actual nets',wired.revision===editing.revision+1&&!!r1.pins['+']&&r1.pins['+']===r2.pins['+']);
    await page.screenshot({path:path.join(base,'package-'+edition.edition+'-'+process.platform+'-'+process.arch+'.png')});report.completed=true;
  }catch(e){report.completed=false;report.error=e.message;if(app){const p=await app.firstWindow().catch(()=>null);if(p){report.renderer_text=(await p.locator('body').innerText().catch(()=>'' )).slice(0,5000);await p.screenshot({path:path.join(base,'failure.png')}).catch(()=>{});}}throw e;}finally{
    if(app){let timer;try{await Promise.race([app.close(),new Promise(resolve=>{timer=setTimeout(()=>{app.process().kill();resolve();},15000);})]);}finally{clearTimeout(timer);}}
