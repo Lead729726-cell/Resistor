@@ -24,8 +24,9 @@ function parseHoles(text: string): [string, string][][] {
   });
 }
 
-export function AdvancedTools({ scene, selection, onCommand, readOnly, pending, onClose }: { scene: Scene; selection: string | null; onCommand: (command: LayoutCommand) => Promise<void>; readOnly?: boolean; pending?: boolean; onClose: () => void }) {
-  const [tool, setTool] = useState<'polygon'|'path'|'label'|'pin'|'instance'|'transform'|'cell'>('polygon');
+export type AdvancedTool='polygon'|'path'|'label'|'pin'|'instance'|'transform'|'cell';
+export function AdvancedTools({ scene, selection, onCommand, readOnly, pending, onClose,initialTool='polygon' }: { scene: Scene; selection: string | null; onCommand: (command: LayoutCommand) => Promise<void>; readOnly?: boolean; pending?: boolean; onClose: () => void;initialTool?:AdvancedTool }) {
+  const [tool, setTool] = useState<AdvancedTool>(initialTool);
   const [target, setTarget] = useState(scene.cells?.[0]?.name ?? '');
   const [layer, setLayer] = useState(scene.layers.find(layer => layer.id === '68/20')?.id ?? scene.layers[0]?.id ?? '');
   const [points, setPoints] = useState('0,0\n1000,0\n1000,1000\n0,1000');
