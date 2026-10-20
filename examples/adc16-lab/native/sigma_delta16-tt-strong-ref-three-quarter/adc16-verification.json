@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "name": "Actual bitstream matches RTL, gates, CMOS and independent FIR",
+      "pass": true,
+      "observed": 2060
+    },
+    {
+      "name": "No ambiguous sampled bitstream levels",
+      "pass": true,
+      "observed": 0
+    },
+    {
+      "name": "Three or more settled output frames",
+      "pass": true,
+      "observed": 6
+    },
+    {
+      "name": "DC nominal error within 32 output LSB (functional reference, not 16-bit accuracy)",
+      "pass": false,
+      "observed": 72.83333333333576
+    }
+  ],
+  "scope": "Actual second-order RC/MOS modulator; sampled native bits replayed through CIC3 R=256, gain=2^24. First two startup frames withheld by RTL. Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.",
+  "frames": [
+    {
+      "sample": 775,
+      "code": 43763
+    },
+    {
+      "sample": 1031,
+      "code": 43764
+    },
+    {
+      "sample": 1287,
+      "code": 43764
+    },
+    {
+      "sample": 1543,
+      "code": 43763
+    },
+    {
+      "sample": 1799,
+      "code": 43764
+    },
+    {
+      "sample": 2055,
+      "code": 43763
+    }
+  ],
+  "schema_version": 1,
+  "kind": "sigma_delta16",
+  "source": "actual-native-engine-artifacts",
+  "pass": false,
+  "output_bits": 16
+}

@@ -1,0 +1,537 @@
+* NGSPICE file created from sar16_analog.ext - technology: sky130A
+
+.subckt sar16_analog VREF VINP VINN VGND TOPP TOPN EVAL B9 SAMPLE B8 B7 COMPN B0 B12
++ VPWR VCM B5 B11 B6 B13 B14 B15 B1 B2 COMP B10 B3 B4
+X0 VGND B3 DAC__N_BANK3_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X1 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X2 DAC__N_BANK3_B1 B1 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X3 DAC__BANK1N DAC__N_BANK1_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X4 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X5 DAC__HIN SAMPLE VREF VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X6 DAC__N_BANK2_B1 B5 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X7 DAC__LON DAC__SAMPLEB VGND VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X8 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X9 DAC__P_BANK1_B1 DAC__P_BANK1_B1_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X10 VPWR COMPARE_PRE1_LOAD_OUTN_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X11 DAC__BANK2P DAC__P_BANK2_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X12 DAC__BANK3P DAC__P_BANK3_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X13 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X14 VPWR COMPARE__LATCH__QP COMPARE__LATCH__QN VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X15 VGND COMPARE__BIAS COMPARE__PRE0__TAIL VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=1
+X16 DAC__BANK3P DAC__LOP sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X17 DAC__BANK1P SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X18 VPWR B0 DAC__P_BANK3_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X19 DAC__LON DAC__SAMPLEB VINN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X20 DAC__BANK1N DAC__N_BANK1_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X21 COMPARE__LATCH__TAIL COMPARE__PRE1P COMPARE__LATCH__FN VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X22 DAC__P_BANK1_B1 B9 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X23 VPWR COMPARE__LATCH__QP COMPARE__LATCH__OUTN_B VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X24 DAC__N_BANK1_B3 DAC__N_BANK1_B3_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X25 DAC__BANK3N DAC__N_BANK3_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X26 VPWR B5 DAC__P_BANK2_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X27 DAC__N_BANK3_B1 DAC__N_BANK3_B1_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X28 DAC__BANK3N DAC__HIN sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X29 VGND B8 DAC__P_BANK1_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X30 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X31 DAC__LOP DAC__SAMPLEB VINP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X32 DAC__P_BANK0_B3 B15 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X33 DAC__BANK2P DAC__P_BANK2_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X34 VPWR COMPARE_PRE0_LOAD_OUTP_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X35 DAC__LON SAMPLE VGND VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X36 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X37 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X38 VPWR EVAL COMPARE__LATCH__FP VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=0.15
+X39 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X40 DAC__BANK2N DAC__N_BANK2_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X41 TOPN DAC__N_BANK0_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X42 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X43 VPWR B6 DAC__N_BANK2_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X44 DAC__P_BANK2_B2 B6 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X45 VPWR COMPARE_BIAS_RES_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X46 VGND B15 DAC__N_BANK0_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X47 DAC__P_BANK1_B1 B9 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X48 DAC__N_BANK0_B2 DAC__N_BANK0_B2_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X49 VGND B1 DAC__P_BANK3_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X50 DAC__BANK1P DAC__P_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X51 COMPARE__PRE0__TAIL TOPP COMPARE__PRE0P VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X52 VGND COMPARE__BIAS COMPARE__PRE1__TAIL VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=1
+X53 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X54 VPWR B13 DAC__N_BANK0_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X55 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X56 DAC__BANK3N DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X57 DAC__P_BANK1_B3 DAC__P_BANK1_B3_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X58 VPWR EVAL COMPARE__LATCH__QP VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X59 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X60 DAC__BANK1N DAC__BANK2N sky130_fd_pr__cap_mim_m3_1 l=22.91 w=22.91
+X61 VGND B4 DAC__N_BANK2_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X62 DAC__N_BANK1_B1 B9 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X63 DAC__N_BANK3_B3 DAC__N_BANK3_B3_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X64 DAC__N_BANK2_B3 B7 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X65 DAC__P_BANK1_B0 B8 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X66 VGND B0 DAC__P_BANK3_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X67 DAC__N_BANK1_B2 B10 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X68 VGND B13 DAC__P_BANK0_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X69 DAC__BANK1N DAC__N_BANK1_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X70 DAC__N_BANK3_B3 B3 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X71 VPWR COMPARE_PRE1_LOAD_OUTP_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X72 DAC__N_BANK3_B0 DAC__N_BANK3_B0_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X73 DAC__BANK3P DAC__LOP sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X74 TOPN DAC__N_BANK0_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X75 DAC__BANK3P DAC__P_BANK3_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X76 DAC__BANK2P DAC__P_BANK2_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X77 DAC__BANK1P DAC__BANK2P sky130_fd_pr__cap_mim_m3_1 l=22.91 w=22.91
+X78 TOPP DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X79 DAC__LOP SAMPLE VGND VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X80 DAC__BANK3N DAC__HIN sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X81 TOPN DAC__N_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X82 DAC__BANK3N DAC__N_BANK3_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X83 DAC__BANK1N DAC__N_BANK1_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X84 VPWR B4 DAC__N_BANK2_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X85 COMPARE__PRE1__TAIL COMPARE__PRE0N COMPARE__PRE1P VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X86 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X87 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X88 DAC__P_BANK0_B2 B14 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X89 TOPP DAC__P_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X90 DAC__N_BANK0_B1 B13 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X91 DAC__BANK2P DAC__P_BANK2_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X92 VGND B15 DAC__P_BANK0_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X93 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X94 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X95 DAC__BANK1P DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X96 VGND B2 DAC__N_BANK3_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X97 DAC__N_BANK3_B1 DAC__N_BANK3_B1_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X98 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X99 TOPN DAC__N_BANK0_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X100 DAC__BANK3P SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X101 DAC__N_BANK2_B1 B5 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X102 DAC__BANK3P DAC__P_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X103 DAC__BANK1P DAC__P_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X104 DAC__BANK2N DAC__N_BANK2_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X105 VGND SAMPLE DAC__SAMPLEB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X106 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X107 DAC__BANK1N SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X108 DAC__P_BANK0_B1 DAC__P_BANK0_B1_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X109 DAC__N_BANK0_B1 DAC__N_BANK0_B1_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X110 DAC__BANK2N DAC__N_BANK2_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X111 DAC__BANK2P DAC__BANK3P sky130_fd_pr__cap_mim_m3_1 l=22.91 w=22.91
+X112 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X113 DAC__N_BANK2_B2 B6 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X114 DAC__P_BANK3_B3 B3 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X115 DAC__N_BANK0_B3 DAC__N_BANK0_B3_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X116 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X117 DAC__BANK3N DAC__N_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X118 TOPP DAC__P_BANK0_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X119 DAC__BANK2P DAC__BANK3P sky130_fd_pr__cap_mim_m3_1 l=22.91 w=22.91
+X120 COMPARE_PRE1_LOAD_OUTP_R0_N0 COMPARE_PRE1_LOAD_OUTP_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X121 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X122 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X123 VPWR COMPARE__LATCH__QN COMPARE__LATCH__QP VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X124 TOPN DAC__N_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X125 DAC__P_BANK1_B3 DAC__P_BANK1_B3_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X126 DAC__P_BANK3_B1 B1 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X127 DAC__N_BANK3_B0 DAC__N_BANK3_B0_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X128 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X129 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X130 DAC__N_BANK1_B2 DAC__N_BANK1_B2_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X131 DAC__P_BANK3_B3 DAC__P_BANK3_B3_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X132 DAC__BANK1N DAC__N_BANK1_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X133 VGND COMPARE__BIAS COMPARE__BIAS VGND sky130_fd_pr__nfet_01v8 ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=1
+X134 DAC__N_BANK1_B2 DAC__N_BANK1_B2_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X135 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X136 DAC__BANK1P DAC__P_BANK1_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X137 DAC__P_BANK2_B2 B6 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X138 DAC__BANK3P DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X139 DAC__P_BANK0_B0 B12 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X140 DAC__P_BANK1_B0 DAC__P_BANK1_B0_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X141 DAC__P_BANK2_B3 B7 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X142 VPWR B2 DAC__P_BANK3_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X143 DAC__BANK2P DAC__P_BANK2_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X144 VGND COMPARE__LATCH__QP COMPARE__LATCH__OUTN_B VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X145 DAC__P_BANK1_B3 B11 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X146 COMPARE__PRE1P VGND sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+X147 VPWR B7 DAC__P_BANK2_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X148 VPWR B2 DAC__N_BANK3_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X149 DAC__BANK3P DAC__P_BANK3_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X150 DAC__HIN SAMPLE VINN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X151 DAC__HIP SAMPLE VREF VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X152 DAC__P_BANK1_B0 DAC__P_BANK1_B0_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X153 VPWR B10 DAC__N_BANK1_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X154 DAC__HIP DAC__SAMPLEB VINP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X155 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X156 DAC__BANK3N DAC__N_BANK3_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X157 VPWR B11 DAC__N_BANK1_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X158 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X159 TOPP DAC__P_BANK0_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X160 DAC__P_BANK1_B0 B8 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X161 DAC__BANK3P DAC__P_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X162 DAC__N_BANK2_B3 B7 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X163 DAC__BANK1N DAC__N_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X164 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X165 DAC__N_BANK1_B0 B8 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X166 TOPP DAC__BANK1P sky130_fd_pr__cap_mim_m3_1 l=22.91 w=22.91
+X167 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X168 COMPARE__PRE0__TAIL TOPN COMPARE__PRE0N VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X169 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X170 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X171 VGND B9 DAC__N_BANK1_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X172 DAC__N_BANK3_B2 DAC__N_BANK3_B2_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X173 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X174 DAC__BANK2N DAC__BANK3N sky130_fd_pr__cap_mim_m3_1 l=22.91 w=22.91
+X175 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X176 TOPN DAC__N_BANK0_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X177 DAC__N_BANK1_B0 DAC__N_BANK1_B0_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X178 DAC__BANK2P DAC__P_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X179 DAC__BANK3N DAC__N_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X180 VPWR B1 DAC__N_BANK3_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X181 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X182 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X183 DAC__N_BANK3_B2 B2 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X184 DAC__N_BANK2_B2 DAC__N_BANK2_B2_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X185 DAC__BANK2N DAC__N_BANK2_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X186 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X187 DAC__N_BANK0_B1 DAC__N_BANK0_B1_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X188 DAC__BANK1P DAC__P_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X189 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X190 COMPARE_BIAS_RES_R0_N0 COMPARE_BIAS_RES_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X191 DAC__BANK1N DAC__N_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X192 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X193 VGND B2 DAC__P_BANK3_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X194 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X195 VPWR B11 DAC__P_BANK1_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X196 DAC__N_BANK1_B2 B10 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X197 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X198 VPWR B9 DAC__P_BANK1_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X199 DAC__BANK2P DAC__P_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X200 DAC__N_BANK0_B0 DAC__N_BANK0_B0_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X201 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X202 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X203 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X204 DAC__P_BANK3_B3 DAC__P_BANK3_B3_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X205 DAC__BANK1P DAC__P_BANK1_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X206 DAC__N_BANK1_B3 B11 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X207 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X208 DAC__BANK1P DAC__P_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X209 VGND COMPARE__LATCH__OUTP_B COMP VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X210 DAC__BANK3P DAC__P_BANK3_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X211 DAC__BANK2N DAC__N_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X212 DAC__N_BANK0_B2 DAC__N_BANK0_B2_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X213 VGND COMPARE__LATCH__QN COMPARE__LATCH__OUTP_B VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X214 VPWR B9 DAC__N_BANK1_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X215 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X216 DAC__N_BANK2_B0 B4 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X217 DAC__P_BANK3_B3 B3 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X218 VGND EVAL COMPARE__LATCH__TAIL VGND sky130_fd_pr__nfet_01v8 ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=0.15
+X219 COMPARE__LATCH__TAIL COMPARE__PRE1N COMPARE__LATCH__FP VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X220 DAC__BANK3N DAC__N_BANK3_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X221 TOPN DAC__BANK1N sky130_fd_pr__cap_mim_m3_1 l=22.91 w=22.91
+X222 COMPARE__PRE1N VGND sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+X223 TOPP DAC__P_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X224 VGND B6 DAC__N_BANK2_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X225 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X226 DAC__BANK1N DAC__N_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X227 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X228 TOPP DAC__P_BANK0_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X229 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X230 DAC__P_BANK3_B1 DAC__P_BANK3_B1_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X231 DAC__P_BANK3_B0 B0 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X232 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X233 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X234 VGND B7 DAC__N_BANK2_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X235 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X236 DAC__N_BANK1_B0 DAC__N_BANK1_B0_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X237 DAC__BANK2P DAC__P_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X238 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X239 DAC__P_BANK2_B2 DAC__P_BANK2_B2_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X240 DAC__P_BANK2_B1 B5 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X241 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X242 COMPARE_BIAS_RES_R0_N1 COMPARE__BIAS VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X243 DAC__N_BANK2_B2 DAC__N_BANK2_B2_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X244 TOPN SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X245 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X246 VGND B11 DAC__P_BANK1_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X247 DAC__N_BANK3_B0 B0 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X248 DAC__N_BANK1_B0 B8 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X249 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X250 COMPARE__PRE0__TAIL TOPP COMPARE__PRE0P VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X251 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X252 DAC__BANK3P DAC__P_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X253 DAC__P_BANK3_B1 DAC__P_BANK3_B1_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X254 DAC__N_BANK0_B0 B12 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X255 DAC__N_BANK1_B1 DAC__N_BANK1_B1_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X256 DAC__BANK1N DAC__N_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X257 DAC__HIP DAC__SAMPLEB VREF VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X258 DAC__P_BANK1_B2 B10 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X259 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X260 DAC__P_BANK3_B0 DAC__P_BANK3_B0_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X261 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X262 DAC__BANK3P DAC__P_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X263 DAC__BANK2N DAC__N_BANK2_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X264 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X265 DAC__BANK2P SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X266 VPWR B3 DAC__P_BANK3_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X267 DAC__P_BANK2_B2 DAC__P_BANK2_B2_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X268 DAC__HIP SAMPLE VINP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X269 DAC__N_BANK1_B1 B9 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X270 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X271 VPWR COMPARE__LATCH__OUTP_B COMP VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X272 DAC__P_BANK2_B1 DAC__P_BANK2_B1_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X273 DAC__BANK3N DAC__N_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X274 VGND B7 DAC__P_BANK2_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X275 COMPARE__LATCH__FN COMPARE__LATCH__QN COMPARE__LATCH__QP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X276 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X277 DAC__BANK2N DAC__BANK3N sky130_fd_pr__cap_mim_m3_1 l=22.91 w=22.91
+X278 DAC__BANK3N DAC__N_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X279 DAC__BANK2P DAC__P_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X280 VPWR COMPARE__LATCH__QN COMPARE__LATCH__OUTP_B VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X281 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X282 DAC__P_BANK3_B2 B2 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X283 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X284 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X285 DAC__BANK3P DAC__P_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X286 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X287 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X288 DAC__BANK2N DAC__N_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X289 DAC__BANK1P DAC__P_BANK1_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X290 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X291 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X292 VGND B12 DAC__P_BANK0_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X293 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X294 VPWR B7 DAC__N_BANK2_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X295 DAC__N_BANK0_B3 B15 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X296 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X297 DAC__BANK3N DAC__N_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X298 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X299 TOPN DAC__N_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X300 VGND B5 DAC__N_BANK2_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X301 DAC__N_BANK2_B3 DAC__N_BANK2_B3_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X302 DAC__P_BANK0_B3 DAC__P_BANK0_B3_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X303 VGND B13 DAC__N_BANK0_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X304 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X305 DAC__N_BANK0_B3 DAC__N_BANK0_B3_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X306 DAC__N_BANK2_B0 DAC__N_BANK2_B0_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X307 DAC__BANK2N DAC__N_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X308 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X309 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X310 DAC__N_BANK2_B0 B4 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X311 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X312 DAC__N_BANK2_B1 DAC__N_BANK2_B1_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X313 DAC__N_BANK0_B2 B14 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X314 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X315 DAC__LOP SAMPLE VINP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X316 VPWR B15 DAC__N_BANK0_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X317 VGND B3 DAC__P_BANK3_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X318 DAC__P_BANK0_B1 B13 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X319 DAC__BANK1N DAC__N_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X320 DAC__BANK3P DAC__P_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X321 DAC__BANK1P DAC__P_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X322 VGND B14 DAC__P_BANK0_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X323 DAC__N_BANK3_B2 B2 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X324 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X325 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X326 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X327 DAC__N_BANK1_B3 B11 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X328 DAC__BANK2P DAC__P_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X329 DAC__N_BANK3_B2 DAC__N_BANK3_B2_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X330 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X331 DAC__BANK3N DAC__N_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X332 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X333 VPWR B13 DAC__P_BANK0_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X334 DAC__P_BANK0_B0 DAC__P_BANK0_B0_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X335 DAC__P_BANK3_B0 DAC__P_BANK3_B0_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X336 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X337 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X338 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X339 DAC__BANK1N DAC__N_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X340 COMPARE__LATCH__FP COMPARE__LATCH__QP COMPARE__LATCH__QN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X341 DAC__P_BANK2_B1 DAC__P_BANK2_B1_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X342 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X343 DAC__N_BANK3_B1 B1 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X344 DAC__BANK1N DAC__N_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X345 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X346 TOPN DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X347 COMPARE_PRE1_LOAD_OUTN_R0_N0 COMPARE_PRE1_LOAD_OUTN_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X348 VPWR B3 DAC__N_BANK3_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X349 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X350 DAC__BANK2P DAC__P_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X351 DAC__P_BANK3_B0 B0 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X352 COMPARE_PRE1_LOAD_OUTN_R0_N1 COMPARE__PRE1N VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X353 TOPN DAC__N_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X354 DAC__BANK2P DAC__P_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X355 DAC__BANK2P DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X356 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X357 VPWR B10 DAC__P_BANK1_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X358 DAC__BANK1P DAC__P_BANK1_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X359 DAC__P_BANK1_B3 B11 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X360 VGND B11 DAC__N_BANK1_B3_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X361 DAC__P_BANK2_B1 B5 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X362 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X363 DAC__BANK2N DAC__N_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X364 DAC__BANK2N DAC__N_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X365 TOPP DAC__P_BANK0_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X366 DAC__BANK1N DAC__N_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X367 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X368 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X369 VPWR B12 DAC__P_BANK0_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X370 DAC__N_BANK3_B0 B0 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X371 DAC__N_BANK0_B3 B15 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X372 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X373 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X374 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X375 TOPN DAC__N_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X376 DAC__P_BANK0_B2 DAC__P_BANK0_B2_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X377 VPWR B6 DAC__P_BANK2_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X378 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X379 DAC__LOP DAC__SAMPLEB VGND VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X380 VGND B5 DAC__P_BANK2_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X381 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X382 TOPP DAC__P_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X383 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X384 DAC__BANK2P DAC__P_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X385 VPWR SAMPLE DAC__SAMPLEB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X386 DAC__BANK1N DAC__BANK2N sky130_fd_pr__cap_mim_m3_1 l=22.91 w=22.91
+X387 COMPARE__LATCH__TAIL COMPARE__PRE1P COMPARE__LATCH__FN VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X388 DAC__BANK1P DAC__P_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X389 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X390 DAC__BANK2N DAC__N_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X391 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X392 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X393 DAC__P_BANK0_B2 DAC__P_BANK0_B2_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X394 VPWR B14 DAC__N_BANK0_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X395 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X396 TOPN DAC__N_BANK0_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X397 COMPARE_PRE0_LOAD_OUTN_R0_N0 COMPARE_PRE0_LOAD_OUTN_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X398 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X399 VPWR B12 DAC__N_BANK0_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X400 DAC__N_BANK1_B3 DAC__N_BANK1_B3_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X401 DAC__P_BANK2_B3 DAC__P_BANK2_B3_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X402 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X403 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X404 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X405 TOPN DAC__BANK1N sky130_fd_pr__cap_mim_m3_1 l=22.91 w=22.91
+X406 TOPP DAC__P_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X407 VPWR B14 DAC__P_BANK0_B2_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X408 VPWR B5 DAC__N_BANK2_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X409 COMPARE_PRE0_LOAD_OUTP_R0_N0 COMPARE_PRE0_LOAD_OUTP_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X410 DAC__BANK3P DAC__P_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X411 DAC__BANK2N SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X412 DAC__P_BANK3_B2 DAC__P_BANK3_B2_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X413 DAC__P_BANK0_B1 B13 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X414 DAC__BANK1N DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X415 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X416 VPWR B4 DAC__P_BANK2_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X417 DAC__BANK3N DAC__N_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X418 COMPARE_PRE0_LOAD_OUTN_R0_N1 COMPARE__PRE0N VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X419 TOPP DAC__P_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X420 DAC__P_BANK3_B2 DAC__P_BANK3_B2_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X421 DAC__BANK3P DAC__P_BANK3_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X422 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X423 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X424 VGND B6 DAC__P_BANK2_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X425 DAC__BANK1P DAC__P_BANK1_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X426 DAC__BANK3P DAC__P_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X427 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X428 TOPP SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X429 DAC__BANK3N DAC__N_BANK3_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X430 VPWR B15 DAC__P_BANK0_B3_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X431 DAC__N_BANK1_B1 DAC__N_BANK1_B1_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X432 DAC__N_BANK0_B0 DAC__N_BANK0_B0_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X433 COMPARE__LATCH__TAIL COMPARE__PRE1N COMPARE__LATCH__FP VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=0.5
+X434 DAC__BANK1P DAC__BANK2P sky130_fd_pr__cap_mim_m3_1 l=22.91 w=22.91
+X435 DAC__P_BANK3_B2 B2 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X436 TOPN DAC__N_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X437 TOPP DAC__P_BANK0_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X438 VGND B0 DAC__N_BANK3_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X439 DAC__P_BANK0_B0 B12 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X440 DAC__BANK3N DAC__N_BANK3_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X441 DAC__BANK3P DAC__P_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X442 DAC__P_BANK0_B3 B15 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X443 VGND B10 DAC__N_BANK1_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X444 DAC__BANK2N DAC__N_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X445 DAC__BANK3N SAMPLE VCM VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X446 DAC__N_BANK0_B1 B13 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X447 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X448 TOPP DAC__P_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X449 DAC__BANK3N DAC__N_BANK3_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X450 DAC__N_BANK2_B3 DAC__N_BANK2_B3_SW__BITB DAC__HIN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X451 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X452 DAC__P_BANK0_B3 DAC__P_BANK0_B3_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X453 VPWR EVAL COMPARE__LATCH__FN VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=0.15
+X454 COMPARE__PRE1__TAIL COMPARE__PRE0P COMPARE__PRE1N VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X455 DAC__HIN DAC__SAMPLEB VREF VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X456 COMPARE_PRE0_LOAD_OUTP_R0_N1 COMPARE__PRE0P VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X457 COMPARE__PRE1__TAIL COMPARE__PRE0P COMPARE__PRE1N VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X458 TOPN DAC__N_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X459 VPWR B8 DAC__P_BANK1_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X460 DAC__BANK2N DAC__SAMPLEB VCM VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X461 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X462 DAC__P_BANK1_B2 DAC__P_BANK1_B2_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X463 DAC__N_BANK0_B0 B12 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X464 DAC__P_BANK0_B1 DAC__P_BANK0_B1_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X465 VGND B1 DAC__N_BANK3_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X466 DAC__BANK1P DAC__P_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X467 DAC__BANK2N DAC__N_BANK2_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X468 DAC__P_BANK2_B0 B4 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X469 VGND COMPARE__LATCH__OUTN_B COMPN VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X470 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X471 DAC__P_BANK0_B2 B14 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X472 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X473 VGND B10 DAC__P_BANK1_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X474 DAC__P_BANK2_B3 DAC__P_BANK2_B3_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X475 DAC__N_BANK2_B0 DAC__N_BANK2_B0_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X476 DAC__P_BANK1_B2 DAC__P_BANK1_B2_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X477 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X478 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X479 DAC__P_BANK1_B1 DAC__P_BANK1_B1_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X480 DAC__P_BANK3_B1 B1 DAC__HIP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X481 VPWR B0 DAC__N_BANK3_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X482 DAC__BANK1N DAC__N_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X483 DAC__N_BANK2_B2 B6 DAC__LON VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X484 DAC__N_BANK2_B1 DAC__N_BANK2_B1_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X485 DAC__P_BANK2_B0 DAC__P_BANK2_B0_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X486 DAC__BANK3P DAC__P_BANK3_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X487 VPWR B1 DAC__P_BANK3_B1_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X488 VGND B8 DAC__N_BANK1_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X489 DAC__BANK1P DAC__P_BANK1_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X490 DAC__P_BANK2_B3 B7 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X491 TOPP DAC__P_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X492 DAC__P_BANK1_B2 B10 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X493 DAC__BANK2P DAC__P_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X494 DAC__P_BANK0_B0 DAC__P_BANK0_B0_SW__BITB DAC__LOP VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+X495 VPWR EVAL COMPARE__LATCH__QN VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X496 DAC__P_BANK2_B0 DAC__P_BANK2_B0_SW__BITB DAC__HIP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X497 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X498 DAC__BANK3N DAC__N_BANK3_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X499 VGND B9 DAC__P_BANK1_B1_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X500 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X501 DAC__BANK1P DAC__P_BANK1_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X502 COMPARE_PRE1_LOAD_OUTP_R0_N1 COMPARE__PRE1P VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X503 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X504 DAC__BANK1N DAC__N_BANK1_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X505 VPWR COMPARE__LATCH__OUTN_B COMPN VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X506 TOPN DAC__N_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X507 DAC__BANK2N DAC__N_BANK2_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X508 VGND B14 DAC__N_BANK0_B2_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X509 COMPARE__PRE0__TAIL TOPN COMPARE__PRE0N VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X510 TOPN DAC__N_BANK0_B1 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X511 VGND B12 DAC__N_BANK0_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X512 DAC__BANK2P DAC__P_BANK2_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X513 DAC__P_BANK2_B0 B4 DAC__LOP VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X514 VPWR COMPARE_PRE0_LOAD_OUTN_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X515 TOPP DAC__P_BANK0_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X516 DAC__N_BANK3_B3 B3 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X517 COMPARE__PRE1__TAIL COMPARE__PRE0N COMPARE__PRE1P VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X518 DAC__BANK1P DAC__P_BANK1_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X519 DAC__BANK2N DAC__N_BANK2_B0 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X520 DAC__N_BANK3_B3 DAC__N_BANK3_B3_SW__BITB DAC__LON VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X521 TOPN DAC__N_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X522 VGND B4 DAC__P_BANK2_B0_SW__BITB VGND sky130_fd_pr__nfet_01v8 ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X523 TOPP DAC__BANK1P sky130_fd_pr__cap_mim_m3_1 l=22.91 w=22.91
+X524 TOPP DAC__P_BANK0_B2 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X525 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X526 DAC__HIN DAC__SAMPLEB VINN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X527 VPWR B8 DAC__N_BANK1_B0_SW__BITB VPWR sky130_fd_pr__pfet_01v8_hvt ad=0.1885 pd=1.88 as=0.1885 ps=1.88 w=0.65 l=0.15
+X528 TOPP DAC__P_BANK0_B3 sky130_fd_pr__cap_mim_m3_1 l=22.17 w=22.17
+X529 DAC__N_BANK0_B2 B14 DAC__HIN VPWR sky130_fd_pr__pfet_01v8_hvt ad=3.48 pd=24.58 as=3.48 ps=24.58 w=12 l=0.15
+X530 DAC__LON SAMPLE VINN VGND sky130_fd_pr__nfet_01v8 ad=2.32 pd=16.58 as=2.32 ps=16.58 w=8 l=0.15
+.ends
+

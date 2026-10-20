@@ -1,0 +1,121 @@
+{
+  "id": "bbbce221df264b5188a8f94cb95e1649",
+  "project_id": "1f017c309749452696a548948172930b",
+  "revision": 1,
+  "artifacts": {
+    "analog_netlist": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar_adc16-tt-directed-seven/analog.spice",
+    "testbench": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar_adc16-tt-directed-seven/testbench.spice",
+    "waveform_data": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar_adc16-tt-directed-seven/waveform.dat",
+    "rtl_replay": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar_adc16-tt-directed-seven/rtl-codes.csv",
+    "gate_replay": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar_adc16-tt-directed-seven/gate-codes.csv",
+    "ir_replay": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar_adc16-tt-directed-seven/ir-codes.csv",
+    "adc16_verification": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar_adc16-tt-directed-seven/adc16-verification.json",
+    "native_decisions": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar_adc16-tt-directed-seven/decisions.csv"
+  },
+  "measurements": {
+    "raw_sample_count": 104598,
+    "display_sample_count": 3958,
+    "start_s": 0.0,
+    "end_s": 0.000148,
+    "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+    "source_energy": {
+      "9": {
+        "energy_J": 8.527166789560322e-09,
+        "average_power_W": 5.7615991821353525e-05,
+        "minimum_current_A": -0.00016198980380011108,
+        "peak_current_A": 0.000527348250031423,
+        "source_voltage_V": 1.8
+      }
+    },
+    "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+    "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "output_bits": 16,
+    "ENOB_bits": null,
+    "ENOB_status": "not measured; output width is not effective resolution",
+    "frames": 6,
+    "max_code_error": 19,
+    "ambiguous_decisions": 0,
+    "lsb_V": 3.662109375e-05,
+    "conversion_s": 2.45e-05,
+    "sample_rate_Hz": 40816.32653061225,
+    "physical_unit_count": 244,
+    "bridge_capacitor_count": 6,
+    "architecture": "differential-4+4+4+4-split-SAR"
+  },
+  "tool": "ngspice + Icarus Verilog",
+  "reference_verification": {
+    "checks": [
+      {
+        "name": "Actual 16 comparator trials match RTL, synthesized gates and CMOS graph",
+        "pass": true,
+        "observed": null
+      },
+      {
+        "name": "Complementary comparator levels at every decision",
+        "pass": true,
+        "observed": 0
+      },
+      {
+        "name": "Directed native code error within one nominal 16-bit LSB",
+        "pass": false,
+        "observed": 19
+      }
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "input_differential_V": 1.8310546875e-05,
+        "code": 32768,
+        "expected_code": 32768,
+        "error_codes": 0
+      },
+      {
+        "frame": 1,
+        "input_differential_V": -1.199981689453125,
+        "code": 1,
+        "expected_code": 0,
+        "error_codes": 1
+      },
+      {
+        "frame": 2,
+        "input_differential_V": -1.1999450683593749,
+        "code": 2,
+        "expected_code": 1,
+        "error_codes": 1
+      },
+      {
+        "frame": 3,
+        "input_differential_V": -1.8310546875e-05,
+        "code": 32767,
+        "expected_code": 32767,
+        "error_codes": 0
+      },
+      {
+        "frame": 4,
+        "input_differential_V": 1.1999450683593749,
+        "code": 65515,
+        "expected_code": 65534,
+        "error_codes": -19
+      },
+      {
+        "frame": 5,
+        "input_differential_V": 1.199981689453125,
+        "code": 65516,
+        "expected_code": 65535,
+        "error_codes": -19
+      }
+    ],
+    "scope": "Actual retained-charge four-bank CDAC and dynamic MOS decisions; external finite-impedance VREF/VCM/control. No calibrated or coupled-PEX accuracy claim. Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.",
+    "schema_version": 1,
+    "kind": "sar_adc16",
+    "pass": false,
+    "output_bits": 16
+  },
+  "analysis_result": "fail",
+  "message": "ADC16 actual native execution completed; accuracy criteria are reported independently.",
+  "execution_status": "completed",
+  "elapsed_s": 125.55137839005329
+}

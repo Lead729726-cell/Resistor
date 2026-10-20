@@ -1,0 +1,41 @@
+{
+  "id": "8710ac4e0bc040a3be3b3167a6cc2848",
+  "project_id": "dbf1929def8f48009351cc3ca29c0722",
+  "revision": 1,
+  "artifacts": {
+    "rtl_replay": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar16_controller-tt-standalone-v1/rtl-codes.csv",
+    "gate_replay": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar16_controller-tt-standalone-v1/gate-codes.csv",
+    "ir_replay": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar16_controller-tt-standalone-v1/ir-codes.csv",
+    "adc16_verification": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar16_controller-tt-standalone-v1/adc16-verification.json"
+  },
+  "tool": "Icarus Verilog",
+  "reference_verification": {
+    "checks": [
+      {
+        "name": "Actual RTL, synthesized gates, CMOS graph and independent digital oracle agree",
+        "pass": true,
+        "observed": 265
+      }
+    ],
+    "scope": "Digital standalone block stimuli only. No analog execution, ADC input accuracy or MOS delay/power measured. Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.",
+    "schema_version": 1,
+    "kind": "sar16_controller",
+    "source": "actual-native-engine-artifacts",
+    "pass": true,
+    "output_bits": 16
+  },
+  "analysis_result": "pass",
+  "message": "ADC16 actual native execution completed; accuracy criteria are reported independently.",
+  "measurements": {
+    "analysis": "tran",
+    "x_unit": "cycle",
+    "x_label": "digital cycle",
+    "output_bits": 16,
+    "ENOB_bits": null,
+    "ENOB_status": "not measured; output width is not effective resolution",
+    "frames": 265,
+    "architecture": "digital-block"
+  },
+  "execution_status": "completed",
+  "elapsed_s": 0.9990253620198928
+}

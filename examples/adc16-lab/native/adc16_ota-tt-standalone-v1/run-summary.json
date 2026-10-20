@@ -1,0 +1,57 @@
+{
+  "id": "e266bec055e24736b59c11c8c22ca466",
+  "project_id": "cc824577559d477ea9d8bfd5286cf606",
+  "revision": 1,
+  "artifacts": {
+    "analog_netlist": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/adc16_ota-tt-standalone-v1/analog.spice",
+    "testbench": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/adc16_ota-tt-standalone-v1/testbench.spice",
+    "waveform_data": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/adc16_ota-tt-standalone-v1/waveform.dat",
+    "adc16_verification": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/adc16_ota-tt-standalone-v1/adc16-verification.json"
+  },
+  "measurements": {
+    "raw_sample_count": 10014,
+    "display_sample_count": 2624,
+    "start_s": 0.0,
+    "end_s": 1.9999999999999998e-05,
+    "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+    "source_energy": {
+      "3": {
+        "energy_J": 1.7778130483800096e-09,
+        "average_power_W": 8.889065241900048e-05,
+        "minimum_current_A": 4.912936159229275e-05,
+        "peak_current_A": 5.0250034185239656e-05,
+        "source_voltage_V": 1.8
+      }
+    },
+    "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+    "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "output_bits": null,
+    "ENOB_bits": null,
+    "ENOB_status": "not measured; output width is not effective resolution",
+    "block_context": "ota",
+    "frames": null
+  },
+  "tool": "ngspice + Icarus Verilog",
+  "reference_verification": {
+    "checks": [
+      {
+        "name": "Actual OTA tracks unity-feedback input (functional 20mV bound)",
+        "pass": true,
+        "observed": -0.0022189151401477147
+      }
+    ],
+    "scope": "Standalone block with explicitly declared bias, load and clocks. Functional block criterion only; not a sixteen-bit ADC accuracy test. Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.",
+    "schema_version": 1,
+    "kind": "adc16_ota",
+    "source": "actual-native-engine-artifacts",
+    "pass": true,
+    "output_bits": null
+  },
+  "analysis_result": "pass",
+  "message": "ADC16 actual native execution completed; accuracy criteria are reported independently.",
+  "execution_status": "completed",
+  "elapsed_s": 1.792481406009756
+}

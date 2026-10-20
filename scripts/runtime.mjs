@@ -33,7 +33,7 @@ export async function workerRpc(config,method,params={}){
     params={...params,path:`/workspace/.runtime/eda/uploads/${id}/${filename}`};delete params.file_base64;delete params.sidecar_base64;delete params.format;
   }
   // Bounded large-file transfers can outlast ordinary interactive requests.
-  const timeout=['project.import_bundle','project.export_bundle'].includes(method)?180000:65000;
+  const timeout=['project.import_bundle','project.export_bundle','design.create_template'].includes(method)?180000:65000;
   const response=await localEngineFetch(`${config.url}/rpc`,{method:'POST',headers:{'Content-Type':'application/json','X-MOS-Token':config.token},body:JSON.stringify({method,params}),signal:AbortSignal.timeout(timeout)});
   if(!response.ok)throw new Error(`Worker HTTP ${response.status}`);return response.json();
 }

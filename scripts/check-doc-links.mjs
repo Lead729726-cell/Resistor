@@ -13,6 +13,7 @@ documents.push('docs/instructor-course.md');
 documents.push('docs/hardware-workbench.md', 'docs/hardware-validation.md', 'examples/hardware-validation/README.md','examples/hardware-lab/README.md');
 documents.push('docs/sar12.md','docs/sar12-convergence.md','examples/sar12-lab/README.md','examples/sar12-lab/NOTICE.md');
 documents.push('docs/paper-signoff-validation.md','examples/paper-signoff/README.md','examples/paper-signoff/THIRD_PARTY.md');
+documents.push('docs/adc16-lab.md','examples/adc16-lab/README.md','examples/adc16-lab/NOTICE.md');
 documents.push('docs/native-runtime.md','docs/schematic-quickstart.md','docs/gds-schematic-conversion.md','docs/workbench-usability.md');
 documents.push('docs/physical-tools.md');
 documents.push('docs/logic-composition.md','docs/logic-transient.md');

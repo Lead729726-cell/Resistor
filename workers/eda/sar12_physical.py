@@ -45,11 +45,13 @@ def array_plan(devices):
     if len(seen)!=508:raise EDAError('SAR12_ARRAY_MISMATCH','Unplaced physical capacitor units remain.')
     return [sorted(row,key=lambda entry:entry[0]) for row in rows],rest
 
-def physical(folder,ir,cell_name,ports,chip_limits):
+def physical(folder,ir,cell_name,ports,chip_limits,*,planner=None,unit_count=508,bridge_count=2,array_grid=(16,32),algorithm='sar12-interleaved-unit-pairs-m3-m4-v1',packing_passes=1,trunk_pitch=3000,logic_rail_pitch=4000):
     policy=F.policy(F.specification(chip_limits or F.policy()));folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
     devices=[copy.deepcopy(d) for d in ir['devices'] if d['kind']!='port']
     if not 1<=len(devices)<=768:raise EDAError('PHYSICAL_LIMIT','Dedicated SAR12 analog adapter permits at most 768 real primitives.')
-    rows,logic=array_plan(devices);cache={};vias=[];subs=[]
+    rows,logic=(array_plan if planner is None else planner)(devices);cache={};vias=[];subs=[]
+    if trunk_pitch not in(2500,3000)or logic_rail_pitch not in(3600,4000)or packing_passes not in(1,2,3,4,5):raise EDAError('INVALID_GEOMETRY','Bounded routing pitches and packing passes required.')
+    if sum(len(row)for row in rows)!=unit_count:raise EDAError('SAR_ARRAY_MISMATCH','Every declared physical unit must be placed exactly once.')
     for i,row in enumerate(rows):
         units=[d for _,d,_ in row];rownets=sorted({n for d in units for n in d['pins'].values()})
         sub=P._single_row(folder/f'array-row-{i:02d}',{'devices':units},cell_name,rownets,600,primitive_cache=cache,via_cache=vias,slots={d['id']:c for c,d,_ in row})
@@ -62,7 +64,7 @@ def physical(folder,ir,cell_name,ports,chip_limits):
     # Preliminary channel reserves all actual nets; the finalized channel drops
     # nets confined to one row, without changing their local connectivity.
     allnets={n for d in devices for n in d['pins'].values()}
-    channel_start=edge+right-left+2500;channel_width=len(allnets)*3000+3000
+    channel_start=edge+right-left+2500;channel_width=len(allnets)*trunk_pitch+3000
     available=width-edge-channel_start-channel_width-5000
     if available<30000:raise EDAError('CHIP_ENVELOPE_EXCEEDED','No space remains for actual SAR switches and comparator.')
     grouped=[];by_group={}
@@ -74,21 +76,30 @@ def physical(folder,ir,cell_name,ports,chip_limits):
         else:
             if group is not None:by_group[group]=len(grouped)
             grouped.append([d])
-    batches=[];batch=[];used=0
-    for group in grouped:
-        size=sum(cache[(d['model'],d['parameters']['w_um'],d['parameters']['l_um'])][1].bbox().width()+5000 for d in group)
-        if size+6000>available:raise EDAError('CHIP_ENVELOPE_EXCEEDED','An indivisible comparator matching group exceeds its real width allocation.')
-        if batch and used+size+6000>available:batches.append(batch);batch=[];used=0
-        batch.extend(group);used+=size
-    if batch:batches.append(batch)
+    # Optional fixed-point packing removes tracks confined to one real row
+    # before allocating logic width. It changes placement, never device sizes.
+    for _ in range(packing_passes):
+        batches=[];batch=[];used=0
+        for group in grouped:
+            size=sum(cache[(d['model'],d['parameters']['w_um'],d['parameters']['l_um'])][1].bbox().width()+5000 for d in group)
+            if size+6000>available:raise EDAError('CHIP_ENVELOPE_EXCEEDED','An indivisible comparator matching group exceeds its real width allocation.')
+            if batch and used+size+6000>available:batches.append(batch);batch=[];used=0
+            batch.extend(group);used+=size
+        if batch:batches.append(batch)
+        row_nets=[set(ns)for _,_,ns in subs]+[{n for d in b for n in d['pins'].values()}for b in batches]
+        count=Counter(n for ns in row_nets for n in ns)
+        preliminary=[n for n,c in count.items()if c>1 or n in ports]
+        next_available=width-edge-channel_start-(len(preliminary)*trunk_pitch+3000)-5000
+        if next_available==available:break
+        available=next_available
     logic_subs=[]
     for i,batch in enumerate(batches):
-        nets=sorted({n for d in batch for n in d['pins'].values()});sub=P._single_row(folder/f'logic-row-{i:02d}',{'devices':batch},cell_name,nets,600,primitive_cache=cache,via_cache=vias,rail_pitch=4000)
+        nets=sorted({n for d in batch for n in d['pins'].values()});sub=P._single_row(folder/f'logic-row-{i:02d}',{'devices':batch},cell_name,nets,600,primitive_cache=cache,via_cache=vias,rail_pitch=logic_rail_pitch)
         logic_subs.append((sub,sub.cell(cell_name),nets))
     counts=Counter(n for _,_,ns in subs+logic_subs for n in ns);nets=sorted(n for n in counts if counts[n]>1 or n in ports)
     if set(ports)-set(nets):raise EDAError('UNCONNECTED_PORT','ADC top port lacks a real physical connection.')
-    channel_width=len(nets)*3000+3000;logic_left=channel_start+channel_width+3000
-    trunk_x={n:channel_start+1500+i*3000 for i,n in enumerate(nets)}
+    channel_width=len(nets)*trunk_pitch+3000;logic_left=channel_start+channel_width+3000
+    trunk_x={n:channel_start+1500+i*trunk_pitch for i,n in enumerate(nets)}
     layout=k.Layout();layout.dbu=.001;top=layout.create_cell(cell_name);landings=defaultdict(list);extensions=[];placed_units=[];logic_reports=[];cap_transition_points=set()
     def shape(layer,p,net='',ident=None):
         s=top.shapes(layout.layer(*layer)).insert(p);s.set_property(2,net)
@@ -164,5 +175,5 @@ def physical(folder,ir,cell_name,ports,chip_limits):
     for group in sorted({u['group'] for u in placed_units}):
         points=[u['center_dbu'] for u in placed_units if u['group']==group];centroids[group]=[float(sum(Fraction(p[a]) for p in points)/len(points)) for a in (0,1)]
     if len({tuple(v) for v in centroids.values()})!=1:raise EDAError('SAR12_CENTROID_MISMATCH','Actual placed unit centroids are not coincident; no geometry is committed.')
-    report=dict(algorithm='sar12-interleaved-unit-pairs-m3-m4-v1',primitive_count=len(devices),unit_capacitors=len(placed_units),bridge_capacitors=2,array_grid=[16,32],unit_centroids_dbu=centroids,nominal_unit_centroids_equal=True,unit_placements=placed_units,row_pitch_dbu=row_pitch,central_trunk_count=len(nets),logic_rows=logic_reports,floorplan=result,scope='Actual dimensioned public PCells and routed masks. Nominal first moments only; extracted coupling, comparator imbalance, noise, mismatch and foundry approval are separate checks.')
+    report=dict(algorithm=algorithm,primitive_count=len(devices),unit_capacitors=len(placed_units),bridge_capacitors=bridge_count,array_grid=list(array_grid),unit_centroids_dbu=centroids,nominal_unit_centroids_equal=True,unit_placements=placed_units,row_pitch_dbu=row_pitch,central_trunk_count=len(nets),logic_rows=logic_reports,floorplan=result,scope='Actual dimensioned public PCells and routed masks. Nominal first moments only; extracted coupling, comparator imbalance, noise, mismatch and foundry approval are separate checks.')
     (folder/'routing-report.json').write_text(json.dumps(report,indent=2)+'\n');G.assign_ids(layout);return layout

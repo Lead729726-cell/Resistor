@@ -1,0 +1,57 @@
+{
+  "id": "d49da3ba600749f8be51dcc934006cb5",
+  "project_id": "89c3cd5f21cf42ef98cb1699c0a3b9dc",
+  "revision": 1,
+  "artifacts": {
+    "analog_netlist": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar16_cdac-tt-standalone-v1/analog.spice",
+    "testbench": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar16_cdac-tt-standalone-v1/testbench.spice",
+    "waveform_data": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar16_cdac-tt-standalone-v1/waveform.dat",
+    "adc16_verification": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar16_cdac-tt-standalone-v1/adc16-verification.json"
+  },
+  "measurements": {
+    "raw_sample_count": 10301,
+    "display_sample_count": 2939,
+    "start_s": 0.0,
+    "end_s": 1.9999999999999998e-05,
+    "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+    "source_energy": {
+      "5": {
+        "energy_J": 7.044571448415778e-13,
+        "average_power_W": 3.5222857242078894e-08,
+        "minimum_current_A": -2.6824798407432127e-05,
+        "peak_current_A": 0.000458663409695248,
+        "source_voltage_V": 1.8
+      }
+    },
+    "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+    "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "output_bits": null,
+    "ENOB_bits": null,
+    "ENOB_status": "not measured; output width is not effective resolution",
+    "block_context": "cdac",
+    "frames": null
+  },
+  "tool": "ngspice + Icarus Verilog",
+  "reference_verification": {
+    "checks": [
+      {
+        "name": "Actual MSB CDAC differential step is nominal 1.2V",
+        "pass": true,
+        "observed": 1.199766380605995
+      }
+    ],
+    "scope": "Standalone block with explicitly declared bias, load and clocks. Functional block criterion only; not a sixteen-bit ADC accuracy test. Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.",
+    "schema_version": 1,
+    "kind": "sar16_cdac",
+    "source": "actual-native-engine-artifacts",
+    "pass": true,
+    "output_bits": null
+  },
+  "analysis_result": "pass",
+  "message": "ADC16 actual native execution completed; accuracy criteria are reported independently.",
+  "execution_status": "completed",
+  "elapsed_s": 12.567047814955004
+}

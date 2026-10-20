@@ -1,0 +1,24 @@
+Resistor Indust actual ADC16 MOS reference
+.include "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/adc16_ota-tt-standalone-v1/supported-tt.spice"
+.include "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/adc16_ota-tt-standalone-v1/analog.spice"
+.option sparse scale=1e-6 method=gear maxord=2 reltol=1e-5 vntol=1e-6 abstol=1e-12
+.temp 27.0
+VGND VGND 0 0
+VDD SUPPLY VGND 1.8
+R_SUPPLY SUPPLY VPWR .1
+XU INP OUT BIAS OUT VPWR VGND adc16_ota
+V_INP INP VGND PWL(0 .9 5u .9 5.01u .91 20u .91)
+V_BIAS BIAS VGND 0.75
+C_LOAD OUT VGND 1p
+.control
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+tran 2e-09 2e-05 0 2e-09
+let supply_current = -i(VDD)
+wrdata waveform.dat v(INP) v(OUT) supply_current
+echo ADC16_NATIVE_COMPLETE
+quit
+.endc
+.end

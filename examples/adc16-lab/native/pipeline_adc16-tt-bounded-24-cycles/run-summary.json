@@ -1,0 +1,150 @@
+{
+  "id": "dba9b34e1c78428fa4f8624ce37f156e",
+  "project_id": "cf8324e888024abf92ddd24cf08d7f23",
+  "revision": 1,
+  "artifacts": {
+    "analog_netlist": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline_adc16-tt-bounded-24-cycles/analog.spice",
+    "testbench": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline_adc16-tt-bounded-24-cycles/testbench.spice",
+    "waveform_data": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline_adc16-tt-bounded-24-cycles/waveform.dat",
+    "rtl_replay": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline_adc16-tt-bounded-24-cycles/rtl-codes.csv",
+    "gate_replay": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline_adc16-tt-bounded-24-cycles/gate-codes.csv",
+    "ir_replay": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline_adc16-tt-bounded-24-cycles/ir-codes.csv",
+    "adc16_verification": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline_adc16-tt-bounded-24-cycles/adc16-verification.json",
+    "stage_samples": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline_adc16-tt-bounded-24-cycles/stage-samples.json"
+  },
+  "measurements": {
+    "raw_sample_count": 36802,
+    "display_sample_count": 2698,
+    "start_s": 0.0,
+    "end_s": 0.00024000000000000003,
+    "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+    "source_energy": {
+      "39": {
+        "energy_J": 2.39213541262364e-07,
+        "average_power_W": 0.0009967230885931833,
+        "minimum_current_A": -0.0007130403271737862,
+        "peak_current_A": 0.0016053332289658329,
+        "source_voltage_V": 1.8
+      }
+    },
+    "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+    "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "output_bits": 16,
+    "ENOB_bits": null,
+    "ENOB_status": "not measured; output width is not effective resolution",
+    "architecture": "14x1.5-bit-MDAC+2-bit-flash",
+    "frames": 10,
+    "max_code_error": 1,
+    "ambiguous_decisions": 0,
+    "malformed_words": 0,
+    "lsb_V": 3.662109375e-05,
+    "sample_rate_Hz": 100000.0,
+    "digital_alignment_half_cycles": 14,
+    "full_pipeline_latency_half_cycles": 15,
+    "calibration": "not-applied"
+  },
+  "tool": "ngspice + Icarus Verilog",
+  "reference_verification": {
+    "checks": [
+      {
+        "name": "Actual stage words match RTL/gates/CMOS and independent aligned decode",
+        "pass": true,
+        "observed": null
+      },
+      {
+        "name": "No malformed filled-pipeline thermometer words",
+        "pass": true,
+        "observed": 0
+      },
+      {
+        "name": "No ambiguous settled logic levels",
+        "pass": true,
+        "observed": 0
+      },
+      {
+        "name": "At least eight valid output words",
+        "pass": true,
+        "observed": 10
+      },
+      {
+        "name": "Uncalibrated DC code within one nominal 16-bit LSB",
+        "pass": true,
+        "observed": 1
+      }
+    ],
+    "scope": "Actual fourteen differential switched-capacitor MDACs, MOS flash/latches and raw-word digital alignment. DC input only; amplifier gain, offset and settling are not idealized or corrected. Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.",
+    "frames": [
+      {
+        "half_cycle": 29,
+        "code": 36863,
+        "error": 0,
+        "expected_code": 36864
+      },
+      {
+        "half_cycle": 31,
+        "code": 36863,
+        "error": 0,
+        "expected_code": 36864
+      },
+      {
+        "half_cycle": 33,
+        "code": 36863,
+        "error": 0,
+        "expected_code": 36864
+      },
+      {
+        "half_cycle": 35,
+        "code": 36863,
+        "error": 0,
+        "expected_code": 36864
+      },
+      {
+        "half_cycle": 37,
+        "code": 36863,
+        "error": 0,
+        "expected_code": 36864
+      },
+      {
+        "half_cycle": 39,
+        "code": 36863,
+        "error": 0,
+        "expected_code": 36864
+      },
+      {
+        "half_cycle": 41,
+        "code": 36863,
+        "error": 0,
+        "expected_code": 36864
+      },
+      {
+        "half_cycle": 43,
+        "code": 36863,
+        "error": 0,
+        "expected_code": 36864
+      },
+      {
+        "half_cycle": 45,
+        "code": 36863,
+        "error": 0,
+        "expected_code": 36864
+      },
+      {
+        "half_cycle": 47,
+        "code": 36863,
+        "error": 0,
+        "expected_code": 36864
+      }
+    ],
+    "schema_version": 1,
+    "kind": "pipeline_adc16",
+    "pass": true,
+    "output_bits": 16
+  },
+  "analysis_result": "pass",
+  "message": "ADC16 actual native execution completed; accuracy criteria are reported independently.",
+  "execution_status": "completed",
+  "elapsed_s": 832.4817574800109
+}

@@ -1,0 +1,461 @@
+{
+  "id": "db1404ac292d49ed8f69f3da2317beb4",
+  "revision": 1,
+  "cell": "sdm16_integrator",
+  "schematic": {
+    "schema_version": 1,
+    "ports": [
+      "VIN",
+      "SIGNAL",
+      "BITSTREAM",
+      "VCM",
+      "BIAS",
+      "OUT",
+      "RESET",
+      "RESETB",
+      "VPWR",
+      "VGND"
+    ],
+    "connectivity_mode": "explicit",
+    "devices": [
+      {
+        "id": "AMP",
+        "name": "AMP",
+        "kind": "block",
+        "pins": {
+          "INP": "TRACK_REF",
+          "INN": "SUM",
+          "BIAS": "BIAS",
+          "OUT": "OUT",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 180,
+        "y": 170,
+        "cell_name": "ADC16_OTA"
+      },
+      {
+        "id": "R_REF_CM",
+        "name": "R_REF_CM",
+        "kind": "resistor",
+        "pins": {
+          "+": "VCM",
+          "-": "TRACK_REF"
+        },
+        "parameters": {
+          "value": 200000.0
+        },
+        "x": 420,
+        "y": 170
+      },
+      {
+        "id": "R_REF_SIGNAL",
+        "name": "R_REF_SIGNAL",
+        "kind": "resistor",
+        "pins": {
+          "+": "SIGNAL",
+          "-": "TRACK_REF"
+        },
+        "parameters": {
+          "value": 100000.0
+        },
+        "x": 660,
+        "y": 170
+      },
+      {
+        "id": "R_INPUT",
+        "name": "R_INPUT",
+        "kind": "resistor",
+        "pins": {
+          "+": "VIN",
+          "-": "SUM"
+        },
+        "parameters": {
+          "value": 500000.0
+        },
+        "x": 900,
+        "y": 170
+      },
+      {
+        "id": "R_FEEDBACK",
+        "name": "R_FEEDBACK",
+        "kind": "resistor",
+        "pins": {
+          "+": "BITSTREAM",
+          "-": "SUM"
+        },
+        "parameters": {
+          "value": 250000.0
+        },
+        "x": 180,
+        "y": 350
+      },
+      {
+        "id": "C_INT",
+        "name": "C_INT",
+        "kind": "capacitor",
+        "pins": {
+          "+": "OUT",
+          "-": "SUM"
+        },
+        "parameters": {
+          "value": 4e-12
+        },
+        "x": 420,
+        "y": 350
+      },
+      {
+        "id": "RESET_SWITCH",
+        "name": "RESET_SWITCH",
+        "kind": "block",
+        "pins": {
+          "RESET": "RESET",
+          "RESETB": "RESETB",
+          "VCM": "VCM",
+          "SUM": "SUM",
+          "OUT": "OUT",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 660,
+        "y": 350,
+        "cell_name": "SDM8_RESET_SWITCH"
+      }
+    ],
+    "wires": [],
+    "junctions": [],
+    "cells": {
+      "ADC16_OTA": {
+        "schema_version": 1,
+        "ports": [
+          "INP",
+          "INN",
+          "BIAS",
+          "OUT",
+          "VPWR",
+          "VGND"
+        ],
+        "connectivity_mode": "explicit",
+        "devices": [
+          {
+            "id": "FIRST",
+            "name": "FIRST",
+            "kind": "block",
+            "pins": {
+              "INP": "INP",
+              "INN": "INN",
+              "BIAS": "BIAS",
+              "OUT": "PRE",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 180,
+            "y": 170,
+            "cell_name": "SDM8_OTA_FIRST"
+          },
+          {
+            "id": "P_SECOND",
+            "name": "P_SECOND",
+            "kind": "pmos",
+            "pins": {
+              "D": "OUT",
+              "G": "PRE",
+              "S": "VPWR",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 20,
+              "l_um": 1,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 420,
+            "y": 170,
+            "model": "sky130_fd_pr__pfet_01v8_hvt"
+          },
+          {
+            "id": "N_SECOND",
+            "name": "N_SECOND",
+            "kind": "nmos",
+            "pins": {
+              "D": "OUT",
+              "G": "BIAS",
+              "S": "VGND",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 10,
+              "l_um": 1,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 660,
+            "y": 170,
+            "model": "sky130_fd_pr__nfet_01v8"
+          },
+          {
+            "id": "C_MILLER",
+            "name": "C_MILLER",
+            "kind": "capacitor",
+            "pins": {
+              "+": "PRE",
+              "-": "COMP"
+            },
+            "parameters": {
+              "value": 5e-13
+            },
+            "x": 900,
+            "y": 170
+          },
+          {
+            "id": "R_ZERO",
+            "name": "R_ZERO",
+            "kind": "resistor",
+            "pins": {
+              "+": "COMP",
+              "-": "OUT"
+            },
+            "parameters": {
+              "value": 1000
+            },
+            "x": 180,
+            "y": 350
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "SDM8_OTA_FIRST": {
+        "schema_version": 1,
+        "ports": [
+          "INP",
+          "INN",
+          "BIAS",
+          "OUT",
+          "VPWR",
+          "VGND"
+        ],
+        "connectivity_mode": "explicit",
+        "devices": [
+          {
+            "id": "N_INP",
+            "name": "N_INP",
+            "kind": "nmos",
+            "pins": {
+              "D": "OUT",
+              "G": "INP",
+              "S": "TAIL",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 10,
+              "l_um": 1.0,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 180,
+            "y": 170,
+            "model": "sky130_fd_pr__nfet_01v8"
+          },
+          {
+            "id": "N_INN",
+            "name": "N_INN",
+            "kind": "nmos",
+            "pins": {
+              "D": "MIR",
+              "G": "INN",
+              "S": "TAIL",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 10,
+              "l_um": 1.0,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 420,
+            "y": 170,
+            "model": "sky130_fd_pr__nfet_01v8"
+          },
+          {
+            "id": "P_DIODE",
+            "name": "P_DIODE",
+            "kind": "pmos",
+            "pins": {
+              "D": "MIR",
+              "G": "MIR",
+              "S": "VPWR",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 20.0,
+              "l_um": 1.0,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 660,
+            "y": 170,
+            "model": "sky130_fd_pr__pfet_01v8_hvt"
+          },
+          {
+            "id": "P_MIRROR",
+            "name": "P_MIRROR",
+            "kind": "pmos",
+            "pins": {
+              "D": "OUT",
+              "G": "MIR",
+              "S": "VPWR",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 20.0,
+              "l_um": 1.0,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 900,
+            "y": 170,
+            "model": "sky130_fd_pr__pfet_01v8_hvt"
+          },
+          {
+            "id": "N_TAIL",
+            "name": "N_TAIL",
+            "kind": "nmos",
+            "pins": {
+              "D": "TAIL",
+              "G": "BIAS",
+              "S": "VGND",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 2.0,
+              "l_um": 1.0,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 180,
+            "y": 350,
+            "model": "sky130_fd_pr__nfet_01v8"
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "SDM8_RESET_SWITCH": {
+        "schema_version": 1,
+        "ports": [
+          "RESET",
+          "RESETB",
+          "VCM",
+          "SUM",
+          "OUT",
+          "VPWR",
+          "VGND"
+        ],
+        "connectivity_mode": "explicit",
+        "devices": [
+          {
+            "id": "N_RESET0",
+            "name": "N_RESET0",
+            "kind": "nmos",
+            "pins": {
+              "D": "SUM",
+              "G": "RESET",
+              "S": "VCM",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 2,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 180,
+            "y": 170,
+            "model": "sky130_fd_pr__nfet_01v8"
+          },
+          {
+            "id": "P_RESET0",
+            "name": "P_RESET0",
+            "kind": "pmos",
+            "pins": {
+              "D": "SUM",
+              "G": "RESETB",
+              "S": "VCM",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 4,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 420,
+            "y": 170,
+            "model": "sky130_fd_pr__pfet_01v8_hvt"
+          },
+          {
+            "id": "N_RESET1",
+            "name": "N_RESET1",
+            "kind": "nmos",
+            "pins": {
+              "D": "OUT",
+              "G": "RESET",
+              "S": "VCM",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 2,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 660,
+            "y": 170,
+            "model": "sky130_fd_pr__nfet_01v8"
+          },
+          {
+            "id": "P_RESET1",
+            "name": "P_RESET1",
+            "kind": "pmos",
+            "pins": {
+              "D": "OUT",
+              "G": "RESETB",
+              "S": "VCM",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 4,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 900,
+            "y": 170,
+            "model": "sky130_fd_pr__pfet_01v8_hvt"
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      }
+    }
+  },
+  "design_template": {
+    "id": "sdm16_integrator",
+    "parameters": {}
+  },
+  "testbench": {
+    "analysis": "tran",
+    "corner": "tt",
+    "temperature_C": 27.0,
+    "supply_V": 1.8,
+    "duration_s": 2e-05,
+    "step_s": 2e-09,
+    "load_F": 5e-15,
+    "vds_V": 1.8,
+    "vbs_V": 0.0
+  }
+}

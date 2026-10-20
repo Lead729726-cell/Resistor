@@ -1,5 +1,7 @@
 # Resistor
 
+**16-bit ADC 세 구조 · Resistor Indust 최신 소스**: SAR·2차 ΣΔ·Pipeline과 23개 편집 블록을 추가했습니다. 실제 MOS transient·RTL/gate/CMOS 재생과 물리 블록 3개의 공개 DRC/LVS/PEX를 실행했습니다. [사용법·실제 수치·남은 한계](docs/adc16-lab.md) · [프로젝트·파형·로그](examples/adc16-lab/README.md). 무보정 SAR 최대 19 LSB, ΣΔ 최대 119 LSB 오차가 남아 있으며, 16-bit 출력 폭을 실물 16-bit ENOB로 표시하지 않습니다. 새 installer 발행은 별도입니다.
+
 **HDL·Mixed SoC 작업대 · 최신 소스**: Verilog/SystemVerilog, VHDL, uint32 C 하드웨어, RTLIL/BLIF와 flat SPICE를 revision으로 저장하고 실제 도구로 처리합니다. 출력 assertion·X/Z 보존 VCD, 편집 가능한 CMOS 변환, bounded SKY130 참조 레이아웃, 아날로그/디지털 계층 조립과 실제 MOS+RC 해석을 연결했습니다. [사용법·언어별 범위](docs/hardware-workbench.md) · [편집 프로젝트·실제 실행 근거](examples/hardware-lab/README.md). 대형 표준셀 P&R·상용 HLS·제조 signoff와 새 installer 발행은 별도입니다.
 
 **12-bit SAR ADC 연구용 레퍼런스 · Resistor Indust**: arXiv:2610.15240의 검증 관점을 반영한 차동 6+6 CDAC, 12개 편집 블록과 합성 제어기입니다. 아날로그 마스크는 841.205 × 718.720 µm로 1mm² 영역 안에 들어갑니다. [프로젝트·실제 검사 기록](examples/sar12-lab/README.md) · [사용법·계산·논문과의 차이](docs/sar12.md). [제어기 실제 배치·배선·3코너 STA와 논문 기반 검증](docs/paper-signoff-validation.md)을 추가했습니다. 아날로그 결합 C 정합성은 실패이며, 전체 ADC 배선 후 ENOB·제조 signoff는 미검증입니다.

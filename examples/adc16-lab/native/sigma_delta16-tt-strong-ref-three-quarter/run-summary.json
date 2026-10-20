@@ -1,0 +1,111 @@
+{
+  "id": "387839607bd445d4bd8c288125f02160",
+  "project_id": "2ae6b96468404d2f879ff4e27ddb0d7f",
+  "revision": 1,
+  "artifacts": {
+    "analog_netlist": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sigma_delta16-tt-strong-ref-three-quarter/analog.spice",
+    "testbench": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sigma_delta16-tt-strong-ref-three-quarter/testbench.spice",
+    "waveform_data": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sigma_delta16-tt-strong-ref-three-quarter/waveform.dat",
+    "rtl_replay": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sigma_delta16-tt-strong-ref-three-quarter/rtl-codes.csv",
+    "gate_replay": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sigma_delta16-tt-strong-ref-three-quarter/gate-codes.csv",
+    "ir_replay": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sigma_delta16-tt-strong-ref-three-quarter/ir-codes.csv",
+    "adc16_verification": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sigma_delta16-tt-strong-ref-three-quarter/adc16-verification.json",
+    "sampled_bits": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sigma_delta16-tt-strong-ref-three-quarter/sampled-bits.json"
+  },
+  "measurements": {
+    "raw_sample_count": 561685,
+    "display_sample_count": 6767,
+    "start_s": 0.0,
+    "end_s": 0.00206,
+    "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+    "source_energy": {
+      "9": {
+        "energy_J": 3.3682116770553656e-05,
+        "average_power_W": 0.016350542121627988,
+        "minimum_current_A": 0.009045620194982007,
+        "peak_current_A": 0.0092978278668987,
+        "source_voltage_V": 1.8
+      }
+    },
+    "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+    "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "output_bits": 16,
+    "ENOB_bits": null,
+    "ENOB_status": "not measured; output width is not effective resolution",
+    "architecture": "second-order-CT-MOS-CIC3",
+    "modulator_clock_Hz": 1000000.0,
+    "decimation": 256,
+    "sample_rate_Hz": 3906.25,
+    "lsb_V": 2.74658203125e-05,
+    "frames": 6,
+    "mean_code": 43763.5,
+    "dc_error_LSB": 72.83333333333576,
+    "ambiguous_decisions": 0,
+    "filter_gain": 16777216,
+    "filter_group_delay_input_samples": 382.5
+  },
+  "tool": "ngspice + Icarus Verilog",
+  "reference_verification": {
+    "checks": [
+      {
+        "name": "Actual bitstream matches RTL, gates, CMOS and independent FIR",
+        "pass": true,
+        "observed": 2060
+      },
+      {
+        "name": "No ambiguous sampled bitstream levels",
+        "pass": true,
+        "observed": 0
+      },
+      {
+        "name": "Three or more settled output frames",
+        "pass": true,
+        "observed": 6
+      },
+      {
+        "name": "DC nominal error within 32 output LSB (functional reference, not 16-bit accuracy)",
+        "pass": false,
+        "observed": 72.83333333333576
+      }
+    ],
+    "scope": "Actual second-order RC/MOS modulator; sampled native bits replayed through CIC3 R=256, gain=2^24. First two startup frames withheld by RTL. Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.",
+    "frames": [
+      {
+        "sample": 775,
+        "code": 43763
+      },
+      {
+        "sample": 1031,
+        "code": 43764
+      },
+      {
+        "sample": 1287,
+        "code": 43764
+      },
+      {
+        "sample": 1543,
+        "code": 43763
+      },
+      {
+        "sample": 1799,
+        "code": 43764
+      },
+      {
+        "sample": 2055,
+        "code": 43763
+      }
+    ],
+    "schema_version": 1,
+    "kind": "sigma_delta16",
+    "source": "actual-native-engine-artifacts",
+    "pass": false,
+    "output_bits": 16
+  },
+  "analysis_result": "fail",
+  "message": "ADC16 actual native execution completed; accuracy criteria are reported independently.",
+  "execution_status": "completed",
+  "elapsed_s": 202.47612611803925
+}

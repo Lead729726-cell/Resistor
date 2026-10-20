@@ -1,0 +1,68 @@
+{
+  "checks": [
+    {
+      "name": "Actual 16 comparator trials match RTL, synthesized gates and CMOS graph",
+      "pass": true,
+      "observed": null
+    },
+    {
+      "name": "Complementary comparator levels at every decision",
+      "pass": true,
+      "observed": 0
+    },
+    {
+      "name": "Directed native code error within one nominal 16-bit LSB",
+      "pass": false,
+      "observed": 19
+    }
+  ],
+  "frames": [
+    {
+      "frame": 0,
+      "input_differential_V": 1.8310546875e-05,
+      "code": 32768,
+      "expected_code": 32768,
+      "error_codes": 0
+    },
+    {
+      "frame": 1,
+      "input_differential_V": -1.199981689453125,
+      "code": 1,
+      "expected_code": 0,
+      "error_codes": 1
+    },
+    {
+      "frame": 2,
+      "input_differential_V": -1.1999450683593749,
+      "code": 2,
+      "expected_code": 1,
+      "error_codes": 1
+    },
+    {
+      "frame": 3,
+      "input_differential_V": -1.8310546875e-05,
+      "code": 32767,
+      "expected_code": 32767,
+      "error_codes": 0
+    },
+    {
+      "frame": 4,
+      "input_differential_V": 1.1999450683593749,
+      "code": 65515,
+      "expected_code": 65534,
+      "error_codes": -19
+    },
+    {
+      "frame": 5,
+      "input_differential_V": 1.199981689453125,
+      "code": 65516,
+      "expected_code": 65535,
+      "error_codes": -19
+    }
+  ],
+  "scope": "Actual retained-charge four-bank CDAC and dynamic MOS decisions; external finite-impedance VREF/VCM/control. No calibrated or coupled-PEX accuracy claim. Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.",
+  "schema_version": 1,
+  "kind": "sar_adc16",
+  "pass": false,
+  "output_bits": 16
+}

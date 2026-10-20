@@ -1,0 +1,1090 @@
+{
+  "edition": "Resistor Indust",
+  "runs": [
+    {
+      "name": "sar_adc16-tt-directed-seven",
+      "project_id": "1f017c309749452696a548948172930b",
+      "run_id": "bbbce221df264b5188a8f94cb95e1649",
+      "execution_status": "completed",
+      "analysis_result": "fail",
+      "measurements": {
+        "raw_sample_count": 104598,
+        "display_sample_count": 3958,
+        "start_s": 0.0,
+        "end_s": 0.000148,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 8.527166789560322e-09,
+            "average_power_W": 5.7615991821353525e-05,
+            "minimum_current_A": -0.00016198980380011108,
+            "peak_current_A": 0.000527348250031423,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 16,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "frames": 6,
+        "max_code_error": 19,
+        "ambiguous_decisions": 0,
+        "lsb_V": 3.662109375e-05,
+        "conversion_s": 2.45e-05,
+        "sample_rate_Hz": 40816.32653061225,
+        "physical_unit_count": 244,
+        "bridge_capacitor_count": 6,
+        "architecture": "differential-4+4+4+4-split-SAR"
+      },
+      "checks": [
+        {
+          "name": "Actual 16 comparator trials match RTL, synthesized gates and CMOS graph",
+          "pass": true,
+          "observed": null
+        },
+        {
+          "name": "Complementary comparator levels at every decision",
+          "pass": true,
+          "observed": 0
+        },
+        {
+          "name": "Directed native code error within one nominal 16-bit LSB",
+          "pass": false,
+          "observed": 19
+        }
+      ]
+    },
+    {
+      "name": "pipeline_adc16-tt-bounded-24-cycles",
+      "project_id": "cf8324e888024abf92ddd24cf08d7f23",
+      "run_id": "dba9b34e1c78428fa4f8624ce37f156e",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 36802,
+        "display_sample_count": 2698,
+        "start_s": 0.0,
+        "end_s": 0.00024000000000000003,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "39": {
+            "energy_J": 2.39213541262364e-07,
+            "average_power_W": 0.0009967230885931833,
+            "minimum_current_A": -0.0007130403271737862,
+            "peak_current_A": 0.0016053332289658329,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 16,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "architecture": "14x1.5-bit-MDAC+2-bit-flash",
+        "frames": 10,
+        "max_code_error": 1,
+        "ambiguous_decisions": 0,
+        "malformed_words": 0,
+        "lsb_V": 3.662109375e-05,
+        "sample_rate_Hz": 100000.0,
+        "digital_alignment_half_cycles": 14,
+        "full_pipeline_latency_half_cycles": 15,
+        "calibration": "not-applied"
+      },
+      "checks": [
+        {
+          "name": "Actual stage words match RTL/gates/CMOS and independent aligned decode",
+          "pass": true,
+          "observed": null
+        },
+        {
+          "name": "No malformed filled-pipeline thermometer words",
+          "pass": true,
+          "observed": 0
+        },
+        {
+          "name": "No ambiguous settled logic levels",
+          "pass": true,
+          "observed": 0
+        },
+        {
+          "name": "At least eight valid output words",
+          "pass": true,
+          "observed": 10
+        },
+        {
+          "name": "Uncalibrated DC code within one nominal 16-bit LSB",
+          "pass": true,
+          "observed": 1
+        }
+      ]
+    },
+    {
+      "name": "sigma_delta16-tt-strong-ref-low",
+      "project_id": "a488b104b50c4f23b3f994e8840430ab",
+      "run_id": "ed03ba2f122443399095141d11c9abe1",
+      "execution_status": "completed",
+      "analysis_result": "fail",
+      "measurements": {
+        "raw_sample_count": 471703,
+        "display_sample_count": 6380,
+        "start_s": 0.0,
+        "end_s": 0.00206,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 3.3629351236636705e-05,
+            "average_power_W": 0.0163249277847751,
+            "minimum_current_A": 0.009038753051978432,
+            "peak_current_A": 0.00925439566784192,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 16,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "architecture": "second-order-CT-MOS-CIC3",
+        "modulator_clock_Hz": 1000000.0,
+        "decimation": 256,
+        "sample_rate_Hz": 3906.25,
+        "lsb_V": 2.74658203125e-05,
+        "frames": 6,
+        "mean_code": 10803.666666666666,
+        "dc_error_LSB": -119.0,
+        "ambiguous_decisions": 0,
+        "filter_gain": 16777216,
+        "filter_group_delay_input_samples": 382.5
+      },
+      "checks": [
+        {
+          "name": "Actual bitstream matches RTL, gates, CMOS and independent FIR",
+          "pass": true,
+          "observed": 2060
+        },
+        {
+          "name": "No ambiguous sampled bitstream levels",
+          "pass": true,
+          "observed": 0
+        },
+        {
+          "name": "Three or more settled output frames",
+          "pass": true,
+          "observed": 6
+        },
+        {
+          "name": "DC nominal error within 32 output LSB (functional reference, not 16-bit accuracy)",
+          "pass": false,
+          "observed": -119.0
+        }
+      ]
+    },
+    {
+      "name": "sigma_delta16-tt-strong-ref-mid",
+      "project_id": "511281ee718545f2b646ed2bb5f92d1f",
+      "run_id": "2d5e29bf9fd4497299269b9159347d2f",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 588322,
+        "display_sample_count": 6473,
+        "start_s": 0.0,
+        "end_s": 0.00206,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 3.368161592264981e-05,
+            "average_power_W": 0.016350298991577576,
+            "minimum_current_A": 0.009046382952217158,
+            "peak_current_A": 0.00928304849493955,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 16,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "architecture": "second-order-CT-MOS-CIC3",
+        "modulator_clock_Hz": 1000000.0,
+        "decimation": 256,
+        "sample_rate_Hz": 3906.25,
+        "lsb_V": 2.74658203125e-05,
+        "frames": 6,
+        "mean_code": 32778.666666666664,
+        "dc_error_LSB": 10.666666666664241,
+        "ambiguous_decisions": 0,
+        "filter_gain": 16777216,
+        "filter_group_delay_input_samples": 382.5
+      },
+      "checks": [
+        {
+          "name": "Actual bitstream matches RTL, gates, CMOS and independent FIR",
+          "pass": true,
+          "observed": 2060
+        },
+        {
+          "name": "No ambiguous sampled bitstream levels",
+          "pass": true,
+          "observed": 0
+        },
+        {
+          "name": "Three or more settled output frames",
+          "pass": true,
+          "observed": 6
+        },
+        {
+          "name": "DC nominal error within 32 output LSB (functional reference, not 16-bit accuracy)",
+          "pass": true,
+          "observed": 10.666666666664241
+        }
+      ]
+    },
+    {
+      "name": "sigma_delta16-tt-strong-ref-high",
+      "project_id": "1cec7c13eb6f40f09645c76af12c70a3",
+      "run_id": "ce9b45fb8c694d17ba29111f37be4026",
+      "execution_status": "completed",
+      "analysis_result": "fail",
+      "measurements": {
+        "raw_sample_count": 466080,
+        "display_sample_count": 6445,
+        "start_s": 0.0,
+        "end_s": 0.00206,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 3.366188198161093e-05,
+            "average_power_W": 0.016340719408548993,
+            "minimum_current_A": 0.00904512438510352,
+            "peak_current_A": 0.00928473752346548,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 16,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "architecture": "second-order-CT-MOS-CIC3",
+        "modulator_clock_Hz": 1000000.0,
+        "decimation": 256,
+        "sample_rate_Hz": 3906.25,
+        "lsb_V": 2.74658203125e-05,
+        "frames": 6,
+        "mean_code": 54713.0,
+        "dc_error_LSB": 99.66666666667152,
+        "ambiguous_decisions": 0,
+        "filter_gain": 16777216,
+        "filter_group_delay_input_samples": 382.5
+      },
+      "checks": [
+        {
+          "name": "Actual bitstream matches RTL, gates, CMOS and independent FIR",
+          "pass": true,
+          "observed": 2060
+        },
+        {
+          "name": "No ambiguous sampled bitstream levels",
+          "pass": true,
+          "observed": 0
+        },
+        {
+          "name": "Three or more settled output frames",
+          "pass": true,
+          "observed": 6
+        },
+        {
+          "name": "DC nominal error within 32 output LSB (functional reference, not 16-bit accuracy)",
+          "pass": false,
+          "observed": 99.66666666667152
+        }
+      ]
+    },
+    {
+      "name": "sigma_delta16-tt-strong-ref-quarter",
+      "project_id": "334fdf37f38f43f2a2fc790a9f1c057c",
+      "run_id": "706e6a31a72a476fbe02680a73eddac7",
+      "execution_status": "completed",
+      "analysis_result": "fail",
+      "measurements": {
+        "raw_sample_count": 574912,
+        "display_sample_count": 6501,
+        "start_s": 0.0,
+        "end_s": 0.00206,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 3.366952324938082e-05,
+            "average_power_W": 0.01634442876183535,
+            "minimum_current_A": 0.009014379446391274,
+            "peak_current_A": 0.009251475774178175,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 16,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "architecture": "second-order-CT-MOS-CIC3",
+        "modulator_clock_Hz": 1000000.0,
+        "decimation": 256,
+        "sample_rate_Hz": 3906.25,
+        "lsb_V": 2.74658203125e-05,
+        "frames": 6,
+        "mean_code": 21792.0,
+        "dc_error_LSB": -53.33333333333212,
+        "ambiguous_decisions": 0,
+        "filter_gain": 16777216,
+        "filter_group_delay_input_samples": 382.5
+      },
+      "checks": [
+        {
+          "name": "Actual bitstream matches RTL, gates, CMOS and independent FIR",
+          "pass": true,
+          "observed": 2060
+        },
+        {
+          "name": "No ambiguous sampled bitstream levels",
+          "pass": true,
+          "observed": 0
+        },
+        {
+          "name": "Three or more settled output frames",
+          "pass": true,
+          "observed": 6
+        },
+        {
+          "name": "DC nominal error within 32 output LSB (functional reference, not 16-bit accuracy)",
+          "pass": false,
+          "observed": -53.33333333333212
+        }
+      ]
+    },
+    {
+      "name": "sigma_delta16-tt-strong-ref-three-quarter",
+      "project_id": "2ae6b96468404d2f879ff4e27ddb0d7f",
+      "run_id": "387839607bd445d4bd8c288125f02160",
+      "execution_status": "completed",
+      "analysis_result": "fail",
+      "measurements": {
+        "raw_sample_count": 561685,
+        "display_sample_count": 6767,
+        "start_s": 0.0,
+        "end_s": 0.00206,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 3.3682116770553656e-05,
+            "average_power_W": 0.016350542121627988,
+            "minimum_current_A": 0.009045620194982007,
+            "peak_current_A": 0.0092978278668987,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": 16,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "architecture": "second-order-CT-MOS-CIC3",
+        "modulator_clock_Hz": 1000000.0,
+        "decimation": 256,
+        "sample_rate_Hz": 3906.25,
+        "lsb_V": 2.74658203125e-05,
+        "frames": 6,
+        "mean_code": 43763.5,
+        "dc_error_LSB": 72.83333333333576,
+        "ambiguous_decisions": 0,
+        "filter_gain": 16777216,
+        "filter_group_delay_input_samples": 382.5
+      },
+      "checks": [
+        {
+          "name": "Actual bitstream matches RTL, gates, CMOS and independent FIR",
+          "pass": true,
+          "observed": 2060
+        },
+        {
+          "name": "No ambiguous sampled bitstream levels",
+          "pass": true,
+          "observed": 0
+        },
+        {
+          "name": "Three or more settled output frames",
+          "pass": true,
+          "observed": 6
+        },
+        {
+          "name": "DC nominal error within 32 output LSB (functional reference, not 16-bit accuracy)",
+          "pass": false,
+          "observed": 72.83333333333576
+        }
+      ]
+    },
+    {
+      "name": "adc16_reference-tt-standalone-v1",
+      "project_id": "bb5e06fe0ff548deb8b7ce656e0a4ee9",
+      "run_id": "f9094813062048a7bbe28f6357040335",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10008,
+        "display_sample_count": 2505,
+        "start_s": 0.0,
+        "end_s": 2e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "2": {
+            "energy_J": 3.238382427975489e-07,
+            "average_power_W": 0.016191912139877446,
+            "minimum_current_A": 0.008995506744376769,
+            "peak_current_A": 0.008995506744376769,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "VCM",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Loaded resistor reference near 0.9V",
+          "pass": true,
+          "observed": 0.8995497748878937
+        }
+      ]
+    },
+    {
+      "name": "adc16_bias-tt-standalone-v1",
+      "project_id": "336a699e7ef8451988c0a25b724179ee",
+      "run_id": "acce2f6559ff44e884bfc7abf0880afd",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10008,
+        "display_sample_count": 4504,
+        "start_s": 0.0,
+        "end_s": 2e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "2": {
+            "energy_J": 1.9330051146941578e-10,
+            "average_power_W": 9.665025573470789e-06,
+            "minimum_current_A": 5.3694586519270615e-06,
+            "peak_current_A": 5.3694586519270615e-06,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "BIAS",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Diode-connected MOS establishes a finite bias",
+          "pass": true,
+          "observed": 0.7261077328820693
+        }
+      ]
+    },
+    {
+      "name": "adc16_ota-tt-standalone-v1",
+      "project_id": "cc824577559d477ea9d8bfd5286cf606",
+      "run_id": "e266bec055e24736b59c11c8c22ca466",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10014,
+        "display_sample_count": 2624,
+        "start_s": 0.0,
+        "end_s": 1.9999999999999998e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "3": {
+            "energy_J": 1.7778130483800096e-09,
+            "average_power_W": 8.889065241900048e-05,
+            "minimum_current_A": 4.912936159229275e-05,
+            "peak_current_A": 5.0250034185239656e-05,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "ota",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Actual OTA tracks unity-feedback input (functional 20mV bound)",
+          "pass": true,
+          "observed": -0.0022189151401477147
+        }
+      ]
+    },
+    {
+      "name": "adc16_comparator-tt-standalone-v1",
+      "project_id": "31f8ceb00b7d4045958b50db352e0806",
+      "run_id": "156c2763550f422ca22f4b92120e2f87",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10008,
+        "display_sample_count": 3269,
+        "start_s": 0.0,
+        "end_s": 2e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "4": {
+            "energy_J": 2.3634370499073743e-10,
+            "average_power_W": 1.181718524953687e-05,
+            "minimum_current_A": 6.565102903977049e-06,
+            "peak_current_A": 6.565102918187904e-06,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "static",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Positive differential input produces a CMOS HIGH",
+          "pass": true,
+          "observed": 1.7999977404665808
+        }
+      ]
+    },
+    {
+      "name": "sar16_switch-tt-standalone-v1",
+      "project_id": "d8ef1f0a64f645ccbb691229a63d00bc",
+      "run_id": "1e4f151b74664988b6554338487f92ca",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10103,
+        "display_sample_count": 2755,
+        "start_s": 0.0,
+        "end_s": 1.9999999999999998e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "3": {
+            "energy_J": 1.251245753650817e-16,
+            "average_power_W": 6.2562287682540864e-12,
+            "minimum_current_A": -1.5772755475040867e-06,
+            "peak_current_A": 1.1855468144972292e-06,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "switch",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Enabled real TG passes the external voltage",
+          "pass": true,
+          "observed": -3.054974523353238e-08
+        }
+      ]
+    },
+    {
+      "name": "sar16_unit_cap-tt-standalone-v1",
+      "project_id": "fb127229d3ea4975b3047942390d9784",
+      "run_id": "1e02d0d749714250aa7bb542fc08681b",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10049,
+        "display_sample_count": 1832,
+        "start_s": 0.0,
+        "end_s": 1.9999999999999998e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "3": {
+            "energy_J": 0.0,
+            "average_power_W": 0.0,
+            "minimum_current_A": -0.0,
+            "peak_current_A": -0.0,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "capacitor",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Real capacitor terminal settles to declared 0.6V step",
+          "pass": true,
+          "observed": 0.6000000000000002
+        }
+      ]
+    },
+    {
+      "name": "sar16_bridge-tt-standalone-v1",
+      "project_id": "3b14d446b31245d8b650a46a3e595639",
+      "run_id": "887dd0df75e04a84ae263e1be799e2f7",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10051,
+        "display_sample_count": 1833,
+        "start_s": 0.0,
+        "end_s": 1.9999999999999998e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "3": {
+            "energy_J": 0.0,
+            "average_power_W": 0.0,
+            "minimum_current_A": -0.0,
+            "peak_current_A": -0.0,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "capacitor",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Real capacitor terminal settles to declared 0.6V step",
+          "pass": true,
+          "observed": 0.6000000000000003
+        }
+      ]
+    },
+    {
+      "name": "sar16_cdac-tt-standalone-v1",
+      "project_id": "89c3cd5f21cf42ef98cb1699c0a3b9dc",
+      "run_id": "d49da3ba600749f8be51dcc934006cb5",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10301,
+        "display_sample_count": 2939,
+        "start_s": 0.0,
+        "end_s": 1.9999999999999998e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "5": {
+            "energy_J": 7.044571448415778e-13,
+            "average_power_W": 3.5222857242078894e-08,
+            "minimum_current_A": -2.6824798407432127e-05,
+            "peak_current_A": 0.000458663409695248,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "cdac",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Actual MSB CDAC differential step is nominal 1.2V",
+          "pass": true,
+          "observed": 1.199766380605995
+        }
+      ]
+    },
+    {
+      "name": "sar16_comparator-tt-standalone-v1",
+      "project_id": "5dcbd87dba794bc1b1cd4da368cedec3",
+      "run_id": "b2a0e97f94054d5d80aa31f07523840f",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10134,
+        "display_sample_count": 3242,
+        "start_s": 0.0,
+        "end_s": 1.9999999999999998e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "5": {
+            "energy_J": 1.1354617840190845e-09,
+            "average_power_W": 5.677308920095423e-05,
+            "minimum_current_A": -7.85247507124609e-05,
+            "peak_current_A": 0.0003676980354079262,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "dynamic",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Positive 100uV differential resolves dynamic comparator",
+          "pass": true,
+          "observed": 1.7999968332421423
+        }
+      ]
+    },
+    {
+      "name": "sar16_controller-tt-standalone-v1",
+      "project_id": "dbf1929def8f48009351cc3ca29c0722",
+      "run_id": "8710ac4e0bc040a3be3b3167a6cc2848",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "cycle",
+        "x_label": "digital cycle",
+        "output_bits": 16,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "frames": 265,
+        "architecture": "digital-block"
+      },
+      "checks": [
+        {
+          "name": "Actual RTL, synthesized gates, CMOS graph and independent digital oracle agree",
+          "pass": true,
+          "observed": 265
+        }
+      ]
+    },
+    {
+      "name": "sdm16_integrator-tt-standalone-v1",
+      "project_id": "db1404ac292d49ed8f69f3da2317beb4",
+      "run_id": "a0f6ae30d8064e4fa5ef446dfb4d16ef",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10045,
+        "display_sample_count": 1689,
+        "start_s": 0.0,
+        "end_s": 1.9999999999999998e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "4": {
+            "energy_J": 1.6153291433395636e-09,
+            "average_power_W": 8.076645716697819e-05,
+            "minimum_current_A": 9.216139183365613e-06,
+            "peak_current_A": 4.928017821725916e-05,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "integrator",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Real second integrator has the expected negative ramp direction",
+          "pass": true,
+          "observed": -0.08113372591033585
+        }
+      ]
+    },
+    {
+      "name": "sdm16_filter-tt-standalone-v1",
+      "project_id": "199d1cd1c9d141c0bbb90e669b36c2d5",
+      "run_id": "a89d3e5779554226ad8aaec7b0e73f24",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "cycle",
+        "x_label": "digital cycle",
+        "output_bits": 16,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "frames": 28,
+        "architecture": "digital-block"
+      },
+      "checks": [
+        {
+          "name": "Actual RTL, synthesized gates, CMOS graph and independent digital oracle agree",
+          "pass": true,
+          "observed": 28
+        }
+      ]
+    },
+    {
+      "name": "pipeline16_subadc-tt-standalone-v1",
+      "project_id": "107d350fd9f548c68796232375ad72d1",
+      "run_id": "b726d0861e074e65a5b217309f94a80a",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10008,
+        "display_sample_count": 3199,
+        "start_s": 0.0,
+        "end_s": 2e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "5": {
+            "energy_J": 4.304037167640131e-10,
+            "average_power_W": 2.1520185838200654e-05,
+            "minimum_current_A": 1.1955658777651479e-05,
+            "peak_current_A": 1.1955658813178616e-05,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "pipeline16_subadc",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "SubADC within \u00b1VREF/4 produces thermometer 01",
+          "pass": true,
+          "observed": [
+            1.7999987776613349,
+            3.2710148581719875e-10
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pipeline16_mdac-tt-standalone-v1",
+      "project_id": "1a6714bfa51545408397581f2d5c84a0",
+      "run_id": "fc98b076e5c74be9b6ddc9082f4b0b27",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10333,
+        "display_sample_count": 2132,
+        "start_s": 0.0,
+        "end_s": 2e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "3": {
+            "energy_J": 1.1495206731365285e-09,
+            "average_power_W": 5.747603365682642e-05,
+            "minimum_current_A": -6.68202393363515e-05,
+            "peak_current_A": 8.108313210897222e-05,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "pipeline16_mdac",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Real SC half-MDAC produces nominal gain 2 (functional 50mV bound)",
+          "pass": true,
+          "observed": 1.0157248755170079
+        }
+      ]
+    },
+    {
+      "name": "pipeline16_stage-tt-standalone-v1",
+      "project_id": "d351e92ee2514542b1c4d37bbc6ab59f",
+      "run_id": "6129249bb19e4bc8b7c694de2d825709",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10701,
+        "display_sample_count": 1708,
+        "start_s": 0.0,
+        "end_s": 1.9999999999999998e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "7": {
+            "energy_J": 2.6484416892539673e-09,
+            "average_power_W": 0.00013242208446269838,
+            "minimum_current_A": -9.689993535744179e-05,
+            "peak_current_A": 0.00023157638913673395,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "pipeline16_stage",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Real differential stage gain approximately 2 (functional 50mV bound)",
+          "pass": true,
+          "observed": 0.29987854045952234
+        }
+      ]
+    },
+    {
+      "name": "pipeline16_flash-tt-standalone-v1",
+      "project_id": "57dac2ddfa5c4a8089832c57cee3c4c2",
+      "run_id": "2b03d7f434f94953a9490f13a1a0e361",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "raw_sample_count": 10251,
+        "display_sample_count": 2954,
+        "start_s": 0.0,
+        "end_s": 1.9999999999999998e-05,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "6": {
+            "energy_J": 5.906783772918263e-10,
+            "average_power_W": 2.9533918864591318e-05,
+            "minimum_current_A": -1.0471889737573292e-06,
+            "peak_current_A": 0.00022241681425327897,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "pipeline16_flash",
+        "frames": null
+      },
+      "checks": [
+        {
+          "name": "Final flash captures thermometer 011",
+          "pass": true,
+          "observed": [
+            1.7999984670068931,
+            1.7999984670068931,
+            5.402129734720908e-09
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pipeline16_align-tt-standalone-v1",
+      "project_id": "a3bf7dd75f2544db854c093a58d7fe9c",
+      "run_id": "89900816f4a74fd8b44a3c39c12dda91",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "cycle",
+        "x_label": "digital cycle",
+        "output_bits": 16,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "frames": 256,
+        "architecture": "digital-block"
+      },
+      "checks": [
+        {
+          "name": "Actual RTL, synthesized gates, CMOS graph and independent digital oracle agree",
+          "pass": true,
+          "observed": 256
+        }
+      ]
+    }
+  ],
+  "scope": "Native MOS measurements and separate digital replays. Output bits are not measured silicon ENOB."
+}

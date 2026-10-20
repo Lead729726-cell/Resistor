@@ -1,0 +1,60 @@
+{
+  "id": "b726d0861e074e65a5b217309f94a80a",
+  "project_id": "107d350fd9f548c68796232375ad72d1",
+  "revision": 1,
+  "artifacts": {
+    "analog_netlist": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline16_subadc-tt-standalone-v1/analog.spice",
+    "testbench": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline16_subadc-tt-standalone-v1/testbench.spice",
+    "waveform_data": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline16_subadc-tt-standalone-v1/waveform.dat",
+    "adc16_verification": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline16_subadc-tt-standalone-v1/adc16-verification.json"
+  },
+  "measurements": {
+    "raw_sample_count": 10008,
+    "display_sample_count": 3199,
+    "start_s": 0.0,
+    "end_s": 2e-05,
+    "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+    "source_energy": {
+      "5": {
+        "energy_J": 4.304037167640131e-10,
+        "average_power_W": 2.1520185838200654e-05,
+        "minimum_current_A": 1.1955658777651479e-05,
+        "peak_current_A": 1.1955658813178616e-05,
+        "source_voltage_V": 1.8
+      }
+    },
+    "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+    "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "output_bits": null,
+    "ENOB_bits": null,
+    "ENOB_status": "not measured; output width is not effective resolution",
+    "block_context": "pipeline16_subadc",
+    "frames": null
+  },
+  "tool": "ngspice + Icarus Verilog",
+  "reference_verification": {
+    "checks": [
+      {
+        "name": "SubADC within \u00b1VREF/4 produces thermometer 01",
+        "pass": true,
+        "observed": [
+          1.7999987776613349,
+          3.2710148581719875e-10
+        ]
+      }
+    ],
+    "scope": "Standalone block with explicitly declared bias, load and clocks. Functional block criterion only; not a sixteen-bit ADC accuracy test. Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.",
+    "schema_version": 1,
+    "kind": "pipeline16_subadc",
+    "source": "actual-native-engine-artifacts",
+    "pass": true,
+    "output_bits": null
+  },
+  "analysis_result": "pass",
+  "message": "ADC16 actual native execution completed; accuracy criteria are reported independently.",
+  "execution_status": "completed",
+  "elapsed_s": 2.1496302730520256
+}

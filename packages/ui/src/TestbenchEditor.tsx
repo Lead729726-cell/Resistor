@@ -13,7 +13,7 @@ const fields = [
   { key: 'vbs_V', name: 'MOS Vbs bias', unit: 'V', factor: 1, min: -1.8, max: 0 },
 ] as const;
 export default function TestbenchEditor({ project, readOnly = false, onCommand, onSaved }: Props) {
-  const adc=project.design_template?.id==='sigma_delta8'||String(project.design_template?.id||'').startsWith('sdm8_');
+  const adc=/^(sigma_delta(?:8|16)|sdm(?:8|16)_|sar_adc(?:8|12|16)|sar(?:8|12|16)_|pipeline(?:_adc16|16_)|adc16_)/.test(String(project.design_template?.id||''));
   const visibleFields=fields.filter(f=>!adc||!['load_F','vds_V','vbs_V'].includes(f.key)).map(f=>adc&&f.key==='duration_s'?{...f,unit:'ms',factor:1e-3,min:.016,max:20}:adc&&f.key==='step_s'?{...f,unit:'ns',factor:1e-9,min:.001,max:125}:f);
   const [settings, setSettings] = useState<Settings>(project.testbench || {});
   const [corners, setCorners] = useState<string[]>(['tt']);

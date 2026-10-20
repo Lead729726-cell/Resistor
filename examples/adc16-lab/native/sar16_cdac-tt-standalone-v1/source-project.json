@@ -1,0 +1,4352 @@
+{
+  "id": "89c3cd5f21cf42ef98cb1699c0a3b9dc",
+  "revision": 1,
+  "cell": "sar16_cdac",
+  "schematic": {
+    "schema_version": 1,
+    "ports": [
+      "VINP",
+      "VINN",
+      "VREF",
+      "VCM",
+      "SAMPLE",
+      "TOPP",
+      "TOPN",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "B5",
+      "B6",
+      "B7",
+      "B8",
+      "B9",
+      "B10",
+      "B11",
+      "B12",
+      "B13",
+      "B14",
+      "B15",
+      "VPWR",
+      "VGND"
+    ],
+    "connectivity_mode": "explicit",
+    "devices": [
+      {
+        "id": "SAMPLE_INV",
+        "name": "SAMPLE_INV",
+        "kind": "block",
+        "cell_name": "INV",
+        "pins": {
+          "A": "SAMPLE",
+          "Y": "SAMPLEB",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 170
+      },
+      {
+        "id": "HIP",
+        "name": "HIP",
+        "kind": "block",
+        "cell_name": "SAR12_REFMUX",
+        "pins": {
+          "VIN": "VINP",
+          "REF": "VREF",
+          "SAMPLE": "SAMPLE",
+          "SAMPLEB": "SAMPLEB",
+          "OUT": "HIP",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 170
+      },
+      {
+        "id": "LOP",
+        "name": "LOP",
+        "kind": "block",
+        "cell_name": "SAR12_REFMUX",
+        "pins": {
+          "VIN": "VINP",
+          "REF": "VGND",
+          "SAMPLE": "SAMPLE",
+          "SAMPLEB": "SAMPLEB",
+          "OUT": "LOP",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 170
+      },
+      {
+        "id": "RESET_0P",
+        "name": "RESET_0P",
+        "kind": "block",
+        "cell_name": "SAR12_TG",
+        "pins": {
+          "A": "VCM",
+          "Y": "TOPP",
+          "EN": "SAMPLE",
+          "ENB": "SAMPLEB",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 170
+      },
+      {
+        "id": "BRIDGE_0P",
+        "name": "BRIDGE_0P",
+        "kind": "block",
+        "cell_name": "SAR16_BRIDGE",
+        "pins": {
+          "TOP": "TOPP",
+          "FINE": "BANK1P"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 420
+      },
+      {
+        "id": "P_BANK0_B0_SW",
+        "name": "P_BANK0_B0_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B12",
+          "OUT": "P_BANK0_B0",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 420
+      },
+      {
+        "id": "P_BANK0_B0_U0",
+        "name": "P_BANK0_B0_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B0"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 420
+      },
+      {
+        "id": "P_BANK0_B0_U1",
+        "name": "P_BANK0_B0_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B0"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 420
+      },
+      {
+        "id": "P_BANK0_B1_SW",
+        "name": "P_BANK0_B1_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B13",
+          "OUT": "P_BANK0_B1",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 670
+      },
+      {
+        "id": "P_BANK0_B1_U0",
+        "name": "P_BANK0_B1_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B1"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 670
+      },
+      {
+        "id": "P_BANK0_B1_U1",
+        "name": "P_BANK0_B1_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B1"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 670
+      },
+      {
+        "id": "P_BANK0_B1_U2",
+        "name": "P_BANK0_B1_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B1"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 670
+      },
+      {
+        "id": "P_BANK0_B1_U3",
+        "name": "P_BANK0_B1_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B1"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 920
+      },
+      {
+        "id": "P_BANK0_B2_SW",
+        "name": "P_BANK0_B2_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B14",
+          "OUT": "P_BANK0_B2",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 920
+      },
+      {
+        "id": "P_BANK0_B2_U0",
+        "name": "P_BANK0_B2_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 920
+      },
+      {
+        "id": "P_BANK0_B2_U1",
+        "name": "P_BANK0_B2_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 920
+      },
+      {
+        "id": "P_BANK0_B2_U2",
+        "name": "P_BANK0_B2_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 1170
+      },
+      {
+        "id": "P_BANK0_B2_U3",
+        "name": "P_BANK0_B2_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 1170
+      },
+      {
+        "id": "P_BANK0_B2_U4",
+        "name": "P_BANK0_B2_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 1170
+      },
+      {
+        "id": "P_BANK0_B2_U5",
+        "name": "P_BANK0_B2_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 1170
+      },
+      {
+        "id": "P_BANK0_B2_U6",
+        "name": "P_BANK0_B2_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 1420
+      },
+      {
+        "id": "P_BANK0_B2_U7",
+        "name": "P_BANK0_B2_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 1420
+      },
+      {
+        "id": "P_BANK0_B3_SW",
+        "name": "P_BANK0_B3_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B15",
+          "OUT": "P_BANK0_B3",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 1420
+      },
+      {
+        "id": "P_BANK0_B3_U0",
+        "name": "P_BANK0_B3_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 1420
+      },
+      {
+        "id": "P_BANK0_B3_U1",
+        "name": "P_BANK0_B3_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 1670
+      },
+      {
+        "id": "P_BANK0_B3_U2",
+        "name": "P_BANK0_B3_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 1670
+      },
+      {
+        "id": "P_BANK0_B3_U3",
+        "name": "P_BANK0_B3_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 1670
+      },
+      {
+        "id": "P_BANK0_B3_U4",
+        "name": "P_BANK0_B3_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 1670
+      },
+      {
+        "id": "P_BANK0_B3_U5",
+        "name": "P_BANK0_B3_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 1920
+      },
+      {
+        "id": "P_BANK0_B3_U6",
+        "name": "P_BANK0_B3_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 1920
+      },
+      {
+        "id": "P_BANK0_B3_U7",
+        "name": "P_BANK0_B3_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 1920
+      },
+      {
+        "id": "P_BANK0_B3_U8",
+        "name": "P_BANK0_B3_U8",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 1920
+      },
+      {
+        "id": "P_BANK0_B3_U9",
+        "name": "P_BANK0_B3_U9",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 2170
+      },
+      {
+        "id": "P_BANK0_B3_U10",
+        "name": "P_BANK0_B3_U10",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 2170
+      },
+      {
+        "id": "P_BANK0_B3_U11",
+        "name": "P_BANK0_B3_U11",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 2170
+      },
+      {
+        "id": "P_BANK0_B3_U12",
+        "name": "P_BANK0_B3_U12",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 2170
+      },
+      {
+        "id": "P_BANK0_B3_U13",
+        "name": "P_BANK0_B3_U13",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 2420
+      },
+      {
+        "id": "P_BANK0_B3_U14",
+        "name": "P_BANK0_B3_U14",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 2420
+      },
+      {
+        "id": "P_BANK0_B3_U15",
+        "name": "P_BANK0_B3_U15",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPP",
+          "BOTTOM": "P_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 2420
+      },
+      {
+        "id": "RESET_1P",
+        "name": "RESET_1P",
+        "kind": "block",
+        "cell_name": "SAR12_TG",
+        "pins": {
+          "A": "VCM",
+          "Y": "BANK1P",
+          "EN": "SAMPLE",
+          "ENB": "SAMPLEB",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 2420
+      },
+      {
+        "id": "BRIDGE_1P",
+        "name": "BRIDGE_1P",
+        "kind": "block",
+        "cell_name": "SAR16_BRIDGE",
+        "pins": {
+          "TOP": "BANK1P",
+          "FINE": "BANK2P"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 2670
+      },
+      {
+        "id": "P_BANK1_B0_SW",
+        "name": "P_BANK1_B0_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B8",
+          "OUT": "P_BANK1_B0",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 2670
+      },
+      {
+        "id": "P_BANK1_B0_U0",
+        "name": "P_BANK1_B0_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B0"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 2670
+      },
+      {
+        "id": "P_BANK1_B0_U1",
+        "name": "P_BANK1_B0_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B0"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 2670
+      },
+      {
+        "id": "P_BANK1_B1_SW",
+        "name": "P_BANK1_B1_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B9",
+          "OUT": "P_BANK1_B1",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 2920
+      },
+      {
+        "id": "P_BANK1_B1_U0",
+        "name": "P_BANK1_B1_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B1"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 2920
+      },
+      {
+        "id": "P_BANK1_B1_U1",
+        "name": "P_BANK1_B1_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B1"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 2920
+      },
+      {
+        "id": "P_BANK1_B1_U2",
+        "name": "P_BANK1_B1_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B1"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 2920
+      },
+      {
+        "id": "P_BANK1_B1_U3",
+        "name": "P_BANK1_B1_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B1"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 3170
+      },
+      {
+        "id": "P_BANK1_B2_SW",
+        "name": "P_BANK1_B2_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B10",
+          "OUT": "P_BANK1_B2",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 3170
+      },
+      {
+        "id": "P_BANK1_B2_U0",
+        "name": "P_BANK1_B2_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 3170
+      },
+      {
+        "id": "P_BANK1_B2_U1",
+        "name": "P_BANK1_B2_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 3170
+      },
+      {
+        "id": "P_BANK1_B2_U2",
+        "name": "P_BANK1_B2_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 3420
+      },
+      {
+        "id": "P_BANK1_B2_U3",
+        "name": "P_BANK1_B2_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 3420
+      },
+      {
+        "id": "P_BANK1_B2_U4",
+        "name": "P_BANK1_B2_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 3420
+      },
+      {
+        "id": "P_BANK1_B2_U5",
+        "name": "P_BANK1_B2_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 3420
+      },
+      {
+        "id": "P_BANK1_B2_U6",
+        "name": "P_BANK1_B2_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 3670
+      },
+      {
+        "id": "P_BANK1_B2_U7",
+        "name": "P_BANK1_B2_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 3670
+      },
+      {
+        "id": "P_BANK1_B3_SW",
+        "name": "P_BANK1_B3_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B11",
+          "OUT": "P_BANK1_B3",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 3670
+      },
+      {
+        "id": "P_BANK1_B3_U0",
+        "name": "P_BANK1_B3_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 3670
+      },
+      {
+        "id": "P_BANK1_B3_U1",
+        "name": "P_BANK1_B3_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 3920
+      },
+      {
+        "id": "P_BANK1_B3_U2",
+        "name": "P_BANK1_B3_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 3920
+      },
+      {
+        "id": "P_BANK1_B3_U3",
+        "name": "P_BANK1_B3_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 3920
+      },
+      {
+        "id": "P_BANK1_B3_U4",
+        "name": "P_BANK1_B3_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 3920
+      },
+      {
+        "id": "P_BANK1_B3_U5",
+        "name": "P_BANK1_B3_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 4170
+      },
+      {
+        "id": "P_BANK1_B3_U6",
+        "name": "P_BANK1_B3_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 4170
+      },
+      {
+        "id": "P_BANK1_B3_U7",
+        "name": "P_BANK1_B3_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 4170
+      },
+      {
+        "id": "P_BANK1_B3_U8",
+        "name": "P_BANK1_B3_U8",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 4170
+      },
+      {
+        "id": "P_BANK1_B3_U9",
+        "name": "P_BANK1_B3_U9",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 4420
+      },
+      {
+        "id": "P_BANK1_B3_U10",
+        "name": "P_BANK1_B3_U10",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 4420
+      },
+      {
+        "id": "P_BANK1_B3_U11",
+        "name": "P_BANK1_B3_U11",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 4420
+      },
+      {
+        "id": "P_BANK1_B3_U12",
+        "name": "P_BANK1_B3_U12",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 4420
+      },
+      {
+        "id": "P_BANK1_B3_U13",
+        "name": "P_BANK1_B3_U13",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 4670
+      },
+      {
+        "id": "P_BANK1_B3_U14",
+        "name": "P_BANK1_B3_U14",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 4670
+      },
+      {
+        "id": "P_BANK1_B3_U15",
+        "name": "P_BANK1_B3_U15",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1P",
+          "BOTTOM": "P_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 4670
+      },
+      {
+        "id": "RESET_2P",
+        "name": "RESET_2P",
+        "kind": "block",
+        "cell_name": "SAR12_TG",
+        "pins": {
+          "A": "VCM",
+          "Y": "BANK2P",
+          "EN": "SAMPLE",
+          "ENB": "SAMPLEB",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 4670
+      },
+      {
+        "id": "BRIDGE_2P",
+        "name": "BRIDGE_2P",
+        "kind": "block",
+        "cell_name": "SAR16_BRIDGE",
+        "pins": {
+          "TOP": "BANK2P",
+          "FINE": "BANK3P"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 4920
+      },
+      {
+        "id": "P_BANK2_B0_SW",
+        "name": "P_BANK2_B0_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B4",
+          "OUT": "P_BANK2_B0",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 4920
+      },
+      {
+        "id": "P_BANK2_B0_U0",
+        "name": "P_BANK2_B0_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B0"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 4920
+      },
+      {
+        "id": "P_BANK2_B0_U1",
+        "name": "P_BANK2_B0_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B0"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 4920
+      },
+      {
+        "id": "P_BANK2_B1_SW",
+        "name": "P_BANK2_B1_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B5",
+          "OUT": "P_BANK2_B1",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 5170
+      },
+      {
+        "id": "P_BANK2_B1_U0",
+        "name": "P_BANK2_B1_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B1"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 5170
+      },
+      {
+        "id": "P_BANK2_B1_U1",
+        "name": "P_BANK2_B1_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B1"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 5170
+      },
+      {
+        "id": "P_BANK2_B1_U2",
+        "name": "P_BANK2_B1_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B1"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 5170
+      },
+      {
+        "id": "P_BANK2_B1_U3",
+        "name": "P_BANK2_B1_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B1"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 5420
+      },
+      {
+        "id": "P_BANK2_B2_SW",
+        "name": "P_BANK2_B2_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B6",
+          "OUT": "P_BANK2_B2",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 5420
+      },
+      {
+        "id": "P_BANK2_B2_U0",
+        "name": "P_BANK2_B2_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 5420
+      },
+      {
+        "id": "P_BANK2_B2_U1",
+        "name": "P_BANK2_B2_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 5420
+      },
+      {
+        "id": "P_BANK2_B2_U2",
+        "name": "P_BANK2_B2_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 5670
+      },
+      {
+        "id": "P_BANK2_B2_U3",
+        "name": "P_BANK2_B2_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 5670
+      },
+      {
+        "id": "P_BANK2_B2_U4",
+        "name": "P_BANK2_B2_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 5670
+      },
+      {
+        "id": "P_BANK2_B2_U5",
+        "name": "P_BANK2_B2_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 5670
+      },
+      {
+        "id": "P_BANK2_B2_U6",
+        "name": "P_BANK2_B2_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 5920
+      },
+      {
+        "id": "P_BANK2_B2_U7",
+        "name": "P_BANK2_B2_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 5920
+      },
+      {
+        "id": "P_BANK2_B3_SW",
+        "name": "P_BANK2_B3_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B7",
+          "OUT": "P_BANK2_B3",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 5920
+      },
+      {
+        "id": "P_BANK2_B3_U0",
+        "name": "P_BANK2_B3_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 5920
+      },
+      {
+        "id": "P_BANK2_B3_U1",
+        "name": "P_BANK2_B3_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 6170
+      },
+      {
+        "id": "P_BANK2_B3_U2",
+        "name": "P_BANK2_B3_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 6170
+      },
+      {
+        "id": "P_BANK2_B3_U3",
+        "name": "P_BANK2_B3_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 6170
+      },
+      {
+        "id": "P_BANK2_B3_U4",
+        "name": "P_BANK2_B3_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 6170
+      },
+      {
+        "id": "P_BANK2_B3_U5",
+        "name": "P_BANK2_B3_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 6420
+      },
+      {
+        "id": "P_BANK2_B3_U6",
+        "name": "P_BANK2_B3_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 6420
+      },
+      {
+        "id": "P_BANK2_B3_U7",
+        "name": "P_BANK2_B3_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 6420
+      },
+      {
+        "id": "P_BANK2_B3_U8",
+        "name": "P_BANK2_B3_U8",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 6420
+      },
+      {
+        "id": "P_BANK2_B3_U9",
+        "name": "P_BANK2_B3_U9",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 6670
+      },
+      {
+        "id": "P_BANK2_B3_U10",
+        "name": "P_BANK2_B3_U10",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 6670
+      },
+      {
+        "id": "P_BANK2_B3_U11",
+        "name": "P_BANK2_B3_U11",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 6670
+      },
+      {
+        "id": "P_BANK2_B3_U12",
+        "name": "P_BANK2_B3_U12",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 6670
+      },
+      {
+        "id": "P_BANK2_B3_U13",
+        "name": "P_BANK2_B3_U13",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 6920
+      },
+      {
+        "id": "P_BANK2_B3_U14",
+        "name": "P_BANK2_B3_U14",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 6920
+      },
+      {
+        "id": "P_BANK2_B3_U15",
+        "name": "P_BANK2_B3_U15",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2P",
+          "BOTTOM": "P_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 6920
+      },
+      {
+        "id": "RESET_3P",
+        "name": "RESET_3P",
+        "kind": "block",
+        "cell_name": "SAR12_TG",
+        "pins": {
+          "A": "VCM",
+          "Y": "BANK3P",
+          "EN": "SAMPLE",
+          "ENB": "SAMPLEB",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 6920
+      },
+      {
+        "id": "P_BANK3_B0_SW",
+        "name": "P_BANK3_B0_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B0",
+          "OUT": "P_BANK3_B0",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 7170
+      },
+      {
+        "id": "P_BANK3_B0_U0",
+        "name": "P_BANK3_B0_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B0"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 7170
+      },
+      {
+        "id": "P_BANK3_B0_U1",
+        "name": "P_BANK3_B0_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B0"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 7170
+      },
+      {
+        "id": "P_BANK3_B1_SW",
+        "name": "P_BANK3_B1_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B1",
+          "OUT": "P_BANK3_B1",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 7170
+      },
+      {
+        "id": "P_BANK3_B1_U0",
+        "name": "P_BANK3_B1_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B1"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 7420
+      },
+      {
+        "id": "P_BANK3_B1_U1",
+        "name": "P_BANK3_B1_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B1"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 7420
+      },
+      {
+        "id": "P_BANK3_B1_U2",
+        "name": "P_BANK3_B1_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B1"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 7420
+      },
+      {
+        "id": "P_BANK3_B1_U3",
+        "name": "P_BANK3_B1_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B1"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 7420
+      },
+      {
+        "id": "P_BANK3_B2_SW",
+        "name": "P_BANK3_B2_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B2",
+          "OUT": "P_BANK3_B2",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 7670
+      },
+      {
+        "id": "P_BANK3_B2_U0",
+        "name": "P_BANK3_B2_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 7670
+      },
+      {
+        "id": "P_BANK3_B2_U1",
+        "name": "P_BANK3_B2_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 7670
+      },
+      {
+        "id": "P_BANK3_B2_U2",
+        "name": "P_BANK3_B2_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 7670
+      },
+      {
+        "id": "P_BANK3_B2_U3",
+        "name": "P_BANK3_B2_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 7920
+      },
+      {
+        "id": "P_BANK3_B2_U4",
+        "name": "P_BANK3_B2_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 7920
+      },
+      {
+        "id": "P_BANK3_B2_U5",
+        "name": "P_BANK3_B2_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 7920
+      },
+      {
+        "id": "P_BANK3_B2_U6",
+        "name": "P_BANK3_B2_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 7920
+      },
+      {
+        "id": "P_BANK3_B2_U7",
+        "name": "P_BANK3_B2_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 8170
+      },
+      {
+        "id": "P_BANK3_B3_SW",
+        "name": "P_BANK3_B3_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "HIP",
+          "LO": "LOP",
+          "BIT": "B3",
+          "OUT": "P_BANK3_B3",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 8170
+      },
+      {
+        "id": "P_BANK3_B3_U0",
+        "name": "P_BANK3_B3_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 8170
+      },
+      {
+        "id": "P_BANK3_B3_U1",
+        "name": "P_BANK3_B3_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 8170
+      },
+      {
+        "id": "P_BANK3_B3_U2",
+        "name": "P_BANK3_B3_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 8420
+      },
+      {
+        "id": "P_BANK3_B3_U3",
+        "name": "P_BANK3_B3_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 8420
+      },
+      {
+        "id": "P_BANK3_B3_U4",
+        "name": "P_BANK3_B3_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 8420
+      },
+      {
+        "id": "P_BANK3_B3_U5",
+        "name": "P_BANK3_B3_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 8420
+      },
+      {
+        "id": "P_BANK3_B3_U6",
+        "name": "P_BANK3_B3_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 8670
+      },
+      {
+        "id": "P_BANK3_B3_U7",
+        "name": "P_BANK3_B3_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 8670
+      },
+      {
+        "id": "P_BANK3_B3_U8",
+        "name": "P_BANK3_B3_U8",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 8670
+      },
+      {
+        "id": "P_BANK3_B3_U9",
+        "name": "P_BANK3_B3_U9",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 8670
+      },
+      {
+        "id": "P_BANK3_B3_U10",
+        "name": "P_BANK3_B3_U10",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 8920
+      },
+      {
+        "id": "P_BANK3_B3_U11",
+        "name": "P_BANK3_B3_U11",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 8920
+      },
+      {
+        "id": "P_BANK3_B3_U12",
+        "name": "P_BANK3_B3_U12",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 8920
+      },
+      {
+        "id": "P_BANK3_B3_U13",
+        "name": "P_BANK3_B3_U13",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 8920
+      },
+      {
+        "id": "P_BANK3_B3_U14",
+        "name": "P_BANK3_B3_U14",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 9170
+      },
+      {
+        "id": "P_BANK3_B3_U15",
+        "name": "P_BANK3_B3_U15",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "P_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 9170
+      },
+      {
+        "id": "P_BANK3_DUMMY_U0",
+        "name": "P_BANK3_DUMMY_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "LOP"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 9170
+      },
+      {
+        "id": "P_BANK3_DUMMY_U1",
+        "name": "P_BANK3_DUMMY_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3P",
+          "BOTTOM": "LOP"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 9170
+      },
+      {
+        "id": "HIN",
+        "name": "HIN",
+        "kind": "block",
+        "cell_name": "SAR12_REFMUX",
+        "pins": {
+          "VIN": "VINN",
+          "REF": "VREF",
+          "SAMPLE": "SAMPLE",
+          "SAMPLEB": "SAMPLEB",
+          "OUT": "HIN",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 9420
+      },
+      {
+        "id": "LON",
+        "name": "LON",
+        "kind": "block",
+        "cell_name": "SAR12_REFMUX",
+        "pins": {
+          "VIN": "VINN",
+          "REF": "VGND",
+          "SAMPLE": "SAMPLE",
+          "SAMPLEB": "SAMPLEB",
+          "OUT": "LON",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 9420
+      },
+      {
+        "id": "RESET_0N",
+        "name": "RESET_0N",
+        "kind": "block",
+        "cell_name": "SAR12_TG",
+        "pins": {
+          "A": "VCM",
+          "Y": "TOPN",
+          "EN": "SAMPLE",
+          "ENB": "SAMPLEB",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 9420
+      },
+      {
+        "id": "BRIDGE_0N",
+        "name": "BRIDGE_0N",
+        "kind": "block",
+        "cell_name": "SAR16_BRIDGE",
+        "pins": {
+          "TOP": "TOPN",
+          "FINE": "BANK1N"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 9420
+      },
+      {
+        "id": "N_BANK0_B0_SW",
+        "name": "N_BANK0_B0_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B12",
+          "OUT": "N_BANK0_B0",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 9670
+      },
+      {
+        "id": "N_BANK0_B0_U0",
+        "name": "N_BANK0_B0_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B0"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 9670
+      },
+      {
+        "id": "N_BANK0_B0_U1",
+        "name": "N_BANK0_B0_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B0"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 9670
+      },
+      {
+        "id": "N_BANK0_B1_SW",
+        "name": "N_BANK0_B1_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B13",
+          "OUT": "N_BANK0_B1",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 9670
+      },
+      {
+        "id": "N_BANK0_B1_U0",
+        "name": "N_BANK0_B1_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B1"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 9920
+      },
+      {
+        "id": "N_BANK0_B1_U1",
+        "name": "N_BANK0_B1_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B1"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 9920
+      },
+      {
+        "id": "N_BANK0_B1_U2",
+        "name": "N_BANK0_B1_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B1"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 9920
+      },
+      {
+        "id": "N_BANK0_B1_U3",
+        "name": "N_BANK0_B1_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B1"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 9920
+      },
+      {
+        "id": "N_BANK0_B2_SW",
+        "name": "N_BANK0_B2_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B14",
+          "OUT": "N_BANK0_B2",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 10170
+      },
+      {
+        "id": "N_BANK0_B2_U0",
+        "name": "N_BANK0_B2_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 10170
+      },
+      {
+        "id": "N_BANK0_B2_U1",
+        "name": "N_BANK0_B2_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 10170
+      },
+      {
+        "id": "N_BANK0_B2_U2",
+        "name": "N_BANK0_B2_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 10170
+      },
+      {
+        "id": "N_BANK0_B2_U3",
+        "name": "N_BANK0_B2_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 10420
+      },
+      {
+        "id": "N_BANK0_B2_U4",
+        "name": "N_BANK0_B2_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 10420
+      },
+      {
+        "id": "N_BANK0_B2_U5",
+        "name": "N_BANK0_B2_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 10420
+      },
+      {
+        "id": "N_BANK0_B2_U6",
+        "name": "N_BANK0_B2_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 10420
+      },
+      {
+        "id": "N_BANK0_B2_U7",
+        "name": "N_BANK0_B2_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 10670
+      },
+      {
+        "id": "N_BANK0_B3_SW",
+        "name": "N_BANK0_B3_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B15",
+          "OUT": "N_BANK0_B3",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 10670
+      },
+      {
+        "id": "N_BANK0_B3_U0",
+        "name": "N_BANK0_B3_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 10670
+      },
+      {
+        "id": "N_BANK0_B3_U1",
+        "name": "N_BANK0_B3_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 10670
+      },
+      {
+        "id": "N_BANK0_B3_U2",
+        "name": "N_BANK0_B3_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 10920
+      },
+      {
+        "id": "N_BANK0_B3_U3",
+        "name": "N_BANK0_B3_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 10920
+      },
+      {
+        "id": "N_BANK0_B3_U4",
+        "name": "N_BANK0_B3_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 10920
+      },
+      {
+        "id": "N_BANK0_B3_U5",
+        "name": "N_BANK0_B3_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 10920
+      },
+      {
+        "id": "N_BANK0_B3_U6",
+        "name": "N_BANK0_B3_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 11170
+      },
+      {
+        "id": "N_BANK0_B3_U7",
+        "name": "N_BANK0_B3_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 11170
+      },
+      {
+        "id": "N_BANK0_B3_U8",
+        "name": "N_BANK0_B3_U8",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 11170
+      },
+      {
+        "id": "N_BANK0_B3_U9",
+        "name": "N_BANK0_B3_U9",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 11170
+      },
+      {
+        "id": "N_BANK0_B3_U10",
+        "name": "N_BANK0_B3_U10",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 11420
+      },
+      {
+        "id": "N_BANK0_B3_U11",
+        "name": "N_BANK0_B3_U11",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 11420
+      },
+      {
+        "id": "N_BANK0_B3_U12",
+        "name": "N_BANK0_B3_U12",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 11420
+      },
+      {
+        "id": "N_BANK0_B3_U13",
+        "name": "N_BANK0_B3_U13",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 11420
+      },
+      {
+        "id": "N_BANK0_B3_U14",
+        "name": "N_BANK0_B3_U14",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 11670
+      },
+      {
+        "id": "N_BANK0_B3_U15",
+        "name": "N_BANK0_B3_U15",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "TOPN",
+          "BOTTOM": "N_BANK0_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 11670
+      },
+      {
+        "id": "RESET_1N",
+        "name": "RESET_1N",
+        "kind": "block",
+        "cell_name": "SAR12_TG",
+        "pins": {
+          "A": "VCM",
+          "Y": "BANK1N",
+          "EN": "SAMPLE",
+          "ENB": "SAMPLEB",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 11670
+      },
+      {
+        "id": "BRIDGE_1N",
+        "name": "BRIDGE_1N",
+        "kind": "block",
+        "cell_name": "SAR16_BRIDGE",
+        "pins": {
+          "TOP": "BANK1N",
+          "FINE": "BANK2N"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 11670
+      },
+      {
+        "id": "N_BANK1_B0_SW",
+        "name": "N_BANK1_B0_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B8",
+          "OUT": "N_BANK1_B0",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 11920
+      },
+      {
+        "id": "N_BANK1_B0_U0",
+        "name": "N_BANK1_B0_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B0"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 11920
+      },
+      {
+        "id": "N_BANK1_B0_U1",
+        "name": "N_BANK1_B0_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B0"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 11920
+      },
+      {
+        "id": "N_BANK1_B1_SW",
+        "name": "N_BANK1_B1_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B9",
+          "OUT": "N_BANK1_B1",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 11920
+      },
+      {
+        "id": "N_BANK1_B1_U0",
+        "name": "N_BANK1_B1_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B1"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 12170
+      },
+      {
+        "id": "N_BANK1_B1_U1",
+        "name": "N_BANK1_B1_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B1"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 12170
+      },
+      {
+        "id": "N_BANK1_B1_U2",
+        "name": "N_BANK1_B1_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B1"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 12170
+      },
+      {
+        "id": "N_BANK1_B1_U3",
+        "name": "N_BANK1_B1_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B1"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 12170
+      },
+      {
+        "id": "N_BANK1_B2_SW",
+        "name": "N_BANK1_B2_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B10",
+          "OUT": "N_BANK1_B2",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 12420
+      },
+      {
+        "id": "N_BANK1_B2_U0",
+        "name": "N_BANK1_B2_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 12420
+      },
+      {
+        "id": "N_BANK1_B2_U1",
+        "name": "N_BANK1_B2_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 12420
+      },
+      {
+        "id": "N_BANK1_B2_U2",
+        "name": "N_BANK1_B2_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 12420
+      },
+      {
+        "id": "N_BANK1_B2_U3",
+        "name": "N_BANK1_B2_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 12670
+      },
+      {
+        "id": "N_BANK1_B2_U4",
+        "name": "N_BANK1_B2_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 12670
+      },
+      {
+        "id": "N_BANK1_B2_U5",
+        "name": "N_BANK1_B2_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 12670
+      },
+      {
+        "id": "N_BANK1_B2_U6",
+        "name": "N_BANK1_B2_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 12670
+      },
+      {
+        "id": "N_BANK1_B2_U7",
+        "name": "N_BANK1_B2_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 12920
+      },
+      {
+        "id": "N_BANK1_B3_SW",
+        "name": "N_BANK1_B3_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B11",
+          "OUT": "N_BANK1_B3",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 12920
+      },
+      {
+        "id": "N_BANK1_B3_U0",
+        "name": "N_BANK1_B3_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 12920
+      },
+      {
+        "id": "N_BANK1_B3_U1",
+        "name": "N_BANK1_B3_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 12920
+      },
+      {
+        "id": "N_BANK1_B3_U2",
+        "name": "N_BANK1_B3_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 13170
+      },
+      {
+        "id": "N_BANK1_B3_U3",
+        "name": "N_BANK1_B3_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 13170
+      },
+      {
+        "id": "N_BANK1_B3_U4",
+        "name": "N_BANK1_B3_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 13170
+      },
+      {
+        "id": "N_BANK1_B3_U5",
+        "name": "N_BANK1_B3_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 13170
+      },
+      {
+        "id": "N_BANK1_B3_U6",
+        "name": "N_BANK1_B3_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 13420
+      },
+      {
+        "id": "N_BANK1_B3_U7",
+        "name": "N_BANK1_B3_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 13420
+      },
+      {
+        "id": "N_BANK1_B3_U8",
+        "name": "N_BANK1_B3_U8",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 13420
+      },
+      {
+        "id": "N_BANK1_B3_U9",
+        "name": "N_BANK1_B3_U9",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 13420
+      },
+      {
+        "id": "N_BANK1_B3_U10",
+        "name": "N_BANK1_B3_U10",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 13670
+      },
+      {
+        "id": "N_BANK1_B3_U11",
+        "name": "N_BANK1_B3_U11",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 13670
+      },
+      {
+        "id": "N_BANK1_B3_U12",
+        "name": "N_BANK1_B3_U12",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 13670
+      },
+      {
+        "id": "N_BANK1_B3_U13",
+        "name": "N_BANK1_B3_U13",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 13670
+      },
+      {
+        "id": "N_BANK1_B3_U14",
+        "name": "N_BANK1_B3_U14",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 13920
+      },
+      {
+        "id": "N_BANK1_B3_U15",
+        "name": "N_BANK1_B3_U15",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK1N",
+          "BOTTOM": "N_BANK1_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 13920
+      },
+      {
+        "id": "RESET_2N",
+        "name": "RESET_2N",
+        "kind": "block",
+        "cell_name": "SAR12_TG",
+        "pins": {
+          "A": "VCM",
+          "Y": "BANK2N",
+          "EN": "SAMPLE",
+          "ENB": "SAMPLEB",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 13920
+      },
+      {
+        "id": "BRIDGE_2N",
+        "name": "BRIDGE_2N",
+        "kind": "block",
+        "cell_name": "SAR16_BRIDGE",
+        "pins": {
+          "TOP": "BANK2N",
+          "FINE": "BANK3N"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 13920
+      },
+      {
+        "id": "N_BANK2_B0_SW",
+        "name": "N_BANK2_B0_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B4",
+          "OUT": "N_BANK2_B0",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 14170
+      },
+      {
+        "id": "N_BANK2_B0_U0",
+        "name": "N_BANK2_B0_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B0"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 14170
+      },
+      {
+        "id": "N_BANK2_B0_U1",
+        "name": "N_BANK2_B0_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B0"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 14170
+      },
+      {
+        "id": "N_BANK2_B1_SW",
+        "name": "N_BANK2_B1_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B5",
+          "OUT": "N_BANK2_B1",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 14170
+      },
+      {
+        "id": "N_BANK2_B1_U0",
+        "name": "N_BANK2_B1_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B1"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 14420
+      },
+      {
+        "id": "N_BANK2_B1_U1",
+        "name": "N_BANK2_B1_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B1"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 14420
+      },
+      {
+        "id": "N_BANK2_B1_U2",
+        "name": "N_BANK2_B1_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B1"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 14420
+      },
+      {
+        "id": "N_BANK2_B1_U3",
+        "name": "N_BANK2_B1_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B1"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 14420
+      },
+      {
+        "id": "N_BANK2_B2_SW",
+        "name": "N_BANK2_B2_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B6",
+          "OUT": "N_BANK2_B2",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 14670
+      },
+      {
+        "id": "N_BANK2_B2_U0",
+        "name": "N_BANK2_B2_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 14670
+      },
+      {
+        "id": "N_BANK2_B2_U1",
+        "name": "N_BANK2_B2_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 14670
+      },
+      {
+        "id": "N_BANK2_B2_U2",
+        "name": "N_BANK2_B2_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 14670
+      },
+      {
+        "id": "N_BANK2_B2_U3",
+        "name": "N_BANK2_B2_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 14920
+      },
+      {
+        "id": "N_BANK2_B2_U4",
+        "name": "N_BANK2_B2_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 14920
+      },
+      {
+        "id": "N_BANK2_B2_U5",
+        "name": "N_BANK2_B2_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 14920
+      },
+      {
+        "id": "N_BANK2_B2_U6",
+        "name": "N_BANK2_B2_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 14920
+      },
+      {
+        "id": "N_BANK2_B2_U7",
+        "name": "N_BANK2_B2_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 15170
+      },
+      {
+        "id": "N_BANK2_B3_SW",
+        "name": "N_BANK2_B3_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B7",
+          "OUT": "N_BANK2_B3",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 15170
+      },
+      {
+        "id": "N_BANK2_B3_U0",
+        "name": "N_BANK2_B3_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 15170
+      },
+      {
+        "id": "N_BANK2_B3_U1",
+        "name": "N_BANK2_B3_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 15170
+      },
+      {
+        "id": "N_BANK2_B3_U2",
+        "name": "N_BANK2_B3_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 15420
+      },
+      {
+        "id": "N_BANK2_B3_U3",
+        "name": "N_BANK2_B3_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 15420
+      },
+      {
+        "id": "N_BANK2_B3_U4",
+        "name": "N_BANK2_B3_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 15420
+      },
+      {
+        "id": "N_BANK2_B3_U5",
+        "name": "N_BANK2_B3_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 15420
+      },
+      {
+        "id": "N_BANK2_B3_U6",
+        "name": "N_BANK2_B3_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 15670
+      },
+      {
+        "id": "N_BANK2_B3_U7",
+        "name": "N_BANK2_B3_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 15670
+      },
+      {
+        "id": "N_BANK2_B3_U8",
+        "name": "N_BANK2_B3_U8",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 15670
+      },
+      {
+        "id": "N_BANK2_B3_U9",
+        "name": "N_BANK2_B3_U9",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 15670
+      },
+      {
+        "id": "N_BANK2_B3_U10",
+        "name": "N_BANK2_B3_U10",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 15920
+      },
+      {
+        "id": "N_BANK2_B3_U11",
+        "name": "N_BANK2_B3_U11",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 15920
+      },
+      {
+        "id": "N_BANK2_B3_U12",
+        "name": "N_BANK2_B3_U12",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 15920
+      },
+      {
+        "id": "N_BANK2_B3_U13",
+        "name": "N_BANK2_B3_U13",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 15920
+      },
+      {
+        "id": "N_BANK2_B3_U14",
+        "name": "N_BANK2_B3_U14",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 16170
+      },
+      {
+        "id": "N_BANK2_B3_U15",
+        "name": "N_BANK2_B3_U15",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK2N",
+          "BOTTOM": "N_BANK2_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 16170
+      },
+      {
+        "id": "RESET_3N",
+        "name": "RESET_3N",
+        "kind": "block",
+        "cell_name": "SAR12_TG",
+        "pins": {
+          "A": "VCM",
+          "Y": "BANK3N",
+          "EN": "SAMPLE",
+          "ENB": "SAMPLEB",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 16170
+      },
+      {
+        "id": "N_BANK3_B0_SW",
+        "name": "N_BANK3_B0_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B0",
+          "OUT": "N_BANK3_B0",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 16170
+      },
+      {
+        "id": "N_BANK3_B0_U0",
+        "name": "N_BANK3_B0_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B0"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 16420
+      },
+      {
+        "id": "N_BANK3_B0_U1",
+        "name": "N_BANK3_B0_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B0"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 16420
+      },
+      {
+        "id": "N_BANK3_B1_SW",
+        "name": "N_BANK3_B1_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B1",
+          "OUT": "N_BANK3_B1",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 16420
+      },
+      {
+        "id": "N_BANK3_B1_U0",
+        "name": "N_BANK3_B1_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B1"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 16420
+      },
+      {
+        "id": "N_BANK3_B1_U1",
+        "name": "N_BANK3_B1_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B1"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 16670
+      },
+      {
+        "id": "N_BANK3_B1_U2",
+        "name": "N_BANK3_B1_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B1"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 16670
+      },
+      {
+        "id": "N_BANK3_B1_U3",
+        "name": "N_BANK3_B1_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B1"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 16670
+      },
+      {
+        "id": "N_BANK3_B2_SW",
+        "name": "N_BANK3_B2_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B2",
+          "OUT": "N_BANK3_B2",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 16670
+      },
+      {
+        "id": "N_BANK3_B2_U0",
+        "name": "N_BANK3_B2_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 16920
+      },
+      {
+        "id": "N_BANK3_B2_U1",
+        "name": "N_BANK3_B2_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 16920
+      },
+      {
+        "id": "N_BANK3_B2_U2",
+        "name": "N_BANK3_B2_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 16920
+      },
+      {
+        "id": "N_BANK3_B2_U3",
+        "name": "N_BANK3_B2_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 16920
+      },
+      {
+        "id": "N_BANK3_B2_U4",
+        "name": "N_BANK3_B2_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 17170
+      },
+      {
+        "id": "N_BANK3_B2_U5",
+        "name": "N_BANK3_B2_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 17170
+      },
+      {
+        "id": "N_BANK3_B2_U6",
+        "name": "N_BANK3_B2_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 17170
+      },
+      {
+        "id": "N_BANK3_B2_U7",
+        "name": "N_BANK3_B2_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B2"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 17170
+      },
+      {
+        "id": "N_BANK3_B3_SW",
+        "name": "N_BANK3_B3_SW",
+        "kind": "block",
+        "cell_name": "SAR12_BITMUX",
+        "pins": {
+          "HI": "LON",
+          "LO": "HIN",
+          "BIT": "B3",
+          "OUT": "N_BANK3_B3",
+          "VPWR": "VPWR",
+          "VGND": "VGND"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 17420
+      },
+      {
+        "id": "N_BANK3_B3_U0",
+        "name": "N_BANK3_B3_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 17420
+      },
+      {
+        "id": "N_BANK3_B3_U1",
+        "name": "N_BANK3_B3_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 17420
+      },
+      {
+        "id": "N_BANK3_B3_U2",
+        "name": "N_BANK3_B3_U2",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 17420
+      },
+      {
+        "id": "N_BANK3_B3_U3",
+        "name": "N_BANK3_B3_U3",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 17670
+      },
+      {
+        "id": "N_BANK3_B3_U4",
+        "name": "N_BANK3_B3_U4",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 17670
+      },
+      {
+        "id": "N_BANK3_B3_U5",
+        "name": "N_BANK3_B3_U5",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 17670
+      },
+      {
+        "id": "N_BANK3_B3_U6",
+        "name": "N_BANK3_B3_U6",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 17670
+      },
+      {
+        "id": "N_BANK3_B3_U7",
+        "name": "N_BANK3_B3_U7",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 17920
+      },
+      {
+        "id": "N_BANK3_B3_U8",
+        "name": "N_BANK3_B3_U8",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 17920
+      },
+      {
+        "id": "N_BANK3_B3_U9",
+        "name": "N_BANK3_B3_U9",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 17920
+      },
+      {
+        "id": "N_BANK3_B3_U10",
+        "name": "N_BANK3_B3_U10",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 17920
+      },
+      {
+        "id": "N_BANK3_B3_U11",
+        "name": "N_BANK3_B3_U11",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 18170
+      },
+      {
+        "id": "N_BANK3_B3_U12",
+        "name": "N_BANK3_B3_U12",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 18170
+      },
+      {
+        "id": "N_BANK3_B3_U13",
+        "name": "N_BANK3_B3_U13",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 18170
+      },
+      {
+        "id": "N_BANK3_B3_U14",
+        "name": "N_BANK3_B3_U14",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 860,
+        "y": 18170
+      },
+      {
+        "id": "N_BANK3_B3_U15",
+        "name": "N_BANK3_B3_U15",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "N_BANK3_B3"
+        },
+        "parameters": {},
+        "x": 170,
+        "y": 18420
+      },
+      {
+        "id": "N_BANK3_DUMMY_U0",
+        "name": "N_BANK3_DUMMY_U0",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "HIN"
+        },
+        "parameters": {},
+        "x": 400,
+        "y": 18420
+      },
+      {
+        "id": "N_BANK3_DUMMY_U1",
+        "name": "N_BANK3_DUMMY_U1",
+        "kind": "block",
+        "cell_name": "SAR16_UNIT",
+        "pins": {
+          "TOP": "BANK3N",
+          "BOTTOM": "HIN"
+        },
+        "parameters": {},
+        "x": 630,
+        "y": 18420
+      }
+    ],
+    "wires": [],
+    "junctions": [],
+    "cells": {
+      "INV": {
+        "schema_version": 1,
+        "connectivity_mode": "explicit",
+        "ports": [
+          "A",
+          "Y",
+          "VPWR",
+          "VGND"
+        ],
+        "devices": [
+          {
+            "id": "MP",
+            "name": "MP",
+            "kind": "pmos",
+            "model": "sky130_fd_pr__pfet_01v8_hvt",
+            "pins": {
+              "D": "Y",
+              "G": "A",
+              "S": "VPWR",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 180,
+            "y": 160
+          },
+          {
+            "id": "MN",
+            "name": "MN",
+            "kind": "nmos",
+            "model": "sky130_fd_pr__nfet_01v8",
+            "pins": {
+              "D": "Y",
+              "G": "A",
+              "S": "VGND",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 0.65,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 370,
+            "y": 160
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "SAR12_REFMUX": {
+        "schema_version": 1,
+        "ports": [
+          "VIN",
+          "REF",
+          "SAMPLE",
+          "SAMPLEB",
+          "OUT",
+          "VPWR",
+          "VGND"
+        ],
+        "connectivity_mode": "explicit",
+        "devices": [
+          {
+            "id": "ACQUIRE",
+            "name": "ACQUIRE",
+            "kind": "block",
+            "cell_name": "SAR12_TG",
+            "pins": {
+              "A": "VIN",
+              "Y": "OUT",
+              "EN": "SAMPLE",
+              "ENB": "SAMPLEB",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 170,
+            "y": 170
+          },
+          {
+            "id": "CONVERT",
+            "name": "CONVERT",
+            "kind": "block",
+            "cell_name": "SAR12_TG",
+            "pins": {
+              "A": "REF",
+              "Y": "OUT",
+              "EN": "SAMPLEB",
+              "ENB": "SAMPLE",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 400,
+            "y": 170
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "SAR12_TG": {
+        "schema_version": 1,
+        "ports": [
+          "A",
+          "Y",
+          "EN",
+          "ENB",
+          "VPWR",
+          "VGND"
+        ],
+        "connectivity_mode": "explicit",
+        "devices": [
+          {
+            "id": "N",
+            "name": "N",
+            "kind": "nmos",
+            "pins": {
+              "D": "A",
+              "G": "EN",
+              "S": "Y",
+              "B": "VGND"
+            },
+            "parameters": {
+              "w_um": 8.0,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 180,
+            "y": 170,
+            "model": "sky130_fd_pr__nfet_01v8"
+          },
+          {
+            "id": "P",
+            "name": "P",
+            "kind": "pmos",
+            "pins": {
+              "D": "A",
+              "G": "ENB",
+              "S": "Y",
+              "B": "VPWR"
+            },
+            "parameters": {
+              "w_um": 12.0,
+              "l_um": 0.15,
+              "nf": 1,
+              "m": 1
+            },
+            "x": 420,
+            "y": 170,
+            "model": "sky130_fd_pr__pfet_01v8_hvt"
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "SAR16_BRIDGE": {
+        "schema_version": 1,
+        "ports": [
+          "TOP",
+          "FINE"
+        ],
+        "connectivity_mode": "explicit",
+        "devices": [
+          {
+            "id": "C_BRIDGE",
+            "name": "C_BRIDGE",
+            "kind": "capacitor",
+            "pins": {
+              "+": "TOP",
+              "-": "FINE"
+            },
+            "parameters": {
+              "value": 2.1333333333333334e-12
+            },
+            "x": 180,
+            "y": 170
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "SAR12_BITMUX": {
+        "schema_version": 1,
+        "ports": [
+          "HI",
+          "LO",
+          "BIT",
+          "OUT",
+          "VPWR",
+          "VGND"
+        ],
+        "connectivity_mode": "explicit",
+        "devices": [
+          {
+            "id": "INV",
+            "name": "INV",
+            "kind": "block",
+            "cell_name": "INV",
+            "pins": {
+              "A": "BIT",
+              "Y": "BITB",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 170,
+            "y": 170
+          },
+          {
+            "id": "HIGH",
+            "name": "HIGH",
+            "kind": "block",
+            "cell_name": "SAR12_TG",
+            "pins": {
+              "A": "HI",
+              "Y": "OUT",
+              "EN": "BIT",
+              "ENB": "BITB",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 400,
+            "y": 170
+          },
+          {
+            "id": "LOW",
+            "name": "LOW",
+            "kind": "block",
+            "cell_name": "SAR12_TG",
+            "pins": {
+              "A": "LO",
+              "Y": "OUT",
+              "EN": "BITB",
+              "ENB": "BIT",
+              "VPWR": "VPWR",
+              "VGND": "VGND"
+            },
+            "parameters": {},
+            "x": 630,
+            "y": 170
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      },
+      "SAR16_UNIT": {
+        "schema_version": 1,
+        "ports": [
+          "TOP",
+          "BOTTOM"
+        ],
+        "connectivity_mode": "explicit",
+        "devices": [
+          {
+            "id": "C_UNIT",
+            "name": "C_UNIT",
+            "kind": "capacitor",
+            "pins": {
+              "+": "TOP",
+              "-": "BOTTOM"
+            },
+            "parameters": {
+              "value": 1e-12
+            },
+            "x": 180,
+            "y": 170
+          }
+        ],
+        "wires": [],
+        "junctions": []
+      }
+    }
+  },
+  "design_template": {
+    "id": "sar16_cdac",
+    "parameters": {}
+  },
+  "testbench": {
+    "analysis": "tran",
+    "corner": "tt",
+    "temperature_C": 27.0,
+    "supply_V": 1.8,
+    "duration_s": 2e-05,
+    "step_s": 2e-09,
+    "load_F": 5e-15,
+    "vds_V": 1.8,
+    "vbs_V": 0.0
+  }
+}

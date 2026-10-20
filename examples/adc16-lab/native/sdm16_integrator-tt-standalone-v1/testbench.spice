@@ -1,0 +1,28 @@
+Resistor Indust actual ADC16 MOS reference
+.include "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sdm16_integrator-tt-standalone-v1/supported-tt.spice"
+.include "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sdm16_integrator-tt-standalone-v1/analog.spice"
+.option sparse scale=1e-6 method=gear maxord=2 reltol=1e-5 vntol=1e-6 abstol=1e-12
+.temp 27.0
+VGND VGND 0 0
+VDD SUPPLY VGND 1.8
+R_SUPPLY SUPPLY VPWR .1
+XU VIN SIGNAL BITSTREAM VCM BIAS OUT RESET RESETB VPWR VGND sdm16_integrator
+V_VIN VIN VGND 0.91
+V_SIGNAL SIGNAL VGND 0.9
+V_BITSTREAM BITSTREAM VGND 0.9
+V_VCM VCM VGND 0.9
+V_BIAS BIAS VGND 0.75
+V_RESET RESET VGND PWL(0 1.8 1.99u 1.8 2u 0 20u 0)
+V_RESETB RESETB VGND PWL(0 0 1.99u 0 2u 1.8 20u 1.8)
+.control
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+tran 2e-09 2e-05 0 2e-09
+let supply_current = -i(VDD)
+wrdata waveform.dat v(VIN) v(OUT) v(RESET) supply_current
+echo ADC16_NATIVE_COMPLETE
+quit
+.endc
+.end

@@ -4,6 +4,13 @@ This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
 `docs/evidence/` and the example READMEs. Package version: 0.27.0.
 
+## Unreleased — Resistor Indust ADC16 references (2026-10-20)
+
+- Add 16-bit differential four-bank SAR, second-order RC/MOS sigma-delta with CIC3, and fourteen-stage 1.5-bit pipeline with registered flash and latency alignment; expose 23 editable blocks in the workbench.
+- Execute native analog transients and independent RTL, synthesized gate and CMOS-graph replays. Exhaustively verify 65,536 pipeline codes, 524 directed SAR controller codes and 22,535 CIC samples; test all 17 standalone block contexts.
+- Fit the SAR analog mask within 1mm² without scaling devices; pass public SKY130 DRC/LVS/PEX on that core, the pipeline stage and the second sigma-delta integrator. Preserve separate input snapshots, raw vectors, GDS exchanges and import-without-verdict checks.
+- Fix source sampling from repeated linear time-index rebuilding to one indexed trace; reject partial stop-time traces, stale synthesis and edited mixed/digital hierarchies without explicit binding. Preserve failed accuracy criteria: SAR up to 19 LSB and sigma-delta up to 119 LSB; do not claim sixteen effective bits, complete ADC masks, calibrated RTL or foundry signoff.
+
 ## Unreleased — Resistor Indust paper-based SAR12 verification (2026-10-20)
 
 - Add a reproducible public-engine flow for the complete SAR12 digital controller: SKY130 mapping, placement, CTS, multi-corner hold repair, PDN/filler, detailed routing, OpenRCX, native GDS and independent OpenSTA.

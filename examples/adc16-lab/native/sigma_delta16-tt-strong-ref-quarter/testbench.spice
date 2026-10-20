@@ -1,0 +1,25 @@
+Resistor Indust actual ADC16 MOS reference
+.include "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sigma_delta16-tt-strong-ref-quarter/supported-tt.spice"
+.include "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sigma_delta16-tt-strong-ref-quarter/analog.spice"
+.option sparse scale=1e-6 method=gear maxord=2 reltol=1e-5 vntol=1e-6 abstol=1e-12
+.temp 27.0
+VGND VGND 0 0
+VDD SUPPLY VGND 1.8
+R_SUPPLY SUPPLY VPWR .1
+XU VIN CLK RESET BITSTREAM VCM BIAS INT1 INT2 VPWR VGND sdm16_modulator
+VIN VIN_DRV VGND 0.6
+R_INPUT VIN_DRV VIN 50
+VCLK CLK VGND PULSE(0 1.8 500n 10n 10n 480n 1u)
+VRESET RESET VGND PWL(0 1.8 7.99u 1.8 8u 0)
+.control
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+tran 2e-08 0.00206 0 2e-08
+let supply_current = -i(VDD)
+wrdata waveform.dat v(VIN) v(CLK) v(RESET) v(BITSTREAM) v(INT1) v(INT2) v(VCM) v(BIAS) supply_current
+echo ADC16_NATIVE_COMPLETE
+quit
+.endc
+.end

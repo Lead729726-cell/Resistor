@@ -1,0 +1,57 @@
+{
+  "id": "887dd0df75e04a84ae263e1be799e2f7",
+  "project_id": "3b14d446b31245d8b650a46a3e595639",
+  "revision": 1,
+  "artifacts": {
+    "analog_netlist": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar16_bridge-tt-standalone-v1/analog.spice",
+    "testbench": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar16_bridge-tt-standalone-v1/testbench.spice",
+    "waveform_data": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar16_bridge-tt-standalone-v1/waveform.dat",
+    "adc16_verification": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/sar16_bridge-tt-standalone-v1/adc16-verification.json"
+  },
+  "measurements": {
+    "raw_sample_count": 10051,
+    "display_sample_count": 1833,
+    "start_s": 0.0,
+    "end_s": 1.9999999999999998e-05,
+    "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+    "source_energy": {
+      "3": {
+        "energy_J": 0.0,
+        "average_power_W": 0.0,
+        "minimum_current_A": -0.0,
+        "peak_current_A": -0.0,
+        "source_voltage_V": 1.8
+      }
+    },
+    "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+    "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "output_bits": null,
+    "ENOB_bits": null,
+    "ENOB_status": "not measured; output width is not effective resolution",
+    "block_context": "capacitor",
+    "frames": null
+  },
+  "tool": "ngspice + Icarus Verilog",
+  "reference_verification": {
+    "checks": [
+      {
+        "name": "Real capacitor terminal settles to declared 0.6V step",
+        "pass": true,
+        "observed": 0.6000000000000003
+      }
+    ],
+    "scope": "Standalone block with explicitly declared bias, load and clocks. Functional block criterion only; not a sixteen-bit ADC accuracy test. Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.",
+    "schema_version": 1,
+    "kind": "sar16_bridge",
+    "source": "actual-native-engine-artifacts",
+    "pass": true,
+    "output_bits": null
+  },
+  "analysis_result": "pass",
+  "message": "ADC16 actual native execution completed; accuracy criteria are reported independently.",
+  "execution_status": "completed",
+  "elapsed_s": 1.3791713950340636
+}

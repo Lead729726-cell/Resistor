@@ -1,0 +1,32 @@
+Resistor Indust actual ADC16 MOS reference
+.include "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline16_stage-tt-standalone-v1/supported-tt.spice"
+.include "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline16_stage-tt-standalone-v1/analog.spice"
+.option sparse scale=1e-6 method=gear maxord=2 reltol=1e-5 vntol=1e-6 abstol=1e-12
+.temp 27.0
+VGND VGND 0 0
+VDD SUPPLY VGND 1.8
+R_SUPPLY SUPPLY VPWR .1
+XU VINP VINN OUTP OUTN VCM REFP REFN THP THN BIAS SAMPLE HOLD RESET HIGH LOW VPWR VGND pipeline16_stage
+V_VINP VINP VGND 0.975
+V_VINN VINN VGND 0.825
+V_VCM VCM VGND 0.9
+V_BIAS BIAS VGND 0.75
+V_REFP REFP VGND 1.2
+V_REFN REFN VGND 0.6
+V_THP THP VGND 1.2
+V_THN THN VGND 0.6
+V_SAMPLE SAMPLE VGND PULSE(0 1.8 .1u 1n 1n 4.8u 10u)
+V_HOLD HOLD VGND PULSE(0 1.8 5.1u 1n 1n 4.8u 10u)
+V_RESET RESET VGND PWL(0 1.8 1.99u 1.8 2u 0 20u 0)
+.control
+set num_threads=1
+set numdgt=17
+set wr_singlescale
+set wr_vecnames
+tran 2e-09 2e-05 0 2e-09
+let supply_current = -i(VDD)
+wrdata waveform.dat v(VINP) v(VINN) v(OUTP) v(OUTN) v(HIGH) v(LOW) supply_current
+echo ADC16_NATIVE_COMPLETE
+quit
+.endc
+.end

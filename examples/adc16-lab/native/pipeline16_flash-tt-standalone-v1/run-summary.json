@@ -1,0 +1,61 @@
+{
+  "id": "2b03d7f434f94953a9490f13a1a0e361",
+  "project_id": "57dac2ddfa5c4a8089832c57cee3c4c2",
+  "revision": 1,
+  "artifacts": {
+    "analog_netlist": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline16_flash-tt-standalone-v1/analog.spice",
+    "testbench": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline16_flash-tt-standalone-v1/testbench.spice",
+    "waveform_data": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline16_flash-tt-standalone-v1/waveform.dat",
+    "adc16_verification": "/mnt/d/Coldbrew/Resistor/.runtime/adc16/native/pipeline16_flash-tt-standalone-v1/adc16-verification.json"
+  },
+  "measurements": {
+    "raw_sample_count": 10251,
+    "display_sample_count": 2954,
+    "start_s": 0.0,
+    "end_s": 1.9999999999999998e-05,
+    "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+    "source_energy": {
+      "6": {
+        "energy_J": 5.906783772918263e-10,
+        "average_power_W": 2.9533918864591318e-05,
+        "minimum_current_A": -1.0471889737573292e-06,
+        "peak_current_A": 0.00022241681425327897,
+        "source_voltage_V": 1.8
+      }
+    },
+    "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+    "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "output_bits": null,
+    "ENOB_bits": null,
+    "ENOB_status": "not measured; output width is not effective resolution",
+    "block_context": "pipeline16_flash",
+    "frames": null
+  },
+  "tool": "ngspice + Icarus Verilog",
+  "reference_verification": {
+    "checks": [
+      {
+        "name": "Final flash captures thermometer 011",
+        "pass": true,
+        "observed": [
+          1.7999984670068931,
+          1.7999984670068931,
+          5.402129734720908e-09
+        ]
+      }
+    ],
+    "scope": "Standalone block with explicitly declared bias, load and clocks. Functional block criterion only; not a sixteen-bit ADC accuracy test. Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.",
+    "schema_version": 1,
+    "kind": "pipeline16_flash",
+    "source": "actual-native-engine-artifacts",
+    "pass": true,
+    "output_bits": null
+  },
+  "analysis_result": "pass",
+  "message": "ADC16 actual native execution completed; accuracy criteria are reported independently.",
+  "execution_status": "completed",
+  "elapsed_s": 5.2742893529939465
+}

@@ -1,0 +1,47 @@
+* NGSPICE file created from sdm16_integrator.ext - technology: sky130A
+
+.subckt sdm16_integrator VPWR VGND VIN VCM RESETB SIGNAL RESET OUT BITSTREAM BIAS
+X0 R_REF_CM_R0_N0 R_REF_CM_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=28.04
+X1 OUT SUM sky130_fd_pr__cap_mim_m3_1 l=25.63 w=25.63
+X2 OUT SUM sky130_fd_pr__cap_mim_m3_1 l=25.63 w=25.63
+X3 R_INPUT_R0_N6 R_INPUT_R0_N7 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X4 R_FEEDBACK_R0_N2 R_FEEDBACK_R0_N3 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X5 R_REF_CM_R0_N2 R_REF_CM_R0_N3 VGND sky130_fd_pr__res_xhigh_po_1p41 l=28.04
+X6 R_INPUT_R0_N8 R_INPUT_R0_N9 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X7 R_FEEDBACK_R0_N4 SUM VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X8 AMP__PRE AMP__COMP sky130_fd_pr__cap_mim_m3_1 l=15.63 w=15.63
+X9 R_INPUT_R0_N10 SUM VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X10 VPWR AMP__FIRST__MIR AMP__FIRST__MIR VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X11 R_INPUT_R0_N0 R_INPUT_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X12 R_FEEDBACK_R0_N0 R_FEEDBACK_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X13 R_INPUT_R0_N2 R_INPUT_R0_N3 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X14 VGND BIAS OUT VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X15 AMP__COMP OUT VGND sky130_fd_pr__res_xhigh_po_1p41 l=0.54
+X16 OUT SUM sky130_fd_pr__cap_mim_m3_1 l=25.63 w=25.63
+X17 R_REF_SIGNAL_R0_N0 R_REF_SIGNAL_R0_N1 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X18 R_FEEDBACK_R0_N1 R_FEEDBACK_R0_N2 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X19 AMP__FIRST__TAIL SUM AMP__FIRST__MIR VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X20 R_INPUT_R0_N3 R_INPUT_R0_N4 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X21 VCM R_REF_CM_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=28.04
+X22 R_REF_SIGNAL_R0_N1 TRACK_REF VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X23 AMP__FIRST__TAIL TRACK_REF AMP__PRE VGND sky130_fd_pr__nfet_01v8 ad=2.9 pd=20.58 as=2.9 ps=20.58 w=10 l=1
+X24 VGND BIAS AMP__FIRST__TAIL VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=1
+X25 R_INPUT_R0_N5 R_INPUT_R0_N6 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X26 R_REF_CM_R0_N1 R_REF_CM_R0_N2 VGND sky130_fd_pr__res_xhigh_po_1p41 l=28.04
+X27 VIN R_INPUT_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X28 R_FEEDBACK_R0_N3 R_FEEDBACK_R0_N4 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X29 R_REF_CM_R0_N3 TRACK_REF VGND sky130_fd_pr__res_xhigh_po_1p41 l=28.04
+X30 BITSTREAM R_FEEDBACK_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X31 R_INPUT_R0_N1 R_INPUT_R0_N2 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X32 R_INPUT_R0_N9 R_INPUT_R0_N10 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X33 VCM RESET SUM VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=0.15
+X34 VPWR AMP__FIRST__MIR AMP__PRE VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X35 VPWR AMP__PRE OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=5.8 pd=40.58 as=5.8 ps=40.58 w=20 l=1
+X36 SIGNAL R_REF_SIGNAL_R0_N0 VGND sky130_fd_pr__res_xhigh_po_1p41 l=23.34
+X37 VCM RESET OUT VGND sky130_fd_pr__nfet_01v8 ad=0.58 pd=4.58 as=0.58 ps=4.58 w=2 l=0.15
+X38 R_INPUT_R0_N7 R_INPUT_R0_N8 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+X39 VCM RESETB SUM VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X40 VCM RESETB OUT VPWR sky130_fd_pr__pfet_01v8_hvt ad=1.16 pd=8.58 as=1.16 ps=8.58 w=4 l=0.15
+X41 R_INPUT_R0_N4 R_INPUT_R0_N5 VGND sky130_fd_pr__res_xhigh_po_1p41 l=29.21
+.ends
+

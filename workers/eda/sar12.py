@@ -134,17 +134,20 @@ def recommended_settings(raw):
     v={**DEFAULTS,**raw};end=len(inputs(v))*(v['acquisition_s']+v['hold_s']+12*v['bit_period_s'])+v['bit_period_s']
     return settings(dict(analysis='tran',duration_s=end,step_s=max(10e-9,end/180000)))
 
-def control_testbench(p,folder,deck,netlist,sub,post_layout=False):
-    v={**DEFAULTS,**p['design_template']['parameters']};parameters('sar12_analog',v)
-    s=p['testbench']['supply_V'];period=v['bit_period_s'];acq=v['acquisition_s'];values=inputs(v);end=p['testbench']['duration_s'];step=p['testbench']['step_s'];cm=v['input_common_mode_V']
-    if end+1e-12<len(values)*(acq+v['hold_s']+12*period)+period or step>min(acq,period)/10:raise EDAError('SAR12_TIMING_RANGE','Resolve every acquisition/decision interval with ten or more steps and retain the full sequence.')
+def control_testbench(p,folder,deck,netlist,sub,post_layout=False,*,bit_count=12,default_values=None,values_override=None,prepare_fraction=.65,validate_parameters=True):
+    if bit_count not in (12,16) or not 0<prepare_fraction<1:raise EDAError('SAR_TIMING_RANGE','Supported SAR width and preparation fraction required.')
+    v={**(DEFAULTS if default_values is None else default_values),**p['design_template']['parameters']}
+    if validate_parameters:parameters('sar12_analog',v)
+    bit_pins=[f'B{i}'for i in range(bit_count)]
+    s=p['testbench']['supply_V'];period=v['bit_period_s'];acq=v['acquisition_s'];values=inputs(v)if values_override is None else values_override;end=p['testbench']['duration_s'];step=p['testbench']['step_s'];cm=v['input_common_mode_V']
+    if end+1e-12<len(values)*(acq+v['hold_s']+bit_count*period)+period or step>min(acq,period)/10:raise EDAError('SAR12_TIMING_RANGE','Resolve every acquisition/decision interval with ten or more steps and retain the full sequence.')
     if s<1.6 or cm+v['reference_V']/2>s:raise EDAError('SAR12_SUPPLY_RANGE','This adapter needs 1.6..1.8V and rail-valid differential input common mode.')
     reset_cm=cm+(s-v['reference_V'])/2
     if not 0<=reset_cm<=s:raise EDAError('SAR12_COMMON_MODE','Reset common mode must remain within actual rails.')
     drivers=[]
-    for node,initial in [('SAMPLE',s),('EVAL',0),*[(b,0) for b in BITS]]:drivers += [f'VD_{node} DRV_{node} VGND {initial:.12g}',f'RD_{node} DRV_{node} {node} 2000',f'CD_{node} {node} VGND 2p']
+    for node,initial in [('SAMPLE',s),('EVAL',0),*[(b,0) for b in bit_pins]]:drivers += [f'VD_{node} DRV_{node} VGND {initial:.12g}',f'RD_{node} DRV_{node} {node} 2000',f'CD_{node} {node} VGND 2p']
     names=['VINP','VINN','SAMPLE','EVAL','TOPP','TOPN','COMP','COMPN']
-    lines=['Differential twelve-bit SAR with actual retained charge and dynamic MOS latch',f'.include "{deck}"','.option sparse scale=1e-6 method=gear maxord=2 reltol=1e-5 vntol=1e-6 abstol=1e-12 chgtol=1e-16',f'.include "{netlist}"',f'.temp {p["testbench"]["temperature_C"]}','VGND VGND 0 0',f'VDD VPWR VGND {s:.12g}',f'VINP VINP VGND {cm+values[0]/2:.12g}',f'VINN VINN VGND {cm-values[0]/2:.12g}',f'VREF VREF VGND {v["reference_V"]:.12g}',f'VCM VCM VGND {reset_cm:.12g}',*drivers,'XU '+' '.join(sub)+' '+p['cell'],f'.tran {step:.12g} {end:.12g} 0 {step:.12g}', '.control','set num_threads=1','set numdgt=17','set wr_singlescale','set wr_vecnames','save '+' '.join('v('+n+')' for n in names+BITS)+' i(VDD) i(VREF)','echo frame bit trial comp compn topp topn vin decision > decisions.csv']
+    lines=[f'Differential {bit_count}-bit SAR with actual retained charge and dynamic MOS latch',f'.include "{deck}"','.option sparse scale=1e-6 method=gear maxord=2 reltol=1e-5 vntol=1e-6 abstol=1e-12 chgtol=1e-16',f'.include "{netlist}"',f'.temp {p["testbench"]["temperature_C"]}','VGND VGND 0 0',f'VDD VPWR VGND {s:.12g}',f'VINP VINP VGND {cm+values[0]/2:.12g}',f'VINN VINN VGND {cm-values[0]/2:.12g}',f'VREF VREF VGND {v["reference_V"]:.12g}',f'VCM VCM VGND {reset_cm:.12g}',*drivers,'XU '+' '.join(sub)+' '+p['cell'],f'.tran {step:.12g} {end:.12g} 0 {step:.12g}', '.control','set num_threads=1','set numdgt=17','set wr_singlescale','set wr_vecnames','save '+' '.join('v('+n+')' for n in names+bit_pins)+' i(VDD) i(VREF)','echo frame bit trial comp compn topp topn vin decision > decisions.csv']
     # Finite off-macro reference/common-mode drive prevents an unphysical
     # zero-impedance displacement-current impulse at a switch transition.
     idx=next(i for i,line in enumerate(lines) if line.startswith('VCM '));lines[idx:idx+1]=[f'VCM VCM_DRV VGND {reset_cm:.12g}','RVCM VCM_DRV VCM 10','CVCM VCM VGND 100p']
@@ -160,7 +163,7 @@ def control_testbench(p,folder,deck,netlist,sub,post_layout=False):
     idx=next(i for i,line in enumerate(lines) if line.startswith('VDD '))
     lines[idx:idx+1]=[f'VDD VDD_DRV VGND {s:.12g}',f'RVDD VDD_DRV VPWR {SUPPLY_SOURCE_R_OHM:.12g}']
     idx=next(i for i,line in enumerate(lines) if line.startswith('save '));lines[idx]+=' v(VPWR)'
-    sources={'VINP','VINN','VD_SAMPLE','VD_EVAL',*('VD_'+b for b in BITS)}
+    sources={'VINP','VINN','VD_SAMPLE','VD_EVAL',*('VD_'+b for b in bit_pins)}
     for i,line in enumerate(lines):
         f=line.split()
         if f and f[0] in sources:lines[i]=' '.join(f[:3])+f' PWL(0 {f[3]} {end:.15g} {f[3]})'
@@ -180,7 +183,7 @@ def control_testbench(p,folder,deck,netlist,sub,post_layout=False):
     stops=[];t=0.
     for _ in values:
         t+=acq;stops.append(t);t+=v['hold_s'];stops.append(t)
-        for _ in range(12):t+=period*.65;stops.append(t);t+=period*.35;stops.append(t)
+        for _ in range(bit_count):t+=period*prepare_fraction;stops.append(t);t+=period*(1-prepare_fraction);stops.append(t)
     def pause(target):
         nonlocal first
         if first:lines.extend(f'stop when time = {stop:.15g}' for stop in stops)
@@ -189,36 +192,37 @@ def control_testbench(p,folder,deck,netlist,sub,post_layout=False):
         lines.extend(['let sar12_k = length(time)-1',f'if abs(time[sar12_k] - {target:.15g}) > 1e-12','print time[sar12_k]',f'echo expected_pause_time_s {target:.15g}','echo SAR12_PAUSE_FAILED','quit 1','end','print time[sar12_k] >> pause-times.txt'])
         first=False
     for frame,vin in enumerate(values):
-        for source,value in [('VINP',f'{cm+vin/2:.12g}'),('VINN',f'{cm-vin/2:.12g}'),('VD_SAMPLE',f'{s:.12g}'),('VD_EVAL','0'),*[('VD_B'+str(i),'0')for i in range(12)]]:drive(source,value)
+        for source,value in [('VINP',f'{cm+vin/2:.12g}'),('VINN',f'{cm-vin/2:.12g}'),('VD_SAMPLE',f'{s:.12g}'),('VD_EVAL','0'),*[('VD_B'+str(i),'0')for i in range(bit_count)]]:drive(source,value)
         lines.append('let sar12_code = 0')
         time+=acq;pause(time);drive('VD_SAMPLE','0');time+=v['hold_s'];pause(time)
-        for bit in reversed(range(12)):
+        for bit in reversed(range(bit_count)):
             drive('VD_EVAL','0');lines.append(f'let sar12_trial = sar12_code + {1<<bit}')
-            for i in range(12):
+            for i in range(bit_count):
                 lines.append(f'let sar12_drive = (floor(sar12_trial / {1<<i}) - 2*floor(sar12_trial / {1<<(i+1)}))*{s:.12g}');drive('VD_B'+str(i),'sar12_drive')
-            time+=period*.65;pause(time);drive('VD_EVAL',f'{s:.12g}');time+=period*.35;pause(time)
+            time+=period*prepare_fraction;pause(time);drive('VD_EVAL',f'{s:.12g}');time+=period*(1-prepare_fraction);pause(time)
             lines += ['let sar12_k = length(time)-1','let sar12_cmp = v(COMP)[sar12_k]','let sar12_cmpn = v(COMPN)[sar12_k]','let sar12_p = v(TOPP)[sar12_k]','let sar12_n = v(TOPN)[sar12_k]','let sar12_decision = 0',f'if sar12_cmp >= {s/2:.12g}','let sar12_code = sar12_trial','let sar12_decision = 1','end',f'echo {frame} {bit} $&sar12_trial $&sar12_cmp $&sar12_cmpn $&sar12_p $&sar12_n {vin:.15g} $&sar12_decision >> decisions.csv']
         drive('VD_EVAL','0')
-    lines+=['resume','let supply_current = -i(VDD)','let reference_current = -i(VREF)','wrdata waveform.dat '+' '.join('v('+n+')' for n in names)+' supply_current reference_current '+' '.join('v('+n+')' for n in BITS)+' v(VPWR)','echo SAR12_NATIVE_COMPLETE','quit','.endc','.end']
+    lines+=['resume','let supply_current = -i(VDD)','let reference_current = -i(VREF)','wrdata waveform.dat '+' '.join('v('+n+')' for n in names)+' supply_current reference_current '+' '.join('v('+n+')' for n in bit_pins)+' v(VPWR)',f'echo SAR{bit_count}_NATIVE_COMPLETE','quit','.endc','.end']
     target=Path(folder)/'testbench.spice';target.write_text('\n'.join(lines)+'\n');return target,values
 
-def parse_decisions(file,values,supply,reference):
+def parse_decisions(file,values,supply,reference,*,bit_count=12):
+    if bit_count not in (12,16):raise EDAError('SAR_WIDTH','Supported SAR width required.')
     rows=[]
     for line in Path(file).read_text().splitlines()[1:]:
         try:r=[float(v) for v in line.split()]
         except ValueError:raise EDAError('SAR12_PARSER_FAILED','Decision trace has non-numeric fields.')
         if len(r)!=9 or any(not math.isfinite(v) for v in r):raise EDAError('SAR12_PARSER_FAILED','Decision trace requires nine finite columns.')
         rows.append(r)
-    if len(rows)!=12*len(values):raise EDAError('SAR12_INCOMPLETE','Every input needs twelve actual comparison records.')
+    if len(rows)!=bit_count*len(values):raise EDAError('SAR12_INCOMPLETE','Every input needs its complete actual comparison records.')
     frames=[];ambiguous=0
     for f,vin in enumerate(values):
         code=0
-        for bit,r in zip(reversed(range(12)),rows[12*f:12*f+12]):
+        for bit,r in zip(reversed(range(bit_count)),rows[bit_count*f:bit_count*f+bit_count]):
             frame,b,trial,cmp,cmpn,tp,tn,v,decision=r
             if (frame,b,trial)!=(f,bit,code+(1<<bit)) or abs(v-vin)>1e-10 or decision not in (0.,1.) or decision!=int(cmp>=supply/2):raise EDAError('SAR12_SEQUENCE_FAILED','Read the actual comparator output; do not substitute an ideal VIN quantizer or a different bit sequence.')
             ambiguous+=int(not((cmp>.7*supply and cmpn<.3*supply)or(cmp<.3*supply and cmpn>.7*supply)))
             if decision:code=int(trial)
-        expected=min(4095,max(0,math.floor((vin/reference+1)*2048)))
+        expected=min((1<<bit_count)-1,max(0,math.floor((vin/reference+1)*(1<<(bit_count-1)))))
         frames.append(dict(frame=f,input_differential_V=vin,code=code,expected_code=expected,error_codes=code-expected))
     return rows,frames,ambiguous
 

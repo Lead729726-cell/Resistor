@@ -159,7 +159,7 @@ def _single_row(folder,ir,cell_name,ports,rail_width=400,*,primitive_cache=None,
             xs[d['pins'][pin]].append(x)
     spans={n:(-1800 if n in ports else min(v)-300,max(v)+300) for n,v in xs.items()}
     tracks,track_count=interval_tracks({n:spans[n] for n in nets if n not in ('VGND','VPWR')})
-    if rail_pitch not in (1200,4000):raise EDAError('INVALID_GEOMETRY','Use the native M3 pitch or the bounded M5 fan-out pitch.')
+    if rail_pitch not in (1200,3600,4000):raise EDAError('INVALID_GEOMETRY','Use the native M3 pitch or the bounded M5 fan-out pitch.')
     rails={net:ymax+3000+track*rail_pitch for net,track in tracks.items()}
     power_gap=max(1500,rail_pitch)
     rails.update({n:y for n,y in [('VGND',ymin-3000),('VPWR',ymin-3000-power_gap)] if n in spans})
