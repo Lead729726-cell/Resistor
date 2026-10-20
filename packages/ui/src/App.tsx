@@ -33,7 +33,7 @@ import Brand from './Brand';
 import AppearanceControl from './AppearanceControl';
 import CalculatorHub from './CalculatorHub';
 import { calculatorPaths } from '../../calculators/src';
-import {editingText,deleteDesignKey,shortcutLabel,appleKeyboard,resolveShortcut} from './shortcuts';
+import {editingText,deleteDesignKey,shortcutLabel,appleKeyboard,resolveShortcut,dispatchMenuHistory} from './shortcuts';
 import ShortcutHelp from './ShortcutHelp';
 import Status from './RunStatus';
 import WorkbenchMenu from './WorkbenchMenu';
@@ -264,7 +264,7 @@ function DesignWorkspace({onViewer,active=true,onStudyMode,guidedStep,onGuidedSt
     if(editingText(document.activeElement)){document.execCommand(command);return;}
     if(modal||shortcutHelpOpen||readOnly||busy.includes('edit'))return;
     if(command!=='undo'&&command!=='redo')return;
-    undo(command==='redo');
+    if(!dispatchMenuHistory(command))undo(command==='redo');
   }),[active,save,undo,modal,shortcutHelpOpen,readOnly,busy,collaboration?.room,remoteClient]);
   useEffect(()=>{const guard=(event:KeyboardEvent)=>{
     if(!active||(event.target instanceof Element&&event.target.closest('[data-edu-mode-controls]')))return;
