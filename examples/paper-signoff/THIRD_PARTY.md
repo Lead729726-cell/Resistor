@@ -1,0 +1,9 @@
+# Public source attribution
+
+- Paper: Kentaro Yoshioka, [arXiv:2610.15240v1](https://arxiv.org/abs/2610.15240v1), 2026-10-11. Validation methodology reference; this 12-bit design is not the paper's 11-bit implementation. The paper itself is not redistributed here.
+- SKY130 native GDS, transistor technology, standard-cell SPICE/characterization: [SkyWater PDK](https://github.com/google/skywater-pdk), [HD library](https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hd/tree/ac7fb61f06e6470b94e8afdf7c25268f62fbd7b1), [open_pdks](https://github.com/chipfoundry/open_pdks). Apache-2.0. Native tool/deck and GDS hashes are recorded; no foundry approval implied.
+- ORFS platform LEF, Liberty and nominal RC reference: [OpenROAD-flow-scripts](https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/tree/bf3f9b344bf7d9d999f199778a722833bccbd33c/flow/platforms/sky130hd). Platform data retains its upstream licenses/headers. SKY130 characterization is Apache-2.0; OpenROAD flow scripts are BSD-3-Clause.
+- Liberty formatter: [google/skywater-pdk](https://github.com/google/skywater-pdk/tree/7198cf647113f56041e02abf3eb623692820c5e1/scripts/python-skywater-pdk), Apache-2.0. Official modules unchanged; standalone import adapter is separately identified.
+- Native executables (not included in ZIP): OpenSTA GPLv3, OpenROAD BSD-3-Clause with component licenses, Magic and Netgen upstream licenses, ngspice mixed BSD-style licenses, Yosys ISC, Icarus GPL, KLayout GPL. See each project's official distribution for complete terms.
+
+Unmodified downloaded standard-cell SPICE is retained alongside the derived LVS reference view. That view classifies four 0.36um nfets by the installed public Magic deck's explicit 0.42um width threshold; it does not alter geometry, connectivity, tolerance or ignore device classes. Raw and derived hashes are distinct.

@@ -4,6 +4,13 @@ This records the source snapshot being opened, rather than reconstructing Git
 history that did not previously exist. Existing detailed verification remains in
 `docs/evidence/` and the example READMEs. Package version: 0.27.0.
 
+## Unreleased — Resistor Indust paper-based SAR12 verification (2026-10-20)
+
+- Add a reproducible public-engine flow for the complete SAR12 digital controller: SKY130 mapping, placement, CTS, multi-corner hold repair, PDN/filler, detailed routing, OpenRCX, native GDS and independent OpenSTA.
+- Repair an actual SS hold failure with two physical buffers; verify three routed cell corners without relaxing the I/O constraints. Keep overclock, unknown-comparator and changed-MOS-width negative controls.
+- Independently check transistor GDS with Magic/Netgen, preserve pin labels and public narrow-device classification provenance, and recheck 319,502 mapped/routed gate assertions.
+- Run 702 actual comparator transients and repeat analog macro DRC/LVS/PEX. Publish raw waveforms, constraints, masks and hashes; explicitly block precision ADC qualification on the failed independent C/RC matrix audit. Whole-chip and licensed/foundry signoff remain unverified.
+
 ## Unreleased — Resistor lecture studio, editor and assistant (2026-10-16)
 
 - Add four shared SKY130 oscillator projects: five-stage ring, resistor-feedback RC capacitance sensor, dual-ring XOR beat detector and enable-controlled burst clock. Expose them in Indust starter/template UI with actual frequency, duty, switching-level and signed-power measurements.

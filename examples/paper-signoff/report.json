@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "edition": "Resistor Indust",
+  "date": "2026-10-20",
+  "source_git_base": "8127153a73709fb8309640ceb9ecddfea667fdcb",
+  "paper": {
+    "url": "https://arxiv.org/abs/2610.15240v1",
+    "author": "Kentaro Yoshioka",
+    "title": "The Era of Vibe Tapeout: Dark Age or Golden Age for Analog Circuit Design?",
+    "scope": "Methodology reference. Paper 11-bit 5.12MS/s; this is a different 12-bit design."
+  },
+  "native_adapter_sources_verified": 52,
+  "analog": {
+    "edition": "Resistor Indust",
+    "project_id": "4762e41d601a4d9fa3d63f10009a99e8",
+    "revision": 1,
+    "records": [
+      {
+        "label": "drc",
+        "id": "fa6ec9a5f9894c618696c2033066ed65",
+        "execution": "completed",
+        "analysis": "pass",
+        "message": "Magic drc(full): 0 native violation rectangles. Selected deck; no signoff."
+      },
+      {
+        "label": "lvs",
+        "id": "9331d9552d6445f38830e0aadbd634bc",
+        "execution": "completed",
+        "analysis": "pass",
+        "message": "Actual Netgen comparison: circuits match uniquely."
+      },
+      {
+        "label": "pex",
+        "id": "d006c607efd74cb99979edd1697a7241",
+        "execution": "completed",
+        "analysis": "pass",
+        "message": "Actual Magic RC extraction: 61144 resistors, 17199 capacitors. Zero counts reflect native thresholds, not inserted elements.",
+        "parasitics": {
+          "resistors": 61144,
+          "capacitors": 17199
+        }
+      }
+    ]
+  },
+  "digital_post_route_sta": [
+    {
+      "stage": "post-route",
+      "corner": "tt_025C_1v80",
+      "clock_period_ns": 250.0,
+      "input_delay_max_ns": 25.0,
+      "input_delay_min_ns": 0.5,
+      "output_delay_max_ns": 25.0,
+      "output_delay_min_ns": 0.5,
+      "load_pF": 0.01,
+      "input_transition_ns": 0.1,
+      "setup_uncertainty_ns": 0.5,
+      "hold_uncertainty_ns": 0.1,
+      "setup_slack_ns": 223.46,
+      "hold_slack_ns": 0.27,
+      "analysis_result": "pass",
+      "expected_negative_control": false,
+      "constraints_sanity_pass": true,
+      "library_sha256": "ec0e1067a35c8bf20b11e58d1e8ac53326067e4dac84a125cc1b917a3518d0d9",
+      "netlist_sha256": "dd5a40d48910a0d54290c1b5c8a6aab6e45e6b208b270e5d9ecd007021a86af8",
+      "spef_sha256": "4774c9b46f41b10fbec08c29afa1096053fb567e62a6f240cec71b8993341dfe",
+      "raw_log_sha256": "cbc7672fd09e47ba8944eeae177e3c034c1bf40de3291b60cba43605ffaf2307",
+      "clock": "propagated CTS with OpenRCX routed SPEF"
+    },
+    {
+      "stage": "post-route",
+      "corner": "ss_100C_1v60",
+      "clock_period_ns": 250.0,
+      "input_delay_max_ns": 25.0,
+      "input_delay_min_ns": 0.5,
+      "output_delay_max_ns": 25.0,
+      "output_delay_min_ns": 0.5,
+      "load_pF": 0.01,
+      "input_transition_ns": 0.1,
+      "setup_uncertainty_ns": 0.5,
+      "hold_uncertainty_ns": 0.1,
+      "setup_slack_ns": 222.63,
+      "hold_slack_ns": 0.2,
+      "analysis_result": "pass",
+      "expected_negative_control": false,
+      "constraints_sanity_pass": true,
+      "library_sha256": "8f08a0fffa63dc78c87059acc10d7d38b7192bc2c3e57066cc093930c5297516",
+      "netlist_sha256": "dd5a40d48910a0d54290c1b5c8a6aab6e45e6b208b270e5d9ecd007021a86af8",
+      "spef_sha256": "4774c9b46f41b10fbec08c29afa1096053fb567e62a6f240cec71b8993341dfe",
+      "raw_log_sha256": "a7e9eb3723d413f6fbd48952a7bc7dbe94e0e04e1ba5175e5c8dc73139654c7f",
+      "clock": "propagated CTS with OpenRCX routed SPEF"
+    },
+    {
+      "stage": "post-route",
+      "corner": "ff_n40C_1v95",
+      "clock_period_ns": 250.0,
+      "input_delay_max_ns": 25.0,
+      "input_delay_min_ns": 0.5,
+      "output_delay_max_ns": 25.0,
+      "output_delay_min_ns": 0.5,
+      "load_pF": 0.01,
+      "input_transition_ns": 0.1,
+      "setup_uncertainty_ns": 0.5,
+      "hold_uncertainty_ns": 0.1,
+      "setup_slack_ns": 223.79,
+      "hold_slack_ns": 0.24,
+      "analysis_result": "pass",
+      "expected_negative_control": false,
+      "constraints_sanity_pass": true,
+      "library_sha256": "052369ccddecaa3649a20a8dda206b8f9a4fb3cef9139164f31211c5571583d0",
+      "netlist_sha256": "dd5a40d48910a0d54290c1b5c8a6aab6e45e6b208b270e5d9ecd007021a86af8",
+      "spef_sha256": "4774c9b46f41b10fbec08c29afa1096053fb567e62a6f240cec71b8993341dfe",
+      "raw_log_sha256": "a14a793886946d0b42dd49d1ce16b1532be97ab517d90600ab330166d4bb2b9f",
+      "clock": "propagated CTS with OpenRCX routed SPEF"
+    }
+  ],
+  "digital_gds": {
+    "edition": "Resistor Indust",
+    "tool": "KLayout 0.30.5",
+    "gds_sha256": "1b7fc965fcaf54e51c25131b1bdc8bc0dea3f931da51f4aed41b0520c97c1f8e",
+    "def_sha256": "637f886d5488fc2b517719af81af97ed67f7ff3e29a5b55181c41a68b4f2c668",
+    "native_gds": {
+      "sky130_fd_sc_hd.gds": "1b118450ce1cacb3bd34de60e95d3abc1e98b4e52b02938dda843dd41a045644"
+    },
+    "native_cell_types": 38,
+    "dbu_um": 0.001,
+    "top_pin_labels": [
+      "VGND",
+      "VPWR",
+      "busy",
+      "clk",
+      "code[0]",
+      "code[10]",
+      "code[11]",
+      "code[1]",
+      "code[2]",
+      "code[3]",
+      "code[4]",
+      "code[5]",
+      "code[6]",
+      "code[7]",
+      "code[8]",
+      "code[9]",
+      "comparator",
+      "eval",
+      "reset",
+      "sample",
+      "start",
+      "trial[0]",
+      "trial[10]",
+      "trial[11]",
+      "trial[1]",
+      "trial[2]",
+      "trial[3]",
+      "trial[4]",
+      "trial[5]",
+      "trial[6]",
+      "trial[7]",
+      "trial[8]",
+      "trial[9]",
+      "valid"
+    ],
+    "bbox_um": "(2.32,0;117.74,116.6)",
+    "manufacturing_signoff": false
+  },
+  "digital_mask_drc": {
+    "marker_count": 0,
+    "edition": "Resistor Indust",
+    "gds_sha256": "1b7fc965fcaf54e51c25131b1bdc8bc0dea3f931da51f4aed41b0520c97c1f8e",
+    "analysis_result": "pass",
+    "scope": "Public SKY130 Magic drc(full) mask rectangles. Not foundry signoff.",
+    "manufacturing_signoff": false
+  },
+  "digital_lvs": {
+    "edition": "Resistor Indust",
+    "execution": "completed",
+    "analysis_result": "pass",
+    "gds_sha256": "1b7fc965fcaf54e51c25131b1bdc8bc0dea3f931da51f4aed41b0520c97c1f8e",
+    "reference_sha256": "6920b991de1bd8571eea3cbbb11a6fab6ba55ce15bfa521d6aa6833481b00b54",
+    "narrow_device_classification": [
+      {
+        "instance": "X12",
+        "width_um": 0.36,
+        "from": "nfet_01v8",
+        "to": "special_nfet_01v8"
+      },
+      {
+        "instance": "X13",
+        "width_um": 0.36,
+        "from": "nfet_01v8",
+        "to": "special_nfet_01v8"
+      },
+      {
+        "instance": "X15",
+        "width_um": 0.36,
+        "from": "nfet_01v8",
+        "to": "special_nfet_01v8"
+      },
+      {
+        "instance": "X17",
+        "width_um": 0.36,
+        "from": "nfet_01v8",
+        "to": "special_nfet_01v8"
+      }
+    ],
+    "layout_sha256": "6e37042da8ffbde56941b924b7ed5c4f53bb77b149e5907fd4d2c5fd076485a8",
+    "manufacturing_signoff": false,
+    "scope": "Native Magic/Netgen with public SKY130 setup. Raw upstream cell SPICE retained; reference-view nfets narrower than 0.42um classified exactly as the installed public Magic technology. No equate/ignore waiver. Not foundry signoff."
+  },
+  "digital_gate_assertions": 319502,
+  "digital_spef_nets": 177,
+  "comparator": {
+    "native_runs": 702,
+    "engine_failures": 0,
+    "unresolved_points": 1,
+    "large_signal_failing_groups": [],
+    "scope": "Actual pre-layout MOS transient with source ideal R/C bias and 0.5fF explicit sensitivity variant on the latch QP/QN. No random mismatch, noise, silicon offset yield or full-ADC performance claimed."
+  },
+  "analog_coupling_matrix": {
+    "matrix_preserved": false,
+    "matrix_relative_L1": 1.133494089207757,
+    "cap_only_matrix_sum_F": 2.132254272e-11,
+    "RC_lumped_matrix_sum_F": 4.495016777999989e-11,
+    "matrix_absolute_difference_F": 2.4168976139999888e-11
+  },
+  "commercial_execution": "not_run",
+  "foundry_approved_deck": "not_provided",
+  "whole_analog_digital_chip_sta": "not_run",
+  "manufacturing_signoff": false,
+  "manufacturing_readiness": "not_ready",
+  "blockers": [
+    "Analog C/RC capacitance matrix inconsistent; precision coupling preservation failed.",
+    "No complete analog/digital/pad interface closure or post-PEX coherent 256-point ADC FFT.",
+    "No multi-RC-corner OCV/SI, EM/IR, package/reliability/foundry-deck signoff.",
+    "Public input releases pinned and hashed but manufacturing-qualified release alignment unverified.",
+    "No licensed commercial executable discovered on this worker PATH; license state not tested."
+  ],
+  "scope": "Actual reference-design verification, not a commercial-engine run, foundry tapeout approval or universal STA engine API."
+}

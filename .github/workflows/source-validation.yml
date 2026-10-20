@@ -63,6 +63,8 @@ jobs:
         run: python3 -m unittest test_job_evidence test_toolchain_diagnostics test_workspace_paths test_drawing test_logic_composition test_source_stimulus test_oscillator_projects test_chip_references
       - name: Workspace metadata and detailed API compatibility
         run: python3 -m unittest discover -s tests -p test_project_index.py
+      - name: Independent extraction, timing and LVS report auditors
+        run: python3 -m unittest discover -s tests -p test_paper_signoff.py -v
       - name: Exact KLayout intent review and revision persistence
         run: |
           python3 -m pip install klayout==0.30.5

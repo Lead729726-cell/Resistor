@@ -1,0 +1,10 @@
+# SAR12 digital controller fixture, ns/pF. Not a complete ADC interface closure.
+create_clock -name SAR_CLK -period 250 [get_ports clk]
+set_clock_uncertainty -setup 0.5 [get_clocks SAR_CLK]
+set_clock_uncertainty -hold 0.1 [get_clocks SAR_CLK]
+set_input_delay -clock SAR_CLK -max 25 [get_ports {reset start comparator}]
+set_input_delay -clock SAR_CLK -min 0.5 [get_ports {reset start comparator}]
+set_input_transition 0.1 [get_ports {reset start comparator}]
+set_output_delay -clock SAR_CLK -max 25 [get_ports {sample eval busy valid trial* code*}]
+set_output_delay -clock SAR_CLK -min 0.5 [get_ports {sample eval busy valid trial* code*}]
+set_load 0.01 [get_ports {sample eval busy valid trial* code*}]
