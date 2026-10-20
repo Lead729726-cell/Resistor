@@ -61,13 +61,23 @@ export async function verifyEditionPackage({executable,resources}){
    await page.getByTestId('app-ready').waitFor({timeout:120000});await page.getByRole('tab',{name:'회로도 / Schematic',exact:true}).click();
    await page.getByTestId('schematic-pin-QA_WIRE1-+').press('Enter');
    check('Wiring names the selected terminal and exposes explicit cancellation',(await page.locator('.schematic-easy-guide').innerText()).includes('QA_WIRE1.+')&&await page.getByTestId('schematic-wire-cancel').isVisible());
+   const primary=process.platform==='darwin'?'Meta':'Control';
+   await page.locator('.schematic-svg').press(primary+'+z');await page.getByTestId('schematic-wire-preview').waitFor({state:'detached'});
+   check('Installed Ctrl/Cmd+Z undoes the draft before any engine history',(await rpc('project.open',{project_id:editingId})).revision===editing.revision);
+   await page.locator('.schematic-svg').press(primary+'+Shift+z');await page.getByTestId('schematic-wire-preview').waitFor({state:'attached'});
+   check('Installed Ctrl/Cmd+Shift+Z restores the terminal draft without changing revision',(await rpc('project.open',{project_id:editingId})).revision===editing.revision);
+   if(process.platform==='darwin'){
+     await app.evaluate(({Menu})=>Menu.getApplicationMenu().getMenuItemById('register-undo').click());await page.getByTestId('schematic-wire-preview').waitFor({state:'detached'});
+     await app.evaluate(({Menu})=>Menu.getApplicationMenu().getMenuItemById('register-redo').click());await page.getByTestId('schematic-wire-preview').waitFor({state:'attached'});
+     check('Actual Mac menu undo/redo respects draft priority',(await rpc('project.open',{project_id:editingId})).revision===editing.revision);
+   }
    await page.getByTestId('schematic-wire-cancel').click();
    check('Cancelling a preview does not change the project revision',(await rpc('project.open',{project_id:editingId})).revision===editing.revision);
    await page.getByTestId('schematic-pin-QA_WIRE1-+').press('Enter');await page.getByTestId('schematic-pin-QA_WIRE2-+').press('Enter');
    await page.waitForFunction(()=>document.querySelector('[data-testid="schematic-pin-QA_WIRE1-+"]')?.textContent.includes('N_'),undefined,{timeout:30000});
    const wired=await rpc('project.open',{project_id:editingId}),r1=wired.schematic.devices.find(d=>d.id==='qa-wire-r1'),r2=wired.schematic.devices.find(d=>d.id==='qa-wire-r2');
    check('Installed pin-to-pin wiring saves exactly one revision with matching actual nets',wired.revision===editing.revision+1&&!!r1.pins['+']&&r1.pins['+']===r2.pins['+']);
-   await page.screenshot({path:path.join(base,'package-'+edition.edition+'-'+process.platform+'-'+process.arch+'.png')});report.completed=true;
+   report.shortcut_profile='virtuoso-style-v1';await page.screenshot({path:path.join(base,'package-'+edition.edition+'-'+process.platform+'-'+process.arch+'.png')});report.completed=true;
  }catch(e){report.completed=false;report.error=e.message;if(app){const p=await app.firstWindow().catch(()=>null);if(p){report.renderer_text=(await p.locator('body').innerText().catch(()=>'' )).slice(0,5000);await p.screenshot({path:path.join(base,'failure.png')}).catch(()=>{});}}throw e;}finally{
    if(app){let timer;try{await Promise.race([app.close(),new Promise(resolve=>{timer=setTimeout(()=>{app.process().kill();resolve();},15000);})]);}finally{clearTimeout(timer);}}
    try{await stopWorker(workspace);}catch(e){report.cleanup_error=e.message;}
