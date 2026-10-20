@@ -2,7 +2,22 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {makePlacedDevice,pinOffsets,orthogonalBridge,pinBridge,engineeringValue} from '../packages/ui/src/schematic-drawing';
 import {isLocalWorkbench} from '../packages/contracts/src/index';
+import {wirePins,nearestWirePin,wireNetConflict} from '../packages/ui/src/schematic-wiring';
 import {logicPreview,connectionCommand} from '../packages/ui/src/logic-composition';
+
+test('wire target snapping uses actual terminals after transforms and refuses ambiguous overlap',()=>{
+  const d=makePlacedDevice('resistor',[],[100,200],'r',90,true);
+  const pins=wirePins([d]);assert.deepEqual(pins.map(p=>p.point),[[144,200],[56,200]]);
+  assert.equal(nearestWirePin(pins,[140,200],5)?.pin,'+');
+  assert.equal(nearestWirePin(pins,[140,200],3),null);
+  assert.equal(nearestWirePin([...pins,{...pins[0],device_id:'other'}],[144,200],14),null);
+  assert.equal(nearestWirePin(pins,[100,200],14),null);
+  const to={...pins[1],net:'OUT'};assert.equal(wireNetConflict(pins[0],to),null);
+  assert.match(wireNetConflict({...pins[0],net:'VDD'},to)!,/VDD.*OUT/);
+  assert.match(wireNetConflict(pins[0],to,'0')!,/OUT.*0/);
+  assert.equal(wireNetConflict({...pins[0],net:'OUT'},to,' OUT '),null);
+  assert.deepEqual(d.pins,{'+':'','-':''});
+});
 test('local workstation routing keeps desktop/dev local and public hosting behind cloud auth',()=>{
   const descriptor=Object.getOwnPropertyDescriptor(globalThis,'location');
   try{for(const [protocol,hostname,port,expected] of [['file:','','',true],['http:','127.0.0.1','5173',true],['https:','example.com','5173',false],['http:','127.0.0.1','18766',false]] as const){Object.defineProperty(globalThis,'location',{value:{protocol,hostname,port},configurable:true});assert.equal(isLocalWorkbench(),expected);}}
