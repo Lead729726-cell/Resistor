@@ -1,4 +1,4 @@
-const {app,BrowserWindow,ipcMain,dialog,Menu,net,shell}=require('electron');
+const {app,BrowserWindow,ipcMain,dialog,Menu,net,shell,safeStorage}=require('electron');
 const {spawn}=require('node:child_process');
 const path=require('node:path');
 const {pathToFileURL}=require('node:url');
@@ -16,6 +16,10 @@ let quitting=false,quitReady=false;
 configureAppIdentity(app,{userDataOverride:process.env.REGISTER_USER_DATA,edition:productEdition});
 async function boot(){
   const root=path.resolve(__dirname,'../..');
+  const {createDesktopLicense}=await import(pathToFileURL(path.join(__dirname,'licensing.mjs')));
+  const license=await createDesktopLicense({root,userData:app.getPath('userData'),edition:productEdition.edition,safeStorage,fetchImpl:(url,options)=>net.fetch(url,{...options,credentials:'omit',useSessionCookies:false,bypassCustomProtocolHandlers:true})});
+  await license.refresh().catch(()=>{});
+  const licenseRefresh=setInterval(()=>void license.refresh().catch(()=>{}),60*60*1000);licenseRefresh.unref();
   if(!updater){
     const {DesktopUpdater}=await import(pathToFileURL(path.join(__dirname,'updates.mjs')));
     updater=new DesktopUpdater({edition:productEdition.edition,version:app.isPackaged?app.getVersion():require(path.join(root,'package.json')).version,userData:app.getPath('userData'),packaged:app.isPackaged,fetchImpl:makeUpdateFetch(net),install:async({file,update,folder})=>{
@@ -68,6 +72,11 @@ async function boot(){
     if(JSON.stringify(payload).length>32*1024*1024)throw new Error('IPC request too large');
     try{
       if(payload.method==='desktop.product'){if(Object.keys(payload.params??{}).length)throw Error('Product context takes no parameters');return {ok:true,result:{...productEdition,workspace}};}
+      if(payload.method==='license.workspace'){if(Object.keys(payload.params??{}).length)throw Error('No custom backup path accepted');const error=await shell.openPath(workspace);if(error)throw Error(error);return {ok:true,result:{opened:true,edition:productEdition.edition}};}
+      if(typeof payload.method==='string'&&payload.method.startsWith('license.'))return {ok:true,result:await license.rpc(payload.method,payload.params??{})};
+      // Enforcement is in the trusted main process, before viewer/engine calls.
+      // Update and read-only installation diagnostics remain accessible.
+      if(!['desktop.diagnostics','desktop.update.status','desktop.update.check','desktop.update.download','desktop.update.install','desktop.update.website','desktop.update.notes'].includes(payload.method))await license.assertActive();
       if(payload.method==='desktop.learning.guide'){const id=payload.params?.lesson_id;if(Object.keys(payload.params||{}).length!==1||typeof id!=='string'||!/^[a-z0-9-]{1,80}$/.test(id))throw Error('Invalid lesson ID');await shell.openExternal('https://resistor-downloads.vercel.app/tutorial/learn/'+id+'/');return {ok:true,result:{opened:true,product_id:productEdition.id}};}
       if(typeof payload.method==='string'&&payload.method.startsWith('desktop.update.')){
         if(['desktop.update.website','desktop.update.notes'].includes(payload.method)){
@@ -98,12 +107,12 @@ async function boot(){
       const runtime=await ensureRuntime();
       if(typeof payload.method==='string'&&payload.method.startsWith('assistant.'))return await assistantRpc(runtime,payload.method,payload.params??{});
       return await workerRpc(runtime,payload.method,payload.params??{});
-    }catch(e){return {ok:false,error:{code:'WORKER_UNAVAILABLE',message:e.message}};}
+    }catch(e){return {ok:false,error:{code:e.code||'WORKER_UNAVAILABLE',message:e.message}};}
   });
   mainWindow.webContents.setWindowOpenHandler(()=>({action:'deny'}));
   mainWindow.webContents.on('will-navigate',(e,url)=>{if(url!==expected)e.preventDefault();});
   mainWindow.webContents.session.setPermissionRequestHandler((_wc,_permission,callback)=>callback(false));
-  mainWindow.on('closed',()=>{mainWindow=null;});
+  mainWindow.on('closed',()=>{clearInterval(licenseRefresh);mainWindow=null;});
   if(devURL)await mainWindow.loadURL(devURL+(viewerOnly?'?mode=viewer':''));else await mainWindow.loadFile(path.join(rendererRoot,'index.html'),viewerOnly?{query:{mode:'viewer'}}:undefined);
 }
 const ensureWindow=()=>windowBootPromise??=(boot().finally(()=>{windowBootPromise=undefined;}));

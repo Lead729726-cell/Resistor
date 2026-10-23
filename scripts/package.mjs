@@ -21,6 +21,8 @@ await rm(stage,{recursive:true,force:true});
 await mkdir(stage,{recursive:true});
 await copyNotices(path.join(stage,'licenses'));
 await cp(rendererRoot,path.join(stage,'dist'),{recursive:true});
+await mkdir(path.join(stage,'platform/licensing'),{recursive:true});
+for(const file of ['token.mjs','public-config.json'])await cp(path.join('platform/licensing',file),path.join(stage,'platform/licensing',file));
 for(const folder of ['apps/desktop','workers/eda','adapters','docs','platform/cloud','platform/commercial'])await cp(folder,path.join(stage,folder),{recursive:true,filter:source=>!source.includes('__pycache__')&&!source.includes('vendor')&&!source.includes('.secrets')&&!source.includes(`${path.sep}evidence${path.sep}`)&&!source.endsWith(`${path.sep}evidence`)});
 // Runtime samples only; large recordings and test evidence are delivered separately.
 await cp('examples/sky130',path.join(stage,'examples/sky130'),{recursive:true});

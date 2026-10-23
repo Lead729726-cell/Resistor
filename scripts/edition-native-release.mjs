@@ -9,6 +9,8 @@ import {Zip,ZipDeflate,ZipPassThrough} from 'fflate';
 import {getProductEdition} from './edition-workspace.mjs';
 import {verifyEditionPackage} from './edition-native-qa.mjs';
 import {buildWindowsArmInstaller} from './windows-arm-installer.mjs';
+import {assertLicenseReleaseReady} from './license-release-check.mjs';
+await assertLicenseReleaseReady();
 const require=createRequire(import.meta.url),edition=getProductEdition(),pkg=JSON.parse(await readFile('package.json','utf8')),name=edition.edition==='edu'?'Resistor Edu':'Resistor';
 const run=(exe,args,opts={})=>new Promise((resolve,reject)=>{const c=spawn(exe,args,{stdio:'inherit',windowsHide:true,...opts});c.once('error',reject);c.once('exit',code=>code===0?resolve():reject(Error(exe+' exited '+code)));});
 await run(process.execPath,['scripts/package.mjs']);
