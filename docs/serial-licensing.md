@@ -31,10 +31,11 @@ or a claim that public educational tasks have become secret exams.
 
 ## Current external status
 
-The default public configuration deliberately has no production server URL or
-signing authority. It fails closed and explains that the seller must finish setup.
+The default public configuration deliberately has no production server URL.
+A public signing key is packaged; its private key stays in the seller's private
+directory. It fails closed and explains that the seller must finish setup.
 **Do not publish those locked installers.** `assertLicenseReleaseReady` blocks the
-native release entry point until a production HTTPS service/public key is configured.
+package and native release entry points until a production HTTPS service/public key is configured.
 Old 0.31.0 installers remain the existing public release.
 
 Inflearn's public guides show instructor enrollment/payment records, but a supported
