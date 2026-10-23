@@ -7,6 +7,10 @@ import { signMacApp } from './mac-signing.mjs';
 import {prepareNativeRuntime} from './prepare-native-runtime.mjs';
 import {getProductEdition} from './edition-workspace.mjs';
 import renderer from '../apps/desktop/renderer.cjs';
+import {assertLicenseReleaseReady} from './license-release-check.mjs';
+// All official package paths share this preflight, including edition branches
+// which do not carry the optional native release orchestration script.
+await assertLicenseReleaseReady();
 const edition=getProductEdition();
 const packageName=edition.edition==='edu'?'Resistor Edu':'Resistor';
 const rendererRoot=renderer.rendererDirectory(process.cwd(),edition);
