@@ -1,0 +1,79 @@
+{
+  "edition": "Resistor Indust",
+  "checked_at": "2026-10-24T04:08:53.426Z",
+  "baseline_commit": "bb9d768d25ce94e9b4f8517eee7f2ccb9badd090",
+  "source_sha256": {
+    "workers/eda/adc16_sim.py": "a919e86b0009f2809db9d86a0d2e1b34934447bd36c9ba14d23861c605f4b34f",
+    "workers/eda/adc16_digital.py": "8adc79ec54f6676a99afbb02655ce6a3ac8d00c29343f47a6dc97ebffe76599a",
+    "workers/eda/test_adc16_debug.py": "3adb11feabd73de8731caa50b27f315fac7920e681a345f0d1f57466680104f4",
+    "packages/ui/src/Adc16Library.tsx": "ba8fce0e9c5ae01d2e362567c8d7d00a7d67a70fdc70e1d04ec3013ef8c3479c",
+    "scripts/adc16-unit-qa.py": "48601aefd65cd405255ae17bb7a9f0d215de6270d54f051b8cc97a4241d7e2eb",
+    "scripts/adc16-digital-qa.py": "efbcc9a4289caa0117a7d626cabba570ce6f284d36f4b8ac8cf573947408d16f",
+    "scripts/debug-qa.mjs": "9a9e051dfd7a7dcb65503bdd70ae28fa9f1af3abac5f37a6bdfb05deb59d4408",
+    "scripts/adc16-trace-qa.py": "39d0dbf634f6bb8ac6a76c2af4cff1aa04fbc0817a622e9ffbc38b7706fd3ba7"
+  },
+  "checks": {
+    "core": {
+      "passed": 272,
+      "failed": 0
+    },
+    "python": {
+      "run": 209,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 1,
+      "windows_skipped_case_executed_on_windows": true
+    },
+    "native": [
+      {
+        "kind": "sar16_unit_cap",
+        "id": "a6a22ba8ad584c50bd5fc96995a9f3c2",
+        "execution": "completed",
+        "result": "pass",
+        "tool": "ngspice"
+      },
+      {
+        "kind": "sar16_controller",
+        "id": "89dbcd972246467f91197b4bed0f7633",
+        "execution": "completed",
+        "result": "pass",
+        "tool": "Icarus Verilog"
+      },
+      {
+        "kind": "sar_adc16",
+        "id": "819664052b8f4ed2b31426c091d03701",
+        "execution": "completed",
+        "result": "pass",
+        "tool": "ngspice + Icarus Verilog"
+      }
+    ],
+    "negative_controls": [
+      {
+        "case": "fixture-shorter-than-measurement-window",
+        "run_id": "b0df0379a9ca43679077408d03e47bd4",
+        "execution": "failed",
+        "result": "unknown"
+      }
+    ],
+    "bundle": {
+      "original_project": "58e643a3e18047d0b5410f498d7080e0",
+      "copy_project": "08373179957f473ea40194381ab792bb",
+      "geometry_hash": "5c1ae284fc08b856f21b2b150e67f5471f258d739f07ca1193add2970d383938",
+      "schematic_equal": true,
+      "imported_jobs": 0,
+      "invalid_zip_rejected": true,
+      "original_preserved": true
+    },
+    "ui": {
+      "run_prefix": "d32afc61",
+      "create_requests": 12,
+      "root_create_count": 1,
+      "repeated_batch_create_requests": 0,
+      "console_errors": 0
+    },
+    "build": "passed",
+    "typecheck": "passed",
+    "physical_signoff": "not established",
+    "installer_publication": "not performed"
+  }
+}

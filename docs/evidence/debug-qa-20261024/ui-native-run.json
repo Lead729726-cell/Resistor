@@ -1,0 +1,328 @@
+{
+  "id": "d32afc61f501473da7659808b6a3b573",
+  "project_id": "c0a8f558a57e4f9ea11fcdcd476195ba",
+  "kind": "simulation",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "freshness": "current",
+  "artifacts": {
+    "analog_netlist": "/workspace/.runtime/eda/runs/d32afc61f501473da7659808b6a3b573/analog.spice",
+    "testbench": "/workspace/.runtime/eda/runs/d32afc61f501473da7659808b6a3b573/testbench.spice",
+    "waveform_data": "/workspace/.runtime/eda/runs/d32afc61f501473da7659808b6a3b573/waveform.dat",
+    "rtl_replay": "/workspace/.runtime/eda/runs/d32afc61f501473da7659808b6a3b573/rtl-codes.csv",
+    "gate_replay": "/workspace/.runtime/eda/runs/d32afc61f501473da7659808b6a3b573/gate-codes.csv",
+    "ir_replay": "/workspace/.runtime/eda/runs/d32afc61f501473da7659808b6a3b573/ir-codes.csv",
+    "adc16_verification": "/workspace/.runtime/eda/runs/d32afc61f501473da7659808b6a3b573/adc16-verification.json",
+    "native_decisions": "/workspace/.runtime/eda/runs/d32afc61f501473da7659808b6a3b573/decisions.csv",
+    "stdout": "/workspace/.runtime/eda/runs/d32afc61f501473da7659808b6a3b573/stdout.log"
+  },
+  "manifest_path": "/workspace/.runtime/eda/runs/d32afc61f501473da7659808b6a3b573/manifest.json",
+  "input_signature": "e864ba9c33fe084f379e617eb2082534394b8884e677d45384f7664c1e602ffa",
+  "analysis_stage": "pre-layout",
+  "started_at": "2026-10-24T04:04:38.502752+00:00",
+  "tool": "ngspice + Icarus Verilog",
+  "measurements": {
+    "raw_sample_count": 17819,
+    "display_sample_count": 1760,
+    "start_s": 0,
+    "end_s": 0.0000255,
+    "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+    "source_energy": {
+      "9": {
+        "energy_J": 1.467625483847902e-9,
+        "average_power_W": 0.00005755394054305498,
+        "minimum_current_A": -0.0000020525133308524346,
+        "peak_current_A": 0.00041383448601450823,
+        "source_voltage_V": 1.8
+      }
+    },
+    "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+    "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+    "analysis": "tran",
+    "x_unit": "s",
+    "x_label": "time",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "output_bits": 16,
+    "ENOB_bits": null,
+    "ENOB_status": "not measured; output width is not effective resolution",
+    "frames": 1,
+    "max_code_error": 0,
+    "ambiguous_decisions": 0,
+    "lsb_V": 0.00003662109375,
+    "conversion_s": 0.0000245,
+    "sample_rate_Hz": 40816.32653061225,
+    "physical_unit_count": 244,
+    "bridge_capacitor_count": 6,
+    "architecture": "differential-4+4+4+4-split-SAR",
+    "sample_rate_scope": "External analog testbench frame rate; not full-controller START throughput.",
+    "rtl_clock_Hz": 2000000,
+    "rtl_min_start_period_s": 0.000024999999999999998,
+    "rtl_max_start_rate_Hz": 40000,
+    "research_metrics": {
+      "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+      "input_drivers_power": "not measured",
+      "external_bias_power": "not measured",
+      "complete_system_power_available": false,
+      "supply": {
+        "available": true,
+        "start_s": 0,
+        "end_s": 0.0000255,
+        "energy_J": 1.4582654936896628e-9,
+        "average_current_A": 0.00003177049005859832,
+        "peak_current_A": 0.00041383448601450823,
+        "minimum_current_A": -0.0000020525133308524346,
+        "average_power_W": 0.00005718688210547697,
+        "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+        "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+      }
+    }
+  },
+  "reference_verification": {
+    "checks": [
+      {
+        "name": "Actual 16 comparator trials match RTL, synthesized gates and CMOS graph",
+        "pass": true,
+        "observed": null
+      },
+      {
+        "name": "Complementary comparator levels at every decision",
+        "pass": true,
+        "observed": 0
+      },
+      {
+        "name": "Directed native code error within one nominal 16-bit LSB",
+        "pass": true,
+        "observed": 0
+      }
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "input_differential_V": 0.000018310546875,
+        "code": 32768,
+        "expected_code": 32768,
+        "error_codes": 0
+      }
+    ],
+    "scope": "Actual retained-charge four-bank CDAC and dynamic MOS decisions; external finite-impedance VREF/VCM/control. No calibrated or coupled-PEX accuracy claim. Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.",
+    "schema_version": 1,
+    "kind": "sar_adc16",
+    "source": "actual-native-engine-artifacts",
+    "pass": true,
+    "output_bits": 16
+  },
+  "message": "ADC16 actual native execution completed; accuracy criteria are reported independently.",
+  "literature_review": {
+    "schema_version": 1,
+    "review_version": "literature-review-20261013-v1",
+    "reviewed_at": "2026-10-13",
+    "reference_ids": [
+      "sar-reset-2025",
+      "clock-gating-2026",
+      "isscc-trends-2026"
+    ],
+    "references": [
+      {
+        "id": "sar-reset-2025",
+        "title": "A 2.8 fJ/conversion-step 10-bit 500 kS/s SAR ADC with low-power switching scheme and dynamic comparator",
+        "authors": "Linlin Huang; Jianhui Wu",
+        "date": "2025-01-10",
+        "venue": "IEICE Electronics Express 22(1), 20240528",
+        "doi": "10.1587/elex.21.20240528",
+        "url": "https://www.jstage.jst.go.jp/article/elex/22/1/22_21.20240528/_article",
+        "read_scope": "Full PDF, sections 2.2–2.4 and 3",
+        "technology": "40 nm CMOS, differential 10-bit ADC, 0.7 V",
+        "adopted": "Separate acquisition/reset, conversion, VDD and reference-source signed energy; no omitted reset-energy claim.",
+        "not_reproduced": "Differential switching topology, bootstrap/double-tail comparator or published energy, ENOB and capacitor reduction. Existing single-ended SKY130 ADC is preserved."
+      },
+      {
+        "id": "clock-gating-2026",
+        "title": "Clock-Gating Insertion Strategies on an Open-Source MSP430 Core: A Reproducible PPA Study and a Gate-Level Simulation Caveat",
+        "authors": "Xingran Huang; Qiming Guo; Jinwen Tang; Wenqi Jia; Dongzheng Wang",
+        "date": "2026-08-31",
+        "venue": "arXiv preprint v1; authors report acceptance at IEEE UEMCON 2026",
+        "doi": "10.48550/arXiv.2608.30954",
+        "url": "https://arxiv.org/abs/2608.30954",
+        "read_scope": "Full HTML, sections IV-B–D and V-G",
+        "technology": "openMSP430, commercial 32 nm synthesis flow; not this accumulator CPU",
+        "adopted": "Keep RTL/gate/CMOS replay and transistor timing as distinct evidence; explicitly report unavailable clock-gating/STA closure.",
+        "not_reproduced": "ICG insertion, MSP430 architecture, SDF/STA closure or reported PPA savings."
+      },
+      {
+        "id": "isscc-trends-2026",
+        "title": "ISSCC 2026 Press Kit — Analog, Power Management, Data Converters and Frequency Synthesizers trends",
+        "authors": "ISSCC technical subcommittees",
+        "date": "2026",
+        "venue": "Official conference summaries; not full research papers",
+        "doi": null,
+        "url": "https://www.isscc.org/s/ISSCC2026PressKit.pdf",
+        "read_scope": "PDF pages 97–98 and 113–122 (zero-based), including paper 32.2 summary",
+        "technology": "Multiple technologies; architecture and robustness trends only",
+        "adopted": "PVT/source-buffer assumptions, source completeness and named noise/linearity/timing gaps on every block.",
+        "not_reproduced": "Paper 32.2 dynamic ΔΣ topology, conference circuits, calibration, phase-noise or advertised performance."
+      }
+    ],
+    "relationship": "method-inspired review; existing owned circuits, not a reproduction of the cited chips",
+    "paper_performance_reproduced": false,
+    "qualification": "See actual engine verdict; literature review cannot establish PASS.",
+    "pending": [
+      "Thermal/flicker noise and mismatch yield except explicitly executed studies.",
+      "Full PVT/RC, EM/IR, ESD, antenna/density, foundry signoff.",
+      "Complete sequential timing, STA/Liberty and physical CPU/ADC-controller closure."
+    ],
+    "revision": 1,
+    "project_id": "c0a8f558a57e4f9ea11fcdcd476195ba",
+    "run_id": "d32afc61f501473da7659808b6a3b573"
+  },
+  "ended_at": "2026-10-24T04:05:01.652187+00:00",
+  "elapsed_s": 23.15812401799485,
+  "retained_waveforms": [
+    {
+      "name": "VINP",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "VINN",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "SAMPLE",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "EVAL",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "TOPP",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "TOPN",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "COMP",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "COMPN",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "supply_current",
+      "unit": "A",
+      "samples": 1760
+    },
+    {
+      "name": "reference_current",
+      "unit": "A",
+      "samples": 1760
+    },
+    {
+      "name": "B0",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B1",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B2",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B3",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B4",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B5",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B6",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B7",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B8",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B9",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B10",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B11",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B12",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B13",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B14",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "B15",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "VPWR",
+      "unit": "V",
+      "samples": 1760
+    },
+    {
+      "name": "CODE",
+      "unit": "code",
+      "samples": 1
+    }
+  ],
+  "current_flow_scope": [
+    "Actual aggregate VDD current only; external reference/bias/clock/input supplies and replayed digital power excluded.",
+    "No inferred internal branch current or geometry vector. Raw adaptive samples retained; display extrema use one shared time axis."
+  ]
+}

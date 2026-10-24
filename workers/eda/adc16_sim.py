@@ -8,14 +8,14 @@ from geometry import EDAError
 def check(name,passed,observed=None):return{'name':name,'pass':bool(passed),'observed':observed}
 
 
-def finish(run,p,folder,report,measurements):
+def finish(run,p,folder,report,measurements,tool='ngspice + Icarus Verilog'):
     report.update(schema_version=1,kind=p['design_template']['id'],source='actual-native-engine-artifacts',pass_=all(c['pass']for c in report['checks']))
     report['pass']=report.pop('pass_');report['scope']+=' Thermal/flicker noise, mismatch, jitter, full digital MOS timing and foundry signoff are not established.'
     output_bits=A.CATALOG[p['design_template']['id']].get('output_bits')
     report['output_bits']=output_bits
     file=Path(folder)/'adc16-verification.json';file.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
     run['artifacts']['adc16_verification']=str(file)
-    run.update(tool='ngspice + Icarus Verilog',reference_verification=report,analysis_result='pass'if report['pass']else'fail',message='ADC16 actual native execution completed; accuracy criteria are reported independently.')
+    run.update(tool=tool,reference_verification=report,analysis_result='pass'if report['pass']else'fail',message='ADC16 actual native execution completed; accuracy criteria are reported independently.')
     run.setdefault('measurements',{}).update(analysis='tran',x_unit='s',x_label='time',corner=p['testbench']['corner'],temperature_C=p['testbench']['temperature_C'],supply_V=p['testbench']['supply_V'],output_bits=output_bits,ENOB_bits=None,ENOB_status='not measured; output width is not effective resolution')
     run['measurements'].update(measurements)
 
@@ -67,7 +67,8 @@ def sar(server,run,p,folder,manifest,params,ir):
         t=f*period+v['acquisition_s'];expected.extend([t,t+v['hold_s']]);t+=v['hold_s']
         for b in range(16):expected.extend([t+(b+.5)*v['bit_period_s'],t+(b+1)*v['bit_period_s']])
     if len(pauses)!=len(expected)or any(not math.isfinite(t)or abs(t-e)>1e-12 for t,e in zip(pauses,expected)):raise EDAError('ADC16_TIME','Actual retained-state pauses differ from the sixteen-decision schedule.')
-    names=['VINP','VINN','SAMPLE','EVAL','TOPP','TOPN','COMP','COMPN','supply_current','reference_current']+A.BITS+['VPWR'];traces(run,folder,names)
+    names=['VINP','VINN','SAMPLE','EVAL','TOPP','TOPN','COMP','COMPN','supply_current','reference_current']+A.BITS+['VPWR']
+    actual_rows(folder,len(names)+1,p['testbench']['duration_s']);traces(run,folder,names)
     run['waveforms'].append(dict(name='CODE',unit='code',x=[(r['frame']+1)*period for r in frames],y=[r['code']for r in frames]))
     checks=[check('Actual 16 comparator trials match RTL, synthesized gates and CMOS graph',True),check('Complementary comparator levels at every decision',ambiguous==0,ambiguous),check('Directed native code error within one nominal 16-bit LSB',all(abs(f['error_codes'])<=1 for f in frames),max(abs(f['error_codes'])for f in frames))]
     report={'checks':checks,'frames':frames,'scope':'Actual retained-charge four-bank CDAC and dynamic MOS decisions; external finite-impedance VREF/VCM/control. No calibrated or coupled-PEX accuracy claim.'}
@@ -105,7 +106,7 @@ class NativeTrace(list):
 def actual_rows(folder,columns,expected_end=None):
     rows=NativeTrace()
     with(folder/'waveform.dat').open()as source:
-        next(source)
+        if not next(source, '').strip():raise EDAError('ADC16_TRACE','Native waveform header is missing.')
         for line in source:
             if not line.strip():continue
             try:r=list(map(float,line.split()))
@@ -114,6 +115,7 @@ def actual_rows(folder,columns,expected_end=None):
             rows.append(r)
             if len(rows)>2000000:raise EDAError('ADC16_TRACE','Split long ADC16 traces into bounded jobs.')
     if not rows:raise EDAError('ADC16_TRACE','Native waveform has no samples.')
+    if rows[0][0]!=0:raise EDAError('ADC16_INCOMPLETE','Native transient must start at zero; a partial record cannot establish complete boundary power or sampling history.')
     if expected_end is not None and abs(rows[-1][0]-expected_end)>max(1e-15,expected_end*1e-8):raise EDAError('ADC16_INCOMPLETE','Native waveform does not reach the requested stop time; completion marker alone is insufficient.')
     rows.times=[r[0]for r in rows]
     return rows
@@ -128,6 +130,11 @@ def sample(rows,t,column):
     if times[index]==t:return rows[index][column]
     a,b=rows[index-1],rows[index]
     return a[column]+(b[column]-a[column])*(t-a[0])/(b[0]-a[0])
+
+
+def pipeline_ambiguity(levels,output_indices):
+    """Check the exact half-cycle sources consumed by each aligned output."""
+    return sum(sum(levels[i-14+j][j]for j in range(14))+levels[i][14]for i in output_indices)
 
 
 def sdm(server,run,p,folder,manifest,params,ir):
@@ -168,7 +175,7 @@ def pipeline(server,run,p,folder,manifest,params,ir):
               f'VRESET RESET VGND PWL(0 1.8 {t*1.99:.15g} 1.8 {t*2:.15g} 0)']
     names=['VINP','VINN','PHI1','PHI2','RESET','RESIDUEP','RESIDUEN']+[f'STAGE{i}_{role}'for i in range(14)for role in('LOW','HIGH')]+['Q0','Q1','Q2','supply_current']
     tb=write_tb(folder,lines,names,p);ngspice(server,run,folder,manifest,tb,'ADC16_NATIVE_COMPLETE')
-    rows=actual_rows(folder,len(names)+1,p['testbench']['duration_s']);stages=[];flashes=[];valids=[];ambiguous=0
+    rows=actual_rows(folder,len(names)+1,p['testbench']['duration_s']);stages=[];flashes=[];valids=[];levels=[]
     count=int(rows[-1][0]/(t/2))
     for i in range(count):
         when=(i+.90)*t/2
@@ -179,11 +186,12 @@ def pipeline(server,run,p,folder,manifest,params,ir):
             lo,hi=values[7+2*j:9+2*j];digits.append(int(lo>=.9)+2*int(hi>=.9))
         flash=sum(int(values[35+j]>=.9)<<j for j in range(3))
         stages.append(digits);flashes.append(flash);valids.append(int(i>=8 and i%2==1))
-        if i>=24 and i%2==1:ambiguous+=sum(not(x<=.36 or x>=1.44)for x in values[7:38])
+        levels.append([sum(not(x<=.36 or x>=1.44)for x in values[7+2*j:9+2*j])for j in range(14)]+[sum(not(x<=.36 or x>=1.44)for x in values[35:38])])
     actual=D.pipeline_replay(server,run,folder,manifest,stages,flashes,valids)
     frames=[(i,code,error)for i,code,valid,error in actual if i>=28 and(valid or error)]
     valid_frames=[(i,c)for i,c,e in frames if not e]
     if not frames:raise EDAError('ADC16_RECORD','No filled pipeline output interval; retain more cycles.')
+    ambiguous=pipeline_ambiguity(levels,[i for i,_,_ in frames])
     expected=D.quantize16(vin,ref);errors=[abs(c-expected)for _,c in valid_frames]
     traces(run,folder,names)
     run['waveforms'].append(dict(name='CODE',unit='code',x=[(i+.90)*t/2 for i,c in valid_frames],y=[c for i,c in valid_frames]))
@@ -196,10 +204,18 @@ def pipeline(server,run,p,folder,manifest,params,ir):
     manifest['settings'].update(adc16_architecture='14 differential 1.5-bit stages plus registered 2-bit flash',digital_boundary='two alternating sample phases, native thermometer samples → half-cycle RTL alignment; no digital MOS delay/power')
 
 
+def matches_binding(ir,original):
+    # Display positions/IDs may change, but ports, primitive models and the complete
+    # hierarchy must still match the independently synthesized RTL being replayed.
+    def same(a,b):return a.get('ports')==b.get('ports')and SD.electrical(a)==SD.electrical(b)
+    cells=ir.get('cells',{});expected=original.get('cells',{})
+    return same(ir,original)and cells.keys()==expected.keys()and all(same(c,expected[n])for n,c in cells.items())
+
+
 def digital_block(server,run,p,folder,manifest):
     kind=p['design_template']['id']
     original=A.schematic(kind,p['design_template']['parameters'])
-    if SD.electrical(p['schematic'])!=SD.electrical(original)or any(SD.electrical(c)!=SD.electrical(original['cells'].get(n,{'devices':[]}))for n,c in p['schematic']['cells'].items()):raise EDAError('ADC16_BINDING','Edited digital CMOS hierarchy needs re-synthesis and binding; original RTL is not a substitute for your edits.')
+    if not matches_binding(p['schematic'],original):raise EDAError('ADC16_BINDING','Edited digital CMOS hierarchy needs re-synthesis and binding; original RTL is not a substitute for your edits.')
     if kind=='sar16_controller':
         values=list(dict.fromkeys([0,1,2,255,256,32767,32768,32769,65280,65534,65535,*range(0,65536,257)]));decisions=[];frames=[]
         for f,code in enumerate(values):
@@ -223,8 +239,7 @@ def digital_block(server,run,p,folder,manifest):
             flashes.append(inputs[t-14][1]if 0<=t-14<len(inputs)else 0);valids.append(int(t<len(inputs)))
         rows=D.pipeline_replay(server,run,folder,manifest,stages,flashes,valids);codes=[(i,c)for i,c,v,e in rows if v]
     run['waveforms']=[dict(name='CODE',unit='code',x=[float(i)for i,_ in codes],y=[c for _,c in codes])]
-    finish(run,p,folder,dict(checks=[check('Actual RTL, synthesized gates, CMOS graph and independent digital oracle agree',True,len(codes))],scope='Digital standalone block stimuli only. No analog execution, ADC input accuracy or MOS delay/power measured.'),dict(frames=len(codes),architecture='digital-block',x_unit='cycle',x_label='digital cycle'))
-    run['tool']='Icarus Verilog'
+    finish(run,p,folder,dict(checks=[check('Actual RTL, synthesized gates, CMOS graph and independent digital oracle agree',True,len(codes))],scope='Digital standalone block stimuli only. No analog execution, ADC input accuracy or MOS delay/power measured.'),dict(frames=len(codes),architecture='digital-block',x_unit='cycle',x_label='digital cycle'),tool='Icarus Verilog')
 
 
 def block(server,run,p,folder,manifest,params,ir):
@@ -267,7 +282,7 @@ def block(server,run,p,folder,manifest,params,ir):
         if'CLK'in sub:voltage('CLK','PULSE(0 1.8 5u 1n 1n 4.9u 10u)')
         names=[n for n in('VINP','VINN','VIN','OUTP','OUTN','OUT','HIGH','LOW','Q0','Q1','Q2')if n in sub]+['supply_current'];target=kind
     tb=write_tb(folder,lines,names,p);ngspice(server,run,folder,manifest,tb,'ADC16_NATIVE_COMPLETE');rows=actual_rows(folder,len(names)+1,p['testbench']['duration_s']);traces(run,folder,names)
-    def at(name,t=19e-6):return sample(rows,min(t,rows[-1][0]),names.index(name)+1)
+    def at(name,t=19e-6):return sample(rows,t,names.index(name)+1)
     if target=='capacitor':
         difference=at('TOP')-at(bottom);checks=[check('Real capacitor terminal settles to declared 0.6V step',abs(difference-.6)<.001,difference)]
     elif target=='switch':checks=[check('Enabled real TG passes the external voltage',abs(at('Y')-at('A'))<.02,at('Y')-at('A'))]
@@ -283,17 +298,19 @@ def block(server,run,p,folder,manifest,params,ir):
     elif target=='pipeline16_mdac':checks=[check('Real SC half-MDAC produces nominal gain 2 (functional 50mV bound)',abs(at('OUT')-1.05)<.05,at('OUT'))]
     elif target=='pipeline16_stage':checks=[check('Real differential stage gain approximately 2 (functional 50mV bound)',abs(at('OUTP')-at('OUTN')-.3)<.05,at('OUTP')-at('OUTN'))]
     elif target=='pipeline16_flash':checks=[check('Final flash captures thermometer 011',at('Q0')>1.44 and at('Q1')>1.44 and at('Q2')<.36,[at('Q0'),at('Q1'),at('Q2')])]
-    finish(run,p,folder,dict(checks=checks,scope='Standalone block with explicitly declared bias, load and clocks. Functional block criterion only; not a sixteen-bit ADC accuracy test.'),dict(block_context=target,frames=None))
+    finish(run,p,folder,dict(checks=checks,scope='Standalone block with explicitly declared bias, load and clocks. Functional block criterion only; not a sixteen-bit ADC accuracy test.'),dict(block_context=target,frames=None),tool='ngspice')
 
 
 def execute(server,run,p,folder,manifest,params):
     folder=Path(folder);kind=p['design_template']['id']
     config=A.settings({**p['testbench'],**{k:params[k]for k in native.TESTBENCH if k in params}});p={**p,'testbench':config}
+    if config['analysis']!='tran':raise EDAError('ADC16_ANALYSIS','ADC16 replay fixtures require transient analysis; no AC/DC result is substituted.')
+    if kind in('sar16_controller','sdm16_filter','pipeline16_align')and params.get('post_layout'):raise EDAError('ADC16_DIGITAL_PEX','Digital replay does not model extracted parasitics or transistor delay. Use pre-layout logical verification.')
     root_to_core={'sar_adc16':'sar16_analog','sigma_delta16':'sdm16_modulator','pipeline_adc16':'pipeline16_analog'}
     if kind in root_to_core:
         if params.get('post_layout'):raise EDAError('ADC16_FULL_PEX','Full ADC mask/interface extraction is not qualified. Inspect explicit block or core geometry first.')
         original=A.schematic(kind,p['design_template']['parameters'])
-        if SD.electrical(p['schematic'])!=SD.electrical(original)or any(SD.electrical(c)!=SD.electrical(original['cells'].get(n,{'devices':[]}))for n,c in p['schematic']['cells'].items()):raise EDAError('ADC16_BINDING','Edited full mixed hierarchy needs explicit native analog/RTL re-binding; no unedited substitute is simulated.')
+        if not matches_binding(p['schematic'],original):raise EDAError('ADC16_BINDING','Edited full mixed hierarchy needs explicit native analog/RTL re-binding; no unedited substitute is simulated.')
         ir=A.schematic(root_to_core[kind],p['design_template']['parameters']);p={**p,'cell':root_to_core[kind],'schematic':ir,'ports':ir['ports']}
     else:ir=p['schematic']
     if kind in ('sar_adc16','sar16_analog'):return sar(server,run,p,folder,manifest,params,ir)

@@ -1,10 +1,12 @@
 """Native RTL/gate/CMOS replay: exhaustive pipeline, directed SAR, CIC overflow/reset."""
-import hashlib, json, os, random, subprocess, sys, time
+import argparse, hashlib, json, os, random, subprocess, sys, time
 from pathlib import Path
 from types import SimpleNamespace
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'workers/eda'))
 import adc16_digital as D
-OUT=ROOT/'.runtime/adc16/digital';OUT.mkdir(parents=True,exist_ok=True)
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--out',type=Path,default=ROOT/'.runtime/adc16/digital')
+OUT=parser.parse_args().out.resolve();OUT.mkdir(parents=True,exist_ok=True)
 manifest={'edition':'Resistor Indust','commands':[],'scope':'Digital logic only; independent stimuli are not analog ADC measurements.'}
 def process(run,folder,argv,name,manifest,timeout=120):
  t=time.monotonic();r=subprocess.run(argv,cwd=folder,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=600)

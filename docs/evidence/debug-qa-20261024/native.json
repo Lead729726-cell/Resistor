@@ -1,0 +1,190 @@
+{
+  "edition": "Resistor Indust",
+  "checked_at": "2026-10-24T04:00:38.218Z",
+  "actual_native": true,
+  "runs": [
+    {
+      "kind": "sar16_unit_cap",
+      "project_id": "9155d7179bf14760b0c16eaf5160d285",
+      "id": "a6a22ba8ad584c50bd5fc96995a9f3c2",
+      "execution": "completed",
+      "result": "pass",
+      "tool": "ngspice",
+      "measurements": {
+        "raw_sample_count": 10049,
+        "display_sample_count": 1832,
+        "start_s": 0,
+        "end_s": 0.000019999999999999998,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "3": {
+            "energy_J": 0,
+            "average_power_W": 0,
+            "minimum_current_A": 0,
+            "peak_current_A": 0,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "output_bits": null,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "block_context": "capacitor",
+        "frames": null,
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 0,
+            "end_s": 0.000019999999999999998,
+            "energy_J": 0,
+            "average_current_A": 0,
+            "peak_current_A": 0,
+            "minimum_current_A": 0,
+            "average_power_W": 0,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "TOP_tail": {
+            "available": true,
+            "start": 0.000014999999999999999,
+            "end": 0.000019999999999999998,
+            "integral": 0.000002999999999999988,
+            "mean": 0.5999999999999976,
+            "rms": 0.5999999999999996,
+            "ac_rms": 4.9421560620597e-8,
+            "minimum": 0.6000000000000001,
+            "maximum": 0.6000000000000002,
+            "peak_to_peak": 1.1102230246251565e-16,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      }
+    },
+    {
+      "kind": "sar16_controller",
+      "project_id": "e7c4a1df011a4e6596942a717c6073b2",
+      "id": "89dbcd972246467f91197b4bed0f7633",
+      "execution": "completed",
+      "result": "pass",
+      "tool": "Icarus Verilog",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "cycle",
+        "x_label": "digital cycle",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "output_bits": 16,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "frames": 265,
+        "architecture": "digital-block",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": false,
+            "reason": "No analog supply-current trace; RTL/gate replay is not transistor power."
+          }
+        }
+      }
+    },
+    {
+      "kind": "sar_adc16",
+      "project_id": "58e643a3e18047d0b5410f498d7080e0",
+      "id": "819664052b8f4ed2b31426c091d03701",
+      "execution": "completed",
+      "result": "pass",
+      "tool": "ngspice + Icarus Verilog",
+      "measurements": {
+        "raw_sample_count": 17819,
+        "display_sample_count": 1760,
+        "start_s": 0,
+        "end_s": 0.0000255,
+        "display_sampling": "actual shared-axis bucket endpoints and extrema; original raw file retained",
+        "source_energy": {
+          "9": {
+            "energy_J": 1.467625483847902e-9,
+            "average_power_W": 0.00005755394054305498,
+            "minimum_current_A": -0.0000020525133308524346,
+            "peak_current_A": 0.00041383448601450823,
+            "source_voltage_V": 1.8
+          }
+        },
+        "energy_method": "signed trapezoidal integration of every raw adaptive-step sample; no clipping or display-thinned integration",
+        "power_scope": "Signed VDD boundary power only; external clock, input, reference, VCM/bias supplies and replayed digital power excluded. Not total ADC power.",
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "output_bits": 16,
+        "ENOB_bits": null,
+        "ENOB_status": "not measured; output width is not effective resolution",
+        "frames": 1,
+        "max_code_error": 0,
+        "ambiguous_decisions": 0,
+        "lsb_V": 0.00003662109375,
+        "conversion_s": 0.0000245,
+        "sample_rate_Hz": 40816.32653061225,
+        "physical_unit_count": 244,
+        "bridge_capacitor_count": 6,
+        "architecture": "differential-4+4+4+4-split-SAR",
+        "sample_rate_scope": "External analog testbench frame rate; not full-controller START throughput.",
+        "rtl_clock_Hz": 2000000,
+        "rtl_min_start_period_s": 0.000024999999999999998,
+        "rtl_max_start_rate_Hz": 40000,
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 0,
+            "end_s": 0.0000255,
+            "energy_J": 1.4582654936896628e-9,
+            "average_current_A": 0.00003177049005859832,
+            "peak_current_A": 0.00041383448601450823,
+            "minimum_current_A": -0.0000020525133308524346,
+            "average_power_W": 0.00005718688210547697,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          }
+        }
+      }
+    }
+  ],
+  "negative_controls": [
+    {
+      "case": "fixture-shorter-than-measurement-window",
+      "run_id": "b0df0379a9ca43679077408d03e47bd4",
+      "execution": "failed",
+      "result": "unknown"
+    }
+  ],
+  "scope": "Actual isolated native smoke at default conditions. Directed ADC accuracy, PVT/noise/mismatch, full-chip timing and manufacturing signoff are separate.",
+  "bundle": {
+    "original_project": "58e643a3e18047d0b5410f498d7080e0",
+    "copy_project": "08373179957f473ea40194381ab792bb",
+    "geometry_hash": "5c1ae284fc08b856f21b2b150e67f5471f258d739f07ca1193add2970d383938",
+    "schematic_equal": true,
+    "imported_jobs": 0,
+    "invalid_zip_rejected": true,
+    "original_preserved": true
+  }
+}

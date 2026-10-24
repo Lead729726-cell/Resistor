@@ -88,6 +88,18 @@ def replay(server,run,folder,manifest,stem,top,tb):
     return results[0]
 
 
+def replay_rows(result,count,width):
+    """Agreement between engines is insufficient if all omitted the same rows."""
+    if len(result)!=count:raise EDAError('ADC16_REPLAY','Digital output record is incomplete; every input timestamp must be retained.')
+    rows=[]
+    for i,line in enumerate(result):
+        try:row=list(map(int,line.split()))
+        except ValueError:raise EDAError('ADC16_REPLAY','Digital output contains an unknown or non-integer value.')
+        if len(row)!=width or row[0]!=i or not 0<=row[1]<=65535 or any(v not in(0,1)for v in row[2:]):raise EDAError('ADC16_REPLAY','Digital timestamps, 16-bit codes and binary status must be complete and ordered.')
+        rows.append(row)
+    return rows
+
+
 def sar_replay(server,run,folder,manifest,decisions,frames):
     Path(folder/'decisions.mem').write_text('\n'.join(str(int(r[8]))for r in decisions)+'\n')
     Path(folder/'expected.mem').write_text('\n'.join(f'{r["code"]:016b}'for r in frames)+'\n')
@@ -104,7 +116,10 @@ tick;if(trial!==16'h8000||sample!==0||eval!==0)$fatal(1,"nonoverlap/trial");
 for(b=15;b>=0;b=b-1)begin tick;if(eval!==1)$fatal(1,"evaluation");comparator=decisions[16*f+15-b];tick;end
 if(valid!==1||code!==expected[f]||busy!==0)$fatal(1,"native SAR code replay");
 $fwrite(out,"%0d %0d\\n",f,code);tick;end $fclose(out);$finish;end endmodule'''.replace('COUNT',str(len(decisions))).replace('FRAMES',str(len(frames)))
-    return replay(server,run,folder,manifest,'sar16','sar16_controller',tb)
+    result=replay(server,run,folder,manifest,'sar16','sar16_controller',tb)
+    rows=replay_rows(result,len(frames),2)
+    if any(code!=frame['code']for (_,code),frame in zip(rows,frames)):raise EDAError('ADC16_REPLAY','Actual SAR replay disagrees with the native comparator decision sequence.')
+    return result
 
 
 def filter_replay(server,run,folder,manifest,bits,resets):
@@ -116,7 +131,7 @@ initial begin $readmemb("bits.mem",bits);$readmemb("resets.mem",resets);out=$fop
 for(i=0;i<COUNT;i=i+1)begin reset=resets[i];bit_in=bits[i];#5;clk=1;#5;clk=0;$fwrite(out,"%0d %0d %0d\\n",i,code,valid);end
 $fclose(out);$finish;end endmodule'''.replace('COUNT',str(len(bits)))
     result=replay(server,run,folder,manifest,'sigma_delta16','sigma_delta16_filter',tb);oracle=cic3_reference(bits,resets)
-    actual=[tuple(map(int,l.split()[1:]))for l in result]
+    actual=[tuple(row[1:])for row in replay_rows(result,len(bits),3)]
     if actual!=oracle:raise EDAError('ADC16_FILTER','CIC3 modulo RTL disagrees with independent full-precision FIR.')
     return[(i,c)for i,(c,valid)in enumerate(actual)if valid]
 
@@ -132,7 +147,7 @@ pipeline16_align dut(clk,reset,sample_valid,stage_codes,flash_therm,code,valid,e
 initial begin $readmemb("stages.mem",stages);$readmemb("flash.mem",flash);$readmemb("valids.mem",valids);out=$fopen("codes.csv","w");#5;clk=1;#5;clk=0;reset=0;
 for(i=0;i<COUNT;i=i+1)begin stage_codes=stages[i];flash_therm=flash[i];sample_valid=valids[i];#5;clk=1;#5;clk=0;$fwrite(out,"%0d %0d %0d %0d\\n",i,code,valid,error);end
 $fclose(out);$finish;end endmodule'''.replace('COUNT',str(len(stages)))
-    result=replay(server,run,folder,manifest,'pipeline16','pipeline16_align',tb);rows=[list(map(int,l.split()))for l in result]
+    result=replay(server,run,folder,manifest,'pipeline16','pipeline16_align',tb);rows=replay_rows(result,len(stages),4)
     for i,code,valid,error in rows:
         expected_valid=i>=14 and bool(valids[i-14]);digits=[stages[i-14+j][j]for j in range(14)]if i>=14 else[]
         malformed=i>=14 and (any(v not in(0,1,3)for v in digits)or flashes[i]not in(0,1,3,7))

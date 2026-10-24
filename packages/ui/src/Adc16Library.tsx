@@ -9,20 +9,28 @@ const architectures={
 } as const;
 type Family=keyof typeof architectures;
 interface Props{catalog:DesignCatalog;transport:typeof rpc;readOnly:boolean;shared:boolean;onProject:(p:Project,s:Scene)=>void|Promise<void>}
+interface Scope{transport:typeof rpc;catalog:DesignCatalog;created:Record<string,string>;commands:Record<string,string>;busy:boolean;error:string}
 
 export default function Adc16Library({catalog,transport,readOnly,shared,onProject}:Props){
- const [family,setFamily]=useState<Family>('sar'),[busy,setBusy]=useState(false),[error,setError]=useState(''),[created,setCreated]=useState<Record<string,string>>({});
- const alive=useRef(true),commands=useRef<Record<string,string>>({});
+ const [family,setFamily]=useState<Family>('sar'),[,refresh]=useState(0);
+ const source=useRef<Scope|null>(null),latest=useRef({readOnly,shared,onProject});latest.current={readOnly,shared,onProject};
+ if(!source.current||source.current.transport!==transport||source.current.catalog!==catalog)source.current={transport,catalog,created:{},commands:{},busy:false,error:''};
+ const scope=source.current,{created,busy,error}=scope;
+ const alive=useRef(true);
  useEffect(()=>{alive.current=true;return()=>{alive.current=false;};},[]);
+ const active=()=>alive.current&&source.current===scope;
+ const ensure=()=>{if(!active())throw Error('작업 공간이 변경되어 이전 요청의 후속 작업을 중단했습니다.');};
+ const redraw=()=>{if(active())refresh(v=>v+1);};
  const all=catalog.templates.filter(b=>typeof b.adc_family==='string'&&b.id.includes('16'));
  const blocks=all.filter(b=>b.adc_family===family||b.adc_family==='common');
  const spec=architectures[family];
- const work=async(fn:()=>Promise<void>)=>{setBusy(true);setError('');try{await fn();}catch(e){if(alive.current)setError(e instanceof Error?e.message:String(e));}finally{if(alive.current)setBusy(false);}};
- const open=async(id:string)=>{const p=await transport<Project>('project.open',{project_id:id});const s=await transport<Scene>('view.get_scene',{project_id:id,max_shapes:2000});if(alive.current)await onProject(p,s);};
+ const work=async(fn:()=>Promise<void>)=>{if(scope.busy)return;scope.busy=true;scope.error='';redraw();try{ensure();await fn();}catch(e){if(active())scope.error=e instanceof Error?e.message:String(e);}finally{scope.busy=false;redraw();}};
+ const open=async(id:string)=>{ensure();const p=await transport<Project>('project.open',{project_id:id});ensure();const s=await transport<Scene>('view.get_scene',{project_id:id,max_shapes:2000});ensure();if(s.project_id!==p.id||s.revision!==p.revision)throw Error('프로젝트가 변경되어 장면을 열지 않았습니다. 현재 revision으로 다시 여세요.');await latest.current.onProject(p,s);};
  const create=async(id:string,physical=false)=>{
+  ensure();
   const block=all.find(b=>b.id===id);if(!block)throw Error('현재 엔진에 이 블록이 없습니다. 엔진 버전을 확인하세요.');
   const key=id+(physical?':physical':'');let projectId=created[key];
-  if(!projectId){commands.current[key]??=crypto.randomUUID();const p=await transport<Project>('design.create_template',{template_id:id,name:`ADC16 v1 · ${block.name}${physical?' · 물리 코어':''}`,parameters:block.parameter_defaults,physical_core:physical,chip_limits:defaultChipLimits,command_id:commands.current[key]});projectId=p.id;if(alive.current)setCreated(v=>({...v,[key]:p.id}));}
+  if(!projectId){if(latest.current.readOnly||latest.current.shared)throw Error('현재 작업 공간에서는 새 회로를 생성할 수 없습니다.');scope.commands[key]??=crypto.randomUUID();const p=await transport<Project>('design.create_template',{template_id:id,name:`ADC16 v1 · ${block.name}${physical?' · 물리 코어':''}`,parameters:block.parameter_defaults,physical_core:physical,chip_limits:defaultChipLimits,command_id:scope.commands[key]});ensure();projectId=p.id;scope.created[key]=p.id;redraw();}
   return projectId;
  };
  if(!all.length)return null;
@@ -32,9 +40,9 @@ export default function Adc16Library({catalog,transport,readOnly,shared,onProjec
   <p>{spec.summary}</p><p className="mono">{spec.spec}</p>
   {family==='sigma_delta'&&<p className="it-muted">기준전압 부하를 견디는 100Ω 저항 분압기를 사용하며 약 16.2mW를 소비합니다. 저전력 기준회로와 외부 anti-alias 필터, gain/offset 보정은 추가 설계 항목입니다.</p>}
   <p className="it-warning">16-bit는 출력 코드 폭입니다. 실물 16-bit ENOB·잡음·편차·지터·제조 signoff는 별도 검증입니다. 회로 생성은 해석 실행이나 PASS 판정이 아닙니다.</p>
-  <div className="it-toolbar"><button className="button primary" disabled={busy||readOnly||shared} onClick={()=>void work(async()=>open(await create(spec.root)))}>전체 {spec.title} ADC {created[spec.root]?'열기':'생성'}</button>
+  <div className="it-toolbar"><button className="button primary" disabled={busy||((readOnly||shared)&&!created[spec.root])} onClick={()=>void work(async()=>open(await create(spec.root)))}>전체 {spec.title} ADC {created[spec.root]?'열기':'생성'}</button>
    <button disabled={busy||readOnly||shared} onClick={()=>void work(async()=>{for(const b of blocks){if(!alive.current)return;await create(b.id);}if(alive.current)await open(await create(spec.root));})}>{busy?'회로 처리 중…':`${blocks.length}개 계층 블록 준비`}</button>
-   <button disabled={busy} onClick={()=>void work(async()=>{const projects=await transport<Project[]>('project.list',{metadata_only:true});const found:Record<string,string>={};for(const b of all)for(const physical of[false,true]){const p=projects.filter(p=>p.cell===b.id&&p.name===`ADC16 v1 · ${b.name}${physical?' · 물리 코어':''}`).at(-1);if(p)found[b.id+(physical?':physical':'')]=p.id;}if(alive.current)setCreated(v=>({...v,...found}));})}>기존 프로젝트 읽기</button></div>
+   <button disabled={busy} onClick={()=>void work(async()=>{const projects=await transport<Project[]>('project.list',{metadata_only:true});ensure();const found:Record<string,string>={};for(const b of all)for(const physical of[false,true]){const p=projects.filter(p=>p.cell===b.id&&p.name===`ADC16 v1 · ${b.name}${physical?' · 물리 코어':''}`).at(-1);if(p)found[b.id+(physical?':physical':'')]=p.id;}Object.assign(scope.created,found);redraw();})}>기존 프로젝트 읽기</button></div>
   <details><summary>하위 블록 · {blocks.length}개 / 공통 블록 포함</summary><div className="it-table-wrap"><table><thead><tr><th>편집 가능한 블록</th><th>실제 포트</th><th>작업</th></tr></thead><tbody>{blocks.map(b=><tr key={b.id}><td>{b.name}</td><td><code>{b.ports.join(', ')}</code></td><td><button disabled={busy||((readOnly||shared)&&!created[b.id])} onClick={()=>void work(async()=>open(await create(b.id)))}>{created[b.id]?'열기':'회로 생성'}</button>{b.physical_supported===true&&<button disabled={busy||((readOnly||shared)&&!created[b.id+':physical'])} onClick={()=>void work(async()=>open(await create(b.id,true)))}>물리 {created[b.id+':physical']?'열기':'생성'}</button>}</td></tr>)}</tbody></table></div></details>
   <p className="it-muted">생성 후 ‘테스트벤치 → 시뮬레이션’에서 실행하고 파형·칩 레퍼런스 결과를 확인하세요. 지원 물리 블록은 1,000×1,000µm 한도에서 생성합니다. DRC/LVS/PEX는 검증 패널에서 각각 실행해야 합니다.</p>
   {error&&<p className="it-error" role="alert">{error} · 완료된 블록은 유지됩니다. 다시 누르면 동일 명령으로 이어집니다.</p>}
