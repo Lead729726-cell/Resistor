@@ -49,6 +49,7 @@ import LearningDashboard from './LearningDashboard';
 import './edu-modes.css';
 import {readEduRoute,eduHash,eduResumeKey,readEduResume,eduRouteLabel,type EduRoute,type EduResume} from './edu-navigation';
 import {linkedObservation} from '../../education/src/inverter';
+import {readPreference,writePreference,removePreference,readRecentProjects} from './ui-preferences';
 import type {EducationCourse} from './education-courses';
 import './workbench-usability.css';
 import './precision-workbench.css';
@@ -64,7 +65,7 @@ const executionLabels: Record<string, string> = { queued: '대기', running: '�
 const activeRun = (run: Run) => run.execution_status === 'queued' || run.execution_status === 'running';
 const errorText = (error: unknown) => error instanceof Error ? error.message : String(error);
 const fileBase64=(file:File)=>new Promise<string>((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=()=>reject(reader.error);reader.readAsDataURL(file);});
-const stored = <T,>(key: string, fallback: T): T => { try { return JSON.parse(localStorage.getItem(key) || 'null') ?? fallback; } catch { return fallback; } };
+const stored = <T,>(key: string, fallback: T): T => { try { return JSON.parse(readPreference(key) || 'null') ?? fallback; } catch { return fallback; } };
 function Icon({ name, size = 16 }: { name: string; size?: number }) {
   const paths: Record<string, string> = { save: 'M4 3h12l4 4v14H4z M7 3v7h9V3 M7 21v-7h10v7', play: 'M7 4l13 8-13 8z', grid: 'M4 4h6v6H4z M14 4h6v6h-6z M4 14h6v6H4z M14 14h6v6h-6z', cube: 'M12 2l9 5v10l-9 5-9-5V7z M3 7l9 5 9-5 M12 12v10', circuit: 'M3 6h5v12H3 M8 9h8 M8 15h8 M16 4v16 M16 6h5 M16 18h5', wave: 'M2 12h4l3-8 6 16 3-8h4', folder: 'M3 6h7l2 3h9v11H3z', plus: 'M12 4v16 M4 12h16', undo: 'M9 5L3 11l6 6 M3 11h11a6 6 0 016 6', redo: 'M15 5l6 6-6 6 M21 11H10a6 6 0 00-6 6', refresh: 'M20 8a8 8 0 10.3 7 M20 3v5h-5', check: 'M4 12l5 5L20 6', tool: 'M14 3a6 6 0 00-7 8l-5 7 4 4 7-5a6 6 0 008-7l-4 4-4-4 4-4z', file: 'M5 2h9l5 5v15H5z M14 2v6h5 M8 13h8 M8 17h8', close: 'M5 5l14 14 M5 19L19 5', sun: 'M12 2v2 M12 20v2 M2 12h2 M20 12h2 M5 5l2 2 M17 17l2 2 M5 19l2-2 M17 7l2-2 M16 12a4 4 0 11-8 0 4 4 0 018 0', down: 'M6 9l6 6 6-6', warning: 'M12 2l10 19H2z M12 8v6 M12 17v1', export: 'M12 15V2 M7 7l5-5 5 5 M4 13v8h16v-8', stop: 'M5 5h14v14H5z', layers: 'M12 2l10 5-10 5L2 7z M2 12l10 5 10-5 M2 17l10 5 10-5' };
   return <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d={paths[name] || paths.file}/></svg>;
@@ -126,6 +127,7 @@ function DesignWorkspace({onViewer,active=true,onStudyMode,guidedStep,onGuidedSt
   const pendingCursor = useRef<{ x: string; y: string; layer_id?: string } | null>(null);
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const [bootAttempt,setBootAttempt]=useState(0);
+  const [preferenceWarning,setPreferenceWarning]=useState(false);
   const [project, setProject] = useState<Project | null>(null);
   const [scene, setScene] = useState<Scene | null>(null);
   const [pdkDisplay,setPdkDisplay]=useState<PdkDisplay|null>(null);
@@ -195,9 +197,10 @@ function DesignWorkspace({onViewer,active=true,onStudyMode,guidedStep,onGuidedSt
     const sameSelection=preserveSelection&&projectRef.current?.id===next.id&&projectRef.current?.revision===next.revision;
     setProject(next); setScene(nextScene); setRuns(next.runs || []); if(!sameSelection){setSelectedShape(null);setViewerFocus(undefined);setSelectedDevice(null);setSchematicCell(null);} setAnalysis(next.analysis_setup?.analysis || next.testbench?.analysis || 'tran'); setNetlister('native');
     if(next.digital_unit)setDisplay(current=>({...current,renderLimit:1000000,scopeCentre:undefined,highlightNet:undefined}));
-    localStorage.setItem(editionStorageKey('mos.last_project'), next.id);
-    const previous = stored<{ id: string; name: string }[]>(editionStorageKey('mos.recent'), []);
-    localStorage.setItem(editionStorageKey('mos.recent'), JSON.stringify([{ id: next.id, name: next.name }, ...previous.filter(item => item.id !== next.id)].slice(0, 8)));
+    const lastSaved=writePreference(editionStorageKey('mos.last_project'),next.id);
+    const previous=readRecentProjects(readPreference(editionStorageKey('mos.recent')));
+    const recentSaved=writePreference(editionStorageKey('mos.recent'),JSON.stringify([{id:next.id,name:next.name},...previous.filter(item=>item.id!==next.id)].slice(0,8)));
+    if(!lastSaved||!recentSaved)setPreferenceWarning(true);
   }, []);
   const learningLoadQueue=useRef<Promise<void>>(Promise.resolve());
   const loadLearningProject=useCallback((next:Project)=>{
@@ -222,15 +225,15 @@ function DesignWorkspace({onViewer,active=true,onStudyMode,guidedStep,onGuidedSt
       const nextDoctor = await rpc<Doctor>('toolchain.doctor'); if (canceled) return; setDoctor(nextDoctor);
       // The selected lesson owns its project. Do not race it with the editor's last-project restore.
       if(educationMode&&guidedStep)return;
-      const last = localStorage.getItem(editionStorageKey('mos.last_project'));
-      if (last) { try { const previous = await rpc<Project>('project.open', { project_id: last }); if (!canceled) await load(previous); return; } catch { localStorage.removeItem(editionStorageKey('mos.last_project')); } }
+      const last = readPreference(editionStorageKey('mos.last_project'));
+      if (last) { try { const previous = await rpc<Project>('project.open', { project_id: last }); if (!canceled) await load(previous); return; } catch { removePreference(editionStorageKey('mos.last_project')); } }
       if(educationMode)return;
       const initial = await rpc<Project>('project.create', educationMode ? {name:'[Edu] 첫 실습 · 빈 회로',example:'schematic'} : nextDoctor.pdk.available ? { name: 'CMOS inverter', example: 'inverter' } : {name:'새 회로 · 직접 설계',example:'schematic'}); if (!canceled) {await load(initial);if(!nextDoctor.pdk.available)setTab('schematic');}
     });
     return () => { canceled = true; mounted.current = false; };
   }, [action, load, remoteClient,bootAttempt]);
   useEffect(() => { document.title = productEdition.name; }, []);
-  useEffect(() => { if (display) localStorage.setItem(editionStorageKey('mos.display'), JSON.stringify(display)); }, [display]);
+  useEffect(() => { if (display&&!writePreference(editionStorageKey('mos.display'),JSON.stringify(display)))setPreferenceWarning(true); }, [display]);
   useEffect(() => { if (!notice) return; const timer = window.setTimeout(() => setNotice(null), 4500); return () => clearTimeout(timer); }, [notice]);
   const runningIds = runs.filter(activeRun).map(run => run.id).join('|');
   useEffect(() => {
@@ -295,7 +298,7 @@ function DesignWorkspace({onViewer,active=true,onStudyMode,guidedStep,onGuidedSt
   }, [collaboration?.room?.revision, collaboration?.sync.sequence, collaboration?.room?.id, collaboration?.sync.state, project?.id, project?.revision, refresh]);
   useEffect(() => () => { if (cursorTimer.current) clearTimeout(cursorTimer.current); }, []);
   const cloudProject = async (next: Project) => { await action('cloud-project', async () => {
-    if (!cloudProjectRef.current && project) { localProjectBeforeSharing.current = project.id; localStorage.setItem(editionStorageKey('mos.last_local_project'), project.id); }
+    if (!cloudProjectRef.current && project) { localProjectBeforeSharing.current = project.id; if(!writePreference(editionStorageKey('mos.last_local_project'),project.id))setPreferenceWarning(true); }
     const sameProject = cloudProjectRef.current === next.id && projectRef.current?.id === next.id;
     cloudProjectRef.current = next.id;
     if (sameProject) { const nextScene = await rpc<Scene>('view.get_scene', { project_id: next.id, max_shapes: 2000 }); setProject(next); setScene(nextScene); setRuns(next.runs || []); }
@@ -304,7 +307,7 @@ function DesignWorkspace({onViewer,active=true,onStudyMode,guidedStep,onGuidedSt
     }, true);
   };
   const restoreLocalProject = async () => {
-    cloudProjectRef.current = null; const id = localProjectBeforeSharing.current || localStorage.getItem(editionStorageKey('mos.last_local_project'));
+    cloudProjectRef.current = null; const id = localProjectBeforeSharing.current || readPreference(editionStorageKey('mos.last_local_project'));
     if (remoteClient) { setProject(null); setScene(null); setRuns([]); setDoctor(null); setSelectedDevice(null); setSelectedShape(null); setModal('collaboration'); return; }
     const nextDoctor = await rpc<Doctor>('toolchain.doctor'); setDoctor(nextDoctor);
     if (id) await load(await rpc<Project>('project.open', { project_id: id }));
@@ -417,6 +420,7 @@ function DesignWorkspace({onViewer,active=true,onStudyMode,guidedStep,onGuidedSt
       </div>
     </div>
     {error && !doctor && !remoteClient && !isBusy('boot') && <RuntimeDiagnostics onRetry={()=>setBootAttempt(n=>n+1)} onViewer={onViewer} reconnecting={isBusy('boot')}/>}
+    {preferenceWarning&&<div className="error-banner preference-warning" role="status" data-testid="preference-warning">이 브라우저에 화면 설정·최근 프로젝트 목록을 저장하지 못했습니다. 화면 조작은 계속할 수 있습니다. 프로젝트 파일과 학습 기록의 저장 상태는 각 저장 결과에서 확인하세요.</div>}
     {error && <div className="error-banner" role="alert"><Icon name="warning"/><strong>요청 실패</strong><span>{error}</span><button className="icon-button" aria-label="오류 닫기" onClick={() => setError(null)}><Icon name="close"/></button></div>}
     {project?.semiconductor_starter && <div className="starter-project-banner" data-testid="starter-project-summary"><strong>{project.semiconductor_starter.title}</strong><span>{project.semiconductor_starter.technology_id} · 시작 조건 {project.semiconductor_starter.mode_name}</span><span>현재 {project.testbench?.analysis?.toUpperCase()} · {project.testbench?.supply_V}V · {project.testbench?.temperature_C}°C</span><button className="button small" onClick={() => setModal('semiconductor-starters')}>다른 반도체 만들어보기</button></div>}
     {educationMode && project && scene && <div className="edu-selection-context" data-testid="edu-selection-context"><strong>Resistor Edu · {project.id.slice(0,8)} / r{project.revision}</strong>{linkedObservation(project,scene,selectedDevice,selectedShape).reason} · GDS {project.pdk_id} layer mapping · Z 1× · layer extrusion / process simulation not executed{display?.explode?` · explode ${display.explode}µm/layer`:''}</div>}

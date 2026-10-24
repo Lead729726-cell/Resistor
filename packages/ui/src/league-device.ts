@@ -1,3 +1,4 @@
+import {readPreference} from './ui-preferences';
 import {canonical,type LeagueEnvelope} from '../../education/src/league-protocol';
 type Identity={signing:CryptoKeyPair;draftKey:CryptoKey};
 const enc=new TextEncoder();
@@ -17,7 +18,7 @@ export function leagueEndpoint(value:string){
  const u=new URL(value);if(u.username||u.password||u.hash||u.search||!(u.protocol==='https:'||u.protocol==='http:'&&['127.0.0.1','localhost','[::1]'].includes(u.hostname)))throw Error('공용 서버는 인증정보 없는 HTTPS 주소를 사용하세요. 로컬 HTTP는 localhost만 허용합니다.');
  if(u.pathname==='/'||u.pathname==='')u.pathname='/api/league';if(u.pathname!=='/api/league')throw Error('리그 주소는 /api/league 경로를 사용하세요.');return u.href;
 }
-export function defaultLeagueEndpoint(){return localStorage.getItem('resistor.edu.league.endpoint')||((location.protocol==='http:'||location.protocol==='https:')?new URL('/api/league',location.origin).href:'http://127.0.0.1:18786/api/league');}
+export function defaultLeagueEndpoint(){return readPreference('resistor.edu.league.endpoint')||((location.protocol==='http:'||location.protocol==='https:')?new URL('/api/league',location.origin).href:'http://127.0.0.1:18786/api/league');}
 export function leagueClient(value:string,identityNamespace?:string){
  const endpoint=leagueEndpoint(value),storage=identityNamespace?'publisher:'+identityNamespace:endpoint;let offset=0,synced=false,queue=Promise.resolve();
  async function call<T=Record<string,unknown>>(method:string,params:Record<string,unknown>={},signed=false):Promise<T>{

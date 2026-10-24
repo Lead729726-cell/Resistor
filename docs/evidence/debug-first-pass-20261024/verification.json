@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "shared_editions": [
+    "edu",
+    "indust"
+  ],
+  "checked_at": "2026-10-24T13:12:19.2893255+09:00",
+  "source_head": "6a353797b7b63627f396a1cc9fe65839674643dd",
+  "status": "first_pass_verified_locally",
+  "project_id": null,
+  "data_revision": null,
+  "fixes": [
+    "퍼즐 파형: 0이 아닌 시작 시간, 신호별 서로 다른 시간 범위, 단일 표본 및 손상된 표본의 예외 처리",
+    "전압/전류 및 이전 실행 겹치기에 공통 시간 축 적용; 표본 범위 밖은 수치를 생성하지 않음",
+    "표시 경로 준비를 memoize하고 공통 극값 보존 축약을 재사용; 커서 값은 원본 표본으로 계산",
+    "브라우저 저장소 차단/용량 초과/손상된 최근 목록이 프로젝트 열기를 중단하지 않도록 보호; 실패 경고 표시",
+    "공동 설계 초기화 시 목적지와 세션을 한 번에 읽음; 부분 실패 시 기존 키를 수정하거나 다른 목적지로 보내지 않음",
+    "리그 서버 주소 환경설정의 저장 실패가 현재 화면 연결을 중단하지 않도록 수정"
+  ],
+  "tests": {
+    "core_mjs": 195,
+    "core_ts": 162,
+    "core_total": 357,
+    "new_regressions": 14,
+    "edition_and_mcp": 9,
+    "typecheck": "passed",
+    "build_edu": "passed",
+    "build_indust": "passed",
+    "debug_maps_per_build": 6,
+    "docs_checked": 278,
+    "docs_missing": 0,
+    "source_audit_issues": 0,
+    "diff_check": "passed"
+  },
+  "browser": {
+    "waveform_inputs": "isolated synthetic QA vectors; not native engine output",
+    "offset_time": "17.5 us initial, 17.505 us after ArrowRight",
+    "mixed_intervals": "outside sample range shown without extrapolation",
+    "malformed": "invalid vector reported; valid vector retained",
+    "overlay": "old revision label and shared domain verified",
+    "local_storage_security_error": "actual App component mounted, QA project opened, app-ready and warning verified",
+    "local_storage_quota_and_corrupt_recent": "actual App component mounted, QA project opened, app-ready and warning verified",
+    "browser_console_errors": 0,
+    "mobile_width": 390,
+    "mobile_scroll_width": 390,
+    "viewport_restored": 1235,
+    "fixture_transport": "in-memory isolated response; no actual user project reads or writes"
+  },
+  "performance": {
+    "scope": "display preparation only; not an end-to-end FPS benchmark",
+    "original_samples": 100000,
+    "rendered_coordinates": 603,
+    "maximum_coordinates_per_trace": 1200,
+    "original_samples_preserved": true,
+    "cursor_interpolation": "shared original-sample binary search",
+    "path_preparation": "memoized independently of cursor position"
+  },
+  "limits": [
+    "Normal licensed app end-to-end workflow blocked: license server not configured",
+    "No native simulation, DRC, LVS or PEX executed in this task",
+    "No cloud deployment, installer publication, commit or push",
+    "Initial app JS chunk remains about 1.9 MB; later work should split optional panels after profiling",
+    "QA wrapper banner initially covered a close button; wrapper position corrected; no product modal change made"
+  ],
+  "preserved": [
+    "Industry data and edition storage keys",
+    "Existing browser cloud/session credentials",
+    "Existing learner submissions and projects",
+    "Pre-existing theme.css / appearance-init.js changes and tutorial helper files"
+  ],
+  "screenshots": [
+    "storage-blocked.png",
+    "storage-quota.png",
+    "waveform.png"
+  ],
+  "next_priorities": [
+    "Configure and verify the real licensing endpoint before a release",
+    "Profile initial load and lazy-load optional heavy workbench panels",
+    "Run licensed native simulation/verification smoke flows using separate QA project copies"
+  ]
+}
