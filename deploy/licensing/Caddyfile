@@ -1,0 +1,22 @@
+# Set this hostname only after an operator selects the production server and DNS.
+licenses.resistor.kr {
+    encode gzip
+    @health {
+        path /health
+        method GET
+    }
+    handle @health {
+        reverse_proxy 127.0.0.1:18948
+    }
+    @activation {
+        path /v1/activate /v1/refresh /v1/deactivate
+        method POST
+    }
+    handle @activation {
+        reverse_proxy 127.0.0.1:18948
+    }
+    # Operator orders, delivery and refund remain reachable only through SSH/VPN.
+    handle {
+        respond "Not found" 404
+    }
+}

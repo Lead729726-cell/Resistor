@@ -1,0 +1,30 @@
+[Unit]
+Description=Resistor edition license authority
+After=network.target
+
+[Service]
+Type=simple
+User=resistor-license
+Group=resistor-license
+WorkingDirectory=/opt/resistor-license
+Environment=NODE_ENV=production
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=RESISTOR_LICENSE_HOME=/var/lib/resistor-license
+Environment=RESISTOR_LICENSE_PORT=18948
+Environment=RESISTOR_LICENSE_TRUST_LOOPBACK_PROXY=1
+EnvironmentFile=-/etc/resistor-license.env
+ExecStart=/usr/bin/env node /opt/resistor-license/scripts/license-server.mjs serve
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+StateDirectory=resistor-license
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/resistor-license
+
+[Install]
+WantedBy=multi-user.target
