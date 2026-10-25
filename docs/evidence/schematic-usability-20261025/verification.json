@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "edition": "Resistor Indust; shared editor and shortcuts",
+  "checked_at": "2026-10-25T09:26:31.887Z",
+  "base_revision": "c3c82bf5e5f107a0b1175f21696789e89058f539",
+  "source_binding": "Uncommitted implementation identified by SHA-256 below; engine APIs, mathematical logic and geometry unchanged",
+  "source_sha256": {
+    "package.json": "803c1aa28d844e48863184976148dea4c0b5f5a6fec43ea388b2981fa7e2e3fd",
+    "packages/ui/src/App.tsx": "d8a6eecaafa8e3b8177c0618c2fa28ef011ded90f2886cf840d726dc7c1561c2",
+    "packages/ui/src/SchematicEditor.tsx": "1d31381d82d74844cb9fe8691ce033cf3f5f0e01c5f8f7f8f6cefa1797ae7558",
+    "packages/ui/src/SchematicFinder.tsx": "dcf886b59739a05d42b4e87bcb0e32be2bc6ddfdcf81ef1a9f75f1bd06d3249c",
+    "packages/ui/src/schematic-search.ts": "877655675e48ecbb457984c35c16fecc2b1fcb71e1a20bf32a65e953a697d10f",
+    "packages/ui/src/schematic-finder.css": "f660d36b43212943e4751e8ba68bf2fc615db2725259dc50211689c7fc530c65",
+    "packages/ui/src/workbench-usability.css": "edd76e2535ae896c55a4b7bdf8e021fbf9c1cb51c67bcac549339df9c882b68a",
+    "packages/shortcuts/src/index.ts": "bde715e987e22ee071940c89450d6e066ee9c39b8e42a3c2327db9b102338edd",
+    "tests/schematic-search.test.ts": "ccd18b5e3627bf4c2271ff6aa8310aa5535c4c0dd6cb3f0db766952c08945ad0",
+    "tests/ui/schematic-finder.spec.ts": "59b0bcfd4d4086ceb90bd3c9a4ecf2d5772c5ca0b6032809bcd7b413fec73384"
+  },
+  "core_tests": {
+    "passed": 297,
+    "failed": 0,
+    "skipped": 0
+  },
+  "typecheck": "passed via npm run build and separate typecheck",
+  "build": {
+    "status": "passed",
+    "debug_maps": 3,
+    "warning": "Existing main JavaScript bundle remains above Vite 500 kB chunk warning; no bundle splitting claimed"
+  },
+  "browser": {
+    "driver": "CUA actual in-app browser",
+    "native_worker": "dedicated disposable Windows native worker",
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 320,
+        "height": 640
+      }
+    ],
+    "cases": [
+      {
+        "name": "Search by device name and Enter focus restoration",
+        "selected": "R_FAR",
+        "selection_count": 1,
+        "viewBox": "9771 20 500 360"
+      },
+      {
+        "name": "Exact net-label selection includes devices, wire and junction",
+        "net": "OUT",
+        "selection_count": 4,
+        "devices": 2,
+        "wires": 1,
+        "junctions": 1
+      },
+      {
+        "name": "F restores all, Shift+F restores selected bounds",
+        "all_width": 10226,
+        "selected_width": 500
+      },
+      {
+        "name": "Wire draft blocks result navigation and survives finder Escape",
+        "draft_pins_after_close": 1
+      },
+      {
+        "name": "Child cell search does not include parent-cell objects",
+        "cell": "QA_CHILD",
+        "matches": 0
+      },
+      {
+        "name": "Arrow keys scroll result list without scrolling hidden editor ancestors",
+        "results_scroll_top": 36,
+        "editor_scroll_top": 0
+      },
+      {
+        "name": "Short-window drawing canvas preserved",
+        "canvas_height_px": 140
+      },
+      {
+        "name": "320x640 canvas fully inside viewport",
+        "canvas_top": 375.6667,
+        "canvas_bottom": 515.6667,
+        "viewport_bottom": 545.6667
+      },
+      {
+        "name": "390px mobile finder and page remain bounded",
+        "page_width": 390,
+        "finder_width": 374
+      },
+      {
+        "name": "Mobile explorer and inspector are exclusive, Escape returns focus",
+        "focus_after_close": "toggle-inspector"
+      },
+      {
+        "name": "Unapplied property input survives panel close and reopen",
+        "draft_value": "1234",
+        "saved_value": 1000
+      },
+      {
+        "name": "Desktop explorer and inspector restored after mobile viewport",
+        "explorer": true,
+        "inspector": true
+      },
+      {
+        "name": "F1 documents Ctrl+F finder shortcut",
+        "verified": true
+      },
+      {
+        "name": "Light theme colors and original theme restoration",
+        "background": "rgb(247, 250, 255)",
+        "text": "rgb(38, 54, 73)"
+      }
+    ],
+    "console_errors": [],
+    "console_warnings": []
+  },
+  "qa_project": {
+    "id": "18db79727ba645fb82cb0f16e3ef97ba",
+    "initial_revision": 7,
+    "final_revision": 7,
+    "simulation_jobs": 0,
+    "user_projects_modified": false
+  },
+  "playwright_regression": {
+    "defined_tests": 3,
+    "runner_list_passed": true,
+    "runner_executed": false,
+    "actual_workflows_verified_via_cua": true
+  },
+  "screenshots": {
+    "finder-desktop.jpg": "3ba8d9627a5e2a7932d2dd82ad1b26fc77111114b5dbac79c8d8ae55bf954362",
+    "finder-light.jpg": "bcf7875e59e10793c5c2d66013b5a3bafac89d35d9d1783158d02332eee7a818",
+    "finder-mobile-small.jpg": "3df08de8c82d01174219327e85e6e0b823b6cade7c3bb039a95588be80381bab",
+    "finder-mobile.jpg": "7118c79b231436cb6605f339459e8186f8ded78c3913f83ac11c6cd1cf5fc27c"
+  },
+  "new_installer_published": false,
+  "production_deployed": false,
+  "foundry_signoff": "not_run",
+  "documentation_links": {
+    "documents": 67,
+    "checked": 541,
+    "missing": []
+  },
+  "source_audit": {
+    "files": 11530,
+    "archives": 235,
+    "issues": []
+  }
+}

@@ -74,6 +74,8 @@ export const shortcutDefinitions:ShortcutDefinition[]=[
  {id:'place_port',scope:'schematic',keys:['P','Shift+O'],label:'Port 배치',mutates:true},
  {id:'nudge',scope:'schematic',keys:['Arrows','Shift+Arrows'],label:'선택 소자·배선·접점 미세 이동',mutates:true,note:'방향키 10 unit, Shift+방향키 100 unit. 선택 모드에서 사용합니다.'},
  {id:'fit',scope:'schematic',keys:['F'],label:'전체 맞춤'},
+ {id:'fit_selection',scope:'schematic',keys:['Shift+F'],label:'선택 항목 화면 맞춤',note:'선택한 소자·배선·접점을 함께 표시합니다. 설계 좌표는 바뀌지 않습니다.'},
+ {id:'find',scope:'schematic',keys:['Primary+F'],label:'현재 셀 소자·넷 찾기',note:'캔버스에서 사용합니다. 이름·ID·모델·net 검색 후 Enter로 선택·화면 이동. 실행이나 설계 변경은 하지 않습니다.'},
  {id:'zoom_in',scope:'schematic',keys:['+','='],label:'확대'},
  {id:'zoom_out',scope:'schematic',keys:['-'],label:'축소'},
  {id:'finish',scope:'schematic',keys:['Enter'],label:'배선 완료',drawingOnly:true,mutates:true},
