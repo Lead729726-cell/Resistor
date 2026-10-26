@@ -1,3 +1,4 @@
+import './read-connection.css';
 export default function ReadConnection({loading,error,checkedAt,cached,onRetry,label='다시 연결',disabled=false}:{loading:boolean;error:string;checkedAt?:string|null;cached?:boolean;onRetry:()=>void;label?:string;disabled?:boolean}){
  const message=/Failed to fetch|NetworkError|ERR_INTERNET_DISCONNECTED/i.test(error)?'서버에 연결하지 못했습니다. 인터넷과 로컬 실행 상태를 확인하세요.':error;
  return <div className="edu-read-connection" aria-label="학습 데이터 연결 상태"><div>{loading?<span role="status">학습 데이터를 다시 읽는 중…</span>:error?<p role="alert">연결 확인 실패: {message}{cached?' · 이전 조회 내용을 유지하고 있습니다.':''}</p>:checkedAt?<span>마지막 조회 {new Date(checkedAt).toLocaleTimeString()}</span>:<span>연결을 확인하세요.</span>}<small>다시 읽기는 새 실습·해석·제출·AI 요청을 실행하지 않습니다.</small></div><button type="button" className="button small" disabled={loading||disabled} onClick={onRetry}>{label}</button></div>;

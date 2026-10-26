@@ -79,3 +79,18 @@ test('adaptive study uses independent objective practice only, reuses stored que
  bank=await api('study.catalog');assert.equal(bank.difficulty.level,2);assert.equal(bank.questions.length,76);assert.ok(bank.questions.some(q=>q.level===3&&q.kind==='numeric'));
  assert.ok(!JSON.stringify(rec.question).includes('numerical_trace'));assert.equal(calls.length,0);
 }));
+
+
+test('browser draft scope is stable, opaque, isolated by workspace and consistent in tool responses',()=>fixture(async({api,workspace})=>{
+ const bank=await api('study.catalog');assert.match(bank.study_store_id,/^[a-f0-9]{64}$/);assert.equal(bank.context.study_store_id,bank.study_store_id);assert(!JSON.stringify(bank.context).includes(workspace));
+ assert.equal((await api('study.history')).study_store_id,bank.study_store_id);
+ const other=await studyRpc({workspace:path.join(workspace,'separate')},'study.catalog',{}, {edition:'edu'});assert(other.ok);assert.notEqual(other.result.study_store_id,bank.study_store_id);
+}));
+
+test('explicit hints mark assistance, remain idempotent and separate QA from practice without calling AI',()=>fixture(async({api,calls})=>{
+ const q=(await api('study.catalog')).questions.find(q=>q.kind==='numeric');const original=initialStudyQuestions().find(x=>x.title===q.title);
+ const first=await api('study.hint',{question_id:q.id,purpose:'qa'}),again=await api('study.hint',{question_id:q.id,purpose:'qa'});assert.deepEqual(first.hints,q.hints);assert.equal(first.tokens_used,0);assert.equal(first.study_revision,again.study_revision);
+ assert.equal((await api('study.submit',submit(q,String(original.expected)))).attempt.assisted,false);
+ const other=(await api('study.catalog')).questions.find(x=>x.kind==='numeric'&&x.id!==q.id),expected=initialStudyQuestions().find(x=>x.title===other.title).expected;
+ await api('study.hint',{question_id:other.id});assert.equal((await api('study.submit',submit(other,String(expected)))).attempt.assisted,true);assert.equal(calls.length,0);
+}));

@@ -33,6 +33,7 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
   'study.catalog':z.object({}).strict(),
   'study.recommend':z.object({topic:z.string().max(100).optional(),purpose:z.enum(['practice','qa']).default('practice')}).strict(),
   'study.open':z.object({question_id:qid}).strict(),
+  'study.hint':z.object({question_id:qid,purpose:z.enum(['practice','qa']).default('practice')}).strict(),
   'study.reveal':z.object({question_id:qid,purpose:z.enum(['practice','qa']).default('practice')}).strict(),
   'study.history':z.object({}).strict(),
   'study.export':z.object({}).strict(),
@@ -49,7 +50,7 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
   let seeded=false;for(const draft of initialStudyQuestions()){const id=hash(draft);if(!state.questions[id]){state.questions[id]={...draft,id};seeded=true;}}
   const save=async()=>{state.revision++;state.updated_at=stamp();await write(file,state);};
   if(seeded)await save();
-  const context={schema_version:1,edition:'edu',product_id:'resistor.edu',project_id:null,data_revision:0,engine:{id:'shared-calculator-and-study-rubric',version:studyVersion},process:{id:null,scope:'자율학습 문항 · 공정/설계 검증 실행 없음'},engine_verification:false};
+  const context={schema_version:1,edition:'edu',study_store_id:hash({scope:'resistor.edu.study',workspace:path.resolve(config.workspace)}),product_id:'resistor.edu',project_id:null,data_revision:0,engine:{id:'shared-calculator-and-study-rubric',version:studyVersion},process:{id:null,scope:'자율학습 문항 · 공정/설계 검증 실행 없음'},engine_verification:false};
   const result=value=>({...context,context,study_revision:state.revision,...value});
   const settings=await read(path.join(directory,'provider.json'),{});
   // The local CLI writes this reference after human authorization. Keys never move to Edu.
@@ -75,6 +76,7 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
    return result({difficulty:recommendation(),questions:Object.values(state.questions).map(q=>{const latest=state.attempts.findLast(a=>a.question_id===q.id&&a.purpose!=='qa');return {...publicQuestion(q),last_attempt:latest?{id:latest.id,score:latest.feedback?.score??null,status:latest.feedback?.status,assisted:latest.assisted}:null};}),references:studyReferences.map(r=>({id:r.id,title:r.title})),limits,counters:state.counters});
   }
   if(method==='study.open')return result({question:publicQuestion(get())});
+  if(method==='study.hint'){const q=get();if(!helped(q.id)){state.revealed.push(assistanceKey(q.id));await save();}return result({hints:q.hints,tokens_used:0,assisted:true});}
   if(method==='study.reveal'){const q=get();if(!helped(q.id))state.revealed.push(assistanceKey(q.id));await save();return result({question:publicQuestion(q),solution:q.solution,expected:q.expected??null,correct_index:q.correct_index??null,formula:q.formula||null,tokens_used:0,assisted:true});}
   if(method==='study.history')return result({attempts:state.attempts.toReversed(),counters:state.counters,limits});
   if(method==='study.export')return result({exported_at:stamp(),purpose:'self-study-not-official-submission',questions:state.questions,attempts:state.attempts,puzzle_sessions:state.puzzle_sessions||{},counters:state.counters,contains_credentials:false});

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "created_at": "2026-10-26T08:59:17.016129+00:00",
+  "base_source_revision": "a393cf942d3da780dd75edc79134d60d8b2bf70d",
+  "scope": "Edu UI + real deterministic study service in isolated QA workspace; connection/storage faults injected",
+  "source_hash_format": "SHA-256 of UTF-8 source normalized to LF",
+  "source_files_sha256": {
+    "packages/ui/src/SelfStudy.tsx": "faed585fb128be083e9b09f0f40a065ffe5f1aff392bed1d4a88262c34f97ee8",
+    "packages/ui/src/CircuitPuzzleLab.tsx": "832ddb8afdd9b476c2363ec9609fcf8de9596a65f3c5393ca93d9197a22d2fca",
+    "packages/ui/src/ReadConnection.tsx": "374d0209a08c5af6eeb6902d0203ed2cd24e41bfeef3458568e28d2b0aa67f88",
+    "packages/ui/src/read-connection.css": "2ba2a1b0a83774bd1f55c3c3ee67d8f08b3d7128b3771b7780dab8ec9b88d8e8",
+    "packages/ui/src/learning-dashboard.css": "796240e92bc7eab2ef189ed8d9ed611943d3fa91d8510d17be1df444c34b34b4",
+    "packages/ui/src/self-study.css": "fc24c34b43733b16d72302dd90096207f9c81041829e57979fa854c23ae705dc",
+    "packages/ui/src/study-draft.ts": "f3420600ab5ab2cb6791d29790f6dbf7d58569507070069b05f6db415f2a2d03",
+    "packages/ui/src/useStudyDraft.ts": "f5c423e3b71ecf5e606b5047ad10060f5445b93c5ee8423b1373b712e739c57c",
+    "scripts/self-study-service.mjs": "250b8eb5c75d36d413c289d27174c7c5e6808f512a530fa08386008205d53b98",
+    "tests/study-draft.test.ts": "a8b7d2a194ebece307af8519b3e0d81f7b95264759203c251d02c5bbae492787",
+    "tests/self-study.test.mjs": "6ec9d6455cd8a6f4fc32ea6f618eacc497b4fbdb4f4294188fc38b3808a35905",
+    "tests/ui/edu-study-harness.mjs": "deda95258168e8a3e9f308cb9724173ea7feef747dea74f589c82a91d21a5eaf"
+  },
+  "checks": {
+    "typecheck": "passed",
+    "core": {
+      "passed": 363,
+      "failed": 0
+    },
+    "edition_separation": {
+      "passed": 9,
+      "failed": 0
+    },
+    "edu_build": "passed",
+    "industry_build": "passed",
+    "docs": {
+      "checked": 279,
+      "missing": []
+    },
+    "source_audit": {
+      "issues": []
+    },
+    "manual_browser": {
+      "draft_switch_and_reload": "passed",
+      "practice_qa_isolation": "passed",
+      "filter_selection_and_empty_state": "passed",
+      "current_answer_kept_on_history_open": "passed",
+      "hint_assistance_and_objective_grade": "passed",
+      "puzzle_read_retry_keeps_board_and_explanation": "passed",
+      "storage_failure_keeps_in_memory_answer": "passed",
+      "mobile": {
+        "viewport_width_px": 390,
+        "viewport_height_px": 844,
+        "document_width_px": 384,
+        "body_width_px": 384,
+        "horizontal_overflow": false
+      }
+    }
+  },
+  "external_ai_calls": 0,
+  "eda_engine_jobs": 0,
+  "native_installer_published": false,
+  "learning_effectiveness_evaluated": false,
+  "notes": [
+    "Existing vendor/foundry verification is not replaced or relabeled by learning checks.",
+    "Existing large JS bundle warning remains.",
+    "QA harness does not modify product licensing or user workspaces."
+  ]
+}
