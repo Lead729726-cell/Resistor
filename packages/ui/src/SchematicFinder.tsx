@@ -1,13 +1,14 @@
 import {useId, useMemo, useRef, useState, useEffect} from 'react';
 import type {SchematicCell} from '@mos/contracts';
-import {schematicSearchIndex, searchSchematic, type SchematicSearchEntry} from './schematic-search';
+import {schematicSearchIndex, searchSchematic, type SchematicSearchEntry,type SchematicFinderState} from './schematic-search';
 import './schematic-finder.css';
 
-export default function SchematicFinder({cell, cellName, blocked, onChoose, onClose}: {
+export default function SchematicFinder({cell, cellName, blocked, onChoose, onClose,initialState,onStateChange}: {
   cell: SchematicCell; cellName: string; blocked: boolean;
   onChoose: (entry: SchematicSearchEntry) => void; onClose: () => void;
+  initialState?:SchematicFinderState;onStateChange?:(state:SchematicFinderState)=>void;
 }) {
-  const [query, setQuery] = useState(''), [kind, setKind] = useState<'all' | 'device' | 'net'>('all');
+  const [query, setQuery] = useState(initialState?.query??''), [kind, setKind] = useState<'all' | 'device' | 'net'>(initialState?.kind??'all');
   const [active, setActive] = useState(0), input = useRef<HTMLInputElement>(null), list = useRef<HTMLDivElement>(null);
   const id = useId(), index = useMemo(() => schematicSearchIndex(cell), [cell]);
   const result = useMemo(() => searchSchematic(index, query, kind), [index, query, kind]);
@@ -30,16 +31,17 @@ export default function SchematicFinder({cell, cellName, blocked, onChoose, onCl
     <div className="schematic-finder-controls">
       <input ref={input} role="combobox" aria-label="소자·넷 검색" aria-expanded="true" aria-autocomplete="list"
         aria-controls={`${id}-results`} aria-activedescendant={result.entries.length ? `${id}-${position}` : undefined}
-        placeholder="소자 이름·ID·모델·넷 검색" value={query} onChange={event => {setQuery(event.target.value); setActive(0);}}
+        placeholder="소자 이름·ID·모델·넷 검색" value={query} onChange={event => {setQuery(event.target.value);setActive(0);onStateChange?.({query:event.target.value,kind});}}
         onKeyDown={event => {
           if (event.nativeEvent.isComposing) return;
           if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
             event.preventDefault(); setActive(result.entries.length ? (position + (event.key === 'ArrowDown' ? 1 : -1) + result.entries.length) % result.entries.length : 0);
           } else if (event.key === 'Enter' && result.entries[position]) {event.preventDefault(); choose(result.entries[position]);}
         }}/>
-      <select aria-label="회로도 검색 종류" value={kind} onChange={event => {setKind(event.target.value as typeof kind); setActive(0);}}>
+      <select aria-label="회로도 검색 종류" value={kind} onChange={event => {const next=event.target.value as typeof kind;setKind(next);setActive(0);onStateChange?.({query,kind:next});}}>
         <option value="all">전체</option><option value="device">소자</option><option value="net">넷</option>
       </select>
+      <button disabled={!query&&kind==='all'} onClick={()=>{setQuery('');setKind('all');setActive(0);onStateChange?.({query:'',kind:'all'});input.current?.focus();}} aria-label="회로도 검색 조건 지우기">지우기</button>
       <button onClick={onClose} aria-label="회로도 찾기 닫기">닫기 · Esc</button>
     </div>
     <p className="schematic-finder-status" role="status">{cellName} · {result.total}개 일치{result.total > result.entries.length ? ` · 처음 ${result.entries.length}개 표시, 검색어를 좁혀 주세요` : ''} · ↑↓ 선택 · Enter 이동</p>

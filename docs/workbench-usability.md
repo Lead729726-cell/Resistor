@@ -35,3 +35,17 @@ Resistor Indust에서 검증한 공통 편집기 개선입니다. Edu와 수식�
 실제 로컬 QA는 별도 작업 공간과 임시 QA 인증서로 수행했습니다. 고객 프로젝트·운영 라이선스·설계 엔진 결과를 만들거나 변경하지 않았습니다. 회로도 검색·보기 검증은 제조 signoff가 아닙니다. [검증 기록](evidence/schematic-usability-20261025/verification.json), [데스크톱 화면](evidence/schematic-usability-20261025/finder-desktop.jpg), [모바일 화면](evidence/schematic-usability-20261025/finder-mobile.jpg)을 확인하세요.
 
 회귀 정의: `tests/ui/schematic-finder.spec.ts`. 이 작업의 브라우저 확인은 CUA로 실제 조작했으며, Playwright 테스트 러너 실행 여부는 검증 JSON에 별도로 기록합니다.
+
+## 편의성 개선 루프 3회 (2026-10-26)
+
+Resistor Indust의 세 차례 개선을 현재 작업에서 완료했습니다. 예약 자동 실행은 만들지 않았으며, 서버·설치판 배포 보류는 유지합니다.
+
+1. **반복 검색**: 정확한 소자 이름·ID·net 이름을 접두어 일치보다 먼저 표시합니다. 회로도 편집 세션에서 셀마다 검색어·필터를 기억하며, **지우기**로 초기화합니다. 앱/편집기를 다시 시작하면 검색 상태는 초기화됩니다.
+2. **레이아웃 탐색**: **Shift+F / 선택 맞춤**으로 현재 로드된 선택 도형을 확대합니다. **F / 맞춤**은 전체 범위로 돌아갑니다. 2D·3D와 복수 선택을 지원하며, DBU 정수와 설계 revision을 바꾸지 않습니다. CPU 읽기 전용 뷰에도 같은 맞춤 조작과 편집 키 차단을 추가했습니다. CPU 경로는 타입 검사·공통 정수 범위 검사를 했으며 실제 GPU 미지원 환경 조작은 미검증입니다.
+3. **입력 보호**: 다른 소자·셀을 선택해도 소자별 미적용 속성 입력을 메모리에 유지합니다. 프로젝트·셀·소자 식별자로 구분하며 디스크에 자동 저장하지 않습니다. 앱을 닫으면 사라집니다. **현재 설계 값 새로 읽기**는 입력을 보존한 채 원본을 조회합니다. 같은 항목이 바뀌었다면 적용을 차단하고 원본·현재·입력을 비교합니다. 관련 없는 최신 서버 값은 보존합니다. **서버 값으로 되돌리기**는 해당 소자의 임시 입력을 지웁니다.
+
+핵심 검사 304개와 빌드가 통과했습니다. 실제 브라우저 검증은 별도 native worker와 QA 인증서를 사용해 수행했습니다. 충돌 재현과 정상 적용 확인을 위해 QA 소자 값만 네 번 변경하고 마지막에 1000 Ω로 복원했으며, 시뮬레이션 job은 만들지 않았습니다. 새 제조 검증 결과나 installer 공개를 의미하지 않습니다.
+
+[3회 검증 기록](evidence/usability-loop-20261026/verification.json) · [검색 조건 복원](evidence/usability-loop-20261026/loop1-search.jpg) · [레이아웃 선택 맞춤](evidence/usability-loop-20261026/loop2-layout-fit.jpg) · [속성 충돌 비교](evidence/usability-loop-20261026/loop3-draft-conflict.jpg). 회귀 정의는 `tests/ui/schematic-finder.spec.ts`, `tests/ui/layout-selection-fit.spec.ts`에 있으며 이번 실제 UI 확인은 CUA로 수행했습니다.
+
+다음 개선 후보는 초기 번들 분할, GPU 미지원 실기기 회귀, 명시적 설계 초안 복구입니다. 이번 3회 완료 범위에는 포함하지 않습니다.

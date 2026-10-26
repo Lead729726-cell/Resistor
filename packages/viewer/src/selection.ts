@@ -6,6 +6,14 @@ export function mergeSelection(old:string[],hits:string[],mode:SelectionMode):st
  for(const id of hits)if(mode==='subtract'||mode==='toggle'&&result.has(id))result.delete(id);else result.add(id);
  return [...result];
 }
+/** Loaded selection bbox stays integer DBU until the camera's local-frame conversion. */
+export function layoutSelectionBounds(shapes:SceneShape[],ids:string[]){
+ const wanted=new Set(ids),found:string[]=[];let box:[bigint,bigint,bigint,bigint]|null=null;
+ for(const shape of shapes){if(!wanted.has(shape.id)||!shape.polygon.length)continue;found.push(shape.id);
+  for(const [x,y]of shape.polygon){const a=BigInt(x),b=BigInt(y);if(!box)box=[a,b,a,b];else{if(a<box[0])box[0]=a;if(b<box[1])box[1]=b;if(a>box[2])box[2]=a;if(b>box[3])box[3]=b;}}
+ }
+ return box?{ids:found,bbox:box.map(String) as [string,string,string,string]}:null;
+}
 type P=[bigint,bigint];type B=[bigint,bigint,bigint,bigint];
 const orientation=(a:P,b:P,c:P)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
 const between=(a:bigint,b:bigint,c:bigint)=>c>=(a<b?a:b)&&c<=(a>b?a:b);

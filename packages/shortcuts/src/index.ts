@@ -35,6 +35,7 @@ export const shortcutDefinitions:ShortcutDefinition[]=[
  {id:'redraw',scope:'layout',keys:['F6','Ctrl+R'],label:'화면 다시 그리기'},
  {id:'nudge',scope:'layout',keys:['Arrows','Shift+Arrows'],label:'선택 도형 미세 이동',mutates:true,note:'방향키 1 grid, Shift+방향키 10 grid. Layout 2D 선택 모드에서 사용합니다.'},
  {id:'fit',scope:'layout',keys:['F'],label:'전체 맞춤'},
+ {id:'fit_selection',scope:'layout',keys:['Shift+F'],label:'선택 도형 화면 맞춤',note:'현재 로드된 선택 도형 범위를 표시합니다. 정수 DBU·설계 revision은 바뀌지 않습니다.'},
  {id:'zoom_in',scope:'layout',keys:['+','='],label:'확대'},
  {id:'zoom_out',scope:'layout',keys:['-'],label:'축소'},
  {id:'layers',scope:'layout',keys:['L'],label:'레이어 패널 표시 전환'},

@@ -16,7 +16,7 @@ import { branchCurrent,currentDirection,currentPath,flowStatus,formatCurrent,pro
 import { CurrentFlowPanel } from './CurrentFlowPanel';
 import { AdvancedTools } from './AdvancedTools';
 import { CanvasLayoutFallback } from './CanvasLayoutFallback';
-import {maskInRegion,selectionBox,mergeSelection,selectionMode,type SelectionMode} from './selection';
+import {maskInRegion,selectionBox,mergeSelection,selectionMode,layoutSelectionBounds,type SelectionMode} from './selection';
 import './viewer.css';
 
 export interface LayoutViewerProps {
@@ -229,6 +229,16 @@ export function LayoutViewer(props: LayoutViewerProps) {
     stage.focusBounds=new THREE.Box3(new THREE.Vector3(deltaUm(x1,stage.frame.origin[0],source.dbu_um),deltaUm(y1,stage.frame.origin[1],source.dbu_um),0),new THREE.Vector3(deltaUm(x2,stage.frame.origin[0],source.dbu_um),deltaUm(y2,stage.frame.origin[1],source.dbu_um),stage.maxZ));
     stage.fit(undefined,true);
     if(fetch&&propsRef.current.onRequestScope)await requestScope(instance.bbox,displayRef.current.renderLimit??2000);
+  }
+  function focusSelection() {
+    const stage=stageRef.current,source=propsRef.current.scene;if(!stage||!source)return;
+    const shapes=source.shapes.filter(shape=>isPickable(displayLayer(source,displayRef.current,shape.layer_id)));
+    const selected=layoutSelectionBounds(shapes,selectionRef.current);if(!selected){setNote('현재 로드 범위에서 선택 가능한 도형을 먼저 선택하세요.');return;}
+    const [x1,y1,x2,y2]=selected.bbox;
+    const ids=new Set(selected.ids);let z1=Infinity,z2=-Infinity;
+    for(const shape of shapes){if(!ids.has(shape.id))continue;const i=source.layers.findIndex(layer=>layer.id===shape.layer_id),z=layerZ(source,shape.layer_id,i,displayRef.current,mode);z1=Math.min(z1,z);z2=Math.max(z2,z+(source.layers[i]?.thickness_display_um??0));}
+    stage.focusBounds=new THREE.Box3(new THREE.Vector3(deltaUm(x1,stage.frame.origin[0],source.dbu_um),deltaUm(y1,stage.frame.origin[1],source.dbu_um),z1),new THREE.Vector3(deltaUm(x2,stage.frame.origin[0],source.dbu_um),deltaUm(y2,stage.frame.origin[1],source.dbu_um),z2));
+    stage.fit(undefined,true);setNote(`선택 ${selected.ids.length}개 화면 맞춤 · 현재 로드 범위 · 설계 좌표는 변경하지 않습니다.`);
   }
   function focusShape(id:string) {
     const stage=stageRef.current, source=propsRef.current.scene;if(!stage||!source)return;
@@ -547,6 +557,7 @@ previewRedo.current=[];            copyRef.current={shape,anchor:p};setCopySourc
       if(action.id==='bend'){if(toolRef.current==='route')setDrawOrder(order=>order==='x-first'?'y-first':'x-first');return;}
       if(['box','polygon','route','move','copy','area'].includes(action.id)){if(mode==='2d'||action.id==='move')chooseTool(action.id as typeof tool);return;}
       if(action.id==='fit'){stage.focusBounds=undefined;stage.fit();return;}
+      if(action.id==='fit_selection'){focusSelection();return;}
       if(action.id==='layers'){setPaletteOpen(value=>!value);return;}
       if(action.id==='display'){setPaletteOpen(true);requestAnimationFrame(()=>host.closest('.mos-viewer')?.querySelector<HTMLElement>('.mos-viewer-palette input,.mos-viewer-palette button')?.focus());return;}
       if(action.id==='properties'){setPropertiesOpen(true);requestAnimationFrame(()=>host.closest('.mos-viewer')?.querySelector<HTMLElement>('[data-layout-properties]')?.focus());return;}
@@ -977,6 +988,7 @@ previewRedo.current=[];            copyRef.current={shape,anchor:p};setCopySourc
         {mode==='2d'&&<button data-testid="layout-area-select" disabled={!scene||pending} className={tool==='area'?'active':''} onClick={()=>chooseTool('area')} title="A · 드래그 영역 선택 · Shift 추가 · Alt 제외">영역 선택</button>}
         <button className={tool === 'move' ? 'active' : ''} disabled={!scene || pending || props.readOnly} onClick={() => { chooseTool('move'); setNote('도형을 XY 방향으로 드래그하세요. 표시 Z 높이는 설계 명령에 포함되지 않습니다.'); }} title={props.readOnly ? '읽기 전용 설계 · 편집 기능 비활성화' : 'XY grid 이동 · M'}>XY 이동</button>
         {mode==='2d'&&(['box','polygon','route','copy'] as const).map(kind=><button key={kind} data-testid={`layout-draw-${kind}`} title={kind==='box'?'드래그 또는 두 점 클릭 · R':kind==='polygon'?'꼭짓점 클릭 · Shift+P':kind==='route'?'Manhattan 배선 · P / W':'원본 도형과 새 위치 클릭 · C'} aria-pressed={tool===kind} className={tool===kind?'active':''} disabled={!scene||pending||props.readOnly} onClick={()=>chooseTool(kind)}>{kind==='box'?'사각형':kind==='polygon'?'다각형':kind==='route'?'배선 그리기':'복사'}</button>)}
+        <button data-testid="layout-fit-selection" disabled={!scene||!selectedIds.length} onClick={focusSelection} title="선택 도형 화면 맞춤 · Shift+F">선택 맞춤</button>
         <button onClick={() => { if (stageRef.current) stageRef.current.focusBounds = undefined; stageRef.current?.fit(); }} title="전체 맞춤 (F)">맞춤</button>
       </div>
       <div className="mos-toolgroup">

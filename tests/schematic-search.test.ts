@@ -46,3 +46,9 @@ test('finder and fit selection are read-only canvas shortcuts; browser text sear
  assert.equal(resolveShortcut('schematic',{key:'f',ctrlKey:true,isComposing:true}),null);
  assert.equal(resolveShortcut('layout',{key:'f',ctrlKey:true}),null);
 });
+test('exact name and ID matches precede prefixes even beyond the visible result cap',()=>{
+ const index=schematicSearchIndex({devices:[...Array.from({length:200},(_,i)=>device('r1_extra_'+i)),device('r1')]});
+ const found=searchSchematic(index,'R1','device');assert.equal(found.total,201);assert.equal(found.entries.length,40);assert.equal(found.entries[0].label,'R1');
+ assert.equal(searchSchematic(index,'r1','device',NaN).entries.length,40);
+ assert.equal(searchSchematic(index,'r1','device',0).entries.length,0);
+});

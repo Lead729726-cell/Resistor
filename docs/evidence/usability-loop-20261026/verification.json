@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "edition": "Resistor Indust; shared editor and math/geometry APIs preserved",
+  "checked_at": "2026-10-26T08:56:25.486Z",
+  "requested_iterations": 3,
+  "completed_iterations": 3,
+  "recurring_automation_created": false,
+  "base_revision": "615e4ecbae86fa55300ec2a3c2db7e68a60344a5",
+  "source_binding": "Implementation bytes below; tested before commit",
+  "source_sha256": {
+    "packages/ui/src/App.tsx": "d14358fae12c78e626ba3696dc72a9e1dbdb72c82860df3ffc4c023f63213d7b",
+    "packages/ui/src/device-drafts.ts": "01dc38630de15dd6af4145f6776a99bfbd8a876ec7f68b40013c024db30eee88",
+    "packages/ui/src/SchematicEditor.tsx": "08636196a7ff99337a5299fab4194cad0ac050f79a492741d9488085fb7c79cd",
+    "packages/ui/src/SchematicFinder.tsx": "97ca90e1b6e317ee410a158543629e6b8b65b7da47ab5ed6b17fddea3769ba7b",
+    "packages/ui/src/schematic-search.ts": "1dc41ac37cd2f99f2005bcf162db7580e0bc342707591fd2e8b8084cf1f891e8",
+    "packages/ui/src/workbench-usability.css": "bde86e1b8521856bfe3c50dd00b2f9b19d381d28ed45cd5df51c15072f30796e",
+    "packages/viewer/src/LayoutViewer.tsx": "9512b2eae8f0ddd1b912ee5215e80206b7917b2f245ad740471320bfd808439b",
+    "packages/viewer/src/CanvasLayoutFallback.tsx": "a132b37da593ccc4f9f6ea2959e1ccdb1d961572daa296f40b9f0128ba892c7c",
+    "packages/viewer/src/selection.ts": "e28d9fd93a6a90e2bbc611891b390bff277975e65909583e37ee7b6377124b4b",
+    "packages/shortcuts/src/index.ts": "b2e6517a44fa88b652dcdb979a5c85fd275541288f898db02910209cd7342588"
+  },
+  "iterations": [
+    {
+      "iteration": 1,
+      "issue": "Search resets on close; exact names can appear after prefix hits",
+      "changes": [
+        "exact name/id/net rank first",
+        "bounded result buckets retain total match count",
+        "per-cell editor-session query/filter restoration",
+        "explicit clear button"
+      ],
+      "unit_tests": 6,
+      "actual_browser": {
+        "driver": "CUA",
+        "query": "R_FAR",
+        "first_result": "R_FAR",
+        "prefix_result_after_exact": "R_FAR_EXTRA",
+        "restored_query": "R_FAR",
+        "restored_kind": "device",
+        "cleared_kind": "all",
+        "mobile": {
+          "width": 320,
+          "page_width": 320,
+          "finder_width": 304,
+          "overflow": 0
+        }
+      }
+    },
+    {
+      "iteration": 2,
+      "issue": "Layout lacks the same selected-object fit used in schematic",
+      "changes": [
+        "Shift+F and selected-fit button for layout",
+        "integer DBU union of loaded selected polygons",
+        "2D/3D selection preserved",
+        "CPU fallback selection fit and read-only key guard"
+      ],
+      "unit_tests": 3,
+      "actual_browser": {
+        "driver": "CUA",
+        "render_path": "WebGL2",
+        "single_fit": {
+          "selection_count": 1,
+          "before_scale": "10 µm",
+          "after_scale": "0.5 µm"
+        },
+        "group_fit": {
+          "selection_count": 3,
+          "modes": [
+            "2d",
+            "3d"
+          ]
+        },
+        "layout_revision_before": 4,
+        "layout_revision_after": 4
+      },
+      "cpu_fallback": {
+        "typecheck": "passed",
+        "shared_integer_bounds_unit_tests": "passed",
+        "actual_gpu_unavailable_path": "not_run",
+        "reason": "Browser debugging interface does not support forced WebGL initialization failure. No production browser graphics state changed."
+      }
+    },
+    {
+      "iteration": 3,
+      "issue": "Unapplied inspector edits are lost on device change and can overwrite changed server fields",
+      "changes": [
+        "memory-only device drafts scoped by project/cell/device",
+        "explicit read-only refresh preserves inputs",
+        "same-field conflict blocks Apply and displays comparison",
+        "unrelated server fields retained; already-applied fields omitted on retry",
+        "editing inputs disabled during save"
+      ],
+      "unit_tests": 3,
+      "actual_browser": {
+        "driver": "CUA",
+        "draft_after_device_roundtrip": "1234",
+        "conflict": {
+          "original": 3000,
+          "current": 4000,
+          "entered": 1234,
+          "apply_enabled": false
+        },
+        "actual_ui_applied_value": 2250,
+        "actual_engine_revision": 11,
+        "final_qa_value_restored": 1000,
+        "final_qa_revision": 12
+      }
+    }
+  ],
+  "checks": {
+    "core_tests": {
+      "passed": 304,
+      "failed": 0,
+      "skipped": 0
+    },
+    "typecheck": "passed",
+    "build": "passed",
+    "debug_maps": 3,
+    "build_warning": "Existing main bundle still exceeds 500 kB; no code splitting claimed",
+    "main_browser_console_errors": [],
+    "main_browser_console_warnings": [],
+    "playwright_regression_definitions": 5,
+    "playwright_runner_executed": false,
+    "actual_user_flows_verified_via_cua": true,
+    "documentation_links": {
+      "documents": 67,
+      "checked": 545,
+      "missing": []
+    },
+    "source_audit": {
+      "files": 11542,
+      "sizeMiB": 2181.21,
+      "archives": 235,
+      "issues": []
+    }
+  },
+  "qa_scope": {
+    "workspace": "D:\\Coldbrew\\Resistor\\.runtime\\usability-loop-20261026\\workspace-1793003498935",
+    "isolated_user_projects": true,
+    "production_keys_used": false,
+    "customer_orders_created": false,
+    "schematic_fixture_seed_revision": 8,
+    "schematic_final_revision": 12,
+    "controlled_qa_value_changes": [
+      "1000 to 3000 API concurrent edit",
+      "3000 to 4000 API concurrent edit",
+      "4000 to 2250 GUI apply",
+      "2250 to 1000 GUI restore"
+    ],
+    "layout_shapes": 3,
+    "simulation_jobs_created": 0
+  },
+  "screenshots": {
+    "loop1-mobile.jpg": "fe6314aeb1a54a55349b10b1d90a941045b01fdfa312bb2d40ed6d5b867f9244",
+    "loop1-search.jpg": "0f05e81c3d3758befe46bc1fedf9a549932f5f1ee6ec127974ed344195a9d6a4",
+    "loop2-layout-fit.jpg": "369d51d9a8449c5514f74c501833531cf519207eacc7411554f3d4e1bdae696f",
+    "loop3-draft-conflict.jpg": "e907db15d3b46173dac605c0c6745704e05b8f45a94f7af6185ad28c74b7a661"
+  },
+  "production_deployed": false,
+  "new_installer_published": false,
+  "foundry_signoff": "not_run"
+}
