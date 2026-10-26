@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdtemp,rm,readFile,mkdir,writeFile} from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import {createHash,generateKeyPairSync,randomUUID,sign,randomBytes,createCipheriv} from 'node:crypto';
+import {createHash,generateKeyPairSync,randomUUID,sign,randomBytes,createCipheriv,createDecipheriv} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
 import {canonical,leagueEmojis} from '../packages/education/src/league-protocol.ts';
 import {leagueQuestion,buildLeagueQuestions,gradeLeague,publicLeagueQuestion,leagueKinds} from '../packages/education/src/league-problems.ts';
@@ -49,7 +49,13 @@ test('daily server timer, ownership, scoring, review embargo and encrypted stora
  f.advance(15000);assert.equal(good(f.api('league.start',{},d)).attempt.deadline,a.deadline);
  assert.equal(good(f.api('league.submit',{attempt_id:a.id,answers:answers()},d)).score,100);
  let me=good(f.api('league.me',{},d));assert.equal(me.attempt.elapsed_ms,15000);assert.equal(me.attempt.review,null);assert.equal(f.api('league.submit',{attempt_id:a.id,answers:answers()},d).error.code,'ALREADY_SUBMITTED');
- await f.reopen();me=good(f.api('league.me',{},d));assert.equal(me.attempt.score,100);const db=new DatabaseSync(path.join(f.directory,'league.sqlite3'));for(const r of db.prepare('SELECT answers_cipher FROM attempts WHERE answers_cipher IS NOT NULL').all())assert.ok(!r.answers_cipher.includes('q1'));for(const r of db.prepare('SELECT cipher FROM packs').all())assert.ok(!r.cipher.includes('expected'));db.close();
+ await f.reopen();me=good(f.api('league.me',{},d));assert.equal(me.attempt.score,100);const db=new DatabaseSync(path.join(f.directory,'league.sqlite3'));
+ const secret=await readFile(path.join(f.directory,'server-secret'));
+ const unseal=(cipher,aad,key=secret)=>{const bytes=Buffer.from(cipher,'base64');assert(bytes.length>28);const c=createDecipheriv('aes-256-gcm',key,bytes.subarray(0,12));c.setAAD(Buffer.from(aad));c.setAuthTag(bytes.subarray(12,28));return JSON.parse(Buffer.concat([c.update(bytes.subarray(28)),c.final()]).toString('utf8'));};
+ const storedAnswers=db.prepare('SELECT id,answers_cipher FROM attempts WHERE answers_cipher IS NOT NULL').all();assert(storedAnswers.length>0);
+ // Random Base64 can legitimately contain short strings like q1. Check authenticated encryption instead.
+ for(const r of storedAnswers){assert.deepEqual(unseal(r.answers_cipher,'answers:'+r.id),answers());assert.throws(()=>unseal(r.answers_cipher,'answers:another-attempt'));assert.throws(()=>unseal(r.answers_cipher,'answers:'+r.id,Buffer.alloc(32)));const tampered=Buffer.from(r.answers_cipher,'base64');tampered[tampered.length-1]^=1;assert.throws(()=>unseal(tampered.toString('base64'),'answers:'+r.id));}
+ const storedPacks=db.prepare('SELECT day,cipher FROM packs').all();assert(storedPacks.length>0);for(const r of storedPacks){const pack=unseal(r.cipher,'pack:'+r.day);assert.equal(pack.day,r.day);assert.equal(pack.questions.length,5);assert(pack.questions.every(q=>Number.isFinite(q.expected)));assert.throws(()=>unseal(r.cipher,'pack:wrong-day'));}db.close();
  f.setClock(Date.parse('2026-10-17T00:00:00+09:00'));me=good(f.api('league.me',{},d));assert.equal(me.attempt,null);assert.equal(me.history[0].review.questions[0].expected,.9);assert.deepEqual(me.history[0].review.answers,answers());assert.notEqual(good(f.api('league.start',{},d)).attempt.id,a.id);
 }));
 test('deadline uses KST midnight and elapsed server time, never a client duration',()=>fixture(async f=>{
