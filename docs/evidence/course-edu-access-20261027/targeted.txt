@@ -1,0 +1,34 @@
+✔ public sources are pinned to distinct, verified Edu and Indust products (1.2195ms)
+✔ wrong edition identity, unpinned URLs and common-installer relabeling are rejected (1.254ms)
+✔ refresh aborts before writing if a public branch belongs to the wrong product (4.7682ms)
+✔ dedicated installer schema rejects partial, substituted and unverified releases (0.6412ms)
+✔ published Industry and Indust labels remain compatible only within the same product identity (0.3319ms)
+✔ verified order issuance is idempotent; wrong and unverified input is rejected (18.1807ms)
+✔ serials have random 160-bit values and stay out of plaintext database (13.3372ms)
+✔ Edu and Industry have separate entitlements and both clients enforce the edition (23.882ms)
+✔ two active installations allowed; releasing one frees its seat (24.5521ms)
+✔ signed lease rejects tampering, another installation and another edition (11.2046ms)
+✔ client requires serial before app RPC and stores neither serial nor refresh token plaintext (15.4306ms)
+✔ offline keeps valid authorization; expires after seven days; no synthetic extension (16.3643ms)
+✔ refund blocks refresh and clears authorization; archived order cannot issue again (18.0998ms)
+✔ failed deactivation preserves current seat and stored authorization (17.7334ms)
+✔ clock rollback is visible, and expired lease can refresh through valid device secret (17.8023ms)
+✔ unconfigured authority fails closed and never accepts an unsigned local serial (13.4028ms)
+✔ unconnected email remains pending and does not consume a successful delivery status (11.5486ms)
+✔ mail acknowledgments and uncertain retries use the same delivery idempotency key (14.1877ms)
+✔ HTTP rejects unauthenticated issuance, cross-origin activation and oversized data (51.0359ms)
+✔ real HTTP activation and refresh preserve POST bodies, error states and server trust (28.4342ms)
+✔ optional mail adapter submits only to official endpoint and requires provider acknowledgment (0.695ms)
+✔ unconfigured serial-required installers cannot enter official native release (0.7642ms)
+✔ Inflearn course grants are fixed to Edu and two devices even for a verified operator order (13.3372ms)
+✔ separate Industry orders have their own purchase and refund namespace (33.3833ms)
+✔ HTTP admin course fulfillment cannot issue Industry or override the course device policy (22.3389ms)
+✔ packaged shared license client retains course policy without a source-tree dependency (33.7193ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 498.251

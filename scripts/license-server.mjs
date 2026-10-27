@@ -20,9 +20,9 @@ if(command==='init'){
   else if(command==='status')console.log(JSON.stringify(service.status(),null,2));
   else if(command==='import-orders'){
    const input=path.resolve(process.argv[3]||'');if(!process.argv[3])throw Error('Provide an operator-reviewed order JSON file');const bytes=await readFile(input),orders=JSON.parse(bytes);if(!Array.isArray(orders)||orders.length>1000)throw Error('Order array, maximum 1000 rows');const result=[];for(const order of orders){const issued=service.issue(order);result.push({...issued,...(process.argv.includes('--send')?{mail:await service.deliver(issued.delivery_id)}:{})});}await writeFile(path.join(directory,'last-import-receipt.json'),JSON.stringify({schema_version:1,source_sha256:createHash('sha256').update(bytes).digest('hex'),results:result},null,2)+'\n',{mode:0o600});console.log('Processed '+result.length+' verified order rows. Receipt saved privately; no buyer address or serial printed.');
-  }else if(command==='refund'){console.log(JSON.stringify(service.refund({purchase_ref:process.argv[3]})));}
+  }else if(command==='refund'){console.log(JSON.stringify(service.refund({purchase_ref:process.argv[3],provider:process.argv.find(v=>v.startsWith('--provider='))?.slice(11)??'inflearn'})));}
   else if(command==='export-delivery'){
    const row=service.operatorDelivery(process.argv[3]);if(!process.argv[4])throw Error('Provide a private output path for buyer delivery');await writeFile(path.resolve(process.argv[4]),JSON.stringify(row,null,2)+'\n',{mode:0o600,flag:'wx'});console.log('Buyer delivery saved privately. Use only for this verified buyer; never publish this file.');
-  }else throw Error('Commands: init, status, serve, import-orders FILE [--send], refund PURCHASE_REF, export-delivery DELIVERY_ID PRIVATE_FILE');
+  }else throw Error('Commands: init, status, serve, import-orders FILE [--send], refund PURCHASE_REF [--provider=inflearn|direct], export-delivery DELIVERY_ID PRIVATE_FILE');
  }finally{if(command!=='serve')service.close();}
 }

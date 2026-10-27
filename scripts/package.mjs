@@ -8,6 +8,7 @@ import {prepareNativeRuntime} from './prepare-native-runtime.mjs';
 import {getProductEdition} from './edition-workspace.mjs';
 import renderer from '../apps/desktop/renderer.cjs';
 import {assertLicenseReleaseReady} from './license-release-check.mjs';
+import {publicLicenseRuntimeFiles} from '../platform/licensing/access-policy.mjs';
 // All official package paths share this preflight, including edition branches
 // which do not carry the optional native release orchestration script.
 await assertLicenseReleaseReady();
@@ -26,7 +27,7 @@ await mkdir(stage,{recursive:true});
 await copyNotices(path.join(stage,'licenses'));
 await cp(rendererRoot,path.join(stage,'dist'),{recursive:true});
 await mkdir(path.join(stage,'platform/licensing'),{recursive:true});
-for(const file of ['token.mjs','public-config.json'])await cp(path.join('platform/licensing',file),path.join(stage,'platform/licensing',file));
+for(const file of publicLicenseRuntimeFiles)await cp(path.join('platform/licensing',file),path.join(stage,'platform/licensing',file));
 for(const folder of ['apps/desktop','workers/eda','adapters','docs','platform/cloud','platform/commercial'])await cp(folder,path.join(stage,folder),{recursive:true,filter:source=>!source.includes('__pycache__')&&!source.includes('vendor')&&!source.includes('.secrets')&&!source.includes(`${path.sep}evidence${path.sep}`)&&!source.endsWith(`${path.sep}evidence`)});
 // Runtime samples only; large recordings and test evidence are delivered separately.
 await cp('examples/sky130',path.join(stage,'examples/sky130'),{recursive:true});

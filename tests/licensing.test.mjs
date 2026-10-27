@@ -1,8 +1,9 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {generateKeyPairSync,randomBytes,createHash} from 'node:crypto';
-import {mkdtemp,readFile,rm} from 'node:fs/promises';
+import {mkdtemp,readFile,rm,mkdir,cp} from 'node:fs/promises';
 import path from 'node:path';
+import {pathToFileURL} from 'node:url';
 import os from 'node:os';
 import {createLicenseService} from '../platform/licensing/service.mjs';
 import {createLicenseHttpServer} from '../platform/licensing/http.mjs';
@@ -10,17 +11,18 @@ import {readLease,sha256} from '../platform/licensing/token.mjs';
 import {LicenseClient,fileLicenseVault} from '../apps/desktop/licensing.mjs';
 import {createResendMailer} from '../platform/licensing/mail.mjs';
 import {assertLicenseReleaseReady} from '../scripts/license-release-check.mjs';
+import {publicLicenseRuntimeFiles} from '../platform/licensing/access-policy.mjs';
 async function setup(fn,{mailer}={}){
  const directory=await mkdtemp(path.join(os.tmpdir(),'resistor-license-'));const keys=generateKeyPairSync('ed25519'),privateKey=keys.privateKey.export({type:'pkcs8',format:'pem'}),publicKey=keys.publicKey.export({type:'spki',format:'pem'});let clock=Date.now();
  const service=createLicenseService({filename:path.join(directory,'license.sqlite'),masterKey:randomBytes(32),privateKey,now:()=>clock,mailer});
- const order=(edition='edu',id='test-order')=>service.issue({provider:'inflearn',purchase_ref:id,edition,email:'fixture@example.invalid',evidence_sha256:'a'.repeat(64),verified:true,device_limit:2});
+ const order=(edition='edu',id='test-order')=>service.issue({provider:edition==='edu'?'inflearn':'direct',purchase_ref:id,edition,email:'fixture@example.invalid',evidence_sha256:'a'.repeat(64),verified:true,device_limit:2});
  const serial=(edition='edu',id='test-order')=>service.operatorDelivery(order(edition,id).delivery_id).serial;
  const config={schema_version:1,required:true,server_url:'https://licensing.example.invalid',public_keys:{'resistor-20261023':publicKey},policy:{edu:{device_limit:2},indust:{device_limit:2}}};
  const fakeFetch=async(url,options)=>{const p=JSON.parse(options.body),method=new URL(url).pathname.split('/').at(-1);try{const result=service[method](p);return {status:200,json:async()=>({ok:true,result})};}catch(e){return {status:403,json:async()=>({ok:false,error:{code:e.code,message:e.message}})};}};
  const client=async(name,edition='edu',fetchImpl=fakeFetch)=>{const dir=path.join(directory,name);return new LicenseClient({directory:dir,edition,config,...await fileLicenseVault(dir),fetchImpl,now:()=>clock});};
  try{await fn({service,order,serial,client,config,publicKey,directory,advance:n=>clock+=n,now:()=>clock});}finally{service.close();await rm(directory,{recursive:true,force:true});}
 }
-test('verified order issuance is idempotent; wrong and unverified input is rejected',()=>setup(async({service,order})=>{assert.throws(()=>service.issue({verified:false}),{code:'ORDER_UNVERIFIED'});const a=order(),b=order();assert.equal(a.license_id,b.license_id);assert.equal(b.idempotent,true);assert.throws(()=>order('indust'),{code:'ORDER_CONFLICT'});}));
+test('verified order issuance is idempotent; wrong and unverified input is rejected',()=>setup(async({service,order})=>{assert.throws(()=>service.issue({verified:false}),{code:'ORDER_UNVERIFIED'});const a=order(),b=order();assert.equal(a.license_id,b.license_id);assert.equal(b.idempotent,true);assert.throws(()=>service.issue({provider:'inflearn',purchase_ref:'test-order',edition:'edu',email:'fixture@example.invalid',evidence_sha256:'b'.repeat(64),verified:true,device_limit:2}),{code:'ORDER_CONFLICT'});}));
 test('serials have random 160-bit values and stay out of plaintext database',()=>setup(async({serial,directory})=>{const a=serial('edu','one'),b=serial('edu','two');assert.match(a,/^RS1-(?:[A-F0-9]{8}-){4}[A-F0-9]{8}$/);assert.notEqual(a,b);for(const suffix of['','-wal']){const file=await readFile(path.join(directory,'license.sqlite'+suffix));assert.ok(!file.includes(Buffer.from(a)));assert.ok(!file.includes(Buffer.from('fixture@example.invalid')));}}));
 test('Edu and Industry have separate entitlements and both clients enforce the edition',()=>setup(async({client,serial})=>{const edu=await client('edu'),indust=await client('indust','indust');await assert.rejects(()=>indust.activate(serial()),{code:'LICENSE_EDITION'});assert.equal((await edu.activate(serial())).authorized,true);assert.equal((await indust.activate(serial('indust','industry-order'))).authorized,true);}));
 test('two active installations allowed; releasing one frees its seat',()=>setup(async({client,serial})=>{const code=serial(),a=await client('a'),b=await client('b'),c=await client('c');await a.activate(code);await b.activate(code);await assert.rejects(()=>c.activate(code),{code:'LICENSE_SEAT_LIMIT'});assert.equal((await a.deactivate()).authorized,false);assert.equal((await c.activate(code)).authorized,true);}));
@@ -35,5 +37,35 @@ test('unconnected email remains pending and does not consume a successful delive
 test('mail acknowledgments and uncertain retries use the same delivery idempotency key',async()=>{let calls=0,ids=[];await setup(async({service,order})=>{const o=order();assert.equal((await service.deliver(o.delivery_id)).status,'pending');assert.equal((await service.deliver(o.delivery_id)).status,'accepted');assert.equal((await service.deliver(o.delivery_id)).idempotent,true);assert.equal(calls,2);assert.equal(ids[0],ids[1]);},{mailer:async p=>{ids.push(p.idempotency_key);if(++calls===1)throw Error('timeout');return{id:'provider-ack'};}});});
 test('HTTP rejects unauthenticated issuance, cross-origin activation and oversized data',()=>setup(async({service})=>{const server=createLicenseHttpServer(service,{adminToken:'t'.repeat(43)});await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;try{let r=await fetch(base+'/admin/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});assert.equal(r.status,401);r=await fetch(base+'/v1/activate',{method:'POST',headers:{'Content-Type':'application/json',Origin:'https://evil.example'},body:'{}'});assert.equal(r.status,403);r=await fetch(base+'/v1/activate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({x:'x'.repeat(20000)})});assert.equal(r.status,413);assert.equal((await (await fetch(base+'/health')).json()).result.inflearn_webhook,'not_connected');}finally{await new Promise(r=>server.close(r));}}));
 test('real HTTP activation and refresh preserve POST bodies, error states and server trust',()=>setup(async({service,client,serial})=>{const server=createLicenseHttpServer(service,{adminToken:'t'.repeat(43)});await new Promise(r=>server.listen(0,'127.0.0.1',r));try{const c=await client('http','edu',fetch);c.config={...c.config,server_url:'http://127.0.0.1:'+server.address().port};c.allowLocalServer=true;assert.equal((await c.activate(serial())).authorized,true);assert.equal((await c.refresh()).authorized,true);assert.equal((await c.deactivate()).authorized,false);}finally{await new Promise(r=>server.close(r));}}));
-test('optional mail adapter submits only to official endpoint and requires provider acknowledgment',async()=>{let payload;const m=createResendMailer({apiKey:'fixture',from:'teacher@example.invalid',fetchImpl:async(url,options)=>{assert.equal(url,'https://api.resend.com/emails');payload=JSON.parse(options.body);assert.equal(options.headers['Idempotency-Key'],'id');return{ok:true,json:async()=>({id:'ack'})};}});assert.equal((await m({email:'buyer@example.invalid',serial:'fixture-code',edition:'edu',device_limit:2,idempotency_key:'id'})).id,'ack');assert.match(payload.text,/Edu/);assert.deepEqual(payload.to,['buyer@example.invalid']);});
+test('optional mail adapter submits only to official endpoint and requires provider acknowledgment',async()=>{let payload;const m=createResendMailer({apiKey:'fixture',from:'teacher@example.invalid',fetchImpl:async(url,options)=>{assert.equal(url,'https://api.resend.com/emails');payload=JSON.parse(options.body);assert.equal(options.headers['Idempotency-Key'],'id');return{ok:true,json:async()=>({id:'ack'})};}});assert.equal((await m({email:'buyer@example.invalid',serial:'fixture-code',edition:'edu',device_limit:2,idempotency_key:'id'})).id,'ack');assert.match(payload.text,/Edu/);assert.match(payload.text,/인프런 강의에는 Resistor Edu 사용권만 포함/);assert.match(payload.text,/Resistor Industry는 별도 구매/);assert.match(payload.text,/download\/edu\//);assert.deepEqual(payload.to,['buyer@example.invalid']);});
 test('unconfigured serial-required installers cannot enter official native release',async()=>{await assert.rejects(()=>assertLicenseReleaseReady(),/cannot be published/);});
+
+
+test('Inflearn course grants are fixed to Edu and two devices even for a verified operator order',()=>setup(async({service,order})=>{
+ const base={provider:'inflearn',purchase_ref:'course-boundary',edition:'edu',email:'fixture@example.invalid',evidence_sha256:'a'.repeat(64),verified:true,device_limit:2};
+ for(const patch of [{edition:'indust'},{device_limit:1},{device_limit:3},{verified:'true'},{provider:'unrecognized'}])assert.throws(()=>service.issue({...base,...patch}));
+ assert.throws(()=>service.issue({...base,edition:'indust'}),{code:'ORDER_EDITION'});
+ const issued=service.issue(base);assert.equal(issued.idempotent,false);assert.deepEqual(issued.entitlement.included_editions,['edu']);assert.equal(issued.entitlement.industry_included,false);assert.equal(issued.entitlement.device_limit,2);assert.equal(service.status().course_access_policy.edition,'edu');
+ assert.equal(service.issue(base).license_id,issued.license_id);assert.throws(()=>service.issue({...base,edition:'indust'}),{code:'ORDER_EDITION'});
+ assert.throws(()=>service.issue({...base,provider:'direct',purchase_ref:'wrong-direct-edu'}),{code:'ORDER_EDITION'});
+}));
+test('separate Industry orders have their own purchase and refund namespace',()=>setup(async({service,serial,client})=>{
+ const edu=await client('course-seat'),industry=await client('separate-seat','indust'),sameRef='same-purchase-reference';
+ const eduCode=serial('edu',sameRef),industryCode=serial('indust',sameRef);
+ await assert.rejects(()=>industry.activate(eduCode),{code:'LICENSE_EDITION'});await edu.activate(eduCode);await industry.activate(industryCode);
+ service.refund({purchase_ref:sameRef});await assert.rejects(()=>edu.refresh(),{code:'LICENSE_REVOKED'});assert.equal((await industry.refresh()).authorized,true);
+ assert.throws(()=>service.refund({provider:'wrong',purchase_ref:sameRef}),{code:'INVALID_PARAMETER'});service.refund({provider:'direct',purchase_ref:sameRef});await assert.rejects(()=>industry.refresh(),{code:'LICENSE_REVOKED'});
+}));
+test('HTTP admin course fulfillment cannot issue Industry or override the course device policy',()=>setup(async({service})=>{
+ const token='t'.repeat(43),server=createLicenseHttpServer(service,{adminToken:token});await new Promise(r=>server.listen(0,'127.0.0.1',r));
+ try{const base='http://127.0.0.1:'+server.address().port,p={provider:'inflearn',purchase_ref:'http-course-only',edition:'indust',email:'fixture@example.invalid',evidence_sha256:'a'.repeat(64),verified:true,device_limit:2};
+  const post=p=>fetch(base+'/admin/orders',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify(p)});
+  const denied=await post(p);assert.equal(denied.status,400);assert.equal((await denied.json()).error.code,'ORDER_EDITION');const accepted=await post({...p,edition:'edu'});assert.equal(accepted.status,200);assert.deepEqual((await accepted.json()).result.entitlement.included_editions,['edu']);
+ }finally{await new Promise(r=>server.close(r));}
+}));
+test('packaged shared license client retains course policy without a source-tree dependency',()=>setup(async({directory,config})=>{
+ const stage=path.join(directory,'packaged-client');await mkdir(path.join(stage,'apps/desktop'),{recursive:true});await mkdir(path.join(stage,'platform/licensing'),{recursive:true});await cp('apps/desktop/licensing.mjs',path.join(stage,'apps/desktop/licensing.mjs'));for(const file of publicLicenseRuntimeFiles)await cp(path.join('platform/licensing',file),path.join(stage,'platform/licensing',file));
+ const module=await import(pathToFileURL(path.join(stage,'apps/desktop/licensing.mjs')));
+ for(const edition of ['edu','indust']){const dir=path.join(stage,'data-'+edition),client=new module.LicenseClient({directory:dir,edition,config,...await module.fileLicenseVault(dir)});const status=await client.status();assert.equal(status.authorized,false);assert.equal(status.course_access_policy.edition,'edu');assert.equal(status.course_access_policy.industry_included,false);assert.match(status.course_access_policy.notice,/Edu 사용권만/);}
+
+}));

@@ -5,6 +5,29 @@ one shared implementation. Edu course purchase grants **Edu only, two active
 installations**. Industry is a separate order/code. Existing project directories,
 engine mathematics, device models and verification results are unchanged.
 
+### Course fulfillment policy
+
+**인프런 강의에는 Resistor Edu 사용권만 포함합니다. 개인 기기 2대까지
+등록할 수 있으며, Resistor Industry는 별도 구매 제품입니다.**
+
+The shared issuance service enforces this before creating an order, code or delivery:
+
+| Verified order source | Allowed edition | Active devices | Included product |
+| --- | --- | --- | --- |
+| `inflearn` | `edu` only | Exactly 2 | Resistor Edu course entitlement |
+| `direct` | `indust` only | 1–2, explicitly recorded | Separate Resistor Industry purchase |
+
+An operator-authenticated Inflearn request with `edition:"indust"` fails with
+`ORDER_EDITION`; `verified:true` does not override the product policy. A different
+course seat count fails with `ORDER_POLICY`. Verification must be the boolean `true`,
+not a truthy string. Successful issuance receipts contain the exact entitlement;
+the existing signed lease still binds a single edition and a single installation.
+
+The app activation screen, fulfillment email and download-page generator state the
+Edu-only course scope. This source change does not claim that the live Inflearn
+editor or live download website has been updated. Automatic purchase ingestion and
+delivery remain separate deployment gates described below.
+
 ## Implemented boundary
 
 - Cryptographically random 160-bit serials; no sequential guessable codes.
@@ -81,6 +104,26 @@ node scripts/license-server.mjs import-orders D:\private\verified-orders.json --
 node scripts/license-server.mjs refund VERIFIED_PURCHASE_REF
 ```
 
+For a separately verified Industry purchase, use
+`platform/licensing/industry-orders.example.json` as the non-issuable template, set
+`provider:"direct"` and `edition:"indust"`, and import the reviewed private copy.
+Do not relabel an Inflearn course purchase as a direct purchase to expand access.
+
+```powershell
+node scripts/license-server.mjs refund VERIFIED_INDUSTRY_PURCHASE_REF --provider=direct
+```
+
+Purchase references are unique within each provider. Refund defaults to `inflearn`
+for existing course operator commands; a direct Industry refund must explicitly name
+its provider, so a matching course order number is not revoked by that operation.
+
+The existing schema 1 SQLite tables, serial format and signed leases are retained.
+No existing order, activation, encrypted outbox, private key or student project is
+rewritten or revoked by installing this source update. Historical Industry records
+marked `inflearn` need an operator review of their original purchase scope; new
+Inflearn-to-Industry issuance and reissuance are refused rather than silently
+rewriting those records. Existing MIT source rights are unchanged.
+
 `--send` is an explicit delivery operation to verified buyers. It reuses the outbox
 delivery ID as the provider idempotency key. Uncertain results remain pending.
 `export-delivery DELIVERY_ID PRIVATE_FILE` supports operator-assisted delivery when
@@ -107,3 +150,16 @@ Before selling, confirm external-tool access, refund/device access policy, data
 processing, support and existing-customer treatment with the actual platform contract.
 Paid accounts, code signing and new infrastructure purchases are not authorized by
 this implementation task.
+
+## Edu-only course policy verification (2026-10-27)
+
+Shared licensing/download tests: 26/26; core regression: 377/377; edition/MCP
+isolation: 9/9. Typecheck and both edition builds passed. The existing large bundle
+warning remains. The real activation screen displayed the course scope in a
+disposable local QA workspace; 390 px mobile had no horizontal overflow. No real
+order, customer code, mail delivery or production key was created or changed.
+
+Evidence: [summary](evidence/course-edu-access-20261027/verification.json),
+[core test log](evidence/course-edu-access-20261027/core.txt),
+[desktop activation screen](evidence/course-edu-access-20261027/activation-desktop.png),
+[mobile activation screen](evidence/course-edu-access-20261027/activation-mobile.png).

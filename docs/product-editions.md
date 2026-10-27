@@ -15,6 +15,7 @@ Resistor는 회로도·계층·레이아웃·GDS/OASIS·실제 엔진 시뮬레�
 | 소스 워크스페이스 | `.runtime/editions/edu/workspace` | 선택한 checkout의 기존 workspace |
 | 실행 화면 | 예측·회로 퍼즐·실험·이유 설명·복습 | 현재 프로젝트·다음 실행·실제 결과 |
 | AI 역할 | Luna 학습 판단 → Sol 힌트·설명·비교 실험 | 기존 설계 검토 정책 유지 |
+| 인프런 강의 제공 범위 | Edu 전용 시리얼 · 개인 기기 2대 | 강의에 포함되지 않음 · 별도 구매 |
 
 `main`은 공통 구현입니다. Edu 브랜치의 `product-edition.json`은 `edu`, Industry 브랜치는 `indust`로 설정합니다. 환경 변수 `RESISTOR_EDITION`을 사용하면 같은 checkout에서도 명시적으로 선택할 수 있습니다. 잘못된 값은 실행을 중단합니다. 계산식, 단위, 정밀도, 파일 형식, 기존 엔진 API를 별도로 복제하지 않습니다.
 

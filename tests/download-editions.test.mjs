@@ -6,7 +6,7 @@ const definitions=JSON.parse(await readFile('apps/desktop/product-editions.json'
 const manifest=JSON.parse(await readFile('platform/download-site/edition-downloads.json','utf8'));
 test('public sources are pinned to distinct, verified Edu and Indust products',()=>{
   validateEditionDownloads(manifest,definitions);assert.notEqual(manifest.editions[0].source.url,manifest.editions[1].source.url);
-  const cards=editionDownloadCards(manifest);assert(cards.includes('/download/edu/'));assert(cards.includes('/download/industry/'));assert(cards.includes(manifest.editions.every(e=>e.native_installer.status==='published')?'Windows x64·ARM64':'전용 설치 파일 준비 중'));
+  const cards=editionDownloadCards(manifest);assert(cards.includes('/download/edu/'));assert(cards.includes('/download/industry/'));assert(cards.includes('인프런 강의에는 Resistor Edu 사용권만 포함됩니다.'));assert(cards.includes('개인 기기 2대'));assert(cards.includes('Industry는 강의 제공 범위에 포함되지 않는 별도 구매 제품입니다.'));assert(cards.includes(manifest.editions.every(e=>e.native_installer.status==='published')?'Windows x64·ARM64':'전용 설치 파일 준비 중'));
 });
 test('wrong edition identity, unpinned URLs and common-installer relabeling are rejected',()=>{
   for(const mutate of [m=>m.editions.pop(),m=>m.editions[1].edition='edu',m=>m.editions[0].source.product_edition_verified='indust',m=>m.editions[0].source.url='https://example.com/fake.zip',m=>m.editions[0].source.revision='main',m=>m.editions[0].native_installer={status:'published',files:[]},m=>m.editions[0].native_installer.files=['Resistor-0.27.0-win-x64.exe']]){
