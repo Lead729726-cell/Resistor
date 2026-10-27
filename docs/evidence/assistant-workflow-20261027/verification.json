@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "edition": "indust",
+  "checked_at": "2026-10-27T05:58:25.567Z",
+  "scope": "Isolated public RC; actual UI calls to OpenAI and native ngspice. No user design was changed.",
+  "models": {
+    "decision": {
+      "model": "gpt-6-luna",
+      "input": 0.1,
+      "output": 0.5,
+      "checked": "2026-10-27"
+    },
+    "execution": {
+      "model": "gpt-6.1-sol",
+      "input": 2,
+      "output": 10,
+      "checked": "2026-10-27"
+    }
+  },
+  "model_calls": 7,
+  "model_calls_by_role": {
+    "decision": 4,
+    "execution": 3
+  },
+  "api_budget": {
+    "cap_usd": 1,
+    "additional_reserved_usd": 0.212555,
+    "total_reserved_usd": 0.22885,
+    "standard_usage_estimate_usd": 0.0247543,
+    "reservations_are_not_final_billing": true
+  },
+  "project": {
+    "id": "f241e4d690d745589f4dfe1dce95c5d2",
+    "revision": 2,
+    "resistor_ohm": 2200
+  },
+  "actual_run": {
+    "id": "02a04026a1824bddbb119b2fbc0f05d7",
+    "revision": 2,
+    "tool": "ngspice",
+    "execution_status": "completed",
+    "analysis_result": "pass",
+    "samples": 2022,
+    "waveforms": [
+      {
+        "name": "IN",
+        "unit": "V",
+        "min": 0,
+        "max": 1.8
+      },
+      {
+        "name": "OUT",
+        "unit": "V",
+        "min": 0,
+        "max": 1.8
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "Live Luna decisions use the requested model",
+      "pass": true
+    },
+    {
+      "name": "Completed Sol proposals use the requested model",
+      "pass": true
+    },
+    {
+      "name": "Every plan initially executed no engine action",
+      "pass": true
+    },
+    {
+      "name": "The model clarification case did not call Sol",
+      "pass": true
+    },
+    {
+      "name": "Actual approved R1 edit changed 10000 ohm to 2200 ohm",
+      "pass": true
+    },
+    {
+      "name": "Only the approved edit created a new revision",
+      "pass": true
+    },
+    {
+      "name": "Unapproved 3300 ohm proposal was not applied",
+      "pass": true
+    },
+    {
+      "name": "A later actual engine result invalidates the same-revision plan",
+      "pass": true
+    },
+    {
+      "name": "The approved simulation completed in actual ngspice",
+      "pass": true
+    },
+    {
+      "name": "Actual waveform arrays contain 2022 native samples",
+      "pass": true
+    },
+    {
+      "name": "The existing US$1 cap was preserved",
+      "pass": true
+    }
+  ],
+  "local_validation": {
+    "core_tests": 326,
+    "assistant_tests": 55,
+    "typecheck": "passed",
+    "builds": {
+      "indust": "passed",
+      "edu": "passed"
+    },
+    "docs": {
+      "documents": 67,
+      "checked": 548,
+      "missing": []
+    },
+    "source_audit": {
+      "files": 11555,
+      "sizeMiB": 2181.67,
+      "archives": 235,
+      "issues": []
+    }
+  },
+  "manual_ui": {
+    "approval_buttons_disabled_before_consent": true,
+    "history_restored_after_reload": true,
+    "same_revision_stale_plan_apply_disabled": true,
+    "mobile": {
+      "viewport_width": 390,
+      "panel_width": 255,
+      "panel_scroll_width": 255
+    },
+    "screenshots": [
+      "actual-plan.jpg",
+      "actual-ngspice.jpg",
+      "mobile.jpg",
+      "plan-preview-fixed.jpg",
+      "stale-plan.jpg"
+    ]
+  },
+  "notes": [
+    "The initial live requests exposed an overly literal plan-only clarification. The final prompt clarification and response-wait labels were then rebuilt and verified with a real plan-only request.",
+    "DRC/LVS/PEX dispatch is covered by bounded schemas; no live DRC/LVS/PEX job was executed in this exercise.",
+    "Windows native engine and bundled Node ESM were tested. macOS/Linux native execution, commercial engines, full-chip STA and foundry signoff were not run."
+  ],
+  "source_sha256": {
+    "scripts/assistant-models.mjs": "ec3947adbb7ffff26872efe724ad704985852bf99bd6b3287ece544f9d4a36cd",
+    "scripts/assistant-workflow.mjs": "129ee0f1c8ea3d925a4f19a82ee47adb16e4e3e35f627c6c6110cad4d15cf4ba",
+    "scripts/design-assistant.mjs": "2fa435eeb53a82ece996343c58c2231bd90b368fa63c1f7e4813f3c5895c72b8",
+    "packages/ui/src/AssistantWorkflow.tsx": "1167632acb7f1a14bfd748e5e283ceb44d081f400a4d08c876104432577ad95e",
+    "packages/ui/src/DesignAssistantWorkbench.tsx": "135234bbdd4f37e5f074ef29176d681e888c4d9953b2af6a22fa32bee5c54c53",
+    "packages/contracts/src/assistant.ts": "4e829b99f884fa2f9633236798a51d337f5f84df91fc9615cf475ca1abd1ce90",
+    "tests/assistant-workflow.test.mjs": "cf8e67e97cef61a88c433f546128ba9996149773c1a867fb1aa9d3f090de0afb",
+    "tests/design-assistant.test.mjs": "8e8f4b20281862e09b1b4972a2a5f1e8f3ee0e014f82d54d0a4120c86a011032",
+    "workers/eda/server.py": "6bc1d90b31576444ecc8c1c107f2c6bb4bf99106f0785a21cd717b7fb13da8ed"
+  },
+  "foundry_signoff": false,
+  "production_deployed": false,
+  "new_installer_published": false
+}

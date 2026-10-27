@@ -128,4 +128,6 @@ test('the packaged Node ESM assistant resolves edition identity without copying 
   const {build}=await import('esbuild');const target=path.join(stage,'scripts/design-assistant.mjs');await build({entryPoints:['scripts/design-assistant.mjs'],outfile:target,bundle:true,platform:'node',target:'node24',format:'esm',legalComments:'none'});
   const bundled=await import(pathToFileURL(target).href);const result=await bundled.assistantRpc({workspace:stage},'assistant.status',{}, {fetcher:async()=>new Response('{"models":[]}')});assert(result.ok);assert.equal(result.result.openai.budget_usd,0);assert.equal(result.result.openai.configured,false);
   const e=await bundled.collectEvidence({workspace:stage},{project_id:id,expected_revision:1},call);assert.equal(e.product.id,'resistor.'+(process.env.RESISTOR_EDITION||'indust'));
+  const workflows=await bundled.assistantRpc({workspace:stage},'assistant.workflow_history',{project_id:id,expected_revision:1},{call});assert.equal(workflows.ok,true);assert.deepEqual(workflows.result,[]);
+  assert.equal(result.result.openai.roles.decision.model,'gpt-6-luna');assert.equal(result.result.openai.roles.execution.model,'gpt-6.1-sol');
 });

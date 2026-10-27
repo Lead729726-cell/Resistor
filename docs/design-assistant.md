@@ -2,6 +2,8 @@
 
 The conversational workbench now supports server-owned multi-turn history, selected-cell/device/mask context, deterministic diagnostics and stored voltage/current/drop summaries. See the [Resistor Indust assistant guide](assistant-workbench.md) for usage, bounds and separate real-provider/native/UI evidence.
 
+The approval-based workflow adds Luna (`gpt-6-luna`) decision making followed by Sol (`gpt-6.1-sol`) proposal generation. It validates a single numeric ideal-device change or native simulation/DRC/LVS/PEX request, stores its revision/evidence hash, and dispatches only after the user approves the exact saved plan. Ordinary chat/review remains advisory. Shared rooms do not receive local credentials or execution access. Commercial/imported analysis configurations use their existing dedicated panels.
+
 Resistor keeps deterministic engineering and native engine validation separate from AI advice. The assistant reads a revision-pinned project, the selected/root cell connectivity, recent actual engine status and measurement summaries. It does not receive raw GDS, PDK/model/deck files, waveform arrays or credentials. The evidence preview shows exactly what will be sent.
 
 ## Providers
@@ -19,7 +21,7 @@ New workspaces have a US$0 cap. Set only a budget you explicitly authorize:
 npm run assistant:settings -- --budget-usd=1 --ollama-model=qwen2.5:1.5b
 ```
 
-This writes local `.runtime/assistant/settings.json`. Every paid request requires a current evidence preview and the explicit one-call checkbox. The backend atomically reserves the conservative maximum before sending; concurrent processes cannot exceed the cap. Reservations remain after ambiguous/provider failures, and the UI labels them as reservations, not final billing. The rate table is dated and uses the higher standard input/output rates from [official pricing](https://developers.openai.com/api/docs/pricing). Check current pricing before changing the model or reauthorizing a new budget. The model/context/output bounds must be updated together.
+This writes local `.runtime/assistant/settings.json`. Every paid request requires a current evidence preview and explicit consent; the workflow checkbox authorizes at most one Luna call and one Sol call. The backend atomically reserves the conservative maximum before each call; concurrent processes cannot exceed the shared cap. Reservations remain after ambiguous/provider failures, and the UI labels them as reservations, not final billing. The role-specific rate table is dated and uses standard input/output rates from the [official model catalog](https://developers.openai.com/api/docs/models). Check current pricing before changing the model or reauthorizing a new budget. The model/context/output bounds must be updated together.
 
 For an installed desktop app, use the **writable workspace shown by desktop diagnostics**, not `Register.app/Contents/Resources/app`. Source npm commands require the source checkout and Node 24. In that writable workspace, an explicitly authorized cap can instead be configured in `.runtime/assistant/settings.json`:
 
