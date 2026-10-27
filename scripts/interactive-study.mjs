@@ -4,6 +4,7 @@ import {circuitPuzzles,getPuzzle,assessPuzzle,placePuzzlePart,puzzleCoach,puzzle
 import {simulatePuzzle,refreshPuzzle} from './puzzle-simulation.mjs';
 import {validateConnections} from '../packages/education/src/dynamic-puzzles.ts';
 import {structuredEstimate,requestStructured} from './structured-ai.mjs';
+import {eduAiPolicy} from '../packages/education/src/ai-policy.ts';
 
 const id=z.string().uuid(),version=z.number().int().positive(),purpose=z.enum(['practice','qa']).default('practice');
 const action=z.discriminatedUnion('type',[
@@ -77,19 +78,19 @@ export async function interactiveStudy(state,method,p,{save,limits,source,provid
  }
  if(s.turns.length>=100)throw Error('대화 100회 제한입니다. 새 실습에서 이어가세요.');
  const content={puzzle:{id:definition.id,version:puzzleVersion,goal:definition.goal,vin:definition.vin,conditions:definition.conditions,slots:definition.slots},parts:definition.parts.filter(x=>Object.values(s.placements).includes(x.id)),placements:Object.fromEntries(Object.entries(s.placements).sort()),assessment:assessPuzzle(definition,s.placements,s.connections),...(isDynamic(definition)?{connections:s.connections,simulation:runSummary(s)}:{}),question:p.question.normalize('NFC').replace(/\s+/g,' ')};
- const key=hash({task:'puzzle-tutor-v1',content,model:provider.model}),cached=state.puzzle_tutor_cache[key];
+ const key=hash({task:'puzzle-tutor-v1',content,model:eduAiPolicy.executor.model}),legacyKey=hash({task:'puzzle-tutor-v1',content,model:provider.model}),cached=state.puzzle_tutor_cache[key]||state.puzzle_tutor_cache[legacyKey];
  let answer,receipt=null,apiError=null,cacheHit=false;
  if(p.mode==='coach'){answer=puzzleCoach(definition,s.placements,p.question,Math.max(0,s.hint_level-1),s.connections);if(isDynamic(definition)){const summary=runSummary(s);if(summary){answer.observed_facts=`보드 r${summary.board_revision} · ${summary.current?'현재 배치':'이전 배치'} · 해석 ${summary.status}. `+summary.metrics.map(m=>`${m.name}: ${Number(m.min.toPrecision(5))} ~ ${Number(m.max.toPrecision(5))} ${m.unit}`).join(' / ');answer.reasoning=summary.status==='completed'?'표시한 수치는 저장된 ngspice 표본의 최솟값·최댓값입니다. 같은 시간의 변화와 부호는 아래 파형 커서로 비교하세요. '+(summary.current?'현재 보드의 실행입니다.':'배치가 달라졌으므로 새 실행 전에는 현재 결과로 해석하지 마세요.'):'실행이 완료되지 않았으므로 전기적 결과를 단정할 수 없습니다.';answer.next_experiment=definition.hints[2];}}}
- else if(cached){answer=cached.answer;cacheHit=true;state.counters.cache_hits++;}
+ else if(cached){answer=cached.answer;receipt=cached.receipt||null;cacheHit=true;state.counters.cache_hits++;}
  else{
   if(!p.approved)throw Error('이번 질문·배치의 OpenAI 전송·호출 승인이 필요합니다. 규칙 코치는 무료입니다.');
   if(!source||!provider.configured)throw Error('기존 AI 키 참조가 연결되지 않았습니다. 규칙 코치는 계속 사용할 수 있습니다.');
-  const schema=z.toJSONSchema(tutorSchema,{target:'draft-7'}),estimate=structuredEstimate(system,content,schema);
+  const schema=z.toJSONSchema(tutorSchema,{target:'draft-7'}),estimate=structuredEstimate(system,content,schema,{model:eduAiPolicy.executor.model});
   if(estimate>limits.study_remaining_usd||estimate>provider.remaining_usd)throw Error('학습 또는 공통 API 비용 상한이 부족합니다. 기존 비용 설정을 확인하세요.');
   state.reserved_usd=Math.ceil((state.reserved_usd+estimate)*1e6)/1e6;state.counters.provider_calls++;
   state.requests[p.command_id]={digest,status:'started'};
   s.turns.push({id:p.command_id,question:p.question,mode:p.mode,board_revision:s.board_revision,created_at:now(),status:'pending',answer:null});s.version++;s.updated_at=now();await save();
-  try{const reply=await requestStructured(source,{system,content,schema,name:'resistor_puzzle_tutor',approved:true},{fetcher});answer={...tutorSchema.parse(reply.value),source:'ai-advisory',engine_verification:false};receipt=reply.receipt;state.puzzle_tutor_cache[key]={answer,receipt};}
+  try{const reply=await requestStructured(source,{system,content,schema,name:'resistor_puzzle_tutor',model:eduAiPolicy.executor.model,reasoning_effort:'low',approved:true},{fetcher});answer={...tutorSchema.parse(reply.value),source:'ai-advisory',engine_verification:false};receipt=reply.receipt;state.puzzle_tutor_cache[key]={answer,receipt};}
   catch{apiError='AI 답변을 받지 못했습니다. 질문은 저장했고 자동 재시도하지 않았습니다. 비용 예약은 유지됩니다.';}
  }
  const turn={id:p.command_id,question:p.question,mode:p.mode,board_revision:s.board_revision,created_at:now(),status:apiError?'error':'completed',answer:answer||null,error:apiError,cache_hit:cacheHit,receipt};

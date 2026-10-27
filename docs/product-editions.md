@@ -13,7 +13,8 @@ Resistor는 회로도·계층·레이아웃·GDS/OASIS·실제 엔진 시뮬레�
 | 로컬 협업 포트 | 18776 | 18766 |
 | 데스크톱 저장 폴더 | `Resistor Edu` | 기존 `레지스터` 폴더 보존 |
 | 소스 워크스페이스 | `.runtime/editions/edu/workspace` | 선택한 checkout의 기존 workspace |
-| 실행 화면 | 실습 과정·학습 체크·보고서 | 현재 프로젝트·다음 실행·실제 결과 |
+| 실행 화면 | 예측·회로 퍼즐·실험·이유 설명·복습 | 현재 프로젝트·다음 실행·실제 결과 |
+| AI 역할 | Luna 학습 판단 → Sol 힌트·설명·비교 실험 | 기존 설계 검토 정책 유지 |
 
 `main`은 공통 구현입니다. Edu 브랜치의 `product-edition.json`은 `edu`, Industry 브랜치는 `indust`로 설정합니다. 환경 변수 `RESISTOR_EDITION`을 사용하면 같은 checkout에서도 명시적으로 선택할 수 있습니다. 잘못된 값은 실행을 중단합니다. 계산식, 단위, 정밀도, 파일 형식, 기존 엔진 API를 별도로 복제하지 않습니다.
 
@@ -70,3 +71,9 @@ npm run desktop:indust
 [버전 선택 안내](https://resistor-downloads.vercel.app/editions/) · [전체 튜토리얼](https://resistor-downloads.vercel.app/tutorial/library/) · [네이티브 엔진](native-runtime.md) · [원본 회로 작성](schematic-quickstart.md)
 
 Industry는 전문 작업 흐름의 이름입니다. 공개 PDK·도구 검사, 실측 공정 지형, 상용 도구 라이선스, 제조 signoff는 각각 실제 검증 범위를 따릅니다.
+
+## Edu의 교육 제품 노선
+
+Edu는 정답 자동 작성이나 전문 EDA 기능 수를 중심에 두지 않습니다. 학생이 예측하고 직접 계산·실험한 뒤 자기 말로 이유를 설명하는 흐름을 제공합니다. [Luna·Sol 학습 코치](edu-ai-roles.md)는 Edu에서만 노출하며 Industry의 설계 검토·실제 해석·리뷰 상태 흐름을 바꾸지 않습니다. 공통 수학·기하·포맷·엔진은 계속 공유합니다.
+
+공통 변경 전달은 기존 `main` 중심 방식을 유지합니다. 모델 허용 목록·비용 예약 같은 공통 수정은 관련 회귀 검사와 함께 main에 전달하고 각 edition에 반영합니다. Edu 화면·학습 정책·기록은 Edu에 유지합니다. 이번 커밋을 Industry 브랜치에 자동 병합하지 않으며, 공유 helper의 기본 모델과 기존 호출 인자는 호환됩니다.

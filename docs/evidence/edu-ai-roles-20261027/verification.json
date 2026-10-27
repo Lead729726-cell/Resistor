@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "branch": "codex/resistor-edu",
+  "checked_at": "2026-10-27T06:11:43.921795+00:00",
+  "base_revision": "a42879daed7143911bf86f346beff1e54fb2c1a4",
+  "models": {
+    "judge": "gpt-6-luna",
+    "executor": "gpt-6.1-sol",
+    "catalog_lookup": "Authenticated free GET https://api.openai.com/v1/models",
+    "both_listed": true,
+    "live_generation_tested": false,
+    "paid_generation_calls": 0
+  },
+  "user_study_budget_usd": 0,
+  "user_budget_changed": false,
+  "credential_created_or_copied": false,
+  "checks": {
+    "core": {
+      "passed": 373,
+      "failed": 0,
+      "phases": [
+        207,
+        166
+      ]
+    },
+    "edition_isolation_and_mcp": {
+      "passed": 9,
+      "failed": 0
+    },
+    "typecheck": "pass",
+    "build_edu": "pass",
+    "build_indust": "pass",
+    "build_warning": "Existing chunk-size warning remains",
+    "browser": {
+      "provider_response_source": "Explicitly labeled Luna/Sol fixtures, no external generation",
+      "fixture_calls": 4,
+      "checks": [
+        "consent required for fresh calls",
+        "worst-case cost shown before approval",
+        "Luna precedes Sol",
+        "saved stage reuse with zero new calls",
+        "learner explanation saved and reopened after reload",
+        "QA purpose isolated from learner progress",
+        "puzzle board edit marks activity historical",
+        "question preview unavailable after changed input",
+        "no browser console errors",
+        "confirmed displayed max cost is bound in final UI run request"
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "document_width": 384,
+        "body_width": 384,
+        "horizontal_overflow": false
+      },
+      "final_protocol_reuse": {
+        "evidence": "browser-final-protocol.json",
+        "new_fixture_calls": 0,
+        "external_calls": 0,
+        "max_cost_bound_tested": true
+      }
+    },
+    "not_run": [
+      "live paid text generation",
+      "learning effectiveness user study",
+      "new physical DRC/LVS/PEX for this AI/UI change",
+      "new native installer publication"
+    ],
+    "documentation_links": {
+      "checked": 281,
+      "missing": 0
+    },
+    "source_audit": {
+      "issues": 0
+    },
+    "logs": {
+      "core": "core.txt",
+      "editions": "editions.txt",
+      "build-edu": "build-edu.txt",
+      "build-indust": "build-indust.txt",
+      "docs": "docs.txt",
+      "audit": "audit.txt"
+    }
+  },
+  "industry": {
+    "shared_engines": true,
+    "legacy_default_model_preserved": true,
+    "edu_coach_tools_exposed": false,
+    "data_and_update_paths_changed": false
+  },
+  "preexisting_user_files_preserved": [
+    "packages/ui/src/theme.css",
+    "public/appearance-init.js"
+  ],
+  "source_sha256": {
+    "scripts/edu-coach.mjs": "a3f66f5d3bb9fcea95353eb6220a218d4916ad416a508e17a4fc30d88b0b43d7",
+    "scripts/structured-ai.mjs": "b0ff0891fa7cb01bcbec3df2b04901f0306fd0678cd7b428b1f92f6b37ae1652",
+    "packages/contracts/src/ai-models.ts": "0c66fc61b983b47b35429942d1c9c6d419a453c3f3eaee82b754064def9e23b4",
+    "packages/education/src/ai-policy.ts": "41b4d4e090ab0c970de8ed67c5022a0573210cc7c9864bfa687d7552a90dffff",
+    "packages/ui/src/EduLearningCoach.tsx": "3b05a3b7ed3d4cbd81d6281ec101fae73102227cabd5ad9ecf07cb3e97d3f185",
+    "packages/ui/src/SelfStudy.tsx": "79932235e83492fe84f541de3868d6a3f0491d91eca74ad1c482853a45f3650d",
+    "packages/ui/src/CircuitPuzzleLab.tsx": "d0a0d3a68c7781fecce2cd7079e1f7e03723f456294bb9d0639e030652999283"
+  }
+}

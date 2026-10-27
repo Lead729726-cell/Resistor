@@ -8,6 +8,8 @@ import {difficultyLevels,classifyDifficulty,recommendDifficulty} from '../packag
 import {workerRpc} from './runtime.mjs';
 import {puzzleSchemas,interactiveStudy} from './interactive-study.mjs';
 import {structuredStatus,structuredEstimate,requestStructured} from './structured-ai.mjs';
+import {coachSchemas,educationCoach} from './edu-coach.mjs';
+import {eduAiPolicy} from '../packages/education/src/ai-policy.ts';
 
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const stamp=()=>new Date().toISOString(),root=new URL('../',import.meta.url);
@@ -29,7 +31,7 @@ export async function studyRpc(config,method,params={},options={}){
 }
 async function execute(config,method,params,{edition=getProductEdition({root}).edition,fetcher=fetch,invoke=workerRpc}={}){
  if(edition!=='edu')throw error('Resistor Edu에서만 사용하는 자율학습 기능입니다.');
- const schemas={...puzzleSchemas,
+ const schemas={...puzzleSchemas,...coachSchemas,
   'study.catalog':z.object({}).strict(),
   'study.recommend':z.object({topic:z.string().max(100).optional(),purpose:z.enum(['practice','qa']).default('practice')}).strict(),
   'study.open':z.object({question_id:qid}).strict(),
@@ -57,7 +59,8 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
   const source=settings.credential_workspace;
   const unavailable={configured:false,model:'gpt-6-luna',budget_usd:0,remaining_usd:0};
   let provider=unavailable;try{if(source)provider=await structuredStatus(source);}catch{provider={...unavailable,reason:'기존 키 또는 공통 예산 설정을 읽을 수 없습니다. 저장된 문제는 계속 사용할 수 있습니다.'};}
-  const limits={...provider,study_budget_usd:state.budget_usd,study_reserved_usd:state.reserved_usd,study_remaining_usd:Math.max(0,state.budget_usd-state.reserved_usd),automatic_calls:false,credential_mode:source?'existing-workspace-reference':'not_configured'};
+  const limits={...provider,study_budget_usd:state.budget_usd,study_reserved_usd:state.reserved_usd,study_remaining_usd:Math.max(0,state.budget_usd-state.reserved_usd),ai_policy:eduAiPolicy,automatic_calls:false,credential_mode:source?'existing-workspace-reference':'not_configured'};
+  if(method.startsWith('study.coach.'))return result(await educationCoach(state,method,p,{save,limits,source,provider,fetcher}));
   if(method.startsWith('study.puzzle.'))return result(await interactiveStudy(state,method,p,{save,limits,source,provider,fetcher,context,config,invoke}));
   const get=()=>{const q=state.questions[p.question_id];if(!q)throw error('저장된 문제를 찾을 수 없습니다.');return q;};
   const assistanceKey=id=>(p.purpose||'practice')+':'+id;
@@ -79,7 +82,7 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
   if(method==='study.hint'){const q=get();if(!helped(q.id)){state.revealed.push(assistanceKey(q.id));await save();}return result({hints:q.hints,tokens_used:0,assisted:true});}
   if(method==='study.reveal'){const q=get();if(!helped(q.id))state.revealed.push(assistanceKey(q.id));await save();return result({question:publicQuestion(q),solution:q.solution,expected:q.expected??null,correct_index:q.correct_index??null,formula:q.formula||null,tokens_used:0,assisted:true});}
   if(method==='study.history')return result({attempts:state.attempts.toReversed(),counters:state.counters,limits});
-  if(method==='study.export')return result({exported_at:stamp(),purpose:'self-study-not-official-submission',questions:state.questions,attempts:state.attempts,puzzle_sessions:state.puzzle_sessions||{},counters:state.counters,contains_credentials:false});
+  if(method==='study.export')return result({exported_at:stamp(),purpose:'self-study-not-official-submission',questions:state.questions,attempts:state.attempts,puzzle_sessions:state.puzzle_sessions||{},edu_coach_records:state.edu_coach_records||{},counters:state.counters,contains_credentials:false});
   if(method==='study.settings'){
    if(p.expected_revision!==state.revision)throw error('학습 설정이 변경되었습니다. 새로 읽고 다시 저장하세요.');
    if(p.budget_usd>provider.budget_usd||p.budget_usd<state.reserved_usd)throw error('공통 API 상한 이하, 이미 예약한 비용 이상으로 지정하세요.');
@@ -88,16 +91,18 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
   const digest=hash({method,params:{...p,command_id:undefined}}),previous=state.requests[p.command_id];
   if(previous){if(previous.digest!==digest)throw error('같은 요청 ID에 다른 입력을 사용할 수 없습니다.');if(previous.result)return result({...previous.result,replayed:true});throw error('이 요청은 이미 시작됐습니다. 기록을 확인하세요. 같은 ID로 API를 재호출하지 않습니다.');}
   if(state.attempts.length>=2000||Object.keys(state.questions).length>=1000||Object.keys(state.requests).length>=4000)throw error('학습 저장 용량 제한입니다. 기록을 내보내고 별도 학습 공간을 사용하세요.');
+  const roleModel=method==='study.generate'?eduAiPolicy.executor.model:eduAiPolicy.judge.model;
   let q,cacheKey,content,schema,name,grade;
   if(method==='study.generate'){
    const reference=studyReferences.find(r=>r.id===p.reference_id);if(!reference)throw error('지원하는 레퍼런스를 고르세요.');
-   cacheKey=hash({task:'questions-v1',reference,level:p.level,model:provider.model});
+   cacheKey=hash({task:'questions-v1',reference,level:p.level,model:roleModel});
+   const legacyKey=hash({task:'questions-v1',reference,level:p.level,model:provider.model});if(!state.batches[cacheKey]&&state.batches[legacyKey])cacheKey=legacyKey;
    if(state.batches[cacheKey]){state.counters.cache_hits++;const value={questions:state.batches[cacheKey].map(id=>publicQuestion(state.questions[id])),cache_hit:true,tokens_used:0};state.requests[p.command_id]={digest,result:value};await save();return result(value);}
    content={task:'제공한 레퍼런스 범위의 서술형 문제 세 개를 만든다. 수치 정답 문제는 만들지 않는다. 정답/조건/한계를 제공한다.',reference,level:p.level,difficulty:{...difficultyLevels[p.level-1],explanation_requirements:p.level===1?'핵심 원리 하나와 직접 적용':p.level===2?'조건 두 가지를 비교하고 판단 근거 설명':'여러 조건·한계·대안 실험을 구분해 판단 근거 설명'}};schema=z.toJSONSchema(generatedSchema,{target:'draft-7'});name='resistor_study_questions';
   }else{
    q=get();
    if(q.kind!=='explanation')grade=gradeObjective(q,p.answer);
-   cacheKey=hash({task:'grade-v1',question:q,answer:p.answer.normalize('NFC').trim().replace(/\s+/g,' '),model:provider.model});
+   cacheKey=hash({task:'grade-v1',question:q,answer:p.answer.normalize('NFC').trim().replace(/\s+/g,' '),model:roleModel});
    if(!grade&&state.grades[cacheKey]){grade=state.grades[cacheKey];state.counters.cache_hits++;}
    if(!grade&&!p.approved)grade={status:'ungraded',score:null,method:'reference-comparison',solution:q.solution,feedback:'답안을 저장했습니다. 아래 해설과 스스로 비교하세요. AI 채점을 요청하지 않아 점수를 부여하지 않았습니다.',advisory_only:true,engine_verification:false};
    content={task:'학생 답안을 제공된 원리·범위·루브릭으로 평가한다. criteria의 id는 principle/scope/experiment 각각 한 번, 점수 상한은 40/35/25. 불확실성을 밝힌다.',question:q,student_answer:p.answer};schema=z.toJSONSchema(scoreSchema,{target:'draft-7'});name='resistor_study_feedback';
@@ -106,17 +111,17 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
   if(!grade){
    if(p.approved!==true)throw error('새 AI 문제를 만들려면 외부 전송·호출을 명시적으로 승인하세요. 저장된 기본 문제는 무료로 사용할 수 있습니다.');
    if(!source||!provider.configured)throw error('기존 OpenAI 키 참조가 연결되지 않았습니다. 로컬 study:link 설정을 확인하세요.');
-   const estimate=structuredEstimate(system,content,schema);
+   const estimate=structuredEstimate(system,content,schema,{model:roleModel});
    if(estimate>limits.study_remaining_usd||estimate>provider.remaining_usd)throw error('API 호출 상한이 부족합니다. 저장된 문제를 사용하거나 명시적으로 학습 비용 상한을 설정하세요.');
    state.reserved_usd=Math.ceil((state.reserved_usd+estimate)*1e6)/1e6;state.counters.provider_calls++;
    state.requests[p.command_id]={digest,status:'started',created_at:stamp(),upper_bound_usd:estimate};
    if(q){state.attempts.push({id:p.command_id,question_id:q.id,question_version:q.version,answer:p.answer,created_at:stamp(),assisted:helped(q.id),feedback:{status:'pending',score:null},purpose:p.purpose});}
    await save();
-   try{const response=await requestStructured(source,{system,content,schema,name,approved:true},{fetcher});receipt=response.receipt;
+   try{const response=await requestStructured(source,{system,content,schema,name,model:roleModel,reasoning_effort:'low',approved:true},{fetcher});receipt=response.receipt;
     if(q){grade=gradeFeedback(response.value,q);state.grades[cacheKey]={...grade,receipt};}
     else{const responseQuestions=generatedSchema.parse(response.value).questions;
      const template=Object.values(state.questions).find(x=>x.kind==='explanation'&&x.reference_id===p.reference_id);
-     const ids=responseQuestions.map(draft=>{const question={...template,...draft,version:studyVersion+':ai-v1',level:p.level,origin:'ai',provenance:{model:provider.model,reference_hash:hash(studyReferences.find(r=>r.id===p.reference_id)),human_reviewed:false},id:undefined};const id=hash(question);state.questions[id]={...question,id};return id;});state.batches[cacheKey]=ids;
+     const ids=responseQuestions.map(draft=>{const question={...template,...draft,version:studyVersion+':ai-v1',level:p.level,origin:'ai',provenance:{model:roleModel,reference_hash:hash(studyReferences.find(r=>r.id===p.reference_id)),human_reviewed:false},id:undefined};const id=hash(question);state.questions[id]={...question,id};return id;});state.batches[cacheKey]=ids;
     }
    }catch{aiError='AI 출제·채점이 완료되지 않았습니다. 자동 재시도하지 않았고 예약 비용은 유지했습니다.'+(q?' 답안은 저장되었습니다.':'');if(q)grade={status:'error',score:null,method:'ai-advisory',feedback:aiError,solution:q.solution,engine_verification:false,advisory_only:true};}
   }

@@ -6,6 +6,8 @@ import {getProductEdition,prepareEditionWorkspace} from './edition-workspace.mjs
 import {readFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {puzzleSchemas} from './interactive-study.mjs';
+import {coachSchemas} from './edu-coach.mjs';
+import {eduAiPolicy} from '../packages/education/src/ai-policy.ts';
 import {studyRpc} from './self-study-service.mjs';
 import {educationRpc} from './education-service.mjs';
 import {runtimeIdentity,workspaceId} from './native-worker.mjs';
@@ -16,7 +18,7 @@ const edition=getProductEdition({root:resourcesRoot});
 const workspace=await prepareEditionWorkspace({root:resourcesRoot,edition,workspace:process.env.MOS_WORKSPACE});
 const config=await runtimeConfig(workspace);
 const version=JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8')).version;
-const productContext={schema_version:1,edition:edition.edition,project_id:null,data_revision:null,product_id:edition.id,name:edition.name,branch:edition.branch,workspace,engine_url:config.url,shared_engine_implementation:true,learning_check_is_verification:false,foundry_signoff:false,tutorial_url:edition.tutorial_url};
+const productContext={schema_version:1,edition:edition.edition,project_id:null,data_revision:null,product_id:edition.id,name:edition.name,branch:edition.branch,workspace,engine_url:config.url,shared_engine_implementation:true,learning_check_is_verification:false,foundry_signoff:false,tutorial_url:edition.tutorial_url,...(edition.edition==='edu'?{ai_learning_policy:eduAiPolicy}:{})};
 const server=new McpServer({name:edition.mcp_name,version},{instructions:`This server is ${edition.name} (${edition.id}), branch ${edition.branch}. Use register_product_context to confirm the selected workspace. Edu learning completion is never engine PASS. Preserve actual run status, freshness, math and geometry. For education explain in this order: observed facts, applied model/rules, reasoning grounded in those observations, next experiment. If evidence is missing, say unknown and identify required data. Do not write generated answers as the student's submission.`});
 const id=z.string().regex(/^[a-f0-9]{32}$/);
 const decimal=z.string().regex(/^-?\d{1,18}$/);
@@ -45,8 +47,13 @@ if(edition.edition==='edu'){
   ['register_study_puzzle_create','study.puzzle.create','Create a separate guided circuit puzzle. Mark automated testing as qa, never a human submission.',false],
   ['register_study_puzzle_open','study.puzzle.open','Reopen saved placement, raw explanation, coach turns and revision-bound puzzle checks.',true],
   ['register_study_puzzle_act','study.puzzle.act','Place/remove a supported resistor/capacitor/NMOS, connect declared pins, undo/redo, inspect, get hint or save the human explanation. Practice checks never substitute for engine execution.',false],
-  ['register_study_puzzle_tutor','study.puzzle.tutor','Ask the free authored coach or reuse a cached AI reply. A new AI call requires explicit human approval and budget; never infer approval or fabricate student questions.',false]
+  ['register_study_puzzle_tutor','study.puzzle.tutor','Legacy single-stage tutor: free authored coach or Sol reply (old cached models retain provenance). Prefer register_study_coach_preview/run for Luna then Sol. New AI calls require explicit human approval and budget; never infer approval or fabricate student questions.',false]
  ])tool(name,description,puzzleSchemas[method].shape,p=>study(method,p),{readOnly,openWorld:method.endsWith('tutor')});
+ for(const [name,method,description,readOnly] of [
+  ['register_study_coach_preview','study.coach.preview','Prepare Edu Luna judgment then Sol learning activity. Read-only evidence, model roles, cache and worst-case cost; zero AI calls. Never infer consent.',true],
+  ['register_study_coach_history','study.coach.history','Read saved Edu learning activities and separately authored learner reflections. Preserves source revision. No AI calls.',true],
+  ['register_study_coach_run','study.coach.run','Run Luna learning judgment then Sol hint/explanation/experiment writing. New calls require explicit human approval of the prepared evidence and cost. Never set approved yourself. No engine actions, official grading or fabricated learner submissions.',false]
+ ])tool(name,description,coachSchemas[method].shape,p=>study(method,p),{readOnly,openWorld:!readOnly});
  tool('register_study_history','Reopen raw self-study answers and cached advisory feedback. These are not official submissions or engine PASS.',{},()=>study('study.history'));
  tool('register_study_generate','Reuse the saved reference/level question set. A missing set needs explicit human API approval and configured budget; never set approved yourself.',{reference_id:z.string().max(100),level:z.number().int().min(1).max(3),approved:z.boolean().default(false),command_id:z.string().uuid()},p=>study('study.generate',p),{readOnly:false,openWorld:true});
  tool('register_study_submit','Save only the human-provided practice answer. Objective grading uses shared math. Same essay answer reuses cached feedback. New AI grading requires explicit human approval. Do not synthesize student work.',{question_id:z.string().regex(/^[a-f0-9]{64}$/),answer:z.string().min(1).max(6000),approved:z.boolean().default(false),command_id:z.string().uuid(),purpose:z.enum(['practice','qa']).default('practice')},p=>study('study.submit',p),{readOnly:false,openWorld:true});
