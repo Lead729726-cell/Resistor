@@ -10,8 +10,12 @@ export const courseAccessPolicy=Object.freeze({
  download_url:'https://resistor.kr/download/edu/',
  notice:'인프런 강의에는 Resistor Edu 사용권만 포함됩니다. 개인 기기 2대까지 등록할 수 있으며, Resistor Industry는 별도 구매 제품입니다.'
 });
-export function orderAccess({provider,edition,device_limit}){
- if(!['inflearn','direct'].includes(provider))throw licenseError('ORDER_PROVIDER','지원하는 주문 출처는 inflearn 또는 direct입니다.');
+export function orderAccess({provider,edition,device_limit,product_id}){
+ if(!['inflearn','direct','resistor_web'].includes(provider))throw licenseError('ORDER_PROVIDER','지원하지 않는 주문 출처입니다.');
+ if(provider==='resistor_web'){
+  if(edition!=='edu'||device_limit!==2||!['resistor.edu.standalone','resistor.edu.course-bundle'].includes(product_id))throw licenseError('ORDER_POLICY','웹 Edu 주문은 허용된 Edu 상품·개인 기기 2대 전용입니다.');
+  return {product_id,purchase_scope:product_id.endsWith('course-bundle')?'course':'software',included_editions:['edu'],industry_included:false,device_limit:2};
+ }
  if(provider==='inflearn'){
   if(edition!=='edu')throw licenseError('ORDER_EDITION','인프런 강의 주문은 Resistor Edu 전용입니다. Industry 사용권은 별도 구매·증빙으로 발급하세요.');
   if(device_limit!==2)throw licenseError('ORDER_POLICY','강의 Edu 사용권은 개인 기기 2대로 고정됩니다.');

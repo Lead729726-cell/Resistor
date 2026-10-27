@@ -4,6 +4,30 @@
   "outputDirectory": ".",
   "rewrites": [
     {
+      "source": "/course/",
+      "destination": "/course-workbook.html"
+    },
+    {
+      "source": "/course",
+      "destination": "/course-workbook.html"
+    },
+    {
+      "source": "/checkout/",
+      "destination": "/checkout.html"
+    },
+    {
+      "source": "/checkout",
+      "destination": "/checkout.html"
+    },
+    {
+      "source": "/shop/",
+      "destination": "/shop.html"
+    },
+    {
+      "source": "/shop",
+      "destination": "/shop.html"
+    },
+    {
       "source": "/tutorial",
       "destination": "/tutorial.html"
     },
@@ -1206,6 +1230,57 @@
         {
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; script-src 'self'; frame-ancestors 'none'; base-uri 'self'"
+        }
+      ]
+    },
+    {
+      "source": "/checkout",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://*.tosspayments.com data:; script-src 'self' https://js.tosspayments.com; connect-src 'self' https://*.tosspayments.com https://*.toss.im; frame-src https://*.tosspayments.com https://*.toss.im; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://*.tosspayments.com"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/checkout/",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://*.tosspayments.com data:; script-src 'self' https://js.tosspayments.com; connect-src 'self' https://*.tosspayments.com https://*.toss.im; frame-src https://*.tosspayments.com https://*.toss.im; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://*.tosspayments.com"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/checkout.html",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://*.tosspayments.com data:; script-src 'self' https://js.tosspayments.com; connect-src 'self' https://*.tosspayments.com https://*.toss.im; frame-src https://*.tosspayments.com https://*.toss.im; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://*.tosspayments.com"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
         }
       ]
     }

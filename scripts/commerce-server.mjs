@@ -1,0 +1,14 @@
+import {readFile} from 'node:fs/promises';
+import path from 'node:path';
+import {createLicenseService} from '../platform/licensing/service.mjs';
+import {createCommerceService} from '../platform/commerce/service.mjs';
+import {createCommerceHttpServer} from '../platform/commerce/http.mjs';
+import {createTossProvider} from '../platform/commerce/toss.mjs';
+const home=path.resolve(process.env.RESISTOR_LICENSE_HOME||'.runtime/licensing');
+const secrets=JSON.parse(await readFile(path.join(home,'server-secrets.json'),'utf8'));
+const licenses=createLicenseService({filename:path.join(home,'licensing.sqlite'),masterKey:Buffer.from(secrets.master_key,'base64'),privateKey:secrets.private_key,keyId:secrets.key_id});
+const service=createCommerceService({filename:path.join(home,'commerce.sqlite'),masterKey:Buffer.from(secrets.master_key,'base64'),licenses,provider:createTossProvider({secretKey:process.env.TOSS_SECRET_KEY,clientKey:process.env.TOSS_CLIENT_KEY}),readiness:{fulfillmentReady:process.env.RESISTOR_SHOP_FULFILLMENT_READY==='1',termsApproved:process.env.RESISTOR_SHOP_TERMS_APPROVED==='1'}});
+const port=Number(process.env.RESISTOR_SHOP_PORT||18951);if(!Number.isInteger(port)||port<1024||port>65535)throw Error('Invalid commerce port');
+const server=createCommerceHttpServer(service,{gatewayToken:process.env.RESISTOR_SHOP_GATEWAY_TOKEN});
+server.listen(port,'127.0.0.1',()=>console.log('Resistor Edu store on loopback '+port+'. Catalog, delivery, terms and payment gates remain independently enforced.'));
+server.on('close',()=>{service.close();licenses.close();});process.on('SIGINT',()=>server.close());process.on('SIGTERM',()=>server.close());

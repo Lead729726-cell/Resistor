@@ -56,6 +56,13 @@ test('separate Industry orders have their own purchase and refund namespace',()=
  service.refund({purchase_ref:sameRef});await assert.rejects(()=>edu.refresh(),{code:'LICENSE_REVOKED'});assert.equal((await industry.refresh()).authorized,true);
  assert.throws(()=>service.refund({provider:'wrong',purchase_ref:sameRef}),{code:'INVALID_PARAMETER'});service.refund({provider:'direct',purchase_ref:sameRef});await assert.rejects(()=>industry.refresh(),{code:'LICENSE_REVOKED'});
 }));
+test('web Edu SKU identity cannot widen a grant or refund a different purchase provider',()=>setup(async({service,serial})=>{
+ const base={provider:'resistor_web',purchase_ref:'same-reference',edition:'edu',product_id:'resistor.edu.standalone',email:'fixture@example.invalid',evidence_sha256:'a'.repeat(64),verified:true,device_limit:2};
+ for(const patch of [{edition:'indust'},{product_id:'resistor.indust.official'},{device_limit:1},{product_id:undefined}])assert.throws(()=>service.issue({...base,...patch}),{code:'ORDER_POLICY'});
+ const issued=service.issue(base);assert.deepEqual(issued.entitlement.included_editions,['edu']);assert.equal(issued.entitlement.purchase_scope,'software');
+ assert.throws(()=>service.issue({...base,product_id:'resistor.edu.course-bundle'}),{code:'ORDER_CONFLICT'});
+ const course=serial('edu','same-reference');service.refund({provider:'resistor_web',purchase_ref:'same-reference'});assert.ok(service.activate({serial:course,edition:'edu',device_hash:'b'.repeat(64)}).lease);
+}));
 test('HTTP admin course fulfillment cannot issue Industry or override the course device policy',()=>setup(async({service})=>{
  const token='t'.repeat(43),server=createLicenseHttpServer(service,{adminToken:token});await new Promise(r=>server.listen(0,'127.0.0.1',r));
  try{const base='http://127.0.0.1:'+server.address().port,p={provider:'inflearn',purchase_ref:'http-course-only',edition:'indust',email:'fixture@example.invalid',evidence_sha256:'a'.repeat(64),verified:true,device_limit:2};
