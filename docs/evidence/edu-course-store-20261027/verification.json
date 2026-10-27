@@ -47,7 +47,23 @@
     "purchase_form_hidden_when_unavailable": true,
     "json_browser_download_artifact": "not_confirmed_download_event_timed_out",
     "record_json_validation": "unit_tested",
-    "print_PDF_artifact": "not_exported"
+    "print_PDF_artifact": "not_exported",
+    "core_tests_in_successful_ci": 395,
+    "ci": {
+      "run_id": 40472157898,
+      "revision": "505cf537fe36b7bdb1c429900043d8e73ecec385",
+      "conclusion": "success",
+      "url": "https://github.com/Lead729726-cell/Resistor/actions/runs/40472157898"
+    },
+    "production_pages_rendered": [
+      "https://resistor.kr/shop/",
+      "https://resistor.kr/course/",
+      "https://resistor.kr/checkout/?product=resistor.edu.course-bundle"
+    ],
+    "production_purchase_form_visible": false,
+    "production_email_input_visible": false,
+    "production_mobile_scroll_width_equals_document_width": true,
+    "browser_download_history_inspection": "not_permitted_by_browser_URL_policy; no workaround attempted"
   },
   "commerce": {
     "provider_adapter": "Toss individual-integration API",
@@ -68,7 +84,8 @@
       "durable_HTTPS_order_and_license_host",
       "delivery_assets_and_terms"
     ],
-    "native_installer_published": false
+    "native_installer_published": false,
+    "test_keys_cannot_issue_official_runtime_grants": true
   },
   "deployment": {
     "baseline_id": "dpl_9JczzvzkE6fsagvFYEVV5gJWecZA",
@@ -79,6 +96,44 @@
       "vercel.json"
     ],
     "preserve_industry_source": "42b6d8650b2fdeaef572b305f320ec462e6b34dc",
-    "live_id": null
+    "live_id": "dpl_Gu6zf6gGjuDMTvUPsjpj8yiksngv",
+    "production_url": "https://resistor.kr",
+    "source_revision": "505cf537fe36b7bdb1c429900043d8e73ecec385",
+    "preservation_checks": [
+      {
+        "file": "edition-downloads.json",
+        "matches_preserved_production": true
+      },
+      {
+        "file": "updates.json",
+        "matches_preserved_production": true
+      },
+      {
+        "file": "edu-updates.json",
+        "matches_preserved_production": true
+      },
+      {
+        "file": "downloads.json",
+        "matches_preserved_production": true
+      },
+      {
+        "api_action": "create",
+        "origin": "https://resistor.kr",
+        "status": 503,
+        "expected": 503
+      },
+      {
+        "api_action": "create",
+        "origin": "https://evil.invalid",
+        "status": 403,
+        "expected": 403
+      },
+      {
+        "api_action": "admin/orders",
+        "origin": "https://resistor.kr",
+        "status": 405,
+        "expected": 405
+      }
+    ]
   }
 }

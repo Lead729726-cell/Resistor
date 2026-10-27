@@ -14,7 +14,7 @@ async function fixture(fn){
  const dir=await mkdtemp(path.join(os.tmpdir(),'resistor-shop-')),key=randomBytes(32),keys=generateKeyPairSync('ed25519'),licenses=createLicenseService({filename:path.join(dir,'license.sqlite'),masterKey:key,privateKey:keys.privateKey.export({type:'pkcs8',format:'pem'})});
  let calls=0,lookups=0,fail=false,receipt=null,held;
  const provider={mode:'test',clientKey:'test_ck_fixture',async confirm(p){calls++;if(held)await held;if(fail)throw Error('timeout');return receipt??{orderId:p.orderId,paymentKey:p.paymentKey,totalAmount:p.amount,balanceAmount:p.amount,currency:'KRW',status:'DONE'};},async lookup(id){lookups++;return receipt??{orderId:id,paymentKey:'fixture-payment',totalAmount:110000,balanceAmount:110000,currency:'KRW',status:'DONE'};}};
- const config={filename:path.join(dir,'commerce.sqlite'),masterKey:key,licenses,provider,catalog,readiness:{fulfillmentReady:true,termsApproved:true}};let service=createCommerceService(config);
+ const config={filename:path.join(dir,'commerce.sqlite'),masterKey:key,licenses,provider,catalog,allowTestFulfillment:true,readiness:{fulfillmentReady:true,termsApproved:true}};let service=createCommerceService(config);
  const create=(product_id='resistor.edu.standalone')=>service.create({product_id,email:'buyer@example.invalid',consent:true,terms_version:catalog.terms_version});
  try{await fn({get service(){return service;},licenses,dir,key,config,provider,create,setReceipt:v=>receipt=v,setFail:v=>fail=v,hold:v=>held=v,counts:()=>({calls,lookups}),reopen:()=>{service.close();service=createCommerceService(config);}});}finally{service.close();licenses.close();await rm(dir,{recursive:true,force:true});}
 }
@@ -22,6 +22,7 @@ const confirm=(s,c,patch={})=>s.confirm({order_id:c.order.order_id,payment_key:'
 test('unconnected catalog and unrecorded course fail closed; price is not client controlled',()=>fixture(async f=>{
  assert.ok(publicCatalog().products.every(p=>!p.purchasable));assert.equal(publicCatalog().checkout_enabled,false);
  const closed=createCommerceService({...f.config,filename:':memory:',catalog:storeCatalog});try{assert.throws(()=>closed.create({product_id:'resistor.edu.course-bundle'}),{code:'SHOP_UNAVAILABLE'});}finally{closed.close();}
+ const testKeysOnly=createCommerceService({...f.config,filename:':memory:',allowTestFulfillment:false});try{assert.equal(testKeysOnly.catalog().checkout_enabled,false);assert.throws(()=>testKeysOnly.create({product_id:'resistor.edu.standalone'}),{code:'SHOP_UNAVAILABLE'});}finally{testKeysOnly.close();}
  const c=f.create();await assert.rejects(()=>confirm(f.service,c,{amount:1}),{code:'ORDER_AMOUNT'});assert.deepEqual(f.counts(),{calls:0,lookups:0});
  assert.throws(()=>f.service.create({product_id:'resistor.indust.official'}),{code:'SHOP_UNAVAILABLE'});
  assert.throws(()=>f.service.create({product_id:'resistor.edu.standalone',email:'buyer@example.invalid',consent:'true',terms_version:catalog.terms_version}),{code:'CONSENT'});

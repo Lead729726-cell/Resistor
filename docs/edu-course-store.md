@@ -56,6 +56,8 @@ Edu 단품 가격은 미확정이다. 강사 직접 내레이션 선택을 보�
   공개 로그·정적 파일·테스트 증거에 구매자 데이터나 시리얼을 넣지 않는다.
 
 토스 개별 연동 API용 어댑터를 구현했다. **주입한 fixture 검증이며 실제 토스 테스트 상점 결제는 아직 미실행**이다.
+운영 runner는 테스트 키로 공식 사용권을 발급할 수 없다. 테스트의 `allowTestFulfillment`는
+임시 DB·키를 쓰는 테스트 fixture에만 명시하며 운영 환경변수로 제공하지 않는다.
 연동 근거: [통합 결제창](https://docs.tosspayments.com/guides/v2/payment-window/integration),
 [승인·조회 API](https://docs.tosspayments.com/reference),
 [인증·멱등키](https://docs.tosspayments.com/reference/using-api/authorization).

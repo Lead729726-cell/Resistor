@@ -5,7 +5,7 @@ const fail=(code,message,status)=>{throw commerceError(code,message,status);};
 const digest=value=>createHash('sha256').update(value).digest('hex');
 const sessionValid=s=>typeof s==='string'&&/^[A-Za-z0-9_-]{43}$/.test(s);
 const orderValid=id=>typeof id==='string'&&/^RE_[a-f0-9]{40}$/.test(id);
-export function createCommerceService({filename,masterKey,licenses,provider,catalog=storeCatalog,readiness={},now=()=>Date.now()}={}){
+export function createCommerceService({filename,masterKey,licenses,provider,catalog=storeCatalog,readiness={},allowTestFulfillment=false,now=()=>Date.now()}={}){
  if(!Buffer.isBuffer(masterKey)||masterKey.length!==32||!licenses)throw Error('Commerce requires durable storage, encryption and licensing');
  const db=new DatabaseSync(filename);db.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
  CREATE TABLE IF NOT EXISTS shop_orders(id TEXT PRIMARY KEY,product_id TEXT NOT NULL,revision TEXT NOT NULL,amount INTEGER NOT NULL,session_hash TEXT NOT NULL,state TEXT NOT NULL,payload TEXT NOT NULL,created_at INTEGER NOT NULL,updated_at INTEGER NOT NULL);
@@ -15,7 +15,7 @@ export function createCommerceService({filename,masterKey,licenses,provider,cata
  const get=id=>db.prepare('SELECT * FROM shop_orders WHERE id=?').get(id);
  const update=(row,state,payload=open(row))=>{db.exec('BEGIN IMMEDIATE');try{db.prepare('UPDATE shop_orders SET state=?,payload=?,updated_at=? WHERE id=?').run(state,seal(row.id,payload),now(),row.id);db.prepare('INSERT INTO shop_events(order_id,state,created_at) VALUES(?,?,?)').run(row.id,state,now());db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}return get(row.id);};
  const own=(id,session)=>{if(!orderValid(id)||!sessionValid(session))fail('ORDER_ACCESS','이 브라우저에서 만든 주문만 조회할 수 있습니다.',403);const row=get(id);if(!row||row.session_hash!==digest(session))fail('ORDER_ACCESS','주문 인증 정보가 일치하지 않습니다.',403);return row;};
- const products=()=>publicCatalog(catalog,{...readiness,providerReady:!!provider});
+ const products=()=>publicCatalog(catalog,{...readiness,providerReady:!!provider&&(provider.mode==='live'||allowTestFulfillment)});
  const view=row=>({schema_version:1,edition:'edu',order_id:row.id,product_id:row.product_id,catalog_revision:row.revision,amount:row.amount,currency:'KRW',state:row.state,created_at:row.created_at,updated_at:row.updated_at,payment_mode:provider?.mode||'unavailable',...(row.state==='fulfilled'?{serial:licenses.operatorDelivery(open(row).delivery_id).serial,device_limit:2,download_url:'https://resistor.kr/download/edu/'}:{}),...(row.state==='paid_pending'?{message:'결제 확인 완료 · 사용권 전달 준비 중입니다. 재결제하지 말고 이 주문 번호로 문의하세요.'}:{}),...(row.state==='unknown'||row.state==='confirming'?{message:'승인 여부 확인 중입니다. 새 결제를 만들지 말고 상태를 다시 조회하세요.'}:{})});
  function create({product_id,email,terms_version,consent},session){
   const p=products().products.find(p=>p.id===product_id);
@@ -31,6 +31,7 @@ export function createCommerceService({filename,masterKey,licenses,provider,cata
  async function locked(id,fn){if(locks.has(id))fail('ORDER_BUSY','주문 처리 중입니다. 잠시 후 상태를 조회하세요.',409);locks.add(id);try{return await fn();}finally{locks.delete(id);}}
  async function fulfill(row){
   if(row.state==='refunded'||row.state==='review_required')return row;
+  if(provider?.mode!=='live'&&!allowTestFulfillment)return update(row,'paid_pending');
   const p=open(row);
   // The paid row is durable before the shared license engine is called. An
   // interrupted delivery retries the same provider/order/receipt identity.
