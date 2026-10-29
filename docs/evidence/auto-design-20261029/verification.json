@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "edition": "indust",
-  "checked_at": "2026-10-29T00:50:50.024Z",
+  "checked_at": "2026-10-29T00:55:30.233Z",
   "base_commit": "b2e99d51ef5ea4597fe7572d32c47ed223449a82",
   "source_sha256": {
     "scripts/auto-design.mjs": "bafed2bc28c813e7efcf840c0569c22a588d3e958a61bb59ff15db1b3ef32dc1",
@@ -10,7 +10,9 @@
     "workers/eda/design_tools.py": "ccb770e9418e93f625fb7862c7a716e747322f1675feedef8bd014843f79bf06",
     "packages/contracts/src/auto-design.ts": "989e38de00c5f85c0ebd977345c3cafeebc3cb009a8f24516f4a6eff12aa363c",
     "tests/auto-design.test.mjs": "e58925e634d4f6993997ea0a1946d9a451723b95202d55cc78d0826ea3709842",
-    "workers/eda/test_duet_afe.py": "7c488fec44b9b0beae92034e0400af06ba044225d757e8de80e23e0b15775af5"
+    "workers/eda/test_duet_afe.py": "7c488fec44b9b0beae92034e0400af06ba044225d757e8de80e23e0b15775af5",
+    "tests/product-editions.test.mjs": "1c2042de3190573a0c4d4d067a536b66bb9d9f4583df40fd5da9fdc8b57684f0",
+    ".github/workflows/source-validation.yml": "2799db1fdcac3cf6c5766038443a5ddc8e0b09aa8c6b914e8e405d2869812b30"
   },
   "actual_api": {
     "calls": 2,
@@ -181,6 +183,29 @@
         "log_sha256": "4c8c4f8f4710220bd3919b4a65c119a7c365eb5a63cca0646f19ffb1c1381030",
         "warning": "Existing application bundle exceeds Vite 500kB chunk warning threshold."
       }
+    },
+    "ci_python_unit_tests": {
+      "count": 65,
+      "failures": 0,
+      "modules": [
+        "test_job_evidence",
+        "test_toolchain_diagnostics",
+        "test_workspace_paths",
+        "test_drawing",
+        "test_logic_composition",
+        "test_source_stimulus",
+        "test_oscillator_projects",
+        "test_chip_references",
+        "test_duet_afe"
+      ]
+    },
+    "edition_isolation": {
+      "tests": 10,
+      "failures": 0,
+      "real_stdio_mcp": {
+        "edu_tools": 58,
+        "indust_tools": 65
+      }
     }
   },
   "actual_ui": {
@@ -217,7 +242,9 @@
     "production_site_deployed": false,
     "scope": "Source update; revision is identified by repository commit and source hashes.",
     "captured_files_with_exact_git_bytes": 30,
-    "unrelated_helpers_staged": false
+    "unrelated_helpers_staged": false,
+    "main_feature_commit": "571243187a292dcceb5bb5364927745802970ec0",
+    "followup": "Correct historical MCP tool count expectations and include DUET in source CI; no deployment."
   },
   "source_hash_note": "Final source hashes include the legacy RC port metadata fix. Actual model/PVT records preserve their original source hashes; DUET circuit topology and measurements were unchanged by that fix."
 }

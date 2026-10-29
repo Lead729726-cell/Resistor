@@ -57,6 +57,8 @@ test('Edu updater cannot download or apply a historical Indust installer',async 
 for(const edition of [edu,indust])test('real MCP handshake identifies '+edition.name+' without exposing credentials',async t=>{
  const workspace=await fixture(t);const transport=new StdioClientTransport({command:process.execPath,args:[path.resolve(process.env.REGISTER_MCP_ENTRY||'scripts/mcp.mjs')],env:{RESISTOR_EDITION:edition.edition,MOS_WORKSPACE:workspace},stderr:'pipe'});
  const client=new Client({name:'edition-qa',version:'1.0.0'});t.after(()=>client.close());await client.connect(transport);
- assert.equal(client.getServerVersion().name,edition.mcp_name);const tools=await client.listTools();assert.equal(tools.tools.length,edition.edition==='indust'?56:49);
+ assert.equal(client.getServerVersion().name,edition.mcp_name);const tools=await client.listTools();assert.equal(tools.tools.length,edition.edition==='indust'?65:58);
+ const names=tools.tools.map(tool=>tool.name);assert.equal(new Set(names).size,names.length);
+ for(const name of ['register_product_context','register_hdl_create','register_schematic_selection'])assert(names.includes(name),name+' must remain available in both editions');
  const result=await client.callTool({name:'register_product_context',arguments:{}});assert.equal(result.isError,undefined);assert.equal(result.structuredContent.result.product_id,edition.id);assert.equal(result.structuredContent.product.id,edition.id);assert.equal(result.structuredContent.result.workspace,workspace);assert.equal(result.structuredContent.result.foundry_signoff,false);assert(!JSON.stringify(result).includes('token'));
 });
