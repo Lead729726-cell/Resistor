@@ -4,7 +4,7 @@
 
 **Resistor Edu · 학습 모드와 7단계 실습**: 퀴즈·자율학습과 설계·시뮬레이션 학습을 분리했습니다. 설계 실습은 이전·다음 페이지로 진행하고 입력 초안을 유지합니다. [난이도·페이지 이동·블록 배치 가이드](docs/edu-learning-workflow.md).
 
-**Edu 실험 워크북 · 강의 구성**: [8개 미션 워크북](https://resistor.kr/course/)에서 예측·조건 변경·공통 수식 계산·비교·설명을 기록하고 보고서로 보관합니다. [강의·구매 페이지](https://resistor.kr/shop/)는 Edu 단품과 강의 패키지를 구분하며 현재 결제는 준비 중입니다. [구현·운영 상태와 실행 방법](docs/edu-course-store.md), [강사용 촬영 진행 가이드](docs/course-recording-guide.md).
+**Edu 실험 워크북 · 강의 구성**: [8개 미션 워크북](https://resistor.kr/course/)에서 예측·조건 변경·공통 수식 계산·비교·설명을 기록하고 보고서로 보관합니다. [강의 안내](https://resistor.kr/shop/)는 인프런 우선 판매·판매 예정가 250,000원 기준이며 자체 결제는 보류합니다. [구현·운영 상태와 실행 방법](docs/edu-course-store.md), [강사용 촬영 진행 가이드](docs/course-recording-guide.md).
 
 **Resistor Edu · CMOS inverter 연결 실습**: 실제 공개 회로·레이아웃에서 출력 부하 하나를 바꾸고 ngspice 전후 파형·지연을 비교합니다. 학생 설명·조건·run·revision을 저장하고 다시 엽니다. [실행·측정 결과·지원 범위](docs/edu-inverter-lab.md).
 

@@ -7,7 +7,9 @@ export function createShopGateway({env=process.env,fetchImpl=fetch}={}){return a
  const url=new URL(req.url,'https://resistor.kr'),action=url.searchParams.get('action');
  if(!Object.hasOwn(actions,action??'')||req.method!==actions[action])return send(405,{ok:false,error:{code:'METHOD',message:'지원하지 않는 요청입니다.'}});
  if(req.method==='POST'&&action!=='webhook'&&!['https://resistor.kr','https://resistor-downloads.vercel.app'].includes(req.headers.origin))return send(403,{ok:false,error:{code:'ORIGIN',message:'Resistor 사이트에서 다시 시도하세요.'}});
+ if(action==='create'&&catalog.direct_sales_enabled===false)return send(409,{ok:false,error:{code:'SALES_CHANNEL_INFLEARN',message:'인프런 강의 판매를 우선 진행합니다. 이 사이트에서는 새 결제를 받지 않습니다.'}});
  const origin=env.RESISTOR_COMMERCE_ORIGIN,token=env.RESISTOR_SHOP_GATEWAY_TOKEN;
+ if(action==='catalog'&&catalog.direct_sales_enabled===false)return send(200,{ok:true,result:{...catalog,checkout_enabled:false,products:catalog.products.map(p=>({...p,purchasable:false}))}});
  if(!origin||!token){
   if(action==='catalog')return send(200,{ok:true,result:{...catalog,checkout_enabled:false,products:catalog.products.map(p=>({...p,purchasable:false,blockers:[...p.blockers,'결제·주문 서버 연결']}))}});
   return send(503,{ok:false,error:{code:'SHOP_UNAVAILABLE',message:'판매 준비 중입니다. 결제 정보나 이메일을 받지 않습니다.'}});

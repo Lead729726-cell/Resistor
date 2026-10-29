@@ -1,3 +1,4 @@
+import {purchaseAction,purchaseChannel} from './sales-policy.mjs';
 const $=id=>document.getElementById(id),params=new URLSearchParams(location.search),status=s=>$('checkout-status').textContent=s;
 async function api(action,body){const r=await fetch('/api/shop?action='+action,{method:body?'POST':'GET',headers:{'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{}),cache:'no-store'}),data=await r.json();if(!r.ok||!data.ok)throw Error(data.error?.message||'연결을 확인하지 못했습니다.');return data.result;}
 let orderId=params.get('orderId'),catalog,product;
@@ -12,10 +13,12 @@ try{
  else{
   catalog=await api('catalog');product=catalog.products.find(p=>p.id===params.get('product'));
   if(!product)throw Error('상품을 선택해 주세요.');
-  $('checkout-title').textContent=product.name;$('product-price').textContent=product.price_krw===null?'가격 미확정':new Intl.NumberFormat('ko-KR').format(product.price_krw)+'원 · '+(product.purchasable?'':'예정 가격 · ')+'부가세 포함';
+  const a=purchaseAction(catalog,product),channel=purchaseChannel(product);
+  $('checkout-title').textContent=product.name;$('product-price').textContent=product.price_krw===null?'자체 판매 보류':new Intl.NumberFormat('ko-KR').format(product.price_krw)+'원 · '+a.price_label;
+  if(channel==='inflearn'||channel==='deferred'){$('closed-explanation').textContent=a.notice;const link=$('sales-channel-action');link.href=a.url;link.textContent=a.label+' →';link.hidden=false;}
   const blockers=$('blockers');for(const b of product.blockers){const li=document.createElement('li');li.textContent=b;blockers.append(li);}
   if(product.purchasable){status('구매 정보를 확인하고 결제하세요.');$('purchase-form').hidden=false;$('closed-notice').hidden=true;}
-  else status('판매 준비 중 · 결제 불가');
+  else status(channel==='inflearn'?'인프런 우선 판매 · 자체 결제 보류':channel==='deferred'?'Edu 단품 자체 판매 보류':'판매 준비 중 · 결제 불가');
  }
 }catch(e){status(e.message);if(orderId)$('reconcile').hidden=false;}
 $('reconcile').addEventListener('click',async()=>{try{ready(await api('reconcile',{order_id:orderId}));}catch(e){status(e.message);}});

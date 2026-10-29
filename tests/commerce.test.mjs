@@ -9,7 +9,7 @@ import {createCommerceService} from '../platform/commerce/service.mjs';
 import {createCommerceHttpServer,shopCookie} from '../platform/commerce/http.mjs';
 import {storeCatalog,publicCatalog} from '../platform/commerce/catalog.mjs';
 import {createTossProvider} from '../platform/commerce/toss.mjs';
-const catalog={...structuredClone(storeCatalog),terms_version:'fixture-terms-v1',products:storeCatalog.products.map(p=>({...p,status:'ready',price_krw:110000,price_approved:true,delivery_ready:true,blockers:[]}))};
+const catalog={...structuredClone(storeCatalog),direct_sales_enabled:true,terms_version:'fixture-terms-v1',products:storeCatalog.products.map(p=>({...p,purchase_channel:'direct',status:'ready',price_krw:110000,price_approved:true,delivery_ready:true,blockers:[]}))};
 async function fixture(fn){
  const dir=await mkdtemp(path.join(os.tmpdir(),'resistor-shop-')),key=randomBytes(32),keys=generateKeyPairSync('ed25519'),licenses=createLicenseService({filename:path.join(dir,'license.sqlite'),masterKey:key,privateKey:keys.privateKey.export({type:'pkcs8',format:'pem'})});
  let calls=0,lookups=0,fail=false,receipt=null,held;
