@@ -30,7 +30,8 @@ export function readCourseWorkbook(text:string):CourseWorkbook{
   if(m.inputs.some(i=>typeof d.inputs[i.id]!=='string')||Object.keys(d.inputs).some(k=>!m.inputs.some(i=>i.id===k)))throw Error('실습 입력이 맞지 않습니다.');
   for(const r of d.runs){if(!Number.isSafeInteger(r.revision)||r.revision>d.revision||r.revision<1||typeof r.created_at!=='string'||!r.inputs||!r.engine)throw Error('계산 기록을 확인하세요.');
    const expected=calculateMission(m,{...d,revision:r.revision,inputs:Object.fromEntries(Object.entries(r.inputs).map(([k,v])=>[k,String(v)]))});
-   if(JSON.stringify(expected.result)!==JSON.stringify(r.result)||JSON.stringify(expected.engine)!==JSON.stringify(r.engine)||JSON.stringify(expected.inputs)!==JSON.stringify(r.inputs))throw Error('결과와 입력이 일치하지 않습니다. 원본 기록을 보관하세요.');
+   const canonical=(v:unknown):string=>JSON.stringify(v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.entries(v).sort(([a],[b])=>a.localeCompare(b)).map(([k,value])=>[k,JSON.parse(canonical(value))])):Array.isArray(v)?v.map(item=>JSON.parse(canonical(item))):v);
+   if(canonical(expected.result)!==canonical(r.result)||canonical(expected.engine)!==canonical(r.engine)||canonical(expected.inputs)!==canonical(r.inputs))throw Error('결과와 입력이 일치하지 않습니다. 원본 기록을 보관하세요.');
   }
  }
  return p;

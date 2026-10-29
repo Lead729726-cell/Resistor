@@ -1,11 +1,15 @@
 import {calculators} from '../../packages/calculators/src/index';
 import {courseMissions,courseRevision,newCourseWorkbook,missionDraft,calculateMission,readCourseWorkbook,type WorkbookRun} from '../../packages/education/src/course-workbook';
-const key='resistor.edu.course-workbook.v1',el=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
+import {CourseWorkbookStore,workbookStorageKey} from '../../packages/education/src/course-workbook-store';
+const el=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
 const esc=(s:unknown)=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
-let workbook=newCourseWorkbook(crypto.randomUUID()),blocked=false;
+const store=new CourseWorkbookStore(()=>localStorage,()=>crypto.randomUUID());
+let workbook=store.workbook;
 const notice=(s:string)=>{el('save-status').textContent=s;};
-try{const stored=localStorage.getItem(key);if(stored)workbook=readCourseWorkbook(stored);}catch{blocked=true;notice('이전 기록을 읽을 수 없어 자동 저장을 멈췄습니다. 원본 기록은 덮어쓰지 않습니다. 현재 작성 내용은 JSON으로 내려받으세요.');}
-function save(){if(blocked)return;try{localStorage.setItem(key,JSON.stringify(workbook));notice('이 브라우저에 저장됨 · 서버로 전송하지 않습니다.');}catch{blocked=true;notice('브라우저 저장 실패 · 화면의 내용은 유지됩니다. JSON으로 내려받으세요.');}}
+notice(store.message);
+function save(){store.save();notice(store.message);}
+el('retry-save').addEventListener('click',save);
+window.addEventListener('storage',event=>{if(event.key===workbookStorageKey){store.inspectExternalChange();notice(store.message);}});
 const current=()=>courseMissions.find(m=>m.id===location.hash.slice(1))??courseMissions[0];
 const draft=()=>{const m=current();return workbook.drafts[m.id]??=missionDraft(m);};
 function result(run:WorkbookRun){return `<article class="result-card"><p class="eyebrow">revision ${run.revision} · ${esc(run.engine.status)}</p>${run.result?`<strong class="result-value">${esc(run.result.primaryValue)} <small>${esc(run.result.primaryUnit??'')}</small></strong><p>${esc(run.result.primaryLabel)}</p>${run.result.secondary?.map(s=>`<p>${esc(s.label)} <b>${esc(s.value)} ${esc(s.unit??'')}</b></p>`).join('')??''}`:'<p>웹에서 실행할 수 없습니다. Edu 앱에서 엔진·모델을 연결하세요.</p>'}<p class="muted">${esc(run.engine.scope)}</p><details><summary>이 실행의 입력 조건</summary><pre>${esc(JSON.stringify(run.inputs,null,2))}</pre></details></article>`;}
@@ -33,6 +37,7 @@ function download(text:string,filename:string){const url=URL.createObjectURL(new
 el('export-record').addEventListener('click',()=>download(JSON.stringify(workbook,null,2),'Resistor-Edu-'+workbook.project_id+'.json'));
 el('print-record').addEventListener('click',()=>{el('print-report').innerHTML=`<h1>Resistor Edu 실험 보고서</h1><p>${esc(workbook.project_id)} · ${esc(courseRevision)}</p>`+courseMissions.map(m=>{const d=workbook.drafts[m.id];return `<section><h2>${esc(m.title)}</h2><p>학생 예측: ${esc(d?.prediction??'미작성')}</p><p>학생 설명: ${esc(d?.explanation??'미작성')}</p><p>학생 완료 표시: ${d?.complete?'완료':'미완료'} · 엔진 합격 판정 아님</p>${d?.runs.map(result).join('')??'<p>실행 기록 없음</p>'}</section>`;}).join('');window.print();});
 let imported:ReturnType<typeof readCourseWorkbook>|undefined;
-el('import-record').addEventListener('change',async event=>{const f=(event.target as HTMLInputElement).files?.[0];if(!f)return;try{if(f.size>2e6)throw Error('2 MB 이하 기록을 선택하세요.');imported=readCourseWorkbook(await f.text());el('import-confirm').hidden=false;el('import-status').textContent='호환 기록입니다. 현재 기록을 먼저 JSON으로 보관한 뒤 열기를 확정하세요.';}catch(e){el('import-status').textContent=(e as Error).message;}});
-el('confirm-import').addEventListener('click',()=>{if(!imported)return;download(JSON.stringify(workbook,null,2),'Resistor-Edu-before-open-'+workbook.project_id+'.json');workbook=imported;imported=undefined;blocked=false;save();render();el('import-confirm').hidden=true;});
+let importSequence=0;
+el('import-record').addEventListener('change',async event=>{const sequence=++importSequence;imported=undefined;el('import-confirm').hidden=true;const f=(event.target as HTMLInputElement).files?.[0];if(!f)return;try{if(f.size>2e6)throw Error('2 MB 이하 기록을 선택하세요.');const candidate=readCourseWorkbook(await f.text());if(sequence!==importSequence)return;imported=candidate;el('import-confirm').hidden=false;el('import-status').textContent='호환 기록입니다. 원본·현재 작성 내용이 백업된 경우에만 선택한 기록으로 전환합니다.';}catch(e){if(sequence===importSequence)el('import-status').textContent=(e as Error).message;}});
+el('confirm-import').addEventListener('click',()=>{if(!imported)return;if(!store.replace(imported)){notice(store.message);return;}workbook=store.workbook;imported=undefined;notice(store.message);render();el('import-confirm').hidden=true;});
 window.addEventListener('hashchange',()=>{render();const title=el('mission-title');title.tabIndex=-1;title.scrollIntoView({block:'start'});title.focus({preventScroll:true});});render();
