@@ -1,0 +1,3349 @@
+{
+  "edition": "indust",
+  "scope": "actual UI; public synthetic RC; real API when requested; no user design",
+  "events": [
+    {
+      "method": "assistant.autodesign_catalog",
+      "at": "2026-10-29T00:28:10.397Z",
+      "ok": true,
+      "result": {
+        "families": [
+          {
+            "id": "rc_lowpass",
+            "label": "RC 저역통과 필터",
+            "defaults": {
+              "resistance_Ohm": 10000,
+              "capacitance_F": 1e-12
+            },
+            "analyses": [
+              "tran",
+              "ac",
+              "op"
+            ],
+            "targets": [
+              {
+                "metric": "measured_3db_frequency_Hz",
+                "analysis": "ac",
+                "unit": "Hz",
+                "min": 9000,
+                "max": 11000
+              },
+              {
+                "metric": "measured_low_frequency_gain",
+                "analysis": "ac",
+                "unit": "V/V",
+                "min": 0.98,
+                "max": 1.02
+              }
+            ]
+          },
+          {
+            "id": "soc_miller_ota",
+            "label": "Miller 보상 OTA",
+            "defaults": {
+              "compensation_F": 5e-12,
+              "nulling_Ohm": 5000
+            },
+            "analyses": [
+              "op",
+              "ac"
+            ],
+            "targets": [
+              {
+                "metric": "open_loop_gain_dB",
+                "analysis": "ac",
+                "unit": "dB",
+                "min": 40,
+                "max": null
+              },
+              {
+                "metric": "phase_margin_deg",
+                "analysis": "ac",
+                "unit": "deg",
+                "min": 45,
+                "max": 180
+              }
+            ],
+            "scope": "1.8V SKY130 · 실제 MOS 계층 · 공개 poly/MIM 물리 변환 · 독립 DRC/LVS/PEX 필요"
+          },
+          {
+            "id": "soc_filter2",
+            "label": "버퍼형 2극 필터",
+            "defaults": {
+              "compensation_F": 5e-12,
+              "filter_Ohm": 40000,
+              "filter_F": 2e-11,
+              "nulling_Ohm": 5000
+            },
+            "analyses": [
+              "op",
+              "ac",
+              "tran"
+            ],
+            "targets": [
+              {
+                "metric": "low_frequency_gain",
+                "analysis": "ac",
+                "unit": "V/V",
+                "min": 0.95,
+                "max": 1.05
+              },
+              {
+                "metric": "bandwidth_3dB_Hz",
+                "analysis": "ac",
+                "unit": "Hz",
+                "min": 80000,
+                "max": 180000
+              }
+            ],
+            "scope": "1.8V SKY130 · 실제 MOS 계층 · 공개 poly/MIM 물리 변환 · 독립 DRC/LVS/PEX 필요"
+          },
+          {
+            "id": "soc_tia",
+            "label": "전류 입력 TIA",
+            "defaults": {
+              "compensation_F": 5e-12,
+              "feedback_Ohm": 100000,
+              "feedback_F": 1e-12,
+              "nulling_Ohm": 5000
+            },
+            "analyses": [
+              "op",
+              "ac",
+              "tran"
+            ],
+            "targets": [
+              {
+                "metric": "low_frequency_gain",
+                "analysis": "ac",
+                "unit": "V/A",
+                "min": 95000,
+                "max": 105000
+              }
+            ],
+            "scope": "1.8V SKY130 · 실제 MOS 계층 · 공개 poly/MIM 물리 변환 · 독립 DRC/LVS/PEX 필요"
+          },
+          {
+            "id": "sensor_afe_dualband",
+            "label": "DUET-AFE · 이중 대역 센서",
+            "defaults": {
+              "gain_V_per_V": 4,
+              "slow_cutoff_Hz": 5000,
+              "fast_cutoff_Hz": 100000,
+              "pole_F": 1e-10,
+              "compensation_F": 5e-12,
+              "nulling_Ohm": 5000,
+              "bias_resistance_Ohm": 30000
+            },
+            "analyses": [
+              "op",
+              "ac",
+              "tran"
+            ],
+            "targets": [
+              {
+                "metric": "slow_gain_V_per_V",
+                "analysis": "ac",
+                "unit": "V/V",
+                "min": 3.8,
+                "max": 4.2
+              },
+              {
+                "metric": "slow_bandwidth_Hz",
+                "analysis": "ac",
+                "unit": "Hz",
+                "min": 4000,
+                "max": 6000
+              },
+              {
+                "metric": "fast_bandwidth_Hz",
+                "analysis": "ac",
+                "unit": "Hz",
+                "min": 80000,
+                "max": 120000
+              },
+              {
+                "metric": "supply_power_W",
+                "analysis": "op",
+                "unit": "W",
+                "min": 0,
+                "max": 0.0005
+              }
+            ],
+            "scope": "SKY130 1.8V MOS · 자체 바이어스 + 폐루프 증폭 + 저속/고속 RC 버퍼. R/C는 이상적, 레이아웃·잡음·오프셋 미검증."
+          }
+        ],
+        "engine": {
+          "ngspice_available": true,
+          "ngspice_version": "** ngspice-47 : Circuit level simulation program",
+          "pdk_available": true
+        },
+        "roles": {
+          "decision": {
+            "model": "gpt-6-luna",
+            "input": 0.1,
+            "output": 0.5,
+            "checked": "2026-10-27"
+          },
+          "execution": {
+            "model": "gpt-6.1-sol",
+            "input": 2,
+            "output": 10,
+            "checked": "2026-10-27"
+          }
+        },
+        "limits": {
+          "max_candidates": 3,
+          "max_engine_jobs": 9,
+          "existing_project_effect": "none",
+          "physical_layout": "not-generated"
+        },
+        "catalog_hash": "5b91a3ba1557a2db7e19bba50957860d1096d83180d2041c1701803bcc1a7837"
+      }
+    },
+    {
+      "method": "assistant.autodesign_plan",
+      "at": "2026-10-29T00:28:43.187Z",
+      "ok": true,
+      "result": {
+        "schema_version": 1,
+        "id": "15d288f0-a465-4d31-8104-010b58bc4003",
+        "product_id": "resistor.indust",
+        "goal": "엣지 센서용 DUET-AFE를 설계해줘. 이득 4배, 저속 5kHz·고속 100kHz 두 경로, 1.8V에서 DC 전력 500µW 이하가 목표야. 동일한 이득·대역폭 목표를 유지하고 바이어스 저항과 보상 C를 달리한 후보 2개를 제안해줘.",
+        "family": "sensor_afe_dualband",
+        "constraints": {
+          "supply_V": 1.8,
+          "corner": "tt",
+          "temperature_C": 27,
+          "max_candidates": 2,
+          "chip_limits": {
+            "width_um": 300,
+            "height_um": 300,
+            "max_area_um2": 90000,
+            "edge_um": 10
+          },
+          "targets": [
+            {
+              "metric": "slow_gain_V_per_V",
+              "analysis": "ac",
+              "unit": "V/V",
+              "min": 3.8,
+              "max": 4.2
+            },
+            {
+              "metric": "slow_bandwidth_Hz",
+              "analysis": "ac",
+              "unit": "Hz",
+              "min": 4000,
+              "max": 6000
+            },
+            {
+              "metric": "fast_bandwidth_Hz",
+              "analysis": "ac",
+              "unit": "Hz",
+              "min": 80000,
+              "max": 120000
+            },
+            {
+              "metric": "supply_power_W",
+              "analysis": "op",
+              "unit": "W",
+              "min": 0,
+              "max": 0.0005
+            }
+          ]
+        },
+        "catalog_hash": "5b91a3ba1557a2db7e19bba50957860d1096d83180d2041c1701803bcc1a7837",
+        "created_at": "2026-10-29T00:28:24.941Z",
+        "updated_at": "2026-10-29T00:28:43.184Z",
+        "decision": {
+          "model": "gpt-6-luna",
+          "status": "completed",
+          "usage": {
+            "input_tokens": 797,
+            "output_tokens": 532,
+            "total_tokens": 1329
+          },
+          "budget_reservation": {
+            "id": "28915dcc-e596-4ed9-b516-1a5e79a23f57",
+            "reserved_usd": 0.002589
+          }
+        },
+        "proposal": {
+          "model": "gpt-6.1-sol",
+          "status": "completed",
+          "usage": {
+            "input_tokens": 1189,
+            "output_tokens": 750,
+            "total_tokens": 1939
+          },
+          "budget_reservation": {
+            "id": "49743a7e-7753-4b40-9447-33ede7835680",
+            "reserved_usd": 0.055256
+          }
+        },
+        "candidates": [
+          {
+            "index": 0,
+            "name": "후보 1 · 기본 바이어스·보상",
+            "parameters": {
+              "gain_V_per_V": 4,
+              "slow_cutoff_Hz": 5000,
+              "fast_cutoff_Hz": 100000,
+              "pole_F": 1e-10,
+              "compensation_F": 5e-12,
+              "nulling_Ohm": 5000,
+              "bias_resistance_Ohm": 30000
+            },
+            "rationale": "기본 바이어스 저항과 보상값을 비교 기준으로 둡니다. 후보 2보다 작은 바이어스 저항이 바이어스 전류 확보에 유리할 수 있지만 공급 전력은 더 커질 수 있다는 가설을 확인합니다.",
+            "preview": {
+              "schema_version": 1,
+              "template_id": "sensor_afe_dualband",
+              "name": "후보 1 · 기본 바이어스·보상",
+              "parameters": {
+                "gain_V_per_V": 4,
+                "slow_cutoff_Hz": 5000,
+                "fast_cutoff_Hz": 100000,
+                "pole_F": 1e-10,
+                "compensation_F": 5e-12,
+                "nulling_Ohm": 5000,
+                "bias_resistance_Ohm": 30000
+              },
+              "chip_limits": {
+                "schema_version": 1,
+                "width_um": 300,
+                "height_um": 300,
+                "max_area_um2": 90000,
+                "edge_um": 10,
+                "origin_um": [
+                  0,
+                  0
+                ],
+                "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+              },
+              "schematic_sha256": "04021c5b5782bde9d9516e1452d9f1d857c901b66d55f277eb1a02a7b7c1d597",
+              "implementation_sha256": "c3d8c635aedcf39aa9ebf6dc88e4f0cf27cbca54c21bd6a85686e095c3aa2b7c",
+              "preview_hash": "f6d2258da47ceb976ea019d1bff8a7d20880991d6371be968cffde6706578e69",
+              "ports": [
+                "VIN",
+                "PRE_OUT",
+                "SLOW",
+                "FAST",
+                "VCM",
+                "BIAS",
+                "VPWR",
+                "VGND"
+              ],
+              "root_cell": "sensor_afe_dualband",
+              "device_count": 55,
+              "primitive_counts": {
+                "nmos": 25,
+                "resistor": 11,
+                "capacitor": 7,
+                "pmos": 12
+              },
+              "net_count": 28,
+              "hierarchy": [
+                {
+                  "name": "sensor_afe_dualband",
+                  "devices": 4,
+                  "children": [
+                    "SOC_BIAS",
+                    "DUET_GAIN",
+                    "DUET_SLOW",
+                    "DUET_FAST"
+                  ]
+                },
+                {
+                  "name": "SOC_BIAS",
+                  "devices": 6,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "SOC_OTA",
+                  "devices": 5,
+                  "children": [
+                    "SOC_OTA_FIRST"
+                  ]
+                },
+                {
+                  "name": "SOC_OTA_FIRST",
+                  "devices": 7,
+                  "children": []
+                },
+                {
+                  "name": "DUET_GAIN",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "DUET_SLOW",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "DUET_FAST",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                }
+              ],
+              "spice": ".subckt SOC_OTA_FIRST INP INN BIAS OUT VPWR VGND\nXN_INN0 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INN1 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP0 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP1 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\nXP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\n.ends SOC_OTA_FIRST\n.subckt SOC_OTA INP INN BIAS OUT VPWR VGND\nCC_MILLER PRE COMP 5e-12\nXFIRST INP INN BIAS PRE VPWR VGND SOC_OTA_FIRST\nXN_SECOND OUT BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_SECOND OUT PRE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1\nRR_ZERO COMP OUT 5000\n.ends SOC_OTA\n.subckt SOC_BIAS BIAS VCM VPWR VGND\nCC_VCM VCM_RAW VGND 2e-11\nXN_DIODE BIAS BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nRR_BIAS VPWR BIAS 30000\nRR_VCM_BOTTOM VCM_RAW VGND 100000\nRR_VCM_TOP VPWR VCM_RAW 100000\nXVCM_BUFFER VCM_RAW VCM BIAS VCM VPWR VGND SOC_OTA\n.ends SOC_BIAS\n.subckt DUET_GAIN VIN VCM BIAS OUT VPWR VGND\nXAMP VIN FB BIAS OUT VPWR VGND SOC_OTA\nRR_FEEDBACK OUT FB 300000\nRR_GROUND FB VCM 100000\n.ends DUET_GAIN\n.subckt DUET_SLOW VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 318309.886184\n.ends DUET_SLOW\n.subckt DUET_FAST VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 15915.4943092\n.ends DUET_FAST\n.subckt sensor_afe_dualband VIN PRE_OUT SLOW FAST VCM BIAS VPWR VGND\nXBIAS_SOURCE BIAS VCM VPWR VGND SOC_BIAS\nXFAST_PATH PRE_OUT BIAS FAST VPWR VGND DUET_FAST\nXPREAMP VIN VCM BIAS PRE_OUT VPWR VGND DUET_GAIN\nXSLOW_PATH PRE_OUT BIAS SLOW VPWR VGND DUET_SLOW\n.ends sensor_afe_dualband\n",
+              "layout_status": "not-generated",
+              "physical_area_um2": null,
+              "engine_executed": false,
+              "limits": [
+                "This creates a separate project only after approval.",
+                "Chip envelope is a constraint, not measured mask area.",
+                "No DRC/LVS/PEX/manufacturing result is implied."
+              ]
+            },
+            "command_id": "auto-create-15d288f0-a465-4d31-8104-010b58bc4003-0",
+            "state": "not_run",
+            "jobs": [
+              {
+                "analysis": "op",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-0-op",
+                "status": "not_run"
+              },
+              {
+                "analysis": "ac",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-0-ac",
+                "status": "not_run"
+              },
+              {
+                "analysis": "tran",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-0-tran",
+                "status": "not_run"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+            "parameters": {
+              "gain_V_per_V": 4,
+              "slow_cutoff_Hz": 5000,
+              "fast_cutoff_Hz": 100000,
+              "pole_F": 1e-10,
+              "compensation_F": 8e-12,
+              "nulling_Ohm": 5000,
+              "bias_resistance_Ohm": 40000
+            },
+            "rationale": "바이어스 저항 증가가 공급 전력을 줄일 수 있다는 가설을 조사합니다. 보상 커패시턴스 증가가 안정성에 도움이 될 수 있지만 대역폭과 과도응답에는 불리할 수 있으므로 동일한 목표 범위에서 비교합니다.",
+            "preview": {
+              "schema_version": 1,
+              "template_id": "sensor_afe_dualband",
+              "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+              "parameters": {
+                "gain_V_per_V": 4,
+                "slow_cutoff_Hz": 5000,
+                "fast_cutoff_Hz": 100000,
+                "pole_F": 1e-10,
+                "compensation_F": 8e-12,
+                "nulling_Ohm": 5000,
+                "bias_resistance_Ohm": 40000
+              },
+              "chip_limits": {
+                "schema_version": 1,
+                "width_um": 300,
+                "height_um": 300,
+                "max_area_um2": 90000,
+                "edge_um": 10,
+                "origin_um": [
+                  0,
+                  0
+                ],
+                "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+              },
+              "schematic_sha256": "ed1a258041b74cd76cbc1dc17945dd50fb2165c39af25ec49216eb0663defdf1",
+              "implementation_sha256": "c3d8c635aedcf39aa9ebf6dc88e4f0cf27cbca54c21bd6a85686e095c3aa2b7c",
+              "preview_hash": "24d9a3ccfd83bf9994b56c03a9370adddc514bf02c8e153ba8e09cb5b9c6b679",
+              "ports": [
+                "VIN",
+                "PRE_OUT",
+                "SLOW",
+                "FAST",
+                "VCM",
+                "BIAS",
+                "VPWR",
+                "VGND"
+              ],
+              "root_cell": "sensor_afe_dualband",
+              "device_count": 55,
+              "primitive_counts": {
+                "nmos": 25,
+                "resistor": 11,
+                "capacitor": 7,
+                "pmos": 12
+              },
+              "net_count": 28,
+              "hierarchy": [
+                {
+                  "name": "sensor_afe_dualband",
+                  "devices": 4,
+                  "children": [
+                    "SOC_BIAS",
+                    "DUET_GAIN",
+                    "DUET_SLOW",
+                    "DUET_FAST"
+                  ]
+                },
+                {
+                  "name": "SOC_BIAS",
+                  "devices": 6,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "SOC_OTA",
+                  "devices": 5,
+                  "children": [
+                    "SOC_OTA_FIRST"
+                  ]
+                },
+                {
+                  "name": "SOC_OTA_FIRST",
+                  "devices": 7,
+                  "children": []
+                },
+                {
+                  "name": "DUET_GAIN",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "DUET_SLOW",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "DUET_FAST",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                }
+              ],
+              "spice": ".subckt SOC_OTA_FIRST INP INN BIAS OUT VPWR VGND\nXN_INN0 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INN1 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP0 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP1 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\nXP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\n.ends SOC_OTA_FIRST\n.subckt SOC_OTA INP INN BIAS OUT VPWR VGND\nCC_MILLER PRE COMP 8e-12\nXFIRST INP INN BIAS PRE VPWR VGND SOC_OTA_FIRST\nXN_SECOND OUT BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_SECOND OUT PRE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1\nRR_ZERO COMP OUT 5000\n.ends SOC_OTA\n.subckt SOC_BIAS BIAS VCM VPWR VGND\nCC_VCM VCM_RAW VGND 2e-11\nXN_DIODE BIAS BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nRR_BIAS VPWR BIAS 40000\nRR_VCM_BOTTOM VCM_RAW VGND 100000\nRR_VCM_TOP VPWR VCM_RAW 100000\nXVCM_BUFFER VCM_RAW VCM BIAS VCM VPWR VGND SOC_OTA\n.ends SOC_BIAS\n.subckt DUET_GAIN VIN VCM BIAS OUT VPWR VGND\nXAMP VIN FB BIAS OUT VPWR VGND SOC_OTA\nRR_FEEDBACK OUT FB 300000\nRR_GROUND FB VCM 100000\n.ends DUET_GAIN\n.subckt DUET_SLOW VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 318309.886184\n.ends DUET_SLOW\n.subckt DUET_FAST VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 15915.4943092\n.ends DUET_FAST\n.subckt sensor_afe_dualband VIN PRE_OUT SLOW FAST VCM BIAS VPWR VGND\nXBIAS_SOURCE BIAS VCM VPWR VGND SOC_BIAS\nXFAST_PATH PRE_OUT BIAS FAST VPWR VGND DUET_FAST\nXPREAMP VIN VCM BIAS PRE_OUT VPWR VGND DUET_GAIN\nXSLOW_PATH PRE_OUT BIAS SLOW VPWR VGND DUET_SLOW\n.ends sensor_afe_dualband\n",
+              "layout_status": "not-generated",
+              "physical_area_um2": null,
+              "engine_executed": false,
+              "limits": [
+                "This creates a separate project only after approval.",
+                "Chip envelope is a constraint, not measured mask area.",
+                "No DRC/LVS/PEX/manufacturing result is implied."
+              ]
+            },
+            "command_id": "auto-create-15d288f0-a465-4d31-8104-010b58bc4003-1",
+            "state": "not_run",
+            "jobs": [
+              {
+                "analysis": "op",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-1-op",
+                "status": "not_run"
+              },
+              {
+                "analysis": "ac",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-1-ac",
+                "status": "not_run"
+              },
+              {
+                "analysis": "tran",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-1-tran",
+                "status": "not_run"
+              }
+            ]
+          }
+        ],
+        "engine": {
+          "status": "not_run",
+          "max_jobs": 6
+        },
+        "decision_result": {
+          "verdict": "proceed",
+          "summary": "DUET-AFE의 고정 회로군은 요청한 이중 대역 경로와 이득 조정을 지원합니다. 동일한 목표 범위를 두 후보에 적용하고, 후보 간 바이어스 저항과 보상 커패시턴스를 다르게 둔 미리보기 제안을 진행할 수 있습니다. 후보 1은 기본값인 30 kΩ 및 5 pF, 후보 2는 40 kΩ 및 8 pF로 제안합니다. 이득 목표는 4 V/V, 저속 대역폭 목표는 5 kHz, 고속 대역폭 목표는 100 kHz로 유지하며, 1.8 V에서 공급 전력 상한은 500 µW입니다.",
+          "questions": [],
+          "limitations": [
+            "수치 목표 달성 여부는 엔진의 실제 샘플 결과로만 판단할 수 있으며 여기서는 보장하지 않습니다.",
+            "두 후보의 저항·커패시턴스 변경이 전력과 대역폭에 미치는 영향은 가설이며 실제 결과 확인이 필요합니다.",
+            "레이아웃, 잡음, 오프셋은 검증 범위에 포함되지 않습니다."
+          ],
+          "evidence_ids": [
+            "catalog",
+            "goal",
+            "constraints"
+          ]
+        },
+        "proposal_result": {
+          "summary": "DUET-AFE 고정 회로군의 후보 2개를 제안합니다. 두 후보 모두 이득 4 V/V, 저속 5000 Hz·고속 100000 Hz 설정을 유지하고 바이어스 저항과 보상 커패시턴스만 달리합니다. 시험 조건은 전원 1.8 V, tt 코너, 27 °C이며 DC 공급 전력 상한은 0.0005 W로 유지합니다.",
+          "candidates": [
+            {
+              "name": "후보 1 · 기본 바이어스·보상",
+              "parameters": [
+                {
+                  "key": "gain_V_per_V",
+                  "value": 4
+                },
+                {
+                  "key": "slow_cutoff_Hz",
+                  "value": 5000
+                },
+                {
+                  "key": "fast_cutoff_Hz",
+                  "value": 100000
+                },
+                {
+                  "key": "pole_F",
+                  "value": 1e-10
+                },
+                {
+                  "key": "compensation_F",
+                  "value": 5e-12
+                },
+                {
+                  "key": "nulling_Ohm",
+                  "value": 5000
+                },
+                {
+                  "key": "bias_resistance_Ohm",
+                  "value": 30000
+                }
+              ],
+              "rationale": "기본 바이어스 저항과 보상값을 비교 기준으로 둡니다. 후보 2보다 작은 바이어스 저항이 바이어스 전류 확보에 유리할 수 있지만 공급 전력은 더 커질 수 있다는 가설을 확인합니다."
+            },
+            {
+              "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+              "parameters": [
+                {
+                  "key": "gain_V_per_V",
+                  "value": 4
+                },
+                {
+                  "key": "slow_cutoff_Hz",
+                  "value": 5000
+                },
+                {
+                  "key": "fast_cutoff_Hz",
+                  "value": 100000
+                },
+                {
+                  "key": "pole_F",
+                  "value": 1e-10
+                },
+                {
+                  "key": "compensation_F",
+                  "value": 8e-12
+                },
+                {
+                  "key": "nulling_Ohm",
+                  "value": 5000
+                },
+                {
+                  "key": "bias_resistance_Ohm",
+                  "value": 40000
+                }
+              ],
+              "rationale": "바이어스 저항 증가가 공급 전력을 줄일 수 있다는 가설을 조사합니다. 보상 커패시턴스 증가가 안정성에 도움이 될 수 있지만 대역폭과 과도응답에는 불리할 수 있으므로 동일한 목표 범위에서 비교합니다."
+            }
+          ],
+          "limitations": [
+            "이는 실행 전 제안이며 수치 합격 여부는 실제 엔진 샘플로만 판단합니다.",
+            "두 후보 모두 AC 저속 이득 3.8–4.2 V/V, 저속 대역폭 4000–6000 Hz, 고속 대역폭 80000–120000 Hz 및 OP 공급 전력 0–0.0005 W 기준을 그대로 적용합니다.",
+            "고정 회로군과 편집 가능한 계층은 네이티브 엔진이 구성하며 토폴로지는 변경하지 않습니다.",
+            "R/C는 이상적입니다. 레이아웃·물리 면적·잡음·오프셋 및 DRC/LVS/PEX·사인오프는 검증하지 않습니다."
+          ],
+          "evidence_ids": [
+            "catalog",
+            "goal",
+            "constraints"
+          ]
+        },
+        "plan_hash": "84b58fa069324276a5579c068186115d59e9b22e7b6fe3f024b6e6e9cfcbc03e",
+        "coordination_status": "idle"
+      }
+    },
+    {
+      "method": "assistant.autodesign_start",
+      "at": "2026-10-29T00:30:09.530Z",
+      "ok": true,
+      "result": {
+        "schema_version": 1,
+        "id": "15d288f0-a465-4d31-8104-010b58bc4003",
+        "product_id": "resistor.indust",
+        "goal": "엣지 센서용 DUET-AFE를 설계해줘. 이득 4배, 저속 5kHz·고속 100kHz 두 경로, 1.8V에서 DC 전력 500µW 이하가 목표야. 동일한 이득·대역폭 목표를 유지하고 바이어스 저항과 보상 C를 달리한 후보 2개를 제안해줘.",
+        "family": "sensor_afe_dualband",
+        "constraints": {
+          "supply_V": 1.8,
+          "corner": "tt",
+          "temperature_C": 27,
+          "max_candidates": 2,
+          "chip_limits": {
+            "width_um": 300,
+            "height_um": 300,
+            "max_area_um2": 90000,
+            "edge_um": 10
+          },
+          "targets": [
+            {
+              "metric": "slow_gain_V_per_V",
+              "analysis": "ac",
+              "unit": "V/V",
+              "min": 3.8,
+              "max": 4.2
+            },
+            {
+              "metric": "slow_bandwidth_Hz",
+              "analysis": "ac",
+              "unit": "Hz",
+              "min": 4000,
+              "max": 6000
+            },
+            {
+              "metric": "fast_bandwidth_Hz",
+              "analysis": "ac",
+              "unit": "Hz",
+              "min": 80000,
+              "max": 120000
+            },
+            {
+              "metric": "supply_power_W",
+              "analysis": "op",
+              "unit": "W",
+              "min": 0,
+              "max": 0.0005
+            }
+          ]
+        },
+        "catalog_hash": "5b91a3ba1557a2db7e19bba50957860d1096d83180d2041c1701803bcc1a7837",
+        "created_at": "2026-10-29T00:28:24.941Z",
+        "updated_at": "2026-10-29T00:30:09.528Z",
+        "decision": {
+          "model": "gpt-6-luna",
+          "status": "completed",
+          "usage": {
+            "input_tokens": 797,
+            "output_tokens": 532,
+            "total_tokens": 1329
+          },
+          "budget_reservation": {
+            "id": "28915dcc-e596-4ed9-b516-1a5e79a23f57",
+            "reserved_usd": 0.002589
+          }
+        },
+        "proposal": {
+          "model": "gpt-6.1-sol",
+          "status": "completed",
+          "usage": {
+            "input_tokens": 1189,
+            "output_tokens": 750,
+            "total_tokens": 1939
+          },
+          "budget_reservation": {
+            "id": "49743a7e-7753-4b40-9447-33ede7835680",
+            "reserved_usd": 0.055256
+          }
+        },
+        "candidates": [
+          {
+            "index": 0,
+            "name": "후보 1 · 기본 바이어스·보상",
+            "parameters": {
+              "gain_V_per_V": 4,
+              "slow_cutoff_Hz": 5000,
+              "fast_cutoff_Hz": 100000,
+              "pole_F": 1e-10,
+              "compensation_F": 5e-12,
+              "nulling_Ohm": 5000,
+              "bias_resistance_Ohm": 30000
+            },
+            "rationale": "기본 바이어스 저항과 보상값을 비교 기준으로 둡니다. 후보 2보다 작은 바이어스 저항이 바이어스 전류 확보에 유리할 수 있지만 공급 전력은 더 커질 수 있다는 가설을 확인합니다.",
+            "preview": {
+              "schema_version": 1,
+              "template_id": "sensor_afe_dualband",
+              "name": "후보 1 · 기본 바이어스·보상",
+              "parameters": {
+                "gain_V_per_V": 4,
+                "slow_cutoff_Hz": 5000,
+                "fast_cutoff_Hz": 100000,
+                "pole_F": 1e-10,
+                "compensation_F": 5e-12,
+                "nulling_Ohm": 5000,
+                "bias_resistance_Ohm": 30000
+              },
+              "chip_limits": {
+                "schema_version": 1,
+                "width_um": 300,
+                "height_um": 300,
+                "max_area_um2": 90000,
+                "edge_um": 10,
+                "origin_um": [
+                  0,
+                  0
+                ],
+                "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+              },
+              "schematic_sha256": "04021c5b5782bde9d9516e1452d9f1d857c901b66d55f277eb1a02a7b7c1d597",
+              "implementation_sha256": "c3d8c635aedcf39aa9ebf6dc88e4f0cf27cbca54c21bd6a85686e095c3aa2b7c",
+              "preview_hash": "f6d2258da47ceb976ea019d1bff8a7d20880991d6371be968cffde6706578e69",
+              "ports": [
+                "VIN",
+                "PRE_OUT",
+                "SLOW",
+                "FAST",
+                "VCM",
+                "BIAS",
+                "VPWR",
+                "VGND"
+              ],
+              "root_cell": "sensor_afe_dualband",
+              "device_count": 55,
+              "primitive_counts": {
+                "nmos": 25,
+                "resistor": 11,
+                "capacitor": 7,
+                "pmos": 12
+              },
+              "net_count": 28,
+              "hierarchy": [
+                {
+                  "name": "sensor_afe_dualband",
+                  "devices": 4,
+                  "children": [
+                    "SOC_BIAS",
+                    "DUET_GAIN",
+                    "DUET_SLOW",
+                    "DUET_FAST"
+                  ]
+                },
+                {
+                  "name": "SOC_BIAS",
+                  "devices": 6,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "SOC_OTA",
+                  "devices": 5,
+                  "children": [
+                    "SOC_OTA_FIRST"
+                  ]
+                },
+                {
+                  "name": "SOC_OTA_FIRST",
+                  "devices": 7,
+                  "children": []
+                },
+                {
+                  "name": "DUET_GAIN",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "DUET_SLOW",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "DUET_FAST",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                }
+              ],
+              "spice": ".subckt SOC_OTA_FIRST INP INN BIAS OUT VPWR VGND\nXN_INN0 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INN1 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP0 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP1 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\nXP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\n.ends SOC_OTA_FIRST\n.subckt SOC_OTA INP INN BIAS OUT VPWR VGND\nCC_MILLER PRE COMP 5e-12\nXFIRST INP INN BIAS PRE VPWR VGND SOC_OTA_FIRST\nXN_SECOND OUT BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_SECOND OUT PRE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1\nRR_ZERO COMP OUT 5000\n.ends SOC_OTA\n.subckt SOC_BIAS BIAS VCM VPWR VGND\nCC_VCM VCM_RAW VGND 2e-11\nXN_DIODE BIAS BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nRR_BIAS VPWR BIAS 30000\nRR_VCM_BOTTOM VCM_RAW VGND 100000\nRR_VCM_TOP VPWR VCM_RAW 100000\nXVCM_BUFFER VCM_RAW VCM BIAS VCM VPWR VGND SOC_OTA\n.ends SOC_BIAS\n.subckt DUET_GAIN VIN VCM BIAS OUT VPWR VGND\nXAMP VIN FB BIAS OUT VPWR VGND SOC_OTA\nRR_FEEDBACK OUT FB 300000\nRR_GROUND FB VCM 100000\n.ends DUET_GAIN\n.subckt DUET_SLOW VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 318309.886184\n.ends DUET_SLOW\n.subckt DUET_FAST VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 15915.4943092\n.ends DUET_FAST\n.subckt sensor_afe_dualband VIN PRE_OUT SLOW FAST VCM BIAS VPWR VGND\nXBIAS_SOURCE BIAS VCM VPWR VGND SOC_BIAS\nXFAST_PATH PRE_OUT BIAS FAST VPWR VGND DUET_FAST\nXPREAMP VIN VCM BIAS PRE_OUT VPWR VGND DUET_GAIN\nXSLOW_PATH PRE_OUT BIAS SLOW VPWR VGND DUET_SLOW\n.ends sensor_afe_dualband\n",
+              "layout_status": "not-generated",
+              "physical_area_um2": null,
+              "engine_executed": false,
+              "limits": [
+                "This creates a separate project only after approval.",
+                "Chip envelope is a constraint, not measured mask area.",
+                "No DRC/LVS/PEX/manufacturing result is implied."
+              ]
+            },
+            "command_id": "auto-create-15d288f0-a465-4d31-8104-010b58bc4003-0",
+            "state": "not_run",
+            "jobs": [
+              {
+                "analysis": "op",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-0-op",
+                "status": "not_run"
+              },
+              {
+                "analysis": "ac",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-0-ac",
+                "status": "not_run"
+              },
+              {
+                "analysis": "tran",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-0-tran",
+                "status": "not_run"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+            "parameters": {
+              "gain_V_per_V": 4,
+              "slow_cutoff_Hz": 5000,
+              "fast_cutoff_Hz": 100000,
+              "pole_F": 1e-10,
+              "compensation_F": 8e-12,
+              "nulling_Ohm": 5000,
+              "bias_resistance_Ohm": 40000
+            },
+            "rationale": "바이어스 저항 증가가 공급 전력을 줄일 수 있다는 가설을 조사합니다. 보상 커패시턴스 증가가 안정성에 도움이 될 수 있지만 대역폭과 과도응답에는 불리할 수 있으므로 동일한 목표 범위에서 비교합니다.",
+            "preview": {
+              "schema_version": 1,
+              "template_id": "sensor_afe_dualband",
+              "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+              "parameters": {
+                "gain_V_per_V": 4,
+                "slow_cutoff_Hz": 5000,
+                "fast_cutoff_Hz": 100000,
+                "pole_F": 1e-10,
+                "compensation_F": 8e-12,
+                "nulling_Ohm": 5000,
+                "bias_resistance_Ohm": 40000
+              },
+              "chip_limits": {
+                "schema_version": 1,
+                "width_um": 300,
+                "height_um": 300,
+                "max_area_um2": 90000,
+                "edge_um": 10,
+                "origin_um": [
+                  0,
+                  0
+                ],
+                "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+              },
+              "schematic_sha256": "ed1a258041b74cd76cbc1dc17945dd50fb2165c39af25ec49216eb0663defdf1",
+              "implementation_sha256": "c3d8c635aedcf39aa9ebf6dc88e4f0cf27cbca54c21bd6a85686e095c3aa2b7c",
+              "preview_hash": "24d9a3ccfd83bf9994b56c03a9370adddc514bf02c8e153ba8e09cb5b9c6b679",
+              "ports": [
+                "VIN",
+                "PRE_OUT",
+                "SLOW",
+                "FAST",
+                "VCM",
+                "BIAS",
+                "VPWR",
+                "VGND"
+              ],
+              "root_cell": "sensor_afe_dualband",
+              "device_count": 55,
+              "primitive_counts": {
+                "nmos": 25,
+                "resistor": 11,
+                "capacitor": 7,
+                "pmos": 12
+              },
+              "net_count": 28,
+              "hierarchy": [
+                {
+                  "name": "sensor_afe_dualband",
+                  "devices": 4,
+                  "children": [
+                    "SOC_BIAS",
+                    "DUET_GAIN",
+                    "DUET_SLOW",
+                    "DUET_FAST"
+                  ]
+                },
+                {
+                  "name": "SOC_BIAS",
+                  "devices": 6,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "SOC_OTA",
+                  "devices": 5,
+                  "children": [
+                    "SOC_OTA_FIRST"
+                  ]
+                },
+                {
+                  "name": "SOC_OTA_FIRST",
+                  "devices": 7,
+                  "children": []
+                },
+                {
+                  "name": "DUET_GAIN",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "DUET_SLOW",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "DUET_FAST",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                }
+              ],
+              "spice": ".subckt SOC_OTA_FIRST INP INN BIAS OUT VPWR VGND\nXN_INN0 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INN1 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP0 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP1 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\nXP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\n.ends SOC_OTA_FIRST\n.subckt SOC_OTA INP INN BIAS OUT VPWR VGND\nCC_MILLER PRE COMP 8e-12\nXFIRST INP INN BIAS PRE VPWR VGND SOC_OTA_FIRST\nXN_SECOND OUT BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_SECOND OUT PRE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1\nRR_ZERO COMP OUT 5000\n.ends SOC_OTA\n.subckt SOC_BIAS BIAS VCM VPWR VGND\nCC_VCM VCM_RAW VGND 2e-11\nXN_DIODE BIAS BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nRR_BIAS VPWR BIAS 40000\nRR_VCM_BOTTOM VCM_RAW VGND 100000\nRR_VCM_TOP VPWR VCM_RAW 100000\nXVCM_BUFFER VCM_RAW VCM BIAS VCM VPWR VGND SOC_OTA\n.ends SOC_BIAS\n.subckt DUET_GAIN VIN VCM BIAS OUT VPWR VGND\nXAMP VIN FB BIAS OUT VPWR VGND SOC_OTA\nRR_FEEDBACK OUT FB 300000\nRR_GROUND FB VCM 100000\n.ends DUET_GAIN\n.subckt DUET_SLOW VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 318309.886184\n.ends DUET_SLOW\n.subckt DUET_FAST VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 15915.4943092\n.ends DUET_FAST\n.subckt sensor_afe_dualband VIN PRE_OUT SLOW FAST VCM BIAS VPWR VGND\nXBIAS_SOURCE BIAS VCM VPWR VGND SOC_BIAS\nXFAST_PATH PRE_OUT BIAS FAST VPWR VGND DUET_FAST\nXPREAMP VIN VCM BIAS PRE_OUT VPWR VGND DUET_GAIN\nXSLOW_PATH PRE_OUT BIAS SLOW VPWR VGND DUET_SLOW\n.ends sensor_afe_dualband\n",
+              "layout_status": "not-generated",
+              "physical_area_um2": null,
+              "engine_executed": false,
+              "limits": [
+                "This creates a separate project only after approval.",
+                "Chip envelope is a constraint, not measured mask area.",
+                "No DRC/LVS/PEX/manufacturing result is implied."
+              ]
+            },
+            "command_id": "auto-create-15d288f0-a465-4d31-8104-010b58bc4003-1",
+            "state": "not_run",
+            "jobs": [
+              {
+                "analysis": "op",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-1-op",
+                "status": "not_run"
+              },
+              {
+                "analysis": "ac",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-1-ac",
+                "status": "not_run"
+              },
+              {
+                "analysis": "tran",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-1-tran",
+                "status": "not_run"
+              }
+            ]
+          }
+        ],
+        "engine": {
+          "status": "running",
+          "max_jobs": 6
+        },
+        "decision_result": {
+          "verdict": "proceed",
+          "summary": "DUET-AFE의 고정 회로군은 요청한 이중 대역 경로와 이득 조정을 지원합니다. 동일한 목표 범위를 두 후보에 적용하고, 후보 간 바이어스 저항과 보상 커패시턴스를 다르게 둔 미리보기 제안을 진행할 수 있습니다. 후보 1은 기본값인 30 kΩ 및 5 pF, 후보 2는 40 kΩ 및 8 pF로 제안합니다. 이득 목표는 4 V/V, 저속 대역폭 목표는 5 kHz, 고속 대역폭 목표는 100 kHz로 유지하며, 1.8 V에서 공급 전력 상한은 500 µW입니다.",
+          "questions": [],
+          "limitations": [
+            "수치 목표 달성 여부는 엔진의 실제 샘플 결과로만 판단할 수 있으며 여기서는 보장하지 않습니다.",
+            "두 후보의 저항·커패시턴스 변경이 전력과 대역폭에 미치는 영향은 가설이며 실제 결과 확인이 필요합니다.",
+            "레이아웃, 잡음, 오프셋은 검증 범위에 포함되지 않습니다."
+          ],
+          "evidence_ids": [
+            "catalog",
+            "goal",
+            "constraints"
+          ]
+        },
+        "proposal_result": {
+          "summary": "DUET-AFE 고정 회로군의 후보 2개를 제안합니다. 두 후보 모두 이득 4 V/V, 저속 5000 Hz·고속 100000 Hz 설정을 유지하고 바이어스 저항과 보상 커패시턴스만 달리합니다. 시험 조건은 전원 1.8 V, tt 코너, 27 °C이며 DC 공급 전력 상한은 0.0005 W로 유지합니다.",
+          "candidates": [
+            {
+              "name": "후보 1 · 기본 바이어스·보상",
+              "parameters": [
+                {
+                  "key": "gain_V_per_V",
+                  "value": 4
+                },
+                {
+                  "key": "slow_cutoff_Hz",
+                  "value": 5000
+                },
+                {
+                  "key": "fast_cutoff_Hz",
+                  "value": 100000
+                },
+                {
+                  "key": "pole_F",
+                  "value": 1e-10
+                },
+                {
+                  "key": "compensation_F",
+                  "value": 5e-12
+                },
+                {
+                  "key": "nulling_Ohm",
+                  "value": 5000
+                },
+                {
+                  "key": "bias_resistance_Ohm",
+                  "value": 30000
+                }
+              ],
+              "rationale": "기본 바이어스 저항과 보상값을 비교 기준으로 둡니다. 후보 2보다 작은 바이어스 저항이 바이어스 전류 확보에 유리할 수 있지만 공급 전력은 더 커질 수 있다는 가설을 확인합니다."
+            },
+            {
+              "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+              "parameters": [
+                {
+                  "key": "gain_V_per_V",
+                  "value": 4
+                },
+                {
+                  "key": "slow_cutoff_Hz",
+                  "value": 5000
+                },
+                {
+                  "key": "fast_cutoff_Hz",
+                  "value": 100000
+                },
+                {
+                  "key": "pole_F",
+                  "value": 1e-10
+                },
+                {
+                  "key": "compensation_F",
+                  "value": 8e-12
+                },
+                {
+                  "key": "nulling_Ohm",
+                  "value": 5000
+                },
+                {
+                  "key": "bias_resistance_Ohm",
+                  "value": 40000
+                }
+              ],
+              "rationale": "바이어스 저항 증가가 공급 전력을 줄일 수 있다는 가설을 조사합니다. 보상 커패시턴스 증가가 안정성에 도움이 될 수 있지만 대역폭과 과도응답에는 불리할 수 있으므로 동일한 목표 범위에서 비교합니다."
+            }
+          ],
+          "limitations": [
+            "이는 실행 전 제안이며 수치 합격 여부는 실제 엔진 샘플로만 판단합니다.",
+            "두 후보 모두 AC 저속 이득 3.8–4.2 V/V, 저속 대역폭 4000–6000 Hz, 고속 대역폭 80000–120000 Hz 및 OP 공급 전력 0–0.0005 W 기준을 그대로 적용합니다.",
+            "고정 회로군과 편집 가능한 계층은 네이티브 엔진이 구성하며 토폴로지는 변경하지 않습니다.",
+            "R/C는 이상적입니다. 레이아웃·물리 면적·잡음·오프셋 및 DRC/LVS/PEX·사인오프는 검증하지 않습니다."
+          ],
+          "evidence_ids": [
+            "catalog",
+            "goal",
+            "constraints"
+          ]
+        },
+        "plan_hash": "84b58fa069324276a5579c068186115d59e9b22e7b6fe3f024b6e6e9cfcbc03e",
+        "coordination_status": "active"
+      }
+    },
+    {
+      "method": "assistant.autodesign_get",
+      "at": "2026-10-29T00:30:38.081Z",
+      "ok": true,
+      "result": {
+        "schema_version": 1,
+        "id": "15d288f0-a465-4d31-8104-010b58bc4003",
+        "product_id": "resistor.indust",
+        "goal": "엣지 센서용 DUET-AFE를 설계해줘. 이득 4배, 저속 5kHz·고속 100kHz 두 경로, 1.8V에서 DC 전력 500µW 이하가 목표야. 동일한 이득·대역폭 목표를 유지하고 바이어스 저항과 보상 C를 달리한 후보 2개를 제안해줘.",
+        "family": "sensor_afe_dualband",
+        "constraints": {
+          "supply_V": 1.8,
+          "corner": "tt",
+          "temperature_C": 27,
+          "max_candidates": 2,
+          "chip_limits": {
+            "width_um": 300,
+            "height_um": 300,
+            "max_area_um2": 90000,
+            "edge_um": 10
+          },
+          "targets": [
+            {
+              "metric": "slow_gain_V_per_V",
+              "analysis": "ac",
+              "unit": "V/V",
+              "min": 3.8,
+              "max": 4.2
+            },
+            {
+              "metric": "slow_bandwidth_Hz",
+              "analysis": "ac",
+              "unit": "Hz",
+              "min": 4000,
+              "max": 6000
+            },
+            {
+              "metric": "fast_bandwidth_Hz",
+              "analysis": "ac",
+              "unit": "Hz",
+              "min": 80000,
+              "max": 120000
+            },
+            {
+              "metric": "supply_power_W",
+              "analysis": "op",
+              "unit": "W",
+              "min": 0,
+              "max": 0.0005
+            }
+          ]
+        },
+        "catalog_hash": "5b91a3ba1557a2db7e19bba50957860d1096d83180d2041c1701803bcc1a7837",
+        "created_at": "2026-10-29T00:28:24.941Z",
+        "updated_at": "2026-10-29T00:30:37.447Z",
+        "decision": {
+          "model": "gpt-6-luna",
+          "status": "completed",
+          "usage": {
+            "input_tokens": 797,
+            "output_tokens": 532,
+            "total_tokens": 1329
+          },
+          "budget_reservation": {
+            "id": "28915dcc-e596-4ed9-b516-1a5e79a23f57",
+            "reserved_usd": 0.002589
+          }
+        },
+        "proposal": {
+          "model": "gpt-6.1-sol",
+          "status": "completed",
+          "usage": {
+            "input_tokens": 1189,
+            "output_tokens": 750,
+            "total_tokens": 1939
+          },
+          "budget_reservation": {
+            "id": "49743a7e-7753-4b40-9447-33ede7835680",
+            "reserved_usd": 0.055256
+          }
+        },
+        "candidates": [
+          {
+            "index": 0,
+            "name": "후보 1 · 기본 바이어스·보상",
+            "parameters": {
+              "gain_V_per_V": 4,
+              "slow_cutoff_Hz": 5000,
+              "fast_cutoff_Hz": 100000,
+              "pole_F": 1e-10,
+              "compensation_F": 5e-12,
+              "nulling_Ohm": 5000,
+              "bias_resistance_Ohm": 30000
+            },
+            "rationale": "기본 바이어스 저항과 보상값을 비교 기준으로 둡니다. 후보 2보다 작은 바이어스 저항이 바이어스 전류 확보에 유리할 수 있지만 공급 전력은 더 커질 수 있다는 가설을 확인합니다.",
+            "preview": {
+              "schema_version": 1,
+              "template_id": "sensor_afe_dualband",
+              "name": "후보 1 · 기본 바이어스·보상",
+              "parameters": {
+                "gain_V_per_V": 4,
+                "slow_cutoff_Hz": 5000,
+                "fast_cutoff_Hz": 100000,
+                "pole_F": 1e-10,
+                "compensation_F": 5e-12,
+                "nulling_Ohm": 5000,
+                "bias_resistance_Ohm": 30000
+              },
+              "chip_limits": {
+                "schema_version": 1,
+                "width_um": 300,
+                "height_um": 300,
+                "max_area_um2": 90000,
+                "edge_um": 10,
+                "origin_um": [
+                  0,
+                  0
+                ],
+                "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+              },
+              "schematic_sha256": "04021c5b5782bde9d9516e1452d9f1d857c901b66d55f277eb1a02a7b7c1d597",
+              "implementation_sha256": "c3d8c635aedcf39aa9ebf6dc88e4f0cf27cbca54c21bd6a85686e095c3aa2b7c",
+              "preview_hash": "f6d2258da47ceb976ea019d1bff8a7d20880991d6371be968cffde6706578e69",
+              "ports": [
+                "VIN",
+                "PRE_OUT",
+                "SLOW",
+                "FAST",
+                "VCM",
+                "BIAS",
+                "VPWR",
+                "VGND"
+              ],
+              "root_cell": "sensor_afe_dualband",
+              "device_count": 55,
+              "primitive_counts": {
+                "nmos": 25,
+                "resistor": 11,
+                "capacitor": 7,
+                "pmos": 12
+              },
+              "net_count": 28,
+              "hierarchy": [
+                {
+                  "name": "sensor_afe_dualband",
+                  "devices": 4,
+                  "children": [
+                    "SOC_BIAS",
+                    "DUET_GAIN",
+                    "DUET_SLOW",
+                    "DUET_FAST"
+                  ]
+                },
+                {
+                  "name": "SOC_BIAS",
+                  "devices": 6,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "SOC_OTA",
+                  "devices": 5,
+                  "children": [
+                    "SOC_OTA_FIRST"
+                  ]
+                },
+                {
+                  "name": "SOC_OTA_FIRST",
+                  "devices": 7,
+                  "children": []
+                },
+                {
+                  "name": "DUET_GAIN",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "DUET_SLOW",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "DUET_FAST",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                }
+              ],
+              "spice": ".subckt SOC_OTA_FIRST INP INN BIAS OUT VPWR VGND\nXN_INN0 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INN1 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP0 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP1 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\nXP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\n.ends SOC_OTA_FIRST\n.subckt SOC_OTA INP INN BIAS OUT VPWR VGND\nCC_MILLER PRE COMP 5e-12\nXFIRST INP INN BIAS PRE VPWR VGND SOC_OTA_FIRST\nXN_SECOND OUT BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_SECOND OUT PRE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1\nRR_ZERO COMP OUT 5000\n.ends SOC_OTA\n.subckt SOC_BIAS BIAS VCM VPWR VGND\nCC_VCM VCM_RAW VGND 2e-11\nXN_DIODE BIAS BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nRR_BIAS VPWR BIAS 30000\nRR_VCM_BOTTOM VCM_RAW VGND 100000\nRR_VCM_TOP VPWR VCM_RAW 100000\nXVCM_BUFFER VCM_RAW VCM BIAS VCM VPWR VGND SOC_OTA\n.ends SOC_BIAS\n.subckt DUET_GAIN VIN VCM BIAS OUT VPWR VGND\nXAMP VIN FB BIAS OUT VPWR VGND SOC_OTA\nRR_FEEDBACK OUT FB 300000\nRR_GROUND FB VCM 100000\n.ends DUET_GAIN\n.subckt DUET_SLOW VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 318309.886184\n.ends DUET_SLOW\n.subckt DUET_FAST VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 15915.4943092\n.ends DUET_FAST\n.subckt sensor_afe_dualband VIN PRE_OUT SLOW FAST VCM BIAS VPWR VGND\nXBIAS_SOURCE BIAS VCM VPWR VGND SOC_BIAS\nXFAST_PATH PRE_OUT BIAS FAST VPWR VGND DUET_FAST\nXPREAMP VIN VCM BIAS PRE_OUT VPWR VGND DUET_GAIN\nXSLOW_PATH PRE_OUT BIAS SLOW VPWR VGND DUET_SLOW\n.ends sensor_afe_dualband\n",
+              "layout_status": "not-generated",
+              "physical_area_um2": null,
+              "engine_executed": false,
+              "limits": [
+                "This creates a separate project only after approval.",
+                "Chip envelope is a constraint, not measured mask area.",
+                "No DRC/LVS/PEX/manufacturing result is implied."
+              ]
+            },
+            "command_id": "auto-create-15d288f0-a465-4d31-8104-010b58bc4003-0",
+            "state": "completed",
+            "jobs": [
+              {
+                "analysis": "op",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-0-op",
+                "status": "completed",
+                "result": {
+                  "id": "25705ab9db624fc9aca957f8b5ae17ac",
+                  "project_id": "651a6d3eb6524ce3a06f70e929e15b3d",
+                  "revision": 1,
+                  "kind": "simulation",
+                  "tool": "ngspice",
+                  "execution_status": "completed",
+                  "analysis_result": "pass",
+                  "message": "Actual ngspice op: 1 samples.; reference criteria 4/4",
+                  "measurements": {
+                    "analysis": "op",
+                    "x_unit": "point",
+                    "x_label": "operating point",
+                    "corner": "tt",
+                    "temperature_C": 27,
+                    "supply_V": 1.8,
+                    "post_layout": "false",
+                    "samples": 1,
+                    "solver": "SPARSE 1.3",
+                    "VIN_min": 0.9,
+                    "VIN_max": 0.9,
+                    "PRE_OUT_min": 0.8997098865555297,
+                    "PRE_OUT_max": 0.8997098865555297,
+                    "SLOW_min": 0.8994194638834667,
+                    "SLOW_max": 0.8994194638834667,
+                    "FAST_min": 0.8994194638834632,
+                    "FAST_max": 0.8994194638834632,
+                    "VCM_min": 0.8997098865555311,
+                    "VCM_max": 0.8997098865555311,
+                    "BIAS_min": 0.9293638427659658,
+                    "BIAS_max": 0.9293638427659658,
+                    "supply_current_min": 0.00024080836900829822,
+                    "supply_current_max": 0.00024080836900829822,
+                    "current_flow_status": "available",
+                    "template_id": "sensor_afe_dualband",
+                    "layout_status": "not-generated",
+                    "metric_source": "actual-ngspice-samples",
+                    "reference_scope": "DUET-AFE directed schematic criteria only.",
+                    "unverified": [
+                      "Schematic research prototype; no novelty or product-performance claim.",
+                      "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+                      "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+                    ],
+                    "supply_current_A": 0.00024080836900829822,
+                    "supply_power_W": 0.0004334550642149368
+                  },
+                  "reference_verification": {
+                    "schema_version": 1,
+                    "kind": "sensor_afe_dualband",
+                    "source": "actual-ngspice-samples",
+                    "checks": [
+                      {
+                        "name": "PRE_OUT DC within 50mV of VDD/2",
+                        "pass": true,
+                        "observed": 0.8997098865555297
+                      },
+                      {
+                        "name": "SLOW DC within 50mV of VDD/2",
+                        "pass": true,
+                        "observed": 0.8994194638834667
+                      },
+                      {
+                        "name": "FAST DC within 50mV of VDD/2",
+                        "pass": true,
+                        "observed": 0.8994194638834632
+                      },
+                      {
+                        "name": "Nonnegative finite DC supply power",
+                        "pass": true,
+                        "observed": 0.0004334550642149368
+                      }
+                    ],
+                    "scope": "DUET-AFE directed schematic criteria only.",
+                    "pass": true
+                  }
+                }
+              },
+              {
+                "analysis": "ac",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-0-ac",
+                "status": "completed",
+                "result": {
+                  "id": "5ae3417eb0a94bac96d342f6dde39c2d",
+                  "project_id": "651a6d3eb6524ce3a06f70e929e15b3d",
+                  "revision": 1,
+                  "kind": "simulation",
+                  "tool": "ngspice",
+                  "execution_status": "completed",
+                  "analysis_result": "pass",
+                  "message": "Actual ngspice ac: 561 samples.; reference criteria 4/4",
+                  "measurements": {
+                    "analysis": "ac",
+                    "x_unit": "Hz",
+                    "x_label": "frequency",
+                    "corner": "tt",
+                    "temperature_C": 27,
+                    "supply_V": 1.8,
+                    "post_layout": "false",
+                    "samples": 561,
+                    "solver": "SPARSE 1.3",
+                    "SLOW_gain_min": 0.00017153919456851704,
+                    "SLOW_gain_max": 4.0052431331762675,
+                    "FAST_gain_min": 0.0005787632736190152,
+                    "FAST_gain_max": 4.005251127154343,
+                    "PRE_gain_min": 0.16445582406007606,
+                    "PRE_gain_max": 4.001377895128023,
+                    "current_flow_status": "unsupported_complex_ac",
+                    "template_id": "sensor_afe_dualband",
+                    "layout_status": "not-generated",
+                    "metric_source": "actual-ngspice-samples",
+                    "reference_scope": "DUET-AFE directed schematic criteria only.",
+                    "unverified": [
+                      "Schematic research prototype; no novelty or product-performance claim.",
+                      "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+                      "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+                    ],
+                    "slow_gain_V_per_V": 4.0052431331762675,
+                    "slow_bandwidth_Hz": 4997.0646647219555,
+                    "fast_gain_V_per_V": 4.005251127154343,
+                    "fast_bandwidth_Hz": 99762.7828566656
+                  },
+                  "reference_verification": {
+                    "schema_version": 1,
+                    "kind": "sensor_afe_dualband",
+                    "source": "actual-ngspice-samples",
+                    "checks": [
+                      {
+                        "name": "SLOW low-frequency gain within 5%",
+                        "pass": true,
+                        "observed": 4.0052431331762675
+                      },
+                      {
+                        "name": "SLOW bandwidth within 20% of requested RC pole",
+                        "pass": true,
+                        "observed": 4997.0646647219555
+                      },
+                      {
+                        "name": "FAST low-frequency gain within 5%",
+                        "pass": true,
+                        "observed": 4.005251127154343
+                      },
+                      {
+                        "name": "FAST bandwidth within 20% of requested RC pole",
+                        "pass": true,
+                        "observed": 99762.7828566656
+                      }
+                    ],
+                    "scope": "DUET-AFE directed schematic criteria only.",
+                    "pass": true
+                  }
+                }
+              },
+              {
+                "analysis": "tran",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-0-tran",
+                "status": "completed",
+                "result": {
+                  "id": "469c8c5d5195489f917e48ff0091f148",
+                  "project_id": "651a6d3eb6524ce3a06f70e929e15b3d",
+                  "revision": 1,
+                  "kind": "simulation",
+                  "tool": "ngspice",
+                  "execution_status": "completed",
+                  "analysis_result": "pass",
+                  "message": "Actual ngspice tran: 16008 samples.; reference criteria 5/5",
+                  "measurements": {
+                    "analysis": "tran",
+                    "x_unit": "s",
+                    "x_label": "time",
+                    "corner": "tt",
+                    "temperature_C": 27,
+                    "supply_V": 1.8,
+                    "post_layout": "false",
+                    "samples": 16008,
+                    "solver": "SPARSE 1.3",
+                    "VIN_min": 0.8900609966113092,
+                    "VIN_max": 0.9099389937572002,
+                    "PRE_OUT_min": 0.8599425500800246,
+                    "PRE_OUT_max": 0.9394720869522362,
+                    "SLOW_min": 0.8834120336052931,
+                    "SLOW_max": 0.9167171720100634,
+                    "FAST_min": 0.8617347763341912,
+                    "FAST_max": 0.9370660793972219,
+                    "VCM_min": 0.8997068099079049,
+                    "VCM_max": 0.8997868372627493,
+                    "BIAS_min": 0.9293631820977525,
+                    "BIAS_max": 0.9293656952529803,
+                    "supply_current_min": 0.00023761582442271417,
+                    "supply_current_max": 0.0002437124350769121,
+                    "current_flow_status": "available",
+                    "template_id": "sensor_afe_dualband",
+                    "layout_status": "not-generated",
+                    "metric_source": "actual-ngspice-samples",
+                    "reference_scope": "DUET-AFE directed schematic criteria only.",
+                    "unverified": [
+                      "Schematic research prototype; no novelty or product-performance claim.",
+                      "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+                      "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+                    ],
+                    "vin_two_tone": {
+                      "mean_V": 0.9,
+                      "tone_5k_V": 0.004999998972056448,
+                      "tone_50k_V": 0.004999897206481763,
+                      "residual_rms_V": 3.253095229183779e-8
+                    },
+                    "slow_two_tone": {
+                      "mean_V": 0.8994195083028387,
+                      "tone_5k_V": 0.014156798694412467,
+                      "tone_50k_V": 0.0019920750010969115,
+                      "residual_rms_V": 6.217709894627771e-7
+                    },
+                    "fast_two_tone": {
+                      "mean_V": 0.8994184188496585,
+                      "tone_5k_V": 0.01999796478601361,
+                      "tone_50k_V": 0.01791081277736931,
+                      "residual_rms_V": 0.000006054486886610116
+                    },
+                    "fast_to_slow_50k_ratio": 8.991033353416384,
+                    "supply_current_A": 0.00024075565957817742,
+                    "supply_power_W": 0.00043336018724071933,
+                    "research_metrics": {
+                      "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+                      "input_drivers_power": "not measured",
+                      "external_bias_power": "not measured",
+                      "complete_system_power_available": false,
+                      "supply": {
+                        "available": true,
+                        "start_s": 0,
+                        "end_s": 0.0008,
+                        "energy_J": 3.4671677278691474e-7,
+                        "average_current_A": 0.0002407755366575797,
+                        "peak_current_A": 0.0002437124350769121,
+                        "minimum_current_A": 0.00023761582442271417,
+                        "average_power_W": 0.00043339596598364344,
+                        "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+                        "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+                      }
+                    }
+                  },
+                  "reference_verification": {
+                    "schema_version": 1,
+                    "kind": "sensor_afe_dualband",
+                    "source": "actual-ngspice-samples",
+                    "checks": [
+                      {
+                        "name": "SLOW settled signal within rails",
+                        "pass": true,
+                        "observed": [
+                          0.8834120336052931,
+                          0.9153828192975031
+                        ]
+                      },
+                      {
+                        "name": "SLOW two-tone residual below 5mV",
+                        "pass": true,
+                        "observed": 6.217709894627771e-7
+                      },
+                      {
+                        "name": "FAST settled signal within rails",
+                        "pass": true,
+                        "observed": [
+                          0.8617347763341912,
+                          0.9370650442908309
+                        ]
+                      },
+                      {
+                        "name": "FAST two-tone residual below 5mV",
+                        "pass": true,
+                        "observed": 0.000006054486886610116
+                      },
+                      {
+                        "name": "50kHz fast/slow amplitude separation greater than 3",
+                        "pass": true,
+                        "observed": 8.991033353416384
+                      }
+                    ],
+                    "scope": "DUET-AFE directed schematic criteria only.",
+                    "pass": true
+                  }
+                }
+              }
+            ],
+            "project_id": "651a6d3eb6524ce3a06f70e929e15b3d",
+            "revision": 1,
+            "targets": [
+              {
+                "metric": "slow_gain_V_per_V",
+                "analysis": "ac",
+                "unit": "V/V",
+                "min": 3.8,
+                "max": 4.2,
+                "observed": 4.0052431331762675,
+                "status": "met"
+              },
+              {
+                "metric": "slow_bandwidth_Hz",
+                "analysis": "ac",
+                "unit": "Hz",
+                "min": 4000,
+                "max": 6000,
+                "observed": 4997.0646647219555,
+                "status": "met"
+              },
+              {
+                "metric": "fast_bandwidth_Hz",
+                "analysis": "ac",
+                "unit": "Hz",
+                "min": 80000,
+                "max": 120000,
+                "observed": 99762.7828566656,
+                "status": "met"
+              },
+              {
+                "metric": "supply_power_W",
+                "analysis": "op",
+                "unit": "W",
+                "min": 0,
+                "max": 0.0005,
+                "observed": 0.0004334550642149368,
+                "status": "met"
+              }
+            ],
+            "acceptance": "met"
+          },
+          {
+            "index": 1,
+            "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+            "parameters": {
+              "gain_V_per_V": 4,
+              "slow_cutoff_Hz": 5000,
+              "fast_cutoff_Hz": 100000,
+              "pole_F": 1e-10,
+              "compensation_F": 8e-12,
+              "nulling_Ohm": 5000,
+              "bias_resistance_Ohm": 40000
+            },
+            "rationale": "바이어스 저항 증가가 공급 전력을 줄일 수 있다는 가설을 조사합니다. 보상 커패시턴스 증가가 안정성에 도움이 될 수 있지만 대역폭과 과도응답에는 불리할 수 있으므로 동일한 목표 범위에서 비교합니다.",
+            "preview": {
+              "schema_version": 1,
+              "template_id": "sensor_afe_dualband",
+              "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+              "parameters": {
+                "gain_V_per_V": 4,
+                "slow_cutoff_Hz": 5000,
+                "fast_cutoff_Hz": 100000,
+                "pole_F": 1e-10,
+                "compensation_F": 8e-12,
+                "nulling_Ohm": 5000,
+                "bias_resistance_Ohm": 40000
+              },
+              "chip_limits": {
+                "schema_version": 1,
+                "width_um": 300,
+                "height_um": 300,
+                "max_area_um2": 90000,
+                "edge_um": 10,
+                "origin_um": [
+                  0,
+                  0
+                ],
+                "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+              },
+              "schematic_sha256": "ed1a258041b74cd76cbc1dc17945dd50fb2165c39af25ec49216eb0663defdf1",
+              "implementation_sha256": "c3d8c635aedcf39aa9ebf6dc88e4f0cf27cbca54c21bd6a85686e095c3aa2b7c",
+              "preview_hash": "24d9a3ccfd83bf9994b56c03a9370adddc514bf02c8e153ba8e09cb5b9c6b679",
+              "ports": [
+                "VIN",
+                "PRE_OUT",
+                "SLOW",
+                "FAST",
+                "VCM",
+                "BIAS",
+                "VPWR",
+                "VGND"
+              ],
+              "root_cell": "sensor_afe_dualband",
+              "device_count": 55,
+              "primitive_counts": {
+                "nmos": 25,
+                "resistor": 11,
+                "capacitor": 7,
+                "pmos": 12
+              },
+              "net_count": 28,
+              "hierarchy": [
+                {
+                  "name": "sensor_afe_dualband",
+                  "devices": 4,
+                  "children": [
+                    "SOC_BIAS",
+                    "DUET_GAIN",
+                    "DUET_SLOW",
+                    "DUET_FAST"
+                  ]
+                },
+                {
+                  "name": "SOC_BIAS",
+                  "devices": 6,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "SOC_OTA",
+                  "devices": 5,
+                  "children": [
+                    "SOC_OTA_FIRST"
+                  ]
+                },
+                {
+                  "name": "SOC_OTA_FIRST",
+                  "devices": 7,
+                  "children": []
+                },
+                {
+                  "name": "DUET_GAIN",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "DUET_SLOW",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                },
+                {
+                  "name": "DUET_FAST",
+                  "devices": 3,
+                  "children": [
+                    "SOC_OTA"
+                  ]
+                }
+              ],
+              "spice": ".subckt SOC_OTA_FIRST INP INN BIAS OUT VPWR VGND\nXN_INN0 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INN1 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP0 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP1 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\nXP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\n.ends SOC_OTA_FIRST\n.subckt SOC_OTA INP INN BIAS OUT VPWR VGND\nCC_MILLER PRE COMP 8e-12\nXFIRST INP INN BIAS PRE VPWR VGND SOC_OTA_FIRST\nXN_SECOND OUT BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_SECOND OUT PRE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1\nRR_ZERO COMP OUT 5000\n.ends SOC_OTA\n.subckt SOC_BIAS BIAS VCM VPWR VGND\nCC_VCM VCM_RAW VGND 2e-11\nXN_DIODE BIAS BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nRR_BIAS VPWR BIAS 40000\nRR_VCM_BOTTOM VCM_RAW VGND 100000\nRR_VCM_TOP VPWR VCM_RAW 100000\nXVCM_BUFFER VCM_RAW VCM BIAS VCM VPWR VGND SOC_OTA\n.ends SOC_BIAS\n.subckt DUET_GAIN VIN VCM BIAS OUT VPWR VGND\nXAMP VIN FB BIAS OUT VPWR VGND SOC_OTA\nRR_FEEDBACK OUT FB 300000\nRR_GROUND FB VCM 100000\n.ends DUET_GAIN\n.subckt DUET_SLOW VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 318309.886184\n.ends DUET_SLOW\n.subckt DUET_FAST VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 15915.4943092\n.ends DUET_FAST\n.subckt sensor_afe_dualband VIN PRE_OUT SLOW FAST VCM BIAS VPWR VGND\nXBIAS_SOURCE BIAS VCM VPWR VGND SOC_BIAS\nXFAST_PATH PRE_OUT BIAS FAST VPWR VGND DUET_FAST\nXPREAMP VIN VCM BIAS PRE_OUT VPWR VGND DUET_GAIN\nXSLOW_PATH PRE_OUT BIAS SLOW VPWR VGND DUET_SLOW\n.ends sensor_afe_dualband\n",
+              "layout_status": "not-generated",
+              "physical_area_um2": null,
+              "engine_executed": false,
+              "limits": [
+                "This creates a separate project only after approval.",
+                "Chip envelope is a constraint, not measured mask area.",
+                "No DRC/LVS/PEX/manufacturing result is implied."
+              ]
+            },
+            "command_id": "auto-create-15d288f0-a465-4d31-8104-010b58bc4003-1",
+            "state": "completed",
+            "jobs": [
+              {
+                "analysis": "op",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-1-op",
+                "status": "completed",
+                "result": {
+                  "id": "4faf8dc7112c41e9a34ff6fe14cfc192",
+                  "project_id": "c5f0bcd91b30406cb9f5c1e4eace6539",
+                  "revision": 1,
+                  "kind": "simulation",
+                  "tool": "ngspice",
+                  "execution_status": "completed",
+                  "analysis_result": "pass",
+                  "message": "Actual ngspice op: 1 samples.; reference criteria 4/4",
+                  "measurements": {
+                    "analysis": "op",
+                    "x_unit": "point",
+                    "x_label": "operating point",
+                    "corner": "tt",
+                    "temperature_C": 27,
+                    "supply_V": 1.8,
+                    "post_layout": "false",
+                    "samples": 1,
+                    "solver": "SPARSE 1.3",
+                    "VIN_min": 0.9,
+                    "VIN_max": 0.9,
+                    "PRE_OUT_min": 0.8997831263948222,
+                    "PRE_OUT_max": 0.8997831263948222,
+                    "SLOW_min": 0.8995660721139842,
+                    "SLOW_max": 0.8995660721139842,
+                    "FAST_min": 0.8995660721139878,
+                    "FAST_max": 0.8995660721139878,
+                    "VCM_min": 0.8997831263948232,
+                    "VCM_max": 0.8997831263948232,
+                    "BIAS_min": 0.8885910852111768,
+                    "BIAS_max": 0.8885910852111768,
+                    "supply_current_min": 0.00019618184144880313,
+                    "supply_current_max": 0.00019618184144880313,
+                    "current_flow_status": "available",
+                    "template_id": "sensor_afe_dualband",
+                    "layout_status": "not-generated",
+                    "metric_source": "actual-ngspice-samples",
+                    "reference_scope": "DUET-AFE directed schematic criteria only.",
+                    "unverified": [
+                      "Schematic research prototype; no novelty or product-performance claim.",
+                      "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+                      "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+                    ],
+                    "supply_current_A": 0.00019618184144880313,
+                    "supply_power_W": 0.00035312731460784564
+                  },
+                  "reference_verification": {
+                    "schema_version": 1,
+                    "kind": "sensor_afe_dualband",
+                    "source": "actual-ngspice-samples",
+                    "checks": [
+                      {
+                        "name": "PRE_OUT DC within 50mV of VDD/2",
+                        "pass": true,
+                        "observed": 0.8997831263948222
+                      },
+                      {
+                        "name": "SLOW DC within 50mV of VDD/2",
+                        "pass": true,
+                        "observed": 0.8995660721139842
+                      },
+                      {
+                        "name": "FAST DC within 50mV of VDD/2",
+                        "pass": true,
+                        "observed": 0.8995660721139878
+                      },
+                      {
+                        "name": "Nonnegative finite DC supply power",
+                        "pass": true,
+                        "observed": 0.00035312731460784564
+                      }
+                    ],
+                    "scope": "DUET-AFE directed schematic criteria only.",
+                    "pass": true
+                  }
+                }
+              },
+              {
+                "analysis": "ac",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-1-ac",
+                "status": "completed",
+                "result": {
+                  "id": "2ee41beadf3b43b18d9da2dfc50355ab",
+                  "project_id": "c5f0bcd91b30406cb9f5c1e4eace6539",
+                  "revision": 1,
+                  "kind": "simulation",
+                  "tool": "ngspice",
+                  "execution_status": "completed",
+                  "analysis_result": "pass",
+                  "message": "Actual ngspice ac: 561 samples.; reference criteria 4/4",
+                  "measurements": {
+                    "analysis": "ac",
+                    "x_unit": "Hz",
+                    "x_label": "frequency",
+                    "corner": "tt",
+                    "temperature_C": 27,
+                    "supply_V": 1.8,
+                    "post_layout": "false",
+                    "samples": 561,
+                    "solver": "SPARSE 1.3",
+                    "SLOW_gain_min": 0.00012077931076016091,
+                    "SLOW_gain_max": 4.003248661111383,
+                    "FAST_gain_min": 0.0004079656794614301,
+                    "FAST_gain_max": 4.003256650920388,
+                    "PRE_gain_min": 0.10160969941992067,
+                    "PRE_gain_max": 4.004566015875097,
+                    "current_flow_status": "unsupported_complex_ac",
+                    "template_id": "sensor_afe_dualband",
+                    "layout_status": "not-generated",
+                    "metric_source": "actual-ngspice-samples",
+                    "reference_scope": "DUET-AFE directed schematic criteria only.",
+                    "unverified": [
+                      "Schematic research prototype; no novelty or product-performance claim.",
+                      "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+                      "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+                    ],
+                    "slow_gain_V_per_V": 4.003248661111383,
+                    "slow_bandwidth_Hz": 4997.233905164124,
+                    "fast_gain_V_per_V": 4.003256650920388,
+                    "fast_bandwidth_Hz": 99457.71242473688
+                  },
+                  "reference_verification": {
+                    "schema_version": 1,
+                    "kind": "sensor_afe_dualband",
+                    "source": "actual-ngspice-samples",
+                    "checks": [
+                      {
+                        "name": "SLOW low-frequency gain within 5%",
+                        "pass": true,
+                        "observed": 4.003248661111383
+                      },
+                      {
+                        "name": "SLOW bandwidth within 20% of requested RC pole",
+                        "pass": true,
+                        "observed": 4997.233905164124
+                      },
+                      {
+                        "name": "FAST low-frequency gain within 5%",
+                        "pass": true,
+                        "observed": 4.003256650920388
+                      },
+                      {
+                        "name": "FAST bandwidth within 20% of requested RC pole",
+                        "pass": true,
+                        "observed": 99457.71242473688
+                      }
+                    ],
+                    "scope": "DUET-AFE directed schematic criteria only.",
+                    "pass": true
+                  }
+                }
+              },
+              {
+                "analysis": "tran",
+                "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-1-tran",
+                "status": "completed",
+                "result": {
+                  "id": "c39ef6a9d4b24679a1a76fed574894c0",
+                  "project_id": "c5f0bcd91b30406cb9f5c1e4eace6539",
+                  "revision": 1,
+                  "kind": "simulation",
+                  "tool": "ngspice",
+                  "execution_status": "completed",
+                  "analysis_result": "pass",
+                  "message": "Actual ngspice tran: 16008 samples.; reference criteria 5/5",
+                  "measurements": {
+                    "analysis": "tran",
+                    "x_unit": "s",
+                    "x_label": "time",
+                    "corner": "tt",
+                    "temperature_C": 27,
+                    "supply_V": 1.8,
+                    "post_layout": "false",
+                    "samples": 16008,
+                    "solver": "SPARSE 1.3",
+                    "VIN_min": 0.8900609966113092,
+                    "VIN_max": 0.9099389937572002,
+                    "PRE_OUT_min": 0.8600053303119694,
+                    "PRE_OUT_max": 0.9395543567391011,
+                    "SLOW_min": 0.8835643412795545,
+                    "SLOW_max": 0.9168569290385703,
+                    "FAST_min": 0.8618825569948749,
+                    "FAST_max": 0.9372100808300985,
+                    "VCM_min": 0.8997782193344872,
+                    "VCM_max": 0.8998180883212252,
+                    "BIAS_min": 0.8885908778700707,
+                    "BIAS_max": 0.8885918466548604,
+                    "supply_current_min": 0.0001938355681831358,
+                    "supply_current_max": 0.00019825740597299857,
+                    "current_flow_status": "available",
+                    "template_id": "sensor_afe_dualband",
+                    "layout_status": "not-generated",
+                    "metric_source": "actual-ngspice-samples",
+                    "reference_scope": "DUET-AFE directed schematic criteria only.",
+                    "unverified": [
+                      "Schematic research prototype; no novelty or product-performance claim.",
+                      "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+                      "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+                    ],
+                    "vin_two_tone": {
+                      "mean_V": 0.9,
+                      "tone_5k_V": 0.004999998972056448,
+                      "tone_50k_V": 0.004999897206481763,
+                      "residual_rms_V": 3.253095229183779e-8
+                    },
+                    "slow_two_tone": {
+                      "mean_V": 0.8995657167915971,
+                      "tone_5k_V": 0.01414997844826895,
+                      "tone_50k_V": 0.001992901115523319,
+                      "residual_rms_V": 8.469673267272654e-7
+                    },
+                    "fast_two_tone": {
+                      "mean_V": 0.8995646291342168,
+                      "tone_5k_V": 0.019988238821514098,
+                      "tone_50k_V": 0.017918097569110208,
+                      "residual_rms_V": 0.000009081304669545616
+                    },
+                    "fast_to_slow_50k_ratio": 8.990961683718597,
+                    "supply_current_A": 0.00019613062357501065,
+                    "supply_power_W": 0.0003530351224350192,
+                    "research_metrics": {
+                      "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+                      "input_drivers_power": "not measured",
+                      "external_bias_power": "not measured",
+                      "complete_system_power_available": false,
+                      "supply": {
+                        "available": true,
+                        "start_s": 0,
+                        "end_s": 0.0008,
+                        "energy_J": 2.8244628386427786e-7,
+                        "average_current_A": 0.00019614325268352628,
+                        "peak_current_A": 0.00019825740597299857,
+                        "minimum_current_A": 0.0001938355681831358,
+                        "average_power_W": 0.0003530578548303473,
+                        "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+                        "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+                      }
+                    }
+                  },
+                  "reference_verification": {
+                    "schema_version": 1,
+                    "kind": "sensor_afe_dualband",
+                    "source": "actual-ngspice-samples",
+                    "checks": [
+                      {
+                        "name": "SLOW settled signal within rails",
+                        "pass": true,
+                        "observed": [
+                          0.8835643412795545,
+                          0.9155234083388895
+                        ]
+                      },
+                      {
+                        "name": "SLOW two-tone residual below 5mV",
+                        "pass": true,
+                        "observed": 8.469673267272654e-7
+                      },
+                      {
+                        "name": "FAST settled signal within rails",
+                        "pass": true,
+                        "observed": [
+                          0.8618825569948749,
+                          0.9372089912344461
+                        ]
+                      },
+                      {
+                        "name": "FAST two-tone residual below 5mV",
+                        "pass": true,
+                        "observed": 0.000009081304669545616
+                      },
+                      {
+                        "name": "50kHz fast/slow amplitude separation greater than 3",
+                        "pass": true,
+                        "observed": 8.990961683718597
+                      }
+                    ],
+                    "scope": "DUET-AFE directed schematic criteria only.",
+                    "pass": true
+                  }
+                }
+              }
+            ],
+            "project_id": "c5f0bcd91b30406cb9f5c1e4eace6539",
+            "revision": 1,
+            "targets": [
+              {
+                "metric": "slow_gain_V_per_V",
+                "analysis": "ac",
+                "unit": "V/V",
+                "min": 3.8,
+                "max": 4.2,
+                "observed": 4.003248661111383,
+                "status": "met"
+              },
+              {
+                "metric": "slow_bandwidth_Hz",
+                "analysis": "ac",
+                "unit": "Hz",
+                "min": 4000,
+                "max": 6000,
+                "observed": 4997.233905164124,
+                "status": "met"
+              },
+              {
+                "metric": "fast_bandwidth_Hz",
+                "analysis": "ac",
+                "unit": "Hz",
+                "min": 80000,
+                "max": 120000,
+                "observed": 99457.71242473688,
+                "status": "met"
+              },
+              {
+                "metric": "supply_power_W",
+                "analysis": "op",
+                "unit": "W",
+                "min": 0,
+                "max": 0.0005,
+                "observed": 0.00035312731460784564,
+                "status": "met"
+              }
+            ],
+            "acceptance": "met"
+          }
+        ],
+        "engine": {
+          "status": "completed",
+          "max_jobs": 6,
+          "accepted_candidates": 2
+        },
+        "decision_result": {
+          "verdict": "proceed",
+          "summary": "DUET-AFE의 고정 회로군은 요청한 이중 대역 경로와 이득 조정을 지원합니다. 동일한 목표 범위를 두 후보에 적용하고, 후보 간 바이어스 저항과 보상 커패시턴스를 다르게 둔 미리보기 제안을 진행할 수 있습니다. 후보 1은 기본값인 30 kΩ 및 5 pF, 후보 2는 40 kΩ 및 8 pF로 제안합니다. 이득 목표는 4 V/V, 저속 대역폭 목표는 5 kHz, 고속 대역폭 목표는 100 kHz로 유지하며, 1.8 V에서 공급 전력 상한은 500 µW입니다.",
+          "questions": [],
+          "limitations": [
+            "수치 목표 달성 여부는 엔진의 실제 샘플 결과로만 판단할 수 있으며 여기서는 보장하지 않습니다.",
+            "두 후보의 저항·커패시턴스 변경이 전력과 대역폭에 미치는 영향은 가설이며 실제 결과 확인이 필요합니다.",
+            "레이아웃, 잡음, 오프셋은 검증 범위에 포함되지 않습니다."
+          ],
+          "evidence_ids": [
+            "catalog",
+            "goal",
+            "constraints"
+          ]
+        },
+        "proposal_result": {
+          "summary": "DUET-AFE 고정 회로군의 후보 2개를 제안합니다. 두 후보 모두 이득 4 V/V, 저속 5000 Hz·고속 100000 Hz 설정을 유지하고 바이어스 저항과 보상 커패시턴스만 달리합니다. 시험 조건은 전원 1.8 V, tt 코너, 27 °C이며 DC 공급 전력 상한은 0.0005 W로 유지합니다.",
+          "candidates": [
+            {
+              "name": "후보 1 · 기본 바이어스·보상",
+              "parameters": [
+                {
+                  "key": "gain_V_per_V",
+                  "value": 4
+                },
+                {
+                  "key": "slow_cutoff_Hz",
+                  "value": 5000
+                },
+                {
+                  "key": "fast_cutoff_Hz",
+                  "value": 100000
+                },
+                {
+                  "key": "pole_F",
+                  "value": 1e-10
+                },
+                {
+                  "key": "compensation_F",
+                  "value": 5e-12
+                },
+                {
+                  "key": "nulling_Ohm",
+                  "value": 5000
+                },
+                {
+                  "key": "bias_resistance_Ohm",
+                  "value": 30000
+                }
+              ],
+              "rationale": "기본 바이어스 저항과 보상값을 비교 기준으로 둡니다. 후보 2보다 작은 바이어스 저항이 바이어스 전류 확보에 유리할 수 있지만 공급 전력은 더 커질 수 있다는 가설을 확인합니다."
+            },
+            {
+              "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+              "parameters": [
+                {
+                  "key": "gain_V_per_V",
+                  "value": 4
+                },
+                {
+                  "key": "slow_cutoff_Hz",
+                  "value": 5000
+                },
+                {
+                  "key": "fast_cutoff_Hz",
+                  "value": 100000
+                },
+                {
+                  "key": "pole_F",
+                  "value": 1e-10
+                },
+                {
+                  "key": "compensation_F",
+                  "value": 8e-12
+                },
+                {
+                  "key": "nulling_Ohm",
+                  "value": 5000
+                },
+                {
+                  "key": "bias_resistance_Ohm",
+                  "value": 40000
+                }
+              ],
+              "rationale": "바이어스 저항 증가가 공급 전력을 줄일 수 있다는 가설을 조사합니다. 보상 커패시턴스 증가가 안정성에 도움이 될 수 있지만 대역폭과 과도응답에는 불리할 수 있으므로 동일한 목표 범위에서 비교합니다."
+            }
+          ],
+          "limitations": [
+            "이는 실행 전 제안이며 수치 합격 여부는 실제 엔진 샘플로만 판단합니다.",
+            "두 후보 모두 AC 저속 이득 3.8–4.2 V/V, 저속 대역폭 4000–6000 Hz, 고속 대역폭 80000–120000 Hz 및 OP 공급 전력 0–0.0005 W 기준을 그대로 적용합니다.",
+            "고정 회로군과 편집 가능한 계층은 네이티브 엔진이 구성하며 토폴로지는 변경하지 않습니다.",
+            "R/C는 이상적입니다. 레이아웃·물리 면적·잡음·오프셋 및 DRC/LVS/PEX·사인오프는 검증하지 않습니다."
+          ],
+          "evidence_ids": [
+            "catalog",
+            "goal",
+            "constraints"
+          ]
+        },
+        "plan_hash": "84b58fa069324276a5579c068186115d59e9b22e7b6fe3f024b6e6e9cfcbc03e",
+        "coordination_status": "idle"
+      }
+    },
+    {
+      "method": "assistant.autodesign_history",
+      "at": "2026-10-29T00:36:59.818Z",
+      "ok": true,
+      "result": [
+        {
+          "schema_version": 1,
+          "id": "15d288f0-a465-4d31-8104-010b58bc4003",
+          "product_id": "resistor.indust",
+          "goal": "엣지 센서용 DUET-AFE를 설계해줘. 이득 4배, 저속 5kHz·고속 100kHz 두 경로, 1.8V에서 DC 전력 500µW 이하가 목표야. 동일한 이득·대역폭 목표를 유지하고 바이어스 저항과 보상 C를 달리한 후보 2개를 제안해줘.",
+          "family": "sensor_afe_dualband",
+          "constraints": {
+            "supply_V": 1.8,
+            "corner": "tt",
+            "temperature_C": 27,
+            "max_candidates": 2,
+            "chip_limits": {
+              "width_um": 300,
+              "height_um": 300,
+              "max_area_um2": 90000,
+              "edge_um": 10
+            },
+            "targets": [
+              {
+                "metric": "slow_gain_V_per_V",
+                "analysis": "ac",
+                "unit": "V/V",
+                "min": 3.8,
+                "max": 4.2
+              },
+              {
+                "metric": "slow_bandwidth_Hz",
+                "analysis": "ac",
+                "unit": "Hz",
+                "min": 4000,
+                "max": 6000
+              },
+              {
+                "metric": "fast_bandwidth_Hz",
+                "analysis": "ac",
+                "unit": "Hz",
+                "min": 80000,
+                "max": 120000
+              },
+              {
+                "metric": "supply_power_W",
+                "analysis": "op",
+                "unit": "W",
+                "min": 0,
+                "max": 0.0005
+              }
+            ]
+          },
+          "catalog_hash": "5b91a3ba1557a2db7e19bba50957860d1096d83180d2041c1701803bcc1a7837",
+          "created_at": "2026-10-29T00:28:24.941Z",
+          "updated_at": "2026-10-29T00:30:37.447Z",
+          "decision": {
+            "model": "gpt-6-luna",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 797,
+              "output_tokens": 532,
+              "total_tokens": 1329
+            },
+            "budget_reservation": {
+              "id": "28915dcc-e596-4ed9-b516-1a5e79a23f57",
+              "reserved_usd": 0.002589
+            }
+          },
+          "proposal": {
+            "model": "gpt-6.1-sol",
+            "status": "completed",
+            "usage": {
+              "input_tokens": 1189,
+              "output_tokens": 750,
+              "total_tokens": 1939
+            },
+            "budget_reservation": {
+              "id": "49743a7e-7753-4b40-9447-33ede7835680",
+              "reserved_usd": 0.055256
+            }
+          },
+          "candidates": [
+            {
+              "index": 0,
+              "name": "후보 1 · 기본 바이어스·보상",
+              "parameters": {
+                "gain_V_per_V": 4,
+                "slow_cutoff_Hz": 5000,
+                "fast_cutoff_Hz": 100000,
+                "pole_F": 1e-10,
+                "compensation_F": 5e-12,
+                "nulling_Ohm": 5000,
+                "bias_resistance_Ohm": 30000
+              },
+              "rationale": "기본 바이어스 저항과 보상값을 비교 기준으로 둡니다. 후보 2보다 작은 바이어스 저항이 바이어스 전류 확보에 유리할 수 있지만 공급 전력은 더 커질 수 있다는 가설을 확인합니다.",
+              "preview": {
+                "schema_version": 1,
+                "template_id": "sensor_afe_dualband",
+                "name": "후보 1 · 기본 바이어스·보상",
+                "parameters": {
+                  "gain_V_per_V": 4,
+                  "slow_cutoff_Hz": 5000,
+                  "fast_cutoff_Hz": 100000,
+                  "pole_F": 1e-10,
+                  "compensation_F": 5e-12,
+                  "nulling_Ohm": 5000,
+                  "bias_resistance_Ohm": 30000
+                },
+                "chip_limits": {
+                  "schema_version": 1,
+                  "width_um": 300,
+                  "height_um": 300,
+                  "max_area_um2": 90000,
+                  "edge_um": 10,
+                  "origin_um": [
+                    0,
+                    0
+                  ],
+                  "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+                },
+                "schematic_sha256": "04021c5b5782bde9d9516e1452d9f1d857c901b66d55f277eb1a02a7b7c1d597",
+                "implementation_sha256": "c3d8c635aedcf39aa9ebf6dc88e4f0cf27cbca54c21bd6a85686e095c3aa2b7c",
+                "preview_hash": "f6d2258da47ceb976ea019d1bff8a7d20880991d6371be968cffde6706578e69",
+                "ports": [
+                  "VIN",
+                  "PRE_OUT",
+                  "SLOW",
+                  "FAST",
+                  "VCM",
+                  "BIAS",
+                  "VPWR",
+                  "VGND"
+                ],
+                "root_cell": "sensor_afe_dualband",
+                "device_count": 55,
+                "primitive_counts": {
+                  "nmos": 25,
+                  "resistor": 11,
+                  "capacitor": 7,
+                  "pmos": 12
+                },
+                "net_count": 28,
+                "hierarchy": [
+                  {
+                    "name": "sensor_afe_dualband",
+                    "devices": 4,
+                    "children": [
+                      "SOC_BIAS",
+                      "DUET_GAIN",
+                      "DUET_SLOW",
+                      "DUET_FAST"
+                    ]
+                  },
+                  {
+                    "name": "SOC_BIAS",
+                    "devices": 6,
+                    "children": [
+                      "SOC_OTA"
+                    ]
+                  },
+                  {
+                    "name": "SOC_OTA",
+                    "devices": 5,
+                    "children": [
+                      "SOC_OTA_FIRST"
+                    ]
+                  },
+                  {
+                    "name": "SOC_OTA_FIRST",
+                    "devices": 7,
+                    "children": []
+                  },
+                  {
+                    "name": "DUET_GAIN",
+                    "devices": 3,
+                    "children": [
+                      "SOC_OTA"
+                    ]
+                  },
+                  {
+                    "name": "DUET_SLOW",
+                    "devices": 3,
+                    "children": [
+                      "SOC_OTA"
+                    ]
+                  },
+                  {
+                    "name": "DUET_FAST",
+                    "devices": 3,
+                    "children": [
+                      "SOC_OTA"
+                    ]
+                  }
+                ],
+                "spice": ".subckt SOC_OTA_FIRST INP INN BIAS OUT VPWR VGND\nXN_INN0 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INN1 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP0 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP1 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\nXP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\n.ends SOC_OTA_FIRST\n.subckt SOC_OTA INP INN BIAS OUT VPWR VGND\nCC_MILLER PRE COMP 5e-12\nXFIRST INP INN BIAS PRE VPWR VGND SOC_OTA_FIRST\nXN_SECOND OUT BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_SECOND OUT PRE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1\nRR_ZERO COMP OUT 5000\n.ends SOC_OTA\n.subckt SOC_BIAS BIAS VCM VPWR VGND\nCC_VCM VCM_RAW VGND 2e-11\nXN_DIODE BIAS BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nRR_BIAS VPWR BIAS 30000\nRR_VCM_BOTTOM VCM_RAW VGND 100000\nRR_VCM_TOP VPWR VCM_RAW 100000\nXVCM_BUFFER VCM_RAW VCM BIAS VCM VPWR VGND SOC_OTA\n.ends SOC_BIAS\n.subckt DUET_GAIN VIN VCM BIAS OUT VPWR VGND\nXAMP VIN FB BIAS OUT VPWR VGND SOC_OTA\nRR_FEEDBACK OUT FB 300000\nRR_GROUND FB VCM 100000\n.ends DUET_GAIN\n.subckt DUET_SLOW VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 318309.886184\n.ends DUET_SLOW\n.subckt DUET_FAST VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 15915.4943092\n.ends DUET_FAST\n.subckt sensor_afe_dualband VIN PRE_OUT SLOW FAST VCM BIAS VPWR VGND\nXBIAS_SOURCE BIAS VCM VPWR VGND SOC_BIAS\nXFAST_PATH PRE_OUT BIAS FAST VPWR VGND DUET_FAST\nXPREAMP VIN VCM BIAS PRE_OUT VPWR VGND DUET_GAIN\nXSLOW_PATH PRE_OUT BIAS SLOW VPWR VGND DUET_SLOW\n.ends sensor_afe_dualband\n",
+                "layout_status": "not-generated",
+                "physical_area_um2": null,
+                "engine_executed": false,
+                "limits": [
+                  "This creates a separate project only after approval.",
+                  "Chip envelope is a constraint, not measured mask area.",
+                  "No DRC/LVS/PEX/manufacturing result is implied."
+                ]
+              },
+              "command_id": "auto-create-15d288f0-a465-4d31-8104-010b58bc4003-0",
+              "state": "completed",
+              "jobs": [
+                {
+                  "analysis": "op",
+                  "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-0-op",
+                  "status": "completed",
+                  "result": {
+                    "id": "25705ab9db624fc9aca957f8b5ae17ac",
+                    "project_id": "651a6d3eb6524ce3a06f70e929e15b3d",
+                    "revision": 1,
+                    "kind": "simulation",
+                    "tool": "ngspice",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "message": "Actual ngspice op: 1 samples.; reference criteria 4/4",
+                    "measurements": {
+                      "analysis": "op",
+                      "x_unit": "point",
+                      "x_label": "operating point",
+                      "corner": "tt",
+                      "temperature_C": 27,
+                      "supply_V": 1.8,
+                      "post_layout": "false",
+                      "samples": 1,
+                      "solver": "SPARSE 1.3",
+                      "VIN_min": 0.9,
+                      "VIN_max": 0.9,
+                      "PRE_OUT_min": 0.8997098865555297,
+                      "PRE_OUT_max": 0.8997098865555297,
+                      "SLOW_min": 0.8994194638834667,
+                      "SLOW_max": 0.8994194638834667,
+                      "FAST_min": 0.8994194638834632,
+                      "FAST_max": 0.8994194638834632,
+                      "VCM_min": 0.8997098865555311,
+                      "VCM_max": 0.8997098865555311,
+                      "BIAS_min": 0.9293638427659658,
+                      "BIAS_max": 0.9293638427659658,
+                      "supply_current_min": 0.00024080836900829822,
+                      "supply_current_max": 0.00024080836900829822,
+                      "current_flow_status": "available",
+                      "template_id": "sensor_afe_dualband",
+                      "layout_status": "not-generated",
+                      "metric_source": "actual-ngspice-samples",
+                      "reference_scope": "DUET-AFE directed schematic criteria only.",
+                      "unverified": [
+                        "Schematic research prototype; no novelty or product-performance claim.",
+                        "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+                        "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+                      ],
+                      "supply_current_A": 0.00024080836900829822,
+                      "supply_power_W": 0.0004334550642149368
+                    },
+                    "reference_verification": {
+                      "schema_version": 1,
+                      "kind": "sensor_afe_dualband",
+                      "source": "actual-ngspice-samples",
+                      "checks": [
+                        {
+                          "name": "PRE_OUT DC within 50mV of VDD/2",
+                          "pass": true,
+                          "observed": 0.8997098865555297
+                        },
+                        {
+                          "name": "SLOW DC within 50mV of VDD/2",
+                          "pass": true,
+                          "observed": 0.8994194638834667
+                        },
+                        {
+                          "name": "FAST DC within 50mV of VDD/2",
+                          "pass": true,
+                          "observed": 0.8994194638834632
+                        },
+                        {
+                          "name": "Nonnegative finite DC supply power",
+                          "pass": true,
+                          "observed": 0.0004334550642149368
+                        }
+                      ],
+                      "scope": "DUET-AFE directed schematic criteria only.",
+                      "pass": true
+                    }
+                  }
+                },
+                {
+                  "analysis": "ac",
+                  "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-0-ac",
+                  "status": "completed",
+                  "result": {
+                    "id": "5ae3417eb0a94bac96d342f6dde39c2d",
+                    "project_id": "651a6d3eb6524ce3a06f70e929e15b3d",
+                    "revision": 1,
+                    "kind": "simulation",
+                    "tool": "ngspice",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "message": "Actual ngspice ac: 561 samples.; reference criteria 4/4",
+                    "measurements": {
+                      "analysis": "ac",
+                      "x_unit": "Hz",
+                      "x_label": "frequency",
+                      "corner": "tt",
+                      "temperature_C": 27,
+                      "supply_V": 1.8,
+                      "post_layout": "false",
+                      "samples": 561,
+                      "solver": "SPARSE 1.3",
+                      "SLOW_gain_min": 0.00017153919456851704,
+                      "SLOW_gain_max": 4.0052431331762675,
+                      "FAST_gain_min": 0.0005787632736190152,
+                      "FAST_gain_max": 4.005251127154343,
+                      "PRE_gain_min": 0.16445582406007606,
+                      "PRE_gain_max": 4.001377895128023,
+                      "current_flow_status": "unsupported_complex_ac",
+                      "template_id": "sensor_afe_dualband",
+                      "layout_status": "not-generated",
+                      "metric_source": "actual-ngspice-samples",
+                      "reference_scope": "DUET-AFE directed schematic criteria only.",
+                      "unverified": [
+                        "Schematic research prototype; no novelty or product-performance claim.",
+                        "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+                        "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+                      ],
+                      "slow_gain_V_per_V": 4.0052431331762675,
+                      "slow_bandwidth_Hz": 4997.0646647219555,
+                      "fast_gain_V_per_V": 4.005251127154343,
+                      "fast_bandwidth_Hz": 99762.7828566656
+                    },
+                    "reference_verification": {
+                      "schema_version": 1,
+                      "kind": "sensor_afe_dualband",
+                      "source": "actual-ngspice-samples",
+                      "checks": [
+                        {
+                          "name": "SLOW low-frequency gain within 5%",
+                          "pass": true,
+                          "observed": 4.0052431331762675
+                        },
+                        {
+                          "name": "SLOW bandwidth within 20% of requested RC pole",
+                          "pass": true,
+                          "observed": 4997.0646647219555
+                        },
+                        {
+                          "name": "FAST low-frequency gain within 5%",
+                          "pass": true,
+                          "observed": 4.005251127154343
+                        },
+                        {
+                          "name": "FAST bandwidth within 20% of requested RC pole",
+                          "pass": true,
+                          "observed": 99762.7828566656
+                        }
+                      ],
+                      "scope": "DUET-AFE directed schematic criteria only.",
+                      "pass": true
+                    }
+                  }
+                },
+                {
+                  "analysis": "tran",
+                  "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-0-tran",
+                  "status": "completed",
+                  "result": {
+                    "id": "469c8c5d5195489f917e48ff0091f148",
+                    "project_id": "651a6d3eb6524ce3a06f70e929e15b3d",
+                    "revision": 1,
+                    "kind": "simulation",
+                    "tool": "ngspice",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "message": "Actual ngspice tran: 16008 samples.; reference criteria 5/5",
+                    "measurements": {
+                      "analysis": "tran",
+                      "x_unit": "s",
+                      "x_label": "time",
+                      "corner": "tt",
+                      "temperature_C": 27,
+                      "supply_V": 1.8,
+                      "post_layout": "false",
+                      "samples": 16008,
+                      "solver": "SPARSE 1.3",
+                      "VIN_min": 0.8900609966113092,
+                      "VIN_max": 0.9099389937572002,
+                      "PRE_OUT_min": 0.8599425500800246,
+                      "PRE_OUT_max": 0.9394720869522362,
+                      "SLOW_min": 0.8834120336052931,
+                      "SLOW_max": 0.9167171720100634,
+                      "FAST_min": 0.8617347763341912,
+                      "FAST_max": 0.9370660793972219,
+                      "VCM_min": 0.8997068099079049,
+                      "VCM_max": 0.8997868372627493,
+                      "BIAS_min": 0.9293631820977525,
+                      "BIAS_max": 0.9293656952529803,
+                      "supply_current_min": 0.00023761582442271417,
+                      "supply_current_max": 0.0002437124350769121,
+                      "current_flow_status": "available",
+                      "template_id": "sensor_afe_dualband",
+                      "layout_status": "not-generated",
+                      "metric_source": "actual-ngspice-samples",
+                      "reference_scope": "DUET-AFE directed schematic criteria only.",
+                      "unverified": [
+                        "Schematic research prototype; no novelty or product-performance claim.",
+                        "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+                        "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+                      ],
+                      "vin_two_tone": {
+                        "mean_V": 0.9,
+                        "tone_5k_V": 0.004999998972056448,
+                        "tone_50k_V": 0.004999897206481763,
+                        "residual_rms_V": 3.253095229183779e-8
+                      },
+                      "slow_two_tone": {
+                        "mean_V": 0.8994195083028387,
+                        "tone_5k_V": 0.014156798694412467,
+                        "tone_50k_V": 0.0019920750010969115,
+                        "residual_rms_V": 6.217709894627771e-7
+                      },
+                      "fast_two_tone": {
+                        "mean_V": 0.8994184188496585,
+                        "tone_5k_V": 0.01999796478601361,
+                        "tone_50k_V": 0.01791081277736931,
+                        "residual_rms_V": 0.000006054486886610116
+                      },
+                      "fast_to_slow_50k_ratio": 8.991033353416384,
+                      "supply_current_A": 0.00024075565957817742,
+                      "supply_power_W": 0.00043336018724071933,
+                      "research_metrics": {
+                        "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+                        "input_drivers_power": "not measured",
+                        "external_bias_power": "not measured",
+                        "complete_system_power_available": false,
+                        "supply": {
+                          "available": true,
+                          "start_s": 0,
+                          "end_s": 0.0008,
+                          "energy_J": 3.4671677278691474e-7,
+                          "average_current_A": 0.0002407755366575797,
+                          "peak_current_A": 0.0002437124350769121,
+                          "minimum_current_A": 0.00023761582442271417,
+                          "average_power_W": 0.00043339596598364344,
+                          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+                          "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+                        }
+                      }
+                    },
+                    "reference_verification": {
+                      "schema_version": 1,
+                      "kind": "sensor_afe_dualband",
+                      "source": "actual-ngspice-samples",
+                      "checks": [
+                        {
+                          "name": "SLOW settled signal within rails",
+                          "pass": true,
+                          "observed": [
+                            0.8834120336052931,
+                            0.9153828192975031
+                          ]
+                        },
+                        {
+                          "name": "SLOW two-tone residual below 5mV",
+                          "pass": true,
+                          "observed": 6.217709894627771e-7
+                        },
+                        {
+                          "name": "FAST settled signal within rails",
+                          "pass": true,
+                          "observed": [
+                            0.8617347763341912,
+                            0.9370650442908309
+                          ]
+                        },
+                        {
+                          "name": "FAST two-tone residual below 5mV",
+                          "pass": true,
+                          "observed": 0.000006054486886610116
+                        },
+                        {
+                          "name": "50kHz fast/slow amplitude separation greater than 3",
+                          "pass": true,
+                          "observed": 8.991033353416384
+                        }
+                      ],
+                      "scope": "DUET-AFE directed schematic criteria only.",
+                      "pass": true
+                    }
+                  }
+                }
+              ],
+              "project_id": "651a6d3eb6524ce3a06f70e929e15b3d",
+              "revision": 1,
+              "targets": [
+                {
+                  "metric": "slow_gain_V_per_V",
+                  "analysis": "ac",
+                  "unit": "V/V",
+                  "min": 3.8,
+                  "max": 4.2,
+                  "observed": 4.0052431331762675,
+                  "status": "met"
+                },
+                {
+                  "metric": "slow_bandwidth_Hz",
+                  "analysis": "ac",
+                  "unit": "Hz",
+                  "min": 4000,
+                  "max": 6000,
+                  "observed": 4997.0646647219555,
+                  "status": "met"
+                },
+                {
+                  "metric": "fast_bandwidth_Hz",
+                  "analysis": "ac",
+                  "unit": "Hz",
+                  "min": 80000,
+                  "max": 120000,
+                  "observed": 99762.7828566656,
+                  "status": "met"
+                },
+                {
+                  "metric": "supply_power_W",
+                  "analysis": "op",
+                  "unit": "W",
+                  "min": 0,
+                  "max": 0.0005,
+                  "observed": 0.0004334550642149368,
+                  "status": "met"
+                }
+              ],
+              "acceptance": "met"
+            },
+            {
+              "index": 1,
+              "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+              "parameters": {
+                "gain_V_per_V": 4,
+                "slow_cutoff_Hz": 5000,
+                "fast_cutoff_Hz": 100000,
+                "pole_F": 1e-10,
+                "compensation_F": 8e-12,
+                "nulling_Ohm": 5000,
+                "bias_resistance_Ohm": 40000
+              },
+              "rationale": "바이어스 저항 증가가 공급 전력을 줄일 수 있다는 가설을 조사합니다. 보상 커패시턴스 증가가 안정성에 도움이 될 수 있지만 대역폭과 과도응답에는 불리할 수 있으므로 동일한 목표 범위에서 비교합니다.",
+              "preview": {
+                "schema_version": 1,
+                "template_id": "sensor_afe_dualband",
+                "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+                "parameters": {
+                  "gain_V_per_V": 4,
+                  "slow_cutoff_Hz": 5000,
+                  "fast_cutoff_Hz": 100000,
+                  "pole_F": 1e-10,
+                  "compensation_F": 8e-12,
+                  "nulling_Ohm": 5000,
+                  "bias_resistance_Ohm": 40000
+                },
+                "chip_limits": {
+                  "schema_version": 1,
+                  "width_um": 300,
+                  "height_um": 300,
+                  "max_area_um2": 90000,
+                  "edge_um": 10,
+                  "origin_um": [
+                    0,
+                    0
+                  ],
+                  "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+                },
+                "schematic_sha256": "ed1a258041b74cd76cbc1dc17945dd50fb2165c39af25ec49216eb0663defdf1",
+                "implementation_sha256": "c3d8c635aedcf39aa9ebf6dc88e4f0cf27cbca54c21bd6a85686e095c3aa2b7c",
+                "preview_hash": "24d9a3ccfd83bf9994b56c03a9370adddc514bf02c8e153ba8e09cb5b9c6b679",
+                "ports": [
+                  "VIN",
+                  "PRE_OUT",
+                  "SLOW",
+                  "FAST",
+                  "VCM",
+                  "BIAS",
+                  "VPWR",
+                  "VGND"
+                ],
+                "root_cell": "sensor_afe_dualband",
+                "device_count": 55,
+                "primitive_counts": {
+                  "nmos": 25,
+                  "resistor": 11,
+                  "capacitor": 7,
+                  "pmos": 12
+                },
+                "net_count": 28,
+                "hierarchy": [
+                  {
+                    "name": "sensor_afe_dualband",
+                    "devices": 4,
+                    "children": [
+                      "SOC_BIAS",
+                      "DUET_GAIN",
+                      "DUET_SLOW",
+                      "DUET_FAST"
+                    ]
+                  },
+                  {
+                    "name": "SOC_BIAS",
+                    "devices": 6,
+                    "children": [
+                      "SOC_OTA"
+                    ]
+                  },
+                  {
+                    "name": "SOC_OTA",
+                    "devices": 5,
+                    "children": [
+                      "SOC_OTA_FIRST"
+                    ]
+                  },
+                  {
+                    "name": "SOC_OTA_FIRST",
+                    "devices": 7,
+                    "children": []
+                  },
+                  {
+                    "name": "DUET_GAIN",
+                    "devices": 3,
+                    "children": [
+                      "SOC_OTA"
+                    ]
+                  },
+                  {
+                    "name": "DUET_SLOW",
+                    "devices": 3,
+                    "children": [
+                      "SOC_OTA"
+                    ]
+                  },
+                  {
+                    "name": "DUET_FAST",
+                    "devices": 3,
+                    "children": [
+                      "SOC_OTA"
+                    ]
+                  }
+                ],
+                "spice": ".subckt SOC_OTA_FIRST INP INN BIAS OUT VPWR VGND\nXN_INN0 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INN1 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP0 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP1 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\nXP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\n.ends SOC_OTA_FIRST\n.subckt SOC_OTA INP INN BIAS OUT VPWR VGND\nCC_MILLER PRE COMP 8e-12\nXFIRST INP INN BIAS PRE VPWR VGND SOC_OTA_FIRST\nXN_SECOND OUT BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_SECOND OUT PRE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1\nRR_ZERO COMP OUT 5000\n.ends SOC_OTA\n.subckt SOC_BIAS BIAS VCM VPWR VGND\nCC_VCM VCM_RAW VGND 2e-11\nXN_DIODE BIAS BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nRR_BIAS VPWR BIAS 40000\nRR_VCM_BOTTOM VCM_RAW VGND 100000\nRR_VCM_TOP VPWR VCM_RAW 100000\nXVCM_BUFFER VCM_RAW VCM BIAS VCM VPWR VGND SOC_OTA\n.ends SOC_BIAS\n.subckt DUET_GAIN VIN VCM BIAS OUT VPWR VGND\nXAMP VIN FB BIAS OUT VPWR VGND SOC_OTA\nRR_FEEDBACK OUT FB 300000\nRR_GROUND FB VCM 100000\n.ends DUET_GAIN\n.subckt DUET_SLOW VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 318309.886184\n.ends DUET_SLOW\n.subckt DUET_FAST VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 15915.4943092\n.ends DUET_FAST\n.subckt sensor_afe_dualband VIN PRE_OUT SLOW FAST VCM BIAS VPWR VGND\nXBIAS_SOURCE BIAS VCM VPWR VGND SOC_BIAS\nXFAST_PATH PRE_OUT BIAS FAST VPWR VGND DUET_FAST\nXPREAMP VIN VCM BIAS PRE_OUT VPWR VGND DUET_GAIN\nXSLOW_PATH PRE_OUT BIAS SLOW VPWR VGND DUET_SLOW\n.ends sensor_afe_dualband\n",
+                "layout_status": "not-generated",
+                "physical_area_um2": null,
+                "engine_executed": false,
+                "limits": [
+                  "This creates a separate project only after approval.",
+                  "Chip envelope is a constraint, not measured mask area.",
+                  "No DRC/LVS/PEX/manufacturing result is implied."
+                ]
+              },
+              "command_id": "auto-create-15d288f0-a465-4d31-8104-010b58bc4003-1",
+              "state": "completed",
+              "jobs": [
+                {
+                  "analysis": "op",
+                  "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-1-op",
+                  "status": "completed",
+                  "result": {
+                    "id": "4faf8dc7112c41e9a34ff6fe14cfc192",
+                    "project_id": "c5f0bcd91b30406cb9f5c1e4eace6539",
+                    "revision": 1,
+                    "kind": "simulation",
+                    "tool": "ngspice",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "message": "Actual ngspice op: 1 samples.; reference criteria 4/4",
+                    "measurements": {
+                      "analysis": "op",
+                      "x_unit": "point",
+                      "x_label": "operating point",
+                      "corner": "tt",
+                      "temperature_C": 27,
+                      "supply_V": 1.8,
+                      "post_layout": "false",
+                      "samples": 1,
+                      "solver": "SPARSE 1.3",
+                      "VIN_min": 0.9,
+                      "VIN_max": 0.9,
+                      "PRE_OUT_min": 0.8997831263948222,
+                      "PRE_OUT_max": 0.8997831263948222,
+                      "SLOW_min": 0.8995660721139842,
+                      "SLOW_max": 0.8995660721139842,
+                      "FAST_min": 0.8995660721139878,
+                      "FAST_max": 0.8995660721139878,
+                      "VCM_min": 0.8997831263948232,
+                      "VCM_max": 0.8997831263948232,
+                      "BIAS_min": 0.8885910852111768,
+                      "BIAS_max": 0.8885910852111768,
+                      "supply_current_min": 0.00019618184144880313,
+                      "supply_current_max": 0.00019618184144880313,
+                      "current_flow_status": "available",
+                      "template_id": "sensor_afe_dualband",
+                      "layout_status": "not-generated",
+                      "metric_source": "actual-ngspice-samples",
+                      "reference_scope": "DUET-AFE directed schematic criteria only.",
+                      "unverified": [
+                        "Schematic research prototype; no novelty or product-performance claim.",
+                        "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+                        "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+                      ],
+                      "supply_current_A": 0.00019618184144880313,
+                      "supply_power_W": 0.00035312731460784564
+                    },
+                    "reference_verification": {
+                      "schema_version": 1,
+                      "kind": "sensor_afe_dualband",
+                      "source": "actual-ngspice-samples",
+                      "checks": [
+                        {
+                          "name": "PRE_OUT DC within 50mV of VDD/2",
+                          "pass": true,
+                          "observed": 0.8997831263948222
+                        },
+                        {
+                          "name": "SLOW DC within 50mV of VDD/2",
+                          "pass": true,
+                          "observed": 0.8995660721139842
+                        },
+                        {
+                          "name": "FAST DC within 50mV of VDD/2",
+                          "pass": true,
+                          "observed": 0.8995660721139878
+                        },
+                        {
+                          "name": "Nonnegative finite DC supply power",
+                          "pass": true,
+                          "observed": 0.00035312731460784564
+                        }
+                      ],
+                      "scope": "DUET-AFE directed schematic criteria only.",
+                      "pass": true
+                    }
+                  }
+                },
+                {
+                  "analysis": "ac",
+                  "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-1-ac",
+                  "status": "completed",
+                  "result": {
+                    "id": "2ee41beadf3b43b18d9da2dfc50355ab",
+                    "project_id": "c5f0bcd91b30406cb9f5c1e4eace6539",
+                    "revision": 1,
+                    "kind": "simulation",
+                    "tool": "ngspice",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "message": "Actual ngspice ac: 561 samples.; reference criteria 4/4",
+                    "measurements": {
+                      "analysis": "ac",
+                      "x_unit": "Hz",
+                      "x_label": "frequency",
+                      "corner": "tt",
+                      "temperature_C": 27,
+                      "supply_V": 1.8,
+                      "post_layout": "false",
+                      "samples": 561,
+                      "solver": "SPARSE 1.3",
+                      "SLOW_gain_min": 0.00012077931076016091,
+                      "SLOW_gain_max": 4.003248661111383,
+                      "FAST_gain_min": 0.0004079656794614301,
+                      "FAST_gain_max": 4.003256650920388,
+                      "PRE_gain_min": 0.10160969941992067,
+                      "PRE_gain_max": 4.004566015875097,
+                      "current_flow_status": "unsupported_complex_ac",
+                      "template_id": "sensor_afe_dualband",
+                      "layout_status": "not-generated",
+                      "metric_source": "actual-ngspice-samples",
+                      "reference_scope": "DUET-AFE directed schematic criteria only.",
+                      "unverified": [
+                        "Schematic research prototype; no novelty or product-performance claim.",
+                        "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+                        "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+                      ],
+                      "slow_gain_V_per_V": 4.003248661111383,
+                      "slow_bandwidth_Hz": 4997.233905164124,
+                      "fast_gain_V_per_V": 4.003256650920388,
+                      "fast_bandwidth_Hz": 99457.71242473688
+                    },
+                    "reference_verification": {
+                      "schema_version": 1,
+                      "kind": "sensor_afe_dualband",
+                      "source": "actual-ngspice-samples",
+                      "checks": [
+                        {
+                          "name": "SLOW low-frequency gain within 5%",
+                          "pass": true,
+                          "observed": 4.003248661111383
+                        },
+                        {
+                          "name": "SLOW bandwidth within 20% of requested RC pole",
+                          "pass": true,
+                          "observed": 4997.233905164124
+                        },
+                        {
+                          "name": "FAST low-frequency gain within 5%",
+                          "pass": true,
+                          "observed": 4.003256650920388
+                        },
+                        {
+                          "name": "FAST bandwidth within 20% of requested RC pole",
+                          "pass": true,
+                          "observed": 99457.71242473688
+                        }
+                      ],
+                      "scope": "DUET-AFE directed schematic criteria only.",
+                      "pass": true
+                    }
+                  }
+                },
+                {
+                  "analysis": "tran",
+                  "command_id": "auto-run-15d288f0-a465-4d31-8104-010b58bc4003-1-tran",
+                  "status": "completed",
+                  "result": {
+                    "id": "c39ef6a9d4b24679a1a76fed574894c0",
+                    "project_id": "c5f0bcd91b30406cb9f5c1e4eace6539",
+                    "revision": 1,
+                    "kind": "simulation",
+                    "tool": "ngspice",
+                    "execution_status": "completed",
+                    "analysis_result": "pass",
+                    "message": "Actual ngspice tran: 16008 samples.; reference criteria 5/5",
+                    "measurements": {
+                      "analysis": "tran",
+                      "x_unit": "s",
+                      "x_label": "time",
+                      "corner": "tt",
+                      "temperature_C": 27,
+                      "supply_V": 1.8,
+                      "post_layout": "false",
+                      "samples": 16008,
+                      "solver": "SPARSE 1.3",
+                      "VIN_min": 0.8900609966113092,
+                      "VIN_max": 0.9099389937572002,
+                      "PRE_OUT_min": 0.8600053303119694,
+                      "PRE_OUT_max": 0.9395543567391011,
+                      "SLOW_min": 0.8835643412795545,
+                      "SLOW_max": 0.9168569290385703,
+                      "FAST_min": 0.8618825569948749,
+                      "FAST_max": 0.9372100808300985,
+                      "VCM_min": 0.8997782193344872,
+                      "VCM_max": 0.8998180883212252,
+                      "BIAS_min": 0.8885908778700707,
+                      "BIAS_max": 0.8885918466548604,
+                      "supply_current_min": 0.0001938355681831358,
+                      "supply_current_max": 0.00019825740597299857,
+                      "current_flow_status": "available",
+                      "template_id": "sensor_afe_dualband",
+                      "layout_status": "not-generated",
+                      "metric_source": "actual-ngspice-samples",
+                      "reference_scope": "DUET-AFE directed schematic criteria only.",
+                      "unverified": [
+                        "Schematic research prototype; no novelty or product-performance claim.",
+                        "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+                        "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+                      ],
+                      "vin_two_tone": {
+                        "mean_V": 0.9,
+                        "tone_5k_V": 0.004999998972056448,
+                        "tone_50k_V": 0.004999897206481763,
+                        "residual_rms_V": 3.253095229183779e-8
+                      },
+                      "slow_two_tone": {
+                        "mean_V": 0.8995657167915971,
+                        "tone_5k_V": 0.01414997844826895,
+                        "tone_50k_V": 0.001992901115523319,
+                        "residual_rms_V": 8.469673267272654e-7
+                      },
+                      "fast_two_tone": {
+                        "mean_V": 0.8995646291342168,
+                        "tone_5k_V": 0.019988238821514098,
+                        "tone_50k_V": 0.017918097569110208,
+                        "residual_rms_V": 0.000009081304669545616
+                      },
+                      "fast_to_slow_50k_ratio": 8.990961683718597,
+                      "supply_current_A": 0.00019613062357501065,
+                      "supply_power_W": 0.0003530351224350192,
+                      "research_metrics": {
+                        "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+                        "input_drivers_power": "not measured",
+                        "external_bias_power": "not measured",
+                        "complete_system_power_available": false,
+                        "supply": {
+                          "available": true,
+                          "start_s": 0,
+                          "end_s": 0.0008,
+                          "energy_J": 2.8244628386427786e-7,
+                          "average_current_A": 0.00019614325268352628,
+                          "peak_current_A": 0.00019825740597299857,
+                          "minimum_current_A": 0.0001938355681831358,
+                          "average_power_W": 0.0003530578548303473,
+                          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+                          "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+                        }
+                      }
+                    },
+                    "reference_verification": {
+                      "schema_version": 1,
+                      "kind": "sensor_afe_dualband",
+                      "source": "actual-ngspice-samples",
+                      "checks": [
+                        {
+                          "name": "SLOW settled signal within rails",
+                          "pass": true,
+                          "observed": [
+                            0.8835643412795545,
+                            0.9155234083388895
+                          ]
+                        },
+                        {
+                          "name": "SLOW two-tone residual below 5mV",
+                          "pass": true,
+                          "observed": 8.469673267272654e-7
+                        },
+                        {
+                          "name": "FAST settled signal within rails",
+                          "pass": true,
+                          "observed": [
+                            0.8618825569948749,
+                            0.9372089912344461
+                          ]
+                        },
+                        {
+                          "name": "FAST two-tone residual below 5mV",
+                          "pass": true,
+                          "observed": 0.000009081304669545616
+                        },
+                        {
+                          "name": "50kHz fast/slow amplitude separation greater than 3",
+                          "pass": true,
+                          "observed": 8.990961683718597
+                        }
+                      ],
+                      "scope": "DUET-AFE directed schematic criteria only.",
+                      "pass": true
+                    }
+                  }
+                }
+              ],
+              "project_id": "c5f0bcd91b30406cb9f5c1e4eace6539",
+              "revision": 1,
+              "targets": [
+                {
+                  "metric": "slow_gain_V_per_V",
+                  "analysis": "ac",
+                  "unit": "V/V",
+                  "min": 3.8,
+                  "max": 4.2,
+                  "observed": 4.003248661111383,
+                  "status": "met"
+                },
+                {
+                  "metric": "slow_bandwidth_Hz",
+                  "analysis": "ac",
+                  "unit": "Hz",
+                  "min": 4000,
+                  "max": 6000,
+                  "observed": 4997.233905164124,
+                  "status": "met"
+                },
+                {
+                  "metric": "fast_bandwidth_Hz",
+                  "analysis": "ac",
+                  "unit": "Hz",
+                  "min": 80000,
+                  "max": 120000,
+                  "observed": 99457.71242473688,
+                  "status": "met"
+                },
+                {
+                  "metric": "supply_power_W",
+                  "analysis": "op",
+                  "unit": "W",
+                  "min": 0,
+                  "max": 0.0005,
+                  "observed": 0.00035312731460784564,
+                  "status": "met"
+                }
+              ],
+              "acceptance": "met"
+            }
+          ],
+          "engine": {
+            "status": "completed",
+            "max_jobs": 6,
+            "accepted_candidates": 2
+          },
+          "decision_result": {
+            "verdict": "proceed",
+            "summary": "DUET-AFE의 고정 회로군은 요청한 이중 대역 경로와 이득 조정을 지원합니다. 동일한 목표 범위를 두 후보에 적용하고, 후보 간 바이어스 저항과 보상 커패시턴스를 다르게 둔 미리보기 제안을 진행할 수 있습니다. 후보 1은 기본값인 30 kΩ 및 5 pF, 후보 2는 40 kΩ 및 8 pF로 제안합니다. 이득 목표는 4 V/V, 저속 대역폭 목표는 5 kHz, 고속 대역폭 목표는 100 kHz로 유지하며, 1.8 V에서 공급 전력 상한은 500 µW입니다.",
+            "questions": [],
+            "limitations": [
+              "수치 목표 달성 여부는 엔진의 실제 샘플 결과로만 판단할 수 있으며 여기서는 보장하지 않습니다.",
+              "두 후보의 저항·커패시턴스 변경이 전력과 대역폭에 미치는 영향은 가설이며 실제 결과 확인이 필요합니다.",
+              "레이아웃, 잡음, 오프셋은 검증 범위에 포함되지 않습니다."
+            ],
+            "evidence_ids": [
+              "catalog",
+              "goal",
+              "constraints"
+            ]
+          },
+          "proposal_result": {
+            "summary": "DUET-AFE 고정 회로군의 후보 2개를 제안합니다. 두 후보 모두 이득 4 V/V, 저속 5000 Hz·고속 100000 Hz 설정을 유지하고 바이어스 저항과 보상 커패시턴스만 달리합니다. 시험 조건은 전원 1.8 V, tt 코너, 27 °C이며 DC 공급 전력 상한은 0.0005 W로 유지합니다.",
+            "candidates": [
+              {
+                "name": "후보 1 · 기본 바이어스·보상",
+                "parameters": [
+                  {
+                    "key": "gain_V_per_V",
+                    "value": 4
+                  },
+                  {
+                    "key": "slow_cutoff_Hz",
+                    "value": 5000
+                  },
+                  {
+                    "key": "fast_cutoff_Hz",
+                    "value": 100000
+                  },
+                  {
+                    "key": "pole_F",
+                    "value": 1e-10
+                  },
+                  {
+                    "key": "compensation_F",
+                    "value": 5e-12
+                  },
+                  {
+                    "key": "nulling_Ohm",
+                    "value": 5000
+                  },
+                  {
+                    "key": "bias_resistance_Ohm",
+                    "value": 30000
+                  }
+                ],
+                "rationale": "기본 바이어스 저항과 보상값을 비교 기준으로 둡니다. 후보 2보다 작은 바이어스 저항이 바이어스 전류 확보에 유리할 수 있지만 공급 전력은 더 커질 수 있다는 가설을 확인합니다."
+              },
+              {
+                "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+                "parameters": [
+                  {
+                    "key": "gain_V_per_V",
+                    "value": 4
+                  },
+                  {
+                    "key": "slow_cutoff_Hz",
+                    "value": 5000
+                  },
+                  {
+                    "key": "fast_cutoff_Hz",
+                    "value": 100000
+                  },
+                  {
+                    "key": "pole_F",
+                    "value": 1e-10
+                  },
+                  {
+                    "key": "compensation_F",
+                    "value": 8e-12
+                  },
+                  {
+                    "key": "nulling_Ohm",
+                    "value": 5000
+                  },
+                  {
+                    "key": "bias_resistance_Ohm",
+                    "value": 40000
+                  }
+                ],
+                "rationale": "바이어스 저항 증가가 공급 전력을 줄일 수 있다는 가설을 조사합니다. 보상 커패시턴스 증가가 안정성에 도움이 될 수 있지만 대역폭과 과도응답에는 불리할 수 있으므로 동일한 목표 범위에서 비교합니다."
+              }
+            ],
+            "limitations": [
+              "이는 실행 전 제안이며 수치 합격 여부는 실제 엔진 샘플로만 판단합니다.",
+              "두 후보 모두 AC 저속 이득 3.8–4.2 V/V, 저속 대역폭 4000–6000 Hz, 고속 대역폭 80000–120000 Hz 및 OP 공급 전력 0–0.0005 W 기준을 그대로 적용합니다.",
+              "고정 회로군과 편집 가능한 계층은 네이티브 엔진이 구성하며 토폴로지는 변경하지 않습니다.",
+              "R/C는 이상적입니다. 레이아웃·물리 면적·잡음·오프셋 및 DRC/LVS/PEX·사인오프는 검증하지 않습니다."
+            ],
+            "evidence_ids": [
+              "catalog",
+              "goal",
+              "constraints"
+            ]
+          },
+          "plan_hash": "84b58fa069324276a5579c068186115d59e9b22e7b6fe3f024b6e6e9cfcbc03e",
+          "coordination_status": "idle"
+        }
+      ]
+    }
+  ]
+}

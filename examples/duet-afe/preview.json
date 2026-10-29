@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "template_id": "sensor_afe_dualband",
+  "name": "DUET-AFE · dual-band sensor research prototype",
+  "parameters": {
+    "gain_V_per_V": 4,
+    "slow_cutoff_Hz": 5000,
+    "fast_cutoff_Hz": 100000,
+    "pole_F": 1e-10,
+    "compensation_F": 5e-12,
+    "nulling_Ohm": 5000,
+    "bias_resistance_Ohm": 30000
+  },
+  "chip_limits": {
+    "schema_version": 1,
+    "width_um": 300,
+    "height_um": 300,
+    "max_area_um2": 90000,
+    "edge_um": 10,
+    "origin_um": [
+      0,
+      0
+    ],
+    "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+  },
+  "schematic_sha256": "04021c5b5782bde9d9516e1452d9f1d857c901b66d55f277eb1a02a7b7c1d597",
+  "implementation_sha256": "c3d8c635aedcf39aa9ebf6dc88e4f0cf27cbca54c21bd6a85686e095c3aa2b7c",
+  "preview_hash": "30d95b88a8dea0f8d8b887324dfb0c6ee1fbd152b10d4a122beca052bc6c5458",
+  "ports": [
+    "VIN",
+    "PRE_OUT",
+    "SLOW",
+    "FAST",
+    "VCM",
+    "BIAS",
+    "VPWR",
+    "VGND"
+  ],
+  "root_cell": "sensor_afe_dualband",
+  "device_count": 55,
+  "primitive_counts": {
+    "nmos": 25,
+    "resistor": 11,
+    "capacitor": 7,
+    "pmos": 12
+  },
+  "net_count": 28,
+  "hierarchy": [
+    {
+      "name": "sensor_afe_dualband",
+      "devices": 4,
+      "children": [
+        "SOC_BIAS",
+        "DUET_GAIN",
+        "DUET_SLOW",
+        "DUET_FAST"
+      ]
+    },
+    {
+      "name": "SOC_BIAS",
+      "devices": 6,
+      "children": [
+        "SOC_OTA"
+      ]
+    },
+    {
+      "name": "SOC_OTA",
+      "devices": 5,
+      "children": [
+        "SOC_OTA_FIRST"
+      ]
+    },
+    {
+      "name": "SOC_OTA_FIRST",
+      "devices": 7,
+      "children": []
+    },
+    {
+      "name": "DUET_GAIN",
+      "devices": 3,
+      "children": [
+        "SOC_OTA"
+      ]
+    },
+    {
+      "name": "DUET_SLOW",
+      "devices": 3,
+      "children": [
+        "SOC_OTA"
+      ]
+    },
+    {
+      "name": "DUET_FAST",
+      "devices": 3,
+      "children": [
+        "SOC_OTA"
+      ]
+    }
+  ],
+  "spice": ".subckt SOC_OTA_FIRST INP INN BIAS OUT VPWR VGND\nXN_INN0 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INN1 MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP0 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_INP1 OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=5 l=1 nf=1 m=1\nXN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\nXP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\n.ends SOC_OTA_FIRST\n.subckt SOC_OTA INP INN BIAS OUT VPWR VGND\nCC_MILLER PRE COMP 5e-12\nXFIRST INP INN BIAS PRE VPWR VGND SOC_OTA_FIRST\nXN_SECOND OUT BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_SECOND OUT PRE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=40 l=1 nf=1 m=1\nRR_ZERO COMP OUT 5000\n.ends SOC_OTA\n.subckt SOC_BIAS BIAS VCM VPWR VGND\nCC_VCM VCM_RAW VGND 2e-11\nXN_DIODE BIAS BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nRR_BIAS VPWR BIAS 30000\nRR_VCM_BOTTOM VCM_RAW VGND 100000\nRR_VCM_TOP VPWR VCM_RAW 100000\nXVCM_BUFFER VCM_RAW VCM BIAS VCM VPWR VGND SOC_OTA\n.ends SOC_BIAS\n.subckt DUET_GAIN VIN VCM BIAS OUT VPWR VGND\nXAMP VIN FB BIAS OUT VPWR VGND SOC_OTA\nRR_FEEDBACK OUT FB 300000\nRR_GROUND FB VCM 100000\n.ends DUET_GAIN\n.subckt DUET_SLOW VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 318309.886184\n.ends DUET_SLOW\n.subckt DUET_FAST VIN BIAS OUT VPWR VGND\nXBUFFER FILTERED OUT BIAS OUT VPWR VGND SOC_OTA\nCC_POLE FILTERED VGND 1e-10\nRR_POLE VIN FILTERED 15915.4943092\n.ends DUET_FAST\n.subckt sensor_afe_dualband VIN PRE_OUT SLOW FAST VCM BIAS VPWR VGND\nXBIAS_SOURCE BIAS VCM VPWR VGND SOC_BIAS\nXFAST_PATH PRE_OUT BIAS FAST VPWR VGND DUET_FAST\nXPREAMP VIN VCM BIAS PRE_OUT VPWR VGND DUET_GAIN\nXSLOW_PATH PRE_OUT BIAS SLOW VPWR VGND DUET_SLOW\n.ends sensor_afe_dualband\n",
+  "layout_status": "not-generated",
+  "physical_area_um2": null,
+  "engine_executed": false,
+  "limits": [
+    "This creates a separate project only after approval.",
+    "Chip envelope is a constraint, not measured mask area.",
+    "No DRC/LVS/PEX/manufacturing result is implied."
+  ]
+}

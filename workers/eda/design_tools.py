@@ -29,6 +29,7 @@ import sar12
 import adc16
 import research
 import oscillator_projects
+import duet_afe
 
 S = None
 VERSION = 'register-design-tools-2'
@@ -249,6 +250,7 @@ CATALOG.update(sar12.CATALOG)
 adc16.populate_catalog()
 CATALOG.update(adc16.CATALOG)
 CATALOG.update(oscillator_projects.CATALOG)
+CATALOG.update(duet_afe.CATALOG)
 
 def catalog():
     return {'schema_version':1,'literature':research.inventory([dict(id=k,**v) for k,v in CATALOG.items()],digital_units.CATALOG),'templates':[{'id':key,**copy.deepcopy(value),'research':research.record(key),'limits':['Actual native schematic and public ngspice models; no commercial execution claim.','Empty layout is not physically verified.','Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library.']} for key,value in CATALOG.items()]}
@@ -256,6 +258,7 @@ def catalog():
 def _parameters(template,raw):
     if not isinstance(raw,dict) or set(raw)-set(CATALOG[template]['parameter_defaults']):raise EDAError('UNSUPPORTED_PARAMETER','Unknown template parameter.')
     values={**CATALOG[template]['parameter_defaults'],**raw}
+    if template in duet_afe.CATALOG:return duet_afe.parameters(values)
     for key,value in values.items():
         n=native.num(value)
         if key.endswith('_Ohm') and not 1<=n<=1e9:raise EDAError('PARAMETER_RANGE','Resistance must be 1..1e9 ohm.')
@@ -276,6 +279,7 @@ def _parameters(template,raw):
     return chip_references.parameters(template,values) if template in chip_references.CATALOG else values
 
 def _schematic(template,params):
+    if template in duet_afe.CATALOG:return duet_afe.schematic(params)
     if template in oscillator_projects.CATALOG:return oscillator_projects.schematic(template,params)
     if template in sar_adc.CATALOG:return sar_adc.schematic(template,params)
     if template in sar12.CATALOG:return sar12.schematic(template,params)
@@ -304,7 +308,7 @@ def _schematic(template,params):
     else:
         mos('mn1','MN1',{'D':'OUTP','G':'INP','S':'TAIL','B':'VGND'});mos('mn2','MN2',{'D':'OUTN','G':'INN','S':'TAIL','B':'VGND'});mos('mn3','MN3',{'D':'TAIL','G':'BIAS','S':'VGND','B':'VGND'})
     for port in CATALOG[template]['ports']:device('port_'+port,'PORT_'+port,'port',{'P':port},{})
-    return {'schema_version':1,'connectivity_mode':'explicit','devices':devices,'wires':[],'junctions':[],'cells':{}}
+    return {'schema_version':1,'connectivity_mode':'explicit','ports':list(CATALOG[template]['ports']),'devices':devices,'wires':[],'junctions':[],'cells':{}}
 
 def validate_template_project(p):
     meta=p.get('design_template')
@@ -316,8 +320,36 @@ def validate_template_project(p):
     if not validation['valid']:raise EDAError('INVALID_SCHEMATIC','Template native schematic has validation errors.',validation['issues'])
     return meta
 
+def template_preview(params):
+    """Read-only canonical circuit preview; never creates a project or verdict."""
+    require_keys(params,('template_id','name','parameters','chip_limits'))
+    kind=params.get('template_id')
+    if kind not in CATALOG:raise EDAError('UNSUPPORTED_TEMPLATE','Unknown supported template.')
+    values=_parameters(kind,params.get('parameters',{}));ir=_schematic(kind,values)
+    result=native.validate(ir)
+    if not result['valid']:raise EDAError('INVALID_SCHEMATIC','Preview circuit is invalid.',result['issues'])
+    flat=digital_units.flattened(ir)
+    if len(flat['devices'])>4096:raise EDAError('DESIGN_TOO_LARGE','Preview is bounded to 4096 primitive devices.')
+    text=native.emit(ir,kind,CATALOG[kind]['ports'])
+    if len(text.encode())>200000:raise EDAError('DESIGN_TOO_LARGE','Preview SPICE exceeds 200KB.')
+    name=params.get('name',CATALOG[kind]['name'])
+    if not isinstance(name,str) or not 1<=len(name)<=160 or any(ord(c)<32 for c in name):raise EDAError('INVALID_NAME','Project name must be bounded plain text.')
+    limits=floorplan.policy(params.get('chip_limits'))
+    counts={}
+    for d in flat['devices']:counts[d['kind']]=counts.get(d['kind'],0)+1
+    sources=['design_tools.py','native.py','duet_afe.py','analog_soc.py','chip_references.py','digital_units.py']
+    source_hash=digest({f:profile.sha(Path(__file__).parent/f) for f in sources})
+    logical_hash=digest(ir)
+    identity=dict(template_id=kind,name=name,parameters=values,chip_limits=limits,schematic_sha256=logical_hash,implementation_sha256=source_hash)
+    return dict(schema_version=1,**identity,preview_hash=digest(identity),ports=CATALOG[kind]['ports'],
+        root_cell=kind,device_count=len(flat['devices']),primitive_counts=counts,
+        net_count=len({n for d in flat['devices'] for n in d['pins'].values()}),
+        hierarchy=[dict(name=n,devices=len(cell['devices']),children=[d['cell_name'] for d in cell['devices'] if d['kind']=='block']) for n,cell in {kind:ir,**ir.get('cells',{})}.items()],
+        spice=text,layout_status='not-generated',physical_area_um2=None,engine_executed=False,
+        limits=['This creates a separate project only after approval.','Chip envelope is a constraint, not measured mask area.','No DRC/LVS/PEX/manufacturing result is implied.'])
+
 def create_template(params):
-    require_keys(params,('template_id','name','parameters','physical_core','command_id','starter_id','starter_mode','chip_limits'))
+    require_keys(params,('template_id','name','parameters','physical_core','command_id','starter_id','starter_mode','chip_limits','preview_hash'))
     template=params.get('template_id')
     if template not in CATALOG:raise EDAError('UNSUPPORTED_TEMPLATE','Unknown supported template.')
     starter=None
@@ -338,6 +370,9 @@ def create_template(params):
             return json.loads(rows[0][1])
         def action():
             values=_parameters(template,params.get('parameters',{}));physical=params.get('physical_core',False)
+            if 'preview_hash' in params:
+                preview=template_preview({key:params[key] for key in ('template_id','name','parameters','chip_limits') if key in params})
+                if physical or params['preview_hash']!=preview['preview_hash']:raise EDAError('STALE_TEMPLATE_PREVIEW','Template changed after preview; no project was created.')
             envelope=floorplan.policy(params['chip_limits']) if 'chip_limits' in params else None
             if not isinstance(physical,bool):raise EDAError('INVALID_PARAMETER','physical_core must be boolean.')
             new_physical=template in chip_references.CATALOG or template in physical_library.CATALOG or template in analog_soc.CATALOG
@@ -402,6 +437,9 @@ def create_template(params):
             if template in oscillator_projects.CATALOG:
                 p['testbench']=native.testbench(oscillator_projects.settings(template,values))
                 meta.update(reference_scope=CATALOG[template]['scope'],portfolio_reference=True,subsystem='oscillator-sensor-lab',startup='explicit-initial-conditions',phase_noise='not-measured')
+            if template in duet_afe.CATALOG:
+                p['testbench']=native.testbench(duet_afe.settings())
+                meta.update(reference_scope=duet_afe.CATALOG[template]['scope'],subsystem='dualband-sensor-afe',unverified=duet_afe.LIMITS,manufacturing_signoff=False)
             if starter:
                 p.update(testbench=copy.deepcopy(starter['testbench']),semiconductor_starter=copy.deepcopy(starter['metadata']))
             return S.commit(p,layout)
@@ -469,6 +507,7 @@ def spice_tb(p,folder,params,netlist):
         fields=line.split()
         if len(fields)>=2 and fields[0].lower()=='.subckt' and fields[1].lower()==p['cell'].lower():sub=fields[2:];break
     if sub is None or len(sub)!=len(p['ports']) or len(set(sub))!=len(sub) or set(sub)!=set(p['ports']):raise EDAError('PORT_MISMATCH','Actual emitted/extracted subcircuit ports differ from explicit template declarations.')
+    if meta['id'] in duet_afe.CATALOG:return duet_afe.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     if meta['id'] in oscillator_projects.CATALOG:return oscillator_projects.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     if meta['id'] in analog_soc.CATALOG:return analog_soc.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     if meta['id'] in chip_references.CATALOG:return chip_references.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
@@ -496,6 +535,8 @@ def measurements(p,run,params):
     if not p.get('design_template'):return
     meta=validate_template_project(p);waves={w['name']:w for w in run.get('waveforms',[])};m=run.setdefault('measurements',{});m['template_id']=meta['id'];m['layout_status']=meta['layout_status'];m['metric_source']='actual-ngspice-samples'
     analysis=params.get('analysis',p['testbench']['analysis']);kind=meta['id']
+    if kind in duet_afe.CATALOG:
+        duet_afe.measurements(p,run,params);return
     if kind in oscillator_projects.CATALOG:
         oscillator_projects.measurements(p,run,params);return
     if kind in analog_soc.CATALOG:
@@ -563,6 +604,7 @@ def floorplan_command(method,params):
     return S.mutate(method,params,action)
 
 def rpc(method,params):
+    if method=='design.template_preview':return template_preview(params)
     if method=='design.catalog':require_keys(params,());return catalog()
     if method=='design.create_template':return create_template(params)
     if method in ('design.floorplan_preview','design.floorplan_apply'):return floorplan_command(method,params)

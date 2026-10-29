@@ -82,3 +82,10 @@ scripts/requirements-paper-qa.txt text eol=lf
 # ADC16 checksums and native logs retain exact bytes on every developer OS.
 examples/adc16-lab/** -text whitespace=cr-at-eol,-blank-at-eof
 examples/adc16-lab/**/*.log -whitespace
+# DUET solver samples/manifests retain their captured bytes and checksums.
+examples/duet-afe/** -text whitespace=cr-at-eol,-blank-at-eof
+examples/duet-afe/**/*.dat binary
+examples/duet-afe/measured-results.svg -whitespace
+examples/duet-afe/README.md text eol=lf
+docs/evidence/duet-afe-20261029/** -text whitespace=cr-at-eol,-blank-at-eof
+docs/evidence/auto-design-20261029/** -text whitespace=cr-at-eol,-blank-at-eof

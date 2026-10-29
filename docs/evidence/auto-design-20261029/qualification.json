@@ -1,0 +1,1324 @@
+{
+  "schema_version": 1,
+  "edition": "indust",
+  "checked_at": "2026-10-29T00:33:24.515Z",
+  "design_id": "15d288f0-a465-4d31-8104-010b58bc4003",
+  "paid_api_calls": 0,
+  "models": {
+    "decision": {
+      "model": "gpt-6-luna",
+      "status": "completed",
+      "usage": {
+        "input_tokens": 797,
+        "output_tokens": 532,
+        "total_tokens": 1329
+      },
+      "budget_reservation": {
+        "id": "28915dcc-e596-4ed9-b516-1a5e79a23f57",
+        "reserved_usd": 0.002589
+      }
+    },
+    "proposal": {
+      "model": "gpt-6.1-sol",
+      "status": "completed",
+      "usage": {
+        "input_tokens": 1189,
+        "output_tokens": 750,
+        "total_tokens": 1939
+      },
+      "budget_reservation": {
+        "id": "49743a7e-7753-4b40-9447-33ede7835680",
+        "reserved_usd": 0.055256
+      }
+    }
+  },
+  "constraints": {
+    "supply_V": 1.8,
+    "corner": "tt",
+    "temperature_C": 27,
+    "max_candidates": 2,
+    "chip_limits": {
+      "width_um": 300,
+      "height_um": 300,
+      "max_area_um2": 90000,
+      "edge_um": 10
+    },
+    "targets": [
+      {
+        "metric": "slow_gain_V_per_V",
+        "analysis": "ac",
+        "unit": "V/V",
+        "min": 3.8,
+        "max": 4.2
+      },
+      {
+        "metric": "slow_bandwidth_Hz",
+        "analysis": "ac",
+        "unit": "Hz",
+        "min": 4000,
+        "max": 6000
+      },
+      {
+        "metric": "fast_bandwidth_Hz",
+        "analysis": "ac",
+        "unit": "Hz",
+        "min": 80000,
+        "max": 120000
+      },
+      {
+        "metric": "supply_power_W",
+        "analysis": "op",
+        "unit": "W",
+        "min": 0,
+        "max": 0.0005
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "index": 0,
+      "name": "후보 1 · 기본 바이어스·보상",
+      "parameters": {
+        "gain_V_per_V": 4,
+        "slow_cutoff_Hz": 5000,
+        "fast_cutoff_Hz": 100000,
+        "pole_F": 1e-10,
+        "compensation_F": 5e-12,
+        "nulling_Ohm": 5000,
+        "bias_resistance_Ohm": 30000
+      },
+      "project_id": "651a6d3eb6524ce3a06f70e929e15b3d",
+      "revision": 1,
+      "targets": [
+        {
+          "metric": "slow_gain_V_per_V",
+          "analysis": "ac",
+          "unit": "V/V",
+          "min": 3.8,
+          "max": 4.2,
+          "observed": 4.0052431331762675,
+          "status": "met"
+        },
+        {
+          "metric": "slow_bandwidth_Hz",
+          "analysis": "ac",
+          "unit": "Hz",
+          "min": 4000,
+          "max": 6000,
+          "observed": 4997.0646647219555,
+          "status": "met"
+        },
+        {
+          "metric": "fast_bandwidth_Hz",
+          "analysis": "ac",
+          "unit": "Hz",
+          "min": 80000,
+          "max": 120000,
+          "observed": 99762.7828566656,
+          "status": "met"
+        },
+        {
+          "metric": "supply_power_W",
+          "analysis": "op",
+          "unit": "W",
+          "min": 0,
+          "max": 0.0005,
+          "observed": 0.0004334550642149368,
+          "status": "met"
+        }
+      ],
+      "preview_hash": "f6d2258da47ceb976ea019d1bff8a7d20880991d6371be968cffde6706578e69",
+      "primitive_counts": {
+        "nmos": 25,
+        "resistor": 11,
+        "capacitor": 7,
+        "pmos": 12
+      },
+      "archive_sha256": "ba944ed9cfb46107e6729e952bc7601b8d862a3e8de35966ecec7ad29325815f",
+      "bundle_roundtrip": {
+        "new_project": true,
+        "inherited_runs": 0
+      },
+      "physical_guards": [
+        {
+          "method": "verification.run_drc",
+          "code": "NO_PHYSICAL_LAYOUT"
+        },
+        {
+          "method": "verification.run_lvs",
+          "code": "NO_PHYSICAL_LAYOUT"
+        },
+        {
+          "method": "extraction.run_pex",
+          "code": "NO_PHYSICAL_LAYOUT"
+        }
+      ],
+      "jobs": [
+        {
+          "analysis": "op",
+          "id": "25705ab9db624fc9aca957f8b5ae17ac",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "measurements": {
+            "analysis": "op",
+            "x_unit": "point",
+            "x_label": "operating point",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 1,
+            "solver": "SPARSE 1.3",
+            "VIN_min": 0.9,
+            "VIN_max": 0.9,
+            "PRE_OUT_min": 0.8997098865555297,
+            "PRE_OUT_max": 0.8997098865555297,
+            "SLOW_min": 0.8994194638834667,
+            "SLOW_max": 0.8994194638834667,
+            "FAST_min": 0.8994194638834632,
+            "FAST_max": 0.8994194638834632,
+            "VCM_min": 0.8997098865555311,
+            "VCM_max": 0.8997098865555311,
+            "BIAS_min": 0.9293638427659658,
+            "BIAS_max": 0.9293638427659658,
+            "supply_current_min": 0.00024080836900829822,
+            "supply_current_max": 0.00024080836900829822,
+            "current_flow_status": "available",
+            "template_id": "sensor_afe_dualband",
+            "layout_status": "not-generated",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "DUET-AFE directed schematic criteria only.",
+            "unverified": [
+              "Schematic research prototype; no novelty or product-performance claim.",
+              "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+              "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+            ],
+            "supply_current_A": 0.00024080836900829822,
+            "supply_power_W": 0.0004334550642149368
+          },
+          "reference_verification": {
+            "schema_version": 1,
+            "kind": "sensor_afe_dualband",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "PRE_OUT DC within 50mV of VDD/2",
+                "pass": true,
+                "observed": 0.8997098865555297
+              },
+              {
+                "name": "SLOW DC within 50mV of VDD/2",
+                "pass": true,
+                "observed": 0.8994194638834667
+              },
+              {
+                "name": "FAST DC within 50mV of VDD/2",
+                "pass": true,
+                "observed": 0.8994194638834632
+              },
+              {
+                "name": "Nonnegative finite DC supply power",
+                "pass": true,
+                "observed": 0.0004334550642149368
+              }
+            ],
+            "scope": "DUET-AFE directed schematic criteria only.",
+            "pass": true
+          }
+        },
+        {
+          "analysis": "ac",
+          "id": "5ae3417eb0a94bac96d342f6dde39c2d",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "measurements": {
+            "analysis": "ac",
+            "x_unit": "Hz",
+            "x_label": "frequency",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 561,
+            "solver": "SPARSE 1.3",
+            "SLOW_gain_min": 0.00017153919456851704,
+            "SLOW_gain_max": 4.0052431331762675,
+            "FAST_gain_min": 0.0005787632736190152,
+            "FAST_gain_max": 4.005251127154343,
+            "PRE_gain_min": 0.16445582406007606,
+            "PRE_gain_max": 4.001377895128023,
+            "current_flow_status": "unsupported_complex_ac",
+            "template_id": "sensor_afe_dualband",
+            "layout_status": "not-generated",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "DUET-AFE directed schematic criteria only.",
+            "unverified": [
+              "Schematic research prototype; no novelty or product-performance claim.",
+              "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+              "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+            ],
+            "slow_gain_V_per_V": 4.0052431331762675,
+            "slow_bandwidth_Hz": 4997.0646647219555,
+            "fast_gain_V_per_V": 4.005251127154343,
+            "fast_bandwidth_Hz": 99762.7828566656
+          },
+          "reference_verification": {
+            "schema_version": 1,
+            "kind": "sensor_afe_dualband",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "SLOW low-frequency gain within 5%",
+                "pass": true,
+                "observed": 4.0052431331762675
+              },
+              {
+                "name": "SLOW bandwidth within 20% of requested RC pole",
+                "pass": true,
+                "observed": 4997.0646647219555
+              },
+              {
+                "name": "FAST low-frequency gain within 5%",
+                "pass": true,
+                "observed": 4.005251127154343
+              },
+              {
+                "name": "FAST bandwidth within 20% of requested RC pole",
+                "pass": true,
+                "observed": 99762.7828566656
+              }
+            ],
+            "scope": "DUET-AFE directed schematic criteria only.",
+            "pass": true
+          }
+        },
+        {
+          "analysis": "tran",
+          "id": "469c8c5d5195489f917e48ff0091f148",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "measurements": {
+            "analysis": "tran",
+            "x_unit": "s",
+            "x_label": "time",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 16008,
+            "solver": "SPARSE 1.3",
+            "VIN_min": 0.8900609966113092,
+            "VIN_max": 0.9099389937572002,
+            "PRE_OUT_min": 0.8599425500800246,
+            "PRE_OUT_max": 0.9394720869522362,
+            "SLOW_min": 0.8834120336052931,
+            "SLOW_max": 0.9167171720100634,
+            "FAST_min": 0.8617347763341912,
+            "FAST_max": 0.9370660793972219,
+            "VCM_min": 0.8997068099079049,
+            "VCM_max": 0.8997868372627493,
+            "BIAS_min": 0.9293631820977525,
+            "BIAS_max": 0.9293656952529803,
+            "supply_current_min": 0.00023761582442271417,
+            "supply_current_max": 0.0002437124350769121,
+            "current_flow_status": "available",
+            "template_id": "sensor_afe_dualband",
+            "layout_status": "not-generated",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "DUET-AFE directed schematic criteria only.",
+            "unverified": [
+              "Schematic research prototype; no novelty or product-performance claim.",
+              "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+              "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+            ],
+            "vin_two_tone": {
+              "mean_V": 0.9,
+              "tone_5k_V": 0.004999998972056448,
+              "tone_50k_V": 0.004999897206481763,
+              "residual_rms_V": 3.253095229183779e-8
+            },
+            "slow_two_tone": {
+              "mean_V": 0.8994195083028387,
+              "tone_5k_V": 0.014156798694412467,
+              "tone_50k_V": 0.0019920750010969115,
+              "residual_rms_V": 6.217709894627771e-7
+            },
+            "fast_two_tone": {
+              "mean_V": 0.8994184188496585,
+              "tone_5k_V": 0.01999796478601361,
+              "tone_50k_V": 0.01791081277736931,
+              "residual_rms_V": 0.000006054486886610116
+            },
+            "fast_to_slow_50k_ratio": 8.991033353416384,
+            "supply_current_A": 0.00024075565957817742,
+            "supply_power_W": 0.00043336018724071933,
+            "research_metrics": {
+              "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+              "input_drivers_power": "not measured",
+              "external_bias_power": "not measured",
+              "complete_system_power_available": false,
+              "supply": {
+                "available": true,
+                "start_s": 0,
+                "end_s": 0.0008,
+                "energy_J": 3.4671677278691474e-7,
+                "average_current_A": 0.0002407755366575797,
+                "peak_current_A": 0.0002437124350769121,
+                "minimum_current_A": 0.00023761582442271417,
+                "average_power_W": 0.00043339596598364344,
+                "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+                "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+              }
+            }
+          },
+          "reference_verification": {
+            "schema_version": 1,
+            "kind": "sensor_afe_dualband",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "SLOW settled signal within rails",
+                "pass": true,
+                "observed": [
+                  0.8834120336052931,
+                  0.9153828192975031
+                ]
+              },
+              {
+                "name": "SLOW two-tone residual below 5mV",
+                "pass": true,
+                "observed": 6.217709894627771e-7
+              },
+              {
+                "name": "FAST settled signal within rails",
+                "pass": true,
+                "observed": [
+                  0.8617347763341912,
+                  0.9370650442908309
+                ]
+              },
+              {
+                "name": "FAST two-tone residual below 5mV",
+                "pass": true,
+                "observed": 0.000006054486886610116
+              },
+              {
+                "name": "50kHz fast/slow amplitude separation greater than 3",
+                "pass": true,
+                "observed": 8.991033353416384
+              }
+            ],
+            "scope": "DUET-AFE directed schematic criteria only.",
+            "pass": true
+          }
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "name": "후보 2 · 높은 바이어스 저항·증가된 보상",
+      "parameters": {
+        "gain_V_per_V": 4,
+        "slow_cutoff_Hz": 5000,
+        "fast_cutoff_Hz": 100000,
+        "pole_F": 1e-10,
+        "compensation_F": 8e-12,
+        "nulling_Ohm": 5000,
+        "bias_resistance_Ohm": 40000
+      },
+      "project_id": "c5f0bcd91b30406cb9f5c1e4eace6539",
+      "revision": 1,
+      "targets": [
+        {
+          "metric": "slow_gain_V_per_V",
+          "analysis": "ac",
+          "unit": "V/V",
+          "min": 3.8,
+          "max": 4.2,
+          "observed": 4.003248661111383,
+          "status": "met"
+        },
+        {
+          "metric": "slow_bandwidth_Hz",
+          "analysis": "ac",
+          "unit": "Hz",
+          "min": 4000,
+          "max": 6000,
+          "observed": 4997.233905164124,
+          "status": "met"
+        },
+        {
+          "metric": "fast_bandwidth_Hz",
+          "analysis": "ac",
+          "unit": "Hz",
+          "min": 80000,
+          "max": 120000,
+          "observed": 99457.71242473688,
+          "status": "met"
+        },
+        {
+          "metric": "supply_power_W",
+          "analysis": "op",
+          "unit": "W",
+          "min": 0,
+          "max": 0.0005,
+          "observed": 0.00035312731460784564,
+          "status": "met"
+        }
+      ],
+      "preview_hash": "24d9a3ccfd83bf9994b56c03a9370adddc514bf02c8e153ba8e09cb5b9c6b679",
+      "primitive_counts": {
+        "nmos": 25,
+        "resistor": 11,
+        "capacitor": 7,
+        "pmos": 12
+      },
+      "archive_sha256": "92f3aff0068a8879d0367b42f73960c476106ab2e8529636acf3225bca502ca4",
+      "bundle_roundtrip": {
+        "new_project": true,
+        "inherited_runs": 0
+      },
+      "physical_guards": [
+        {
+          "method": "verification.run_drc",
+          "code": "NO_PHYSICAL_LAYOUT"
+        },
+        {
+          "method": "verification.run_lvs",
+          "code": "NO_PHYSICAL_LAYOUT"
+        },
+        {
+          "method": "extraction.run_pex",
+          "code": "NO_PHYSICAL_LAYOUT"
+        }
+      ],
+      "jobs": [
+        {
+          "analysis": "op",
+          "id": "4faf8dc7112c41e9a34ff6fe14cfc192",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "measurements": {
+            "analysis": "op",
+            "x_unit": "point",
+            "x_label": "operating point",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 1,
+            "solver": "SPARSE 1.3",
+            "VIN_min": 0.9,
+            "VIN_max": 0.9,
+            "PRE_OUT_min": 0.8997831263948222,
+            "PRE_OUT_max": 0.8997831263948222,
+            "SLOW_min": 0.8995660721139842,
+            "SLOW_max": 0.8995660721139842,
+            "FAST_min": 0.8995660721139878,
+            "FAST_max": 0.8995660721139878,
+            "VCM_min": 0.8997831263948232,
+            "VCM_max": 0.8997831263948232,
+            "BIAS_min": 0.8885910852111768,
+            "BIAS_max": 0.8885910852111768,
+            "supply_current_min": 0.00019618184144880313,
+            "supply_current_max": 0.00019618184144880313,
+            "current_flow_status": "available",
+            "template_id": "sensor_afe_dualband",
+            "layout_status": "not-generated",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "DUET-AFE directed schematic criteria only.",
+            "unverified": [
+              "Schematic research prototype; no novelty or product-performance claim.",
+              "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+              "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+            ],
+            "supply_current_A": 0.00019618184144880313,
+            "supply_power_W": 0.00035312731460784564
+          },
+          "reference_verification": {
+            "schema_version": 1,
+            "kind": "sensor_afe_dualband",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "PRE_OUT DC within 50mV of VDD/2",
+                "pass": true,
+                "observed": 0.8997831263948222
+              },
+              {
+                "name": "SLOW DC within 50mV of VDD/2",
+                "pass": true,
+                "observed": 0.8995660721139842
+              },
+              {
+                "name": "FAST DC within 50mV of VDD/2",
+                "pass": true,
+                "observed": 0.8995660721139878
+              },
+              {
+                "name": "Nonnegative finite DC supply power",
+                "pass": true,
+                "observed": 0.00035312731460784564
+              }
+            ],
+            "scope": "DUET-AFE directed schematic criteria only.",
+            "pass": true
+          }
+        },
+        {
+          "analysis": "ac",
+          "id": "2ee41beadf3b43b18d9da2dfc50355ab",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "measurements": {
+            "analysis": "ac",
+            "x_unit": "Hz",
+            "x_label": "frequency",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 561,
+            "solver": "SPARSE 1.3",
+            "SLOW_gain_min": 0.00012077931076016091,
+            "SLOW_gain_max": 4.003248661111383,
+            "FAST_gain_min": 0.0004079656794614301,
+            "FAST_gain_max": 4.003256650920388,
+            "PRE_gain_min": 0.10160969941992067,
+            "PRE_gain_max": 4.004566015875097,
+            "current_flow_status": "unsupported_complex_ac",
+            "template_id": "sensor_afe_dualband",
+            "layout_status": "not-generated",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "DUET-AFE directed schematic criteria only.",
+            "unverified": [
+              "Schematic research prototype; no novelty or product-performance claim.",
+              "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+              "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+            ],
+            "slow_gain_V_per_V": 4.003248661111383,
+            "slow_bandwidth_Hz": 4997.233905164124,
+            "fast_gain_V_per_V": 4.003256650920388,
+            "fast_bandwidth_Hz": 99457.71242473688
+          },
+          "reference_verification": {
+            "schema_version": 1,
+            "kind": "sensor_afe_dualband",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "SLOW low-frequency gain within 5%",
+                "pass": true,
+                "observed": 4.003248661111383
+              },
+              {
+                "name": "SLOW bandwidth within 20% of requested RC pole",
+                "pass": true,
+                "observed": 4997.233905164124
+              },
+              {
+                "name": "FAST low-frequency gain within 5%",
+                "pass": true,
+                "observed": 4.003256650920388
+              },
+              {
+                "name": "FAST bandwidth within 20% of requested RC pole",
+                "pass": true,
+                "observed": 99457.71242473688
+              }
+            ],
+            "scope": "DUET-AFE directed schematic criteria only.",
+            "pass": true
+          }
+        },
+        {
+          "analysis": "tran",
+          "id": "c39ef6a9d4b24679a1a76fed574894c0",
+          "execution_status": "completed",
+          "analysis_result": "pass",
+          "measurements": {
+            "analysis": "tran",
+            "x_unit": "s",
+            "x_label": "time",
+            "corner": "tt",
+            "temperature_C": 27,
+            "supply_V": 1.8,
+            "post_layout": "false",
+            "samples": 16008,
+            "solver": "SPARSE 1.3",
+            "VIN_min": 0.8900609966113092,
+            "VIN_max": 0.9099389937572002,
+            "PRE_OUT_min": 0.8600053303119694,
+            "PRE_OUT_max": 0.9395543567391011,
+            "SLOW_min": 0.8835643412795545,
+            "SLOW_max": 0.9168569290385703,
+            "FAST_min": 0.8618825569948749,
+            "FAST_max": 0.9372100808300985,
+            "VCM_min": 0.8997782193344872,
+            "VCM_max": 0.8998180883212252,
+            "BIAS_min": 0.8885908778700707,
+            "BIAS_max": 0.8885918466548604,
+            "supply_current_min": 0.0001938355681831358,
+            "supply_current_max": 0.00019825740597299857,
+            "current_flow_status": "available",
+            "template_id": "sensor_afe_dualband",
+            "layout_status": "not-generated",
+            "metric_source": "actual-ngspice-samples",
+            "reference_scope": "DUET-AFE directed schematic criteria only.",
+            "unverified": [
+              "Schematic research prototype; no novelty or product-performance claim.",
+              "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+              "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+            ],
+            "vin_two_tone": {
+              "mean_V": 0.9,
+              "tone_5k_V": 0.004999998972056448,
+              "tone_50k_V": 0.004999897206481763,
+              "residual_rms_V": 3.253095229183779e-8
+            },
+            "slow_two_tone": {
+              "mean_V": 0.8995657167915971,
+              "tone_5k_V": 0.01414997844826895,
+              "tone_50k_V": 0.001992901115523319,
+              "residual_rms_V": 8.469673267272654e-7
+            },
+            "fast_two_tone": {
+              "mean_V": 0.8995646291342168,
+              "tone_5k_V": 0.019988238821514098,
+              "tone_50k_V": 0.017918097569110208,
+              "residual_rms_V": 0.000009081304669545616
+            },
+            "fast_to_slow_50k_ratio": 8.990961683718597,
+            "supply_current_A": 0.00019613062357501065,
+            "supply_power_W": 0.0003530351224350192,
+            "research_metrics": {
+              "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+              "input_drivers_power": "not measured",
+              "external_bias_power": "not measured",
+              "complete_system_power_available": false,
+              "supply": {
+                "available": true,
+                "start_s": 0,
+                "end_s": 0.0008,
+                "energy_J": 2.8244628386427786e-7,
+                "average_current_A": 0.00019614325268352628,
+                "peak_current_A": 0.00019825740597299857,
+                "minimum_current_A": 0.0001938355681831358,
+                "average_power_W": 0.0003530578548303473,
+                "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+                "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+              }
+            }
+          },
+          "reference_verification": {
+            "schema_version": 1,
+            "kind": "sensor_afe_dualband",
+            "source": "actual-ngspice-samples",
+            "checks": [
+              {
+                "name": "SLOW settled signal within rails",
+                "pass": true,
+                "observed": [
+                  0.8835643412795545,
+                  0.9155234083388895
+                ]
+              },
+              {
+                "name": "SLOW two-tone residual below 5mV",
+                "pass": true,
+                "observed": 8.469673267272654e-7
+              },
+              {
+                "name": "FAST settled signal within rails",
+                "pass": true,
+                "observed": [
+                  0.8618825569948749,
+                  0.9372089912344461
+                ]
+              },
+              {
+                "name": "FAST two-tone residual below 5mV",
+                "pass": true,
+                "observed": 0.000009081304669545616
+              },
+              {
+                "name": "50kHz fast/slow amplitude separation greater than 3",
+                "pass": true,
+                "observed": 8.990961683718597
+              }
+            ],
+            "scope": "DUET-AFE directed schematic criteria only.",
+            "pass": true
+          }
+        }
+      ]
+    }
+  ],
+  "extra_pvt": [
+    {
+      "condition": {
+        "corner": "ss",
+        "supply_V": 1.6,
+        "temperature_C": 85,
+        "analysis": "op"
+      },
+      "id": "37cdf5c8af8742e9934a8c3c13aaa1e1",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "op",
+        "x_unit": "point",
+        "x_label": "operating point",
+        "corner": "ss",
+        "temperature_C": 85,
+        "supply_V": 1.6,
+        "post_layout": "false",
+        "samples": 1,
+        "solver": "SPARSE 1.3",
+        "VIN_min": 0.8,
+        "VIN_max": 0.8,
+        "PRE_OUT_min": 0.7995813626696773,
+        "PRE_OUT_max": 0.7995813626696773,
+        "SLOW_min": 0.7991620317848458,
+        "SLOW_max": 0.7991620317848458,
+        "FAST_min": 0.7991620317848422,
+        "FAST_max": 0.7991620317848422,
+        "VCM_min": 0.7995813626696773,
+        "VCM_max": 0.7995813626696773,
+        "BIAS_min": 0.8844294438253497,
+        "BIAS_max": 0.8844294438253497,
+        "supply_current_min": 0.0001431253034240229,
+        "supply_current_max": 0.0001431253034240229,
+        "current_flow_status": "available",
+        "template_id": "sensor_afe_dualband",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "DUET-AFE directed schematic criteria only.",
+        "unverified": [
+          "Schematic research prototype; no novelty or product-performance claim.",
+          "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+          "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+        ],
+        "supply_current_A": 0.0001431253034240229,
+        "supply_power_W": 0.00022900048547843668
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "sensor_afe_dualband",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "PRE_OUT DC within 50mV of VDD/2",
+            "pass": true,
+            "observed": 0.7995813626696773
+          },
+          {
+            "name": "SLOW DC within 50mV of VDD/2",
+            "pass": true,
+            "observed": 0.7991620317848458
+          },
+          {
+            "name": "FAST DC within 50mV of VDD/2",
+            "pass": true,
+            "observed": 0.7991620317848422
+          },
+          {
+            "name": "Nonnegative finite DC supply power",
+            "pass": true,
+            "observed": 0.00022900048547843668
+          }
+        ],
+        "scope": "DUET-AFE directed schematic criteria only.",
+        "pass": true
+      },
+      "manifest_sha256": "3a0849ac3ef1bad9f32c06d2409f9da3d1f4dad330332f1f2d02186c11a7ba34"
+    },
+    {
+      "condition": {
+        "corner": "ss",
+        "supply_V": 1.6,
+        "temperature_C": 85,
+        "analysis": "ac"
+      },
+      "id": "809e9790ab6a41729f455ee16962ecf5",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "ac",
+        "x_unit": "Hz",
+        "x_label": "frequency",
+        "corner": "ss",
+        "temperature_C": 85,
+        "supply_V": 1.6,
+        "post_layout": "false",
+        "samples": 561,
+        "solver": "SPARSE 1.3",
+        "SLOW_gain_min": 0.000021296028252355564,
+        "SLOW_gain_max": 4.00772803695104,
+        "FAST_gain_min": 0.00006321128488214134,
+        "FAST_gain_max": 4.007736036220522,
+        "PRE_gain_min": 0.03780222729854879,
+        "PRE_gain_max": 4.012083913656235,
+        "current_flow_status": "unsupported_complex_ac",
+        "template_id": "sensor_afe_dualband",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "DUET-AFE directed schematic criteria only.",
+        "unverified": [
+          "Schematic research prototype; no novelty or product-performance claim.",
+          "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+          "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+        ],
+        "slow_gain_V_per_V": 4.00772803695104,
+        "slow_bandwidth_Hz": 4996.604080670979,
+        "fast_gain_V_per_V": 4.007736036220522,
+        "fast_bandwidth_Hz": 98278.51081060478
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "sensor_afe_dualband",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "SLOW low-frequency gain within 5%",
+            "pass": true,
+            "observed": 4.00772803695104
+          },
+          {
+            "name": "SLOW bandwidth within 20% of requested RC pole",
+            "pass": true,
+            "observed": 4996.604080670979
+          },
+          {
+            "name": "FAST low-frequency gain within 5%",
+            "pass": true,
+            "observed": 4.007736036220522
+          },
+          {
+            "name": "FAST bandwidth within 20% of requested RC pole",
+            "pass": true,
+            "observed": 98278.51081060478
+          }
+        ],
+        "scope": "DUET-AFE directed schematic criteria only.",
+        "pass": true
+      },
+      "manifest_sha256": "2dd8b79e438fd1dde48e5402c7fc42a3506c762e665f9aeeb96af32a5d2f1980"
+    },
+    {
+      "condition": {
+        "corner": "ss",
+        "supply_V": 1.6,
+        "temperature_C": 85,
+        "analysis": "tran"
+      },
+      "id": "5b15a57aa6f045e1a8554663e6c880fe",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ss",
+        "temperature_C": 85,
+        "supply_V": 1.6,
+        "post_layout": "false",
+        "samples": 16008,
+        "solver": "SPARSE 1.3",
+        "VIN_min": 0.7900609966113092,
+        "VIN_max": 0.8099389937572002,
+        "PRE_OUT_min": 0.7597565001892912,
+        "PRE_OUT_max": 0.8393951795985228,
+        "SLOW_min": 0.7831418654212314,
+        "SLOW_max": 0.8164760276674325,
+        "FAST_min": 0.7614088517562398,
+        "FAST_max": 0.8368708438830887,
+        "VCM_min": 0.7995731329849172,
+        "VCM_max": 0.7998302548469092,
+        "BIAS_min": 0.8844282476676383,
+        "BIAS_max": 0.8844356789359082,
+        "supply_current_min": 0.00014059246807366504,
+        "supply_current_max": 0.00014552875006448168,
+        "current_flow_status": "available",
+        "template_id": "sensor_afe_dualband",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "DUET-AFE directed schematic criteria only.",
+        "unverified": [
+          "Schematic research prototype; no novelty or product-performance claim.",
+          "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+          "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+        ],
+        "vin_two_tone": {
+          "mean_V": 0.8,
+          "tone_5k_V": 0.00499999897205645,
+          "tone_50k_V": 0.004999897206481763,
+          "residual_rms_V": 3.2530952291152256e-8
+        },
+        "slow_two_tone": {
+          "mean_V": 0.799163686314045,
+          "tone_5k_V": 0.01416507243413364,
+          "tone_50k_V": 0.001997963637617544,
+          "residual_rms_V": 0.0000025474841178492306
+        },
+        "fast_two_tone": {
+          "mean_V": 0.7991622348971991,
+          "tone_5k_V": 0.020009856744597283,
+          "tone_50k_V": 0.017964014048576168,
+          "residual_rms_V": 0.000029614139423298124
+        },
+        "fast_to_slow_50k_ratio": 8.991161655973487,
+        "supply_current_A": 0.0001430992081738453,
+        "supply_power_W": 0.00022895873307815246,
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 0,
+            "end_s": 0.0008,
+            "energy_J": 1.831865408324457e-7,
+            "average_current_A": 0.00014311448502534818,
+            "peak_current_A": 0.00014552875006448168,
+            "minimum_current_A": 0.00014059246807366504,
+            "average_power_W": 0.00022898317604055712,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "sensor_afe_dualband",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "SLOW settled signal within rails",
+            "pass": true,
+            "observed": [
+              0.7831418654212314,
+              0.8151408324248328
+            ]
+          },
+          {
+            "name": "SLOW two-tone residual below 5mV",
+            "pass": true,
+            "observed": 0.0000025474841178492306
+          },
+          {
+            "name": "FAST settled signal within rails",
+            "pass": true,
+            "observed": [
+              0.7614088517562398,
+              0.836869188279962
+            ]
+          },
+          {
+            "name": "FAST two-tone residual below 5mV",
+            "pass": true,
+            "observed": 0.000029614139423298124
+          },
+          {
+            "name": "50kHz fast/slow amplitude separation greater than 3",
+            "pass": true,
+            "observed": 8.991161655973487
+          }
+        ],
+        "scope": "DUET-AFE directed schematic criteria only.",
+        "pass": true
+      },
+      "manifest_sha256": "fd65f4043197064e5da98b1e4f6bd9f00a9dbcd012fb95c4606fe9e2e6d5dbf5"
+    },
+    {
+      "condition": {
+        "corner": "ff",
+        "supply_V": 1.8,
+        "temperature_C": -40,
+        "analysis": "op"
+      },
+      "id": "277f66ad4e614d82a4b3282ebe3e21f0",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "op",
+        "x_unit": "point",
+        "x_label": "operating point",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 1,
+        "solver": "SPARSE 1.3",
+        "VIN_min": 0.9,
+        "VIN_max": 0.9,
+        "PRE_OUT_min": 0.8998230818161324,
+        "PRE_OUT_max": 0.8998230818161324,
+        "SLOW_min": 0.8996460734517271,
+        "SLOW_max": 0.8996460734517271,
+        "FAST_min": 0.8996460734517253,
+        "FAST_max": 0.8996460734517253,
+        "VCM_min": 0.899823081816132,
+        "VCM_max": 0.899823081816132,
+        "BIAS_min": 0.862541968039087,
+        "BIAS_max": 0.862541968039087,
+        "supply_current_min": 0.0002047084249738526,
+        "supply_current_max": 0.0002047084249738526,
+        "current_flow_status": "available",
+        "template_id": "sensor_afe_dualband",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "DUET-AFE directed schematic criteria only.",
+        "unverified": [
+          "Schematic research prototype; no novelty or product-performance claim.",
+          "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+          "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+        ],
+        "supply_current_A": 0.0002047084249738526,
+        "supply_power_W": 0.0003684751649529347
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "sensor_afe_dualband",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "PRE_OUT DC within 50mV of VDD/2",
+            "pass": true,
+            "observed": 0.8998230818161324
+          },
+          {
+            "name": "SLOW DC within 50mV of VDD/2",
+            "pass": true,
+            "observed": 0.8996460734517271
+          },
+          {
+            "name": "FAST DC within 50mV of VDD/2",
+            "pass": true,
+            "observed": 0.8996460734517253
+          },
+          {
+            "name": "Nonnegative finite DC supply power",
+            "pass": true,
+            "observed": 0.0003684751649529347
+          }
+        ],
+        "scope": "DUET-AFE directed schematic criteria only.",
+        "pass": true
+      },
+      "manifest_sha256": "39fd9964c38ab1a234ff8bf85e6fd0e40a8fdb9e961fad8029cf9d3a622e2875"
+    },
+    {
+      "condition": {
+        "corner": "ff",
+        "supply_V": 1.8,
+        "temperature_C": -40,
+        "analysis": "ac"
+      },
+      "id": "49d8e9af8c02479b8534c92b8a6102be",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "ac",
+        "x_unit": "Hz",
+        "x_label": "frequency",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 561,
+        "solver": "SPARSE 1.3",
+        "SLOW_gain_min": 0.00017803049400414315,
+        "SLOW_gain_max": 4.0013142807674384,
+        "FAST_gain_min": 0.0006651331873286514,
+        "FAST_gain_max": 4.001322266647267,
+        "PRE_gain_min": 0.19447886254812863,
+        "PRE_gain_max": 3.9999485518124414,
+        "current_flow_status": "unsupported_complex_ac",
+        "template_id": "sensor_afe_dualband",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "DUET-AFE directed schematic criteria only.",
+        "unverified": [
+          "Schematic research prototype; no novelty or product-performance claim.",
+          "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+          "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+        ],
+        "slow_gain_V_per_V": 4.0013142807674384,
+        "slow_bandwidth_Hz": 4997.414483115166,
+        "fast_gain_V_per_V": 4.001322266647267,
+        "fast_bandwidth_Hz": 99372.2870241885
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "sensor_afe_dualband",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "SLOW low-frequency gain within 5%",
+            "pass": true,
+            "observed": 4.0013142807674384
+          },
+          {
+            "name": "SLOW bandwidth within 20% of requested RC pole",
+            "pass": true,
+            "observed": 4997.414483115166
+          },
+          {
+            "name": "FAST low-frequency gain within 5%",
+            "pass": true,
+            "observed": 4.001322266647267
+          },
+          {
+            "name": "FAST bandwidth within 20% of requested RC pole",
+            "pass": true,
+            "observed": 99372.2870241885
+          }
+        ],
+        "scope": "DUET-AFE directed schematic criteria only.",
+        "pass": true
+      },
+      "manifest_sha256": "83d428be2b5c83f3e218683f6718d8954206abbbc5acabedbcf14f35d63645ff"
+    },
+    {
+      "condition": {
+        "corner": "ff",
+        "supply_V": 1.8,
+        "temperature_C": -40,
+        "analysis": "tran"
+      },
+      "id": "36abf1a037be42d997f6fcd40bf90546",
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 16008,
+        "solver": "SPARSE 1.3",
+        "VIN_min": 0.8900609966113092,
+        "VIN_max": 0.9099389937572002,
+        "PRE_OUT_min": 0.8600705104895272,
+        "PRE_OUT_max": 0.9395699685373904,
+        "SLOW_min": 0.8836533455027765,
+        "SLOW_max": 0.9169267448118121,
+        "FAST_min": 0.8619965007130537,
+        "FAST_max": 0.9372561864070101,
+        "VCM_min": 0.8998195833001071,
+        "VCM_max": 0.8998483017983019,
+        "BIAS_min": 0.8625417788623438,
+        "BIAS_max": 0.8625425059410661,
+        "supply_current_min": 0.00020245069928691295,
+        "supply_current_max": 0.00020660286587982635,
+        "current_flow_status": "available",
+        "template_id": "sensor_afe_dualband",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "reference_scope": "DUET-AFE directed schematic criteria only.",
+        "unverified": [
+          "Schematic research prototype; no novelty or product-performance claim.",
+          "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+          "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+        ],
+        "vin_two_tone": {
+          "mean_V": 0.9,
+          "tone_5k_V": 0.004999998972056448,
+          "tone_50k_V": 0.004999897206481763,
+          "residual_rms_V": 3.253095229183779e-8
+        },
+        "slow_two_tone": {
+          "mean_V": 0.8996455326482318,
+          "tone_5k_V": 0.014143407160766503,
+          "tone_50k_V": 0.0019901540940699624,
+          "residual_rms_V": 6.562929440430311e-7
+        },
+        "fast_two_tone": {
+          "mean_V": 0.8996443924746845,
+          "tone_5k_V": 0.019978983724332103,
+          "tone_50k_V": 0.017893394508596346,
+          "residual_rms_V": 0.000006400419399528753
+        },
+        "fast_to_slow_50k_ratio": 8.990959324161416,
+        "supply_current_A": 0.00020464022929721722,
+        "supply_power_W": 0.000368352412734991,
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 0,
+            "end_s": 0.0008,
+            "energy_J": 2.946980158786679e-7,
+            "average_current_A": 0.00020465139991574158,
+            "peak_current_A": 0.00020660286587982635,
+            "minimum_current_A": 0.00020245069928691295,
+            "average_power_W": 0.00036837251984833485,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "sensor_afe_dualband",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "SLOW settled signal within rails",
+            "pass": true,
+            "observed": [
+              0.8836533455027765,
+              0.9155939248611585
+            ]
+          },
+          {
+            "name": "SLOW two-tone residual below 5mV",
+            "pass": true,
+            "observed": 6.562929440430311e-7
+          },
+          {
+            "name": "FAST settled signal within rails",
+            "pass": true,
+            "observed": [
+              0.8619965007130537,
+              0.9372552901506789
+            ]
+          },
+          {
+            "name": "FAST two-tone residual below 5mV",
+            "pass": true,
+            "observed": 0.000006400419399528753
+          },
+          {
+            "name": "50kHz fast/slow amplitude separation greater than 3",
+            "pass": true,
+            "observed": 8.990959324161416
+          }
+        ],
+        "scope": "DUET-AFE directed schematic criteria only.",
+        "pass": true
+      },
+      "manifest_sha256": "b6d331620e6d4b0f2bd43198be056c7ccfad509b5aca0312cd5489f07753194a"
+    }
+  ],
+  "completed": true,
+  "foundry_signoff": false,
+  "physical_layout_generated": false,
+  "selected_candidate_index": 1,
+  "dc_power_reduction_vs_first": 0.18531967033902075,
+  "all_extra_directed_criteria_passed": true,
+  "source_sha256": {
+    "scripts/auto-design.mjs": "bafed2bc28c813e7efcf840c0569c22a588d3e958a61bb59ff15db1b3ef32dc1",
+    "scripts/auto-design-qualify.mjs": "8e1f74ae4932e3fb2ebcdf0f81ccedf34cbe2b44a42085f9d2672142122a57e3",
+    "workers/eda/duet_afe.py": "c151f4b19d6d648307b4a3dc7f70b59e7363d10c3afef1a8208596f0b4b302c3",
+    "workers/eda/design_tools.py": "aaa688240110573cbd00523c2ffb6da53bfe37b99b23f4a6a24a67ed76a1659e",
+    "packages/ui/src/AutoDesign.tsx": "51f1f69d529324c859787d326e4863863b09a96f5d1f063f10bb24ecef516347"
+  }
+}

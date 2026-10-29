@@ -34,6 +34,8 @@ OpenAI 연동은 [공식 구조화 응답 규격](https://developers.openai.com/
 
 ## Luna 판단 → Sol 실행안 → 실제 엔진
 
+새 회로를 후보별로 만들고 비교하려면 **AI 오토 설계** 탭을 사용하세요. [목표 입력 → native 미리보기 → 승인 → 실제 해석 가이드](auto-design.md)와 [DUET-AFE 실제 설계 예제](../examples/duet-afe/README.md)를 제공합니다. 아래의 현재 프로젝트 변경 계획과는 별도 기록이며 기존 프로젝트를 수정하지 않습니다.
+
 Resistor Indust의 **설계 도우미 → 설계 근거·연결 상태 읽기 → Luna 판단 · Sol 실행**에서 사용합니다. Edu에도 같은 코어를 사용하지만 작업공간·키·계획 기록은 합치지 않습니다.
 
 1. 현재 셀·선택·revision의 근거를 읽고 요청합니다. 예: `R1을 2200 Ω으로 바꿔줘`.

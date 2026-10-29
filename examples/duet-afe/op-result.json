@@ -1,0 +1,80 @@
+{
+  "condition": {
+    "corner": "tt",
+    "supply_V": 1.8,
+    "temperature_C": 27,
+    "analysis": "op"
+  },
+  "id": "16549a6773f44733811c5b858fe5af54",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "measurements": {
+    "analysis": "op",
+    "x_unit": "point",
+    "x_label": "operating point",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "false",
+    "samples": 1,
+    "solver": "SPARSE 1.3",
+    "VIN_min": 0.9,
+    "VIN_max": 0.9,
+    "PRE_OUT_min": 0.8997098865555297,
+    "PRE_OUT_max": 0.8997098865555297,
+    "SLOW_min": 0.8994194638834667,
+    "SLOW_max": 0.8994194638834667,
+    "FAST_min": 0.8994194638834632,
+    "FAST_max": 0.8994194638834632,
+    "VCM_min": 0.8997098865555311,
+    "VCM_max": 0.8997098865555311,
+    "BIAS_min": 0.9293638427659658,
+    "BIAS_max": 0.9293638427659658,
+    "supply_current_min": 0.00024080836900829822,
+    "supply_current_max": 0.00024080836900829822,
+    "current_flow_status": "available",
+    "template_id": "sensor_afe_dualband",
+    "layout_status": "not-generated",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "DUET-AFE directed schematic criteria only.",
+    "unverified": [
+      "Schematic research prototype; no novelty or product-performance claim.",
+      "Ideal resistors/capacitors and external 5kHz+50kHz stimulus, 50fF loads.",
+      "MOS PVT only; RC variation, noise, mismatch, CMRR/PSRR, physical area and signoff are not measured."
+    ],
+    "supply_current_A": 0.00024080836900829822,
+    "supply_power_W": 0.0004334550642149368
+  },
+  "reference_verification": {
+    "schema_version": 1,
+    "kind": "sensor_afe_dualband",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "PRE_OUT DC within 50mV of VDD/2",
+        "pass": true,
+        "observed": 0.8997098865555297
+      },
+      {
+        "name": "SLOW DC within 50mV of VDD/2",
+        "pass": true,
+        "observed": 0.8994194638834667
+      },
+      {
+        "name": "FAST DC within 50mV of VDD/2",
+        "pass": true,
+        "observed": 0.8994194638834632
+      },
+      {
+        "name": "Nonnegative finite DC supply power",
+        "pass": true,
+        "observed": 0.0004334550642149368
+      }
+    ],
+    "scope": "DUET-AFE directed schematic criteria only.",
+    "pass": true
+  },
+  "message": "Actual ngspice op: 1 samples.; reference criteria 4/4",
+  "manifest_sha256": "3cfcad410b98d91578dafe21881d58da2e7407e655ca139599d3c36c4894114b"
+}

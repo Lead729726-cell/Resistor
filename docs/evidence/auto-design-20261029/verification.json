@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "edition": "indust",
+  "checked_at": "2026-10-29T00:50:50.024Z",
+  "base_commit": "b2e99d51ef5ea4597fe7572d32c47ed223449a82",
+  "source_sha256": {
+    "scripts/auto-design.mjs": "bafed2bc28c813e7efcf840c0569c22a588d3e958a61bb59ff15db1b3ef32dc1",
+    "packages/ui/src/AutoDesign.tsx": "51f1f69d529324c859787d326e4863863b09a96f5d1f063f10bb24ecef516347",
+    "workers/eda/duet_afe.py": "c151f4b19d6d648307b4a3dc7f70b59e7363d10c3afef1a8208596f0b4b302c3",
+    "workers/eda/design_tools.py": "ccb770e9418e93f625fb7862c7a716e747322f1675feedef8bd014843f79bf06",
+    "packages/contracts/src/auto-design.ts": "989e38de00c5f85c0ebd977345c3cafeebc3cb009a8f24516f4a6eff12aa363c",
+    "tests/auto-design.test.mjs": "e58925e634d4f6993997ea0a1946d9a451723b95202d55cc78d0826ea3709842",
+    "workers/eda/test_duet_afe.py": "7c488fec44b9b0beae92034e0400af06ba044225d757e8de80e23e0b15775af5"
+  },
+  "actual_api": {
+    "calls": 2,
+    "roles": {
+      "decision": "gpt-6-luna",
+      "proposal": "gpt-6.1-sol"
+    },
+    "additional_reserved_usd": 0.057845,
+    "cumulative_reserved_usd": 0.28669500000000003,
+    "approved_cap_usd": 1,
+    "note": "Conservative maximum reservations, not final invoiced cost."
+  },
+  "native": {
+    "baseline_jobs": 9,
+    "auto_candidate_jobs": 6,
+    "selected_extra_pvt_jobs": 6,
+    "anchor_project_unchanged": {
+      "project_id": "4abd8d9380094a3584d4a3c2e8080771",
+      "revision": 1,
+      "runs": 0
+    },
+    "reimported_archives": [
+      {
+        "index": 0,
+        "new_project": true,
+        "inherited_runs": 0,
+        "physical_guards": [
+          {
+            "method": "verification.run_drc",
+            "code": "NO_PHYSICAL_LAYOUT"
+          },
+          {
+            "method": "verification.run_lvs",
+            "code": "NO_PHYSICAL_LAYOUT"
+          },
+          {
+            "method": "extraction.run_pex",
+            "code": "NO_PHYSICAL_LAYOUT"
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "new_project": true,
+        "inherited_runs": 0,
+        "physical_guards": [
+          {
+            "method": "verification.run_drc",
+            "code": "NO_PHYSICAL_LAYOUT"
+          },
+          {
+            "method": "verification.run_lvs",
+            "code": "NO_PHYSICAL_LAYOUT"
+          },
+          {
+            "method": "extraction.run_pex",
+            "code": "NO_PHYSICAL_LAYOUT"
+          }
+        ]
+      }
+    ],
+    "engine": "ngspice",
+    "physical_layout_generated": false,
+    "foundry_signoff": false,
+    "family_previews": [
+      {
+        "family": "rc_lowpass",
+        "devices": 2,
+        "analyses": [
+          "tran",
+          "ac",
+          "op"
+        ],
+        "preview_hash": "a48abcb3ada158bbf5c8c839957a4446c8f9c44b679158f86046466a896f0dc8",
+        "engine_executed": false
+      },
+      {
+        "family": "soc_miller_ota",
+        "devices": 11,
+        "analyses": [
+          "op",
+          "ac"
+        ],
+        "preview_hash": "59573523b90afa2e638767b62cc73edd45228931681941f87be1dd67e93a3cea",
+        "engine_executed": false
+      },
+      {
+        "family": "soc_filter2",
+        "devices": 26,
+        "analyses": [
+          "op",
+          "ac",
+          "tran"
+        ],
+        "preview_hash": "a26a52791ebe3ea2f3151d4f08a5c29241c444615f4d5605e05f64896c2a7d81",
+        "engine_executed": false
+      },
+      {
+        "family": "soc_tia",
+        "devices": 13,
+        "analyses": [
+          "op",
+          "ac",
+          "tran"
+        ],
+        "preview_hash": "138e37b0fabc7edfad2255112aff431d3827ec1604485eac212af46263cdf2e9",
+        "engine_executed": false
+      },
+      {
+        "family": "sensor_afe_dualband",
+        "devices": 55,
+        "analyses": [
+          "op",
+          "ac",
+          "tran"
+        ],
+        "preview_hash": "613a27de2d59a898a2479c6a26a2f805ce2604cd185027b8b68f50956204f279",
+        "engine_executed": false
+      }
+    ],
+    "legacy_rc_regression": {
+      "project_id": "2f6260bcbe9b4a5883532f7caadd8ef6",
+      "run_id": "238dedd92bcf41848259234861f84a7e",
+      "execution_status": "completed",
+      "measurements": {
+        "analysis": "ac",
+        "x_unit": "Hz",
+        "x_label": "frequency",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 361,
+        "solver": "SPARSE 1.3",
+        "OUT_gain_min": 0.000001,
+        "OUT_gain_max": 0.9999995,
+        "OUT_phase_min": -89.9999427,
+        "OUT_phase_max": -0.0572957604,
+        "current_flow_status": "unsupported_complex_ac",
+        "template_id": "rc_lowpass",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "measured_low_frequency_gain": 0.9999995,
+        "measured_3db_frequency_Hz": 10000.00985980167
+      },
+      "scope": "Actual native preview -> hash-bound creation -> AC regression, no model call."
+    }
+  },
+  "automated_tests": {
+    "node_core": 344,
+    "node_failures": 0,
+    "python_duet": 6,
+    "python_failures": 0,
+    "typecheck_exit": 0,
+    "source_audit_issues": 0,
+    "documentation_broken_links": 0,
+    "legacy_docker_test": "test_design_tools.py requires Docker /workspace/server setup; replaced here by isolated native five-family previews and actual RC AC regression.",
+    "builds": {
+      "indust": {
+        "exit_code": 0,
+        "canonical_debug_maps": 3,
+        "log_sha256": "f2a9acbafa79b061cdb5b4baaa73b14ac66c969d92f2fbb63ce790d3a9dc9907",
+        "warning": "Existing application bundle exceeds Vite 500kB chunk warning threshold."
+      },
+      "edu": {
+        "exit_code": 0,
+        "canonical_debug_maps": 3,
+        "log_sha256": "4c8c4f8f4710220bd3919b4a65c119a7c365eb5a63cca0646f19ffb1c1381030",
+        "warning": "Existing application bundle exceeds Vite 500kB chunk warning threshold."
+      }
+    }
+  },
+  "actual_ui": {
+    "provider": "real OpenAI",
+    "engine": "native Windows ngspice",
+    "fixture_license_authority": "isolated synthetic QA only; no production license settings changed",
+    "observed_workflows": [
+      "assistant.autodesign_catalog",
+      "assistant.autodesign_plan",
+      "assistant.autodesign_start",
+      "assistant.autodesign_get",
+      "assistant.autodesign_history"
+    ],
+    "approval_before_run": true,
+    "candidate_preview": true,
+    "history_after_reload": true,
+    "exact_nominal_tran_opens": true,
+    "viewport_390px_no_outer_overflow": true,
+    "screenshots": [
+      "actual-candidate-preview.png",
+      "actual-comparison.png",
+      "mobile.png",
+      "generated-schematic.png",
+      "generated-signal-flow.png"
+    ]
+  },
+  "limitations": [
+    "Fixed-template numeric candidate design, not arbitrary circuit topology synthesis.",
+    "MOS PVT at three combined conditions only; ideal R/C unchanged.",
+    "No noise, mismatch, RC corners, PEX, manufacturing signoff or global optimum claim."
+  ],
+  "publication": {
+    "new_installer_published": false,
+    "production_site_deployed": false,
+    "scope": "Source update; revision is identified by repository commit and source hashes.",
+    "captured_files_with_exact_git_bytes": 30,
+    "unrelated_helpers_staged": false
+  },
+  "source_hash_note": "Final source hashes include the legacy RC port metadata fix. Actual model/PVT records preserve their original source hashes; DUET circuit topology and measurements were unchanged by that fix."
+}
