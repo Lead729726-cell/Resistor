@@ -19,7 +19,11 @@ export function missionDraft(m:Mission):MissionDraft{return {revision:1,inputs:O
 export function calculateMission(m:Mission,d:MissionDraft):WorkbookRun{
  const inputs=Object.fromEntries(m.inputs.map(i=>{const raw=d.inputs[i.id];if(typeof raw!=='string'||!raw.trim()||!Number.isFinite(Number(raw)))throw Error(i.label+'에 유효한 수치를 입력하세요.');return [i.id,Number(raw)];}));
  const calculator=calculators.find(c=>c.id===m.calculator);
- return {revision:d.revision,inputs,result:calculator?.calculate(inputs)??null,engine:{id:calculator?'resistor.shared-calculators':'ngspice',status:calculator?'calculated':'unavailable',process_id:'educational-ideal-circuit',scope:calculator?'이상 소자 수식 계산 · DRC/LVS/PEX/시뮬레이션 미실행':'웹 워크북은 외부 엔진을 실행하지 않음 · Edu 앱에서 실제 엔진/모델 연결 필요'},created_at:new Date().toISOString()};
+ const result=calculator?.calculate(inputs)??null;
+ if(result){const values=[result.primaryValue,...(result.secondary??[]).map(s=>s.value)];if(values.some(v=>typeof v==='number'&&!Number.isFinite(v)))throw Error('계산 가능한 수치 범위를 벗어났습니다. 입력의 크기와 단위를 확인하세요.');
+  if((m.calculator==='rc-time-constant'&&result.primaryValue===0)||(m.calculator==='voltage-divider'&&inputs.vin!==0&&result.primaryValue===0))throw Error('현재 공통 계산기의 표시 정밀도 범위보다 작습니다. 입력 크기·단위를 확인하세요.');
+ }
+ return {revision:d.revision,inputs,result,engine:{id:calculator?'resistor.shared-calculators':'ngspice',status:calculator?'calculated':'unavailable',process_id:'educational-ideal-circuit',scope:calculator?'이상 소자 수식 계산 · DRC/LVS/PEX/시뮬레이션 미실행':'웹 워크북은 외부 엔진을 실행하지 않음 · Edu 앱에서 실제 엔진/모델 연결 필요'},created_at:new Date().toISOString()};
 }
 export function readCourseWorkbook(text:string):CourseWorkbook{
  const p=JSON.parse(text) as CourseWorkbook;
