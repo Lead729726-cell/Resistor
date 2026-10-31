@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readEduRoute,eduHash,readEduResume,eduRouteLabel} from '../packages/ui/src/edu-navigation';
+import {readEduRoute,eduHash,readEduResume,initialEduDesignRoute,eduRouteLabel} from '../packages/ui/src/edu-navigation';
 import {validateLeagueConfiguration} from '../packages/ui/src/league-connection';
 test('Edu starts at the mode junction and round-trips seven design pages and the in-app league',()=>{
  assert.deepEqual(readEduRoute(eduHash({mode:'workbook'})),{mode:'workbook'});assert.equal(eduRouteLabel({mode:'workbook'}),'첫 회로 실험 워크북');
@@ -25,4 +25,26 @@ test('project dashboard deep links select one lesson and survive reload, resume 
  const lessonId='2e053569-8076-40dc-8016-7056dbbc2c61';assert.deepEqual(readEduRoute('#projects'),{mode:'projects'});
  for(let step=1;step<=7;step++){const r={mode:'design' as const,step,lessonId};assert.deepEqual(readEduRoute(eduHash(r)),r);assert(readEduResume({schema_version:1,edition:'edu',hash:eduHash(r),updated_at:'2026-10-19T00:00:00Z'}));}
  for(const id of ['../../outside','a'.repeat(36),'bad','2e053569-8076-40dc-8016-7056dbbc2c61/extra'])assert.deepEqual(readEduRoute('#design/2/lesson/'+id),{mode:'home'});
+});
+
+test('returning from another learning mode preserves the design lesson and page after reload',()=>{
+ const lessonId='2e053569-8076-40dc-8016-7056dbbc2c61';
+ const design={mode:'design' as const,step:6,lessonId};
+ const saved={schema_version:1,edition:'edu',hash:eduHash(design),updated_at:'2026-10-31T00:00:00Z'};
+ for(const current of [{mode:'home' as const},{mode:'workbook' as const},{mode:'quiz' as const,panel:'puzzles' as const},{mode:'projects' as const}]){
+  const lastScreen={...saved,hash:eduHash(current)};
+  assert.deepEqual(initialEduDesignRoute(current,saved,lastScreen),design);
+ }
+ // Existing single-screen resume records migrate without rewriting learner data.
+ assert.deepEqual(initialEduDesignRoute({mode:'home'},null,saved),design);
+});
+
+test('explicit design links and a new start override history; foreign or malformed pointers are ignored',()=>{
+ const saved={schema_version:1,edition:'edu',hash:'#design/6/lesson/2e053569-8076-40dc-8016-7056dbbc2c61',updated_at:'2026-10-31T00:00:00Z'};
+ const explicit={mode:'design' as const,step:2,lessonId:'5d31c952-3bb7-43b2-bf6f-227136818a79'};
+ assert.deepEqual(initialEduDesignRoute(explicit,saved,saved),explicit);
+ assert.deepEqual(initialEduDesignRoute({mode:'design',step:1},saved,saved),{mode:'design',step:1});
+ for(const patch of [{edition:'indust'},{schema_version:2},{hash:'#design/9'},{hash:'#quiz/puzzles'},{hash:'https://example.com'},{updated_at:'bad'}]){
+  assert.deepEqual(initialEduDesignRoute({mode:'home'},{...saved,...patch},null),{mode:'design',step:1});
+ }
 });
