@@ -3,26 +3,26 @@
   "edition": "edu",
   "product_id": "resistor.edu",
   "scope": "presentation and shared viewer responsiveness",
-  "started_at": "2026-10-31T07:33:21.818Z",
+  "started_at": "2026-10-31T07:40:34.006Z",
   "status": "passed",
   "checks": [
     {
       "name": "typecheck-workbook",
       "command": "node node_modules/typescript/bin/tsc --noEmit -p tsconfig.course-workbook.json",
       "exit_code": 0,
-      "seconds": 2.781
+      "seconds": 1.344
     },
     {
       "name": "build-edu",
       "command": "node scripts/edition.mjs build edu",
       "exit_code": 0,
-      "seconds": 33.646
+      "seconds": 19.498
     },
     {
       "name": "build-indust",
       "command": "node scripts/edition.mjs build indust",
       "exit_code": 0,
-      "seconds": 29.587
+      "seconds": 18.602
     }
   ],
   "appearance_files_restored": [
@@ -35,7 +35,7 @@
       "sha256": "3ffedd99f24fadf9f2e8be3b13e0fb287d63a1879f89c40a85979f9c67138c92"
     }
   ],
-  "completed_at": "2026-10-31T07:34:27.838Z",
+  "completed_at": "2026-10-31T07:41:13.456Z",
   "base_revision": "db8ffbc275615d47e10c2f91f096169395c3eefe",
   "source_hash_kind": "sha256 of working copy bytes",
   "sources": [
@@ -53,7 +53,7 @@
     },
     {
       "path": "packages/ui/src/App.tsx",
-      "sha256": "26c59b3a95db9eafeb2312a552626fcd93fb5f77a0aff4e62f67fe7380ad815a"
+      "sha256": "51d59cf18be4b2343141091053c20254274ca6385beab7ee16aab61b355c8afe"
     },
     {
       "path": "packages/ui/src/CoursePractice.tsx",
@@ -86,7 +86,7 @@
   },
   "browser": {
     "method": "cua_repl Edge extension: visible screenshots and DOM-backed inspection",
-    "status": "partially_verified",
+    "status": "verified_for_ui_scope",
     "observed_before_local_browser_access_was_disabled": [
       {
         "case": "Desktop light theme",
@@ -117,16 +117,55 @@
         "result": "Restored isolated QA project r3; perspective 3D selected; host width=341px,height=250px; layer palette top below canvas bottom"
       }
     ],
-    "pending": [
-      "768px tablet visual check",
-      "Final 1440px visual check",
-      "Official Edu home and header visual check behind unchanged activation gate",
-      "Final screenshots saved to files",
-      "Visual recheck after final minimum touch-width and overflow refinements",
-      "Restore original system theme and clear temporary responsive viewport override"
+    "pending": [],
+    "screenshots_saved": true,
+    "reason": "Local browser access restored. Source rehearsal and standard built frontend preview verified; no activation checks bypassed or claimed.",
+    "completed_at": "2026-10-31T07:44:02.547Z",
+    "final_report": "browser-final.json",
+    "captures": [
+      {
+        "path": "desktop-dark.png",
+        "sha256": "83b9b401f9d558fb3fdc12e562144796dcd418c25ccb7dfd2e5518a3195a249d"
+      },
+      {
+        "path": "tablet-light.png",
+        "sha256": "e3b1f8bde95fc7092d6a32c671f27e582d9293f324335d80bde90b005677db7e"
+      },
+      {
+        "path": "mobile-light.png",
+        "sha256": "bddc849559a7409de718b2f3dedd75ce2347ae90e6444909c930843f37e67020"
+      },
+      {
+        "path": "layout-mobile-light.png",
+        "sha256": "4471d088671394c9fd39839370eeb95687700f028af1fa1e3a94b24e67579ae5"
+      },
+      {
+        "path": "layout-desktop-light.png",
+        "sha256": "8c25ddf9d3b4c8c52710aac647ed1ade24722c226c83e5d8aa868cd5fb1952db"
+      },
+      {
+        "path": "home-mobile.png",
+        "sha256": "18b92a919619a5c22fe290c1ea06848b054e028e2bdf671ae4ec87e1fc5717db"
+      },
+      {
+        "path": "home-tablet.png",
+        "sha256": "febb3d5d66e1add893885f357250a4a44231405173bb69c45876e17f40f5ee91"
+      },
+      {
+        "path": "home-desktop.png",
+        "sha256": "3bc0f31b69f2549a8779bf581200cd6df9deb86ee2d5b99252ac54686633b75c"
+      }
     ],
-    "screenshots_saved": false,
-    "reason": "Local browser use is disabled in Work settings; user said they would re-enable and notify. No alternative UI control used."
+    "restored": {
+      "source_theme_mode": "system",
+      "source_skin": "graphite",
+      "preview_theme_mode": "system",
+      "preview_skin": "graphite",
+      "source_viewport_width": 1524,
+      "preview_viewport_width": 1524,
+      "viewport_overrides_cleared": true,
+      "reduced_motion_emulation_cleared": true
+    }
   },
   "renderer": {
     "source": "existing three dependency",
@@ -141,10 +180,13 @@
     "Source rehearsal is localhost-only, not official serial activation",
     "No new simulation or DRC/LVS/PEX runs performed for this presentation change",
     "Industry build verified, Industry branch not merged automatically",
-    "No production site deployment or new installer publication"
+    "No production site deployment or new installer publication",
+    "Built frontend preview verifies the real Edu home/header/workbook UI only; it has no connected engine API or official serial activation. Actual layout viewing used the isolated source rehearsal."
   ],
   "build_warnings": [
     "Existing appearance-init.js classic-script bundling notice",
     "Existing application chunks above 500kB advisory"
-  ]
+  ],
+  "reviewed_commit_before_title_fix": "da9fb4da506be4b7d5eb9fdbf6e6b1bfd891ee3f",
+  "followup_source_change": "EduWorkspace now sets the browser title to productEdition.name"
 }
