@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "product_id": "resistor.edu",
+  "scope": "progressive modal UX and shared-engine preservation",
+  "started_at": "2026-10-31T09:59:50.528Z",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "typecheck-workbook",
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p tsconfig.course-workbook.json",
+      "exit_code": 0,
+      "seconds": 0.997
+    },
+    {
+      "name": "build-edu",
+      "command": "node scripts/edition.mjs build edu",
+      "exit_code": 0,
+      "seconds": 19.689
+    },
+    {
+      "name": "build-indust",
+      "command": "node scripts/edition.mjs build indust",
+      "exit_code": 0,
+      "seconds": 16.977
+    }
+  ],
+  "appearance_files_restored": [
+    {
+      "path": "packages/ui/src/theme.css",
+      "sha256": "eb12664e1495d09b2bd0b2d7618cb6412f098dbb6a4fd4de100e7e030e125188"
+    },
+    {
+      "path": "public/appearance-init.js",
+      "sha256": "3ffedd99f24fadf9f2e8be3b13e0fb287d63a1879f89c40a85979f9c67138c92"
+    }
+  ],
+  "completed_at": "2026-10-31T10:00:28.195Z"
+}

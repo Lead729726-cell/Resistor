@@ -11,6 +11,23 @@ test('create replay, revision guards, recorded results and student save/reopen a
  assert.equal((await f.rpc('learning.save',{lesson_id:id,expected_version,explanation:'stale overwrite',pre_answers:{},post_answers:{}})).error.code,'LEARNING_CONFLICT');f.changeOutside();v=(await f.rpc('learning.open',{lesson_id:id})).result;assert.equal(v.record.student.explanation,'QA human input fixture');assert.equal(v.comparison.current_relevance,'historical');
 });
 test('missing engine stays unavailable and does not submit or fabricate any job',async t=>{const f=await fixture(t);let v=(await f.rpc('learning.create',{command_id:randomUUID()})).result;f.missing();v=(await f.rpc('learning.run',{lesson_id:v.record.id,expected_revision:f.revision(),slot:'before'})).result;assert.equal(v.record.trials[0].execution_status,'unavailable');assert.equal(v.record.trials[0].run_id,null);assert.equal(v.record.trials[0].metrics,null);assert.equal(f.calls.includes('simulation.run'),false);assert.equal(v.verification.lvs.execution_status,'unavailable');});
+
+test('view observation records only supported views and cannot bypass scoped project ownership',async t=>{
+ const f=await fixture(t),created=(await f.rpc('learning.create',{command_id:randomUUID(),purpose:'qa'})).result,id=created.record.id;
+ const file=path.join(f.workspace,'.runtime/education',id+'.json'),start=f.calls.length;
+ const observed=await f.rpc('learning.observe',{lesson_id:id,view:'layout3d'});
+ assert(observed.ok);assert.deepEqual(observed.result.record.progress.observed_views,['layout3d']);
+ assert.deepEqual(observed.result.record.student,created.record.student);assert.deepEqual(observed.result.record.trials,created.record.trials);
+ assert.equal(observed.result.project.revision,created.project.revision);assert.equal(observed.result.record.purpose,'qa');
+ assert(f.calls.slice(start).every(method=>['project.snapshot','view.get_scene','toolchain.doctor'].includes(method)));
+ assert.equal(observed.result.verification.lvs.execution_status,'unavailable');assert.equal(observed.result.verification.lvs.analysis_result,'unknown');
+ assert.deepEqual((await f.rpc('learning.observe',{lesson_id:id,view:'layout3d'})).result.record.progress.observed_views,['layout3d']);
+ const before=await readFile(file,'utf8');
+ assert.equal((await f.rpc('learning.observe',{lesson_id:id,view:'fabricated-pass'})).ok,false);
+ assert.equal((await f.rpc('learning.observe',{lesson_id:id,view:'schematic',project_id:'b'.repeat(32)})).ok,false);
+ const denied=await educationRpc({workspace:f.workspace},'learning.observe',{lesson_id:id,view:'schematic'},{edition:'edu',invoke:async(_cfg,method,params)=>{assert.equal(method,'project.snapshot');assert.equal(params.project_id,created.project.id);return {ok:false,error:{code:'REHEARSAL_SCOPE',message:'Project is not owned by this source rehearsal.'}};}});
+ assert.equal(denied.error.code,'REHEARSAL_SCOPE');assert.equal(await readFile(file,'utf8'),before);
+});
 test('edition and path/parameter boundaries reject unsafe input before file writes',async t=>{const f=await fixture(t);for(const params of [{lesson_id:'../../outside'},{lesson_id:randomUUID(),path:'arbitrary'}])assert.equal((await f.rpc('learning.open',params)).ok,false);assert.equal((await educationRpc({workspace:os.tmpdir()},'learning.list',{}, {edition:'indust'})).ok,false);});
 
 test('busy lesson reads have a typed recoverable state and never create a duplicate engine job',async t=>{const f=await fixture(t),created=await f.rpc('learning.create',{command_id:randomUUID(),purpose:'qa'}),id=created.result.record.id,lock=path.join(f.workspace,'.runtime/education',id+'.lock');await writeFile(lock,'fixture-only-lock');const before=f.calls.length;assert.equal((await f.rpc('learning.open',{lesson_id:id})).error.code,'LEARNING_BUSY');assert.equal(f.calls.length,before);await unlink(lock);assert.equal((await f.rpc('learning.open',{lesson_id:id})).result.record.id,id);assert.equal(f.calls.includes('simulation.run'),false);});
