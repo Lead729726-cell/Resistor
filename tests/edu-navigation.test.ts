@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readEduRoute,eduHash,readEduResume,eduRouteLabel} from '../packages/ui/src/edu-navigation';
 import {validateLeagueConfiguration} from '../packages/ui/src/league-connection';
 test('Edu starts at the mode junction and round-trips seven design pages and the in-app league',()=>{
+ assert.deepEqual(readEduRoute(eduHash({mode:'workbook'})),{mode:'workbook'});assert.equal(eduRouteLabel({mode:'workbook'}),'첫 회로 실험 워크북');
  for(const hash of ['', '#design/0','#design/8','#design/2?x=1','#invalid'])assert.deepEqual(readEduRoute(hash),{mode:'home'});
  for(let step=1;step<=7;step++)assert.deepEqual(readEduRoute(eduHash({mode:'design',step})),{mode:'design',step});
  assert.deepEqual(readEduRoute('#quiz/league'),{mode:'quiz',panel:'league'});assert.deepEqual(readEduRoute('#quiz'),{mode:'quiz',panel:'questions'});

@@ -1,7 +1,8 @@
 import {newCourseWorkbook,readCourseWorkbook,type CourseWorkbook} from './course-workbook';
 
 export const workbookStorageKey='resistor.edu.course-workbook.v1';
-export type WorkbookStorage=Pick<Storage,'getItem'|'setItem'>;
+export type WorkbookStorage=Pick<Storage,'getItem'|'setItem'>&Partial<Pick<Storage,'key'|'length'>>;
+export type WorkbookRecovery={id:string;source:string;raw:string;workbook:CourseWorkbook|null};
 export type WorkbookSaveState='unsaved'|'saved'|'conflict'|'invalid'|'unavailable';
 export class CourseWorkbookStore {
  workbook:CourseWorkbook;
@@ -39,11 +40,23 @@ export class CourseWorkbookStore {
   try{
    const storage=this.storage(),original=storage.getItem(workbookStorageKey);
    if(original!==this.expected){this.state='conflict';this.message='다른 탭에서 기록이 바뀌어 전환하지 않았습니다. 현재 내용을 JSON으로 보관하세요.';return false;}
-   const backupKey=workbookStorageKey+'.backup.'+this.id(),backup=JSON.stringify({schema_version:1,original_raw:original,current:this.workbook});
+   const backupKey=workbookStorageKey+'.backup.'+this.id(),backup=JSON.stringify({schema_version:1,created_at:new Date().toISOString(),original_raw:original,current:this.workbook});
    storage.setItem(backupKey,backup);if(storage.getItem(backupKey)!==backup)throw Error('Backup not persisted');
    if(storage.getItem(workbookStorageKey)!==original){this.state='conflict';this.message='백업 중 다른 탭의 기록 변경을 발견해 전환하지 않았습니다.';return false;}
    const raw=JSON.stringify(next);storage.setItem(workbookStorageKey,raw);
    this.expected=raw;this.workbook=next;this.invalidOriginal=false;this.state='saved';this.message='원본과 이전 작성 내용을 브라우저 백업에 보관하고 기록을 열었습니다.';return true;
   }catch{this.state='unavailable';this.message='원본·작성 내용의 백업 또는 저장을 확인하지 못해 전환하지 않았습니다. 현재 기록을 JSON으로 보관하고 다시 시도하세요.';return false;}
+ }
+ recoveryRecords():WorkbookRecovery[]{
+  const storage=this.storage();if(!storage.key||typeof storage.length!=='number')return [];
+  const records:WorkbookRecovery[]=[];
+  const add=(id:string,source:string,raw:string)=>{let workbook:CourseWorkbook|null=null;try{workbook=readCourseWorkbook(raw);}catch{/* Unknown/corrupt originals remain exportable. */}records.push({id,source,raw,workbook});};
+  for(let i=0;i<storage.length;i++){const key=storage.key(i);if(!key)continue;
+   if(key.startsWith(workbookStorageKey+'.draft.')){const raw=storage.getItem(key);if(raw)add(key,'탭별 임시 기록',raw);}
+   if(key.startsWith(workbookStorageKey+'.backup.')){const raw=storage.getItem(key);if(!raw)continue;try{const backup=JSON.parse(raw);if(backup.schema_version!==1)continue;
+    if(backup.current)add(key+':current','전환 전 작성 내용',JSON.stringify(backup.current));
+    if(typeof backup.original_raw==='string')add(key+':original','전환 전 원본',backup.original_raw);
+   }catch{add(key,'읽을 수 없는 백업 원본',raw);}}
+  }return records;
  }
 }

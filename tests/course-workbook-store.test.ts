@@ -4,6 +4,8 @@ import {CourseWorkbookStore,workbookStorageKey} from '../packages/education/src/
 import {courseMissions,missionDraft,newCourseWorkbook,calculateMission,readCourseWorkbook} from '../packages/education/src/course-workbook';
 class StorageFixture {
  data=new Map<string,string>();failed=false;
+ get length(){return this.data.size;}
+ key(index:number){return [...this.data.keys()][index]??null;}
  getItem(key:string){return this.data.get(key)??null;}
  setItem(key:string,value:string){if(this.failed)throw Error('quota');this.data.set(key,value);}
 }
@@ -34,4 +36,12 @@ test('tampered imports are rejected and harmless JSON property order is accepted
  const reorder=(value:unknown):unknown=>Array.isArray(value)?value.map(reorder):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).reverse().map(([k,v])=>[k,reorder(v)])):value;
  assert.deepEqual(readCourseWorkbook(JSON.stringify(reorder(w))),w);
  d.runs[0].result!.primaryValue=999;const storage=new StorageFixture(),store=session(storage);assert.throws(()=>store.replace(w));assert.equal(storage.getItem(workbookStorageKey),null);
+});
+test('recovery enumerates only Edu records, retains corrupt original bytes and supports explicit restoration',()=>{
+ const storage=new StorageFixture();storage.setItem(workbookStorageKey,'broken original');storage.setItem('resistor.indust.private','industry-data');const store=session(storage);
+ store.workbook.drafts.report=missionDraft(courseMissions[7]);store.workbook.drafts.report.explanation='전환 전 학생 설명';assert.equal(store.replace(newCourseWorkbook('next')),true);assert.equal(store.save(),true);
+ const records=store.recoveryRecords();assert.equal(records.length,3);assert.equal(records.some(r=>r.raw.includes('industry-data')),false);
+ const original=records.find(r=>r.source==='전환 전 원본')!;assert.equal(original.raw,'broken original');assert.equal(original.workbook,null);
+ const saved=records.find(r=>r.source==='전환 전 작성 내용')!;assert.equal(saved.workbook!.drafts.report.explanation,'전환 전 학생 설명');assert.equal(store.replace(saved.workbook!),true);
+ assert.equal(session(storage).workbook.drafts.report.explanation,'전환 전 학생 설명');
 });
