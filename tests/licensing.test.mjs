@@ -10,9 +10,9 @@ import {readLease,sha256} from '../platform/licensing/token.mjs';
 import {LicenseClient,fileLicenseVault} from '../apps/desktop/licensing.mjs';
 import {createResendMailer} from '../platform/licensing/mail.mjs';
 import {assertLicenseReleaseReady} from '../scripts/license-release-check.mjs';
-async function setup(fn,{mailer}={}){
+async function setup(fn,{mailer,clockTick=0}={}){
  const directory=await mkdtemp(path.join(os.tmpdir(),'resistor-license-'));const keys=generateKeyPairSync('ed25519'),privateKey=keys.privateKey.export({type:'pkcs8',format:'pem'}),publicKey=keys.publicKey.export({type:'spki',format:'pem'});let clock=Date.now();
- const service=createLicenseService({filename:path.join(directory,'license.sqlite'),masterKey:randomBytes(32),privateKey,now:()=>clock,mailer});
+ const service=createLicenseService({filename:path.join(directory,'license.sqlite'),masterKey:randomBytes(32),privateKey,now:()=>{const value=clock;clock+=clockTick;return value;},mailer});
  const order=(edition='edu',id='test-order')=>service.issue({provider:'inflearn',purchase_ref:id,edition,email:'fixture@example.invalid',evidence_sha256:'a'.repeat(64),verified:true,device_limit:2});
  const serial=(edition='edu',id='test-order')=>service.operatorDelivery(order(edition,id).delivery_id).serial;
  const config={schema_version:1,required:true,server_url:'https://licensing.example.invalid',public_keys:{'resistor-20261023':publicKey},policy:{edu:{device_limit:2},indust:{device_limit:2}}};
@@ -37,3 +37,16 @@ test('HTTP rejects unauthenticated issuance, cross-origin activation and oversiz
 test('real HTTP activation and refresh preserve POST bodies, error states and server trust',()=>setup(async({service,client,serial})=>{const server=createLicenseHttpServer(service,{adminToken:'t'.repeat(43)});await new Promise(r=>server.listen(0,'127.0.0.1',r));try{const c=await client('http','edu',fetch);c.config={...c.config,server_url:'http://127.0.0.1:'+server.address().port};c.allowLocalServer=true;assert.equal((await c.activate(serial())).authorized,true);assert.equal((await c.refresh()).authorized,true);assert.equal((await c.deactivate()).authorized,false);}finally{await new Promise(r=>server.close(r));}}));
 test('optional mail adapter submits only to official endpoint and requires provider acknowledgment',async()=>{let payload;const m=createResendMailer({apiKey:'fixture',from:'teacher@example.invalid',fetchImpl:async(url,options)=>{assert.equal(url,'https://api.resend.com/emails');payload=JSON.parse(options.body);assert.equal(options.headers['Idempotency-Key'],'id');return{ok:true,json:async()=>({id:'ack'})};}});assert.equal((await m({email:'buyer@example.invalid',serial:'fixture-code',edition:'edu',device_limit:2,idempotency_key:'id'})).id,'ack');assert.match(payload.text,/Edu/);assert.deepEqual(payload.to,['buyer@example.invalid']);});
 test('unconfigured serial-required installers cannot enter official native release',async()=>{await assert.rejects(()=>assertLicenseReleaseReady(),/cannot be published/);});
+
+// Reading the clock twice could sign a 7-day-plus-1ms token rejected by readLease.
+test('activation and refresh use one timestamp for the bounded lease lifetime',()=>setup(async({service,serial,config,now})=>{
+ const deviceHash=sha256('advancing-clock-device');
+ const activation=service.activate({serial:serial(),edition:'edu',device_hash:deviceHash});
+ const parse=token=>readLease(token,{publicKeys:config.public_keys,edition:'edu',deviceHash,now:now()});
+ const first=parse(activation.lease);
+ assert.equal(first.expires_at-first.issued_at,7*86400000);
+ const renewed=service.refresh({activation_id:first.activation_id,refresh_secret:activation.refresh_secret,device_hash:deviceHash});
+ const second=parse(renewed.lease);
+ assert.equal(second.expires_at-second.issued_at,7*86400000);
+ assert.ok(second.issued_at>first.issued_at);
+},{clockTick:1}));
