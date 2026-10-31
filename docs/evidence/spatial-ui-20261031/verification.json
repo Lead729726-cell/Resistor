@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "product_id": "resistor.edu",
+  "scope": "presentation and shared viewer responsiveness",
+  "started_at": "2026-10-31T07:33:21.818Z",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "typecheck-workbook",
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p tsconfig.course-workbook.json",
+      "exit_code": 0,
+      "seconds": 2.781
+    },
+    {
+      "name": "build-edu",
+      "command": "node scripts/edition.mjs build edu",
+      "exit_code": 0,
+      "seconds": 33.646
+    },
+    {
+      "name": "build-indust",
+      "command": "node scripts/edition.mjs build indust",
+      "exit_code": 0,
+      "seconds": 29.587
+    }
+  ],
+  "appearance_files_restored": [
+    {
+      "path": "packages/ui/src/theme.css",
+      "sha256": "eb12664e1495d09b2bd0b2d7618cb6412f098dbb6a4fd4de100e7e030e125188"
+    },
+    {
+      "path": "public/appearance-init.js",
+      "sha256": "3ffedd99f24fadf9f2e8be3b13e0fb287d63a1879f89c40a85979f9c67138c92"
+    }
+  ],
+  "completed_at": "2026-10-31T07:34:27.838Z",
+  "base_revision": "db8ffbc275615d47e10c2f91f096169395c3eefe",
+  "source_hash_kind": "sha256 of working copy bytes",
+  "sources": [
+    {
+      "path": "packages/ui/src/SpatialWorkbench.tsx",
+      "sha256": "1562198b060fe58765be57a5a8154784e295f75a76f6cf7723f305994e14f827"
+    },
+    {
+      "path": "packages/ui/src/spatial-stage.ts",
+      "sha256": "bf74e5275f0b9813c98370b73cb9d5b0dc53ebebb484dfb35e6fe6787c3049c6"
+    },
+    {
+      "path": "packages/ui/src/spatial-workbench.css",
+      "sha256": "f9c0dcf0572e2056078cee0643e759ae44d8dc0cd36d9464765896cd55325e2a"
+    },
+    {
+      "path": "packages/ui/src/App.tsx",
+      "sha256": "26c59b3a95db9eafeb2312a552626fcd93fb5f77a0aff4e62f67fe7380ad815a"
+    },
+    {
+      "path": "packages/ui/src/CoursePractice.tsx",
+      "sha256": "078211f7a9425d77ea72470e9c86f269e40a6990a52ca145f7eebe31a9d9801a"
+    },
+    {
+      "path": "packages/ui/src/course-practice.css",
+      "sha256": "2d13d04e68bfdae311c42ed8e72c8a0f95f238e19ed841a21eb4ffa668ff5030"
+    },
+    {
+      "path": "packages/ui/src/edu-modes.css",
+      "sha256": "c8c13b4d66276fa0f5d3408285bd0eab240b78867183b206d1b28e1f5dfb62a4"
+    },
+    {
+      "path": "packages/viewer/src/viewer.css",
+      "sha256": "df8b468449cfc8f7f49ffa1aedd47ace43da48b52a68734bd11f6989f2aae6f0"
+    },
+    {
+      "path": "packages/ui/qa/course-recording/recording.css",
+      "sha256": "49edb2d4063f14484857304cda9310427709e04749d351773635901bf588b3e0"
+    }
+  ],
+  "regression": {
+    "command": "node --import tsx --test --test-isolation=none tests/course-*.test.ts tests/edu-navigation.test.ts tests/ui-preferences.test.ts packages/viewer/tests/*.test.ts",
+    "passed": 74,
+    "failed": 0,
+    "source_audit_issues": 0,
+    "documentation_links_checked": 283,
+    "documentation_links_missing": 0
+  },
+  "browser": {
+    "method": "cua_repl Edge extension: visible screenshots and DOM-backed inspection",
+    "status": "partially_verified",
+    "observed_before_local_browser_access_was_disabled": [
+      {
+        "case": "Desktop light theme",
+        "result": "WebGL board visible; depth surfaces and input/result columns visually inspected"
+      },
+      {
+        "case": "3D controls",
+        "result": "Rotation and separated layers operated; data-renderer=webgl; layer separation aria-pressed=true"
+      },
+      {
+        "case": "Flat preference",
+        "result": "Toggle removed canvas, static illustration visible, flat preference retained after reload"
+      },
+      {
+        "case": "Dark theme",
+        "result": "Appearance controls operated; dark surfaces and numeric fields visually inspected"
+      },
+      {
+        "case": "390x844 responsive workbook",
+        "result": "Single experiment column; innerWidth=390, document scrollWidth=384; spatial control heights 44px"
+      },
+      {
+        "case": "Controlled calculation",
+        "result": "Vin=1.8V, R1=10kOhm, R2=10kOhm -> 0.9V,90uA; R2=20kOhm -> 1.2V,60uA; editing before recalculation marked current conditions without a run"
+      },
+      {
+        "case": "390px actual layout viewer",
+        "result": "Restored isolated QA project r3; perspective 3D selected; host width=341px,height=250px; layer palette top below canvas bottom"
+      }
+    ],
+    "pending": [
+      "768px tablet visual check",
+      "Final 1440px visual check",
+      "Official Edu home and header visual check behind unchanged activation gate",
+      "Final screenshots saved to files",
+      "Visual recheck after final minimum touch-width and overflow refinements",
+      "Restore original system theme and clear temporary responsive viewport override"
+    ],
+    "screenshots_saved": false,
+    "reason": "Local browser use is disabled in Work settings; user said they would re-enable and notify. No alternative UI control used."
+  },
+  "renderer": {
+    "source": "existing three dependency",
+    "units": "illustration only; no engineering units",
+    "continuous_animation": false,
+    "max_pixel_ratio": 1.5,
+    "static_fallback": true,
+    "requires_no_external_assets": true,
+    "project_or_engine_data_received": false
+  },
+  "scope_limits": [
+    "Source rehearsal is localhost-only, not official serial activation",
+    "No new simulation or DRC/LVS/PEX runs performed for this presentation change",
+    "Industry build verified, Industry branch not merged automatically",
+    "No production site deployment or new installer publication"
+  ],
+  "build_warnings": [
+    "Existing appearance-init.js classic-script bundling notice",
+    "Existing application chunks above 500kB advisory"
+  ]
+}

@@ -92,3 +92,12 @@
 .mos-object-properties:focus{outline:2px solid var(--accent);outline-offset:-2px}
 @media (max-width: 900px) { .mos-viewer-has-palette .mos-viewer-host { right: 250px; } .mos-viewer-palette { width: 220px; } .mos-viewer-stack-note { max-width: 220px; } .mos-viewer-toolbar { gap: 6px; } .mos-toolgroup-end { margin-left: 0; } }
 @media (max-width: 620px) { .mos-viewer-has-palette .mos-viewer-host { right: 221px; } .mos-viewer-palette { width: 195px; right: 8px; top: 8px; } .mos-viewer-view-label { top: 10px; left: 10px; } .mos-viewer-view-label span { max-width: 140px; } .mos-viewer-renderinfo { display: none; } .mos-viewer-controls { gap: 6px; } .mos-viewer-stack-note { max-width: 160px; } }
+
+/* Fit the actual panel width, including a narrow pane on a wide desktop. */
+.mos-viewer{container-type:inline-size;container-name:layout-viewer;overflow-y:auto;scrollbar-width:thin}
+@container layout-viewer (max-width:620px){
+  .mos-viewer-toolbar{flex-wrap:nowrap;overflow-x:auto;flex-shrink:0;scrollbar-width:thin;gap:8px}.mos-toolgroup{flex-shrink:0}.mos-viewer-toolbar button,.mos-viewer-toolbar select{min-height:40px;white-space:nowrap}
+  .mos-viewer-stage{min-height:440px}.mos-viewer-has-palette .mos-viewer-host{right:0;bottom:190px}.mos-viewer-palette{top:auto;bottom:8px;left:8px;right:8px;width:auto;height:160px;max-height:160px;box-sizing:border-box;backdrop-filter:none}
+  .mos-viewer-has-palette .mos-viewer-scale{bottom:204px}.mos-viewer-has-palette .mos-viewer-stack-note{bottom:235px;max-width:210px}.mos-viewer-view-label{top:10px;left:10px;max-width:calc(100% - 20px)}.mos-viewer-view-label span{max-width:none;overflow-wrap:anywhere;font-size:10px}.mos-viewer-renderinfo{display:none}
+  .mos-viewer-controls{flex-shrink:0;gap:8px}.mos-viewer-controls button,.mos-viewer-controls select{min-height:40px}.mos-viewer-status{flex-wrap:wrap}.mos-viewer-status>span:last-child{max-width:100%;text-align:left}.mos-layer-row{min-height:42px;grid-template-columns:24px 1fr 24px 24px 30px}.mos-layer-row input[type=checkbox]{width:20px;height:20px}.mos-layer-row .mos-layer-color{width:20px!important;height:20px!important}.mos-layer-row .mos-layer-name{min-height:36px}
+}
