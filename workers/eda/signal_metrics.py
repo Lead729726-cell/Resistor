@@ -53,3 +53,17 @@ def supply_metrics(wave,a,b,supply):
     charge=sum((j-i)*(x+y)/2 for (i,x),(j,y) in zip(points,points[1:]))
     mean=charge/(b-a);peak=max(v for _,v in points);minimum=min(v for _,v in points)
     return {'available':True,'start_s':a,'end_s':b,'energy_J':charge*supply,'average_current_A':mean,'peak_current_A':peak,'minimum_current_A':minimum,'average_power_W':mean*supply,'source':'actual -i(VDD), signed trapezoidal integration; constant testbench VDD'}
+
+
+def variable_supply_metrics(current,voltage,a,b):
+    """Exact V(t)*I(t) work for aligned piecewise-linear actual samples."""
+    validate_wave(current);validate_wave(voltage)
+    if current['x']!=voltage['x'] or any(l>=r for l,r in zip(current['x'],current['x'][1:])):
+        return dict(available=False,reason='Actual supply voltage/current need aligned, strictly increasing time axes.')
+    ci,vi=window(current,a,b),window(voltage,a,b)
+    if not ci or not vi:return dict(available=False,reason='Actual supply voltage/current do not cover the complete interval.')
+    energy=math.fsum((r-l)*(2*u*x+u*y+v*x+2*v*y)/6 for ((l,u),(r,v)),((_,x),(_,y)) in zip(zip(ci,ci[1:]),zip(vi,vi[1:])))
+    charge=math.fsum((r-l)*(u+v)/2 for (l,u),(r,v) in zip(ci,ci[1:]))
+    return dict(available=True,start_s=a,end_s=b,energy_J=energy,average_power_W=energy/(b-a),
+        average_current_A=charge/(b-a),peak_current_A=max(i for _,i in ci),minimum_current_A=min(i for _,i in ci),
+        source='Actual signed I(VDD) convention and measured VDD(t); exact product integral of piecewise-linear samples.')

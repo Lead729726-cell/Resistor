@@ -1,0 +1,411 @@
+{
+  "schema_version": 1,
+  "edition": "indust",
+  "solver_executed": false,
+  "scope": "Current measurement logic re-evaluates actual retained OP/AC/tran samples; not a new solver or signoff run.",
+  "logical_dut_matches_current_source": true,
+  "cases": [
+    {
+      "native_run_id": "eccb9fdb18d54754bf15d7041c2ad6f5",
+      "condition": {
+        "corner": "tt",
+        "supply_V": 1.8,
+        "temperature_C": 27,
+        "analysis": "op"
+      },
+      "original_execution_status": "completed",
+      "waveform_sha256": "b890d850cd7b11071d3b179d6d0e38fb648b1f49a96aa650a5314e5a86880a89",
+      "current_checks": {
+        "schema_version": 1,
+        "kind": "soc_ivr_ldo",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "DC output within 50mV of requested rail",
+            "pass": true,
+            "observed": 1.2038118109638276
+          },
+          {
+            "name": "Positive supply power and physical efficiency",
+            "pass": true,
+            "observed": 0.36922616508315953
+          }
+        ],
+        "pass": true,
+        "scope": "IVR directed schematic checks only; not stability/signoff certification."
+      }
+    },
+    {
+      "native_run_id": "08e0ae0114ff4bb5ae8d356013e8bb87",
+      "condition": {
+        "corner": "tt",
+        "supply_V": 1.8,
+        "temperature_C": 27,
+        "analysis": "ac"
+      },
+      "original_execution_status": "completed",
+      "waveform_sha256": "0a0303014a28411b40ebd3c5d701d239e615bcfa1e5574cd4ea3678035c43b99",
+      "current_checks": {
+        "schema_version": 1,
+        "kind": "soc_ivr_ldo",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Light-load PSRR at 100Hz at least 20dB",
+            "pass": true,
+            "observed": 66.43424799804308
+          }
+        ],
+        "pass": true,
+        "scope": "IVR directed schematic checks only; not stability/signoff certification."
+      },
+      "minimum_sampled_psrr_dB": 0.5577981351602878,
+      "minimum_psrr_frequency_Hz": 129568.6697517043
+    },
+    {
+      "native_run_id": "27a7857c7ef04b1fa648a5493058db05",
+      "condition": {
+        "corner": "tt",
+        "supply_V": 1.8,
+        "temperature_C": 27,
+        "analysis": "tran"
+      },
+      "original_execution_status": "completed",
+      "waveform_sha256": "1d2596a0cef12b8ba83686fd3fc938562677f3cbcc114134ce3780988f8c888f",
+      "current_checks": {
+        "schema_version": 1,
+        "kind": "soc_ivr_ldo",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "light output within 50mV",
+            "pass": true,
+            "observed": [
+              1.2011501933558326,
+              1.209808820746068
+            ]
+          },
+          {
+            "name": "heavy output within 50mV",
+            "pass": true,
+            "observed": [
+              1.201934558500167,
+              1.201934558500167
+            ]
+          },
+          {
+            "name": "line_low output within 50mV",
+            "pass": true,
+            "observed": [
+              1.2030948090062277,
+              1.2042993954581418
+            ]
+          },
+          {
+            "name": "reenabled output within 50mV",
+            "pass": true,
+            "observed": [
+              1.2019004729710558,
+              1.204919891244123
+            ]
+          },
+          {
+            "name": "Load step undershoot below 150mV",
+            "pass": true,
+            "observed": 0.07319036762823505
+          },
+          {
+            "name": "Load release overshoot below 150mV",
+            "pass": true,
+            "observed": 0.05772953414754234
+          },
+          {
+            "name": "Disable output remains within \u00b150mV",
+            "pass": true,
+            "observed": [
+              7.314822843434234e-08,
+              6.298069607294086e-05
+            ]
+          },
+          {
+            "name": "Heavy-load efficiency physically bounded",
+            "pass": true,
+            "observed": 0.6176467713271824
+          }
+        ],
+        "pass": true,
+        "scope": "IVR directed schematic checks only; not stability/signoff certification."
+      }
+    },
+    {
+      "native_run_id": "01ede2618c86469483b1534401788e43",
+      "condition": {
+        "corner": "ss",
+        "supply_V": 1.6,
+        "temperature_C": 85,
+        "analysis": "op"
+      },
+      "original_execution_status": "completed",
+      "waveform_sha256": "7c864e0bada711c7a1d4164aa2b0d7130c68ea64952dfbf006e6e23a02d736dd",
+      "current_checks": {
+        "schema_version": 1,
+        "kind": "soc_ivr_ldo",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "DC output within 50mV of requested rail",
+            "pass": true,
+            "observed": 1.2034698045829941
+          },
+          {
+            "name": "Positive supply power and physical efficiency",
+            "pass": true,
+            "observed": 0.43838093748396995
+          }
+        ],
+        "pass": true,
+        "scope": "IVR directed schematic checks only; not stability/signoff certification."
+      }
+    },
+    {
+      "native_run_id": "cf56230612124efeae5bea5e8eb84043",
+      "condition": {
+        "corner": "ss",
+        "supply_V": 1.6,
+        "temperature_C": 85,
+        "analysis": "ac"
+      },
+      "original_execution_status": "completed",
+      "waveform_sha256": "60d9bbe2ebe1e878a7c17b247b123fd884718d10e54018665b31aa08881feb46",
+      "current_checks": {
+        "schema_version": 1,
+        "kind": "soc_ivr_ldo",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Light-load PSRR at 100Hz at least 20dB",
+            "pass": true,
+            "observed": 61.77853721545757
+          }
+        ],
+        "pass": true,
+        "scope": "IVR directed schematic checks only; not stability/signoff certification."
+      },
+      "minimum_sampled_psrr_dB": 0.5623021585633338,
+      "minimum_psrr_frequency_Hz": 122320.71190499536
+    },
+    {
+      "native_run_id": "3d1c4c749ee24932bcc14fc8ae000e35",
+      "condition": {
+        "corner": "ss",
+        "supply_V": 1.6,
+        "temperature_C": 85,
+        "analysis": "tran"
+      },
+      "original_execution_status": "completed",
+      "waveform_sha256": "08843caf4a5adf73a463c8c2cb3e695ee45dfde6c82f91945fc64a79452ad880",
+      "current_checks": {
+        "schema_version": 1,
+        "kind": "soc_ivr_ldo",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "light output within 50mV",
+            "pass": true,
+            "observed": [
+              1.2012322382665135,
+              1.2089378929978032
+            ]
+          },
+          {
+            "name": "heavy output within 50mV",
+            "pass": true,
+            "observed": [
+              1.2012822632741276,
+              1.2012822632741307
+            ]
+          },
+          {
+            "name": "line_low output within 50mV",
+            "pass": true,
+            "observed": [
+              1.2029563005302841,
+              1.2037917771328654
+            ]
+          },
+          {
+            "name": "reenabled output within 50mV",
+            "pass": true,
+            "observed": [
+              1.2012848679874117,
+              1.2043396450836379
+            ]
+          },
+          {
+            "name": "Load step undershoot below 150mV",
+            "pass": true,
+            "observed": 0.07869143707990545
+          },
+          {
+            "name": "Load release overshoot below 150mV",
+            "pass": true,
+            "observed": 0.0630042486242357
+          },
+          {
+            "name": "Disable output remains within \u00b150mV",
+            "pass": true,
+            "observed": [
+              1.8173290263835547e-05,
+              0.0033768381912370146
+            ]
+          },
+          {
+            "name": "Heavy-load efficiency physically bounded",
+            "pass": true,
+            "observed": 0.7006562005597509
+          }
+        ],
+        "pass": true,
+        "scope": "IVR directed schematic checks only; not stability/signoff certification."
+      }
+    },
+    {
+      "native_run_id": "e0ca1aec258b42f390ebf2107e575138",
+      "condition": {
+        "corner": "ff",
+        "supply_V": 1.8,
+        "temperature_C": -40,
+        "analysis": "op"
+      },
+      "original_execution_status": "completed",
+      "waveform_sha256": "25f788458bee6d8e4661abc70321c41981fbb22d71565c0a9db94337f3ffba30",
+      "current_checks": {
+        "schema_version": 1,
+        "kind": "soc_ivr_ldo",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "DC output within 50mV of requested rail",
+            "pass": true,
+            "observed": 1.204351533724969
+          },
+          {
+            "name": "Positive supply power and physical efficiency",
+            "pass": true,
+            "observed": 0.37721202133051485
+          }
+        ],
+        "pass": true,
+        "scope": "IVR directed schematic checks only; not stability/signoff certification."
+      }
+    },
+    {
+      "native_run_id": "a3472341069d41da86bfc7f2048b63b2",
+      "condition": {
+        "corner": "ff",
+        "supply_V": 1.8,
+        "temperature_C": -40,
+        "analysis": "ac"
+      },
+      "original_execution_status": "completed",
+      "waveform_sha256": "b1becdd3998b6c2dec3b9dd8d6960749f9462ac5ef2b35ed4e4cd4ea63152853",
+      "current_checks": {
+        "schema_version": 1,
+        "kind": "soc_ivr_ldo",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Light-load PSRR at 100Hz at least 20dB",
+            "pass": true,
+            "observed": 64.99373758503496
+          }
+        ],
+        "pass": true,
+        "scope": "IVR directed schematic checks only; not stability/signoff certification."
+      },
+      "minimum_sampled_psrr_dB": 0.4502369672620793,
+      "minimum_psrr_frequency_Hz": 133352.14321633484
+    },
+    {
+      "native_run_id": "81daa702d5cd451595a76f97c99157b5",
+      "condition": {
+        "corner": "ff",
+        "supply_V": 1.8,
+        "temperature_C": -40,
+        "analysis": "tran"
+      },
+      "original_execution_status": "completed",
+      "waveform_sha256": "afb83b627bab6af6c315257f8d90c4eb63e66b05566da41ec679ad16fdd5c9e9",
+      "current_checks": {
+        "schema_version": 1,
+        "kind": "soc_ivr_ldo",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "light output within 50mV",
+            "pass": true,
+            "observed": [
+              1.1948178416351711,
+              1.207712429577766
+            ]
+          },
+          {
+            "name": "heavy output within 50mV",
+            "pass": true,
+            "observed": [
+              1.202792938050085,
+              1.2027929380500857
+            ]
+          },
+          {
+            "name": "line_low output within 50mV",
+            "pass": true,
+            "observed": [
+              1.2039548432082827,
+              1.204669152186799
+            ]
+          },
+          {
+            "name": "reenabled output within 50mV",
+            "pass": true,
+            "observed": [
+              1.2030412887351358,
+              1.207242822715304
+            ]
+          },
+          {
+            "name": "Load step undershoot below 150mV",
+            "pass": true,
+            "observed": 0.06589865180223908
+          },
+          {
+            "name": "Load release overshoot below 150mV",
+            "pass": true,
+            "observed": 0.05211808392695394
+          },
+          {
+            "name": "Disable output remains within \u00b150mV",
+            "pass": true,
+            "observed": [
+              4.247008216902924e-08,
+              4.718083911531609e-07
+            ]
+          },
+          {
+            "name": "Heavy-load efficiency physically bounded",
+            "pass": true,
+            "observed": 0.6202502233441876
+          }
+        ],
+        "pass": true,
+        "scope": "IVR directed schematic checks only; not stability/signoff certification."
+      }
+    }
+  ],
+  "all_current_criteria_passed": true,
+  "source_sha256": {
+    "workers/eda/power_ivr.py": "5f388396c429f90334439342d42daf24999baae83cb9a96dba071db015a0a0a7",
+    "workers/eda/signal_metrics.py": "31752dd805f51b2fea62fbc5265f3b2c43c5d3463e3f4d8dda3f0b2be8695434",
+    "scripts/ivr-audit.py": "66ce850627a78b20ddab46e50928aa3bd98c644b4b6a2ef08401643b9adfbb66"
+  }
+}

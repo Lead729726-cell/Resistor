@@ -12,6 +12,7 @@ import design_tools
 import chip_references
 import physical_library
 import oscillator_projects
+import power_ivr
 
 S = None
 VERSION = 'register-semiconductor-starters-1'
@@ -73,6 +74,14 @@ PRESETS = {
         'testbench': {'analysis': 'tran', 'duration_s': 200e-9, 'step_s': 100e-12},
         'observe': ['계단 입력 뒤 OUT 상승과 측정 시정수 확인', '이상적 RC이며 반도체 공정 효과는 포함하지 않음']},
 }
+PRESETS[power_ivr.ID]={'title':power_ivr.CATALOG[power_ivr.ID]['name'],
+    'subtitle':power_ivr.CATALOG[power_ivr.ID]['scope'],'category':'전원·온칩 IVR',
+    'template_id':power_ivr.ID,'parameters':copy.deepcopy(power_ivr.DEFAULTS),
+    'physical_core':False,'layout':'schematic','features':power_ivr.CATALOG[power_ivr.ID]['targets'],
+    'observe':['7개 하위 블록과 실제 PMOS 패스 뱅크를 열어 확인하세요.',
+               '기동·부하·입력 변화·Enable 재시작과 부호 있는 전류를 실제 실행하세요.',
+               'PSRR 최소값도 확인하세요. 위상 여유·보호 회로·실면적·제조 승인은 별도입니다.'],
+    'testbench':power_ivr.settings()}
 for key, row in chip_references.CATALOG.items():
     PRESETS[key]={'title':row['name'],'subtitle':row['scope'],'category':'칩 포트폴리오 · '+row['category'],
         'template_id':key,'parameters':copy.deepcopy(row['parameter_defaults']),'physical_core':False,'layout':'schematic',

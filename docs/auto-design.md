@@ -18,6 +18,7 @@
 | 설계군 | 조정 범위 | 실제 분석 |
 | --- | --- | --- |
 | DUET-AFE 이중 대역 센서 입력부 | 폐루프 이득, 두 RC 극점, 보상 C/R, 바이어스 저항 | OP·AC·tran |
+| IVR 온칩 LDO | 0.6V 기준·1.2V 목표·20→200µA 부하는 고정; 패스 뱅크·바이어스·보상·출력 R/C 비교 | OP·AC·tran |
 | RC 저역통과 | R, C 및 native catalog의 허용 파라미터 | OP·AC·tran |
 | Miller OTA | native catalog의 OTA 파라미터 | OP·AC |
 | 2극 필터 | native catalog의 필터 파라미터 | OP·AC·tran |

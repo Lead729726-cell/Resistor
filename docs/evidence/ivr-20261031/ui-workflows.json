@@ -1,0 +1,501 @@
+{
+  "edition": "indust",
+  "scope": "Actual app on isolated public IVR workspace; synthetic QA license only; native ngspice; zero paid API calls",
+  "events": [
+    {
+      "method": "simulation.run",
+      "at": "2026-10-31T05:03:21.723Z",
+      "ok": true,
+      "params": {
+        "project_id": "cbeaee5b851540b98d8399a19f678052",
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 0.00026,
+        "step_s": 5e-8,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0,
+        "netlister": "native",
+        "post_layout": false
+      },
+      "result": {
+        "id": "7b51e75b60444da7b93efe613d3c08e8",
+        "project_id": "cbeaee5b851540b98d8399a19f678052",
+        "revision": 1,
+        "execution_status": "queued",
+        "analysis_result": "unknown"
+      }
+    },
+    {
+      "method": "job.status",
+      "at": "2026-10-31T05:03:21.927Z",
+      "ok": true,
+      "params": {
+        "run_id": "7b51e75b60444da7b93efe613d3c08e8"
+      },
+      "result": {
+        "id": "7b51e75b60444da7b93efe613d3c08e8",
+        "project_id": "cbeaee5b851540b98d8399a19f678052",
+        "revision": 1,
+        "execution_status": "running",
+        "analysis_result": "unknown"
+      }
+    },
+    {
+      "method": "job.status",
+      "at": "2026-10-31T05:03:23.121Z",
+      "ok": true,
+      "params": {
+        "run_id": "7b51e75b60444da7b93efe613d3c08e8"
+      },
+      "result": {
+        "id": "7b51e75b60444da7b93efe613d3c08e8",
+        "project_id": "cbeaee5b851540b98d8399a19f678052",
+        "revision": 1,
+        "execution_status": "running",
+        "analysis_result": "unknown"
+      }
+    },
+    {
+      "method": "job.status",
+      "at": "2026-10-31T05:03:24.731Z",
+      "ok": true,
+      "params": {
+        "run_id": "7b51e75b60444da7b93efe613d3c08e8"
+      },
+      "result": {
+        "id": "7b51e75b60444da7b93efe613d3c08e8",
+        "project_id": "cbeaee5b851540b98d8399a19f678052",
+        "revision": 1,
+        "execution_status": "completed",
+        "analysis_result": "pass",
+        "measurements": {
+          "analysis": "tran",
+          "x_unit": "s",
+          "x_label": "time",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "post_layout": "false",
+          "samples": 5293,
+          "solver": "SPARSE 1.3",
+          "VIN_min": 0,
+          "VIN_max": 1.8,
+          "OUT_min": -0.005776097515602945,
+          "OUT_max": 1.2623332642899114,
+          "VREF_min": 0,
+          "VREF_max": 0.6000000000000001,
+          "EN_min": 0,
+          "EN_max": 1.8,
+          "FB_min": -0.01701935170341893,
+          "FB_max": 0.6315554639335292,
+          "GATE_min": 2.2139813100786316e-16,
+          "GATE_max": 1.800698709509333,
+          "BIAS_min": -1.3760656509375485e-151,
+          "BIAS_max": 0.788379752701578,
+          "supply_current_min": 1.0201870414659808e-27,
+          "supply_current_max": 0.00032402940537056,
+          "load_current_min": -9.626829770281319e-8,
+          "load_current_max": 0.00020060665752983384,
+          "current_flow_status": "available",
+          "template_id": "soc_ivr_ldo",
+          "layout_status": "not-generated",
+          "metric_source": "actual-ngspice-samples",
+          "reference_scope": "IVR directed schematic checks only; not stability/signoff certification.",
+          "unverified": [
+            "Integrated linear-regulator schematic prototype; not a switching buck IVR.",
+            "External ideal VREF and supply/enable/load control; reference ramp supplies soft start.",
+            "Ideal R/C; MOS corners do not vary feedback/compensation/decoupling passives.",
+            "No return-ratio/phase-margin, noise, mismatch, current-limit, reverse-current or thermal protection qualification.",
+            "No generated layout, physical capacitor area, PEX or foundry signoff."
+          ],
+          "light_output_V": 1.204793834248,
+          "heavy_output_V": 1.201934558500167,
+          "line_low_output_V": 1.2038914066086717,
+          "reenabled_output_V": 1.2038500022716998,
+          "load_step_undershoot_V": 0.07319036762823505,
+          "load_release_overshoot_V": 0.05772953414754234,
+          "load_regulation_V": -0.0028592757478329567,
+          "line_regulation_V": -0.0009024276393283515,
+          "load_settle_2pct_s": 0.0000016040885416667152,
+          "startup_settle_2pct_s": 0.000012225000000000026,
+          "disabled_maximum_V": 0.00006298069607294086,
+          "heavy_input_power_W": 0.00038982021427747253,
+          "heavy_output_power_W": 0.00024077119674655132,
+          "heavy_power_stage_efficiency": 0.6176467713271824,
+          "power_scope": "All DUT VDD current including bias/feedback. External VREF/enable-driver power excluded. Resistive loads specified at target VOUT.",
+          "research_metrics": {
+            "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+            "input_drivers_power": "not measured",
+            "external_bias_power": "not measured",
+            "complete_system_power_available": false,
+            "supply": {
+              "available": true,
+              "start_s": 0,
+              "end_s": 0.00026000000000000003,
+              "energy_J": 3.17880434201541e-8,
+              "average_power_W": 0.00012226170546213115,
+              "average_current_A": 0.000068420957079302,
+              "peak_current_A": 0.00032402940537056,
+              "minimum_current_A": 1.0201870414659808e-27,
+              "source": "Actual signed I(VDD) convention and measured VDD(t); exact product integral of piecewise-linear samples.",
+              "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+            },
+            "OUT_tail": {
+              "available": true,
+              "start": 0.00019500000000000002,
+              "end": 0.00026000000000000003,
+              "integral": 0.00003973831145401164,
+              "mean": 0.6113586377540252,
+              "rms": 0.8454231066881037,
+              "ac_rms": 0.5839356517337397,
+              "minimum": -0.005776097515602945,
+              "maximum": 1.2336042001835297,
+              "peak_to_peak": 1.2393802976991326,
+              "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "assistant.autodesign_catalog",
+      "at": "2026-10-31T05:05:53.593Z",
+      "ok": true,
+      "params": {},
+      "result": {
+        "auto_families": [
+          {
+            "id": "rc_lowpass",
+            "fixed_parameters": []
+          },
+          {
+            "id": "soc_miller_ota",
+            "fixed_parameters": []
+          },
+          {
+            "id": "soc_filter2",
+            "fixed_parameters": []
+          },
+          {
+            "id": "soc_tia",
+            "fixed_parameters": []
+          },
+          {
+            "id": "sensor_afe_dualband",
+            "fixed_parameters": []
+          },
+          {
+            "id": "soc_ivr_ldo",
+            "fixed_parameters": [
+              "reference_V",
+              "output_V",
+              "load_low_A",
+              "load_high_A"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "method": "starter.catalog",
+      "at": "2026-10-31T05:11:48.005Z",
+      "ok": true,
+      "params": {},
+      "result": {}
+    },
+    {
+      "method": "starter.catalog",
+      "at": "2026-10-31T05:15:10.223Z",
+      "ok": true,
+      "params": {},
+      "result": {}
+    },
+    {
+      "method": "starter.create",
+      "at": "2026-10-31T05:16:20.953Z",
+      "ok": true,
+      "params": {
+        "preset_id": "soc_ivr_ldo",
+        "mode": "nominal",
+        "name": "IVR 1.2V · 앱에서 생성한 전원 레일",
+        "command_id": "1a2d8784-59f7-4e4b-bcbd-53655b3beaaf"
+      },
+      "result": {
+        "id": "036d6f52e5904306b448fbbcf2bf57d6",
+        "project_id": "036d6f52e5904306b448fbbcf2bf57d6",
+        "revision": 1,
+        "template_id": "soc_ivr_ldo",
+        "schematic_devices": 7
+      }
+    },
+    {
+      "method": "simulation.run",
+      "at": "2026-10-31T05:16:21.456Z",
+      "ok": true,
+      "params": {
+        "project_id": "036d6f52e5904306b448fbbcf2bf57d6",
+        "expected_revision": 1,
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 0.00026,
+        "step_s": 5e-8,
+        "load_F": 1e-9,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "result": {
+        "id": "20624e3f1ffc4857b416519f7ca3b255",
+        "project_id": "036d6f52e5904306b448fbbcf2bf57d6",
+        "revision": 1,
+        "execution_status": "running",
+        "analysis_result": "unknown"
+      }
+    },
+    {
+      "method": "job.status",
+      "at": "2026-10-31T05:16:22.214Z",
+      "ok": true,
+      "params": {
+        "run_id": "20624e3f1ffc4857b416519f7ca3b255"
+      },
+      "result": {
+        "id": "20624e3f1ffc4857b416519f7ca3b255",
+        "project_id": "036d6f52e5904306b448fbbcf2bf57d6",
+        "revision": 1,
+        "execution_status": "running",
+        "analysis_result": "unknown"
+      }
+    },
+    {
+      "method": "job.status",
+      "at": "2026-10-31T05:16:23.051Z",
+      "ok": true,
+      "params": {
+        "run_id": "20624e3f1ffc4857b416519f7ca3b255"
+      },
+      "result": {
+        "id": "20624e3f1ffc4857b416519f7ca3b255",
+        "project_id": "036d6f52e5904306b448fbbcf2bf57d6",
+        "revision": 1,
+        "execution_status": "running",
+        "analysis_result": "unknown"
+      }
+    },
+    {
+      "method": "job.status",
+      "at": "2026-10-31T05:16:24.721Z",
+      "ok": true,
+      "params": {
+        "run_id": "20624e3f1ffc4857b416519f7ca3b255"
+      },
+      "result": {
+        "id": "20624e3f1ffc4857b416519f7ca3b255",
+        "project_id": "036d6f52e5904306b448fbbcf2bf57d6",
+        "revision": 1,
+        "execution_status": "completed",
+        "analysis_result": "pass",
+        "measurements": {
+          "analysis": "tran",
+          "x_unit": "s",
+          "x_label": "time",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "post_layout": "false",
+          "samples": 5293,
+          "solver": "SPARSE 1.3",
+          "VIN_min": 0,
+          "VIN_max": 1.8,
+          "OUT_min": -0.005776097515602945,
+          "OUT_max": 1.2623332642899114,
+          "VREF_min": 0,
+          "VREF_max": 0.6000000000000001,
+          "EN_min": 0,
+          "EN_max": 1.8,
+          "FB_min": -0.01701935170341893,
+          "FB_max": 0.6315554639335292,
+          "GATE_min": 2.2139813100786316e-16,
+          "GATE_max": 1.800698709509333,
+          "BIAS_min": -1.3760656509375485e-151,
+          "BIAS_max": 0.788379752701578,
+          "supply_current_min": 1.0201870414659808e-27,
+          "supply_current_max": 0.00032402940537056,
+          "load_current_min": -9.626829770281319e-8,
+          "load_current_max": 0.00020060665752983384,
+          "current_flow_status": "available",
+          "template_id": "soc_ivr_ldo",
+          "layout_status": "not-generated",
+          "metric_source": "actual-ngspice-samples",
+          "reference_scope": "IVR directed schematic checks only; not stability/signoff certification.",
+          "unverified": [
+            "Integrated linear-regulator schematic prototype; not a switching buck IVR.",
+            "External ideal VREF and supply/enable/load control; reference ramp supplies soft start.",
+            "Ideal R/C; MOS corners do not vary feedback/compensation/decoupling passives.",
+            "No return-ratio/phase-margin, noise, mismatch, current-limit, reverse-current or thermal protection qualification.",
+            "No generated layout, physical capacitor area, PEX or foundry signoff."
+          ],
+          "light_output_V": 1.204793834248,
+          "heavy_output_V": 1.201934558500167,
+          "line_low_output_V": 1.2038914066086717,
+          "reenabled_output_V": 1.2038500022716998,
+          "load_step_undershoot_V": 0.07319036762823505,
+          "load_release_overshoot_V": 0.05772953414754234,
+          "load_regulation_V": -0.0028592757478329567,
+          "line_regulation_V": -0.0009024276393283515,
+          "load_settle_2pct_s": 0.0000016040885416667152,
+          "startup_settle_2pct_s": 0.000012225000000000026,
+          "disabled_maximum_V": 0.00006298069607294086,
+          "heavy_input_power_W": 0.00038982021427747253,
+          "heavy_output_power_W": 0.00024077119674655132,
+          "heavy_power_stage_efficiency": 0.6176467713271824,
+          "power_scope": "All DUT VDD current including bias/feedback. External VREF/enable-driver power excluded. Resistive loads specified at target VOUT.",
+          "research_metrics": {
+            "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+            "input_drivers_power": "not measured",
+            "external_bias_power": "not measured",
+            "complete_system_power_available": false,
+            "supply": {
+              "available": true,
+              "start_s": 0,
+              "end_s": 0.00026000000000000003,
+              "energy_J": 3.17880434201541e-8,
+              "average_power_W": 0.00012226170546213115,
+              "average_current_A": 0.000068420957079302,
+              "peak_current_A": 0.00032402940537056,
+              "minimum_current_A": 1.0201870414659808e-27,
+              "source": "Actual signed I(VDD) convention and measured VDD(t); exact product integral of piecewise-linear samples.",
+              "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+            },
+            "OUT_tail": {
+              "available": true,
+              "start": 0.00019500000000000002,
+              "end": 0.00026000000000000003,
+              "integral": 0.00003973831145401164,
+              "mean": 0.6113586377540252,
+              "rms": 0.8454231066881037,
+              "ac_rms": 0.5839356517337397,
+              "minimum": -0.005776097515602945,
+              "maximum": 1.2336042001835297,
+              "peak_to_peak": 1.2393802976991326,
+              "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "starter.catalog",
+      "at": "2026-10-31T05:21:02.418Z",
+      "ok": true,
+      "params": {},
+      "result": {}
+    },
+    {
+      "method": "simulation.run",
+      "at": "2026-10-31T05:21:07.378Z",
+      "ok": true,
+      "params": {
+        "project_id": "036d6f52e5904306b448fbbcf2bf57d6",
+        "analysis": "ac",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 0.00026,
+        "step_s": 5e-8,
+        "load_F": 1e-9,
+        "vds_V": 1.8,
+        "vbs_V": 0,
+        "netlister": "native",
+        "post_layout": false
+      },
+      "result": {
+        "id": "038811b7ca8c4e899828551bcbf34303",
+        "project_id": "036d6f52e5904306b448fbbcf2bf57d6",
+        "revision": 1,
+        "execution_status": "queued",
+        "analysis_result": "unknown"
+      }
+    },
+    {
+      "method": "job.status",
+      "at": "2026-10-31T05:21:07.582Z",
+      "ok": true,
+      "params": {
+        "run_id": "038811b7ca8c4e899828551bcbf34303"
+      },
+      "result": {
+        "id": "038811b7ca8c4e899828551bcbf34303",
+        "project_id": "036d6f52e5904306b448fbbcf2bf57d6",
+        "revision": 1,
+        "execution_status": "running",
+        "analysis_result": "unknown"
+      }
+    },
+    {
+      "method": "job.status",
+      "at": "2026-10-31T05:21:08.785Z",
+      "ok": true,
+      "params": {
+        "run_id": "038811b7ca8c4e899828551bcbf34303"
+      },
+      "result": {
+        "id": "038811b7ca8c4e899828551bcbf34303",
+        "project_id": "036d6f52e5904306b448fbbcf2bf57d6",
+        "revision": 1,
+        "execution_status": "running",
+        "analysis_result": "unknown"
+      }
+    },
+    {
+      "method": "job.status",
+      "at": "2026-10-31T05:21:09.969Z",
+      "ok": true,
+      "params": {
+        "run_id": "038811b7ca8c4e899828551bcbf34303"
+      },
+      "result": {
+        "id": "038811b7ca8c4e899828551bcbf34303",
+        "project_id": "036d6f52e5904306b448fbbcf2bf57d6",
+        "revision": 1,
+        "execution_status": "completed",
+        "analysis_result": "pass",
+        "measurements": {
+          "analysis": "ac",
+          "x_unit": "Hz",
+          "x_label": "frequency",
+          "corner": "tt",
+          "temperature_C": 27,
+          "supply_V": 1.8,
+          "post_layout": "false",
+          "samples": 561,
+          "solver": "SPARSE 1.3",
+          "supply_to_output_gain_min": 0.00029637170844880106,
+          "supply_to_output_gain_max": 0.9377997081385421,
+          "supply_to_output_phase_min": -87.96365303889273,
+          "supply_to_output_phase_max": 172.7224844891532,
+          "current_flow_status": "unsupported_complex_ac",
+          "template_id": "soc_ivr_ldo",
+          "layout_status": "not-generated",
+          "metric_source": "actual-ngspice-samples",
+          "reference_scope": "IVR directed schematic checks only; not stability/signoff certification.",
+          "unverified": [
+            "Integrated linear-regulator schematic prototype; not a switching buck IVR.",
+            "External ideal VREF and supply/enable/load control; reference ramp supplies soft start.",
+            "Ideal R/C; MOS corners do not vary feedback/compensation/decoupling passives.",
+            "No return-ratio/phase-margin, noise, mismatch, current-limit, reverse-current or thermal protection qualification.",
+            "No generated layout, physical capacitor area, PEX or foundry signoff."
+          ],
+          "psrr_100Hz_dB": 66.43424799804308,
+          "psrr_10000Hz_dB": 28.468347941586277,
+          "psrr_1000000Hz_dB": 23.65313687949343,
+          "ac_scope": "Closed-loop supply ripple transfer at light resistive load, not loop gain/phase margin."
+        }
+      }
+    }
+  ]
+}

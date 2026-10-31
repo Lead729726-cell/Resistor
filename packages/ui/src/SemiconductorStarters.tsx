@@ -2,6 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { rpc, type Project, type Run, type SemiconductorCatalog, type SemiconductorPreset, type StarterMode } from '@mos/contracts';
 import './semiconductor-starters.css';
 
+const starterQuantity=(value:number,unit:string)=>{
+  if(!Number.isFinite(value))return '—';
+  if(value===0)return '0 '+unit;
+  const [scale,prefix]=([[1,''],[1e-3,'m'],[1e-6,'µ'],[1e-9,'n'],[1e-12,'p'],[1e-15,'f']] as const).find(([s])=>Math.abs(value)>=s*(1-1e-12))||[1,''];
+  return Number((value/scale).toPrecision(4))+' '+prefix+unit;
+};
+
 function ChipGlyph({ variant = 0 }: { variant?: number }) {
   return <svg viewBox="0 0 80 64" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.5">
     <rect x="21" y="13" width="38" height="38" rx="5"/>
@@ -78,7 +85,7 @@ export default function SemiconductorStarters({ project, disabledReason, onProje
           {preset && settings && <div className="starter-configuration">
             <div className="starter-step-label"><b>03</b><h4>시작 조건 확인하기</h4></div>
             <div className="starter-fields"><label>내 설계 이름<input aria-label="내 반도체 설계 이름" maxLength={128} value={name} disabled={busy} onChange={event => { setName(event.target.value); setNameTouched(true); }}/></label><label>운전 조건<select aria-label="반도체 시작 운전 조건" value={mode} disabled={busy} onChange={event => setMode(event.target.value as StarterMode)}>{catalog.modes.filter(item => preset.modes.includes(item.id)).map(item => <option value={item.id} key={item.id}>{item.name}</option>)}</select></label></div>
-            <dl className="starter-settings"><div><dt>실제 해석</dt><dd>{settings.analysis.toUpperCase()}</dd></div><div><dt>전원·코너</dt><dd>{settings.supply_V}V · {settings.corner.toUpperCase()}</dd></div><div><dt>온도</dt><dd>{settings.temperature_C}°C</dd></div><div><dt>출력 부하</dt><dd>{(settings.load_F * 1e15).toPrecision(3)}fF</dd></div>{settings.analysis === 'tran' && <div><dt>해석 길이 / 간격</dt><dd>{(settings.duration_s * 1e9).toFixed(1)}ns / {(settings.step_s * 1e12).toFixed(0)}ps</dd></div>}</dl>
+            <dl className="starter-settings"><div><dt>실제 해석</dt><dd>{settings.analysis.toUpperCase()}</dd></div><div><dt>전원·코너</dt><dd>{settings.supply_V}V · {settings.corner.toUpperCase()}</dd></div><div><dt>온도</dt><dd>{settings.temperature_C}°C</dd></div><div><dt>출력 부하</dt><dd>{starterQuantity(settings.load_F,'F')}</dd></div>{settings.analysis === 'tran' && <div><dt>해석 길이 / 간격</dt><dd>{starterQuantity(settings.duration_s,'s')} / {starterQuantity(settings.step_s,'s')}</dd></div>}</dl>
             <div className="starter-observe"><strong>만든 뒤 이렇게 살펴보세요</strong><ol>{preset.observe.map(item => <li key={item}>{item}</li>)}</ol></div>
             <label className="starter-run"><input type="checkbox" checked={runNow} disabled={busy} onChange={event => setRunNow(event.target.checked)}/>생성 후 실제 해석도 실행하기</label>
             <p className="starter-scope">{preset.ideal_components ? '이상적 RC 부품으로 구성한 기초 회로입니다.' : '공개 SKY130 모델을 사용합니다.'} 생성만으로 DRC·LVS·제조 검증이 통과한 것은 아닙니다. 전류·파형은 실제 해석을 실행한 뒤 표시됩니다.</p>

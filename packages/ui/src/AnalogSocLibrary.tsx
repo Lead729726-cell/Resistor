@@ -4,7 +4,7 @@ import {type DesignCatalog,type Project,type Scene,rpc} from '@mos/contracts';
 interface Props {catalog:DesignCatalog;transport:typeof rpc;readOnly:boolean;shared:boolean;onProject:(p:Project,s:Scene)=>void|Promise<void>}
 const projectName=(name:string)=>`아날로그 SoC v0.21 · ${name.replace(/^SoC · /,'')}`;
 export default function AnalogSocLibrary({catalog,transport,readOnly,shared,onProject}:Props){
-  const blocks=catalog.templates.filter(t=>t.id.startsWith('soc_'));
+  const blocks=catalog.templates.filter(t=>t.id.startsWith('soc_')&&t.id!=='soc_ivr_ldo');
   const [busy,setBusy]=useState(false),[error,setError]=useState(''),[created,setCreated]=useState<Record<string,string>>({});
   const commands=useRef<Record<string,string>>({}),alive=useRef(true);
   useEffect(()=>{alive.current=true;return()=>{alive.current=false;};},[]);

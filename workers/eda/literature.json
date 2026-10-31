@@ -1,8 +1,34 @@
 {
   "schema_version": 1,
   "reviewed_at": "2026-10-13",
-  "scope": "Selected accessible primary sources, 2025–2026 plus one explicitly dated layout foundation. This is not an exhaustive systematic review.",
+  "scope": "Selected accessible 2025–2026 primary research and explicitly dated application/layout foundations. This is not an exhaustive systematic review.",
   "papers": [
+    {
+      "id": "ti-ldo-stability-2020",
+      "title": "ESR, Stability, and the LDO Regulator (SLVA115A)",
+      "authors": "Jeff Falin; John Cummings; Texas Instruments",
+      "date": "2020-02",
+      "venue": "Official application report; foundational source",
+      "doi": null,
+      "url": "https://www.ti.com/lit/an/slva115a/slva115a.pdf",
+      "read_scope": "PDF pages 1-3: PMOS error-amplifier/pass/load poles, ESR zero and load-transient method; accessed 2026-10-31",
+      "technology": "General PMOS LDO control methodology, not SKY130 silicon",
+      "adopted": "Explicit output capacitance/ESR, separate supply-ripple and load/line transient tests, no inferred phase margin from PSRR.",
+      "not_reproduced": "TI circuits, capacitor stability region, current ratings, unconditional stability, silicon or manufacturer specifications."
+    },
+    {
+      "id": "adi-ldo-architecture",
+      "title": "How to Successfully Apply Low-Dropout Regulators",
+      "authors": "Ken Marasco; Analog Devices",
+      "date": "undated official web edition; accessed 2026-10-31",
+      "venue": "Analog Dialogue application article",
+      "doi": null,
+      "url": "https://www.analog.com/en/resources/analog-dialogue/articles/applying-low-dropout-regulators.html",
+      "read_scope": "Basic LDO architecture, feedback polarity, load capacitance/ESR and startup tradeoffs",
+      "technology": "Generic regulator architecture; our circuit uses owned SKY130 MOS building blocks",
+      "adopted": "Reference/error-amplifier/divider/pass-bank hierarchy and independently measured headroom, DC current and transient regulation.",
+      "not_reproduced": "Commercial ADI devices, dropout ratings, protection behavior, guaranteed performance or fabrication."
+    },
     {
       "id": "vibe-tapeout-2026",
       "title": "The Era of Vibe Tapeout: Dark Age or Golden Age for Analog Circuit Design?",

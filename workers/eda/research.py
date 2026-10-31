@@ -16,6 +16,7 @@ def sources():
 
 
 def references(kind):
+    if kind=='soc_ivr_ldo':return ['ti-ldo-stability-2020','adi-ldo-architecture']
     if kind.startswith('sar12_') or kind=='sar_adc12':
         return ['vibe-tapeout-2026', 'clock-gating-2026']
     if kind.startswith('osc_'):
@@ -37,7 +38,7 @@ def record(kind):
     document = sources()
     by_id = {p['id']: p for p in document['papers']}
     ids = references(kind)
-    return dict(schema_version=1, review_version=VERSION, reviewed_at='2026-10-20' if kind.startswith('sar12_') or kind=='sar_adc12' else '2026-10-16' if kind.startswith('osc_') else document['reviewed_at'],
+    return dict(schema_version=1, review_version=VERSION, reviewed_at='2026-10-31' if kind=='soc_ivr_ldo' else '2026-10-20' if kind.startswith('sar12_') or kind=='sar_adc12' else '2026-10-16' if kind.startswith('osc_') else document['reviewed_at'],
                 reference_ids=ids, references=[copy.deepcopy(by_id[i]) for i in ids],
                 relationship='method-inspired review; existing owned circuits, not a reproduction of the cited chips',
                 paper_performance_reproduced=False,
@@ -115,7 +116,10 @@ def annotate(p, run, settings):
                    complete_system_power_available=False)
     if 'supply_current' in waves:
         w = waves['supply_current']
-        metrics['supply'] = M.supply_metrics(w, w['x'][0], w['x'][-1], settings.get('supply_V', p['testbench']['supply_V']))
+        voltage_trace=p.get('design_template',{}).get('supply_voltage_trace')
+        if voltage_trace:
+            metrics['supply']=M.variable_supply_metrics(w,waves[voltage_trace],w['x'][0],w['x'][-1]) if voltage_trace in waves else dict(available=False,reason='Declared actual supply-voltage trace is missing; nominal VDD is not substituted.')
+        else:metrics['supply'] = M.supply_metrics(w, w['x'][0], w['x'][-1], settings.get('supply_V', p['testbench']['supply_V']))
         metrics['supply']['sample_scope']='Integration of the returned trace; ADC raw-source energy is reported separately before display thinning.'
         raw=run.get('measurements',{}).get('source_energy',{}).get('9') if kind.startswith('sar12_') or kind=='sar_adc12' else None
         if raw:

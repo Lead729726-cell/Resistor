@@ -1,0 +1,82 @@
+{
+  "condition": {
+    "corner": "tt",
+    "supply_V": 1.8,
+    "temperature_C": 27,
+    "analysis": "op"
+  },
+  "id": "eccb9fdb18d54754bf15d7041c2ad6f5",
+  "revision": 1,
+  "execution_status": "completed",
+  "analysis_result": "pass",
+  "measurements": {
+    "analysis": "op",
+    "x_unit": "point",
+    "x_label": "operating point",
+    "corner": "tt",
+    "temperature_C": 27,
+    "supply_V": 1.8,
+    "post_layout": "false",
+    "samples": 1,
+    "solver": "SPARSE 1.3",
+    "VIN_min": 1.8,
+    "VIN_max": 1.8,
+    "OUT_min": 1.2038118109638276,
+    "OUT_max": 1.2038118109638276,
+    "VREF_min": 0.6000000000000001,
+    "VREF_max": 0.6000000000000001,
+    "EN_min": 1.8,
+    "EN_max": 1.8,
+    "FB_min": 0.6019059054819137,
+    "FB_max": 0.6019059054819137,
+    "GATE_min": 1.0041308399308109,
+    "GATE_max": 1.0041308399308109,
+    "BIAS_min": 0.7845626558124769,
+    "BIAS_max": 0.7845626558124769,
+    "supply_current_min": 0.00003634134536983913,
+    "supply_current_max": 0.00003634134536983913,
+    "load_current_min": 0.000020063531386542242,
+    "load_current_max": 0.000020063531386542242,
+    "current_flow_status": "available",
+    "template_id": "soc_ivr_ldo",
+    "layout_status": "not-generated",
+    "metric_source": "actual-ngspice-samples",
+    "reference_scope": "IVR directed schematic checks only; not stability/signoff certification.",
+    "unverified": [
+      "Integrated linear-regulator schematic prototype; not a switching buck IVR.",
+      "External ideal VREF and supply/enable/load control; reference ramp supplies soft start.",
+      "Ideal R/C; MOS corners do not vary feedback/compensation/decoupling passives.",
+      "No return-ratio/phase-margin, noise, mismatch, current-limit, reverse-current or thermal protection qualification.",
+      "No generated layout, physical capacitor area, PEX or foundry signoff."
+    ],
+    "output_V": 1.2038118109638276,
+    "supply_current_A": 0.00003634134536983913,
+    "load_current_A": 0.000020063531386542242,
+    "quiescent_current_A": 0.000016277813983296887,
+    "dropout_headroom_V": 0.5961881890361724,
+    "supply_power_W": 0.00006541442166571044,
+    "output_power_W": 0.00002415271605276301,
+    "power_stage_efficiency": 0.36922616508315953
+  },
+  "reference_verification": {
+    "schema_version": 1,
+    "kind": "soc_ivr_ldo",
+    "source": "actual-ngspice-samples",
+    "checks": [
+      {
+        "name": "DC output within 50mV of requested rail",
+        "pass": true,
+        "observed": 1.2038118109638276
+      },
+      {
+        "name": "Positive supply power and physical efficiency",
+        "pass": true,
+        "observed": 0.36922616508315953
+      }
+    ],
+    "pass": true,
+    "scope": "IVR directed schematic checks only; not stability/signoff certification."
+  },
+  "message": "Actual ngspice op: 1 samples.; reference criteria 2/2",
+  "manifest_sha256": "e8b2157ace0b3af89a141e1eec0ed6d3721db367a3fff501f3f37927585404d3"
+}

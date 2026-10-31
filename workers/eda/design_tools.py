@@ -30,6 +30,7 @@ import adc16
 import research
 import oscillator_projects
 import duet_afe
+import power_ivr
 
 S = None
 VERSION = 'register-design-tools-2'
@@ -251,11 +252,13 @@ adc16.populate_catalog()
 CATALOG.update(adc16.CATALOG)
 CATALOG.update(oscillator_projects.CATALOG)
 CATALOG.update(duet_afe.CATALOG)
+CATALOG.update(power_ivr.CATALOG)
 
 def catalog():
     return {'schema_version':1,'literature':research.inventory([dict(id=k,**v) for k,v in CATALOG.items()],digital_units.CATALOG),'templates':[{'id':key,**copy.deepcopy(value),'research':research.record(key),'limits':['Actual native schematic and public ngspice models; no commercial execution claim.','Empty layout is not physically verified.','Independent native DRC/LVS/PEX required. Reference routing is not foundry signoff or an HD standard-cell/Liberty library.']} for key,value in CATALOG.items()]}
 
 def _parameters(template,raw):
+    if template in power_ivr.CATALOG:return power_ivr.parameters(raw)
     if not isinstance(raw,dict) or set(raw)-set(CATALOG[template]['parameter_defaults']):raise EDAError('UNSUPPORTED_PARAMETER','Unknown template parameter.')
     values={**CATALOG[template]['parameter_defaults'],**raw}
     if template in duet_afe.CATALOG:return duet_afe.parameters(values)
@@ -279,6 +282,7 @@ def _parameters(template,raw):
     return chip_references.parameters(template,values) if template in chip_references.CATALOG else values
 
 def _schematic(template,params):
+    if template in power_ivr.CATALOG:return power_ivr.schematic(params)
     if template in duet_afe.CATALOG:return duet_afe.schematic(params)
     if template in oscillator_projects.CATALOG:return oscillator_projects.schematic(template,params)
     if template in sar_adc.CATALOG:return sar_adc.schematic(template,params)
@@ -337,7 +341,7 @@ def template_preview(params):
     limits=floorplan.policy(params.get('chip_limits'))
     counts={}
     for d in flat['devices']:counts[d['kind']]=counts.get(d['kind'],0)+1
-    sources=['design_tools.py','native.py','duet_afe.py','analog_soc.py','chip_references.py','digital_units.py']
+    sources=['design_tools.py','native.py','duet_afe.py','power_ivr.py','analog_soc.py','chip_references.py','digital_units.py']
     source_hash=digest({f:profile.sha(Path(__file__).parent/f) for f in sources})
     logical_hash=digest(ir)
     identity=dict(template_id=kind,name=name,parameters=values,chip_limits=limits,schematic_sha256=logical_hash,implementation_sha256=source_hash)
@@ -440,6 +444,9 @@ def create_template(params):
             if template in duet_afe.CATALOG:
                 p['testbench']=native.testbench(duet_afe.settings())
                 meta.update(reference_scope=duet_afe.CATALOG[template]['scope'],subsystem='dualband-sensor-afe',unverified=duet_afe.LIMITS,manufacturing_signoff=False)
+            if template in power_ivr.CATALOG:
+                p['testbench']=native.testbench({**power_ivr.settings(),'load_F':values['output_F']})
+                meta.update(reference_scope=power_ivr.CATALOG[template]['scope'],subsystem='integrated-linear-voltage-regulator',supply_voltage_trace='VIN',unverified=power_ivr.LIMITS,manufacturing_signoff=False)
             if starter:
                 p.update(testbench=copy.deepcopy(starter['testbench']),semiconductor_starter=copy.deepcopy(starter['metadata']))
             return S.commit(p,layout)
@@ -507,6 +514,7 @@ def spice_tb(p,folder,params,netlist):
         fields=line.split()
         if len(fields)>=2 and fields[0].lower()=='.subckt' and fields[1].lower()==p['cell'].lower():sub=fields[2:];break
     if sub is None or len(sub)!=len(p['ports']) or len(set(sub))!=len(sub) or set(sub)!=set(p['ports']):raise EDAError('PORT_MISMATCH','Actual emitted/extracted subcircuit ports differ from explicit template declarations.')
+    if meta['id'] in power_ivr.CATALOG:return power_ivr.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     if meta['id'] in duet_afe.CATALOG:return duet_afe.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     if meta['id'] in oscillator_projects.CATALOG:return oscillator_projects.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
     if meta['id'] in analog_soc.CATALOG:return analog_soc.spice_tb(p,folder,settings,netlist,supported_model_deck(folder,settings['corner']),sub)
@@ -535,6 +543,8 @@ def measurements(p,run,params):
     if not p.get('design_template'):return
     meta=validate_template_project(p);waves={w['name']:w for w in run.get('waveforms',[])};m=run.setdefault('measurements',{});m['template_id']=meta['id'];m['layout_status']=meta['layout_status'];m['metric_source']='actual-ngspice-samples'
     analysis=params.get('analysis',p['testbench']['analysis']);kind=meta['id']
+    if kind in power_ivr.CATALOG:
+        power_ivr.measurements(p,run,params);return
     if kind in duet_afe.CATALOG:
         duet_afe.measurements(p,run,params);return
     if kind in oscillator_projects.CATALOG:

@@ -41,6 +41,18 @@ const launch=row=>({design_id:row.id,plan_hash:row.plan_hash,approved:true});
 const untilDone=async(f,id)=>{for(let i=0;i<500;i++){const r=await get(f.w,{design_id:id});if(r.engine.status!=='running')return r;await new Promise(r=>setTimeout(r,5));}throw Error('Fixture coordination did not finish');};
 
 test('catalog is local, bounded, exposes real tool flags and no credentials',async t=>{const f=await fixture(t),c=await catalog(f.w,{},f);assert.equal(c.families.length,1);assert.equal(c.limits.max_engine_jobs,9);assert.equal(f.state.models.length,0);assert(!JSON.stringify(c).includes('fixture-not-a-real-key'));});
+
+test('IVR candidates cannot relax the reference, rail or resistive load test',async t=>{
+ const f=await fixture(t),id='soc_ivr_ldo',base={reference_V:.6,output_V:1.2,load_low_A:20e-6,load_high_A:200e-6,compensation_F:10e-12};
+ const call=async(w,m,p)=>m==='design.catalog'?{ok:true,result:{templates:[{id,parameter_defaults:base,analyses:['op','ac','tran'],scope:'IVR fixture only'}]}}:f.call(w,m,p);
+ const c=await catalog(f.w,{}, {call});assert.deepEqual(c.families[0].fixed_parameters,['reference_V','output_V','load_low_A','load_high_A']);
+ for(const key of c.families[0].fixed_parameters){
+  const fetcher=async(_u,init)=>{const b=JSON.parse(init.body);return response(b.model==='gpt-6-luna'?d:{summary:'fixture proposal',candidates:[{name:'IVR fixture',parameters:Object.entries({...base,[key]:base[key]/2}).map(([key,value])=>({key,value})),rationale:'test only'}],limitations:['No actual engine result'],evidence_ids:['catalog']},b.model);};
+  const row=await plan(f.w,{...f.args,request_id:randomUUID(),family:id,catalog_hash:c.catalog_hash,constraints:{...f.args.constraints,targets:FAMILIES[id].targets}}, {call,fetcher});
+  assert.equal(row.error.code,'AUTO_FIXED_PARAMETER');assert.equal(row.candidates.length,0);
+ }
+ assert.equal(f.state.created,0);assert.equal(f.state.solves,0);
+});
 test('Luna and Sol produce two native graph previews before any creation or solve',async t=>{const f=await fixture(t),r=await plan(f.w,f.args,f);assert.equal(r.candidates.length,2);assert.equal(r.engine.status,'not_run');assert.equal(f.state.created,0);assert.equal(f.state.solves,0);assert.deepEqual(f.state.models.map(m=>m.model),['gpt-6-luna','gpt-6.1-sol']);assert.equal(r.engine.max_jobs,6);assert(!JSON.stringify(r).includes('fixture-not-a-real-key'));});
 test('consent, stale catalog, wrong units and chip area fail before provider calls',async t=>{const f=await fixture(t);await assert.rejects(plan(f.w,{...f.args,approved:false},f));await assert.rejects(plan(f.w,{...f.args,catalog_hash:'f'.repeat(64)},f),{code:'AUTO_STALE_CATALOG'});await assert.rejects(plan(f.w,{...f.args,constraints:{...f.args.constraints,targets:[{...f.args.constraints.targets[0],unit:'A'}]}},f),{code:'AUTO_TARGET'});await assert.rejects(plan(f.w,{...f.args,constraints:{...f.args.constraints,chip_limits:{...f.args.constraints.chip_limits,max_area_um2:100}}},f),{code:'AUTO_AREA_LIMIT'});assert.equal(f.state.models.length,0);});
 test('clarification stops before Sol, and repeated request IDs never call models again',async t=>{const f=await fixture(t);let n=0;const opt={...f,fetcher:async()=>{n++;return response({...d,verdict:'needs_input',questions:['어떤 대역인가요?']},'gpt-6-luna');}};const r=await plan(f.w,f.args,opt);assert.equal(r.candidates.length,0);await plan(f.w,f.args,opt);assert.equal(n,1);});

@@ -122,10 +122,27 @@ def voltage_probes(branches,folder):
     (Path(folder)/'voltage-probes.json').write_text(json.dumps(metadata,indent=2))
     return probes
 
+def save_dependencies(vectors):
+    """Retain primitive traces needed by owned arithmetic waveform expressions.
+
+    ngspice `save v(a)/R+(v(a)-v(b))/S` does not retain v(b). The expression
+    is evaluated by `let` after the solve, so save its actual vector inputs.
+    """
+    result=[]
+    for expression in vectors:
+        found=[]
+        for kind,raw in re.findall(r'(?i)\b(v|i)\(([^()]+)\)',expression):
+            nodes=[node.strip() for node in raw.split(',')]
+            if kind.lower()=='v':found.extend('v('+node+')' for node in nodes if node not in ('0',''))
+            else:found.append('i('+raw.strip()+')')
+        found.extend(re.findall(r'@[A-Za-z0-9_.$]+\[[A-Za-z0-9_]+\]',expression))
+        result.extend(found or [expression])
+    return list(dict.fromkeys(result))
+
 def instrument_control(deck,branches,save_vectors=None,voltage_probes=None):
     if not branches:return deck
     lines=deck.splitlines();index=next(i for i,line in enumerate(lines) if line.strip()=='.control')
-    selected=['all'] if save_vectors is None else list(save_vectors)
+    selected=['all'] if save_vectors is None else save_dependencies(save_vectors)
     selected += [branch.get('_save_vector',branch['source_vector']) for branch in branches]
     selected += [probe['source_vector'] for probe in voltage_probes or [] if probe['net']!='0']
     lines.insert(index+1,'save '+' '.join(dict.fromkeys(selected)))

@@ -11,6 +11,7 @@ import {workerRpc} from './runtime.mjs';
 
 const metric=(metric,analysis,unit,min,max)=>({metric,analysis,unit,min,max});
 export const FAMILIES={
+ soc_ivr_ldo:{label:'IVR · 자체 바이어스 온칩 LDO',fixed_parameters:['reference_V','output_V','load_low_A','load_high_A'],targets:[metric('output_V','op','V',1.15,1.25),metric('load_step_undershoot_V','tran','V',0,.15),metric('psrr_100Hz_dB','ac','dB',20,null),metric('heavy_power_stage_efficiency','tran','ratio',.5,1)]},
  sensor_afe_dualband:{label:'DUET-AFE · 이중 대역 센서',targets:[metric('slow_gain_V_per_V','ac','V/V',3.8,4.2),metric('slow_bandwidth_Hz','ac','Hz',4000,6000),metric('fast_bandwidth_Hz','ac','Hz',80000,120000),metric('supply_power_W','op','W',0,.0005)]},
  rc_lowpass:{label:'RC 저역통과 필터',targets:[metric('measured_3db_frequency_Hz','ac','Hz',9000,11000),metric('measured_low_frequency_gain','ac','V/V',.98,1.02)]},
  soc_miller_ota:{label:'Miller 보상 OTA',targets:[metric('open_loop_gain_dB','ac','dB',40,null),metric('phase_margin_deg','ac','deg',45,180)]},
@@ -49,7 +50,7 @@ function view(w,row){return {...row,coordination_status:active.has(key(w,row.id)
 export async function catalog(w,params={},options={}){
  if(Object.keys(params).length)throw fail('INVALID_PARAMETER','Catalog takes no input.');
  const call=options.call||workerRpc,[c,d]=await Promise.all([rpc(w,call,'design.catalog'),rpc(w,call,'toolchain.doctor')]);
- const ng=d.tools?.find(t=>t.name==='ngspice'),families=c.templates.filter(t=>FAMILIES[t.id]).map(t=>({id:t.id,label:FAMILIES[t.id].label,defaults:t.parameter_defaults,analyses:t.analyses,targets:FAMILIES[t.id].targets,scope:t.scope}));
+ const ng=d.tools?.find(t=>t.name==='ngspice'),families=c.templates.filter(t=>FAMILIES[t.id]).map(t=>({id:t.id,label:FAMILIES[t.id].label,defaults:t.parameter_defaults,fixed_parameters:FAMILIES[t.id].fixed_parameters||[],analyses:t.analyses,targets:FAMILIES[t.id].targets,scope:t.scope}));
  const info={families,engine:{ngspice_available:!!ng?.available,ngspice_version:ng?.version||null,pdk_available:!!d.pdk?.available},roles:ASSISTANT_MODELS,limits:{max_candidates:3,max_engine_jobs:9,existing_project_effect:'none',physical_layout:'not-generated'}};
  return {...info,catalog_hash:hash(info)};
 }
@@ -74,12 +75,13 @@ export async function plan(w,params,{call=workerRpc,fetcher=fetch,providerWorksp
    if(row.decision_result.verdict==='needs_input')return view(w,row);
    phase='proposal';row.proposal.status='running';await save(w,row);
    const schema=z.object({summary:z.string().min(1).max(1800),candidates:z.array(z.object({name:z.string().min(1).max(100),parameters:z.array(z.object({key:z.enum(Object.keys(family.defaults)),value:z.number().finite()}).strict()).max(Object.keys(family.defaults).length),rationale:z.string().min(1).max(1200)}).strict()).min(1).max(a.constraints.max_candidates),limitations:z.array(z.string().min(1).max(600)).min(1).max(8),evidence_ids:ids}).strict();
-   const proposal=await ask(SYSTEM+' You are Sol. Propose distinct numeric parameter candidates (no more than max_candidates) for this fixed family. Include every default parameter key once per candidate, with finite base-SI values. For DUET-AFE keep gain and pole targets close to the specified bounds; vary bias resistance/compensation to investigate supply-power tradeoffs. For RC use R*C=1/(2*pi*cutoff). Candidate rationale is a hypothesis. Never change the supplied targets or test conditions.',{goal:a.goal,family,constraints:a.constraints,decision:row.decision_result},schema,'execution');
+   const proposal=await ask(SYSTEM+' You are Sol. Propose distinct numeric parameter candidates (no more than max_candidates) for this fixed family. Include every default parameter key once per candidate, with finite base-SI values. For DUET-AFE keep gain and pole targets close to the specified bounds; vary bias resistance/compensation to investigate supply-power tradeoffs. For RC use R*C=1/(2*pi*cutoff). Candidate rationale is a hypothesis. Preserve every family.fixed_parameters value exactly at family.defaults. Never change the supplied targets or test conditions.',{goal:a.goal,family,constraints:a.constraints,decision:row.decision_result},schema,'execution');
    row.proposal={model:proposal.model,status:'running',usage:proposal.usage,budget_reservation:proposal.reservation};row.proposal_result=schema.parse(proposal.result);
    const seen=new Set();
    for(const [i,p]of row.proposal_result.candidates.entries()){
     const parameters={};for(const pair of p.parameters){if(Object.hasOwn(parameters,pair.key))throw fail('AUTO_PARAMETER','Duplicate circuit parameter.');parameters[pair.key]=pair.value;}
     if(Object.keys(parameters).length!==Object.keys(family.defaults).length)throw fail('AUTO_PARAMETER','Every declared circuit parameter must be present.');
+    for(const key of family.fixed_parameters)if(parameters[key]!==family.defaults[key])throw fail('AUTO_FIXED_PARAMETER','Reference, rail and load-test conditions must remain at the approved family defaults.');
     const input={template_id:a.family,name:p.name,parameters,chip_limits:a.constraints.chip_limits};
     const preview=await rpc(w,call,'design.template_preview',input);
     if(seen.has(preview.schematic_sha256))throw fail('AUTO_DUPLICATE_CANDIDATE','Candidates must contain distinct actual circuit graphs.');seen.add(preview.schematic_sha256);

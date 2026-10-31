@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "template_id": "soc_ivr_ldo",
+  "name": "IVR · enabled self-biased 1.2V on-chip rail",
+  "parameters": {
+    "reference_V": 0.6,
+    "output_V": 1.2,
+    "pass_units": 8,
+    "pass_width_um": 20,
+    "bias_resistance_Ohm": 100000,
+    "compensation_F": 1e-11,
+    "nulling_Ohm": 1000,
+    "output_F": 1e-9,
+    "output_esr_Ohm": 0.5,
+    "load_low_A": 0.00002,
+    "load_high_A": 0.0002
+  },
+  "chip_limits": {
+    "schema_version": 1,
+    "width_um": 1000,
+    "height_um": 1000,
+    "max_area_um2": 1000000,
+    "edge_um": 10,
+    "origin_um": [
+      0,
+      0
+    ],
+    "scope": "All hierarchical geometry and routes; excludes external pads/package. Public-PDK verification required."
+  },
+  "schematic_sha256": "1f6b9e1d6de644f184bfc691cf7a12f9b191eb3fddcef61be6a1bb9422509ace",
+  "implementation_sha256": "268758789fe0dfc006e262c03eb36802b496f1494b6204d35994232f37c152a3",
+  "preview_hash": "043cd1262259fd3d5ca8a06ceb34126a8a605ca369e33c29d1e5b82a47209411",
+  "ports": [
+    "VREF",
+    "EN",
+    "OUT",
+    "FB",
+    "GATE",
+    "BIAS",
+    "VPWR",
+    "VGND"
+  ],
+  "root_cell": "soc_ivr_ldo",
+  "device_count": 27,
+  "primitive_counts": {
+    "resistor": 6,
+    "nmos": 7,
+    "pmos": 12,
+    "capacitor": 2
+  },
+  "net_count": 14,
+  "hierarchy": [
+    {
+      "name": "soc_ivr_ldo",
+      "devices": 7,
+      "children": [
+        "IVR_BIAS",
+        "IVR_ERROR_AMP",
+        "IVR_PASS_BANK",
+        "IVR_FEEDBACK",
+        "IVR_COMPENSATION",
+        "IVR_ENABLE",
+        "IVR_DECOUPLING"
+      ]
+    },
+    {
+      "name": "IVR_BIAS",
+      "devices": 3,
+      "children": []
+    },
+    {
+      "name": "IVR_ERROR_AMP",
+      "devices": 5,
+      "children": []
+    },
+    {
+      "name": "IVR_PASS_BANK",
+      "devices": 8,
+      "children": []
+    },
+    {
+      "name": "IVR_FEEDBACK",
+      "devices": 2,
+      "children": []
+    },
+    {
+      "name": "IVR_COMPENSATION",
+      "devices": 3,
+      "children": []
+    },
+    {
+      "name": "IVR_ENABLE",
+      "devices": 4,
+      "children": []
+    },
+    {
+      "name": "IVR_DECOUPLING",
+      "devices": 2,
+      "children": []
+    }
+  ],
+  "spice": ".subckt IVR_BIAS BIAS ENB VPWR VGND\nXN_DISABLE BIAS ENB VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=0.15 nf=1 m=1\nXN_REFERENCE BIAS BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nRR_BIAS VPWR BIAS 100000\n.ends IVR_BIAS\n.subckt IVR_ERROR_AMP INP INN BIAS OUT VPWR VGND\nXN_INN MIR INN TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1\nXN_INP OUT INP TAIL VGND sky130_fd_pr__nfet_01v8 w=10 l=1 nf=1 m=1\nXN_TAIL TAIL BIAS VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXP_DIODE MIR MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\nXP_MIRROR OUT MIR VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=1 nf=1 m=1\n.ends IVR_ERROR_AMP\n.subckt IVR_PASS_BANK OUT GATE VPWR VGND\nXP_PASS0 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1\nXP_PASS1 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1\nXP_PASS2 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1\nXP_PASS3 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1\nXP_PASS4 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1\nXP_PASS5 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1\nXP_PASS6 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1\nXP_PASS7 OUT GATE VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1\n.ends IVR_PASS_BANK\n.subckt IVR_FEEDBACK OUT FB VGND\nRR_BOTTOM FB VGND 200000\nRR_TOP OUT FB 200000\n.ends IVR_FEEDBACK\n.subckt IVR_COMPENSATION EA_OUT GATE OUT\nCC_COMP GATE ZERO 1e-11\nRR_GATE EA_OUT GATE 1000\nRR_ZERO ZERO OUT 1000\n.ends IVR_COMPENSATION\n.subckt IVR_ENABLE EN ENB GATE OUT VPWR VGND\nXN_DISCHARGE OUT ENB VGND VGND sky130_fd_pr__nfet_01v8 w=2 l=1 nf=1 m=1\nXN_INV ENB EN VGND VGND sky130_fd_pr__nfet_01v8 w=0.5 l=0.15 nf=1 m=1\nXP_GATE_OFF GATE EN VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=20 l=0.15 nf=1 m=1\nXP_INV ENB EN VPWR VPWR sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15 nf=1 m=1\n.ends IVR_ENABLE\n.subckt IVR_DECOUPLING OUT VGND\nCC_DECAP CAP VGND 1e-09\nRR_ESR OUT CAP 0.5\n.ends IVR_DECOUPLING\n.subckt soc_ivr_ldo VREF EN OUT FB GATE BIAS VPWR VGND\nXBIAS_SOURCE BIAS ENB VPWR VGND IVR_BIAS\nXCOMPENSATION EA_OUT GATE OUT IVR_COMPENSATION\nXDECOUPLING OUT VGND IVR_DECOUPLING\nXENABLE EN ENB GATE OUT VPWR VGND IVR_ENABLE\nXERROR_AMP VREF FB BIAS EA_OUT VPWR VGND IVR_ERROR_AMP\nXFEEDBACK OUT FB VGND IVR_FEEDBACK\nXPASS_BANK OUT GATE VPWR VGND IVR_PASS_BANK\n.ends soc_ivr_ldo\n",
+  "layout_status": "not-generated",
+  "physical_area_um2": null,
+  "engine_executed": false,
+  "limits": [
+    "This creates a separate project only after approval.",
+    "Chip envelope is a constraint, not measured mask area.",
+    "No DRC/LVS/PEX/manufacturing result is implied."
+  ]
+}

@@ -1,5 +1,7 @@
 # Resistor
 
+**IVR 온칩 전원 레일 · Resistor Indust 최신 소스**: 자체 바이어스·오차 증폭기·8개 병렬 PMOS·Enable/방전·보상을 갖춘 1.8→1.2V 선형 IVR을 추가했습니다. 편집 블록 7개와 실제 OP·PSRR·기동/부하/입력 변화·재시작을 제공합니다. [회로 ZIP·사용법·실제 MOS 해석·확인한 한계](examples/ivr/README.md). nominal DC 1.2038V, 200µA 부하 효율 61.76%이며 약 130kHz의 리플 억제 약점을 함께 기록합니다. AI 오토 설계에서는 시험 부하/기준을 고정합니다. 물리·보호 회로 검증과 새 설치 파일 배포는 별도입니다.
+
 **AI 오토 설계 · Resistor Indust 최신 소스**: Luna가 목표를 판단하고 Sol이 지원 회로군의 수치 후보를 작성합니다. 실제 native 회로·계층·SPICE 미리보기를 승인하면 후보별 새 프로젝트를 생성해 OP/AC/과도 해석을 실행하고 목표와 비교합니다. [사용법·복구·비용](docs/auto-design.md) · [직접 설계한 DUET-AFE와 편집 파일](examples/duet-afe/README.md). 실제 앱에서 두 후보를 실행했고 선택 후보는 4.003V/V·4.997/99.458kHz·353.127µW로 기본 후보보다 동작점 전력이 18.53% 낮았습니다. 회로도 수준의 MOS PVT 검증이며 잡음·RC 편차·물리 설계·제조 signoff와 새 installer 배포는 별도입니다.
 
 **16-bit ADC 세 구조 · Resistor Indust 최신 소스**: SAR·2차 ΣΔ·Pipeline과 23개 편집 블록을 추가했습니다. 실제 MOS transient·RTL/gate/CMOS 재생과 물리 블록 3개의 공개 DRC/LVS/PEX를 실행했습니다. [사용법·실제 수치·남은 한계](docs/adc16-lab.md) · [프로젝트·파형·로그](examples/adc16-lab/README.md). 무보정 SAR 최대 19 LSB, ΣΔ 최대 119 LSB 오차가 남아 있으며, 16-bit 출력 폭을 실물 16-bit ENOB로 표시하지 않습니다. 새 installer 발행은 별도입니다.
