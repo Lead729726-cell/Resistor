@@ -9,12 +9,21 @@ const site='platform/download-site',base='examples/oscillator-lab';
 const json=async f=>JSON.parse(await readFile(f,'utf8'));
 const sha=b=>createHash('sha256').update(b).digest('hex');
 
-test('public projects have complete actual engine evidence for the current source',async()=>{
-  const report=await json('docs/evidence/oscillator-lab/native-verification.json');
-  assert.equal(report.completed,true);assert.equal(report.runs.length,19);
-  assert.equal(report.manufacturing_signoff,false);assert.equal(report.docker_used,false);
+test('public projects retain original evidence and current-source native regression',async()=>{
+  const report=await json('docs/evidence/oscillator-lab/current-source-regression.json');
+  const baseline=report.published_asset_baseline;
+  assert.equal(baseline.path,'docs/evidence/oscillator-lab/native-verification.json');assert.equal(baseline.regenerated,false);
+  assert.equal(sha(await readFile(baseline.path)),baseline.sha256);
+  for(const checked of [report,await json(baseline.path)]){
+    assert.equal(checked.completed,true);assert.equal(checked.runs.length,19);
+    assert.equal(checked.manufacturing_signoff,false);assert.equal(checked.docker_used,false);
+    for(const run of checked.runs){assert.equal(run.execution_status,'completed');assert.equal(run.analysis_result,'pass');assert(run.reference_verification.checks.every(c=>c.pass));}
+  }
   for(const [file,hash] of Object.entries(report.source_sha256))assert.equal(sha(await readFile(file)),hash,file);
-  for(const run of report.runs){assert.equal(run.execution_status,'completed');assert.equal(run.analysis_result,'pass');assert(run.reference_verification.checks.every(c=>c.pass));}
+  for(const template of (await json(base+'/catalog.json')).templates){
+    const check=report.checks.find(c=>c.name===template.id+' current netlist equals published DUT');
+    assert.equal(check?.passed,true);assert.equal(check.sha256,sha(await readFile(path.join(base,template.id,'core.spice'))));
+  }
 });
 
 test('all four projects retain editable schematic bundles and original solver data',async()=>{

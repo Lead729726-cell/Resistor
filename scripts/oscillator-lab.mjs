@@ -9,7 +9,9 @@ import {startWorker} from './worker.mjs';
 import {stopNativeWorker,nativeEnvironment,runNative} from './native-worker.mjs';
 import {runtimeConfig,workerRpc} from './runtime.mjs';
 
-const root=process.cwd(),generate=process.argv.includes('--generate');
+const root=process.cwd(),generate=process.argv.includes('--generate'),regression=process.argv.includes('--regression');
+assert(process.argv.slice(2).every(a=>['--generate','--regression'].includes(a)),'Use --generate or --regression');
+assert(!(generate&&regression),'Regression preserves the published example bytes.');
 const output=path.join(root,'examples/oscillator-lab');
 await mkdir(path.join(root,'.runtime/oscillator-lab'),{recursive:true});
 const workspace=await mkdtemp(path.join(root,'.runtime/oscillator-lab','run-'));
@@ -19,11 +21,12 @@ await mkdir(path.join(workspace,'.runtime'),{recursive:true});
 await writeFile(path.join(workspace,'.runtime/worker.json'),JSON.stringify({url:`http://127.0.0.1:${port}`,token:randomUUID()+randomUUID()}));
 const config=await runtimeConfig(workspace);
 const resources=await nativeEnvironment(root);
-const sourceFiles=['workers/eda/oscillator_projects.py','workers/eda/test_oscillator_projects.py','workers/eda/design_tools.py','workers/eda/semiconductor_starters.py','workers/eda/research.py','workers/eda/literature.json','scripts/oscillator-lab.mjs','scripts/oscillator-plots.mjs'];
+const sourceFiles=['workers/eda/oscillator_projects.py','workers/eda/test_oscillator_projects.py','workers/eda/design_tools.py','workers/eda/semiconductor_starters.py','workers/eda/research.py','workers/eda/literature.json','workers/eda/current_flow.py','workers/eda/signal_metrics.py','workers/eda/native.py','scripts/oscillator-lab.mjs','scripts/oscillator-plots.mjs'];
 const report={schema_version:1,completed:false,edition:'Resistor Indust',generated_at:new Date().toISOString(),
     engine:'native-'+process.platform,arch:process.arch,docker_used:false,paid_api_calls:0,
     physical_layout_generated:false,manufacturing_signoff:false,runs:[],checks:[]};
 const sha=b=>createHash('sha256').update(b).digest('hex');
+if(regression)report.published_asset_baseline={path:'docs/evidence/oscillator-lab/native-verification.json',sha256:sha(await readFile(path.join(root,'docs/evidence/oscillator-lab/native-verification.json'))),regenerated:false};
 const sourceHashes=async()=>Object.fromEntries(await Promise.all(sourceFiles.map(async f=>[f,sha(await readFile(path.join(root,f)))])));
 const initialHashes=await sourceHashes();
 const api=async(method,params={})=>{const body=await workerRpc(config,method,params);assert(body.ok,`${method}: ${body.error?.code}: ${body.error?.message}`);return body.result;};
@@ -67,6 +70,12 @@ try{
     for(const template of templates){
         const command=randomUUID();
         const p=await api('design.create_template',{template_id:template.id,command_id:command});projects[template.id]=p;
+        if(regression){
+            const net=await api('schematic.export_spice',{project_id:p.id});
+            const published=await readFile(path.join(output,template.id,'core.spice'));
+            assert.equal(sha(Buffer.from(net.text)),sha(published),template.id+' current DUT must match the published circuit');
+            check(template.id+' current netlist equals published DUT',{sha256:sha(published)});
+        }
         assert.equal((await api('design.create_template',{template_id:template.id,command_id:command})).id,p.id);
         const {job,entry}=await run(p);
         assert.equal(job.analysis_result,'pass',template.id+' default waveform criteria');
@@ -132,6 +141,6 @@ try{
 }finally{
     if(started)await stopNativeWorker(workspace);
     await mkdir(path.join(root,'docs/evidence/oscillator-lab'),{recursive:true});
-    await writeFile(path.join(root,'docs/evidence/oscillator-lab/native-verification.json'),JSON.stringify(report,null,2)+'\n');
+    await writeFile(path.join(root,'docs/evidence/oscillator-lab',regression?'current-source-regression.json':'native-verification.json'),JSON.stringify(report,null,2)+'\n');
 }
 console.log(JSON.stringify({native_runs:report.runs.length,checks:report.checks.length,output:generate?output:null}));

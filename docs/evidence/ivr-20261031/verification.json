@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "edition": "indust",
-  "checked_at": "2026-10-31T05:26:20.612Z",
+  "checked_at": "2026-10-31T05:35:10.235Z",
   "base_commit": "b31c46729921b934c379172eb641443038a38f42",
   "source_sha256": {
     "workers/eda/power_ivr.py": "5f388396c429f90334439342d42daf24999baae83cb9a96dba071db015a0a0a7",
@@ -22,13 +22,15 @@
     "scripts/ivr-audit.py": "66ce850627a78b20ddab46e50928aa3bd98c644b4b6a2ef08401643b9adfbb66",
     "scripts/ivr-plots.py": "32eb7967ff40b8b217eac4f9d273e5ffc9deb15cf8947b593ae9e06bba2de8f2",
     "tests/auto-design.test.mjs": "03959ef998354dce4a2c5aa70f5f2aec543734cb22169bb0fc097f6da2adb549",
-    ".github/workflows/source-validation.yml": "bfb699e26eeea039e1327abe5ddc66e4d1723e82627efa130f576391f8bd7b03"
+    ".github/workflows/source-validation.yml": "bfb699e26eeea039e1327abe5ddc66e4d1723e82627efa130f576391f8bd7b03",
+    "scripts/oscillator-lab.mjs": "a7d9ecde5164b9d1617dc47feb9442c2ad80f2de15dd6f478d3653e88909163b",
+    "tests/oscillator-downloads.test.mjs": "9f338d7f316b1f40f121398ca736005fd041b8256e56b02caa64e9cf19753c09"
   },
   "automated_tests": {
     "node_core": 345,
     "python_units": 89,
     "edition_isolation_and_real_mcp": 10,
-    "total": 444,
+    "total": 448,
     "failures": 0,
     "builds": {
       "edu": {
@@ -47,7 +49,8 @@
       }
     },
     "broken_document_links": 0,
-    "source_audit_issues": 0
+    "source_audit_issues": 0,
+    "oscillator_source_evidence": 4
   },
   "native_qualification": {
     "actual_native_runs": 9,
@@ -285,5 +288,15 @@
     "production_site_deployed": false,
     "captured_files_with_exact_git_bytes": 30,
     "unrelated_helpers_staged": false
+  },
+  "post_push_regression": {
+    "original_ci": "https://github.com/Lead729726-cell/Resistor/actions/runs/41172760865",
+    "original_failure": "Oscillator publication test required old shared-source hashes.",
+    "repair": "Preserved original solver evidence and public asset bytes; reran 19 actual oscillator jobs and checked the four current DUT netlists against published SPICE.",
+    "evidence": "docs/evidence/oscillator-lab/current-source-regression.json",
+    "actual_native_runs": 19,
+    "all_passed": true,
+    "published_assets_regenerated": false,
+    "source_publication_only": true
   }
 }

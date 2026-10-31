@@ -1,0 +1,3489 @@
+{
+  "schema_version": 1,
+  "completed": true,
+  "edition": "Resistor Indust",
+  "generated_at": "2026-10-31T05:32:39.064Z",
+  "engine": "native-win32",
+  "arch": "x64",
+  "docker_used": false,
+  "paid_api_calls": 0,
+  "physical_layout_generated": false,
+  "manufacturing_signoff": false,
+  "runs": [
+    {
+      "template": "osc_ring5",
+      "parameters": {
+        "stage_F": 2e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 0.000002,
+        "step_s": 1.9999999999999998e-10,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "de822515809746ee98f9158a88d206ec",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 11107,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.0004743990216581953,
+        "OUT_max": 1.8009399576925824,
+        "supply_current_min": 0.00033547439136715623,
+        "supply_current_max": 0.04517724380662637,
+        "Q0_min": -0.0004981339722517095,
+        "Q0_max": 1.8009400048014796,
+        "Q1_min": -0.00047451541421167874,
+        "Q1_max": 1.8009399556339183,
+        "Q2_min": -0.00047798764605352494,
+        "Q2_max": 1.800939955636822,
+        "Q3_min": -0.0004743988579304056,
+        "Q3_max": 1.80093995571267,
+        "current_flow_status": "available",
+        "template_id": "osc_ring5",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 8e-7,
+          "end_s": 0.000002,
+          "energy_J": 1.8214470921938129e-9,
+          "average_current_A": 0.0008432625426823207,
+          "peak_current_A": 0.0011070724752675482,
+          "minimum_current_A": 0.00045866317339668394,
+          "average_power_W": 0.0015178725768281774,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.0015178725768281774,
+        "average_supply_current_A": 0.0008432625426823207,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 55,
+          "frequency_Hz": 46231778.79070795,
+          "duty": 0.48448545014824573,
+          "period_min_s": 2.1630143294441892e-8,
+          "period_max_s": 2.163014329444348e-8,
+          "deterministic_period_span_s": 1.5881867761018131e-21,
+          "max_sample_step_s": 2.0000000000001503e-10,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 46231778.79070795,
+        "duty_cycle": 0.48448545014824573,
+        "average_stage_delay_s": 2.163014329444292e-9,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 2.0000000000000004e-12,
+            "end_s": 0.000002,
+            "energy_J": 3.0395850344369602e-9,
+            "average_current_A": 0.0008443300205625096,
+            "peak_current_A": 0.04517724380662637,
+            "minimum_current_A": 0.00033547439136715623,
+            "average_power_W": 0.0015197940370125173,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.0000015,
+            "end": 0.000002,
+            "integral": 4.2703708841888846e-7,
+            "mean": 0.8540741768377771,
+            "rms": 1.1600535112358963,
+            "ac_rms": 0.7850359542018475,
+            "minimum": -0.0004743988514086892,
+            "maximum": 1.8009399556338017,
+            "peak_to_peak": 1.8014143544852104,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_ring5",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000002
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 2
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 55
+          },
+          {
+            "name": "Output reaches both logic rails",
+            "pass": true,
+            "observed": [
+              -0.0004743988514086892,
+              1.8009399556338017
+            ]
+          },
+          {
+            "name": "Duty within 10..90 percent",
+            "pass": true,
+            "observed": 0.48448545014824573
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "f68ea2462c58351855023f4e0c9dff979b6a9506dc8868294d7e52976a090d90"
+    },
+    {
+      "template": "osc_ring5",
+      "parameters": {
+        "stage_F": 2e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "tt",
+        "duration_s": 0.000002,
+        "load_F": 5e-15,
+        "step_s": 1.9999999999999998e-10,
+        "supply_V": 1.8,
+        "temperature_C": 27,
+        "vbs_V": 0,
+        "vds_V": 1.8
+      },
+      "run_id": "15dc8a47a5624236b661f2dadb257486",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 11107,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.0004743990216581953,
+        "OUT_max": 1.8009399576925824,
+        "supply_current_min": 0.00033547439136715623,
+        "supply_current_max": 0.04517724380662637,
+        "Q0_min": -0.0004981339722517095,
+        "Q0_max": 1.8009400048014796,
+        "Q1_min": -0.00047451541421167874,
+        "Q1_max": 1.8009399556339183,
+        "Q2_min": -0.00047798764605352494,
+        "Q2_max": 1.800939955636822,
+        "Q3_min": -0.0004743988579304056,
+        "Q3_max": 1.80093995571267,
+        "current_flow_status": "available",
+        "template_id": "osc_ring5",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 8e-7,
+          "end_s": 0.000002,
+          "energy_J": 1.8214470921938129e-9,
+          "average_current_A": 0.0008432625426823207,
+          "peak_current_A": 0.0011070724752675482,
+          "minimum_current_A": 0.00045866317339668394,
+          "average_power_W": 0.0015178725768281774,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.0015178725768281774,
+        "average_supply_current_A": 0.0008432625426823207,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 55,
+          "frequency_Hz": 46231778.79070795,
+          "duty": 0.48448545014824573,
+          "period_min_s": 2.1630143294441892e-8,
+          "period_max_s": 2.163014329444348e-8,
+          "deterministic_period_span_s": 1.5881867761018131e-21,
+          "max_sample_step_s": 2.0000000000001503e-10,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 46231778.79070795,
+        "duty_cycle": 0.48448545014824573,
+        "average_stage_delay_s": 2.163014329444292e-9,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 2.0000000000000004e-12,
+            "end_s": 0.000002,
+            "energy_J": 3.0395850344369602e-9,
+            "average_current_A": 0.0008443300205625096,
+            "peak_current_A": 0.04517724380662637,
+            "minimum_current_A": 0.00033547439136715623,
+            "average_power_W": 0.0015197940370125173,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.0000015,
+            "end": 0.000002,
+            "integral": 4.2703708841888846e-7,
+            "mean": 0.8540741768377771,
+            "rms": 1.1600535112358963,
+            "ac_rms": 0.7850359542018475,
+            "minimum": -0.0004743988514086892,
+            "maximum": 1.8009399556338017,
+            "peak_to_peak": 1.8014143544852104,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_ring5",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000002
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 2
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 55
+          },
+          {
+            "name": "Output reaches both logic rails",
+            "pass": true,
+            "observed": [
+              -0.0004743988514086892,
+              1.8009399556338017
+            ]
+          },
+          {
+            "name": "Duty within 10..90 percent",
+            "pass": true,
+            "observed": 0.48448545014824573
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "a3b98886d66a59e74835622cf890187d6fa2b41d9c4ff127ec3b0a444ee9f3f8"
+    },
+    {
+      "template": "osc_ring5",
+      "parameters": {
+        "stage_F": 2e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "duration_s": 0.000002,
+        "step_s": 1.9999999999999998e-10,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "6c781dfb2b404b9dac9ba77180a4e6d5",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "post_layout": "false",
+        "samples": 10032,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.000516228762847377,
+        "OUT_max": 1.6209157910327185,
+        "supply_current_min": 0.00017617109492271826,
+        "supply_current_max": 0.04126507727357544,
+        "Q0_min": -0.0005162286583759249,
+        "Q0_max": 1.620915796041565,
+        "Q1_min": -0.0005162283185768547,
+        "Q1_max": 1.620915795474122,
+        "Q2_min": -0.0005162272572814025,
+        "Q2_max": 1.6209157947171269,
+        "Q3_min": -0.0005162287681008627,
+        "Q3_max": 1.620915793479626,
+        "current_flow_status": "available",
+        "template_id": "osc_ring5",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 8e-7,
+          "end_s": 0.000002,
+          "energy_J": 9.28459678989493e-10,
+          "average_current_A": 0.0004776027155295746,
+          "peak_current_A": 0.0006224801226014862,
+          "minimum_current_A": 0.0002560260104321893,
+          "average_power_W": 0.0007737163991579109,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.0007737163991579109,
+        "average_supply_current_A": 0.0004776027155295746,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 34,
+          "frequency_Hz": 29107320.93793929,
+          "duty": 0.48673726068474465,
+          "period_min_s": 3.435558456444377e-8,
+          "period_max_s": 3.435575578193736e-8,
+          "deterministic_period_span_s": 1.7121749358780527e-13,
+          "max_sample_step_s": 2.0000000000001503e-10,
+          "crossing_threshold_V": 0.81,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 29107320.93793929,
+        "duty_cycle": 0.48673726068474465,
+        "average_stage_delay_s": 3.4355618029296957e-9,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 2.0000000000000004e-12,
+            "end_s": 0.000002,
+            "energy_J": 1.5499872417277667e-9,
+            "average_current_A": 0.00047839160238165383,
+            "peak_current_A": 0.04126507727357544,
+            "minimum_current_A": 0.00017617109492271826,
+            "average_power_W": 0.0007749943958582793,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.0000015,
+            "end": 0.000002,
+            "integral": 3.914405145540157e-7,
+            "mean": 0.7828810291080316,
+            "rms": 1.0587054011274908,
+            "ac_rms": 0.7127092118383701,
+            "minimum": -0.0005161912995452821,
+            "maximum": 1.620913695378996,
+            "peak_to_peak": 1.6214298866785413,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_ring5",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000002
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 2
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 34
+          },
+          {
+            "name": "Output reaches both logic rails",
+            "pass": true,
+            "observed": [
+              -0.000516228762847377,
+              1.6209151599049563
+            ]
+          },
+          {
+            "name": "Duty within 10..90 percent",
+            "pass": true,
+            "observed": 0.48673726068474465
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "ee983c5a8e555bc4f72057dc77d98a55c65da5e74d8bf90bc3d7fba9892df8ed"
+    },
+    {
+      "template": "osc_ring5",
+      "parameters": {
+        "stage_F": 2e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "duration_s": 0.000002,
+        "step_s": 1.9999999999999998e-10,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "0c5f03f44b9f4aef917f8dfec7528bd0",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 13181,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.00046539318578997925,
+        "OUT_max": 1.800962999220073,
+        "supply_current_min": 0.00036879854980728655,
+        "supply_current_max": 0.04332954638016585,
+        "Q0_min": -0.0004653927499384231,
+        "Q0_max": 1.8009630046475231,
+        "Q1_min": -0.0004695497314429107,
+        "Q1_max": 1.8009630045922664,
+        "Q2_min": -0.0004653931721218087,
+        "Q2_max": 1.8009629596056964,
+        "Q3_min": -0.0004653865328074375,
+        "Q3_max": 1.8009630011546498,
+        "current_flow_status": "available",
+        "template_id": "osc_ring5",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 8e-7,
+          "end_s": 0.000002,
+          "energy_J": 2.3128802309996755e-9,
+          "average_current_A": 0.001070777884722072,
+          "peak_current_A": 0.0014163738420832211,
+          "minimum_current_A": 0.0005902055001919884,
+          "average_power_W": 0.0019274001924997298,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.0019274001924997298,
+        "average_supply_current_A": 0.001070777884722072,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 70,
+          "frequency_Hz": 58749815.195890464,
+          "duty": 0.48253303995557884,
+          "period_min_s": 1.702076453417386e-8,
+          "period_max_s": 1.70222336731522e-8,
+          "deterministic_period_span_s": 1.4691389783420817e-12,
+          "max_sample_step_s": 2.0000000000001503e-10,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 58749815.195890464,
+        "duty_cycle": 0.48253303995557884,
+        "average_stage_delay_s": 1.70213301380725e-9,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 2.0000000000000004e-12,
+            "end_s": 0.000002,
+            "energy_J": 3.858371915577415e-9,
+            "average_current_A": 0.0010717710483203304,
+            "peak_current_A": 0.04332954638016585,
+            "minimum_current_A": 0.00036879854980728655,
+            "average_power_W": 0.0019291878869765948,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.0000015,
+            "end": 0.000002,
+            "integral": 4.2258972834533093e-7,
+            "mean": 0.8451794566906621,
+            "rms": 1.1527223484168088,
+            "ac_rms": 0.7838625507878532,
+            "minimum": -0.00046539318578997925,
+            "maximum": 1.8009629024734628,
+            "peak_to_peak": 1.8014282956592529,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_ring5",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000002
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 2
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 70
+          },
+          {
+            "name": "Output reaches both logic rails",
+            "pass": true,
+            "observed": [
+              -0.00046539318578997925,
+              1.8009629592289211
+            ]
+          },
+          {
+            "name": "Duty within 10..90 percent",
+            "pass": true,
+            "observed": 0.48253303995557884
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "4a7f746ae571e81f40ebc22e77c21273ad6f5c6256279eb1f0cdf993def5468d"
+    },
+    {
+      "template": "osc_rc_sensor",
+      "parameters": {
+        "timing_Ohm": 100000,
+        "sense_F": 1e-11
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 0.000039999999999999996,
+        "step_s": 3.9999999999999994e-9,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "b4d81e32cc4443c0bcd042db1b3c73ac",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 10213,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.0004282231429213467,
+        "OUT_max": 1.7978576129027553,
+        "supply_current_min": -0.0000034027295395602786,
+        "supply_current_max": 0.0006999890142480036,
+        "CAP_min": 0.0000017765527703887308,
+        "CAP_max": 1.2883315054608058,
+        "HYST_min": 0.0000019750514984463296,
+        "HYST_max": 1.8054088759060267,
+        "SUM_min": 0.2495663747445288,
+        "SUM_max": 1.2878212945132563,
+        "current_flow_status": "available",
+        "template_id": "osc_rc_sensor",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 0.000016,
+          "end_s": 0.000039999999999999996,
+          "energy_J": 8.857759542454373e-10,
+          "average_current_A": 0.00002050407301494068,
+          "peak_current_A": 0.00015970131130002563,
+          "minimum_current_A": 6.544422184728838e-8,
+          "average_power_W": 0.000036907331426893224,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.000036907331426893224,
+        "average_supply_current_A": 0.00002050407301494068,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 7,
+          "frequency_Hz": 342115.62066331966,
+          "duty": 0.3888519971295219,
+          "period_min_s": 0.0000029217000151166407,
+          "period_max_s": 0.000002923822306575404,
+          "deterministic_period_span_s": 2.1222914587632293e-9,
+          "max_sample_step_s": 4.0000000000019946e-9,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 342115.62066331966,
+        "duty_cycle": 0.3888519971295219,
+        "cap_switch_low_V": 0.22082806454587114,
+        "cap_switch_high_V": 1.287742372541119,
+        "timing_RC_s": 0.000001,
+        "unloaded_RC_reference_frequency_Hz": 346129.78912006924,
+        "RC_reference_scope": "Uses measured thresholds in the ideal unloaded exponential RC equation; feedback loading, MOS delay/leakage and parasitics cause differences.",
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 4.0000000000000004e-11,
+            "end_s": 0.00004,
+            "energy_J": 1.502199682231551e-9,
+            "average_current_A": 0.000020863905339343546,
+            "peak_current_A": 0.0006999890142480036,
+            "minimum_current_A": -0.0000034027295395602786,
+            "average_power_W": 0.000037555029610818384,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.000030000000000000004,
+            "end": 0.00004,
+            "integral": 0.000007206070623815843,
+            "mean": 0.7206070623815843,
+            "rms": 1.137046729435806,
+            "ac_rms": 0.8795457501269882,
+            "minimum": 0.0003384437786450426,
+            "maximum": 1.79785761269843,
+            "peak_to_peak": 1.797519168919785,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_rc_sensor",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.00004
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 5
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 7
+          },
+          {
+            "name": "Output reaches both logic rails",
+            "pass": true,
+            "observed": [
+              0.000335797565736116,
+              1.7978576129027553
+            ]
+          },
+          {
+            "name": "Duty within 10..90 percent",
+            "pass": true,
+            "observed": 0.3888519971295219
+          },
+          {
+            "name": "CAP crosses separated switching levels",
+            "pass": true,
+            "observed": [
+              0.22082806454587114,
+              1.287742372541119
+            ]
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "33b87f5a2f1e78dd36edaf7fba397e727f00a7c9e2cea9648dc0e249e27c2948"
+    },
+    {
+      "template": "osc_rc_sensor",
+      "parameters": {
+        "sense_F": 1e-11,
+        "timing_Ohm": 100000
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "tt",
+        "duration_s": 0.000039999999999999996,
+        "load_F": 5e-15,
+        "step_s": 3.9999999999999994e-9,
+        "supply_V": 1.8,
+        "temperature_C": 27,
+        "vbs_V": 0,
+        "vds_V": 1.8
+      },
+      "run_id": "3a9dab2a4201423db701e2f189ceb256",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 10213,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.0004282231429213467,
+        "OUT_max": 1.7978576129027553,
+        "supply_current_min": -0.0000034027295395602786,
+        "supply_current_max": 0.0006999890142480036,
+        "CAP_min": 0.0000017765527703887308,
+        "CAP_max": 1.2883315054608058,
+        "HYST_min": 0.0000019750514984463296,
+        "HYST_max": 1.8054088759060267,
+        "SUM_min": 0.2495663747445288,
+        "SUM_max": 1.2878212945132563,
+        "current_flow_status": "available",
+        "template_id": "osc_rc_sensor",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 0.000016,
+          "end_s": 0.000039999999999999996,
+          "energy_J": 8.857759542454373e-10,
+          "average_current_A": 0.00002050407301494068,
+          "peak_current_A": 0.00015970131130002563,
+          "minimum_current_A": 6.544422184728838e-8,
+          "average_power_W": 0.000036907331426893224,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.000036907331426893224,
+        "average_supply_current_A": 0.00002050407301494068,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 7,
+          "frequency_Hz": 342115.62066331966,
+          "duty": 0.3888519971295219,
+          "period_min_s": 0.0000029217000151166407,
+          "period_max_s": 0.000002923822306575404,
+          "deterministic_period_span_s": 2.1222914587632293e-9,
+          "max_sample_step_s": 4.0000000000019946e-9,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 342115.62066331966,
+        "duty_cycle": 0.3888519971295219,
+        "cap_switch_low_V": 0.22082806454587114,
+        "cap_switch_high_V": 1.287742372541119,
+        "timing_RC_s": 0.000001,
+        "unloaded_RC_reference_frequency_Hz": 346129.78912006924,
+        "RC_reference_scope": "Uses measured thresholds in the ideal unloaded exponential RC equation; feedback loading, MOS delay/leakage and parasitics cause differences.",
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 4.0000000000000004e-11,
+            "end_s": 0.00004,
+            "energy_J": 1.502199682231551e-9,
+            "average_current_A": 0.000020863905339343546,
+            "peak_current_A": 0.0006999890142480036,
+            "minimum_current_A": -0.0000034027295395602786,
+            "average_power_W": 0.000037555029610818384,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.000030000000000000004,
+            "end": 0.00004,
+            "integral": 0.000007206070623815843,
+            "mean": 0.7206070623815843,
+            "rms": 1.137046729435806,
+            "ac_rms": 0.8795457501269882,
+            "minimum": 0.0003384437786450426,
+            "maximum": 1.79785761269843,
+            "peak_to_peak": 1.797519168919785,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_rc_sensor",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.00004
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 5
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 7
+          },
+          {
+            "name": "Output reaches both logic rails",
+            "pass": true,
+            "observed": [
+              0.000335797565736116,
+              1.7978576129027553
+            ]
+          },
+          {
+            "name": "Duty within 10..90 percent",
+            "pass": true,
+            "observed": 0.3888519971295219
+          },
+          {
+            "name": "CAP crosses separated switching levels",
+            "pass": true,
+            "observed": [
+              0.22082806454587114,
+              1.287742372541119
+            ]
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "b7da17e85e1b4eb8a58231fefea875c952073fded8c227248082866bc611a84a"
+    },
+    {
+      "template": "osc_rc_sensor",
+      "parameters": {
+        "timing_Ohm": 100000,
+        "sense_F": 1e-11
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "duration_s": 0.000039999999999999996,
+        "step_s": 3.9999999999999994e-9,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "6a3fafd122ac4d4cb6a1906daba9e578",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "post_layout": "false",
+        "samples": 10187,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.000424021663508256,
+        "OUT_max": 1.617363671112076,
+        "supply_current_min": 9.288550514158223e-8,
+        "supply_current_max": 0.0005228616205458017,
+        "CAP_min": 0.000004268260929415716,
+        "CAP_max": 1.2139461263765228,
+        "HYST_min": 0.0000032513225061028914,
+        "HYST_max": 1.6252291254407782,
+        "SUM_min": 0.2368928170979249,
+        "SUM_max": 1.1825560657009087,
+        "current_flow_status": "available",
+        "template_id": "osc_rc_sensor",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 0.000016,
+          "end_s": 0.000039999999999999996,
+          "energy_J": 4.822161068517598e-10,
+          "average_current_A": 0.000012402677645364194,
+          "peak_current_A": 0.0000841443772437167,
+          "minimum_current_A": 9.288550514158223e-8,
+          "average_power_W": 0.000020092337785489995,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.000020092337785489995,
+        "average_supply_current_A": 0.000012402677645364194,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 7,
+          "frequency_Hz": 346909.8633772839,
+          "duty": 0.42953461135961857,
+          "period_min_s": 0.000002882235791642722,
+          "period_max_s": 0.0000028830014752673563,
+          "deterministic_period_span_s": 7.656836246344777e-10,
+          "max_sample_step_s": 4.0000000000019946e-9,
+          "crossing_threshold_V": 0.81,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 346909.8633772839,
+        "duty_cycle": 0.42953461135961857,
+        "cap_switch_low_V": 0.23932690488482986,
+        "cap_switch_high_V": 1.213408642857964,
+        "timing_RC_s": 0.000001,
+        "unloaded_RC_reference_frequency_Hz": 351385.6439543408,
+        "RC_reference_scope": "Uses measured thresholds in the ideal unloaded exponential RC equation; feedback loading, MOS delay/leakage and parasitics cause differences.",
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 4.0000000000000004e-11,
+            "end_s": 0.00004,
+            "energy_J": 8.236266283014241e-10,
+            "average_current_A": 0.000012710300184087592,
+            "peak_current_A": 0.0005228616205458017,
+            "minimum_current_A": 9.288550514158223e-8,
+            "average_power_W": 0.0000205906862982219,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.000030000000000000004,
+            "end": 0.00004,
+            "integral": 0.000006519160147806766,
+            "mean": 0.6519160147806766,
+            "rms": 1.0250744344328644,
+            "ac_rms": 0.7910645395922746,
+            "minimum": 0.0006747365017712378,
+            "maximum": 1.617363479954372,
+            "peak_to_peak": 1.6166887434526007,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_rc_sensor",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.00004
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 5
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 7
+          },
+          {
+            "name": "Output reaches both logic rails",
+            "pass": true,
+            "observed": [
+              0.0006747320730993371,
+              1.617363479954372
+            ]
+          },
+          {
+            "name": "Duty within 10..90 percent",
+            "pass": true,
+            "observed": 0.42953461135961857
+          },
+          {
+            "name": "CAP crosses separated switching levels",
+            "pass": true,
+            "observed": [
+              0.23932690488482986,
+              1.213408642857964
+            ]
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "e5c08df799b351a2bc6fa067f1a0fa8eeb69d03852aaff3d00337c25cd41cd3c"
+    },
+    {
+      "template": "osc_rc_sensor",
+      "parameters": {
+        "timing_Ohm": 100000,
+        "sense_F": 1e-11
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "duration_s": 0.000039999999999999996,
+        "step_s": 3.9999999999999994e-9,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "d652010d15dd4172b63c2e07d053c678",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 10392,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.0005925439179754965,
+        "OUT_max": 1.7982402509253579,
+        "supply_current_min": -0.000005344014960703691,
+        "supply_current_max": 0.00298189257645292,
+        "CAP_min": 0.0000035083960291352267,
+        "CAP_max": 1.2498083179760586,
+        "HYST_min": 0.0000012344798223136314,
+        "HYST_max": 1.8088599210169334,
+        "SUM_min": 0.2346442698249667,
+        "SUM_max": 1.2753784271531818,
+        "current_flow_status": "available",
+        "template_id": "osc_rc_sensor",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 0.000016,
+          "end_s": 0.000039999999999999996,
+          "energy_J": 9.002650235645202e-10,
+          "average_current_A": 0.0000208394681380676,
+          "peak_current_A": 0.0001690171069971408,
+          "minimum_current_A": 3.9977691913828384e-8,
+          "average_power_W": 0.00003751104264852168,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.00003751104264852168,
+        "average_supply_current_A": 0.0000208394681380676,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 7,
+          "frequency_Hz": 339779.0845005927,
+          "duty": 0.36566296147485433,
+          "period_min_s": 0.000002942245833324278,
+          "period_max_s": 0.0000029438605397803393,
+          "deterministic_period_span_s": 1.6147064560610648e-9,
+          "max_sample_step_s": 4.0000000000019946e-9,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 339779.0845005927,
+        "duty_cycle": 0.36566296147485433,
+        "cap_switch_low_V": 0.19823127277264502,
+        "cap_switch_high_V": 1.249321516417533,
+        "timing_RC_s": 0.000001,
+        "unloaded_RC_reference_frequency_Hz": 343803.98330119887,
+        "RC_reference_scope": "Uses measured thresholds in the ideal unloaded exponential RC equation; feedback loading, MOS delay/leakage and parasitics cause differences.",
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 5.0000000000000005e-12,
+            "end_s": 0.00004,
+            "energy_J": 1.5168506226122323e-9,
+            "average_current_A": 0.000021067372391924775,
+            "peak_current_A": 0.00298189257645292,
+            "minimum_current_A": -0.000005344014960703691,
+            "average_power_W": 0.000037921270305464594,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.000030000000000000004,
+            "end": 0.00004,
+            "integral": 0.000007108719957843702,
+            "mean": 0.7108719957843703,
+            "rms": 1.1297469698754006,
+            "ac_rms": 0.8780599191126967,
+            "minimum": 0.0001998866842076639,
+            "maximum": 1.7982401917877893,
+            "peak_to_peak": 1.7980403051035816,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_rc_sensor",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.00004
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 5
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 7
+          },
+          {
+            "name": "Output reaches both logic rails",
+            "pass": true,
+            "observed": [
+              0.00019941542279591337,
+              1.7982401926359084
+            ]
+          },
+          {
+            "name": "Duty within 10..90 percent",
+            "pass": true,
+            "observed": 0.36566296147485433
+          },
+          {
+            "name": "CAP crosses separated switching levels",
+            "pass": true,
+            "observed": [
+              0.19823127277264502,
+              1.249321516417533
+            ]
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "7936136f41ff598ff1d6ddd99ac1696a68f24179498f3b377cc77640ce36913f"
+    },
+    {
+      "template": "osc_beat",
+      "parameters": {
+        "stage_F": 2e-12,
+        "detune_ratio": 0.15,
+        "filter_Ohm": 20000,
+        "filter_F": 5e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 0.000002,
+        "step_s": 4.999999999999999e-10,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "2befd6f0d7a44289a73aa08d136def2f",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 10630,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 0.00003612809929925641,
+        "OUT_max": 0.9976802075025625,
+        "supply_current_min": 0.000552784168356163,
+        "supply_current_max": 0.038420449962828646,
+        "REF_min": -0.0005432688017496,
+        "REF_max": 1.8011711276974833,
+        "SENSE_min": -0.00044987561746469154,
+        "SENSE_max": 1.80114920914776,
+        "XOR_min": -0.01122269970400814,
+        "XOR_max": 1.6684330086257262,
+        "current_flow_status": "available",
+        "template_id": "osc_beat",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 8e-7,
+          "end_s": 0.000002,
+          "energy_J": 3.680049157366928e-9,
+          "average_current_A": 0.0017037264617439482,
+          "peak_current_A": 0.0022586556229722485,
+          "minimum_current_A": 0.0009115312100277592,
+          "average_power_W": 0.003066707631139107,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.003066707631139107,
+        "average_supply_current_A": 0.0017037264617439482,
+        "ref_cycles": {
+          "available": true,
+          "complete_cycles": 54,
+          "frequency_Hz": 46125517.594960384,
+          "duty": 0.4844695409447608,
+          "period_min_s": 2.1653166785383225e-8,
+          "period_max_s": 2.169983436558892e-8,
+          "deterministic_period_span_s": 4.666758020569395e-11,
+          "max_sample_step_s": 5.000000000000376e-10,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "sense_cycles": {
+          "available": true,
+          "complete_cycles": 47,
+          "frequency_Hz": 40228148.57725456,
+          "duty": 0.48449146518462566,
+          "period_min_s": 2.4830367393013228e-8,
+          "period_max_s": 2.488024298833432e-8,
+          "deterministic_period_span_s": 4.987559532109307e-11,
+          "max_sample_step_s": 5.000000000000376e-10,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "difference_frequency_Hz": 5897369.0177058205,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 6,
+          "frequency_Hz": 5899121.609814892,
+          "duty": 0.49453511299172825,
+          "period_min_s": 1.668884787059727e-7,
+          "period_max_s": 1.7118229272700973e-7,
+          "deterministic_period_span_s": 4.293814021037028e-9,
+          "max_sample_step_s": 5.000000000000376e-10,
+          "crossing_threshold_V": 0.820961374577188,
+          "crossing_hysteresis_half_width_V": 0.08835941646268727,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 5899121.609814892,
+        "duty_cycle": 0.49453511299172825,
+        "beat_relative_error": 0.0002971820321586184,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 5.0000000000000005e-12,
+            "end_s": 0.000002,
+            "energy_J": 6.1345347322434214e-9,
+            "average_current_A": 0.0017040416857273869,
+            "peak_current_A": 0.038420449962828646,
+            "minimum_current_A": 0.000552784168356163,
+            "average_power_W": 0.0030672750343092962,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.0000015,
+            "end": 0.000002,
+            "integral": 4.090526516166462e-7,
+            "mean": 0.8181053032332926,
+            "rms": 0.8258472162592828,
+            "ac_rms": 0.11281550170419426,
+            "minimum": 0.6474974223849015,
+            "maximum": 0.9976802075025625,
+            "peak_to_peak": 0.350182785117661,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_beat",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000002
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 5
+          },
+          {
+            "name": "REF has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 54
+          },
+          {
+            "name": "SENSE has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 47
+          },
+          {
+            "name": "Filtered beat exceeds 100mV peak-to-peak",
+            "pass": true,
+            "observed": 0.3534376658507491
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 6
+          },
+          {
+            "name": "Measured beat agrees with abs(fREF-fSENSE) within 10 percent",
+            "pass": true,
+            "observed": 0.0002971820321586184
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "6abcddadf46eb3951c954bf720bde68e3fb5b76a7dc02b294852cdb006c73ea0"
+    },
+    {
+      "template": "osc_beat",
+      "parameters": {
+        "detune_ratio": 0.15,
+        "filter_F": 5e-12,
+        "filter_Ohm": 20000,
+        "stage_F": 2e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "tt",
+        "duration_s": 0.000002,
+        "load_F": 5e-15,
+        "step_s": 4.999999999999999e-10,
+        "supply_V": 1.8,
+        "temperature_C": 27,
+        "vbs_V": 0,
+        "vds_V": 1.8
+      },
+      "run_id": "b43c72e578f14f30ba1c277f824dc7ea",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 10630,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 0.00003612809929925641,
+        "OUT_max": 0.9976802075025625,
+        "supply_current_min": 0.000552784168356163,
+        "supply_current_max": 0.038420449962828646,
+        "REF_min": -0.0005432688017496,
+        "REF_max": 1.8011711276974833,
+        "SENSE_min": -0.00044987561746469154,
+        "SENSE_max": 1.80114920914776,
+        "XOR_min": -0.01122269970400814,
+        "XOR_max": 1.6684330086257262,
+        "current_flow_status": "available",
+        "template_id": "osc_beat",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 8e-7,
+          "end_s": 0.000002,
+          "energy_J": 3.680049157366928e-9,
+          "average_current_A": 0.0017037264617439482,
+          "peak_current_A": 0.0022586556229722485,
+          "minimum_current_A": 0.0009115312100277592,
+          "average_power_W": 0.003066707631139107,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.003066707631139107,
+        "average_supply_current_A": 0.0017037264617439482,
+        "ref_cycles": {
+          "available": true,
+          "complete_cycles": 54,
+          "frequency_Hz": 46125517.594960384,
+          "duty": 0.4844695409447608,
+          "period_min_s": 2.1653166785383225e-8,
+          "period_max_s": 2.169983436558892e-8,
+          "deterministic_period_span_s": 4.666758020569395e-11,
+          "max_sample_step_s": 5.000000000000376e-10,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "sense_cycles": {
+          "available": true,
+          "complete_cycles": 47,
+          "frequency_Hz": 40228148.57725456,
+          "duty": 0.48449146518462566,
+          "period_min_s": 2.4830367393013228e-8,
+          "period_max_s": 2.488024298833432e-8,
+          "deterministic_period_span_s": 4.987559532109307e-11,
+          "max_sample_step_s": 5.000000000000376e-10,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "difference_frequency_Hz": 5897369.0177058205,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 6,
+          "frequency_Hz": 5899121.609814892,
+          "duty": 0.49453511299172825,
+          "period_min_s": 1.668884787059727e-7,
+          "period_max_s": 1.7118229272700973e-7,
+          "deterministic_period_span_s": 4.293814021037028e-9,
+          "max_sample_step_s": 5.000000000000376e-10,
+          "crossing_threshold_V": 0.820961374577188,
+          "crossing_hysteresis_half_width_V": 0.08835941646268727,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 5899121.609814892,
+        "duty_cycle": 0.49453511299172825,
+        "beat_relative_error": 0.0002971820321586184,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 5.0000000000000005e-12,
+            "end_s": 0.000002,
+            "energy_J": 6.1345347322434214e-9,
+            "average_current_A": 0.0017040416857273869,
+            "peak_current_A": 0.038420449962828646,
+            "minimum_current_A": 0.000552784168356163,
+            "average_power_W": 0.0030672750343092962,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.0000015,
+            "end": 0.000002,
+            "integral": 4.090526516166462e-7,
+            "mean": 0.8181053032332926,
+            "rms": 0.8258472162592828,
+            "ac_rms": 0.11281550170419426,
+            "minimum": 0.6474974223849015,
+            "maximum": 0.9976802075025625,
+            "peak_to_peak": 0.350182785117661,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_beat",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000002
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 5
+          },
+          {
+            "name": "REF has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 54
+          },
+          {
+            "name": "SENSE has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 47
+          },
+          {
+            "name": "Filtered beat exceeds 100mV peak-to-peak",
+            "pass": true,
+            "observed": 0.3534376658507491
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 6
+          },
+          {
+            "name": "Measured beat agrees with abs(fREF-fSENSE) within 10 percent",
+            "pass": true,
+            "observed": 0.0002971820321586184
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "5d5b3516277cc10b6a5d5932d55095f19bef5f84bfc98ce95447ddcc13a69584"
+    },
+    {
+      "template": "osc_beat",
+      "parameters": {
+        "stage_F": 2e-12,
+        "detune_ratio": 0.15,
+        "filter_Ohm": 20000,
+        "filter_F": 5e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "duration_s": 0.000002,
+        "step_s": 4.999999999999999e-10,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "a861edb4273545cc9a3e4eafee281a52",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "post_layout": "false",
+        "samples": 6441,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 0.000028116417859840733,
+        "OUT_max": 0.9259695368245526,
+        "supply_current_min": 0.0002792410733059719,
+        "supply_current_max": 0.03276065644321168,
+        "REF_min": -0.0005106357244055239,
+        "REF_max": 1.6210704075184212,
+        "SENSE_min": -0.00043734441630974996,
+        "SENSE_max": 1.6210275630770805,
+        "XOR_min": -0.012678337066879306,
+        "XOR_max": 1.3964532475743934,
+        "current_flow_status": "available",
+        "template_id": "osc_beat",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 8e-7,
+          "end_s": 0.000002,
+          "energy_J": 1.882621542556723e-9,
+          "average_current_A": 0.0009684267194221826,
+          "peak_current_A": 0.00128172748656135,
+          "minimum_current_A": 0.0005139486173955168,
+          "average_power_W": 0.001568851285463936,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.001568851285463936,
+        "average_supply_current_A": 0.0009684267194221826,
+        "ref_cycles": {
+          "available": true,
+          "complete_cycles": 34,
+          "frequency_Hz": 29004858.21060536,
+          "duty": 0.48659036429365543,
+          "period_min_s": 3.445488122090023e-8,
+          "period_max_s": 3.449771476737121e-8,
+          "deterministic_period_span_s": 4.283354647098099e-11,
+          "max_sample_step_s": 5.000000000000376e-10,
+          "crossing_threshold_V": 0.81,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "sense_cycles": {
+          "available": true,
+          "complete_cycles": 29,
+          "frequency_Hz": 25295656.829088412,
+          "duty": 0.48662836101764684,
+          "period_min_s": 3.9505405490775994e-8,
+          "period_max_s": 3.955630506414179e-8,
+          "deterministic_period_span_s": 5.08995733657961e-11,
+          "max_sample_step_s": 5.000000000000376e-10,
+          "crossing_threshold_V": 0.81,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "difference_frequency_Hz": 3709201.3815169483,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 3,
+          "frequency_Hz": 3703443.8610388767,
+          "duty": 0.4948975677668105,
+          "period_min_s": 2.664583785777617e-7,
+          "period_max_s": 2.7220520132354375e-7,
+          "deterministic_period_span_s": 5.746822745782038e-9,
+          "max_sample_step_s": 5.000000000000376e-10,
+          "crossing_threshold_V": 0.7193560923329896,
+          "crossing_hysteresis_half_width_V": 0.1033067222457815,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 3703443.8610388767,
+        "duty_cycle": 0.4948975677668105,
+        "beat_relative_error": 0.001552226446038095,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 5.0000000000000005e-12,
+            "end_s": 0.000002,
+            "energy_J": 3.1302032578559125e-9,
+            "average_current_A": 0.0009661145319085249,
+            "peak_current_A": 0.03276065644321168,
+            "minimum_current_A": 0.0002792410733059719,
+            "average_power_W": 0.0015651055416918106,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.0000015,
+            "end": 0.000002,
+            "integral": 3.5634086587084716e-7,
+            "mean": 0.7126817317416945,
+            "rms": 0.725439405829588,
+            "ac_rms": 0.13545139634586706,
+            "minimum": 0.5154310567997886,
+            "maximum": 0.9204178220699202,
+            "peak_to_peak": 0.40498676527013155,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_beat",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000002
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 5
+          },
+          {
+            "name": "REF has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 34
+          },
+          {
+            "name": "SENSE has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 29
+          },
+          {
+            "name": "Filtered beat exceeds 100mV peak-to-peak",
+            "pass": true,
+            "observed": 0.413226888983126
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 3
+          },
+          {
+            "name": "Measured beat agrees with abs(fREF-fSENSE) within 10 percent",
+            "pass": true,
+            "observed": 0.001552226446038095
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "9290f9029602d337ca1db29d1a359f7c93e5277916a8cfed1299c194819eee29"
+    },
+    {
+      "template": "osc_beat",
+      "parameters": {
+        "stage_F": 2e-12,
+        "detune_ratio": 0.15,
+        "filter_Ohm": 20000,
+        "filter_F": 5e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "duration_s": 0.000002,
+        "step_s": 4.999999999999999e-10,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "240159a797a8458a88d8a03db12c05c6",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 16140,
+        "solver": "SPARSE 1.3",
+        "OUT_min": 0.000039221383478440947,
+        "OUT_max": 0.9714467436656963,
+        "supply_current_min": 0.0006292820043284214,
+        "supply_current_max": 0.03922504140864181,
+        "REF_min": -0.0005050000624154618,
+        "REF_max": 1.8012149471023218,
+        "SENSE_min": -0.0004342404980911991,
+        "SENSE_max": 1.801227620321891,
+        "XOR_min": -0.0228739488530994,
+        "XOR_max": 1.693620840836096,
+        "current_flow_status": "available",
+        "template_id": "osc_beat",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 8e-7,
+          "end_s": 0.000002,
+          "energy_J": 4.674851695352263e-9,
+          "average_current_A": 0.0021642831922927142,
+          "peak_current_A": 0.0028862939467728874,
+          "minimum_current_A": 0.0011836384734548108,
+          "average_power_W": 0.0038957097461268858,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.0038957097461268858,
+        "average_supply_current_A": 0.0021642831922927142,
+        "ref_cycles": {
+          "available": true,
+          "complete_cycles": 69,
+          "frequency_Hz": 58751860.19891224,
+          "duty": 0.48259338997110834,
+          "period_min_s": 1.6992395686617455e-8,
+          "period_max_s": 1.7041792061835934e-8,
+          "deterministic_period_span_s": 4.939637521847943e-11,
+          "max_sample_step_s": 5.000000000000376e-10,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "sense_cycles": {
+          "available": true,
+          "complete_cycles": 60,
+          "frequency_Hz": 51228032.421059035,
+          "duty": 0.48258972516166476,
+          "period_min_s": 1.9493520982413993e-8,
+          "period_max_s": 1.9544134807489945e-8,
+          "deterministic_period_span_s": 5.0613825075951386e-11,
+          "max_sample_step_s": 5.000000000000376e-10,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "difference_frequency_Hz": 7523827.777853206,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 8,
+          "frequency_Hz": 7519345.969748931,
+          "duty": 0.4983503161913715,
+          "period_min_s": 1.3066056352294614e-7,
+          "period_max_s": 1.3449212988514697e-7,
+          "deterministic_period_span_s": 3.831566362200835e-9,
+          "max_sample_step_s": 5.000000000000376e-10,
+          "crossing_threshold_V": 0.8241472874386752,
+          "crossing_hysteresis_half_width_V": 0.07364972811351056,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 7519345.969748931,
+        "duty_cycle": 0.4983503161913715,
+        "beat_relative_error": 0.0005956819104056633,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 5.0000000000000005e-12,
+            "end_s": 0.000002,
+            "energy_J": 7.787714267750021e-9,
+            "average_current_A": 0.0021632593714123235,
+            "peak_current_A": 0.03922504140864181,
+            "minimum_current_A": 0.0006292820043284214,
+            "average_power_W": 0.0038938668685421824,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.0000015,
+            "end": 0.000002,
+            "integral": 4.1537299821974334e-7,
+            "mean": 0.8307459964394869,
+            "rms": 0.8358208550964655,
+            "ac_rms": 0.09196516304531273,
+            "minimum": 0.6796523826426067,
+            "maximum": 0.9714467436656963,
+            "peak_to_peak": 0.29179436102308953,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_beat",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000002
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 5
+          },
+          {
+            "name": "REF has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 69
+          },
+          {
+            "name": "SENSE has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 60
+          },
+          {
+            "name": "Filtered beat exceeds 100mV peak-to-peak",
+            "pass": true,
+            "observed": 0.29459891245404224
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 8
+          },
+          {
+            "name": "Measured beat agrees with abs(fREF-fSENSE) within 10 percent",
+            "pass": true,
+            "observed": 0.0005956819104056633
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "c84787d39e91f2003ab34227949246216e4f253f61415341925eb42cbb6d0f30"
+    },
+    {
+      "template": "osc_burst",
+      "parameters": {
+        "stage_F": 2e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 0.000008,
+        "step_s": 7.999999999999999e-10,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "5e1c72521bf646edbe366adfdb616e18",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 14129,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.00046101264876113445,
+        "OUT_max": 1.8025901874585049,
+        "supply_current_min": -0.000001112455866758566,
+        "supply_current_max": 0.01324097234570875,
+        "EN_min": 0,
+        "EN_max": 1.8,
+        "Q0_min": 0.00804838859292158,
+        "Q0_max": 1.8001265106381643,
+        "Q1_min": -0.00008907675990889796,
+        "Q1_max": 1.8001863516926733,
+        "Q2_min": -0.00018798631132793933,
+        "Q2_max": 1.8005453239351625,
+        "Q3_min": -0.0003638245524260064,
+        "Q3_max": 1.800854417606523,
+        "current_flow_status": "available",
+        "template_id": "osc_burst",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 0.0000032,
+          "end_s": 0.000008,
+          "energy_J": 1.4823377197861906e-9,
+          "average_current_A": 0.00017156686571599428,
+          "peak_current_A": 0.0011702541749474271,
+          "minimum_current_A": -0.0000011121475233105693,
+          "average_power_W": 0.0003088203582887897,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.0003088203582887897,
+        "average_supply_current_A": 0.00017156686571599428,
+        "enabled_first": {
+          "cycles": {
+            "available": true,
+            "complete_cycles": 31,
+            "frequency_Hz": 19876282.45300035,
+            "duty": 0.37818521353315604,
+            "period_min_s": 5.031121903024554e-8,
+            "period_max_s": 5.031121903024999e-8,
+            "deterministic_period_span_s": 4.446922973085077e-21,
+            "max_sample_step_s": 8.000000000000601e-10,
+            "crossing_threshold_V": 0.9,
+            "crossing_hysteresis_half_width_V": 0,
+            "period_scope": "Deterministic transient only; not random jitter or phase noise."
+          },
+          "power": {
+            "available": true,
+            "start_s": 8e-7,
+            "end_s": 0.0000024,
+            "energy_J": 9.850964885416127e-10,
+            "average_current_A": 0.0003420473918547266,
+            "peak_current_A": 0.001164647486803963,
+            "minimum_current_A": 0.000008964603509985236,
+            "average_power_W": 0.0006156853053385079,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "disabled_middle": {
+          "cycles": {
+            "available": false,
+            "complete_cycles": 0,
+            "frequency_Hz": null,
+            "duty": null
+          },
+          "power": {
+            "available": true,
+            "start_s": 0.0000032,
+            "end_s": 0.00000384,
+            "energy_J": 3.890491155825815e-17,
+            "average_current_A": 3.3771624616543545e-11,
+            "peak_current_A": 4.492067745460141e-11,
+            "minimum_current_A": 2.8192419895587637e-11,
+            "average_power_W": 6.078892430977838e-11,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "enabled_again": {
+          "cycles": {
+            "available": true,
+            "complete_cycles": 31,
+            "frequency_Hz": 19876282.453000713,
+            "duty": 0.3781852135331795,
+            "period_min_s": 5.031121903024787e-8,
+            "period_max_s": 5.031121903024872e-8,
+            "deterministic_period_span_s": 8.470329472543003e-22,
+            "max_sample_step_s": 8.000000000000601e-10,
+            "crossing_threshold_V": 0.9,
+            "crossing_hysteresis_half_width_V": 0,
+            "period_scope": "Deterministic transient only; not random jitter or phase noise."
+          },
+          "power": {
+            "available": true,
+            "start_s": 0.0000044,
+            "end_s": 0.000006,
+            "energy_J": 9.85098804015596e-10,
+            "average_current_A": 0.00034204819583874855,
+            "peak_current_A": 0.001164647486803741,
+            "minimum_current_A": 0.000008964603509985236,
+            "average_power_W": 0.0006156867525097474,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "disabled_final": {
+          "cycles": {
+            "available": false,
+            "complete_cycles": 0,
+            "frequency_Hz": null,
+            "duty": null
+          },
+          "power": {
+            "available": true,
+            "start_s": 0.000006799999999999999,
+            "end_s": 0.000008,
+            "energy_J": 6.540865308094331e-17,
+            "average_current_A": 3.028178383377004e-11,
+            "peak_current_A": 4.4920787601843334e-11,
+            "minimum_current_A": 2.48890491549858e-11,
+            "average_power_W": 5.450721090078608e-11,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "output_frequency_Hz": 19876282.45300035,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 8.000000000000001e-12,
+            "end_s": 0.000008,
+            "energy_J": 3.0004351424734225e-9,
+            "average_current_A": 0.00020836375992441429,
+            "peak_current_A": 0.01324097234570875,
+            "minimum_current_A": -0.000001112455866758566,
+            "average_power_W": 0.0003750547678639457,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.000006,
+            "end": 0.000008,
+            "integral": 0.0000031246274556110223,
+            "mean": 1.5623137278055115,
+            "rms": 1.6716458178039841,
+            "ac_rms": 0.5946221960976538,
+            "minimum": -0.00046084858973689764,
+            "maximum": 1.8025901874585049,
+            "peak_to_peak": 1.8030510360482417,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_burst",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000008
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 3
+          },
+          {
+            "name": "enabled_first has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 31
+          },
+          {
+            "name": "disabled_middle is held HIGH",
+            "pass": true,
+            "observed": 1.7999999995643705
+          },
+          {
+            "name": "enabled_again has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 31
+          },
+          {
+            "name": "disabled_final is held HIGH",
+            "pass": true,
+            "observed": 1.7999999988206947
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "0199af545d36c0469d611a3f5e0198a1703560ce31fd04f548229f8690f746f9"
+    },
+    {
+      "template": "osc_burst",
+      "parameters": {
+        "stage_F": 2e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "tt",
+        "duration_s": 0.000008,
+        "load_F": 5e-15,
+        "step_s": 7.999999999999999e-10,
+        "supply_V": 1.8,
+        "temperature_C": 27,
+        "vbs_V": 0,
+        "vds_V": 1.8
+      },
+      "run_id": "db0013fbecd347d291bb9b9eed7de5a1",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 14129,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.00046101264876113445,
+        "OUT_max": 1.8025901874585049,
+        "supply_current_min": -0.000001112455866758566,
+        "supply_current_max": 0.01324097234570875,
+        "EN_min": 0,
+        "EN_max": 1.8,
+        "Q0_min": 0.00804838859292158,
+        "Q0_max": 1.8001265106381643,
+        "Q1_min": -0.00008907675990889796,
+        "Q1_max": 1.8001863516926733,
+        "Q2_min": -0.00018798631132793933,
+        "Q2_max": 1.8005453239351625,
+        "Q3_min": -0.0003638245524260064,
+        "Q3_max": 1.800854417606523,
+        "current_flow_status": "available",
+        "template_id": "osc_burst",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 0.0000032,
+          "end_s": 0.000008,
+          "energy_J": 1.4823377197861906e-9,
+          "average_current_A": 0.00017156686571599428,
+          "peak_current_A": 0.0011702541749474271,
+          "minimum_current_A": -0.0000011121475233105693,
+          "average_power_W": 0.0003088203582887897,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.0003088203582887897,
+        "average_supply_current_A": 0.00017156686571599428,
+        "enabled_first": {
+          "cycles": {
+            "available": true,
+            "complete_cycles": 31,
+            "frequency_Hz": 19876282.45300035,
+            "duty": 0.37818521353315604,
+            "period_min_s": 5.031121903024554e-8,
+            "period_max_s": 5.031121903024999e-8,
+            "deterministic_period_span_s": 4.446922973085077e-21,
+            "max_sample_step_s": 8.000000000000601e-10,
+            "crossing_threshold_V": 0.9,
+            "crossing_hysteresis_half_width_V": 0,
+            "period_scope": "Deterministic transient only; not random jitter or phase noise."
+          },
+          "power": {
+            "available": true,
+            "start_s": 8e-7,
+            "end_s": 0.0000024,
+            "energy_J": 9.850964885416127e-10,
+            "average_current_A": 0.0003420473918547266,
+            "peak_current_A": 0.001164647486803963,
+            "minimum_current_A": 0.000008964603509985236,
+            "average_power_W": 0.0006156853053385079,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "disabled_middle": {
+          "cycles": {
+            "available": false,
+            "complete_cycles": 0,
+            "frequency_Hz": null,
+            "duty": null
+          },
+          "power": {
+            "available": true,
+            "start_s": 0.0000032,
+            "end_s": 0.00000384,
+            "energy_J": 3.890491155825815e-17,
+            "average_current_A": 3.3771624616543545e-11,
+            "peak_current_A": 4.492067745460141e-11,
+            "minimum_current_A": 2.8192419895587637e-11,
+            "average_power_W": 6.078892430977838e-11,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "enabled_again": {
+          "cycles": {
+            "available": true,
+            "complete_cycles": 31,
+            "frequency_Hz": 19876282.453000713,
+            "duty": 0.3781852135331795,
+            "period_min_s": 5.031121903024787e-8,
+            "period_max_s": 5.031121903024872e-8,
+            "deterministic_period_span_s": 8.470329472543003e-22,
+            "max_sample_step_s": 8.000000000000601e-10,
+            "crossing_threshold_V": 0.9,
+            "crossing_hysteresis_half_width_V": 0,
+            "period_scope": "Deterministic transient only; not random jitter or phase noise."
+          },
+          "power": {
+            "available": true,
+            "start_s": 0.0000044,
+            "end_s": 0.000006,
+            "energy_J": 9.85098804015596e-10,
+            "average_current_A": 0.00034204819583874855,
+            "peak_current_A": 0.001164647486803741,
+            "minimum_current_A": 0.000008964603509985236,
+            "average_power_W": 0.0006156867525097474,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "disabled_final": {
+          "cycles": {
+            "available": false,
+            "complete_cycles": 0,
+            "frequency_Hz": null,
+            "duty": null
+          },
+          "power": {
+            "available": true,
+            "start_s": 0.000006799999999999999,
+            "end_s": 0.000008,
+            "energy_J": 6.540865308094331e-17,
+            "average_current_A": 3.028178383377004e-11,
+            "peak_current_A": 4.4920787601843334e-11,
+            "minimum_current_A": 2.48890491549858e-11,
+            "average_power_W": 5.450721090078608e-11,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "output_frequency_Hz": 19876282.45300035,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 8.000000000000001e-12,
+            "end_s": 0.000008,
+            "energy_J": 3.0004351424734225e-9,
+            "average_current_A": 0.00020836375992441429,
+            "peak_current_A": 0.01324097234570875,
+            "minimum_current_A": -0.000001112455866758566,
+            "average_power_W": 0.0003750547678639457,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.000006,
+            "end": 0.000008,
+            "integral": 0.0000031246274556110223,
+            "mean": 1.5623137278055115,
+            "rms": 1.6716458178039841,
+            "ac_rms": 0.5946221960976538,
+            "minimum": -0.00046084858973689764,
+            "maximum": 1.8025901874585049,
+            "peak_to_peak": 1.8030510360482417,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_burst",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000008
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 3
+          },
+          {
+            "name": "enabled_first has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 31
+          },
+          {
+            "name": "disabled_middle is held HIGH",
+            "pass": true,
+            "observed": 1.7999999995643705
+          },
+          {
+            "name": "enabled_again has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 31
+          },
+          {
+            "name": "disabled_final is held HIGH",
+            "pass": true,
+            "observed": 1.7999999988206947
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "7f46286114204ed92ade1026d2814800c543db0e08785eb253102f0f5ed75639"
+    },
+    {
+      "template": "osc_burst",
+      "parameters": {
+        "stage_F": 2e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "duration_s": 0.000008,
+        "step_s": 7.999999999999999e-10,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "6e26663667dd461db6150607d6d0077b",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ss",
+        "temperature_C": 125,
+        "supply_V": 1.62,
+        "post_layout": "false",
+        "samples": 11571,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.00047371043828639813,
+        "OUT_max": 1.6209934577813698,
+        "supply_current_min": -0.0000010087710107103964,
+        "supply_current_max": 0.010829956505162122,
+        "EN_min": 0,
+        "EN_max": 1.62,
+        "Q0_min": 0.007558435001954162,
+        "Q0_max": 1.620115436543882,
+        "Q1_min": -0.00006231492488139017,
+        "Q1_max": 1.6201086696204627,
+        "Q2_min": -0.00020075292363861655,
+        "Q2_max": 1.6204100492098477,
+        "Q3_min": -0.00035431930894173035,
+        "Q3_max": 1.6208206397947016,
+        "current_flow_status": "available",
+        "template_id": "osc_burst",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 0.0000032,
+          "end_s": 0.000008,
+          "energy_J": 6.741589981715697e-10,
+          "average_current_A": 0.00008669740202823685,
+          "peak_current_A": 0.0006651313197067674,
+          "minimum_current_A": -0.0000010086726912883481,
+          "average_power_W": 0.0001404497912857437,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.0001404497912857437,
+        "average_supply_current_A": 0.00008669740202823685,
+        "enabled_first": {
+          "cycles": {
+            "available": true,
+            "complete_cycles": 17,
+            "frequency_Hz": 11244392.712944528,
+            "duty": 0.41929792912676067,
+            "period_min_s": 8.893232476116059e-8,
+            "period_max_s": 8.893784956957913e-8,
+            "deterministic_period_span_s": 5.524808418542256e-12,
+            "max_sample_step_s": 8.000000000000601e-10,
+            "crossing_threshold_V": 0.81,
+            "crossing_hysteresis_half_width_V": 0,
+            "period_scope": "Deterministic transient only; not random jitter or phase noise."
+          },
+          "power": {
+            "available": true,
+            "start_s": 8e-7,
+            "end_s": 0.0000024,
+            "energy_J": 4.4778664819439814e-10,
+            "average_current_A": 0.00017275719451944374,
+            "peak_current_A": 0.0006636617636955888,
+            "minimum_current_A": 0.000004651311467186725,
+            "average_power_W": 0.00027986665512149886,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "disabled_middle": {
+          "cycles": {
+            "available": false,
+            "complete_cycles": 0,
+            "frequency_Hz": null,
+            "duty": null
+          },
+          "power": {
+            "available": true,
+            "start_s": 0.0000032,
+            "end_s": 0.00000384,
+            "energy_J": 3.6051144121232455e-16,
+            "average_current_A": 3.477155104285538e-10,
+            "peak_current_A": 3.637281169744512e-10,
+            "minimum_current_A": 3.3988895392664237e-10,
+            "average_power_W": 5.632991268942572e-10,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "enabled_again": {
+          "cycles": {
+            "available": true,
+            "complete_cycles": 17,
+            "frequency_Hz": 11244265.933386527,
+            "duty": 0.41930236548483535,
+            "period_min_s": 8.893238640355409e-8,
+            "period_max_s": 8.893816850274928e-8,
+            "deterministic_period_span_s": 5.782099195191523e-12,
+            "max_sample_step_s": 8.000000000000601e-10,
+            "crossing_threshold_V": 0.81,
+            "crossing_hysteresis_half_width_V": 0,
+            "period_scope": "Deterministic transient only; not random jitter or phase noise."
+          },
+          "power": {
+            "available": true,
+            "start_s": 0.0000044,
+            "end_s": 0.000006,
+            "energy_J": 4.4778227925433245e-10,
+            "average_current_A": 0.00017275550897157888,
+            "peak_current_A": 0.0006645320757320619,
+            "minimum_current_A": 0.000004614157726810786,
+            "average_power_W": 0.0002798639245339578,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "disabled_final": {
+          "cycles": {
+            "available": false,
+            "complete_cycles": 0,
+            "frequency_Hz": null,
+            "duty": null
+          },
+          "power": {
+            "available": true,
+            "start_s": 0.000006799999999999999,
+            "end_s": 0.000008,
+            "energy_J": 6.664906725724562e-16,
+            "average_current_A": 3.428449961792469e-10,
+            "peak_current_A": 3.637297369646895e-10,
+            "minimum_current_A": 3.353548549966945e-10,
+            "average_power_W": 5.5540889381038e-10,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "output_frequency_Hz": 11244392.712944528,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 8.000000000000001e-12,
+            "end_s": 0.000008,
+            "energy_J": 1.377440840506191e-9,
+            "average_current_A": 0.00010628412175527847,
+            "peak_current_A": 0.010829956505162122,
+            "minimum_current_A": -0.0000010087710107103964,
+            "average_power_W": 0.00017218027724355114,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.000006,
+            "end": 0.000008,
+            "integral": 0.000002819772710423669,
+            "mean": 1.4098863552118348,
+            "rms": 1.5069975303390823,
+            "ac_rms": 0.5322236577188031,
+            "minimum": -0.000467863116172895,
+            "maximum": 1.6209934531009882,
+            "peak_to_peak": 1.6214613162171612,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_burst",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000008
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 3
+          },
+          {
+            "name": "enabled_first has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 17
+          },
+          {
+            "name": "disabled_middle is held HIGH",
+            "pass": true,
+            "observed": 1.6199999080716547
+          },
+          {
+            "name": "enabled_again has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 17
+          },
+          {
+            "name": "disabled_final is held HIGH",
+            "pass": true,
+            "observed": 1.6199999066214474
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "e5d48376bdead7c3ec681777f0c39cfaf2871d61e871bca402928347bd9a773a"
+    },
+    {
+      "template": "osc_burst",
+      "parameters": {
+        "stage_F": 2e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "duration_s": 0.000008,
+        "step_s": 7.999999999999999e-10,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "450d86d4cdff499bad14f348ec65a9dc",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "ff",
+        "temperature_C": -40,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 16083,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.00047499887746206315,
+        "OUT_max": 1.8072638783761086,
+        "supply_current_min": -0.000001074469056366878,
+        "supply_current_max": 0.013815939177768653,
+        "EN_min": 0,
+        "EN_max": 1.8,
+        "Q0_min": 0.007514619031463518,
+        "Q0_max": 1.800121627777428,
+        "Q1_min": -0.00009450602213406211,
+        "Q1_max": 1.8001830951184628,
+        "Q2_min": -0.00018343648282096773,
+        "Q2_max": 1.8006338563439979,
+        "Q3_min": -0.0003650611443548543,
+        "Q3_max": 1.8009622690912492,
+        "current_flow_status": "available",
+        "template_id": "osc_burst",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 0.0000032,
+          "end_s": 0.000008,
+          "energy_J": 1.910770211413445e-9,
+          "average_current_A": 0.00022115395965433392,
+          "peak_current_A": 0.0015273433042435475,
+          "minimum_current_A": -0.00000107398502190853,
+          "average_power_W": 0.00039807712737780106,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.00039807712737780106,
+        "average_supply_current_A": 0.00022115395965433392,
+        "enabled_first": {
+          "cycles": {
+            "available": true,
+            "complete_cycles": 40,
+            "frequency_Hz": 25835334.37485243,
+            "duty": 0.34977211952830195,
+            "period_min_s": 3.869482215285176e-8,
+            "period_max_s": 3.87236404804889e-8,
+            "deterministic_period_span_s": 2.8818327637142983e-11,
+            "max_sample_step_s": 8.000000000000601e-10,
+            "crossing_threshold_V": 0.9,
+            "crossing_hysteresis_half_width_V": 0,
+            "period_scope": "Deterministic transient only; not random jitter or phase noise."
+          },
+          "power": {
+            "available": true,
+            "start_s": 8e-7,
+            "end_s": 0.0000024,
+            "energy_J": 1.272186446291766e-9,
+            "average_current_A": 0.00044173140496241874,
+            "peak_current_A": 0.001485815556470295,
+            "minimum_current_A": 0.000013675070639769527,
+            "average_power_W": 0.0007951165289323538,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "disabled_middle": {
+          "cycles": {
+            "available": false,
+            "complete_cycles": 0,
+            "frequency_Hz": null,
+            "duty": null
+          },
+          "power": {
+            "available": true,
+            "start_s": 0.0000032,
+            "end_s": 0.00000384,
+            "energy_J": 2.6421765807162807e-17,
+            "average_current_A": 2.29355605964955e-11,
+            "peak_current_A": 3.1142842024948285e-11,
+            "minimum_current_A": 1.87636342015099e-11,
+            "average_power_W": 4.1284009073691905e-11,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "enabled_again": {
+          "cycles": {
+            "available": true,
+            "complete_cycles": 40,
+            "frequency_Hz": 25834787.38721093,
+            "duty": 0.34978759915647534,
+            "period_min_s": 3.8693476687276386e-8,
+            "period_max_s": 3.873151916351445e-8,
+            "deterministic_period_span_s": 3.804247623806435e-11,
+            "max_sample_step_s": 8.000000000000601e-10,
+            "crossing_threshold_V": 0.9,
+            "crossing_hysteresis_half_width_V": 0,
+            "period_scope": "Deterministic transient only; not random jitter or phase noise."
+          },
+          "power": {
+            "available": true,
+            "start_s": 0.0000044,
+            "end_s": 0.000006,
+            "energy_J": 1.2723529790083067e-9,
+            "average_current_A": 0.0004417892288223287,
+            "peak_current_A": 0.0014858437311374428,
+            "minimum_current_A": 0.000013646641693551564,
+            "average_power_W": 0.0007952206118801917,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "disabled_final": {
+          "cycles": {
+            "available": false,
+            "complete_cycles": 0,
+            "frequency_Hz": null,
+            "duty": null
+          },
+          "power": {
+            "available": true,
+            "start_s": 0.000006799999999999999,
+            "end_s": 0.000008,
+            "energy_J": 4.38833338524414e-17,
+            "average_current_A": 2.031635826501916e-11,
+            "peak_current_A": 3.114608406032071e-11,
+            "minimum_current_A": 1.6252124646065624e-11,
+            "average_power_W": 3.656944487703449e-11,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+          }
+        },
+        "output_frequency_Hz": 25835334.37485243,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 8.000000000000001e-12,
+            "end_s": 0.000008,
+            "energy_J": 3.8567733091276195e-9,
+            "average_current_A": 0.0002678317476322768,
+            "peak_current_A": 0.013815939177768653,
+            "minimum_current_A": -0.000001074469056366878,
+            "average_power_W": 0.0004820971457380982,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.000006,
+            "end": 0.000008,
+            "integral": 0.000003115387094655754,
+            "mean": 1.5576935473278775,
+            "rms": 1.6692564204408646,
+            "ac_rms": 0.6000065081281557,
+            "minimum": -0.00047499887746206315,
+            "maximum": 1.807078786162421,
+            "peak_to_peak": 1.807553785039883,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_burst",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000008
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 3
+          },
+          {
+            "name": "enabled_first has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 40
+          },
+          {
+            "name": "disabled_middle is held HIGH",
+            "pass": true,
+            "observed": 1.8000000005403307
+          },
+          {
+            "name": "enabled_again has at least 3 resolved cycles",
+            "pass": true,
+            "observed": 40
+          },
+          {
+            "name": "disabled_final is held HIGH",
+            "pass": true,
+            "observed": 1.8000000000776708
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "a49757a2aba49753bf0abe3e97ba89a89b905dfc8304f37272ea49fbfd145f43"
+    },
+    {
+      "template": "osc_rc_sensor",
+      "parameters": {
+        "timing_Ohm": 100000,
+        "sense_F": 5e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 0.000019999999999999998,
+        "step_s": 1.9999999999999997e-9,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "20e0aa97f614488da858e5ca6a4eca86",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 10117,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.0005654115544490972,
+        "OUT_max": 1.798173937899128,
+        "supply_current_min": -8.905243093146331e-7,
+        "supply_current_max": 0.0010390087330823458,
+        "CAP_min": 0.000005191413122996288,
+        "CAP_max": 1.3647502066153088,
+        "HYST_min": 0.0000014946921048943334,
+        "HYST_max": 1.8084270133150586,
+        "SUM_min": 0.36033985744635144,
+        "SUM_max": 1.2379577966085222,
+        "current_flow_status": "available",
+        "template_id": "osc_rc_sensor",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 0.000008,
+          "end_s": 0.000019999999999999998,
+          "energy_J": 4.724376850217063e-10,
+          "average_current_A": 0.000021872115047301214,
+          "peak_current_A": 0.00014884417022074242,
+          "minimum_current_A": 1.3639393799808053e-7,
+          "average_power_W": 0.00003936980708514219,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.00003936980708514219,
+        "average_supply_current_A": 0.000021872115047301214,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 6,
+          "frequency_Hz": 596795.5442154658,
+          "duty": 0.394826412992984,
+          "period_min_s": 0.0000016754453865435048,
+          "period_max_s": 0.000001675854441921303,
+          "deterministic_period_span_s": 4.090553777982424e-10,
+          "max_sample_step_s": 2.0000000000009973e-9,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 596795.5442154658,
+        "duty_cycle": 0.394826412992984,
+        "cap_switch_low_V": 0.1853309128396892,
+        "cap_switch_high_V": 1.363058598527958,
+        "timing_RC_s": 5e-7,
+        "unloaded_RC_reference_frequency_Hz": 605614.7085560239,
+        "RC_reference_scope": "Uses measured thresholds in the ideal unloaded exponential RC equation; feedback loading, MOS delay/leakage and parasitics cause differences.",
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 2.0000000000000002e-11,
+            "end_s": 0.00002,
+            "energy_J": 7.815870706279305e-10,
+            "average_current_A": 0.000021710773672660632,
+            "peak_current_A": 0.0010390087330823458,
+            "minimum_current_A": -8.905243093146331e-7,
+            "average_power_W": 0.00003907939261078914,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.000015000000000000002,
+            "end": 0.00002,
+            "integral": 0.0000035679730541597088,
+            "mean": 0.7135946108319419,
+            "rms": 1.13144321898997,
+            "ac_rms": 0.8780355853779471,
+            "minimum": 0.0002415949611393448,
+            "maximum": 1.7981695316264228,
+            "peak_to_peak": 1.7979279366652834,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_rc_sensor",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.00002
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 5
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 6
+          },
+          {
+            "name": "Output reaches both logic rails",
+            "pass": true,
+            "observed": [
+              0.00024087355694056735,
+              1.798169589793781
+            ]
+          },
+          {
+            "name": "Duty within 10..90 percent",
+            "pass": true,
+            "observed": 0.394826412992984
+          },
+          {
+            "name": "CAP crosses separated switching levels",
+            "pass": true,
+            "observed": [
+              0.1853309128396892,
+              1.363058598527958
+            ]
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "02039b2bb07b357499401faeeb76288d1fb67d7c1e5371cf9a1f997877e84c9a"
+    },
+    {
+      "template": "osc_rc_sensor",
+      "parameters": {
+        "timing_Ohm": 100000,
+        "sense_F": 2e-11
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 0.00007999999999999999,
+        "step_s": 7.999999999999999e-9,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "7f9c857ed1864bb4b1fab05a1d01746d",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 10248,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.00022051169541908379,
+        "OUT_max": 1.7976527504301205,
+        "supply_current_min": -0.0000036349725759457496,
+        "supply_current_max": 0.0004244075057924998,
+        "CAP_min": 0.0000010328185741242457,
+        "CAP_max": 1.237436524978226,
+        "HYST_min": 0.000001292053485312463,
+        "HYST_max": 1.805572795573312,
+        "SUM_min": 0.16333032820923368,
+        "SUM_max": 1.3208777056561094,
+        "current_flow_status": "available",
+        "template_id": "osc_rc_sensor",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 0.000032,
+          "end_s": 0.00007999999999999999,
+          "energy_J": 1.7466437263484087e-9,
+          "average_current_A": 0.000020215783869773248,
+          "peak_current_A": 0.00015887710205601813,
+          "minimum_current_A": 4.329040305395271e-8,
+          "average_power_W": 0.00003638841096559185,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.00003638841096559185,
+        "average_supply_current_A": 0.000020215783869773248,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 8,
+          "frequency_Hz": 187835.37462617154,
+          "duty": 0.3847005946333281,
+          "period_min_s": 0.000005315805295509258,
+          "period_max_s": 0.000005327906298469931,
+          "deterministic_period_span_s": 1.2101002960673737e-8,
+          "max_sample_step_s": 8.000000000003989e-9,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 187835.37462617154,
+        "duty_cycle": 0.3847005946333281,
+        "cap_switch_low_V": 0.2448676677850806,
+        "cap_switch_high_V": 1.2366661318483672,
+        "timing_RC_s": 0.000002,
+        "unloaded_RC_reference_frequency_Hz": 189760.52547624227,
+        "RC_reference_scope": "Uses measured thresholds in the ideal unloaded exponential RC equation; feedback loading, MOS delay/leakage and parasitics cause differences.",
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 8.000000000000001e-11,
+            "end_s": 0.00008,
+            "energy_J": 2.888397446466999e-9,
+            "average_current_A": 0.000020058335658800932,
+            "peak_current_A": 0.0004244075057924998,
+            "minimum_current_A": -0.0000036349725759457496,
+            "average_power_W": 0.000036105004185841676,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.00006000000000000001,
+            "end": 0.00008,
+            "integral": 0.000012836326940855804,
+            "mean": 0.6418163470427902,
+            "rms": 1.0729683732213309,
+            "ac_rms": 0.8598446991183223,
+            "minimum": 0.0003955878102374922,
+            "maximum": 1.7976525226856184,
+            "peak_to_peak": 1.7972569348753809,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_rc_sensor",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.00008
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 5
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 8
+          },
+          {
+            "name": "Output reaches both logic rails",
+            "pass": true,
+            "observed": [
+              0.0003955827027277853,
+              1.7976527420311825
+            ]
+          },
+          {
+            "name": "Duty within 10..90 percent",
+            "pass": true,
+            "observed": 0.3847005946333281
+          },
+          {
+            "name": "CAP crosses separated switching levels",
+            "pass": true,
+            "observed": [
+              0.2448676677850806,
+              1.2366661318483672
+            ]
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "9811007f823622bdd95aff02f26da9f8a9eab09dfb9be69202b3b7f4f55326bb"
+    },
+    {
+      "template": "osc_ring5",
+      "parameters": {
+        "stage_F": 4e-12
+      },
+      "condition": {
+        "analysis": "tran",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "duration_s": 0.000004,
+        "step_s": 3.9999999999999996e-10,
+        "load_F": 5e-15,
+        "vds_V": 1.8,
+        "vbs_V": 0
+      },
+      "run_id": "7bfc6103e4084720b636a6ccfdfa2a77",
+      "revision": 1,
+      "execution_status": "completed",
+      "analysis_result": "pass",
+      "freshness": "current",
+      "measurements": {
+        "analysis": "tran",
+        "x_unit": "s",
+        "x_label": "time",
+        "corner": "tt",
+        "temperature_C": 27,
+        "supply_V": 1.8,
+        "post_layout": "false",
+        "samples": 11625,
+        "solver": "SPARSE 1.3",
+        "OUT_min": -0.00021716432047602565,
+        "OUT_max": 1.8003164545794754,
+        "supply_current_min": 0.0003027141841393244,
+        "supply_current_max": 0.02577172124382667,
+        "Q0_min": -0.00021716556381635153,
+        "Q0_max": 1.8003164547468984,
+        "Q1_min": -0.00021717503536185904,
+        "Q1_max": 1.8003164560020832,
+        "Q2_min": -0.0002171997981585184,
+        "Q2_max": 1.800316465514243,
+        "Q3_min": -0.0002171641547908064,
+        "Q3_max": 1.8003164545571608,
+        "current_flow_status": "available",
+        "template_id": "osc_ring5",
+        "layout_status": "not-generated",
+        "metric_source": "actual-ngspice-samples",
+        "supply_observation": {
+          "available": true,
+          "start_s": 0.0000016,
+          "end_s": 0.000004,
+          "energy_J": 3.6413523419463354e-9,
+          "average_current_A": 0.0008429056347097998,
+          "peak_current_A": 0.001109007750611353,
+          "minimum_current_A": 0.0004591229523828455,
+          "average_power_W": 0.0015172301424776398,
+          "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD"
+        },
+        "average_supply_power_W": 0.0015172301424776398,
+        "average_supply_current_A": 0.0008429056347097998,
+        "output_cycles": {
+          "available": true,
+          "complete_cycles": 55,
+          "frequency_Hz": 23240557.520044737,
+          "duty": 0.48448991220682075,
+          "period_min_s": 4.3028227663534545e-8,
+          "period_max_s": 4.302822766353666e-8,
+          "deterministic_period_span_s": 2.117582368135751e-21,
+          "max_sample_step_s": 4.0000000000003005e-10,
+          "crossing_threshold_V": 0.9,
+          "crossing_hysteresis_half_width_V": 0,
+          "period_scope": "Deterministic transient only; not random jitter or phase noise."
+        },
+        "output_frequency_Hz": 23240557.520044737,
+        "duty_cycle": 0.48448991220682075,
+        "average_stage_delay_s": 4.302822766353649e-9,
+        "reference_scope": "schematic-only; ideal external R/C; startup seeds; no physical/noise/sensor calibration signoff",
+        "research_metrics": {
+          "source": "returned native trace samples, possibly display-thinned; source coverage is explicit",
+          "input_drivers_power": "not measured",
+          "external_bias_power": "not measured",
+          "complete_system_power_available": false,
+          "supply": {
+            "available": true,
+            "start_s": 4.000000000000001e-12,
+            "end_s": 0.000004,
+            "energy_J": 6.0745691369961366e-9,
+            "average_current_A": 0.0008436910016071318,
+            "peak_current_A": 0.02577172124382667,
+            "minimum_current_A": 0.0003027141841393244,
+            "average_power_W": 0.0015186438028928371,
+            "source": "actual -i(VDD), signed trapezoidal integration; constant testbench VDD",
+            "sample_scope": "Integration of the returned trace; ADC raw-source energy is reported separately before display thinning."
+          },
+          "OUT_tail": {
+            "available": true,
+            "start": 0.000003,
+            "end": 0.000004,
+            "integral": 8.604776244571562e-7,
+            "mean": 0.8604776244571564,
+            "rms": 1.1652923226280179,
+            "ac_rms": 0.7858017911562493,
+            "minimum": -0.0002171641293129204,
+            "maximum": 1.8003164545537302,
+            "peak_to_peak": 1.8005336186830432,
+            "method": "Exact moments of piecewise-linear samples with interpolated boundaries; adaptive-step weighted."
+          }
+        }
+      },
+      "reference_verification": {
+        "schema_version": 1,
+        "kind": "osc_ring5",
+        "source": "actual-ngspice-samples",
+        "checks": [
+          {
+            "name": "Complete requested transient interval",
+            "pass": true,
+            "observed": 0.000004
+          },
+          {
+            "name": "Required actual node and current traces present",
+            "pass": true,
+            "observed": 2
+          },
+          {
+            "name": "Output has at least 3 resolved complete cycles",
+            "pass": true,
+            "observed": 55
+          },
+          {
+            "name": "Output reaches both logic rails",
+            "pass": true,
+            "observed": [
+              -0.0002171641293129204,
+              1.8003164545537302
+            ]
+          },
+          {
+            "name": "Duty within 10..90 percent",
+            "pass": true,
+            "observed": 0.48448991220682075
+          }
+        ],
+        "pass": true,
+        "scope": "Only named deterministic waveform criteria in the requested interval. No jitter, phase noise, foundry signoff or calibrated physical sensor."
+      },
+      "manifest_sha256": "473025d4b0bf317f628652286b1d2d5392873e43f9fe5053a2821bacb17ef6d8"
+    }
+  ],
+  "checks": [
+    {
+      "name": "analytic, unit, corruption and regression fixtures",
+      "passed": true
+    },
+    {
+      "name": "ideal RC template creates and simulates without PDK files",
+      "passed": true,
+      "execution_status": "completed",
+      "analysis_result": "pass"
+    },
+    {
+      "name": "osc_ring5 current netlist equals published DUT",
+      "passed": true,
+      "sha256": "95417fa4ba9726f9ebe259689c26798d21ddde3f2fc3fcfebe5633949b4fd744"
+    },
+    {
+      "name": "osc_ring5 bundle roundtrip, no inherited results, empty layout rejects physical verdicts",
+      "passed": true
+    },
+    {
+      "name": "osc_rc_sensor current netlist equals published DUT",
+      "passed": true,
+      "sha256": "177bc59a8b1116d8ecb14d5dc577c1338f523a1fb6b78e5f8cabd6db40afe3ae"
+    },
+    {
+      "name": "osc_rc_sensor bundle roundtrip, no inherited results, empty layout rejects physical verdicts",
+      "passed": true
+    },
+    {
+      "name": "osc_beat current netlist equals published DUT",
+      "passed": true,
+      "sha256": "f1707ad64a7e842356a7a20be29d7a34094f8d372e5d4f08f8448daa6e566244"
+    },
+    {
+      "name": "osc_beat bundle roundtrip, no inherited results, empty layout rejects physical verdicts",
+      "passed": true
+    },
+    {
+      "name": "osc_burst current netlist equals published DUT",
+      "passed": true,
+      "sha256": "a489b70c76bdf13d907fe3d1122437733cba88f2b86785a0d19ea41c4a695768"
+    },
+    {
+      "name": "osc_burst bundle roundtrip, no inherited results, empty layout rejects physical verdicts",
+      "passed": true
+    },
+    {
+      "name": "sensor 5/10/20pF monotonic response and measured-threshold RC reference within 5 percent",
+      "passed": true,
+      "calibration": [
+        {
+          "capacitance_pF": 5,
+          "frequency_Hz": 596795.5442154658,
+          "unloaded_reference_Hz": 605614.7085560239,
+          "reference_relative_error": 0.014562335121591996
+        },
+        {
+          "capacitance_pF": 10,
+          "frequency_Hz": 342115.62066331966,
+          "unloaded_reference_Hz": 346129.78912006924,
+          "reference_relative_error": 0.011597292642607893
+        },
+        {
+          "capacitance_pF": 20,
+          "frequency_Hz": 187835.37462617154,
+          "unloaded_reference_Hz": 189760.52547624227,
+          "reference_relative_error": 0.010145159775665546
+        }
+      ]
+    },
+    {
+      "name": "doubling actual ring load slows oscillation",
+      "passed": true,
+      "base_Hz": 46231778.79070795,
+      "loaded_Hz": 23240557.520044737
+    },
+    {
+      "name": "real schematic edit stales prior oscillator results",
+      "passed": true
+    }
+  ],
+  "published_asset_baseline": {
+    "path": "docs/evidence/oscillator-lab/native-verification.json",
+    "sha256": "3e105b003bb3cdfe3cd6621e95f77404e296a677c980453672e8c396c478b95b",
+    "regenerated": false
+  },
+  "ideal_rc_without_pdk": {
+    "run_id": "1be0c72556b84fe0b3691b847146d10a",
+    "execution_status": "completed",
+    "analysis_result": "pass"
+  },
+  "tools": [
+    {
+      "name": "ngspice",
+      "path": "D:\\Coldbrew\\Resistor\\release\\native-runtimes\\win32-x64\\ngspice\\bin\\ngspice.EXE",
+      "version": "** ngspice-47 : Circuit level simulation program",
+      "available": true,
+      "probe_status": "ready"
+    },
+    {
+      "name": "KLayout",
+      "path": "D:\\Coldbrew\\Resistor\\release\\native-runtimes\\win32-x64\\python\\python.exe",
+      "version": "0.30.5",
+      "available": true,
+      "probe_status": "ready"
+    }
+  ],
+  "sensor_calibration": [
+    {
+      "capacitance_pF": 5,
+      "frequency_Hz": 596795.5442154658,
+      "unloaded_reference_Hz": 605614.7085560239,
+      "reference_relative_error": 0.014562335121591996
+    },
+    {
+      "capacitance_pF": 10,
+      "frequency_Hz": 342115.62066331966,
+      "unloaded_reference_Hz": 346129.78912006924,
+      "reference_relative_error": 0.011597292642607893
+    },
+    {
+      "capacitance_pF": 20,
+      "frequency_Hz": 187835.37462617154,
+      "unloaded_reference_Hz": 189760.52547624227,
+      "reference_relative_error": 0.010145159775665546
+    }
+  ],
+  "source_sha256": {
+    "workers/eda/oscillator_projects.py": "26e787acdb3fc466973cdcbdbcea541822b10b29e542a94060667b1ccce71e59",
+    "workers/eda/test_oscillator_projects.py": "36a65fc531fb0fb9cfbb70e407f6f467ea5efcb5b8dcc958f46336ca47102e8d",
+    "workers/eda/design_tools.py": "c36d0443e34f7317b82aeb8e5388bd6c11bb0e6298fea66e7d6878b2a3d4694f",
+    "workers/eda/semiconductor_starters.py": "40b8138664a959d35444d85ac74b19d316eb389741552661014f9f663b428f81",
+    "workers/eda/research.py": "1b79311ceacd4252561ffc3f0f1d744840fb335090029569b455d2d997a2c1d7",
+    "workers/eda/literature.json": "023295dfd553c18716acbc91427a10b17d2d93141c7a8eb9861fc22f58c281f6",
+    "workers/eda/current_flow.py": "1e3b984081ec1dd3cb79f6815dabdac8f23761dcdd461d269d66b60d801b6d68",
+    "workers/eda/signal_metrics.py": "31752dd805f51b2fea62fbc5265f3b2c43c5d3463e3f4d8dda3f0b2be8695434",
+    "workers/eda/native.py": "d3b3eda4b283a8f8d0c18772dcc97da930772310db2e570dbf4f1bfc9bc1a08b",
+    "scripts/oscillator-lab.mjs": "a7d9ecde5164b9d1617dc47feb9442c2ad80f2de15dd6f478d3653e88909163b",
+    "scripts/oscillator-plots.mjs": "b20aa9270a2a6a38b40248e47a505720c62445a4fe661862cee9cfa445936b1d"
+  }
+}
