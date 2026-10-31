@@ -77,6 +77,8 @@ jobs:
           sudo apt-get install -y ngspice
           npx playwright install --with-deps chromium
           npm run test:assistant-chat
+      - name: Guided popup navigation, draft retention and actual native simulation
+        run: npm run test:guided-workbench && npm run test:guided-advanced
       - name: Lecture focus, native demos, notes and actual recorder byte playback in both editions
         run: |
           npm run test:lecture:ui

@@ -1,0 +1,37 @@
+.schematic-guided-controls {flex:none;min-height:0;}
+.schematic-compact-tools {display:flex;align-items:center;gap:6px;padding:8px 12px;flex-wrap:wrap;border-bottom:1px solid var(--line);background:var(--panel);}
+.schematic-cell-title {font:11px var(--mono);color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:10px;}
+.schematic-compact-tools button,.schematic-wire-context button,.schematic-tool-dialog button {border:1px solid var(--line);background:var(--panel-raised);color:var(--text);border-radius:6px;padding:7px 11px;font-size:12px;cursor:pointer;}
+.schematic-compact-tools button.active {border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,var(--panel));}
+.schematic-compact-tools button:disabled,.schematic-tool-dialog button:disabled {opacity:.45;cursor:default;}
+.schematic-compact-zoom {font:10px var(--mono);color:var(--muted);margin-left:auto;}
+.schematic-wire-context {display:flex;align-items:center;gap:8px;padding:8px 12px;flex-wrap:wrap;background:var(--panel);}
+.schematic-wire-context input {min-width:120px;max-width:210px;padding:7px 9px;background:var(--input);color:var(--text);border:1px solid var(--line);border-radius:6px;}
+.schematic-context-hint {font-size:11px;color:var(--muted);margin:0;padding:8px 12px;background:var(--panel);}
+.schematic-tool-overlay {position:fixed;inset:0;z-index:160;display:flex;align-items:center;justify-content:center;padding:20px;background:#0007;backdrop-filter:blur(2px);}
+.schematic-tool-overlay[hidden],.schematic-tool-page[hidden] {display:none!important;}
+.schematic-tool-dialog {background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:16px;width:min(620px,100%);max-height:calc(100dvh - 40px);padding:22px;overflow:auto;box-shadow:0 24px 80px #0007;}
+.schematic-tool-dialog>header {display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px;}
+.schematic-tool-dialog>h3 {font-size:22px;font-weight:550;letter-spacing:-.5px;color:var(--text-strong);margin:0 0 24px;outline:none;}
+.schematic-tool-page {min-height:160px;}
+.schematic-tool-choices {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.schematic-tool-choices>button {text-align:left;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:9px;padding:18px;min-height:94px;white-space:normal;}
+.schematic-tool-choices>button>strong {font-size:14px;}
+.schematic-tool-choices>button>span {font-size:11px;color:var(--muted);line-height:1.6;}
+.schematic-tool-actions {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-content:start;}
+.schematic-tool-actions>button {min-height:54px;white-space:normal;}
+.schematic-tool-actions>label {display:flex;flex-direction:column;gap:9px;font-size:12px;color:var(--muted);grid-column:1/-1;}
+.schematic-tool-dialog select,.schematic-tool-dialog input {background:var(--input);color:var(--text);border:1px solid var(--line);border-radius:6px;min-height:36px;min-width:0;padding:7px;}
+.schematic-tool-pagination {display:flex;align-items:center;justify-content:center;gap:16px;margin:18px 0;}
+.schematic-tool-pagination span {font:11px var(--mono);color:var(--muted);}
+.schematic-tool-dialog .schematic-hierarchy-popover,.schematic-tool-dialog .schematic-object-properties {position:static;max-width:none;width:auto;box-shadow:none;border:0;padding:16px 0;background:transparent;}
+.schematic-tool-dialog .schematic-hierarchy-popover {max-height:none;}
+.schematic-tool-dialog .schematic-hierarchy-popover form {display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.schematic-tool-dialog .schematic-quick-values {display:flex;flex-wrap:wrap;background:transparent;padding:0;border:0;gap:14px;}
+.schematic-tool-dialog .schematic-quick-values label {flex:1 1 180px;}
+.schematic-tool-dialog .schematic-quick-values>strong,.schematic-tool-dialog .schematic-quick-values>small {flex-basis:100%;}
+.schematic-tool-dialog .logic-palette,.schematic-tool-dialog .logic-connection-fields {flex-wrap:wrap;}
+.schematic-tool-dialog .logic-palette button {padding:9px 12px;}
+.schematic-tool-dialog .button.primary {background:var(--accent);color:var(--accent-contrast,#101618);border-color:var(--accent);}
+.schematic-tool-dialog .button.full {width:100%;margin-top:16px;}
+@media(max-width:640px){.schematic-tool-overlay{padding:8px;}.schematic-tool-dialog{padding:18px;max-height:calc(100dvh - 16px);}.schematic-tool-dialog>h3{font-size:20px;}.schematic-compact-tools{padding:7px;gap:5px;}.schematic-cell-title{display:none;}.schematic-compact-tools button{padding:7px 8px;font-size:11px;}.schematic-compact-zoom{display:none;}.schematic-tool-choices>button{min-height:84px;padding:13px;}.schematic-tool-dialog .schematic-hierarchy-popover form{grid-template-columns:1fr;}}

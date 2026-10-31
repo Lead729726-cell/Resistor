@@ -19,7 +19,7 @@ documents.push('docs/physical-tools.md');
 documents.push('docs/logic-composition.md','docs/logic-transient.md');
 documents.push('docs/assistant-workbench.md','docs/design-assistant.md','docs/lecture-studio.md','docs/download-editions.md');
 documents.push('docs/auto-design.md','examples/duet-afe/README.md');
-documents.push('examples/ivr/README.md');
+documents.push('examples/ivr/README.md','docs/guided-workbench.md');
 documents.push('docs/product-editions.md','docs/website-design.md','docs/industry-layout-review.md','docs/industry-qualification.md','docs/area-selection.md');
 documents.push('docs/tutorial-library.md','docs/tutorial-site.md','docs/integrated-design.md');
 let checked = 0;

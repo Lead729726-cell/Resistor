@@ -7,6 +7,41 @@ import {promisify} from 'node:util';
 import {chromium} from 'playwright';
 
 const execFileAsync=promisify(execFile);
+const openWorkspaceTool=async(page,id,category='setup')=>{
+  await page.getByTestId('guided-task-open').click();
+  await page.getByTestId(`guided-category-${category}`).click();
+  for(let remaining=3;remaining>0;remaining--){
+    if(await page.getByTestId(id).count()){await page.getByTestId(id).click();return;}
+    const next=page.getByRole('button',{name:'다음 도구 →',exact:true});
+    assert.equal(await next.isEnabled(),true,`${id} must be reachable in the ${category} task pages`);await next.click();
+  }
+  throw new Error(`Task ${id} was not found`);
+};
+const goPdkStep=async(page,target)=>{
+  const wizard=page.getByTestId('pdk-setup-wizard');
+  if(await wizard.getAttribute('data-depth')!=='main')await page.getByTestId('pdk-guided-depth-back').click();
+  for(let remaining=9;remaining>0;remaining--){
+    const current=Number(await wizard.getAttribute('data-step'));if(current===target)return;
+    const direction=current<target?1:-1,button=page.getByTestId(direction===1?'pdk-next':'pdk-back');
+    assert.equal(await button.isEnabled(),true,`PDK page ${current} must allow navigation to ${target}`);await button.click();
+    await page.waitForFunction(step=>document.querySelector('[data-testid="pdk-setup-wizard"]')?.getAttribute('data-step')===String(step),current+direction);
+  }
+  throw new Error(`PDK page ${target} was not reached`);
+};
+const goGuidedPage=async(page,id,target)=>{
+  const flow=page.getByTestId(id);
+  for(let remaining=10;remaining>0;remaining--){
+    const current=Number(await flow.locator(':scope > section[data-testid="guided-page"]:not([hidden])').getAttribute('data-step'));
+    if(current===target)return;
+    await flow.getByTestId(current<target?'guided-next':'guided-back').click();
+  }
+  throw new Error(`${id} page ${target} was not reached`);
+};
+const openIntegratedTool=async(page,id)=>{
+  const back=page.getByTestId('integrated-tool-back');if(await back.isVisible())await back.click();
+  await goGuidedPage(page,'integrated-tool-choice',['routing','design','research'].includes(id)?1:0);
+  await page.getByTestId(`integrated-tab-${id}`).click();
+};
 // Operator-only source setup for an actual public file in the isolated worker.
 // The private token stays inside the container and never enters test output.
 const bindPublicDatabase=async(sourceId,projectId)=>{
@@ -63,19 +98,20 @@ test('isolated Linux hub serves remote web client and executes actual physical j
   assert.equal(configured.current_flow.source,'ngspice');assert.ok(configured.current_flow.branches.some(b=>b.values_A.some(n=>Math.abs(n)>1e-6)));
   assert.ok(configured.current_flow.branches.every(b=>b.mapping==='unmapped'));
   await page.reload();await page.locator('[data-cloud-project-ready=true]').waitFor({timeout:30000});
-  await page.getByTestId('open-pdk-setup').click();const wizard=page.getByTestId('pdk-setup-wizard');await wizard.waitFor();
-  await page.getByTestId('pdk-profile-select').selectOption('sky130A');await page.getByTestId('pdk-validate').click();
-  await page.locator('.pdk-fingerprint').waitFor();await wizard.locator('.pdk-setup-steps button').nth(4).click();
-  await page.getByTestId('pdk-job-row').filter({hasText:configured.id.slice(0,10)}).waitFor();await page.screenshot({path:'docs/evidence/linux-cloud-pdk-setup.png'});
+  await openWorkspaceTool(page,'open-pdk-setup');const wizard=page.getByTestId('pdk-setup-wizard');await wizard.waitFor();
+  await page.getByTestId('pdk-profile-select').selectOption('sky130A');await goPdkStep(page,1);await page.getByTestId('pdk-validate').click();
+  await page.locator('.pdk-fingerprint').waitFor();await page.getByRole('button',{name:'기존 실행 결과 →',exact:true}).click();
+  await page.getByLabel('PDK 실행 결과 선택',{exact:true}).selectOption(configured.id);await page.locator(`[data-testid="pdk-job-row"][data-run-id="${configured.id}"]`).waitFor();await page.screenshot({path:'docs/evidence/linux-cloud-pdk-setup.png'});
   // Drive the actual shared setup form and analysis button, including native
   // revision/receipt transport and the completed scene/current callback.
-  await page.getByTestId('pdk-step-1').click();await page.getByTestId('pdk-inspect').click();
-  await page.getByTestId('pdk-inspection-status').filter({hasText:'현재 profile'}).waitFor({timeout:60000});
-  await page.getByTestId('pdk-step-3').click();await page.getByTestId('pdk-save-setup').click();
+  await goPdkStep(page,2);await page.getByTestId('pdk-inspect').click();
+  await page.getByTestId('pdk-inspection-status').filter({hasText:'현재 설계'}).waitFor({timeout:60000});
+  await goPdkStep(page,7);await page.getByTestId('pdk-save-setup').click();
   await page.waitForFunction(()=>document.querySelector('[data-testid="pdk-setup-state"]')?.textContent?.includes('해석 조건 저장됨'),undefined,{timeout:45000});
-  await page.getByTestId('pdk-step-4').click();const before=await page.getByTestId('pdk-job-row').count();
-  await page.getByTestId('pdk-run-analysis').click();await page.waitForFunction(count=>document.querySelectorAll('[data-testid="pdk-job-row"]').length===count+1,before,{timeout:45000});
-  const buttonRow=page.getByTestId('pdk-job-row').last();await page.waitForFunction(()=>document.querySelector('[data-testid="pdk-job-row"]:last-child')?.textContent?.includes('completed · pass'),undefined,{timeout:90000});
+  await goPdkStep(page,8);const before=await page.getByLabel('PDK 실행 결과 선택',{exact:true}).locator('option').count();
+  await page.getByLabel('PDK 실행할 작업',{exact:true}).selectOption('simulation');
+  await page.getByTestId('pdk-run-analysis').click();await page.waitForFunction(count=>document.querySelectorAll('select[aria-label="PDK 실행 결과 선택"] option').length===count+1,before,{timeout:45000});
+  const buttonRow=page.getByTestId('pdk-job-row');await page.waitForFunction(()=>document.querySelector('[data-testid="pdk-job-row"]')?.textContent?.includes('completed · pass'),undefined,{timeout:90000});
   const buttonRun=await native('job.status',{run_id:await buttonRow.getAttribute('data-run-id')});
   assert.equal(buttonRun.workflow,'configured-layout');assert.equal(buttonRun.current_flow.source,'ngspice');
   assert.ok(buttonRun.current_flow.branches.some(b=>b.values_A.some(n=>Math.abs(n)>1e-6)));
@@ -84,7 +120,7 @@ test('isolated Linux hub serves remote web client and executes actual physical j
   await page.getByRole('dialog').getByRole('button',{name:'닫기',exact:true}).click();
   const backendCatalog=await native('backend.catalog');assert.equal(backendCatalog.tools.length,18);
   assert(backendCatalog.tools.filter(tool=>tool.vendor!=='Open source').every(tool=>tool.verification==='unverified'));
-  await page.getByTestId('open-commercial-backend').click();await page.getByTestId('backend-step-1').click();
+  await openWorkspaceTool(page,'open-commercial-backend');await page.getByTestId('backend-step-1').click();
   await page.getByTestId('backend-profile-select').selectOption('ngspice-calibration-v1');
   await page.getByTestId('backend-validate').click();await page.getByTestId('backend-state').filter({hasText:'검증 통과'}).waitFor({timeout:45000});
   await page.getByTestId('backend-step-2').click();await page.getByTestId('backend-save').click();
@@ -100,11 +136,11 @@ test('isolated Linux hub serves remote web client and executes actual physical j
   await page.screenshot({path:'docs/evidence/linux-cloud-commercial-backend.png'});
   await page.getByRole('dialog').getByRole('button',{name:'닫기',exact:true}).click();
   await page.reload();await page.locator('[data-cloud-project-ready=true]').waitFor({timeout:30000});
-  await page.getByTestId('open-commercial-backend').click();await page.getByTestId('backend-step-3').click();
+  await openWorkspaceTool(page,'open-commercial-backend');await page.getByTestId('backend-step-3').click();
   await page.getByTestId('backend-job-row').filter({hasText:backendRun.id.slice(0,10)}).waitFor();
   assert.equal(localRequests,0,'shared backend uses authorized remote RPC only');assert.deepEqual(errors,[]);
   await page.getByRole('dialog').getByRole('button',{name:'닫기',exact:true}).click();
-  await page.getByTestId('open-interchange').click();
+  await openWorkspaceTool(page,'open-interchange');
   await page.getByTestId('interchange-files').setInputFiles([
     {name:'wire.gds',mimeType:'application/octet-stream',buffer:await fs.readFile('examples/sky130/wire.gds')},
     {name:'external.cdl',mimeType:'text/plain',buffer:Buffer.from('* external cell\n.SUBCKT extcell A Z VDD VSS\nR1 A Z 1000\n.ENDS extcell\n')},
@@ -158,7 +194,7 @@ test('isolated Linux hub serves remote web client and executes actual physical j
   const sourceId=`linux_file_${crypto.randomUUID().replaceAll('-','')}`;
   await bindPublicDatabase(sourceId,project.id);
   const originalHash=crypto.createHash('sha256').update(await fs.readFile('examples/sky130/wire.gds')).digest('hex');
-  await page.getByTestId('open-native-database').click();
+  await openWorkspaceTool(page,'open-native-database');
   await page.getByTestId('database-load').click();
   await page.getByTestId('database-source').selectOption(sourceId);
   assert.equal(await page.getByTestId('database-new-source').count(),0,'shared browser cannot register operator paths');
@@ -182,7 +218,7 @@ test('isolated Linux hub serves remote web client and executes actual physical j
   await page.screenshot({path:'docs/evidence/linux-cloud-native-database.png'});
   await page.getByRole('dialog').getByRole('button',{name:'닫기',exact:true}).click();
   const beforeReview=localRequests;
-  await page.getByTestId('open-design-review').click();await page.getByLabel('로드된 도형 검색').fill('wire');await page.getByTestId('review-tab-ruler').click();
+  await openWorkspaceTool(page,'open-design-review','design');await page.getByLabel('로드된 도형 검색').fill('wire');await page.getByTestId('review-tab-ruler').click();
   await page.getByLabel('점 A X DBU').fill('0');await page.getByLabel('점 A Y DBU').fill('0');await page.getByLabel('점 B X DBU').fill('300');await page.getByLabel('점 B Y DBU').fill('400');
   await page.getByTestId('review-ruler-result').filter({hasText:'500'}).waitFor();await page.screenshot({path:'docs/evidence/linux-cloud-design-review.png'});
   assert.equal(localRequests,beforeReview);assert.deepEqual(errors,[]);
@@ -192,21 +228,26 @@ test('isolated Linux hub serves remote web client and executes actual physical j
   await page.reload();await page.locator('[data-cloud-project-ready=true]').waitFor({timeout:30000});
   const integratedNative=(method,params={})=>rpc('cloud.native',{room_id:integratedRoom.room.id,method,params:{project_id:integratedRoom.project.id,...params}});
   const remoteReply=method=>page.waitForResponse(response=>{if(new URL(response.url()).pathname!=='/rpc')return false;try{return response.request().postDataJSON()?.params?.method===method;}catch{return false;}});
-  await page.getByTestId('open-integrated-tools').click();
+  await openWorkspaceTool(page,'open-integrated-tools','design');
+  await openIntegratedTool(page,'pvt');
   const sourcesReply=remoteReply('pvt.sources');await page.getByTestId('pvt-read-sources').click();const sourceBody=await(await sourcesReply).json();assert.equal(sourceBody.ok,true,sourceBody.error?.message);
   assert.deepEqual(sourceBody.result.bindings,[{kind:'testbench',source_names:['VD']}]);
-  await page.getByLabel('검증된 PVT 공급원').selectOption('0');await page.getByLabel('PVT corners').fill('tt, ff');
+  await page.getByLabel('검증된 PVT 공급원').selectOption('0');await goGuidedPage(page,'pvt-guided',1);await page.getByLabel('PVT corners').fill('tt, ff');
+  await goGuidedPage(page,'pvt-guided',6);
   const saveReply=remoteReply('pvt.create');await page.getByTestId('pvt-create').click();const savedBody=await(await saveReply).json();assert.equal(savedBody.ok,true,savedBody.error?.message);const integratedStudyId=savedBody.result.id;
   assert.equal(savedBody.result.execution_status,'created');await page.getByTestId('pvt-start').click();
+  await goGuidedPage(page,'pvt-guided',7);
   await page.waitForFunction(()=>[...document.querySelectorAll('[data-testid="pvt-point"]')].length===2&&[...document.querySelectorAll('[data-testid="pvt-point"]')].every(row=>row.textContent.includes('completed')),{},{timeout:120000});
   const integratedStudy=await integratedNative('pvt.status',{study_id:integratedStudyId});assert.equal(integratedStudy.execution_status,'completed');assert(integratedStudy.points.every(point=>point.analysis_result==='pass'&&point.run_id&&Number.isFinite(point.metrics.Id_max)));
   for(const point of integratedStudy.points){const child=await integratedNative('job.status',{run_id:point.run_id});assert.equal(child.project_id,point.project_id);assert.equal(child.analysis_result,'pass');}
-  await page.getByTestId('integrated-tab-routing').click();await page.getByTestId('routing-load-rules').click();await page.getByTestId('routing-layer').selectOption('68/20');
+  await openIntegratedTool(page,'routing');await page.getByTestId('routing-load-rules').click();await page.getByTestId('routing-rule-ledger').waitFor();await goGuidedPage(page,'routing-guided',1);await page.getByTestId('routing-layer').selectOption('68/20');
+  await goGuidedPage(page,'routing-guided',2);
   await page.getByLabel('시작 X DBU').fill('50000');await page.getByLabel('시작 Y DBU').fill('50000');await page.getByLabel('끝 X DBU').fill('52000');await page.getByLabel('끝 Y DBU').fill('52000');
+  await goGuidedPage(page,'routing-guided',3);
   const previewReply=remoteReply('design.route_preview');await page.getByTestId('routing-preview').click();const previewBody=await(await previewReply).json();assert.equal(previewBody.ok,true,previewBody.error?.message);assert.equal(previewBody.result.valid,true);
   await page.getByTestId('routing-apply-confirm').check();const appliedReply=remoteReply('design.route_apply');await page.getByTestId('routing-apply').click();const appliedBody=await(await appliedReply).json();assert.equal(appliedBody.ok,true,appliedBody.error?.message);assert.equal(appliedBody.result.revision,integratedRoom.project.revision+1);
   assert.equal((await integratedNative('pvt.status',{study_id:integratedStudyId})).freshness,'stale');
-  await page.getByTestId('integrated-tab-design').click();await page.getByTestId('design-read-connectivity').click();await page.getByTestId('design-pin-list').waitFor();
+  await openIntegratedTool(page,'design');await page.getByTestId('design-page-connectivity').click();await page.getByTestId('design-read-connectivity').click();await page.getByTestId('design-pin-list').waitFor();
   assert.equal(await page.getByTestId('design-create').count(),0,'new projects require the separate local creation/share workflow');
   await page.screenshot({path:'docs/evidence/linux-cloud-integrated.png'});assert.equal(localRequests,0);assert.deepEqual(errors,[]);
   const standalone=await browser.newPage();let viewerRpc=0;standalone.on('request',r=>{if(/\/rpc|\/events/.test(new URL(r.url()).pathname))viewerRpc++;});await standalone.goto(url+'/?mode=viewer');await standalone.getByTestId('viewer-empty-gds-input').setInputFiles('examples/sky130/mosfet.gds');await standalone.getByTestId('viewer-shape-count').waitFor();assert.equal(await standalone.getByTestId('viewer-shape-count').innerText(),'52 / 52');assert.equal(viewerRpc,0);await standalone.close();

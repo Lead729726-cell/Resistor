@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "edition": "indust",
+  "checked_at": "2026-10-31T10:06:32.677Z",
+  "completed": true,
+  "paid_calls": 0,
+  "license": "isolated synthetic QA authority; production settings unchanged",
+  "cases": [
+    {
+      "name": "Existing project opens in the correct edition",
+      "pass": true
+    },
+    {
+      "name": "Fresh project does not inherit a simulation verdict",
+      "pass": true
+    },
+    {
+      "name": "Work canvas starts without permanently open explorer or inspector",
+      "pass": true
+    },
+    {
+      "name": "Run executes only inside its review popup",
+      "pass": true
+    },
+    {
+      "name": "Schematic analysis controls occupy one popup depth",
+      "pass": true
+    },
+    {
+      "name": "Layout draw settings survive going back through the tool popup",
+      "pass": true
+    },
+    {
+      "name": "Closing and reopening drawing settings keeps the draft without geometry edits",
+      "pass": true
+    },
+    {
+      "name": "Parent navigation returns to the task chooser",
+      "pass": true
+    },
+    {
+      "name": "Closing the popup restores keyboard focus to its trigger",
+      "pass": true
+    },
+    {
+      "name": "Log shortcut opens the results popup on the actual Logs panel",
+      "pass": true
+    },
+    {
+      "name": "Shortcut help replaces the task popup with a single focus-trapped dialog",
+      "pass": true
+    },
+    {
+      "name": "New project cannot advance without a name",
+      "pass": true
+    },
+    {
+      "name": "New-project name survives going back to choose the starting circuit",
+      "pass": true
+    },
+    {
+      "name": "Enter advances to review without creating a project",
+      "pass": true
+    },
+    {
+      "name": "Starter shows only the current choice depth",
+      "pass": true
+    },
+    {
+      "name": "Create is reserved for the last review page",
+      "pass": true
+    },
+    {
+      "name": "Starter settings survive backwards navigation",
+      "pass": true
+    },
+    {
+      "name": "Late native PDK discovery does not overwrite a draft created while loading",
+      "pass": true
+    },
+    {
+      "name": "Nested PDK form keeps unregistered identity when returning",
+      "pass": true
+    },
+    {
+      "name": "PDK identity page has no more than four visible data fields",
+      "pass": true
+    },
+    {
+      "name": "Testbench values survive backwards navigation",
+      "pass": true
+    },
+    {
+      "name": "Testbench time unit and numeric draft survive forward navigation",
+      "pass": true
+    },
+    {
+      "name": "Invalid time step cannot advance to review",
+      "pass": true
+    },
+    {
+      "name": "Review requires explicit condition save and does not run the engine",
+      "pass": true
+    },
+    {
+      "name": "Returning through the parent setup preserves unapplied testbench values and review step",
+      "pass": true
+    },
+    {
+      "name": "Pure navigation preserves native revision, circuit and run history",
+      "pass": true,
+      "initial_duration_ns": "200"
+    },
+    {
+      "name": "Unapplied device parameter survives closing and reopening its popup",
+      "pass": true
+    },
+    {
+      "name": "Run review navigation did not mutate or solve the project",
+      "pass": true
+    },
+    {
+      "name": "Final execution dispatches one actual native simulation",
+      "pass": true
+    },
+    {
+      "name": "Mobile popup and document stay inside the viewport",
+      "pass": true
+    },
+    {
+      "name": "Escape restores access to the canvas without a design edit",
+      "pass": true
+    },
+    {
+      "name": "Same-kind placement re-selection keeps the displayed engineering-unit draft",
+      "pass": true
+    },
+    {
+      "name": "Explicit canvas placement saves the same 4.7k value shown in the popup",
+      "pass": true
+    },
+    {
+      "name": "Editing after the measured run marks that evidence stale",
+      "pass": true
+    },
+    {
+      "name": "Existing light theme remains available",
+      "pass": true
+    },
+    {
+      "name": "Actual workbench finishes without browser errors",
+      "pass": true
+    }
+  ],
+  "browser_errors": [],
+  "ui_methods": [
+    "license.status",
+    "license.status",
+    "toolchain.doctor",
+    "project.open",
+    "view.get_scene",
+    "schematic.validate",
+    "schematic.validate",
+    "schematic.validate",
+    "schematic.validate",
+    "starter.catalog",
+    "starter.catalog",
+    "pdk.list_profiles",
+    "pdk.list_profiles",
+    "pdk.capabilities",
+    "pdk.capabilities",
+    "pdk.capabilities",
+    "pdk.capabilities",
+    "simulation.run",
+    "job.status",
+    "job.status",
+    "job.status",
+    "job.status",
+    "license.status",
+    "job.status",
+    "schematic.validate",
+    "schematic.validate",
+    "schematic.apply_command",
+    "project.snapshot",
+    "view.get_scene",
+    "license.status",
+    "license.status",
+    "toolchain.doctor",
+    "project.open",
+    "view.get_scene",
+    "schematic.validate",
+    "schematic.validate"
+  ],
+  "project_id": "bec9209a888d4308a7a3d5986048688f",
+  "initial_revision": 1,
+  "actual_run": {
+    "id": "0fcdf80e24494d2d863bdf5cd258a053",
+    "project_id": "bec9209a888d4308a7a3d5986048688f",
+    "revision": 1,
+    "tool": "ngspice",
+    "execution_status": "completed",
+    "analysis_result": "pass",
+    "samples": 2022
+  },
+  "final_revision": 2,
+  "source_sha256": {
+    "packages/ui/src/App.tsx": "8438ebe162ec7b285e28e25ba53287fc07f01c45b9cb4b9129773d96a47a9698",
+    "packages/ui/src/GuidedPages.tsx": "89fca6b3c3ee93dec2d1066b031d73e37b32ddd9ccf8feabfc26e2d858ab48ee",
+    "packages/ui/src/TaskChooser.tsx": "28d07c361d6d1a20763d02788928a7ddf54c38ea2c0f174dfad80d613d88bd51",
+    "packages/ui/src/guided-workbench.css": "c828efc82c2cf056458b075de30edaac9ec6142eecebb12d2ba6c69f221be2c6",
+    "packages/ui/src/NewProject.tsx": "8f56d3f093ead47defd2a08c9b8312051a395f325cdff66e49564a8d2fc0ae56",
+    "packages/ui/src/TestbenchEditor.tsx": "96a539ac97fecd3d537eb18cd41c3538b28e8a29f750ee6f6964aaa73ce64bc4",
+    "packages/ui/src/DesignAssistantWorkbench.tsx": "25fb6c90b7bc0c90829691c724e90f94eef0c35cd49b924cf0fde17cee6fc6fe",
+    "packages/ui/src/AutoDesign.tsx": "b174a389a3ff480534c9c9c8db1b6bbac5ddf2da1913cad20760d634ae3e876d",
+    "packages/ui/src/AssistantWorkflow.tsx": "8638205931e3ddc31108bc332d1db056a210429ce0bfdf7e717f1200e9611b40",
+    "packages/ui/src/design-assistant.css": "a93d33034dc11a91eb89f9bf2f15eb9beab3d439e8a5f4bc88ecca835cafa0c2",
+    "packages/ui/src/SemiconductorStarters.tsx": "f0edfdac673798021d751e557bafe48200a7d60ea34702816b93796db6f568f1",
+    "packages/ui/src/starter-flow.css": "52b7ee68e6be9adeee9ebf52062d4d71d5691b039d11c5c223529b9b86e6b2d2",
+    "packages/ui/src/PdkSetupWizard.tsx": "2c69765ed28289144390574cd910e7905a88fc3117945fbca63d89ca8ac0516e",
+    "packages/ui/src/pdk-guided.css": "715d794e253fa361ec31233e1e1e2db10cc1757640618dacfc72adb5fa8aed55",
+    "packages/ui/src/SchematicEditor.tsx": "782f2d4808a09b853f9a5369501015f09097a1a7cc75aa3fb92aa0426cdc8c0d",
+    "packages/ui/src/schematic-guided.css": "bed0fb4c6e99ab9361a1227a29039f62c2e39db1562e14bb230c10d34e62e993",
+    "packages/viewer/src/LayoutViewer.tsx": "8261d50a9f1caecfda6881545cd8b91525189c6f7d9d8b4e64258033e5655834",
+    "packages/viewer/src/layout-guided.css": "f654e400dac4abf212bb4678d31635c1a7948be58d3524726fe376216a261b22",
+    "tests/integration/guided-workbench.mjs": "33cef1e3545eef6ea9b80c3dd32b50e6f96459749c53bd9153ceac473a9eea8f"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "edition": "indust",
+  "shared_ui_editions": [
+    "edu",
+    "indust"
+  ],
+  "checked_at": "2026-10-31T10:13:50.784789+00:00",
+  "scope": "Progressive popup workflows and native regression; source/dev-preview only",
+  "checks": [
+    {
+      "command": "npm run test:core",
+      "status": "passed",
+      "tests_per_runner": [
+        202,
+        143
+      ],
+      "log_sha256": "fd3892a6a3490f9d77396a7cc55e7b0e3387e63b8eef14e806e023f1282624e3"
+    },
+    {
+      "command": "node --test tests/licensing.test.mjs",
+      "status": "passed",
+      "tests_per_runner": [
+        18
+      ],
+      "log_sha256": "6075d7f5f8a294d4c3893794dd285b434cc2f68a2f28224c0b30cb11db1ce14c"
+    },
+    {
+      "command": "npm run test:editions",
+      "status": "passed",
+      "tests_per_runner": [
+        10
+      ],
+      "log_sha256": "3d2ff59890428ab81154967eac86222e33f8aec28e569e2d87a0bd2cf5a5d61e"
+    },
+    {
+      "command": "npm run typecheck",
+      "status": "passed",
+      "tests_per_runner": [],
+      "log_sha256": "5c9761d669e8425f8cd0222bc27143e287e7c01ecd9d721fad787b4ee6b0543a"
+    },
+    {
+      "command": "npm run build:edu",
+      "status": "passed",
+      "tests_per_runner": [],
+      "log_sha256": "a089ae3eb2299c4a20524e0e33a16a35ab27babf6bae5c7c19e1bcd8313faeb2"
+    },
+    {
+      "command": "npm run build:indust",
+      "status": "passed",
+      "tests_per_runner": [],
+      "log_sha256": "b93d4e636d02fcec4d571ad223ce5fbcc132cb490b9d9bfcc23077ce5e8dda0f"
+    },
+    {
+      "evidence": "docs/evidence/guided-workbench-20261031/ui-verification.json",
+      "status": "passed",
+      "sha256": "4f94ea3e52ef7eace8d44d0e87adf4ad0c0b48d699231e4094763b74a9c3d91b"
+    },
+    {
+      "evidence": "docs/evidence/guided-advanced-20261031/ui-verification.json",
+      "status": "passed",
+      "sha256": "55bbbb18a80b13688904ec15912f10946b88968ae7cdc18d1c5ff480e650f96a"
+    },
+    {
+      "evidence": "docs/evidence/guided-workbench-20261031/regressions/assistant.json",
+      "status": "passed",
+      "sha256": "48696e289a22771f0bb38cd5249b15bf075aa305a8f3bcdfa857cdb250ab352f"
+    },
+    {
+      "evidence": "docs/evidence/guided-workbench-20261031/regressions/lecture-edu.json",
+      "status": "passed",
+      "sha256": "981e8e227ad52b53d2dd1ba3e69c4f590e79708add37c789d36ab68a661b1f81"
+    },
+    {
+      "evidence": "docs/evidence/guided-workbench-20261031/regressions/lecture-indust.json",
+      "status": "passed",
+      "sha256": "3a33196ea2db257814f87d890f9691f8d77843577f5dca30a6b8b1f8cd4193b6"
+    }
+  ],
+  "limitations": [
+    "No new installer or production-site deployment in this change.",
+    "Legacy cloud physical UI tests migrated and syntax/discovery checked, not executed against a configured cloud engine.",
+    "No paid AI calls, commercial engine qualification, or manufacturing signoff."
+  ],
+  "browser_checks_passed": 137
+}

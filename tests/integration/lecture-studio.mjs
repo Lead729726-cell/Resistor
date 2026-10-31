@@ -19,6 +19,7 @@ const config=await runtimeConfig(workspace);config.url='http://127.0.0.1:'+await
 const api=async(method,params={})=>{const r=await workerRpc(config,method,params);assert(r.ok,JSON.stringify(r.error));return r.result;};
 const report={schema_version:1,edition,checked_at:new Date().toISOString(),cases:[],browser_errors:[],capture_source:'explicit synthetic canvas fixture; OS picker/microphone hardware not tested',paid_calls:0};
 const check=(name,ok,details={})=>{assert(ok,name);report.cases.push({name,pass:true,...details});console.log('PASS '+name);};
+const openLecture=async()=>{await page.getByTestId('guided-task-open').click();await page.getByTestId('guided-category-environment').click();await page.getByTestId('open-lecture-studio').click();};
 const poll=async(fn,timeout=30000)=>{const until=Date.now()+timeout;while(!await fn()){assert(Date.now()<until,'UI/native state timed out');await new Promise(r=>setTimeout(r,100));}};
 let vite,staticServer,browser,context,page,worker=false,licenseQa;
 try{
@@ -68,7 +69,7 @@ try{
   await page.getByLabel('다음 강의 단계',{exact:true}).click();await page.getByLabel('다음 강의 단계',{exact:true}).click();
   check('Step navigation changes workspace without running a simulation or editing revision',(await api('project.open',{project_id:id})).revision===revision&&(await api('project.open',{project_id:id})).runs.length===0&&await page.getByTestId('tab-simulation').getAttribute('aria-selected')==='true');
   await page.keyboard.press('F8');check('F8 restores the original panel visibility',JSON.stringify(await Promise.all(['.project-sidebar','.inspector-sidebar','.results-panel'].map(s=>page.locator(s).isVisible())))===JSON.stringify(originalPanels));
-  await page.getByTestId('open-lecture-studio').click();
+  await openLecture();
   await page.evaluate(()=>{Object.defineProperty(navigator.mediaDevices,'getDisplayMedia',{configurable:true,value:async()=>{throw new DOMException('fixture denied','NotAllowedError');}});});
   await page.getByTestId('lecture-record').click();await page.getByTestId('lecture-error').waitFor();
   check('Denied chooser returns to idle without claiming recording',(await page.getByTestId('lecture-capture-state').innerText()).includes('대기')&&(await page.getByTestId('lecture-error').innerText()).includes('녹화를 시작하지 않았습니다'));
@@ -79,9 +80,8 @@ try{
     Object.defineProperty(navigator.mediaDevices,'getDisplayMedia',{configurable:true,value:async()=>stream});
   });
   await page.getByTestId('lecture-record').click();await poll(async()=>await page.getByTestId('lecture-capture-state').innerText().then(t=>t.includes('실제 녹화 중')));
-  check('Active recording blocks viewer navigation and new capture overwrite',!await page.getByTestId('open-standalone-viewer').isEnabled()&&!await page.getByTestId('lecture-record').isEnabled());
-  await page.getByRole('button',{name:'작업 화면으로',exact:true}).click();await page.getByLabel('다음 강의 단계',{exact:true}).click();
-  await page.waitForTimeout(2300);await page.getByTestId('lecture-stop').click();await page.getByTestId('open-lecture-studio').click();await page.getByTestId('lecture-recording').waitFor({timeout:10000});
+  const captureOverwriteBlocked=await page.getByTestId('lecture-record').isDisabled();await page.getByRole('button',{name:'작업 화면으로',exact:true}).click();await page.getByTestId('guided-task-open').click();await page.getByTestId('guided-category-environment').click();check('Active recording blocks viewer navigation and new capture overwrite',await page.getByTestId('open-standalone-viewer').isDisabled()&&captureOverwriteBlocked);await page.getByTestId('guided-close').click();await page.getByLabel('다음 강의 단계',{exact:true}).click();
+  await page.waitForTimeout(2300);await page.getByTestId('lecture-stop').click();await openLecture();await page.getByTestId('lecture-recording').waitFor({timeout:10000});
   check('Real MediaRecorder encodes the fixture, reports actual dimensions and releases tracks',(await page.getByTestId('lecture-recording').innerText()).includes('1920×1080')&&await page.evaluate(()=>window.__lectureCaptureTracks.every(t=>t.readyState==='ended')));
   const video=page.locator('.lecture-recording video');await video.evaluate(async v=>{await v.play();});await poll(()=>video.evaluate(v=>v.videoWidth===1920&&v.videoHeight===1080&&v.currentTime>0));
   check('Encoded fixture preview actually decodes and plays',true);
@@ -96,7 +96,7 @@ try{
   await page.setViewportSize({width:390,height:844});await page.screenshot({path:path.join(out,'studio-mobile.png')});
   check('Mobile studio keeps all controls inside the viewport',await page.getByTestId('lecture-studio').evaluate(el=>el.scrollWidth<=el.clientWidth+1)&&await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   await page.setViewportSize({width:1920,height:1080});await page.getByRole('button',{name:'강의 스튜디오 닫기',exact:true}).click();
-  await page.evaluate(()=>localStorage.setItem('register.appearance',JSON.stringify({version:1,mode:'light',skin:'graphite'})));await page.reload();await page.getByTestId('app-ready').waitFor();if(edition==='edu')await page.keyboard.press('Escape');await page.getByTestId('open-lecture-studio').click();
+  await page.evaluate(()=>localStorage.setItem('register.appearance',JSON.stringify({version:1,mode:'light',skin:'graphite'})));await page.reload();await page.getByTestId('app-ready').waitFor();if(edition==='edu')await page.keyboard.press('Escape');await openLecture();
   check('Edition-scoped lecture plan, notes and large text survive reload',(await page.getByTestId('lecture-plan').inputValue())==='layout'&&(await page.getByLabel('내 강의 메모',{exact:true}).inputValue()).includes('강사 전용')&&await page.locator('.app-shell').getAttribute('data-lecture-large')==='true');
   await page.screenshot({path:path.join(out,'studio-light-1080p.png')});check('Dark/light workspaces finish without browser errors',report.browser_errors.length===0);report.completed=true;
 }catch(e){report.completed=false;report.error=e.message;if(page){report.fixture_events=await page.evaluate(()=>({events:window.__lectureRecorderEvents,tracks:window.__lectureCaptureTracks?.map(t=>({state:t.readyState,settings:t.getSettings()})),visible:document.visibilityState})).catch(()=>null);await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});report.body=await page.locator('body').innerText().catch(()=>'');}throw e;}
