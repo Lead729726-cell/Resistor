@@ -12,6 +12,9 @@ import {studyRpc} from './self-study-service.mjs';
 import {educationRpc} from './education-service.mjs';
 const root=process.cwd(),edition=getProductEdition();if(edition.edition!=='edu')throw Error('촬영 실습은 Resistor Edu에서만 실행합니다.');
 const port=18955,origin='http://127.0.0.1:'+port,token=randomBytes(32).toString('hex'),output=path.resolve('.runtime/course-recording-20261031'),kit=path.resolve('docs/teaching/recording-20261031');
+let existingResponse;
+try{existingResponse=await fetch(origin+'/health',{signal:AbortSignal.timeout(1500)});}catch(e){if(e.cause?.code!=='ECONNREFUSED')throw Error('촬영 포트의 상태를 확인하지 못했습니다. 기존 작업을 보존하고 다시 확인하세요.');}
+if(existingResponse){let existing;try{existing=await existingResponse.json();}catch{}if(existingResponse.ok&&existing?.product_id==='resistor.edu.source-rehearsal'&&existing.edition==='edu'){console.log('Existing Resistor Edu source rehearsal preserved: '+origin);process.exit(0);}throw Error('촬영 포트 18955를 다른 프로그램이 사용 중입니다. 기존 프로그램이나 파일을 변경하지 않았습니다.');}
 await mkdir(output,{recursive:true});
 const engine=await startWorker(await prepareEditionWorkspace({edition}),{resourcesRoot:root});
 const local={workspace:path.join(output,'learner-records')};await mkdir(local.workspace,{recursive:true});
@@ -47,6 +50,7 @@ const server=http.createServer(async(req,res)=>{
   res.setHeader('Content-Type','application/json; charset=utf-8');res.end(JSON.stringify(result));return;
  }
  if(req.method!=='GET'){res.writeHead(405).end();return;}
+ if(url.pathname==='/health'){res.setHeader('Content-Type','application/json');res.end(JSON.stringify({schema_version:1,edition:'edu',product_id:'resistor.edu.source-rehearsal',official_activation:false}));return;}
  let file;if(['/','/index.html','/app.mjs','/app.css'].includes(url.pathname))file=path.join(output,url.pathname==='/'?'index.html':url.pathname.slice(1));
  else if(url.pathname.startsWith('/kit/')){const name=url.pathname.slice(5)||'index.html';if(!/^[a-zA-Z0-9_.-]+$/.test(name))throw Error('Invalid asset');file=path.join(kit,name);}
  else if(url.pathname.startsWith('/edu-study-tutorial/')){const name=url.pathname.slice('/edu-study-tutorial/'.length);if(!['index.html','chapters.json','captions.ko.vtt','captions.ko.srt','Resistor-Edu-AI-Study-KO.mp4'].includes(name)){res.writeHead(404).end();return;}file=path.join(root,'public/edu-study-tutorial',name);if(name==='index.html'){const html=await readFile(file,'utf8'),hashes=[...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].map(match=>"'sha256-"+createHash('sha256').update(match[1]).digest('base64')+"'");res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self' "+hashes.join(' ')+"; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; media-src 'self'; frame-ancestors 'none'; object-src 'none'");}}
