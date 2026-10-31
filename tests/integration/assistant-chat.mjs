@@ -12,8 +12,9 @@ import {startWorker,stopWorker} from '../../scripts/worker.mjs';
 import {runtimeConfig,workerRpc} from '../../scripts/runtime.mjs';
 import {collectEvidence} from '../../scripts/design-assistant.mjs';
 import {configureEngine} from '../../scripts/engine-settings.mjs';
+import {disposableUiLicense} from './disposable-ui-license.mjs';
 process.env.RESISTOR_EDITION='indust';
-const root=process.cwd(),out=path.join(root,'docs/evidence/assistant-chat');await mkdir(out,{recursive:true});await mkdir('.runtime/assistant-qa',{recursive:true});
+const root=process.cwd(),out=path.resolve(process.env.RESISTOR_UI_QA_OUTPUT||'docs/evidence/assistant-chat');await mkdir(out,{recursive:true});await mkdir('.runtime/assistant-qa',{recursive:true});
 const workspace=await mkdtemp(path.join(root,'.runtime/assistant-qa/ui-'));
 const free=async()=>{const s=netServer();await new Promise(r=>s.listen(0,'127.0.0.1',r));const port=s.address().port;await new Promise(r=>s.close(r));return port;};
 const config=await runtimeConfig(workspace);config.url='http://127.0.0.1:'+await free();await writeFile(config.file,JSON.stringify({url:config.url,token:config.token}));
@@ -21,8 +22,9 @@ const api=async(method,params={})=>{const r=await workerRpc(config,method,params
 const apply=(p,command,cell_name)=>api('schematic.apply_command',{project_id:p.id,expected_revision:p.revision,command_id:randomUUID(),command,...(cell_name?{cell_name}:{})});
 const report={schema_version:1,edition:'indust',checked_at:new Date().toISOString(),workspace,provider:'explicit-loopback-qa-fixture',model_inference_verified:false,paid_calls:0,cases:[],browser_errors:[]};
 const check=(name,ok,details={})=>{assert(ok,name);report.cases.push({name,pass:true,...details});console.log('PASS '+name);};
-let calls=0,badReply=false,modelServer,worker=false,vite,browser,context,page;
+let calls=0,badReply=false,modelServer,worker=false,vite,browser,context,page,licenseQa;
 try{
+  licenseQa=await disposableUiLicense(workspace,'indust');report.licensing='isolated synthetic QA authority; production configuration unchanged';
   modelServer=httpServer(async(req,res)=>{
     res.setHeader('Content-Type','application/json');
     if(req.url==='/api/tags'){res.end(JSON.stringify({models:[{name:'resistor-qa-fixture'}]}));return;}
@@ -43,7 +45,7 @@ try{
   p=await apply(p,{type:'add_cell',name:'child',ports:['A','B']});p=await apply(p,{type:'add_device',device:{id:'child-r',name:'RC',kind:'resistor',x:300,y:240,pins:{'1':'A','2':'B'},parameters:{value:2000}}},'child');
   const child=await collectEvidence(config,{project_id:p.id,expected_revision:p.revision,context:{cell_name:'child',device_ids:['child-r']}});check('Actual native child-cell evidence excludes root-only devices',child.connectivity.devices.length===1&&child.connectivity.devices[0].id==='child-r'&&child.context.cell_name==='child');
   const port=await free(),url='http://127.0.0.1:'+port+'/eda';
-  vite=spawn(process.execPath,['node_modules/vite/bin/vite.js','--host','127.0.0.1'],{cwd:root,env:{...process.env,RESISTOR_EDITION:'indust',MOS_WORKSPACE:workspace,REGISTER_DEV_PORT:String(port)},windowsHide:true,stdio:['ignore','pipe','pipe']});
+  vite=spawn(process.execPath,['node_modules/vite/bin/vite.js','--host','127.0.0.1'],{cwd:root,env:{...process.env,RESISTOR_EDITION:'indust',MOS_WORKSPACE:workspace,REGISTER_DEV_PORT:String(port),RESISTOR_LICENSE_CONFIG:licenseQa.configFile},windowsHide:true,stdio:['ignore','pipe','pipe']});
   // Readiness is an HTTP response, not an English console label (CI can
   // suppress or redirect the banner). Preserve stderr and early process exits.
   let appOutput='',appFailure;
@@ -94,6 +96,6 @@ try{
   check('Dark and light assistant screens render without browser errors',report.browser_errors.length===0);report.completed=true;report.model_fixture_requests=calls;
 }catch(e){report.completed=false;report.error=e.message;if(page){await page.screenshot({path:path.join(out,'failure.png')});report.body=await page.locator('body').innerText();}throw e;}
 finally{
-  if(context){const video=page?.video();await context.close();if(video)await video.saveAs(path.join(out,'assistant-workflow.webm'));}if(browser)await browser.close();if(vite)vite.kill();if(worker)await stopWorker(workspace);if(modelServer)await new Promise(r=>modelServer.close(r));
+  if(context){const video=page?.video();await context.close();if(video)await video.saveAs(path.join(out,'assistant-workflow.webm'));}if(browser)await browser.close();if(vite)vite.kill();if(worker)await stopWorker(workspace);if(modelServer)await new Promise(r=>modelServer.close(r));if(licenseQa)await licenseQa.close();
   report.source_sha256=Object.fromEntries(await Promise.all(['scripts/design-assistant.mjs','packages/ui/src/DesignAssistantWorkbench.tsx','packages/ui/src/App.tsx','packages/contracts/src/assistant.ts'].map(async file=>[file,createHash('sha256').update(await readFile(file)).digest('hex')])));await writeFile(path.join(out,'ui-verification.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({completed:report.completed,cases:report.cases.length,error:report.error}));
 }

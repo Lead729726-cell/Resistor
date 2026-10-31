@@ -10,8 +10,9 @@ import path from 'node:path';
 import {chromium} from '@playwright/test';
 import {startWorker,stopWorker} from '../../scripts/worker.mjs';
 import {runtimeConfig,workerRpc} from '../../scripts/runtime.mjs';
+import {disposableUiLicense} from './disposable-ui-license.mjs';
 const edition=process.env.LECTURE_QA_EDITION==='edu'?'edu':'indust';process.env.RESISTOR_EDITION=edition;
-const root=process.cwd(),out=path.join(root,'docs/evidence/lecture-studio',edition);await mkdir(out,{recursive:true});await mkdir('.runtime/lecture-qa',{recursive:true});
+const root=process.cwd(),out=path.join(process.env.RESISTOR_UI_QA_OUTPUT||path.join(root,'docs/evidence/lecture-studio'),edition);await mkdir(out,{recursive:true});await mkdir('.runtime/lecture-qa',{recursive:true});
 const workspace=await mkdtemp(path.join(root,'.runtime/lecture-qa/'+edition+'-'));
 const free=async()=>{const s=createServer();await new Promise(r=>s.listen(0,'127.0.0.1',r));const port=s.address().port;await new Promise(r=>s.close(r));return port;};
 const config=await runtimeConfig(workspace);config.url='http://127.0.0.1:'+await free();await writeFile(config.file,JSON.stringify({url:config.url,token:config.token}));
@@ -19,8 +20,9 @@ const api=async(method,params={})=>{const r=await workerRpc(config,method,params
 const report={schema_version:1,edition,checked_at:new Date().toISOString(),cases:[],browser_errors:[],capture_source:'explicit synthetic canvas fixture; OS picker/microphone hardware not tested',paid_calls:0};
 const check=(name,ok,details={})=>{assert(ok,name);report.cases.push({name,pass:true,...details});console.log('PASS '+name);};
 const poll=async(fn,timeout=30000)=>{const until=Date.now()+timeout;while(!await fn()){assert(Date.now()<until,'UI/native state timed out');await new Promise(r=>setTimeout(r,100));}};
-let vite,staticServer,browser,context,page,worker=false;
+let vite,staticServer,browser,context,page,worker=false,licenseQa;
 try{
+  licenseQa=await disposableUiLicense(workspace,edition);report.licensing='isolated synthetic QA authority; production configuration unchanged';
   await startWorker(workspace,{resourcesRoot:root,prepare:false});worker=true;
   const original=await api('project.create',{example:'layout',name:'[강의 QA] 원본 보존'});
   const before=await api('project.open',{project_id:original.id});
@@ -33,12 +35,12 @@ try{
     // Never take over the user's dedicated Edu worker on port 18775.
     const dist=path.join(root,'dist-edu');await readFile(path.join(dist,'product-context.json')).then(b=>assert.equal(JSON.parse(b).product_id,'resistor.edu'));
     staticServer=httpServer(async(req,res)=>{try{
-      if(req.url==='/api/rpc'&&req.method==='POST'){let body='';for await(const b of req)body+=b;const p=JSON.parse(body);const result=await workerRpc(config,p.method,p.params||{});res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify(result));return;}
+      if(req.url==='/api/rpc'&&req.method==='POST'){let body='';for await(const b of req)body+=b;const p=JSON.parse(body);let result;if(p.method.startsWith('license.'))result={ok:true,result:await licenseQa.client.rpc(p.method,p.params||{})};else{await licenseQa.client.assertActive();result=await workerRpc(config,p.method,p.params||{});}res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify(result));return;}
       const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname),file=path.resolve(dist,pathname==='/eda'?'index.html':'.'+pathname);if(!file.startsWith(dist+path.sep)){res.writeHead(403).end();return;}
       const mime={'.html':'text/html','.js':'application/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.wasm':'application/wasm'};res.writeHead(200,{'Content-Type':mime[path.extname(file)]||'application/octet-stream'});res.end(await readFile(file));
     }catch{if(!res.headersSent)res.writeHead(404);res.end();}});await new Promise(r=>staticServer.listen(port,'127.0.0.1',r));
   }else{
-    vite=spawn(process.execPath,['node_modules/vite/bin/vite.js','--host','127.0.0.1'],{cwd:root,env:{...process.env,RESISTOR_EDITION:edition,MOS_WORKSPACE:workspace,REGISTER_DEV_PORT:String(port)},windowsHide:true,stdio:['ignore','pipe','pipe']});
+    vite=spawn(process.execPath,['node_modules/vite/bin/vite.js','--host','127.0.0.1'],{cwd:root,env:{...process.env,RESISTOR_EDITION:edition,MOS_WORKSPACE:workspace,REGISTER_DEV_PORT:String(port),RESISTOR_LICENSE_CONFIG:licenseQa.configFile},windowsHide:true,stdio:['ignore','pipe','pipe']});
     const capture=b=>output=(output+b.toString()).slice(-6000);vite.stdout.on('data',capture);vite.stderr.on('data',capture);vite.once('error',e=>failure=e.message);vite.once('exit',code=>failure='Vite exited '+code);
   }
   await poll(async()=>{if(failure)throw Error(failure+'\n'+output);try{return (await fetch(url)).ok;}catch{return false;}},60000);
@@ -99,6 +101,6 @@ try{
   await page.screenshot({path:path.join(out,'studio-light-1080p.png')});check('Dark/light workspaces finish without browser errors',report.browser_errors.length===0);report.completed=true;
 }catch(e){report.completed=false;report.error=e.message;if(page){report.fixture_events=await page.evaluate(()=>({events:window.__lectureRecorderEvents,tracks:window.__lectureCaptureTracks?.map(t=>({state:t.readyState,settings:t.getSettings()})),visible:document.visibilityState})).catch(()=>null);await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});report.body=await page.locator('body').innerText().catch(()=>'');}throw e;}
 finally{
-  if(context){const video=page?.video();await context.close();if(video)await video.saveAs(path.join(out,'actual-app-workflow.webm'));}if(browser)await browser.close();if(vite)vite.kill();if(staticServer)await new Promise(r=>staticServer.close(r));if(worker)await stopWorker(workspace);
+  if(context){const video=page?.video();await context.close();if(video)await video.saveAs(path.join(out,'actual-app-workflow.webm'));}if(browser)await browser.close();if(vite)vite.kill();if(staticServer)await new Promise(r=>staticServer.close(r));if(worker)await stopWorker(workspace);if(licenseQa)await licenseQa.close();
   report.source_sha256=Object.fromEntries(await Promise.all(['packages/ui/src/LectureStudio.tsx','packages/ui/src/lecture-model.ts','packages/ui/src/lecture-recorder.ts','packages/ui/src/App.tsx'].map(async f=>[f,createHash('sha256').update(await readFile(f)).digest('hex')])));await writeFile(path.join(out,'ui-verification.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({completed:report.completed,cases:report.cases.length,error:report.error}));
 }
