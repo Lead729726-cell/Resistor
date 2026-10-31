@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "checked_at": "2026-10-31T05:18:42.541Z",
+  "checks": {
+    "native_op": true,
+    "dynamic_rc_nmos": true,
+    "connected_inverter": true,
+    "physical_tools": true,
+    "negative_verdicts": true
+  },
+  "actual_circuit_runs": 13,
+  "physical_checks": [
+    {
+      "kind": "drc",
+      "revision": 1,
+      "run_id": "4685aa5af29d4ba6ab348864665e7e17",
+      "execution_status": "completed",
+      "analysis_result": "pass"
+    },
+    {
+      "kind": "lvs",
+      "revision": 1,
+      "run_id": "5d457396961244a3be8ee8e25f50e078",
+      "execution_status": "completed",
+      "analysis_result": "pass"
+    },
+    {
+      "kind": "pex",
+      "revision": 1,
+      "run_id": "cf02e637650244d0bc9ea3e37b4dfd23",
+      "execution_status": "completed",
+      "analysis_result": "pass"
+    }
+  ],
+  "negative_checks": [
+    {
+      "kind": "drc",
+      "run_id": "8d480cd581d54bca96c226b3be29d654",
+      "execution_status": "completed",
+      "analysis_result": "fail"
+    },
+    {
+      "kind": "lvs",
+      "run_id": "9ed0cf50f7d642eaa566c9f01004ca65",
+      "execution_status": "completed",
+      "analysis_result": "fail"
+    }
+  ],
+  "ui": {
+    "schema_version": 1,
+    "edition": "edu",
+    "checked_at": "2026-10-31T05:18:42.480554+00:00",
+    "status": "verified_with_one_manual_file_selection_check",
+    "browser": "Edge through browser extension",
+    "scope": "local source rehearsal, not official activation or installer QA",
+    "checks": {
+      "prediction_then_calculation": true,
+      "single_variable_comparison": true,
+      "voltage_and_current_visible": true,
+      "learner_explanation_preserved_after_reload": true,
+      "report_preview": true,
+      "downloaded_json_file_verified": true,
+      "rc_parts_and_pins_connected_in_UI": true,
+      "actual_rc_voltage_current_display": true,
+      "connected_inverter_before_after": true,
+      "independent_not_run_DRC_LVS_PEX": true,
+      "stale_revision_label": true,
+      "inverter_explanation_saved": true,
+      "server_restart_reopens_owned_projects": true,
+      "layer_mapping_and_illustrative_stack_disclosed": true,
+      "instructor_lesson_selection_and_script": true,
+      "rehearsal_timer": true
+    },
+    "actual_ui_runs": [
+      {
+        "kind": "RC",
+        "run_id": "3ef6074d8b50463ab92a3d8f4c9741b3",
+        "board_revision": 7
+      },
+      {
+        "kind": "inverter_before",
+        "run_id": "cb6b46c9489f437a9a0c2f2f53d519f8",
+        "revision": 2
+      },
+      {
+        "kind": "inverter_after",
+        "run_id": "ed8b4e62c1b94aca98e363487bf03e0e",
+        "revision": 3
+      }
+    ],
+    "import_file_picker": {
+      "status": "manual_check_required",
+      "reason": "Browser extension requires file URL access for automatic chooser injection; security setting was not changed. Actual download file and workbook parser/store regression tests passed."
+    },
+    "screenshots": [
+      "instructor.png"
+    ],
+    "paid_provider_calls": 0,
+    "human_microphone_recording": "not_started",
+    "human_full_video_review": "not_run",
+    "official_activation": "not_verified"
+  },
+  "obs_profiles": [
+    {
+      "profile": "GPT_Minecraft_ASMR_Twitch",
+      "base": [
+        "1920",
+        "1080"
+      ],
+      "output": [
+        "1280",
+        "720"
+      ],
+      "fps": "30",
+      "sample_rate": "48000",
+      "changed": false
+    },
+    {
+      "profile": "Mainaicraft_RecordOnly",
+      "base": [
+        "1280",
+        "720"
+      ],
+      "output": [
+        "1280",
+        "720"
+      ],
+      "fps": "30",
+      "sample_rate": "48000",
+      "changed": false
+    },
+    {
+      "profile": "Resistor_Edu_Course_20261031",
+      "base": [
+        "1920",
+        "1080"
+      ],
+      "output": [
+        "1920",
+        "1080"
+      ],
+      "fps": "30",
+      "sample_rate": "44100",
+      "changed": false
+    },
+    {
+      "profile": "제목_없음",
+      "base": [
+        "3840",
+        "2160"
+      ],
+      "output": [
+        "1920",
+        "1080"
+      ],
+      "fps": "60",
+      "sample_rate": "48000",
+      "changed": false
+    }
+  ],
+  "obs_settings_changed": false,
+  "microphone_recording": "not_started",
+  "human_audio_review": "not_run",
+  "video_recording": "not_started",
+  "official_serial_server": "not_configured",
+  "inflearn_price_save": "not_verified",
+  "new_installer_publication": false,
+  "checkout_opened": false,
+  "provider_calls": 0,
+  "foundry_signoff": false,
+  "education_effect_proven": false,
+  "source_hashes": {
+    "packages/education/src/recording-course.ts": "e121254523021a3dcdad72cca4a464a2288cecdd5fe37a0df8e3954ffdb0948a",
+    "packages/education/src/course-workbook.ts": "f5ff5e07dcef5833ac095d96cefcf9ef09a660b09976d1a92fb780ee5340a09a",
+    "packages/ui/src/CoursePractice.tsx": "da7c110cc1b5ddd044ac08d5bee8fc24116022db408f0ecb886df29b5c13eff7",
+    "packages/ui/qa/course-recording/main.tsx": "2c03162df2b73f1219b70516fafc86eeeeb030bed45ac48e9738779dd58b1796",
+    "scripts/course-recording.mjs": "bc15b366e7baae766eb09cadcb6657b17f4468d170700a73d53a2af0d1428940"
+  },
+  "blockers": [
+    "실제 마이크 30초 녹음·재생과 화면 가독성 직접 확인",
+    "정식 배포용 시리얼 서버·인프런 가격 저장·설치 경로는 판매 공개 전 별도 확인"
+  ]
+}

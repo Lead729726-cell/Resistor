@@ -1,0 +1,1 @@
+document.getElementById('theme').onclick=()=>document.documentElement.classList.toggle('light');

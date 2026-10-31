@@ -122,7 +122,11 @@
     "license:server": "node scripts/license-server.mjs serve",
     "test:commerce": "node --test tests/commerce.test.mjs tests/commerce-site.test.mjs && node --import tsx --test tests/course-*.test.ts",
     "download:store": "node scripts/course-store-site.mjs",
-    "commerce:server": "node scripts/commerce-server.mjs"
+    "commerce:server": "node scripts/commerce-server.mjs",
+    "course:kit": "node --import tsx scripts/course-recording-kit.ts",
+    "course:rehearse": "node --import tsx scripts/course-recording.mjs",
+    "course:review": "node scripts/course-recording-review.mjs",
+    "course:media-review": "node scripts/course-recording-media-review.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.31.0",

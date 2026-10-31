@@ -23,8 +23,8 @@ function Resistor({part}:{part?:Part}){
  const colors=[digits[Math.floor(value/10)],digits[value%10],digits[exponent]||'#b29442'];
  return <svg viewBox="0 0 120 36" aria-hidden="true" className="puzzle-resistor"><path d="M0 18H120" stroke="currentColor" strokeWidth="3"/><rect x="20" y="5" width="80" height="26" rx="9" fill="#d9bf91" stroke="#82704e"/>{colors.map((color,i)=><rect key={i} x={32+i*15} y="6" width="7" height="24" fill={color}/>)}<rect x="85" y="6" width="5" height="24" fill="#b29442"/></svg>;
 }
-export default function CircuitPuzzleLab({onBank,storeId}:{onBank:()=>void;storeId?:string}){
- const [view,setView]=useState<View|null>(null),[chosen,setChosen]=useState('half-voltage'),[purpose,setPurpose]=useState<'practice'|'qa'>('practice'),[saved,setSaved]=useState(''),[carry,setCarry]=useState(''),[actionBusy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState(''),[question,setQuestion]=useState(''),[approved,setApproved]=useState(false),[mode,setMode]=useState<'coach'|'ai'>('coach'),[explanation,setExplanation]=useState('');
+export default function CircuitPuzzleLab({onBank,storeId,initialPurpose='practice'}:{onBank:()=>void;storeId?:string;initialPurpose?:'practice'|'qa'}){
+ const [view,setView]=useState<View|null>(null),[chosen,setChosen]=useState('half-voltage'),[purpose,setPurpose]=useState<'practice'|'qa'>(initialPurpose),[saved,setSaved]=useState(''),[carry,setCarry]=useState(''),[actionBusy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState(''),[question,setQuestion]=useState(''),[approved,setApproved]=useState(false),[mode,setMode]=useState<'coach'|'ai'>('coach'),[explanation,setExplanation]=useState('');
  const bank=useReadResource(()=>rpc<Catalog>('study.puzzle.catalog'),'puzzle-catalog');
  const busy=actionBusy||bank.loading;
  const catalog=bank.data,actionPending=useRef(false),p=view?.puzzle,s=view?.session,a=view?.preview,dynamic=p?.kind==='rc'||p?.kind==='nmos';
