@@ -103,6 +103,7 @@ export default function App() {
   return <>{!educationMode&&<DesktopUpdates/>}{calculatorMode && !viewerOnly ? <CalculatorHub/> : viewerOnly ? <StandaloneViewer onExit={()=>setViewerOnly(false)}/> : educationMode ? <EduWorkspace onViewer={()=>setViewerOnly(true)}/> : <DesignWorkspace onViewer={()=>setViewerOnly(true)}/>}</>;
 }
 function EduWorkspace({onViewer}:{onViewer:()=>void}){
+  useEffect(()=>{document.title=productEdition.name;},[]);
   const [route,setRoute]=useState<EduRoute>(()=>readEduRoute(location.hash));
   const routeRef=useRef(route);routeRef.current=route;
   const [designLessonId,setDesignLessonId]=useState(route.mode==='design'?route.lessonId:undefined);
