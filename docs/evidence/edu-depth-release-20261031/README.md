@@ -67,3 +67,21 @@ Run locally: `npm run course:rehearse`, then open `http://127.0.0.1:18955/`.
 This is an isolated source/QA rehearsal with paid AI disabled, not official
 activation. Build the portable workbook with `node scripts/edu-workbook-release.mjs`.
 See `../../public-workbook-release.md` for release commands and download scope.
+
+## Public release verified
+
+Source commit `c3523b14b7ffb4c2f1a49b7cf6023d3a3b5f868f` was pushed to
+`codex/resistor-edu`. [Source validation](https://github.com/Lead729726-cell/Resistor/actions/runs/41191140281)
+completed successfully. The [workbook preview release](https://github.com/Lead729726-cell/Resistor/releases/tag/edu-workbook-20261031)
+is public, explicitly marked prerelease, and provides HTML/ZIP/receipt assets.
+Anonymous downloads returned HTTP 200 and matched the local SHA-256 digests.
+GitHub Latest remains `editions-v0.31.0`, release ID `417979794`.
+
+The latest original rehearsal workbook (r2, two runs, R2=20 kΩ, blank student
+prediction/explanation) was restored. The printable report has six pages; first
+and last pages were visually checked, with no app controls in the report.
+
+`prepare --alias-course` still returned `Vercel 403 forbidden`; therefore
+**resistor.kr has not received this overlay**. The device login screen is kept
+for user handoff. After authorization, prepare against the then-current live
+deployment and verify its protected metadata before publishing.
