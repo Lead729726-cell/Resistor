@@ -89,6 +89,10 @@ authorization (30 public or 60 admin requests per minute per client address).
   `purchase_ref`, `edition`, `email`, `evidence_sha256`, `verified=true`,
   `device_limit=2`). An actual verified purchase is required; caller authority is
   not evidence that a payment happened. Keep the source receipt privately.
+  Hosted Inflearn orders also require an explicit `provider=inflearn`, the
+  configured `course_id`, `verification_method=operator_review`, and Edu/two-seat
+  scope, exactly like `/admin/inflearn/orders`. Omitted/null providers fail this
+  check. Explicit other providers retain their existing separate purchase policy.
 - `/admin/delivery`: `{delivery_id}` retrieves the encrypted pending fulfillment
   payload for a verified operator to hand off privately. It does **not** mark an
   email as sent. `/admin/deliver` remains pending while no mail provider is wired.

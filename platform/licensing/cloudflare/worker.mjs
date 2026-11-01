@@ -83,7 +83,11 @@ export class LicenseAuthority extends DurableObject {
     if(p.course_id!==this.env.LICENSE_INFLEARN_COURSE_ID||p.verification_method!=='operator_review'||p.provider!=='inflearn'||p.edition!=='edu'||p.device_limit!==2)throw Object.assign(Error('운영자가 확인한 해당 강의의 Edu 기기 2대 주문만 입력할 수 있습니다.'),{code:'ORDER_UNVERIFIED'});
     return service.issue(p);
    };
-   const actions={'/v1/activate':()=>service.activate(p),'/v1/refresh':()=>service.refresh(p),'/v1/deactivate':()=>service.deactivate(p),'/admin/orders':()=>service.issue(p),'/admin/inflearn/orders':issueInflearn,'/admin/refund':()=>service.refund(p),'/admin/deliver':()=>service.deliver(p.delivery_id),'/admin/delivery':()=>service.operatorDelivery(p.delivery_id),'/admin/outbox':()=>({...service.outboxStatus(p),readiness:this.currentMailReadiness()}),'/admin/outbox/process':()=>service.processOutbox(p),'/admin/mail/smoke':()=>service.mailSmoke(p),'/admin/grants':()=>service.operatorGrant(p),'/admin/grants/revoke':()=>service.revokeGrant(p)};
+   // The shared domain defaults omitted providers to Inflearn. Both hosted
+   // intake routes must enforce the same course binding before issuing; only
+   // explicit other providers use the generic domain policy directly.
+   const issueOrder=()=>((p.provider??'inflearn')==='inflearn'?issueInflearn():service.issue(p));
+   const actions={'/v1/activate':()=>service.activate(p),'/v1/refresh':()=>service.refresh(p),'/v1/deactivate':()=>service.deactivate(p),'/admin/orders':issueOrder,'/admin/inflearn/orders':issueInflearn,'/admin/refund':()=>service.refund(p),'/admin/deliver':()=>service.deliver(p.delivery_id),'/admin/delivery':()=>service.operatorDelivery(p.delivery_id),'/admin/outbox':()=>({...service.outboxStatus(p),readiness:this.currentMailReadiness()}),'/admin/outbox/process':()=>service.processOutbox(p),'/admin/mail/smoke':()=>service.mailSmoke(p),'/admin/grants':()=>service.operatorGrant(p),'/admin/grants/revoke':()=>service.revokeGrant(p)};
    if(!Object.hasOwn(actions,url.pathname)||url.search)return failure(404,'NOT_FOUND','경로가 없습니다.',origin);
    const result=await actions[url.pathname]();
    if(this.mailReadiness.sending_enabled&&['/admin/orders','/admin/inflearn/orders'].includes(url.pathname)&&(p.provider??'inflearn')==='inflearn')this.context.waitUntil(this.processMailOutbox());
