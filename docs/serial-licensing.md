@@ -54,12 +54,20 @@ or a claim that public educational tasks have become secret exams.
 
 ## Current external status
 
-The default public configuration deliberately has no production server URL.
-A public signing key is packaged; its private key stays in the seller's private
-directory. It fails closed and explains that the seller must finish setup.
-**Do not publish those locked installers.** `assertLicenseReleaseReady` blocks the
-package and native release entry points until a production HTTPS service/public key is configured.
-Old 0.31.0 installers remain the existing public release.
+As of 2026-11-01, `public-config.json` points to the production HTTPS authority
+`https://resistor-licensing.nuev-official.workers.dev`, backed by persistent
+Cloudflare Durable Object SQLite (`production-v1`). Its signing key matches the
+packaged public key. [Production authority checks](evidence/licensing/production-20261101.json)
+cover actual signed activation, two-seat concurrency, restart persistence and
+revocation. Private keys remain in the seller's private operator storage.
+
+Resistor Edu 0.32.0 native installers for Windows x64, macOS arm64/x64 and Linux
+x64 are published separately as `edu-v0.32.0` from source
+`f83ce0d56bf2b9de247e2de32d19e1659d5e4e7b`. The official Edu download route is
+[resistor.kr/download/edu/](https://resistor.kr/download/edu/). Industry's 0.31.0
+release is unchanged. Publication does not imply Apple notarization, Windows
+publisher signing, or automatic Inflearn fulfillment. `assertLicenseReleaseReady`
+continues to reject missing/mismatched authority and durable storage settings.
 
 Inflearn's public guides show instructor enrollment/payment records, but a supported
 merchant purchase webhook and per-buyer serial delivery integration have not been
@@ -72,7 +80,24 @@ its code. A configured mail transport can deliver the queue. Without that transp
 it remains `pending`; provider acceptance is not proof of inbox delivery. Refunds
 also need a verified operator input until an official order/refund adapter exists.
 
+The optional Worker sender is disabled unless `LICENSE_MAIL_SENDING_ENABLED=true`
+and the selected provider's credentials/sender are configured. The user's selected
+transport is the existing Gmail account; Resend remains an optional adapter.
+The encrypted durable outbox freezes each message and bounds attempts. Gmail has
+no send idempotency guarantee: ambiguous sends stop for operator review, with no
+automatic resend. Only proven pre-send failures can retry. Resend may retry the
+same delivery ID within a conservative 23-hour window. Gmail send acceptance does
+not prove recipient delivery. Authenticated Resend events can separately establish
+recipient mail-server acceptance, never inbox placement or that a student read
+the message. The email webhook authenticates **mail events only**, not Inflearn purchases. See
+[Cloudflare fulfillment configuration](licensing-cloudflare.md#optional-durable-email-fulfillment).
+
 ## Operator setup (Node 24)
+
+These commands create a **separate local authority** for development or a new
+installation. Do not run `init` or replace public configuration to repair the
+existing production authority. Production operators use its authenticated routes
+and existing matching keys; local imports do not appear in the hosted database.
 
 ```powershell
 $env:RESISTOR_LICENSE_HOME = 'D:\private-resistor-licensing'
@@ -125,7 +150,9 @@ Inflearn-to-Industry issuance and reissuance are refused rather than silently
 rewriting those records. Existing MIT source rights are unchanged.
 
 `--send` is an explicit delivery operation to verified buyers. It reuses the outbox
-delivery ID as the provider idempotency key. Uncertain results remain pending.
+delivery ID and immutable body as the provider idempotency request. Uncertain
+results back off while within the attempt/time limits; older or conflicting
+requests become `review_required`, never a new automatic resend.
 `export-delivery DELIVERY_ID PRIVATE_FILE` supports operator-assisted delivery when
 the mail service is unavailable; that file contains a live buyer code and must not
 be uploaded as a shared course resource.
@@ -136,8 +163,9 @@ be uploaded as a shared course resource.
 tampering, edition separation, seats, release/reuse, refund, offline expiry, clock
 rollback, retry preservation, HTTP authorization/origin/body limits and mail receipt
 states. It uses disposable test keys and fake buyers, with no provider email calls.
-Native signed installers, actual Inflearn purchase ingestion, production deployment
-and real inbox receipt require separate evidence.
+Publisher-signed installers, actual Inflearn purchase ingestion and real recipient
+delivery require separate evidence. Current production authority evidence is
+linked above; local fulfillment tests do not establish live email integration.
 
 ## Platform references (checked 2026-10-23)
 

@@ -1,9 +1,9 @@
 name: License authority
 on:
   push:
-    paths: ['platform/licensing/**', 'tests/licensing*.mjs', 'apps/desktop/licensing.mjs', 'scripts/license-release-check.mjs', '.github/workflows/license-authority.yml']
+    paths: ['platform/licensing/**', 'tests/licensing*.mjs', 'tests/license-gmail-connect.test.mjs', 'apps/desktop/licensing.mjs', 'scripts/license-release-check.mjs', 'scripts/license-gmail-connect.mjs', '.github/workflows/license-authority.yml']
   pull_request:
-    paths: ['platform/licensing/**', 'tests/licensing*.mjs', 'apps/desktop/licensing.mjs', 'scripts/license-release-check.mjs', '.github/workflows/license-authority.yml']
+    paths: ['platform/licensing/**', 'tests/licensing*.mjs', 'tests/license-gmail-connect.test.mjs', 'apps/desktop/licensing.mjs', 'scripts/license-release-check.mjs', 'scripts/license-gmail-connect.mjs', '.github/workflows/license-authority.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -19,4 +19,4 @@ jobs:
           cache: npm
           cache-dependency-path: platform/licensing/cloudflare/package-lock.json
       - run: npm ci --prefix platform/licensing/cloudflare --no-audit --no-fund
-      - run: node --test tests/licensing.test.mjs tests/licensing-domain.test.mjs tests/licensing-cloudflare.test.mjs
+      - run: node --test tests/licensing.test.mjs tests/licensing-domain.test.mjs tests/licensing-outbox.test.mjs tests/license-gmail-connect.test.mjs tests/licensing-cloudflare.test.mjs

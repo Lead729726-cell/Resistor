@@ -9,6 +9,51 @@ const targets=['windows-x64','windows-arm64','macos-arm64','macos-x64','linux-x6
 const platform={windows:'win32',macos:'darwin',linux:'linux'};
 const validDate=s=>typeof s==='string'&&Number.isFinite(Date.parse(s));
 const check=(condition,message)=>{if(!condition)throw Error(message);};
+const sha256=s=>typeof s==='string'&&/^[a-f0-9]{64}$/.test(s);
+const sha1=s=>typeof s==='string'&&/^[a-f0-9]{40}$/i.test(s);
+const checkedDate=s=>validDate(s)&&Date.parse(s)<=Date.now()+60000;
+
+/** Validate evidence emitted by native signature verifiers. This does not sign
+ * anything or convert a receipt into OS trust; public artifact bytes are still
+ * independently hashed by the deployment preparer before these claims display.
+ * Historic unsigned/ad-hoc receipts deliberately remain valid. */
+export function validateEduSigningEvidence(receipt){
+ const s=receipt?.signing,p=receipt?.signing_policy;
+ check(s&&['authenticode_signed','developer_id_signed','notarized','ad_hoc_signed'].every(k=>typeof s[k]==='boolean'),'Code-signing scope must be explicit');
+ const trusted=s.authenticode_signed||s.developer_id_signed||s.notarized;
+ if(receipt.platform==='windows')check(!s.developer_id_signed&&!s.notarized&&!s.ad_hoc_signed,'Windows receipt contains Mac signing claims');
+ else if(receipt.platform==='macos')check(!s.authenticode_signed&&!(s.ad_hoc_signed&&s.developer_id_signed)&&(!s.notarized||s.developer_id_signed),'Mac receipt contains contradictory signing claims');
+ else check(receipt.platform==='linux'&&!trusted&&!s.ad_hoc_signed,'Unsupported OS signing claim');
+ if(!trusted){
+  check(!p||p.mode===(receipt.platform==='macos'?'adhoc':'none'),'Configured trusted signing has no verified evidence');
+  check(s.hardened_runtime!==true&&s.stapled!==true&&s.verification!=='Valid'&&s.notarization_status!=='Accepted'&&s.gatekeeper_assessment!=='accepted'&&s.application?.authenticode_signed!==true&&!s.signed_installer_files?.some(e=>e.authenticode_signed===true),'Unsigned receipt contains trusted verification claims');
+  return true;
+ }
+ check(s.schema_version===1&&sha256(s.artifact_sha256)&&s.artifact_sha256===receipt.sha256&&sha256(s.packaged_executable_sha256)&&s.packaged_executable_sha256===receipt.packaged_executable_sha256&&sha256(s.runtime_manifest_sha256)&&s.runtime_manifest_sha256===receipt.runtime?.manifest_sha256,'Trusted signature evidence is not bound to the published artifact, executable and runtime');
+ check(checkedDate(s.checked_at),'Trusted signature verification timestamp is missing or in the future');
+ if(receipt.platform==='windows'){
+  check(p&&['store','azure'].includes(p.mode)&&typeof p.publisher==='string'&&p.publisher.trim().length>0,'Windows signing policy/publisher missing');
+  if(p.mode==='store')check(sha1(p.thumbprint),'Configured Windows certificate fingerprint missing');
+  else check(/^https:\/\/[a-z0-9-]+\.codesigning\.azure\.net\/?$/.test(p.endpoint??'')&&/^[a-zA-Z0-9-]{3,64}$/.test(p.account??'')&&/^[a-zA-Z0-9-]{1,100}$/.test(p.profile??''),'Azure signing profile identity missing');
+  const verify=entry=>{
+   check(entry?.authenticode_signed===true&&entry.verification==='Valid'&&entry.publisher===p.publisher&&sha1(entry.signer_thumbprint)&&sha1(entry.timestamp_thumbprint)&&checkedDate(entry.checked_at),'Windows signature lacks verified publisher, certificate, timestamp or trust evidence');
+   if(p.mode==='store')check(entry.signer_thumbprint.toUpperCase()===p.thumbprint.toUpperCase(),'Windows signature belongs to a different certificate');
+  };
+  verify(s);verify(s.application);
+  check(s.sha256===receipt.sha256,'Windows trust verification belongs to a different installer');
+  check(s.application.sha256===receipt.packaged_executable_sha256,'Windows application signature belongs to a different executable');
+  check(Array.isArray(s.signed_installer_files)&&s.signed_installer_files.length>=2&&s.signed_installer_files.length<=100,'Installer and uninstaller signing evidence missing');
+  for(const entry of s.signed_installer_files){verify(entry);check(typeof entry.file==='string'&&!/[\\/\r\n\0]/.test(entry.file)&&sha256(entry.sha256),'Invalid signed installer file evidence');}
+  const installer=s.signed_installer_files.filter(e=>e.file===receipt.file).at(-1),uninstaller=s.signed_installer_files.filter(e=>e.file===receipt.file.replace(/\.exe$/,'.__uninstaller.exe')).at(-1);
+  check(installer?.sha256===receipt.sha256&&uninstaller&&sha256(uninstaller.sha256),'Signing evidence does not match the final installer and uninstaller');
+ }else{
+  check(p?.mode==='developer-id'&&sha1(p.identity)&&/^[A-Z0-9]{10}$/.test(p.team_id??''),'Developer ID policy identity missing');
+  check(s.developer_id_signed===true&&s.ad_hoc_signed===false&&s.hardened_runtime===true&&s.apple_chain_verified===true&&s.team_id===p.team_id&&sha1(s.signer_thumbprint)&&s.signer_thumbprint.toUpperCase()===p.identity.toUpperCase(),'Developer ID certificate, Apple chain, team or hardened runtime evidence mismatch');
+  check(typeof s.authority==='string'&&s.authority.startsWith('Developer ID Application:')&&typeof s.secure_timestamp==='string'&&s.secure_timestamp.trim().length>0&&!/^(none|not set)$/i.test(s.secure_timestamp.trim()),'Developer ID authority or secure timestamp evidence missing');
+  check(s.notarized===true&&s.notarization_status==='Accepted'&&/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(s.notarization_submission_id??'')&&s.stapled===true&&s.gatekeeper_assessment==='accepted'&&s.distribution_archive_verified===true,'Published Developer ID app requires accepted notarization, stapled ticket and verified final archive');
+ }
+ return true;
+}
 
 /** A publication gate over real receipts, not a producer of runtime PASS results. */
 export function verifiedEduNativeFiles(release,receipts,authority,{allowDraft=false}={}){
@@ -46,7 +91,7 @@ export function verifiedEduNativeFiles(release,receipts,authority,{allowDraft=fa
   check(license&&license.server===authority.server&&license.key_id===authority.key_id&&license.public_key_fingerprint===authority.public_key_fingerprint&&validDate(license.checked_at),'Packaged license authority differs from the live verified authority');
   check(receipt.runtime_arch===receipt.arch&&receipt.requires_emulation===false,'This release requires native runtime CPU verification');
   check(receipt.manufacturing_signoff===false,'Native execution must not claim manufacturing signoff');
-  const signing=receipt.signing;check(signing&&['authenticode_signed','developer_id_signed','notarized','ad_hoc_signed'].every(k=>typeof signing[k]==='boolean'),'Code-signing scope must be explicit');
+  validateEduSigningEvidence(receipt);const signing=receipt.signing;
   files.push({target,name:asset.name,url:checked.url,receipt_url:meta.browser_download_url,product_id:'resistor.edu',version,release_tag:release.tag_name,bytes:checked.bytes,sha256:checked.sha256,receipt_sha256:hash(bytes),source_revision:receipt.source_revision,build_tools_revision:receipt.build_tools_revision,runtime_arch:receipt.runtime_arch,requires_emulation:false,qa_completed:true,minimum_os:target.startsWith('macos')?'15.0':target==='windows-x64'?'10.0':null});
   provenance.push({target,source_revision:receipt.source_revision,build_tools_revision:receipt.build_tools_revision,runtime_manifest_sha256:runtime.manifest_sha256,engine_checked_at:engine.checked_at,license_authority:license,signing,native_physical_tools_verified:engine.native_physical_tools_verified===true,manufacturing_signoff:false});
  }

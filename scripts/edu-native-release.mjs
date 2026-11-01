@@ -9,6 +9,9 @@ import {assertLicenseReleaseReady} from './license-release-check.mjs';
 import {eduNativePaths,eduWindowsBuilderConfig,assertEduNativeEvidence,assertEduDesktopEvidence} from './edu-native-options.mjs';
 import {safeArchiveEntries,zipEntryNames,validateTree} from '../apps/desktop/update-install.mjs';
 import {signableMachOHeader} from './native-package-options.mjs';
+import {signingPolicyIdentity,windowsSigningPolicy} from './signing-policy.mjs';
+import {signWindowsFile,verifyWindowsSignature,windowsInstallerSigningConfig} from './windows-signing.mjs';
+import {verifyNotarizedMacApp,notarizeMacApp} from './mac-signing.mjs';
 
 const require=createRequire(import.meta.url),root=process.cwd(),mode=process.argv[2]??'all';
 if(!['build','finish','all'].includes(mode))throw Error('Use edu-native-release.mjs build, finish or all.');
@@ -19,6 +22,7 @@ if(!/^[a-f0-9]{40}$/.test(source_revision))throw Error('A committed source revis
 const changed=execFileSync('git',['diff','--name-only','HEAD'],{encoding:'utf8',windowsHide:true}).trim().split(/\r?\n/).filter(Boolean).filter(file=>!file.startsWith('docs/evidence/')&&!['packages/ui/src/theme.css','public/appearance-init.js'].includes(file));
 if(changed.length)throw Error('Commit release source/config before packaging: '+changed.join(', '));
 const authority=await assertLicenseReleaseReady(root),env={...process.env,RESISTOR_EDITION:'edu'};
+const signingPolicy=signingPolicyIdentity(process.platform);
 const run=(command,args,extra={})=>new Promise((resolve,reject)=>{const child=spawn(command,args,{cwd:root,env,stdio:'inherit',windowsHide:true,...extra});child.once('error',reject);child.once('exit',code=>code===0?resolve():reject(Error(path.basename(command)+' failed with exit '+code)));});
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex'),json=async file=>JSON.parse(await readFile(file,'utf8'));
 await mkdir(paths.output,{recursive:true});
@@ -45,16 +49,19 @@ if(mode!=='finish'){
  const preserved=await Promise.all(['packages/ui/src/theme.css','public/appearance-init.js'].map(async file=>({file,bytes:await readFile(file)})));
  try{await run(process.execPath,['scripts/edition.mjs','build','edu']);}finally{for(const {file,bytes}of preserved)await writeFile(file,bytes);}
  await run(process.execPath,['scripts/package.mjs',...(process.platform==='darwin'?['--mac']:process.platform==='linux'?['--linux']:[])]);
+ if(process.platform==='win32')await signWindowsFile(paths.executable);
  const runtime=await verifyResources();
  await run(process.execPath,['scripts/native-engine-qa.mjs'],{env:{...env,REGISTER_QA_RESOURCES:paths.resources,REGISTER_ENGINE_MODE:'native'}});
  const engine=await json(`docs/evidence/native-runtime/${process.platform}-${process.arch}.json`);
  const state={schema_version:1,edition:'edu',product_id:'resistor.edu',version,target:paths.target,source_revision,build_tools_revision:source_revision,packaged_executable_sha256:hash(await readFile(paths.executable)),license_authority:authority,runtime:{platform:process.platform,arch:process.arch,manifest_sha256:runtime.sha256,versions:runtime.value.versions,scope:runtime.value.scope},native_qa:{completed:false,edition:'edu',product_id:'resistor.edu',platform:process.platform,arch:process.arch,source_revision,engine:{...engine,completed:true,resource_scope:'packaged',runtime_manifest_sha256:runtime.sha256},desktop:null}};
+ state.signing_policy=signingPolicy;
  await writeFile(stateFile,JSON.stringify(state,null,2)+'\n');
  console.log(JSON.stringify({edition:'edu',target:paths.target,built:true,packaged_engine_qa:true,desktop_activation_qa:false,published:false}));
 }
 if(mode==='build')process.exit(0);
 const state=await json(stateFile),runtime=await verifyResources();
 if(state.source_revision!==source_revision||state.version!==version||state.runtime.manifest_sha256!==runtime.sha256)throw Error('Rebuild this source revision before finishing the installer.');
+if(JSON.stringify(state.signing_policy)!==JSON.stringify(signingPolicy))throw Error('Signing identity changed after build; rebuild and repeat actual native QA.');
 if(state.packaged_executable_sha256!==hash(await readFile(paths.executable)))throw Error('Packaged executable changed after engine QA.');
 for(const [file,digest]of Object.entries(state.native_qa.engine.source_sha256??{}))if(hash(await readFile(path.join(paths.resources,file)))!==digest)throw Error('Packaged engine source changed after QA: '+file);
 const observedIndex=process.argv.indexOf('--desktop-evidence');
@@ -65,17 +72,31 @@ assertEduDesktopEvidence(state.native_qa.desktop,{edition:'edu',product_id:'resi
 if(observedIndex>=0&&state.native_qa.desktop.verification_method!=='native-cua')throw Error('Imported observation evidence must identify the native CUA method.');
 assertEduNativeEvidence(state,{version,source_revision,target:paths.target,runtime_manifest_sha256:runtime.sha256});
 state.native_qa.completed=true;
+let signing={authenticode_signed:false,ad_hoc_signed:false,developer_id_signed:false,notarized:false};
 if(process.platform==='win32'){
- const config=path.join(paths.output,'edu-windows-builder.json');await writeFile(config,JSON.stringify(eduWindowsBuilderConfig(await json('apps/desktop/builder.json'),version),null,2));
+ const signature=await verifyWindowsSignature(paths.executable),audit=path.join(paths.output,paths.basename+'.signing-audit.jsonl');
+ if(windowsSigningPolicy().mode!=='none'){await writeFile(audit,'');env.RESISTOR_WINDOWS_SIGN_AUDIT_FILE=audit;}
+ const config=path.join(paths.output,'edu-windows-builder.json');await writeFile(config,JSON.stringify(windowsInstallerSigningConfig(eduWindowsBuilderConfig(await json('apps/desktop/builder.json'),version)),null,2));
  await run(process.execPath,[require.resolve('electron-builder/out/cli/cli.js'),'--config',config,'--prepackaged',paths.app,'--win','--publish','never']);
+ const installerSignature=await verifyWindowsSignature(paths.artifact);
+ if(hash(await readFile(paths.executable))!==state.packaged_executable_sha256)throw Error('Installer packaging changed the executable after QA.');
+ signing={...signing,...installerSignature,application:signature};
+ if(installerSignature.authenticode_signed){const entries=(await readFile(audit,'utf8')).trim().split('\n').map(line=>JSON.parse(line));if(!entries.some(e=>e.file===paths.basename+'.__uninstaller.exe'&&e.authenticode_signed===true)||!entries.some(e=>e.file===path.basename(paths.artifact)&&e.authenticode_signed===true))throw Error('Installer and uninstaller signature verification evidence is incomplete.');signing.signed_installer_files=entries;}
 }else{
+ if(process.platform==='darwin'){signing={...signing,...await notarizeMacApp(paths.app)};if(hash(await readFile(paths.executable))!==state.packaged_executable_sha256)throw Error('Notarization changed the executable after QA.');}
  const temporary=await mkdtemp(path.join(paths.output,'.archive-')),packageRoot=process.platform==='darwin'?temporary:path.join(temporary,paths.basename);
  await mkdir(packageRoot,{recursive:true});await cp(paths.app,path.join(packageRoot,process.platform==='darwin'?'Resistor Edu.app':'Resistor Edu'),{recursive:true,verbatimSymlinks:true});
- const readme=`Resistor Edu ${version} · ${paths.target}\n\nFull Edu application: circuit/layout editing, linked lessons, quizzes and shared native Python/KLayout/ngspice/public SKY130. First activation requires an Edu serial and internet. Industry requires a separate license. User data and Industry installations are preserved.\n\n${process.platform==='darwin'?'Extract the ZIP on your Mac, then drag Resistor Edu.app into your Applications folder. The app is ad-hoc signed, not Apple Developer ID signed or notarized. Follow macOS Privacy & Security guidance only after checking the official source and SHA-256; no system protection is disabled by this archive.':'Extract the entire archive and run ./install.sh, or open ./Resistor Edu/Resistor Edu directly. A graphical Linux x64 session and OS keyring are required. Do not run as root or disable the Chromium sandbox.'}\n\nNo Docker is required for bundled circuit/layout/PDK simulation. Magic/Netgen and physical-rule availability are shown separately; additional tools may need installation. Neither this package nor educational checks assert foundry signoff.\nSource: ${source_revision}\nDownload: https://resistor.kr/download/edu/\n`;
+ const readme=`Resistor Edu ${version} · ${paths.target}\n\nFull Edu application: circuit/layout editing, linked lessons, quizzes and shared native Python/KLayout/ngspice/public SKY130. First activation requires an Edu serial and internet. Industry requires a separate license. User data and Industry installations are preserved.\n\n${process.platform==='darwin'?'Extract the ZIP on your Mac, then drag Resistor Edu.app into your Applications folder. '+(signing.notarized?'Developer ID signature, Apple Accepted notarization, stapled ticket and Gatekeeper assessment were verified.':'The app is ad-hoc signed, not Apple Developer ID signed or notarized.')+' No system protection is disabled by this archive.':'Extract the entire archive and run ./install.sh, or open ./Resistor Edu/Resistor Edu directly. A graphical Linux x64 session and OS keyring are required. Do not run as root or disable the Chromium sandbox.'}\n\nNo Docker is required for bundled circuit/layout/PDK simulation. Magic/Netgen and physical-rule availability are shown separately; additional tools may need installation. Neither this package nor educational checks assert foundry signoff.\nSource: ${source_revision}\nDownload: https://resistor.kr/download/edu/\n`;
  await writeFile(path.join(packageRoot,'README.txt'),readme);
  if(process.platform==='darwin'){
   await run('/usr/bin/ditto',['-c','-k','--norsrc',packageRoot,paths.artifact]);
   safeArchiveEntries((await zipEntryNames(paths.artifact)).join('\n'),'Resistor Edu.app',{mac:true,edition:'edu'});
+  if(signing.notarized){
+   const extracted=await mkdtemp(path.join(paths.output,'.signed-verify-'));await run('/usr/bin/ditto',['-x','-k',paths.artifact,extracted]);
+   const finalApp=path.join(extracted,'Resistor Edu.app');await verifyNotarizedMacApp(finalApp);
+   if(hash(await readFile(path.join(finalApp,'Contents/MacOS/Resistor Edu')))!==state.packaged_executable_sha256||hash(await readFile(path.join(finalApp,'Contents/Resources/app/native-runtime/manifest.json')))!==runtime.sha256)throw Error('Final Mac archive differs from the QA-verified app.');
+   signing.distribution_archive_verified=true;
+  }
  }else{
   await cp('scripts/edu-linux-install.cjs',path.join(packageRoot,'install.cjs'));
   await writeFile(path.join(packageRoot,'install.sh'),'#!/bin/sh\nset -eu\nedu_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)\nexport ELECTRON_RUN_AS_NODE=1\nexec "$edu_directory/Resistor Edu/Resistor Edu" "$edu_directory/install.cjs"\n');await chmod(path.join(packageRoot,'install.sh'),0o755);
@@ -83,6 +104,7 @@ if(process.platform==='win32'){
   safeArchiveEntries(execFileSync('tar',['-tzf',paths.artifact],{encoding:'utf8',maxBuffer:8*1024*1024}),paths.basename,{edition:'edu'});
  }
 }
-const bytes=await readFile(paths.artifact),receipt={...state,platform:paths.target.split('-')[0],arch:process.arch,file:path.basename(paths.artifact),bytes:bytes.length,sha256:hash(bytes),built_at:new Date().toISOString(),license_authority:authority,signing:{authenticode_signed:false,ad_hoc_signed:process.platform==='darwin',developer_id_signed:false,notarized:false},runtime_arch:process.arch,requires_emulation:false,physical_signoff:false,manufacturing_signoff:false};
+const bytes=await readFile(paths.artifact);signing={schema_version:1,...signing,artifact_sha256:hash(bytes),packaged_executable_sha256:state.packaged_executable_sha256,runtime_manifest_sha256:runtime.sha256};
+const receipt={...state,platform:paths.target.split('-')[0],arch:process.arch,file:path.basename(paths.artifact),bytes:bytes.length,sha256:hash(bytes),built_at:new Date().toISOString(),license_authority:authority,signing,runtime_arch:process.arch,requires_emulation:false,physical_signoff:false,manufacturing_signoff:false};
 await writeFile(paths.receipt,JSON.stringify(receipt,null,2)+'\n');
 console.log(JSON.stringify({edition:'edu',target:paths.target,artifact:paths.artifact,receipt:paths.receipt,bytes:receipt.bytes,sha256:receipt.sha256,native_qa_completed:true,published:false}));

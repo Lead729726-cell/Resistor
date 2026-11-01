@@ -5,6 +5,15 @@
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "preview_urls": false,
+  "vars": {
+    "LICENSE_MAIL_PROVIDER": "gmail",
+    "LICENSE_MAIL_SENDING_ENABLED": "false",
+    "GMAIL_SENDER_EMAIL": "creditlsh00726@gmail.com",
+    "LICENSE_MAIL_FROM": "creditlsh00726@gmail.com",
+    "LICENSE_INFLEARN_COURSE_ID": "345103",
+    "LICENSE_MAIL_DAILY_ATTEMPT_LIMIT": "80"
+  },
+  "triggers": {"crons": ["*/5 * * * *"]},
   "durable_objects": {"bindings": [{"name": "LICENSE_AUTHORITY", "class_name": "LicenseAuthority"}]},
   "migrations": [{"tag": "v1", "new_sqlite_classes": ["LicenseAuthority"]}],
   "observability": {"enabled": false}

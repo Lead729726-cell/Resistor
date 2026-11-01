@@ -1,12 +1,18 @@
 name: Resistor Edu native installers
 on:
   workflow_dispatch:
-  push:
-    branches: [codex/resistor-edu]
-    paths:
-      - .github/workflows/edu-native.yml
-      - scripts/edu-native-*.mjs
-      - platform/licensing/public-config.json
+    inputs:
+      mac_developer_id:
+        description: Use approved Developer ID credentials and submit to Apple notarization
+        type: boolean
+        default: false
+      windows_artifact_signing:
+        description: Use the approved paid Azure Artifact Signing Public Trust profile
+        type: boolean
+        default: false
+# Native release builds are intentionally dispatched only after preparing a new
+# release version, fresh short-lived QA grants, and any selected signing keys.
+# Ordinary pushes continue through the separate source-validation workflow.
 permissions:
   contents: read
 concurrency:
@@ -14,6 +20,9 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
+    permissions:
+      contents: read
+      id-token: write
     strategy:
       fail-fast: false
       matrix:
@@ -43,6 +52,14 @@ jobs:
     env:
       RESISTOR_EDITION: edu
       CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      RESISTOR_MAC_SIGNING: ${{ matrix.platform == 'darwin' && inputs.mac_developer_id && 'developer-id' || 'adhoc' }}
+      RESISTOR_WINDOWS_SIGNING: ${{ matrix.platform == 'win32' && inputs.windows_artifact_signing && 'azure' || 'none' }}
+      RESISTOR_MAC_IDENTITY: ${{ vars.RESISTOR_MAC_IDENTITY }}
+      RESISTOR_APPLE_TEAM_ID: ${{ vars.RESISTOR_APPLE_TEAM_ID }}
+      RESISTOR_WINDOWS_PUBLISHER: ${{ vars.RESISTOR_WINDOWS_PUBLISHER }}
+      RESISTOR_AZURE_SIGN_ENDPOINT: ${{ vars.RESISTOR_AZURE_SIGN_ENDPOINT }}
+      RESISTOR_AZURE_SIGN_ACCOUNT: ${{ vars.RESISTOR_AZURE_SIGN_ACCOUNT }}
+      RESISTOR_AZURE_SIGN_PROFILE: ${{ vars.RESISTOR_AZURE_SIGN_PROFILE }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -52,8 +69,61 @@ jobs:
       - name: Verify actual native platform and edition
         run: node -e "if(process.platform!=='${{ matrix.platform }}'||process.arch!=='${{ matrix.arch }}'||require('./product-edition.json').edition!=='edu')process.exit(1)"
       - run: npm ci
+      - name: Prepare existing Developer ID and notarization credentials in an ephemeral keychain
+        if: runner.os == 'macOS' && inputs.mac_developer_id
+        shell: bash
+        env:
+          MAC_CERTIFICATE_P12_BASE64: ${{ secrets.RESISTOR_MAC_CERTIFICATE_P12_BASE64 }}
+          MAC_CERTIFICATE_PASSWORD: ${{ secrets.RESISTOR_MAC_CERTIFICATE_PASSWORD }}
+          APPLE_NOTARY_KEY_BASE64: ${{ secrets.RESISTOR_APPLE_NOTARY_KEY_BASE64 }}
+          APPLE_NOTARY_KEY_ID: ${{ vars.RESISTOR_APPLE_NOTARY_KEY_ID }}
+          APPLE_NOTARY_ISSUER_ID: ${{ vars.RESISTOR_APPLE_NOTARY_ISSUER_ID }}
+        run: |
+          set -euo pipefail
+          umask 077
+          for variable in MAC_CERTIFICATE_P12_BASE64 MAC_CERTIFICATE_PASSWORD APPLE_NOTARY_KEY_BASE64 APPLE_NOTARY_KEY_ID APPLE_NOTARY_ISSUER_ID RESISTOR_MAC_IDENTITY RESISTOR_APPLE_TEAM_ID; do
+            if [ -z "${!variable}" ]; then echo "Missing signing configuration: $variable"; exit 1; fi
+          done
+          keychain="$RUNNER_TEMP/resistor-signing.keychain-db"
+          keychain_password=$(openssl rand -hex 32)
+          printf '%s' "$MAC_CERTIFICATE_P12_BASE64" | base64 -D > "$RUNNER_TEMP/resistor-certificate.p12"
+          printf '%s' "$APPLE_NOTARY_KEY_BASE64" | base64 -D > "$RUNNER_TEMP/resistor-notary.p8"
+          security create-keychain -p "$keychain_password" "$keychain"
+          security set-keychain-settings -lut 21600 "$keychain"
+          security unlock-keychain -p "$keychain_password" "$keychain"
+          security import "$RUNNER_TEMP/resistor-certificate.p12" -P "$MAC_CERTIFICATE_PASSWORD" -k "$keychain" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$keychain_password" "$keychain" >/dev/null
+          security list-keychains -d user -s "$keychain"
+          xcrun notarytool store-credentials resistor-release --key "$RUNNER_TEMP/resistor-notary.p8" --key-id "$APPLE_NOTARY_KEY_ID" --issuer "$APPLE_NOTARY_ISSUER_ID" --keychain "$keychain" >/dev/null
+          printf 'RESISTOR_MAC_KEYCHAIN=%s\nRESISTOR_NOTARY_PROFILE=resistor-release\n' "$keychain" >> "$GITHUB_ENV"
+      - name: Authenticate approved Artifact Signing identity with OIDC
+        if: runner.os == 'Windows' && inputs.windows_artifact_signing
+        uses: azure/login@v3
+        with:
+          client-id: ${{ vars.RESISTOR_AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.RESISTOR_AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.RESISTOR_AZURE_SUBSCRIPTION_ID }}
+      - name: Prepare pinned Microsoft signing client and SignTool
+        if: runner.os == 'Windows' && inputs.windows_artifact_signing
+        shell: pwsh
+        run: |
+          $eduSigningTools = Join-Path $env:RUNNER_TEMP 'resistor-signing-tools'
+          nuget install Microsoft.Windows.SDK.BuildTools -Version 10.0.26100.4188 -OutputDirectory $eduSigningTools -Source https://api.nuget.org/v3/index.json -NonInteractive
+          if ($LASTEXITCODE -ne 0) { throw 'Windows SDK installation failed' }
+          nuget install Microsoft.ArtifactSigning.Client -Version 1.0.128 -OutputDirectory $eduSigningTools -Source https://api.nuget.org/v3/index.json -NonInteractive
+          if ($LASTEXITCODE -ne 0) { throw 'Microsoft signing client installation failed' }
+          $eduSignTool = Get-ChildItem -LiteralPath $eduSigningTools -Recurse -Filter signtool.exe | Where-Object FullName -Match '[\\/]x64[\\/]signtool.exe$' | Select-Object -First 1
+          $eduDlib = Get-ChildItem -LiteralPath $eduSigningTools -Recurse -Filter Azure.CodeSigning.Dlib.dll | Where-Object FullName -Match '[\\/]x64[\\/]' | Select-Object -First 1
+          if (-not $eduSignTool -or -not $eduDlib) { throw 'Pinned native signing tools missing' }
+          "RESISTOR_SIGNTOOL_PATH=$($eduSignTool.FullName)" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
+          "RESISTOR_AZURE_SIGN_DLIB=$($eduDlib.FullName)" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Read-only signing prerequisites
+        run: node scripts/signing-preflight.mjs
+      - name: Require explicitly selected trusted signing configuration
+        if: (runner.os == 'macOS' && inputs.mac_developer_id) || (runner.os == 'Windows' && inputs.windows_artifact_signing)
+        run: node scripts/signing-preflight.mjs --require-trusted
       - name: Verify release authority, edition identity and mathematical core
-        run: node --test --test-isolation=none tests/edu-native-release.test.mjs tests/licensing.test.mjs tests/product-editions.test.mjs
+        run: node --test --test-isolation=none tests/native-signing.test.mjs tests/edu-native-release.test.mjs tests/licensing.test.mjs tests/product-editions.test.mjs
       - run: node --import tsx --test --test-isolation=none tests/formulas/*.test.ts tests/course-*.test.ts tests/education-inverter.test.ts
       - name: Locate Windows LZMA archive extractor
         if: runner.os == 'Windows'
@@ -119,3 +189,9 @@ jobs:
             release/edu-installers/*.desktop-qa.json
             docs/evidence/native-runtime/*.json
           if-no-files-found: ignore
+      - name: Remove ephemeral Apple signing material
+        if: always() && runner.os == 'macOS' && inputs.mac_developer_id
+        shell: bash
+        run: |
+          security delete-keychain "$RUNNER_TEMP/resistor-signing.keychain-db" || true
+          rm -f -- "$RUNNER_TEMP/resistor-certificate.p12" "$RUNNER_TEMP/resistor-notary.p8"

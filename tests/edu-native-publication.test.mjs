@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash,generateKeyPairSync} from 'node:crypto';
-import {verifiedEduNativeFiles,validateEduPublicationSource,flattenVercelSourceTree,mergeEduNativeManifest,eduNativeSiteOverlay} from '../scripts/edu-native-publication.mjs';
+import {verifiedEduNativeFiles,validateEduSigningEvidence,validateEduPublicationSource,flattenVercelSourceTree,mergeEduNativeManifest,eduNativeSiteOverlay} from '../scripts/edu-native-publication.mjs';
 const definitions=JSON.parse(await readFile('apps/desktop/product-editions.json','utf8'));
 const previous=JSON.parse(await readFile('platform/download-site/edition-downloads.json','utf8'));
 const sha=b=>createHash('sha256').update(b).digest('hex');
@@ -26,6 +26,43 @@ test('desktop publication requires the exact observed source, target, executable
  assert.doesNotThrow(()=>verifiedEduNativeFiles(native.release,native.receipts,authority));
  for(const mutation of [r=>r.native_qa.desktop.source_revision='c'.repeat(40),r=>r.native_qa.desktop.target='macos-arm64',r=>r.native_qa.desktop.product_id='resistor.indust',r=>r.native_qa.desktop.version='0.31.0',r=>r.native_qa.desktop.packaged_executable_sha256='8'.repeat(64),r=>delete r.packaged_executable_sha256,r=>r.native_qa.desktop.runtime_manifest_sha256='9'.repeat(64),r=>r.native_qa.desktop.verification_method='unchecked',r=>r.native_qa.desktop.checked_at='2099-01-01T00:00:00Z',r=>{r.native_qa.desktop.verification_method='native-cua';r.native_qa.desktop.observations=checks.slice(1).map(check=>({check,evidence:'Synthetic test observation'}));}]){
   const changed=fixture(mutation);assert.throws(()=>verifiedEduNativeFiles(changed.release,changed.receipts,authority));
+ }
+});
+
+// These are synthetic validator fixtures, never real signed release receipts.
+function signedWindowsFixture(){
+ const r=fixture().receipt,signature={authenticode_signed:true,verification:'Valid',publisher:'Synthetic test publisher',signer_thumbprint:'C'.repeat(40),timestamp_thumbprint:'D'.repeat(40),checked_at:'2026-11-01T00:00:00Z'};
+ r.signing_policy={mode:'store',publisher:signature.publisher,thumbprint:signature.signer_thumbprint};
+ r.signing={...r.signing,...signature,schema_version:1,sha256:r.sha256,artifact_sha256:r.sha256,packaged_executable_sha256:r.packaged_executable_sha256,runtime_manifest_sha256:r.runtime.manifest_sha256,application:{...signature,sha256:r.packaged_executable_sha256},signed_installer_files:[{...signature,file:r.file.replace(/\.exe$/,'.__uninstaller.exe'),sha256:'5'.repeat(64)},{...signature,file:r.file,sha256:r.sha256}]};
+ return r;
+}
+function signedMacFixture(){
+ const r=fixture().receipt;r.platform='macos';r.file='Resistor-Edu-0.32.0-macos-arm64.zip';
+ r.signing_policy={mode:'developer-id',identity:'C'.repeat(40),team_id:'ABCD123456'};
+ r.signing={schema_version:1,authenticode_signed:false,ad_hoc_signed:false,developer_id_signed:true,notarized:true,hardened_runtime:true,apple_chain_verified:true,team_id:r.signing_policy.team_id,signer_thumbprint:r.signing_policy.identity,authority:'Developer ID Application: Synthetic test publisher (ABCD123456)',secure_timestamp:'Nov 1, 2026 at 00:00:00',notarization_status:'Accepted',notarization_submission_id:'12345678-1234-1234-1234-123456789abc',stapled:true,gatekeeper_assessment:'accepted',distribution_archive_verified:true,artifact_sha256:r.sha256,packaged_executable_sha256:r.packaged_executable_sha256,runtime_manifest_sha256:r.runtime.manifest_sha256,checked_at:'2026-11-01T00:00:00Z'};
+ return r;
+}
+test('legacy unsigned receipts stay valid while boolean-only or cross-platform trusted claims fail',()=>{
+ for(const os of ['windows','macos','linux']){const r=fixture().receipt;r.platform=os;r.signing.ad_hoc_signed=os==='macos';assert.equal(validateEduSigningEvidence(r),true);}
+ for(const change of [r=>r.signing.authenticode_signed=true,r=>r.signing.notarized=true,r=>r.signing.developer_id_signed=true,r=>r.signing.ad_hoc_signed=true,r=>r.signing_policy={mode:'store'},r=>r.signing.verification='Valid',r=>r.signing.stapled=true,r=>r.signing.application={authenticode_signed:true},r=>r.signing.signed_installer_files=[{authenticode_signed:true}]]){
+  const f=fixture(change);assert.throws(()=>verifiedEduNativeFiles(f.release,f.receipts,authority));
+ }
+ const mac=fixture().receipt;mac.platform='macos';mac.signing.ad_hoc_signed=true;mac.signing.developer_id_signed=true;assert.throws(()=>validateEduSigningEvidence(mac));
+ const linux=fixture().receipt;linux.platform='linux';linux.signing.authenticode_signed=true;assert.throws(()=>validateEduSigningEvidence(linux));
+});
+test('trusted Windows publication binds publisher, certificate, timestamp and both installer components to observed bytes',()=>{
+ const valid=signedWindowsFixture();assert.equal(validateEduSigningEvidence(valid),true);
+ const f=fixture(r=>Object.assign(r,valid));assert.doesNotThrow(()=>verifiedEduNativeFiles(f.release,f.receipts,authority));
+ for(const mutate of [r=>delete r.signing.schema_version,r=>r.signing.sha256='0'.repeat(64),r=>r.signing.artifact_sha256='0'.repeat(64),r=>r.signing.packaged_executable_sha256='0'.repeat(64),r=>r.signing.runtime_manifest_sha256='0'.repeat(64),r=>r.signing.checked_at='2099-01-01T00:00:00Z',r=>r.signing.verification='NotTrusted',r=>r.signing.publisher='Different publisher',r=>r.signing.signer_thumbprint='A'.repeat(40),r=>delete r.signing.timestamp_thumbprint,r=>r.signing.application.sha256='0'.repeat(64),r=>r.signing.application.verification='UnknownError',r=>r.signing.signed_installer_files.pop(),r=>r.signing.signed_installer_files.shift(),r=>r.signing.signed_installer_files[0].sha256='',r=>r.signing.signed_installer_files[0].timestamp_thumbprint='',r=>r.signing.signed_installer_files[1].sha256='0'.repeat(64),r=>r.signing.signed_installer_files[1].file='../installer.exe']){
+  const r=signedWindowsFixture();mutate(r);assert.throws(()=>validateEduSigningEvidence(r));
+ }
+ const azure=signedWindowsFixture();azure.signing_policy={mode:'azure',publisher:azure.signing.publisher,endpoint:'https://krc.codesigning.azure.net',account:'test-account',profile:'test-profile'};assert.equal(validateEduSigningEvidence(azure),true);
+ azure.signing_policy.endpoint='https://codesigning.azure.net.attacker.test';assert.throws(()=>validateEduSigningEvidence(azure));
+});
+test('trusted Mac publication requires exact Developer ID identity and final archived notarization evidence',()=>{
+ assert.equal(validateEduSigningEvidence(signedMacFixture()),true);
+ for(const mutate of [r=>r.signing.ad_hoc_signed=true,r=>r.signing.authenticode_signed=true,r=>r.signing.notarized=false,r=>delete r.signing_policy,r=>r.signing.signer_thumbprint='A'.repeat(40),r=>r.signing.team_id='OTHER12345',r=>r.signing.hardened_runtime=false,r=>r.signing.apple_chain_verified=false,r=>r.signing.authority='Synthetic self-signed certificate',r=>r.signing.secure_timestamp='none',r=>delete r.signing.secure_timestamp,r=>r.signing.notarization_status='In Progress',r=>r.signing.notarization_submission_id='not-a-submission',r=>r.signing.stapled=false,r=>r.signing.gatekeeper_assessment='rejected',r=>r.signing.distribution_archive_verified=false,r=>r.signing.artifact_sha256='0'.repeat(64),r=>r.signing.packaged_executable_sha256='0'.repeat(64),r=>r.signing.runtime_manifest_sha256='0'.repeat(64)]){
+  const r=signedMacFixture();mutate(r);assert.throws(()=>validateEduSigningEvidence(r));
  }
 });
 test('public publication rejects draft, substituted tag, missing receipt and changed receipt bytes',()=>{
