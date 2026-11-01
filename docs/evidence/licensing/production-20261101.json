@@ -1,0 +1,83 @@
+{
+  "edition": "edu",
+  "authority": "https://resistor-licensing.nuev-official.workers.dev",
+  "checked_at": "2026-11-01T07:47:54.796Z",
+  "checks": [
+    {
+      "name": "https durable database health",
+      "passed": true
+    },
+    {
+      "name": "admin authentication required",
+      "passed": true
+    },
+    {
+      "name": "idempotent internal QA grant",
+      "passed": true
+    },
+    {
+      "name": "concurrent activation exact two-seat limit",
+      "passed": true
+    },
+    {
+      "name": "actual Ed25519 lease against packaged public key",
+      "passed": true
+    },
+    {
+      "name": "activation retry preserves credentials",
+      "passed": true
+    },
+    {
+      "name": "Edu cannot activate Industry",
+      "passed": true
+    },
+    {
+      "name": "activation survives Worker redeployment",
+      "passed": true
+    },
+    {
+      "name": "idempotent device release",
+      "passed": true
+    },
+    {
+      "name": "released seat available",
+      "passed": true
+    },
+    {
+      "name": "revocation enforced online",
+      "passed": true
+    }
+  ],
+  "health": {
+    "schema_version": 1,
+    "service": "resistor-licensing",
+    "key_id": "resistor-20261023",
+    "public_key_fingerprint": "8c05ac6702ac41ba5984fe8d356132c0b411d7cb3cd1d2c75117d5aea17a4537",
+    "editions": [
+      "edu",
+      "indust"
+    ],
+    "course_access_policy": {
+      "schema_version": 1,
+      "product_id": "resistor.edu.course",
+      "provider": "inflearn",
+      "edition": "edu",
+      "included_editions": [
+        "edu"
+      ],
+      "industry_included": false,
+      "device_limit": 2,
+      "download_url": "https://resistor.kr/download/edu/",
+      "notice": "인프런 강의에는 Resistor Edu 사용권만 포함됩니다. 개인 기기 2대까지 등록할 수 있으며, Resistor Industry는 별도 구매 제품입니다."
+    },
+    "order_source": "verified_operator_or_payment_receipt",
+    "inflearn_webhook": "not_connected",
+    "mail": "unavailable",
+    "offline_lease_days": 7,
+    "database_ready": true,
+    "storage_schema_version": 1,
+    "storage_backend": "cloudflare-durable-object-sqlite",
+    "authority_id": "production-v1"
+  },
+  "completed": true
+}

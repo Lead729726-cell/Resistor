@@ -31,3 +31,15 @@ test('published Industry and Indust labels remain compatible only within the sam
  for(const name of ['Resistor Industry','Resistor Indust']){const m=structuredClone(manifest);m.editions.find(e=>e.edition==='indust').name=name;assert.doesNotThrow(()=>validateEditionDownloads(m,definitions));}
  const invalid=structuredClone(manifest);invalid.editions.find(e=>e.edition==='indust').name='Another product';assert.throws(()=>validateEditionDownloads(invalid,definitions));
 });
+
+test('dedicated Edu releases can update one verified OS without relabeling other editions or targets',()=>{
+ const m=structuredClone(manifest),industry=JSON.stringify(m.editions.find(e=>e.edition==='indust')),edu=m.editions.find(e=>e.edition==='edu'),before=structuredClone(edu.native_installer.files);
+ const f=edu.native_installer.files.find(f=>f.target==='windows-x64');
+ f.version='0.32.0';f.release_tag='edu-v0.32.0';f.name='Resistor-Edu-0.32.0-windows-x64.exe';
+ f.url='https://github.com/Lead729726-cell/Resistor/releases/download/'+f.release_tag+'/'+f.name;
+ f.receipt_url=f.url.replace(/\.exe$/,'.json');
+ assert.doesNotThrow(()=>validateEditionDownloads(m,definitions));
+ assert.equal(JSON.stringify(m.editions.find(e=>e.edition==='indust')),industry);
+ assert.deepEqual(edu.native_installer.files.filter(f=>f.target!=='windows-x64'),before.filter(f=>f.target!=='windows-x64'));
+ for(const change of [x=>x.url=x.url.replace('/edu-v','/indust-v'),x=>x.receipt_url=x.receipt_url.replace('/edu-v','/editions-v'),x=>x.release_tag='indust-v0.32.0',x=>x.url+='?moving=1']){const bad=structuredClone(m);change(bad.editions.find(e=>e.edition==='edu').native_installer.files.find(f=>f.target==='windows-x64'));assert.throws(()=>validateEditionDownloads(bad,definitions));}
+});

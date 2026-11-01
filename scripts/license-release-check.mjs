@@ -10,5 +10,6 @@ export async function assertLicenseReleaseReady(root=process.cwd(),fetchImpl=fet
  if(!response.ok)throw Error('License authority health check failed');
  const health=(await response.json()).result,configured=c.public_keys[health?.key_id];
  if(health?.service!=='resistor-licensing'||!configured||health.public_key_fingerprint!==createHash('sha256').update(createPublicKey(configured).export({type:'spki',format:'der'})).digest('hex'))throw Error('Production license authority does not match packaged signing key');
- return {required:true,editions:['edu','indust'],server:url.origin};
+ if(health.database_ready!==true||health.storage_backend!=='cloudflare-durable-object-sqlite'||health.authority_id!=='production-v1'||health.storage_schema_version!==1)throw Error('Production license authority must prove its durable database is ready.');
+ return {required:true,editions:['edu','indust'],server:url.origin,key_id:health.key_id,public_key_fingerprint:health.public_key_fingerprint,database_ready:true,storage_backend:health.storage_backend,authority_id:health.authority_id,storage_schema_version:health.storage_schema_version,checked_at:new Date().toISOString()};
 }

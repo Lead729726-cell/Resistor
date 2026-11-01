@@ -1,0 +1,111 @@
+name: Resistor Edu native installers
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/resistor-edu]
+    paths:
+      - .github/workflows/edu-native.yml
+      - scripts/edu-native-*.mjs
+      - platform/licensing/public-config.json
+permissions:
+  contents: read
+concurrency:
+  group: edu-native-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: windows-2022
+            platform: win32
+            arch: x64
+            target: windows-x64
+            qa_secret: RESISTOR_EDU_QA_SERIAL_WINDOWS_X64
+          - runner: macos-15
+            platform: darwin
+            arch: arm64
+            target: macos-arm64
+            qa_secret: RESISTOR_EDU_QA_SERIAL_MACOS_ARM64
+          - runner: macos-15-intel
+            platform: darwin
+            arch: x64
+            target: macos-x64
+            qa_secret: RESISTOR_EDU_QA_SERIAL_MACOS_X64
+          - runner: ubuntu-24.04
+            platform: linux
+            arch: x64
+            target: linux-x64
+            qa_secret: RESISTOR_EDU_QA_SERIAL_LINUX_X64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 90
+    env:
+      RESISTOR_EDITION: edu
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - name: Verify actual native platform and edition
+        run: node -e "if(process.platform!=='${{ matrix.platform }}'||process.arch!=='${{ matrix.arch }}'||require('./product-edition.json').edition!=='edu')process.exit(1)"
+      - run: npm ci
+      - name: Verify release authority, edition identity and mathematical core
+        run: node --test --test-isolation=none tests/edu-native-release.test.mjs tests/licensing.test.mjs tests/product-editions.test.mjs
+      - run: node --import tsx --test --test-isolation=none tests/formulas/*.test.ts tests/course-*.test.ts tests/education-inverter.test.ts
+      - name: Linux build and graphical keyring prerequisites
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential pkg-config xvfb dbus-x11 gnome-keyring libsecret-1-0
+          npx --no-install playwright install-deps chromium
+      - uses: actions/cache/restore@v4
+        id: native-cache
+        with:
+          path: release/native-runtimes
+          key: edu-native-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('scripts/native-runtime-lock.json','scripts/native-pdk-lock.json') }}
+      - name: Build actual Edu app and verify bundled native engine
+        run: node scripts/edu-native-release.mjs build
+      - uses: actions/cache/save@v4
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        with:
+          path: release/native-runtimes
+          key: ${{ steps.native-cache.outputs.cache-primary-key }}
+      - name: Verify official activation and finish Windows or Mac artifact
+        if: runner.os != 'Linux'
+        env:
+          RESISTOR_EDU_QA_SERIAL: ${{ secrets[matrix.qa_secret] }}
+        run: node scripts/edu-native-release.mjs finish
+      - name: Verify official activation with Linux OS keyring and finish archive
+        if: runner.os == 'Linux'
+        env:
+          RESISTOR_EDU_QA_SERIAL: ${{ secrets[matrix.qa_secret] }}
+        shell: bash
+        run: |
+          dbus-run-session -- xvfb-run -a bash -c '
+            set -e
+            qa_keyring_pass=$(node -e "process.stdout.write(require(\"node:crypto\").randomBytes(32).toString(\"hex\"))")
+            printf "%s" "$qa_keyring_pass" | gnome-keyring-daemon --unlock --components=secrets >/dev/null
+            node scripts/edu-native-release.mjs finish
+          '
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Resistor-Edu-${{ matrix.target }}
+          path: |
+            release/edu-installers/Resistor-Edu-*.exe
+            release/edu-installers/Resistor-Edu-*.zip
+            release/edu-installers/Resistor-Edu-*.tar.gz
+            release/edu-installers/Resistor-Edu-*.json
+          if-no-files-found: error
+      - name: Keep non-secret failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Resistor-Edu-${{ matrix.target }}-failed-QA
+          path: |
+            release/edu-installers/*.build-state.json
+            release/edu-installers/*.desktop-qa.json
+            docs/evidence/native-runtime/*.json
+          if-no-files-found: ignore

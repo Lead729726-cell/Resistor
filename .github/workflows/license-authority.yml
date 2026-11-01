@@ -1,0 +1,22 @@
+name: License authority
+on:
+  push:
+    paths: ['platform/licensing/**', 'tests/licensing*.mjs', 'apps/desktop/licensing.mjs', 'scripts/license-release-check.mjs', '.github/workflows/license-authority.yml']
+  pull_request:
+    paths: ['platform/licensing/**', 'tests/licensing*.mjs', 'apps/desktop/licensing.mjs', 'scripts/license-release-check.mjs', '.github/workflows/license-authority.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  authority:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: platform/licensing/cloudflare/package-lock.json
+      - run: npm ci --prefix platform/licensing/cloudflare --no-audit --no-fund
+      - run: node --test tests/licensing.test.mjs tests/licensing-domain.test.mjs tests/licensing-cloudflare.test.mjs
