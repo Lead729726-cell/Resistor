@@ -19,6 +19,9 @@ const run=promisify(execFile),deny=message=>{throw Error(message);};
 const equal=(a,b)=>typeof a==='string'&&typeof b==='string'&&Buffer.byteLength(a)===Buffer.byteLength(b)&&timingSafeEqual(Buffer.from(a),Buffer.from(b));
 const token=value=>typeof value==='string'&&value.length>0&&value.length<=8192&&/^[\x21-\x7e]+$/.test(value);
 const issuer=value=>value==='https://accounts.google.com'||value==='accounts.google.com';
+const setupStages=new Set(['arguments','source_path','source_read','client_validation','destination_path','destination_existing_file','git_ignore','directory_create','directory_links','directory_acl','session_create','loopback_bind','oauth_callback','google_token_verification','credential_write']);
+let setupStage='arguments';
+export function safeGmailSetupDiagnostic(stage){return {ok:false,stage:setupStages.has(stage)?stage:'unknown',message:'Gmail setup did not complete. No credential contents were logged. Existing credentials are never overwritten.'};}
 
 export function parseGmailDesktopClient(value){
  const c=value?.installed;
@@ -121,30 +124,48 @@ export function approvedGmailStoragePaths(approvedHome){
 async function assertNoLinks(file){
  let current=file;for(;;){const info=await lstat(current);if(info.isSymbolicLink())deny('Secret paths cannot contain links or reparse points.');const parent=path.dirname(current);if(parent===current)break;current=parent;}
 }
-export function gmailPrivateAclScript(){
- return "$ErrorActionPreference='Stop'; Import-Module (Join-Path $env:SystemRoot 'System32/WindowsPowerShell/v1.0/Modules/Microsoft.PowerShell.Security') -ErrorAction Stop; $d=$env:RESISTOR_GMAIL_PRIVATE_DIRECTORY; $sid=[System.Security.Principal.WindowsIdentity]::GetCurrent().User; $acl=New-Object System.Security.AccessControl.DirectorySecurity; $acl.SetOwner($sid); $acl.SetAccessRuleProtection($true,$false); foreach($id in @($sid.Value,'S-1-5-18','S-1-5-32-544')) { $rule=New-Object System.Security.AccessControl.FileSystemAccessRule([System.Security.Principal.SecurityIdentifier]::new($id),'FullControl','ContainerInherit,ObjectInherit','None','Allow'); $acl.AddAccessRule($rule) }; Set-Acl -LiteralPath $d -AclObject $acl; $actual=Get-Acl -LiteralPath $d; if(-not $actual.AreAccessRulesProtected) { throw 'Unprotected ACL' }; foreach($r in $actual.Access) { if($r.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value -notin @($sid.Value,'S-1-5-18','S-1-5-32-544')) { throw 'Unexpected principal' } };";
+export function gmailPrivateAclValidatorScript(){
+ return "function Assert-ResistorGmailAcl { param([System.Security.AccessControl.FileSystemSecurity]$Acl,[System.Security.Principal.SecurityIdentifier]$OwnerSid,[bool]$Directory=$true); if($Acl.GetOwner([System.Security.Principal.SecurityIdentifier]).Value -ne $OwnerSid.Value) { throw 'Unexpected owner' }; if($Directory -and -not $Acl.AreAccessRulesProtected) { throw 'Unprotected ACL' }; $rules=$Acl.GetAccessRules($true,$true,[System.Security.Principal.SecurityIdentifier]); $hasOwner=$false; foreach($r in $rules) { if($r.IdentityReference.Value -notin @($OwnerSid.Value,'S-1-5-18','S-1-5-32-544')) { throw 'Unexpected principal' }; if($r.AccessControlType -ne [System.Security.AccessControl.AccessControlType]::Allow -or $r.PropagationFlags -ne [System.Security.AccessControl.PropagationFlags]::None) { throw 'Unsafe ACL propagation or deny rule' }; if(($r.FileSystemRights -band [System.Security.AccessControl.FileSystemRights]::FullControl) -ne [System.Security.AccessControl.FileSystemRights]::FullControl) { throw 'Private full control missing' }; if($Directory -and ($r.IsInherited -or $r.InheritanceFlags -ne ([System.Security.AccessControl.InheritanceFlags]::ContainerInherit -bor [System.Security.AccessControl.InheritanceFlags]::ObjectInherit))) { throw 'Private child inheritance missing' }; if($r.IdentityReference.Value -eq $OwnerSid.Value) { $hasOwner=$true } }; if(-not $hasOwner) { throw 'Owner full control missing' } }; ";
 }
-async function preparePrivateStorage(approvedHome){
+export function gmailPrivateAclScript({readOnly=false,childFile=false}={}){
+ if(childFile&&!readOnly)deny('Child file ACL checks are read-only.');
+ const prefix="$ErrorActionPreference='Stop'; Import-Module (Join-Path $env:SystemRoot 'System32/WindowsPowerShell/v1.0/Modules/Microsoft.PowerShell.Security') -ErrorAction Stop; $d=$env:RESISTOR_GMAIL_PRIVATE_DIRECTORY; $sid=[System.Security.Principal.WindowsIdentity]::GetCurrent().User; ";
+ const protect="$acl=New-Object System.Security.AccessControl.DirectorySecurity; $acl.SetOwner($sid); $acl.SetAccessRuleProtection($true,$false); foreach($id in @($sid.Value,'S-1-5-18','S-1-5-32-544')) { $rule=New-Object System.Security.AccessControl.FileSystemAccessRule([System.Security.Principal.SecurityIdentifier]::new($id),'FullControl','ContainerInherit,ObjectInherit','None','Allow'); $acl.AddAccessRule($rule) }; Set-Acl -LiteralPath $d -AclObject $acl; ";
+ return prefix+gmailPrivateAclValidatorScript()+(readOnly?'':protect)+"Assert-ResistorGmailAcl -Acl (Get-Acl -LiteralPath $d) -OwnerSid $sid -Directory $"+(childFile?'false':'true')+';';
+}
+async function checkPrivateAcl(file,{childFile=false}={}){await run('powershell.exe',['-NoProfile','-NonInteractive','-Command',gmailPrivateAclScript({readOnly:true,childFile})],{windowsHide:true,env:{...process.env,RESISTOR_GMAIL_PRIVATE_DIRECTORY:file},timeout:20000});}
+async function preparePrivateStorage(approvedHome,{readOnly=false}={}){
+ setupStage='destination_path';
  if(process.platform!=='win32')deny('This setup helper only writes to the approved Windows authority workspace.');
  const paths=approvedGmailStoragePaths(approvedHome);await assertNoLinks(paths.home);
  if((await realpath(paths.home)).toLowerCase()!==paths.home.toLowerCase())deny('Authority private directory resolved unexpectedly.');
+ setupStage='destination_existing_file';
  try{await lstat(paths.file);deny('A Gmail credential file already exists. It will not be overwritten.');}catch(e){if(e.code!=='ENOENT')throw e;}
+ setupStage='git_ignore';
  try{await run('git',['-C','D:/Coldbrew/Resistor','check-ignore','--quiet','--','.runtime/licensing/gmail-oauth/credentials.json'],{windowsHide:true});}catch{deny('Secret destination must be excluded from Git before OAuth starts.');}
- await mkdir(paths.directory,{recursive:false,mode:0o700}).catch(e=>{if(e.code!=='EEXIST')throw e;});await assertNoLinks(paths.directory);
- try{await run('powershell.exe',['-NoProfile','-NonInteractive','-Command',gmailPrivateAclScript()],{windowsHide:true,env:{...process.env,RESISTOR_GMAIL_PRIVATE_DIRECTORY:paths.directory},timeout:20000});}catch{deny('Private Windows ACL verification failed; OAuth was not started.');}
+ setupStage='directory_create';
+ try{if(!(await lstat(paths.directory)).isDirectory())deny('Private destination must be a directory.');}catch(e){if(e.code!=='ENOENT'||readOnly)throw e;await mkdir(paths.directory,{recursive:false,mode:0o700});}
+ setupStage='directory_links';await assertNoLinks(paths.directory);
+ setupStage='directory_acl';
+ const acl=inspect=>run('powershell.exe',['-NoProfile','-NonInteractive','-Command',gmailPrivateAclScript({readOnly:inspect})],{windowsHide:true,env:{...process.env,RESISTOR_GMAIL_PRIVATE_DIRECTORY:paths.directory},timeout:20000});
+ try{await acl(true);}catch{if(readOnly)deny('Private Windows ACL verification failed; OAuth was not started.');try{await acl(false);}catch{deny('Private Windows ACL verification failed; OAuth was not started.');}}
  return paths;
 }
 async function cli(){
  const args=process.argv.slice(2);
- if(!args.length||args[0]==='--help'){console.log('Operator-only setup: node scripts/license-gmail-connect.mjs connect --client-file ABSOLUTE_APPROVED_CLIENT_JSON --approved-private-dir D:/Coldbrew/Resistor/.runtime/licensing --approve-identity-scopes --publishing-status testing|production|unknown\nRequests only openid, email and gmail.send. Verifies creditlsh00726@gmail.com using a Google-signed ID token. Prints no tokens, sends no email and never overwrites credentials. A Testing refresh token is limited to 7 days. Run only after explicit approval of the client file and private destination.');return;}
- if(args[0]!=='connect'||!args.includes('--approve-identity-scopes'))deny('Explicit connect command and identity-scope approval are required.');
+ if(!args.length||args[0]==='--help'){console.log('Operator-only setup: node scripts/license-gmail-connect.mjs connect --client-file ABSOLUTE_APPROVED_CLIENT_JSON --approved-private-dir D:/Coldbrew/Resistor/.runtime/licensing --approve-identity-scopes --publishing-status testing|production|unknown\nUse inspect instead of connect for read-only local checks, without OAuth, listener or credential writes. Requests only openid, email and gmail.send. Verifies creditlsh00726@gmail.com using a Google-signed ID token. Prints no tokens, sends no email and never overwrites credentials. A Testing refresh token is limited to 7 days. Run only after explicit approval of the client file and private destination.');return;}
+ const readOnly=args[0]==='inspect';if(!['connect','inspect'].includes(args[0])||(!readOnly&&!args.includes('--approve-identity-scopes')))deny('Explicit connect command and identity-scope approval are required.');
  const options={};for(let i=1;i<args.length;i++){const key=args[i];if(key==='--approve-identity-scopes')continue;if(!['--client-file','--approved-private-dir','--publishing-status'].includes(key)||options[key]!==undefined||!args[i+1]||args[i+1].startsWith('--'))deny('Invalid setup arguments.');options[key]=args[++i];}
- const file=options['--client-file'];if(!file||!path.isAbsolute(file))deny('An approved absolute OAuth client JSON path is required.');await assertNoLinks(file);
+ setupStage='source_path';const file=options['--client-file'];if(!file||!path.isAbsolute(file))deny('An approved absolute OAuth client JSON path is required.');await assertNoLinks(file);
  const info=await lstat(file);if(!info.isFile()||info.size>16384)deny('Invalid OAuth client JSON file.');
+ setupStage='source_read';
  let parsed;try{parsed=JSON.parse(await readFile(file,'utf8'));}catch{deny('Cannot read the approved OAuth client JSON.');}
+ setupStage='client_validation';
  const client=parseGmailDesktopClient(parsed),publishingStatus=options['--publishing-status']??'unknown';if(!['testing','production','unknown'].includes(publishingStatus))deny('Invalid declared publishing status.');
- const paths=await preparePrivateStorage(options['--approved-private-dir']),session=createGmailOAuthSession(client.client_id),listener=await startGmailLoopback(session);
+ const paths=await preparePrivateStorage(options['--approved-private-dir'],{readOnly});
+ if(readOnly){console.log(JSON.stringify({ok:true,stage:'local_preflight',client_valid:true,path_valid:true,private_acl_verified:true,git_ignored:true,oauth_started:false,credentials_written:false}));return;}
+ setupStage='session_create';const session=createGmailOAuthSession(client.client_id);setupStage='loopback_bind';const listener=await startGmailLoopback(session);
  console.log('Open '+listener.startUrl+' in your browser. Approve only the owner account and the displayed openid/email + Gmail send permissions. No email will be sent.');
- try{const code=await listener.code,record=await exchangeGmailAuthorization(client,session,code,listener.redirectUri,{publishingStatus});await assertNoLinks(paths.directory);await writeFile(paths.file,JSON.stringify(record,null,2)+'\n',{flag:'wx',mode:0o600});console.log(JSON.stringify({saved:true,email:record.email,identity_verified:true,scopes:record.scopes,refresh_expiry_source:record.refresh_expiry_source,refresh_expires_at:record.refresh_expires_at,path:paths.file,email_sent:false,production_configured:false}));}finally{listener.close();}
+ try{setupStage='oauth_callback';const code=await listener.code;setupStage='google_token_verification';const record=await exchangeGmailAuthorization(client,session,code,listener.redirectUri,{publishingStatus});setupStage='credential_write';await assertNoLinks(paths.directory);await checkPrivateAcl(paths.directory);await writeFile(paths.file,JSON.stringify(record,null,2)+'\n',{flag:'wx',mode:0o600});await checkPrivateAcl(paths.file,{childFile:true});console.log(JSON.stringify({saved:true,email:record.email,identity_verified:true,scopes:record.scopes,refresh_expiry_source:record.refresh_expiry_source,refresh_expires_at:record.refresh_expires_at,path:paths.file,email_sent:false,production_configured:false}));}finally{listener.close();}
 }
-if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))cli().catch(()=>{console.error('Gmail setup did not complete. No credential contents were logged. Check client type, approved destination, scopes, owner account, expiry and private folder permissions. Existing credentials are never overwritten.');process.exitCode=1;});
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))cli().catch(()=>{console.error(JSON.stringify(safeGmailSetupDiagnostic(setupStage)));process.exitCode=1;});

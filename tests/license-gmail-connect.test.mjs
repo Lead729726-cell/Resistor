@@ -6,7 +6,7 @@ import {promisify} from 'node:util';
 import {mkdtemp,rm,writeFile,readFile} from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
-import {GMAIL_SEND_SCOPE,GMAIL_EXPECTED_SENDER,GMAIL_PRIVATE_HOME,GMAIL_CONNECT_SCOPES,parseGmailDesktopClient,createGmailOAuthSession,gmailAuthorizationUrl,readGmailOAuthCallback,validateGmailGrantedScopes,verifyGmailOwnerIdToken,exchangeGmailAuthorization,startGmailLoopback,approvedGmailStoragePaths,gmailPrivateAclScript} from '../scripts/license-gmail-connect.mjs';
+import {GMAIL_SEND_SCOPE,GMAIL_EXPECTED_SENDER,GMAIL_PRIVATE_HOME,GMAIL_CONNECT_SCOPES,parseGmailDesktopClient,createGmailOAuthSession,gmailAuthorizationUrl,readGmailOAuthCallback,validateGmailGrantedScopes,verifyGmailOwnerIdToken,exchangeGmailAuthorization,startGmailLoopback,approvedGmailStoragePaths,gmailPrivateAclScript,gmailPrivateAclValidatorScript,safeGmailSetupDiagnostic} from '../scripts/license-gmail-connect.mjs';
 
 // Entirely synthetic RSA/OAuth fixtures. Tests do not contact Google, open a
 // browser, read real client JSON, or write into the authority private directory.
@@ -84,13 +84,34 @@ test('loopback timeout and approved storage pin fail closed without writing priv
 test('help is safe and documents exact identity scopes, no overwrite and testing expiry',async()=>{
  const {stdout,stderr}=await promisify(execFile)(process.execPath,['scripts/license-gmail-connect.mjs','--help']);assert.equal(stderr,'');assert(stdout.includes('openid, email and gmail.send'));assert(stdout.includes('7 days'));assert(stdout.includes('never overwrites'));assert(!stdout.includes('client_secret'));assert(!stdout.includes('refresh_token'));
 });
+test('setup diagnostics use only allowlisted stage names and inspect ACL script never mutates',async()=>{
+ assert.equal(safeGmailSetupDiagnostic('directory_acl').stage,'directory_acl');assert.equal(safeGmailSetupDiagnostic('private-token-marker').stage,'unknown');assert(!JSON.stringify(safeGmailSetupDiagnostic('private-token-marker')).includes('private-token-marker'));
+ const inspect=gmailPrivateAclScript({readOnly:true});assert(inspect.includes('Get-Acl'));assert(!inspect.includes('Set-Acl'));assert(!inspect.includes('SetOwner'));assert(inspect.includes('Owner full control missing'));
+ await assert.rejects(()=>promisify(execFile)(process.execPath,['scripts/license-gmail-connect.mjs','connect','--unexpected','private-token-marker']),error=>{const diagnostic=JSON.parse(error.stderr);return diagnostic.stage==='arguments'&&!error.stderr.includes('private-token-marker')&&!error.stdout;});
+});
 test('Windows protected directory and child file ACL exclude unrelated principals without changing existing files',{skip:process.platform!=='win32'},async()=>{
  const directory=await mkdtemp(path.join(os.tmpdir(),'resistor-gmail-acl-'));
  try{
   const exec=promisify(execFile),env={...process.env,RESISTOR_GMAIL_PRIVATE_DIRECTORY:directory};
   await exec('powershell.exe',['-NoProfile','-NonInteractive','-Command',gmailPrivateAclScript()],{windowsHide:true,env});
+  // Repeat the read-only preflight against an already protected directory,
+  // matching the setup state after the operator saves client.json there.
+  await exec('powershell.exe',['-NoProfile','-NonInteractive','-Command',gmailPrivateAclScript({readOnly:true})],{windowsHide:true,env});
   const file=path.join(directory,'synthetic.json');await writeFile(file,'synthetic fixture, no credentials',{flag:'wx',mode:0o600});await assert.rejects(()=>writeFile(file,'must not overwrite',{flag:'wx'}),{code:'EEXIST'});assert.equal(await readFile(file,'utf8'),'synthetic fixture, no credentials');
-  const inspect="$ErrorActionPreference='Stop'; Import-Module (Join-Path $env:SystemRoot 'System32/WindowsPowerShell/v1.0/Modules/Microsoft.PowerShell.Security') -ErrorAction Stop; $sid=[System.Security.Principal.WindowsIdentity]::GetCurrent().User.Value; $acl=Get-Acl -LiteralPath (Join-Path $env:RESISTOR_GMAIL_PRIVATE_DIRECTORY 'synthetic.json'); foreach($r in $acl.Access) { if($r.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value -notin @($sid,'S-1-5-18','S-1-5-32-544')) { throw 'Unexpected principal' } }; if($acl.Access.Count -lt 1) { throw 'No private ACL' };";
-  const result=await exec('powershell.exe',['-NoProfile','-NonInteractive','-Command',inspect],{windowsHide:true,env});assert.equal(result.stdout,'');
- }finally{await rm(directory,{recursive:true,force:true});}
+  const result=await exec('powershell.exe',['-NoProfile','-NonInteractive','-Command',gmailPrivateAclScript({readOnly:true,childFile:true})],{windowsHide:true,env:{...env,RESISTOR_GMAIL_PRIVATE_DIRECTORY:file}});assert.equal(result.stdout,'');
+ }finally{assert.equal(path.dirname(path.resolve(directory)),path.resolve(os.tmpdir()));await rm(directory,{recursive:true,force:true});}
+});
+test('Windows ACL validator rejects foreign owners, noninheritable grants, propagation flags and deny rules',{skip:process.platform!=='win32'},async()=>{
+ const exec=promisify(execFile);
+ const cases="$ErrorActionPreference='Stop'; $sid=[System.Security.Principal.WindowsIdentity]::GetCurrent().User; "+gmailPrivateAclValidatorScript()+"foreach($case in @('foreign_owner','folder_only','container_only','object_only','inherit_only','no_propagate','deny','missing_owner','unexpected_principal','read_only')) { $acl=New-Object System.Security.AccessControl.DirectorySecurity; $acl.SetOwner($sid); $acl.SetAccessRuleProtection($true,$false); $who=$sid; $flags=[System.Security.AccessControl.InheritanceFlags]'ContainerInherit,ObjectInherit'; $prop=[System.Security.AccessControl.PropagationFlags]::None; $rights=[System.Security.AccessControl.FileSystemRights]::FullControl; $type=[System.Security.AccessControl.AccessControlType]::Allow; switch($case) { 'foreign_owner' { $acl.SetOwner([System.Security.Principal.SecurityIdentifier]::new('S-1-5-18')) }; 'folder_only' { $flags=[System.Security.AccessControl.InheritanceFlags]::None }; 'container_only' { $flags=[System.Security.AccessControl.InheritanceFlags]::ContainerInherit }; 'object_only' { $flags=[System.Security.AccessControl.InheritanceFlags]::ObjectInherit }; 'inherit_only' { $prop=[System.Security.AccessControl.PropagationFlags]::InheritOnly }; 'no_propagate' { $prop=[System.Security.AccessControl.PropagationFlags]::NoPropagateInherit }; 'deny' { $type=[System.Security.AccessControl.AccessControlType]::Deny }; 'missing_owner' { $who=[System.Security.Principal.SecurityIdentifier]::new('S-1-5-18') }; 'unexpected_principal' { $who=[System.Security.Principal.SecurityIdentifier]::new('S-1-1-0') }; 'read_only' { $rights=[System.Security.AccessControl.FileSystemRights]::Read } }; $rule=[System.Security.AccessControl.FileSystemAccessRule]::new($who,$rights,$flags,$prop,$type); $acl.AddAccessRule($rule); $rejected=$false; try { Assert-ResistorGmailAcl -Acl $acl -OwnerSid $sid } catch { $rejected=$true }; if(-not $rejected) { throw 'Unsafe ACL fixture was accepted' } };";
+ const result=await exec('powershell.exe',['-NoProfile','-NonInteractive','-Command',cases],{windowsHide:true});assert.equal(result.stdout,'');
+ const directory=await mkdtemp(path.join(os.tmpdir(),'resistor-gmail-acl-negative-')),env={...process.env,RESISTOR_GMAIL_PRIVATE_DIRECTORY:directory};
+ try{
+  // Create the deliberately noninheritable DACL directly on a new fixture.
+  // Replacing an already protected DACL requests SeSecurityPrivilege on this
+  // host, which must not be enabled for either this test or the real helper.
+  const strip="$ErrorActionPreference='Stop'; Import-Module (Join-Path $env:SystemRoot 'System32/WindowsPowerShell/v1.0/Modules/Microsoft.PowerShell.Security') -ErrorAction Stop; $d=$env:RESISTOR_GMAIL_PRIVATE_DIRECTORY; $sid=[System.Security.Principal.WindowsIdentity]::GetCurrent().User; $acl=New-Object System.Security.AccessControl.DirectorySecurity; $acl.SetOwner($sid); $acl.SetAccessRuleProtection($true,$false); $acl.AddAccessRule([System.Security.AccessControl.FileSystemAccessRule]::new($sid,'FullControl','None','None','Allow')); Set-Acl -LiteralPath $d -AclObject $acl;";
+  await exec('powershell.exe',['-NoProfile','-NonInteractive','-Command',strip],{windowsHide:true,env});
+  await assert.rejects(()=>exec('powershell.exe',['-NoProfile','-NonInteractive','-Command',gmailPrivateAclScript({readOnly:true})],{windowsHide:true,env}),error=>error.stderr.includes('Private child inheritance missing'));
+ }finally{assert.equal(path.dirname(path.resolve(directory)),path.resolve(os.tmpdir()));await rm(directory,{recursive:true,force:true});}
 });
