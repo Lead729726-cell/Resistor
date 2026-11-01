@@ -80,7 +80,7 @@ its code. A configured mail transport can deliver the queue. Without that transp
 it remains `pending`; provider acceptance is not proof of inbox delivery. Refunds
 also need a verified operator input until an official order/refund adapter exists.
 
-The optional Worker sender is disabled unless `LICENSE_MAIL_SENDING_ENABLED=true`
+The optional Worker customer sender is disabled unless `LICENSE_MAIL_SENDING_ENABLED=true`
 and the selected provider's credentials/sender are configured. The user's selected
 transport is the existing Gmail account; Resend remains an optional adapter.
 The encrypted durable outbox freezes each message and bounds attempts. Gmail has
@@ -91,6 +91,23 @@ not prove recipient delivery. Authenticated Resend events can separately establi
 recipient mail-server acceptance, never inbox placement or that a student read
 the message. The email webhook authenticates **mail events only**, not Inflearn purchases. See
 [Cloudflare fulfillment configuration](licensing-cloudflare.md#optional-durable-email-fulfillment).
+
+An authenticated operator can separately call `/admin/mail/smoke` with only a
+UUID `request_id` to test the configured Gmail owner's address while customer
+sending remains disabled. This fixed no-serial message creates no purchase,
+license or grant. Its separate durable queue shares the daily attempt budget and
+the same Gmail ambiguity/no-resend protection; Cron never sends these tests.
+Current-transport health records provider acceptance and a timestamp, never
+inbox delivery. See the [owner test procedure](licensing-cloudflare.md#authenticated-owner-only-send-test).
+This documents implemented behavior; a live send needs its own execution record.
+
+For OAuth renewal, the helper's explicit `--credential-suffix` saves a new file
+beside the approved original without overwriting it. Follow the
+[private renewal procedure](licensing-cloudflare.md#safe-gmail-production-renewal-windows-operator-node-24)
+before replacing Worker secrets. Google Production publishing is separate from
+app verification and does not guarantee a permanent refresh token. It also does
+not connect an Inflearn purchase/refund webhook: instructor-reviewed order intake
+remains the supported path until an official integration is independently verified.
 
 ## Operator setup (Node 24)
 

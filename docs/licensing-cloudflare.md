@@ -5,7 +5,10 @@ The desktop editions share the existing signed-lease domain in
 `service.mjs`; the hosted Worker uses a SQLite-backed Cloudflare Durable Object.
 Neither implementation writes grants to serverless temporary files. Inflearn
 orders remain **Edu only, two devices**. No new payment provider, purchase
-verification webhook, or automatic email delivery is claimed.
+verification webhook, or automatic purchase ingestion is claimed. An authorized
+owner-only Gmail message was accepted and independently found in the owner's
+Inbox on 2026-11-01; customer sending remains disabled pending the separate
+Production OAuth transition. See the [live test evidence](evidence/licensing/mail-operation-20261101.json).
 
 ## Storage and identity
 
@@ -16,6 +19,8 @@ verification webhook, or automatic email delivery is claimed.
   transactional `CREATE TABLE IF NOT EXISTS`; legacy order/license/activation
   schema stays usable. Additive mail jobs/attempts/events and refund tombstones
   preserve existing owner grants, activations, serials and signing identity.
+  Operator self-tests use additive `mail_smoke_deliveries`, `mail_smoke_jobs`
+  and `mail_smoke_attempts` tables. They never create order/license/grant rows.
 - A database identity record binds the existing signing public-key fingerprint,
   key ID, and an HMAC of the master key. Changing these secrets against an existing
   database fails closed rather than silently making grants unusable.
@@ -143,7 +148,7 @@ Configuration is additive and does not change signing keys or the DO namespace:
 | Setting | Meaning |
 | --- | --- |
 | `LICENSE_MAIL_PROVIDER=gmail` or `resend` | Select exactly one transport; current user choice is Gmail |
-| `LICENSE_MAIL_SENDING_ENABLED=true` | Explicit opt-in; every other/unset value disables sends |
+| `LICENSE_MAIL_SENDING_ENABLED=true` | Explicit opt-in for customer mail and its scheduler; every other/unset value disables customer sends. The authenticated owner-only smoke route below is independent. |
 | `LICENSE_MAIL_FROM` | Operator-verified sender address; configuring it does not verify DNS |
 | `RESEND_API_KEY` (secret) | Provider credential; never put in source or command arguments |
 | `RESEND_WEBHOOK_SECRET` (secret) | The endpoint's `whsec_` signing secret |
@@ -162,12 +167,14 @@ legacy `RESISTOR_LICENSE_FROM` setting; it is not the hosted queue.
 The checked-in nonsecret Worker configuration reflects the user's selection:
 `gmail`, sender `creditlsh00726@gmail.com`, Inflearn course `345103`, and a daily
 attempt cap of 80. **`LICENSE_MAIL_SENDING_ENABLED="false"` remains explicit.**
-Google project `resistor-license-mail-20261101` has an owner-verified send-only
-OAuth grant. On 2026-11-01 the approved private credential file, local token
+The initial connection evidence for Google project
+`resistor-license-mail-20261101` records an owner-verified send-only OAuth grant.
+On 2026-11-01 the approved private credential file, local token
 refresh, three Cloudflare secret bindings and live `credentials_configured:true`
-were verified. The grant expires at 2026-11-08T09:57:37.682Z while the OAuth app
-remains in Testing. Production publishing, a real authorized send and Inflearn
-purchase/refund ingestion remain separate, pending gates. See the
+were verified. That initial Testing grant reported expiry at
+2026-11-08T09:57:37.682Z. This is historical connection evidence, not a claim
+about a subsequently renewed credential. Production publishing, an authorized
+live send and Inflearn purchase/refund ingestion each need separate evidence. See the
 [current deployment evidence](evidence/licensing/fulfillment-20261101.json).
 No OAuth client secret, refresh token or access token belongs in `wrangler.jsonc`.
 
@@ -190,13 +197,65 @@ Additional POST routes:
   It queues a unique code, returns IDs/status without the serial, and does not
   label the operator's verification as platform-authenticated automation.
 - `/admin/outbox`: `{limit:1..100}` returns counts, non-PII delivery status and
-  configuration readiness. It does not return addresses, serials or message text.
+  configuration readiness. The `smoke` field contains separate owner-test
+  counts/status. It does not return addresses, serials or message text.
 - `/admin/outbox/process`: `{limit:1..5}` runs the same bounded queue; when
   disabled it returns `enabled:false` without sending.
+- `/admin/mail/smoke`: `{request_id: UUID}` explicitly sends one fixed test
+  message to the configured Gmail owner. See the procedure below. Neither this
+  route nor its records are processed by the customer queue or Cron.
 - `/webhooks/resend`: provider server POST only, no browser Origin. Requires the
   exact raw body and valid `svix-id`, `svix-timestamp`, `svix-signature`; allows
   at most five minutes of clock skew and 64 KiB. It accepts mail evidence only.
   Missing signature configuration returns 503; invalid signatures return 400.
+
+### Authenticated owner-only send test
+
+This is an operator procedure; actual execution evidence is recorded separately
+in the [2026-11-01 live test](evidence/licensing/mail-operation-20261101.json).
+It uses the same encrypted durable outbox algorithm and Gmail
+refresh/send adapter as customer mail, with separate records and no entitlement.
+
+1. Deploy the reviewed source using the existing authority, then check HTTPS
+   `/health`. `result.mail_smoke.configured=true` means valid Gmail configuration
+   is present; it does not mean Gmail has accepted a message. Customer sending
+   can remain `LICENSE_MAIL_SENDING_ENABLED=false` throughout this test.
+2. After explicit send authorization, create and retain a fresh UUID. Submit
+   `POST /admin/mail/smoke` with JSON containing **only** `request_id`, using
+   `Content-Type: application/json` and the existing private bearer token through
+   a secure operator client. Do not put the token in command arguments, logs or
+   a browser. Browser Origin requests are rejected.
+3. The server fixes the recipient to `GMAIL_SENDER_EMAIL`, which must match
+   `LICENSE_MAIL_FROM`. Subject/body are fixed, identify an operator test, and
+   contain no serial. Additional recipient, body, serial, or edition fields are
+   rejected. No paid order, license, QA grant or buyer delivery is created.
+4. Reuse **the same UUID** if the HTTP result is lost. The UUID is normalized to
+   lowercase and durably identifies this test across concurrent requests and
+   restarts. `accepted` is terminal/idempotent. A Gmail send with uncertain
+   acknowledgment becomes `review_required` and is not retried automatically.
+   Do not create a new UUID merely to bypass that state; reconcile the original
+   send in the owner's Gmail first. A proven pre-send failure may be retried
+   with the same UUID after its recorded backoff.
+5. Inspect `status`, `provider_accepted`, `last_error` and `next_attempt_at` in
+   the private result or `/admin/outbox`'s `smoke` section. Customer and smoke
+   attempts share the same durable rolling daily cap; a blocked attempt reports
+   `daily_attempt_limit` without sending. Cron and purchase intake never trigger
+   smoke messages, even when customer sending is enabled.
+6. After an acknowledgment, public health exposes
+   `result.mail_smoke.provider_accepted` and `provider_accepted_at`; the matching
+   readiness fields are `provider_connection_verified`,
+   `provider_connection_verified_at` and
+   `verification_scope=operator_self_test_provider_acceptance`. Evidence is
+   bound to the current transport identity. Rotating credentials/sender removes
+   the current-configuration success claim; it does not erase historical tests.
+   An old UUID cannot be reused under a changed transport.
+
+Gmail's successful send response is provider acceptance, **not inbox arrival or
+reading**. `delivered_to_inbox` and `recipient_server_delivered` remain false for
+this send-only test. The operator must inspect their own mailbox separately;
+the backend does not request mailbox-read scopes. Keep acceptance and any human
+receipt check as distinct evidence. A successful owner test does not verify
+customer fulfillment, Inflearn payment ingestion or a purchase/refund webhook.
 
 ### Retries, reconciliation and delivery meaning
 
@@ -230,9 +289,11 @@ Local verification uses disposable keys/addresses, real SQLite/workerd execution
 and isolated mock provider HTTP. It tests race/restart/refund/expiry behavior and
 raw signed event verification; it does not send real emails. Existing production
 owner/device data must be checked before and after any actual deployment. Enable
-sending only after authorized provider/domain configuration, private operator
-purchase verification, a bounded authorized delivery smoke test, and verified
-mail-event receipt. Leave purchase automation disconnected until the genuine
+sending only after authorized provider/sender configuration, private operator
+purchase verification and a bounded authorized send test. Validate the evidence
+available for the selected transport: signed mail events for configured Resend,
+or a separate human receipt check for Gmail; do not require or fabricate a Gmail
+delivery webhook. Leave purchase automation disconnected until the genuine
 Inflearn integration contract exists.
 
 ### Existing Gmail account transport
@@ -270,6 +331,56 @@ read/inbox status. An acknowledged Gmail message ID is `accepted` only, with
 webhook or read tracking is fabricated. Operators reconcile uncertain sends in
 their own Sent folder before privately handing off the existing serial; the
 backend never generates a substitute serial or bypasses duplicate protection.
+
+### Safe Gmail production renewal (Windows operator, Node 24)
+
+The helper uses the existing approved private authority folder, not the Edu
+workspace. It verifies the Google-signed identity for
+`creditlsh00726@gmail.com`, requesting only `openid`, `email` and `gmail.send`.
+Run from the repository root after approval of the client file, scope and new
+private destination. The following example creates a **new** suffixed file;
+choose a different allowed suffix if this target already exists.
+
+```powershell
+node scripts/license-gmail-connect.mjs inspect --client-file "D:/Coldbrew/Resistor/.runtime/licensing/gmail-oauth/client.json" --approved-private-dir "D:/Coldbrew/Resistor/.runtime/licensing" --credential-suffix production-20261101 --publishing-status production
+node scripts/license-gmail-connect.mjs connect --client-file "D:/Coldbrew/Resistor/.runtime/licensing/gmail-oauth/client.json" --approved-private-dir "D:/Coldbrew/Resistor/.runtime/licensing" --credential-suffix production-20261101 --publishing-status production --approve-identity-scopes
+```
+
+`inspect` makes no OAuth request, starts no listener and writes no credential.
+`connect` prints only a loopback `/start` URL for the owner to open. After Google
+consent it verifies state/PKCE/nonce, signed identity, exact account and scopes
+before exclusive creation of:
+
+`D:/Coldbrew/Resistor/.runtime/licensing/gmail-oauth/credentials-production-20261101.json`
+
+The original `credentials.json` is neither overwritten nor moved. Suffixes
+allow only a leading lowercase letter/digit followed by lowercase letters,
+digits or hyphens, at most 48 characters. Paths cannot escape the approved
+folder. The helper checks Git exclusion, non-link ancestors and private owner
+ACLs; it rechecks the directory before writing and the resulting file afterward.
+An existing destination fails closed, including a repeat `inspect` after a
+successful save. No credential values are printed; no email is sent by either
+command. Loopback sockets are closed on completion, cancellation and timeout.
+
+`--publishing-status production` records an **operator-declared** Google Console
+state; it does not publish or verify the app. Check that state in Google Console
+before using the flag. Publishing is not a guarantee of a permanent refresh
+token, nor evidence of Google verification. Do not assume an old Testing grant's
+expiry was extended. Reconsent and review the new record's actual
+`refresh_expires_at` and `refresh_expiry_source`; a null expiry means no known
+expiry, not unlimited validity. Revocation, account/security changes, inactivity
+and provider limits can still invalidate refresh credentials. See
+[Google's refresh-token expiration rules](https://developers.google.com/identity/protocols/oauth2#expiration).
+
+After verifying the new private record, register the approved Gmail client ID,
+client secret and refresh token through the existing private stdin handoff to
+Worker secrets. Keep the signing/master/admin keys and `production-v1` unchanged.
+Retain the original local file as a protected historical record until the
+operator's retention/revocation procedure permits removal; this helper does not
+revoke the old grant or switch production automatically. Check live health and
+run a newly authorized owner test for the new transport before enabling customer
+mail. Missing/expired credentials fail closed. Monitor failures and renew when
+needed rather than describing unattended operation as permanent.
 
 Primary Gmail references:
 [Send method and scope](https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.messages/send),
