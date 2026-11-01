@@ -162,8 +162,13 @@ legacy `RESISTOR_LICENSE_FROM` setting; it is not the hosted queue.
 The checked-in nonsecret Worker configuration reflects the user's selection:
 `gmail`, sender `creditlsh00726@gmail.com`, Inflearn course `345103`, and a daily
 attempt cap of 80. **`LICENSE_MAIL_SENDING_ENABLED="false"` remains explicit.**
-Google project `resistor-license-mail-20261101` has been selected for OAuth setup;
-consent/credentials and a real authorized send remain separate, pending gates.
+Google project `resistor-license-mail-20261101` has an owner-verified send-only
+OAuth grant. On 2026-11-01 the approved private credential file, local token
+refresh, three Cloudflare secret bindings and live `credentials_configured:true`
+were verified. The grant expires at 2026-11-08T09:57:37.682Z while the OAuth app
+remains in Testing. Production publishing, a real authorized send and Inflearn
+purchase/refund ingestion remain separate, pending gates. See the
+[current deployment evidence](evidence/licensing/fulfillment-20261101.json).
 No OAuth client secret, refresh token or access token belongs in `wrangler.jsonc`.
 
 The Worker Cron runs every five minutes and only calls the stable authority when
