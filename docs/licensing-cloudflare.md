@@ -7,8 +7,10 @@ Neither implementation writes grants to serverless temporary files. Inflearn
 orders remain **Edu only, two devices**. No new payment provider, purchase
 verification webhook, or automatic purchase ingestion is claimed. An authorized
 owner-only Gmail message was accepted and independently found in the owner's
-Inbox on 2026-11-01; customer sending remains disabled pending the separate
-Production OAuth transition. See the [live test evidence](evidence/licensing/mail-operation-20261101.json).
+Inbox on 2026-11-01. Google Production publishing, a separately renewed grant,
+another owner inbox test, and the verified-order sender were then enabled.
+See the [production operation evidence](evidence/licensing/gmail-production-20261101.json)
+and [earlier Testing evidence](evidence/licensing/mail-operation-20261101.json).
 
 ## Storage and identity
 
@@ -170,7 +172,9 @@ legacy `RESISTOR_LICENSE_FROM` setting; it is not the hosted queue.
 
 The checked-in nonsecret Worker configuration reflects the user's selection:
 `gmail`, sender `creditlsh00726@gmail.com`, Inflearn course `345103`, and a daily
-attempt cap of 80. **`LICENSE_MAIL_SENDING_ENABLED="false"` remains explicit.**
+attempt cap of 80. **`LICENSE_MAIL_SENDING_ENABLED="true"` is now explicit** after
+the authorized Production renewal and real self-test. This enables mail after
+an operator verifies/registers an order; it does not verify an Inflearn purchase.
 The initial connection evidence for Google project
 `resistor-license-mail-20261101` records an owner-verified send-only OAuth grant.
 On 2026-11-01 the approved private credential file, local token
@@ -179,7 +183,12 @@ were verified. That initial Testing grant reported expiry at
 2026-11-08T09:57:37.682Z. This is historical connection evidence, not a claim
 about a subsequently renewed credential. Production publishing, an authorized
 live send and Inflearn purchase/refund ingestion each need separate evidence. See the
-[current deployment evidence](evidence/licensing/fulfillment-20261101.json).
+[initial connection evidence](evidence/licensing/fulfillment-20261101.json).
+The subsequent [production operation record](evidence/licensing/gmail-production-20261101.json)
+supersedes those earlier disabled/Testing settings. The new grant reports no
+explicit expiration; that means unknown expiry, not permanent validity or
+Google app verification. The original private file is retained. Inflearn's
+purchase/refund feed remains disconnected; the user deferred the support inquiry.
 No OAuth client secret, refresh token or access token belongs in `wrangler.jsonc`.
 
 The Worker Cron runs every five minutes and only calls the stable authority when
