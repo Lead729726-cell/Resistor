@@ -2,6 +2,16 @@
 
 Live: https://resistor.kr
 
+The operator-only Gmail application has public information pages at
+`/license-mail/` and `/license-mail/privacy/`. The latter covers Google operator
+connection data, not the full product's purchase-record policy. Generate those
+two pages and their route/footer links with `node scripts/download-license-mail.mjs`;
+verify with `node --test tests/license-mail-site.test.mjs`. Include
+`license-mail.css` alongside both HTML files when deploying an overlay. Preserve
+the current production download manifests, native receipts and existing routes.
+These static pages neither start OAuth nor send mail, and do not assert Google
+brand verification or completed production delivery.
+
 This is a static Vercel project. Desktop installers are delivered by the public
 GitHub Releases assets; the portal never deploys the EDA engine, user workspace,
 provider credentials or local runtime.
