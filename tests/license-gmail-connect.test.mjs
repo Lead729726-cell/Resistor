@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {generateKeyPairSync,sign,createHash} from 'node:crypto';
 import {execFile} from 'node:child_process';
+import {createConnection} from 'node:net';
 import {promisify} from 'node:util';
 import {mkdtemp,rm,writeFile,readFile} from 'node:fs/promises';
 import path from 'node:path';
@@ -80,6 +81,31 @@ test('loopback timeout and approved storage pin fail closed without writing priv
  const session=createGmailOAuthSession(client.client_id),listener=await startGmailLoopback(session,{timeoutMs:100});await assert.rejects(listener.code,/timed out/);listener.close();
  assert.equal(approvedGmailStoragePaths(GMAIL_PRIVATE_HOME).file,'D:\\Coldbrew\\Resistor\\.runtime\\licensing\\gmail-oauth\\credentials.json');
  for(const dir of ['.runtime/licensing','D:/Coldbrew/Resistor/.runtime/licensing/../other','C:/Users/example/Downloads','D:/Coldbrew/Resistor/.runtime/licensing-other'])assert.throws(()=>approvedGmailStoragePaths(dir));
+});
+
+test('loopback final close and timeout destroy unfinished browser connections',{timeout:10000},async t=>{
+ for(const outcome of ['success','cancel','timeout'])await t.test(outcome,async t=>{
+  const session=createGmailOAuthSession(client.client_id),listener=await startGmailLoopback(session,{timeoutMs:outcome==='timeout'?250:600000});
+  t.after(()=>listener.close());
+  const socket=createConnection({host:'127.0.0.1',port:Number(new URL(listener.redirectUri).port)});
+  t.after(()=>socket.destroy());
+  let closeDeadline;
+  const closed=new Promise(resolve=>socket.once('close',resolve));
+  await new Promise((resolve,reject)=>{socket.once('connect',resolve);socket.once('error',reject);});
+  // Deliberately omit the final header terminator, like a held browser
+  // preconnect/partial request. server.close() alone does not terminate it.
+  socket.write('GET /start HTTP/1.1\r\nHost: '+new URL(listener.redirectUri).host+'\r\n');
+  if(outcome==='success'){
+   const response=await fetch(listener.redirectUri+'?state='+session.state+'&code=synthetic-code');
+   assert.equal(response.status,200);await response.text();assert.equal(await listener.code,'synthetic-code');
+   assert.equal(socket.destroyed,false);listener.close();listener.close();
+  }else if(outcome==='cancel'){
+   listener.close();await assert.rejects(listener.code,/canceled/);
+  }else await assert.rejects(listener.code,/timed out/);
+  try{await Promise.race([closed,new Promise((_,reject)=>{closeDeadline=setTimeout(()=>reject(Error('Unfinished loopback connection survived cleanup')),1500);})]);}
+  finally{clearTimeout(closeDeadline);}
+  assert.equal(socket.destroyed,true);
+ });
 });
 test('help is safe and documents exact identity scopes, no overwrite and testing expiry',async()=>{
  const {stdout,stderr}=await promisify(execFile)(process.execPath,['scripts/license-gmail-connect.mjs','--help']);assert.equal(stderr,'');assert(stdout.includes('openid, email and gmail.send'));assert(stdout.includes('7 days'));assert(stdout.includes('never overwrites'));assert(!stdout.includes('client_secret'));assert(!stdout.includes('refresh_token'));

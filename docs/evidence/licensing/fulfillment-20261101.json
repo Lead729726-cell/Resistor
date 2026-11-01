@@ -2,9 +2,7 @@
   "schema_version": 1,
   "edition": "edu",
   "shared_with": "indust",
-  "source_commit": "4335306eaf6bc6576a8d02502be5c1d049e9d2cf",
-  "worker_version": "620cfd44-698d-4411-bb70-96fec2ad7604",
-  "checked_at": "2026-11-01T09:31:30.711Z",
+  "checked_at": "2026-11-01T10:00:21.664Z",
   "authority": "https://resistor-licensing.nuev-official.workers.dev",
   "health": {
     "schema_version": 1,
@@ -41,7 +39,7 @@
       "sending_requested": false,
       "sending_enabled": false,
       "sender_configured": true,
-      "credentials_configured": false,
+      "credentials_configured": true,
       "webhook_signature_configured": false,
       "delivery_event_support": "not_available_with_send_only_scope",
       "scheduled_sender_enabled": false,
@@ -58,11 +56,15 @@
     "storage_schema_preserved": true,
     "existing_database_ready": true,
     "mail_explicitly_disabled": true,
-    "credentials_not_configured": true,
+    "credentials_configured": true,
     "admin_outbox_auth_required": true,
     "authorized_outbox_readable": true,
     "unconfigured_webhook_rejected": true
   },
+  "actual_customer_email_sent": false,
+  "inflearn_purchase_integration": "not_connected",
+  "source_commit": "b98f115922fd687ab3ed70fddec2b92a0ae061e7",
+  "worker_version": "ac01788e-3c10-4533-aa4a-5e4c2ef8fd39",
   "gmail_setup": {
     "project_id": "resistor-license-mail-20261101",
     "client_type": "desktop",
@@ -73,18 +75,37 @@
     "homepage_and_domain_saved": true,
     "publishing_status": "testing",
     "production_publication": "blocked_by_incomplete_branding",
-    "oauth_user_grant": "awaiting_owner_review_of_unverified_app_warning",
-    "refresh_token_saved": false,
-    "cloudflare_gmail_secrets_registered": false,
+    "oauth_user_grant": "verified",
+    "identity_verified": true,
+    "granted_scopes": [
+      "openid",
+      "email",
+      "https://www.googleapis.com/auth/gmail.send"
+    ],
+    "refresh_token_saved": true,
+    "refresh_connection_verified_from_local_operator_host": true,
+    "cloudflare_gmail_secrets_registered": true,
+    "refresh_expires_at": "2026-11-08T09:57:37.682Z",
+    "refresh_expiry_source": "google-token-response",
+    "provider_send_verified": false,
     "actual_email_sent": false,
-    "checked_at": "2026-11-01T09:49:21.861Z"
+    "checked_at": "2026-11-01T10:00:21.666Z"
   },
-  "actual_customer_email_sent": false,
-  "inflearn_purchase_integration": "not_connected",
+  "ci": {
+    "source": {
+      "run_id": 41294795763,
+      "status": "success"
+    },
+    "license_authority": {
+      "run_id": 41294795669,
+      "status": "success"
+    }
+  },
   "local_followup_validation": {
-    "license_tests_passed": 60,
-    "gmail_helper_tests_passed": 12,
+    "license_tests_passed": 64,
+    "gmail_helper_tests_passed": 16,
     "windows_directory_and_child_acl_checked": true,
-    "docs_missing_links": 0
+    "docs_missing_links": 0,
+    "incomplete_loopback_connections_close_on_success_cancel_timeout": true
   }
 }

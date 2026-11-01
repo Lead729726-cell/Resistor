@@ -102,6 +102,7 @@ export async function exchangeGmailAuthorization(client,session,code,redirectUri
 export async function startGmailLoopback(session,{timeoutMs=600000}={}){
  if(!Number.isInteger(timeoutMs)||timeoutMs<100||timeoutMs>600000)deny('Invalid OAuth waiting period.');
  let resolveCode,rejectCode,redirectUri,started=false,timer;
+ const sockets=new Set();
  const code=new Promise((resolve,reject)=>{resolveCode=resolve;rejectCode=reject;});code.catch(()=>{});
  const server=createServer((req,res)=>{
   res.setHeader('Cache-Control','no-store');res.setHeader('Referrer-Policy','no-referrer');res.setHeader('Content-Security-Policy',"default-src 'none'; frame-ancestors 'none'");res.setHeader('X-Content-Type-Options','nosniff');
@@ -110,10 +111,15 @@ export async function startGmailLoopback(session,{timeoutMs=600000}={}){
   try{const value=readGmailOAuthCallback(req.url,{host:req.headers.host,method:req.method,remoteAddress:req.socket.remoteAddress},session,redirectUri);clearTimeout(timer);res.writeHead(200,{'Content-Type':'text/plain; charset=utf-8'});res.end('Google authorization received. Account verification and protected storage continue in the local helper. You may close this tab.');resolveCode(value);server.close();}
   catch{res.writeHead(400,{'Content-Type':'text/plain; charset=utf-8'});res.end('Authorization was declined or the callback is invalid. No token has been saved.');if(session.used){clearTimeout(timer);rejectCode(Error('Google authorization declined.'));server.close();}}
  });
+ server.on('connection',socket=>{sockets.add(socket);socket.once('close',()=>sockets.delete(socket));});
+ // server.close() stops accepting connections but may leave an unfinished
+ // browser/preconnect request alive indefinitely. Final cleanup must also
+ // destroy accepted sockets, including any not managed as HTTP connections.
+ function closeConnections(){server.close();server.closeAllConnections?.();for(const socket of sockets)socket.destroy();}
  await new Promise((resolve,reject)=>{server.once('error',()=>reject(Error('Cannot bind local OAuth callback.')));server.listen(0,'127.0.0.1',resolve);});
  redirectUri='http://127.0.0.1:'+server.address().port+'/';
- timer=setTimeout(()=>{session.used=true;server.close();rejectCode(Error('Google authorization timed out; nothing was saved.'));},timeoutMs);
- return {redirectUri,startUrl:redirectUri+'start',code,close(){clearTimeout(timer);server.close();session.used=true;rejectCode(Error('Google authorization canceled.'));}};
+ timer=setTimeout(()=>{session.used=true;closeConnections();rejectCode(Error('Google authorization timed out; nothing was saved.'));},timeoutMs);
+ return {redirectUri,startUrl:redirectUri+'start',code,close(){clearTimeout(timer);closeConnections();session.used=true;rejectCode(Error('Google authorization canceled.'));}};
 }
 
 export function approvedGmailStoragePaths(approvedHome){
