@@ -6,6 +6,7 @@ import os from 'node:os';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {runNative} from './native-worker.mjs';
+import {nativeArchiveCommand} from './native-package-options.mjs';
 
 const digest=b=>createHash('sha256').update(b).digest('hex');
 async function download(item,cache){
@@ -14,7 +15,7 @@ async function download(item,cache){
   if(!bytes||digest(bytes)!==item.sha256){const response=await fetch(item.url,{signal:AbortSignal.timeout(180000)});if(!response.ok)throw Error(`Native resource download failed: HTTP ${response.status}`);bytes=Buffer.from(await response.arrayBuffer());if(digest(bytes)!==item.sha256)throw Error(`Native resource checksum mismatch: ${name}`);await writeFile(file,bytes);}
   return file;
 }
-async function unpack(archive,destination){await mkdir(destination,{recursive:true});await runNative('tar',['-xf',archive,'-C',destination],{timeout:120000});}
+async function unpack(archive,destination){await mkdir(destination,{recursive:true});const command=nativeArchiveCommand(archive,destination);await runNative(command.executable,command.args,{timeout:120000});}
 export async function prepareNativeRuntime({workspace=process.cwd(),pdkDirectory=process.env.REGISTER_NATIVE_PDK_DIR}={}){
   if(!pdkDirectory&&!process.argv.includes('--core-only')){const {prepareNativePdk}=await import('./prepare-native-pdk.mjs');pdkDirectory=await prepareNativePdk({workspace});}
   const key=process.platform+'-'+process.arch,lock=JSON.parse(await readFile(new URL('./native-runtime-lock.json',import.meta.url),'utf8'));

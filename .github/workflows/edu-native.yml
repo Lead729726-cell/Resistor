@@ -55,6 +55,14 @@ jobs:
       - name: Verify release authority, edition identity and mathematical core
         run: node --test --test-isolation=none tests/edu-native-release.test.mjs tests/licensing.test.mjs tests/product-editions.test.mjs
       - run: node --import tsx --test --test-isolation=none tests/formulas/*.test.ts tests/course-*.test.ts tests/education-inverter.test.ts
+      - name: Locate Windows LZMA archive extractor
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $eduSevenZip = (Get-Command 7z.exe -ErrorAction SilentlyContinue).Source
+          if (-not $eduSevenZip) { $eduSevenZip = Join-Path $env:ProgramFiles '7-Zip/7z.exe' }
+          if (-not (Test-Path -LiteralPath $eduSevenZip -PathType Leaf)) { throw '7-Zip is required for the pinned native Windows ngspice archive.' }
+          "RESISTOR_7ZIP=$eduSevenZip" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Linux build and graphical keyring prerequisites
         if: runner.os == 'Linux'
         run: |

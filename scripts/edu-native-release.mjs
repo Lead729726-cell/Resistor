@@ -8,6 +8,7 @@ import {getProductEdition} from './edition-workspace.mjs';
 import {assertLicenseReleaseReady} from './license-release-check.mjs';
 import {eduNativePaths,eduWindowsBuilderConfig,assertEduNativeEvidence,assertEduDesktopEvidence} from './edu-native-options.mjs';
 import {safeArchiveEntries,zipEntryNames,validateTree} from '../apps/desktop/update-install.mjs';
+import {signableMachOHeader} from './native-package-options.mjs';
 
 const require=createRequire(import.meta.url),root=process.cwd(),mode=process.argv[2]??'all';
 if(!['build','finish','all'].includes(mode))throw Error('Use edu-native-release.mjs build, finish or all.');
@@ -33,7 +34,8 @@ async function verifyResources(){
   if(typeof expected!=='string'||!/^[a-f0-9]{64}$/.test(expected)||file.startsWith('/')||file.includes('\\')||file.split('/').some(part=>part==='..'||part==='.'))throw Error('Invalid native runtime inventory entry.');
   // Mac codesign legitimately changes Mach-O bytes after the upstream runtime
   // inventory. The final signed tree is verified by codesign, then hashed below.
-  if(process.platform!=='darwin'&&hash(await readFile(path.join(paths.resources,'native-runtime',file)))!==expected)throw Error('Packaged native runtime checksum mismatch: '+file);
+  const bytes=await readFile(path.join(paths.resources,'native-runtime',file));
+  if(hash(bytes)!==expected&&!(process.platform==='darwin'&&signableMachOHeader(bytes)))throw Error('Packaged native runtime checksum mismatch: '+file);
  }
  if(process.platform==='darwin')await run('/usr/bin/codesign',['--verify','--deep','--strict',paths.app]);
  return runtime;

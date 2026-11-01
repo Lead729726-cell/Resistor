@@ -9,6 +9,7 @@ import {getProductEdition} from './edition-workspace.mjs';
 import renderer from '../apps/desktop/renderer.cjs';
 import {assertLicenseReleaseReady} from './license-release-check.mjs';
 import {publicLicenseRuntimeFiles} from '../platform/licensing/access-policy.mjs';
+import {nativePackageCopyOptions} from './native-package-options.mjs';
 // All official package paths share this preflight, including edition branches
 // which do not carry the optional native release orchestration script.
 await assertLicenseReleaseReady();
@@ -52,6 +53,6 @@ await writeFile(path.join(stage,'package.json'),JSON.stringify({name:'resistor-e
 if(process.argv.includes('--stage-only')){console.log(`Staged Resistor ${metadata.version} resources without private runtime data.`);process.exit(0);}
 const platform=targetPlatform;const arch=targetArch;
 if(platform==='win32'&&arch!=='x64')throw Error('Windows release is verified for x64 only.');
-const result=await packager({dir:stage,out:`release/${metadata.version}`,name:packageName,icon:platform==='win32'?'apps/desktop/assets/register.ico':'apps/desktop/assets/register.icns',platform,arch,electronVersion:'44.5.0',overwrite:true,asar:false,prune:false,appVersion:metadata.version,appBundleId:edition.bundle_id,appCategoryType:'public.app-category.developer-tools',darwinDarkModeSupport:true,appCopyright:'Resistor contributors',win32metadata:{ProductName:edition.name,FileDescription:edition.purpose}});
+const result=await packager({dir:stage,out:`release/${metadata.version}`,name:packageName,icon:platform==='win32'?'apps/desktop/assets/register.ico':'apps/desktop/assets/register.icns',platform,arch,electronVersion:'44.5.0',overwrite:true,asar:false,prune:false,...nativePackageCopyOptions(),appVersion:metadata.version,appBundleId:edition.bundle_id,appCategoryType:'public.app-category.developer-tools',darwinDarkModeSupport:true,appCopyright:'Resistor contributors',win32metadata:{ProductName:edition.name,FileDescription:edition.purpose}});
 if(!result.length)throw Error('No package was created. Build macOS .app/DMG on the prepared macOS workflow; this Windows host cannot create the required symlinks.');
 for(const folder of result){if(platform==='win32'){const exe=path.join(folder,packageName+'.exe');const info=await stat(exe);await writeFile(path.join(folder,'Open-Viewer.cmd'),'@echo off\r\n"%~dp0'+packageName+'.exe" --viewer\r\n');console.log(`Windows executable: ${exe} (${info.size} bytes)`);}else if(platform==='darwin'){await signMacApp(path.join(folder,packageName+'.app'));console.log(`Ad-hoc signed Mac application prepared: ${folder}. Developer ID/notarization are not complete.`);}else{await stat(path.join(folder,packageName));console.log(`Native Linux application prepared: ${folder}`);}}

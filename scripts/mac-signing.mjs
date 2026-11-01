@@ -3,6 +3,7 @@ import path from 'node:path';
 import os from 'node:os';
 import {spawn} from 'node:child_process';
 import {createHash} from 'node:crypto';
+import {signableMachOHeader} from './native-package-options.mjs';
 
 const run=(file,args)=>new Promise((resolve,reject)=>{
   const child=spawn(file,args,{stdio:'inherit',windowsHide:true});
@@ -26,7 +27,7 @@ export async function signMacApp(app){
     // codesign --deep does not necessarily sign loose embedded dylibs.
     // Sign actual Mach-O leaves first, then seal helpers/frameworks/app.
     const binaries=[];
-    async function walk(folder){for(const item of await readdir(folder,{withFileTypes:true})){const file=path.join(folder,item.name);if(item.isDirectory())await walk(file);else if(item.isFile()){const handle=await open(file,'r');try{const bytes=Buffer.alloc(4);await handle.read(bytes,0,4,0);if(['cffaedfe','cefaedfe','feedfacf','feedface','cafebabe','bebafeca','cafebabf','bfbafeca'].includes(bytes.toString('hex')))binaries.push(file);}finally{await handle.close();}}}}
+    async function walk(folder){for(const item of await readdir(folder,{withFileTypes:true})){const file=path.join(folder,item.name);if(item.isDirectory())await walk(file);else if(item.isFile()){const handle=await open(file,'r');try{const bytes=Buffer.alloc(16),{bytesRead}=await handle.read(bytes,0,16,0);if(signableMachOHeader(bytes.subarray(0,bytesRead)))binaries.push(file);}finally{await handle.close();}}}}
     await walk(app);
     const deepestFirst=(a,b)=>b.split(path.sep).length-a.split(path.sep).length||a.localeCompare(b);
     for(const file of binaries.sort(deepestFirst))await run('/usr/bin/codesign',['--force','--deep','--sign','-','--timestamp=none','--entitlements',entitlements,file]);

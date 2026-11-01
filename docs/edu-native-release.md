@@ -12,6 +12,8 @@ The desktop QA step requires `RESISTOR_EDU_QA_SERIAL`, provisioned through the o
 
 Run each target on its actual OS and CPU, with Node.js 24. Commit the release source and public authority configuration first. Windows x64, macOS ARM64 (including M1), macOS Intel x64 and Linux x64 are supported build hosts. This flow does not claim a Windows ARM64 native runtime.
 
+A clean Windows build host also needs 7-Zip for the pinned ngspice `.7z` archive. Put `7z` on PATH or set `RESISTOR_7ZIP` to the installed executable's absolute path; the Windows CI step resolves its existing 7-Zip installation. This is a build prerequisite, not a requirement for installed app users. SDK inventory entries, including Python compiler object files, are preserved rather than silently removed by packager defaults.
+
 ```text
 npm ci
 npm run package:edu:build

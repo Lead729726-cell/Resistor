@@ -4,8 +4,11 @@ import {mkdtemp,mkdir,writeFile,rm} from 'node:fs/promises';
 import {generateKeyPairSync,createHash} from 'node:crypto';
 import os from 'node:os';
 import path from 'node:path';
+import {createRequire} from 'node:module';
+import {pathToFileURL} from 'node:url';
 import {eduNativeTarget,eduNativePaths,eduWindowsBuilderConfig,assertEduNativeEvidence,assertEduDesktopEvidence} from '../scripts/edu-native-options.mjs';
 import {assertLicenseReleaseReady} from '../scripts/license-release-check.mjs';
+import {nativePackageCopyOptions,nativeArchiveCommand,signableMachOHeader} from '../scripts/native-package-options.mjs';
 
 test('native Edu paths keep product, CPU, updater names and Industry installation isolated',()=>{
  for(const [platform,arch,target]of [['win32','x64','windows-x64'],['darwin','arm64','macos-arm64'],['darwin','x64','macos-x64'],['linux','x64','linux-x64']]){
@@ -40,4 +43,30 @@ test('native CUA observations must bind every actual result to the exact package
  const observed={...binding,verification_method:'native-cua',checked_at:new Date().toISOString(),edition_title:'Resistor Edu',...Object.fromEntries(checks.map(name=>[name,true])),observations:checks.map(check=>({check,evidence:'Unit fixture observation; not product QA'}))};
  assert(assertEduDesktopEvidence(observed,binding));
  for(const mutate of [d=>d.source_revision='d'.repeat(40),d=>d.packaged_executable_sha256='e'.repeat(64),d=>d.runtime_manifest_sha256='f'.repeat(64),d=>d.target='macos-arm64',d=>d.observations.pop(),d=>d.activation_checked=false,d=>d.verification_method='assumed',d=>d.checked_at='not-a-date']){const changed=structuredClone(observed);mutate(changed);assert.throws(()=>assertEduDesktopEvidence(changed,binding));}
+});
+
+test('real packager copy filter preserves the entire curated SDK including Python object files',async()=>{
+ const require=createRequire(import.meta.url),module=path.join(path.dirname(require.resolve('@electron/packager')),'copy-filter.js');
+ const {populateIgnoredPaths,userPathFilter}=await import(pathToFileURL(module).href);
+ const directory=path.resolve('fixture-staging'),options={dir:directory,out:path.resolve('fixture-artifact'),prune:false,...nativePackageCopyOptions()};
+ const filter=userPathFilter({...options,...populateIgnoredPaths(options)});
+ for(const name of ['native-runtime/python/lib/python3.13/config-3.13-x86_64-linux-gnu/python.o','native-runtime/python/lib/python3.13/config/python.obj','native-runtime/python/bin/python3','native-runtime/manifest.json','native-runtime/curated/Thumbs.db'])assert.equal(await filter(path.join(directory,name)),true,name);
+ for(const name of ['compiler.o','.git/config','.secrets/signing.key','node_modules/.bin/cli','package-lock.json'])assert.equal(await filter(path.join(directory,name)),false,name);
+});
+
+test('Windows 7z extraction does not depend on tar LZMA support or shell interpolation',()=>{
+ const archive=path.resolve('cached sdk/ngspice.7z'),destination=path.resolve('output sdk');
+ assert.deepEqual(nativeArchiveCommand(archive,destination,{platform:'win32',sevenZip:'C:/Program Files/7-Zip/7z.exe'}),{executable:'C:/Program Files/7-Zip/7z.exe',args:['x','-y','-o'+destination,archive]});
+ for(const platform of ['win32','darwin','linux'])assert.equal(nativeArchiveCommand('python.tar.gz',destination,{platform}).executable,'tar');
+ assert.throws(()=>nativeArchiveCommand(archive,destination,{platform:'win32',sevenZip:'bad\npath'}));
+});
+
+test('Mac signing keeps relocatable Python object files as resources and signs runtime code',()=>{
+ for(const [magic,little]of [['cffaedfe',true],['cefaedfe',true],['feedfacf',false],['feedface',false]]){
+  const bytes=Buffer.alloc(16);Buffer.from(magic,'hex').copy(bytes);
+  for(const type of [1,9,10]){little?bytes.writeUInt32LE(type,12):bytes.writeUInt32BE(type,12);assert.equal(signableMachOHeader(bytes),false);}
+  for(const type of [2,6,8]){little?bytes.writeUInt32LE(type,12):bytes.writeUInt32BE(type,12);assert.equal(signableMachOHeader(bytes),true);}
+ }
+ assert.equal(signableMachOHeader(Buffer.from('ordinary text resource')),false);
+ assert.equal(signableMachOHeader(Buffer.from('cffaedfe','hex')),false);
 });

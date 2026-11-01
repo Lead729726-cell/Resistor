@@ -2,6 +2,7 @@ import {createHash,createPublicKey} from 'node:crypto';
 import {validateEditionDownloads} from './download-editions.mjs';
 import {validateEditionAsset,validateEditionReceipt} from '../apps/desktop/edition-updates.mjs';
 import {compareVersions} from '../apps/desktop/update-feed.mjs';
+import {assertEduDesktopEvidence} from './edu-native-options.mjs';
 
 const repo='https://github.com/Lead729726-cell/Resistor',hash=b=>createHash('sha256').update(b).digest('hex');
 const targets=['windows-x64','windows-arm64','macos-arm64','macos-x64','linux-x64'];
@@ -33,6 +34,8 @@ export function verifiedEduNativeFiles(release,receipts,authority,{allowDraft=fa
   check(qa.product_id==='resistor.edu'&&qa.platform===platform[receipt.platform]&&qa.arch===receipt.arch,'Desktop QA must match installer OS/CPU');
   check(desktop?.activation_checked===true&&desktop.edition_title==='Resistor Edu'&&desktop.window_loaded===true&&desktop.license_required_before_activation===true&&desktop.engine_rpc_checked===true&&desktop.lease_released===true,'Actual licensed Edu desktop verification is incomplete');
   check(runtime&&/^[a-f0-9]{64}$/.test(runtime.manifest_sha256)&&runtime.platform===platform[receipt.platform]&&runtime.arch===receipt.arch,'Packaged runtime provenance missing');
+  check(/^[a-f0-9]{64}$/.test(receipt.packaged_executable_sha256),'Packaged executable digest missing');
+  assertEduDesktopEvidence(desktop,{edition:'edu',product_id:'resistor.edu',version,target,source_revision:receipt.source_revision,packaged_executable_sha256:receipt.packaged_executable_sha256,runtime_manifest_sha256:runtime.manifest_sha256});
   check(engine?.completed===true&&engine.resource_scope==='packaged'&&engine.runtime_manifest_sha256===runtime.manifest_sha256&&engine.platform===runtime.platform&&engine.arch===runtime.arch&&validDate(engine.checked_at),'Engine QA must run against the packaged target runtime');
   check(engine.docker_used===false&&engine.public_pdk_available===true&&engine.physical_signoff===false,'Native engine/PDK/signoff scope not verified');
   check(Array.isArray(engine.cases)&&engine.cases.length>0&&engine.cases.every(c=>typeof c.name==='string'&&c.passed===true),'Packaged engine QA contains missing or failed cases');
