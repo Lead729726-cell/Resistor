@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile,mkdtemp,writeFile,rm} from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
-import {licenseMailPages,prepareLicenseMailSite} from '../scripts/download-license-mail.mjs';
+import {licenseMailPages,prepareLicenseMailSite,renderLicenseMailPages} from '../scripts/download-license-mail.mjs';
 
 test('License Mail public routes expose the app and scoped policy without an OAuth credential form',async()=>{
  const root='platform/download-site/',config=JSON.parse(await readFile(root+'vercel.json','utf8')),ignore=(await readFile(root+'.vercelignore','utf8')).split(/\r?\n/),sitemap=await readFile(root+'sitemap.xml','utf8');
@@ -27,6 +27,21 @@ test('License Mail public routes expose the app and scoped policy without an OAu
  assert.ok(pages.get('/license-mail/').includes('인프런 결제·환불을 자동 수신하는 웹훅 연결은 제공하지 않습니다'));
  assert.ok((await readFile(root+'index.html','utf8')).includes('href="/license-mail/privacy/"'));
  assert.ok(ignore.includes('!license-mail.css'));
+});
+
+test('regeneration preserves the published operator-verified automatic-mail scope and its delivery limits',async()=>{
+ const published=await readFile('platform/download-site/license-mail.html','utf8'),generated=renderLicenseMailPages()['license-mail.html'];
+ const workflow=html=>html.match(/<section\b[^>]*aria-labelledby="mail-flow"[^>]*>[\s\S]*?<\/section>/)?.[0];
+ assert.ok(workflow(published));assert.equal(workflow(generated),workflow(published),'Regeneration must not revert the reviewed public fulfillment scope');
+ const config=await readFile('platform/licensing/cloudflare/wrangler.jsonc','utf8'),course=config.match(/"LICENSE_INFLEARN_COURSE_ID"\s*:\s*"(\d+)"/)?.[1];
+ assert.ok(course);assert.ok(generated.includes('인프런 강의 '+course));assert.match(config,/"\*\/5 \* \* \* \*"/);
+ for(const html of [published,generated]){
+  assert.match(workflow(html),/운영자가[\s\S]*주문과 수신 주소를 확인해 등록하면[\s\S]*발송을 자동 요청/);
+  assert.ok(workflow(html).includes('5분마다 발송 대기열'));
+  assert.ok(workflow(html).includes('웹훅 연결은 제공하지 않습니다'));
+  assert.ok(workflow(html).includes('불명확하면 자동 재발송하지 않고 운영자가 확인'));
+  assert.ok(workflow(html).includes('받은편지함 도착이나 읽음 확인을 뜻하지 않습니다'));
+ }
 });
 
 test('adding License Mail pages preserves existing production downloads, routes and private deployment exclusions',async()=>{
