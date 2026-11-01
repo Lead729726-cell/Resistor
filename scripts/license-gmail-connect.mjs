@@ -122,10 +122,12 @@ export async function startGmailLoopback(session,{timeoutMs=600000}={}){
  return {redirectUri,startUrl:redirectUri+'start',code,close(){clearTimeout(timer);closeConnections();session.used=true;rejectCode(Error('Google authorization canceled.'));}};
 }
 
-export function approvedGmailStoragePaths(approvedHome){
+export function approvedGmailStoragePaths(approvedHome,{credentialSuffix}={}){
  const expected=path.win32.resolve(GMAIL_PRIVATE_HOME);
  if(typeof approvedHome!=='string'||!path.win32.isAbsolute(approvedHome)||path.win32.resolve(approvedHome).toLowerCase()!==expected.toLowerCase())deny('Approve the existing authority private directory explicitly; other destinations are not allowed.');
- return {home:expected,directory:path.win32.join(expected,'gmail-oauth'),file:path.win32.join(expected,'gmail-oauth','credentials.json')};
+ if(credentialSuffix!==undefined&&(typeof credentialSuffix!=='string'||!/^[a-z0-9][a-z0-9-]{0,47}$/.test(credentialSuffix)))deny('Credential suffix must be a short lowercase identifier.');
+ const filename=credentialSuffix===undefined?'credentials.json':'credentials-'+credentialSuffix+'.json';
+ return {home:expected,directory:path.win32.join(expected,'gmail-oauth'),file:path.win32.join(expected,'gmail-oauth',filename)};
 }
 async function assertNoLinks(file){
  let current=file;for(;;){const info=await lstat(current);if(info.isSymbolicLink())deny('Secret paths cannot contain links or reparse points.');const parent=path.dirname(current);if(parent===current)break;current=parent;}
@@ -140,15 +142,15 @@ export function gmailPrivateAclScript({readOnly=false,childFile=false}={}){
  return prefix+gmailPrivateAclValidatorScript()+(readOnly?'':protect)+"Assert-ResistorGmailAcl -Acl (Get-Acl -LiteralPath $d) -OwnerSid $sid -Directory $"+(childFile?'false':'true')+';';
 }
 async function checkPrivateAcl(file,{childFile=false}={}){await run('powershell.exe',['-NoProfile','-NonInteractive','-Command',gmailPrivateAclScript({readOnly:true,childFile})],{windowsHide:true,env:{...process.env,RESISTOR_GMAIL_PRIVATE_DIRECTORY:file},timeout:20000});}
-async function preparePrivateStorage(approvedHome,{readOnly=false}={}){
+async function preparePrivateStorage(approvedHome,{readOnly=false,credentialSuffix}={}){
  setupStage='destination_path';
  if(process.platform!=='win32')deny('This setup helper only writes to the approved Windows authority workspace.');
- const paths=approvedGmailStoragePaths(approvedHome);await assertNoLinks(paths.home);
+ const paths=approvedGmailStoragePaths(approvedHome,{credentialSuffix});await assertNoLinks(paths.home);
  if((await realpath(paths.home)).toLowerCase()!==paths.home.toLowerCase())deny('Authority private directory resolved unexpectedly.');
  setupStage='destination_existing_file';
  try{await lstat(paths.file);deny('A Gmail credential file already exists. It will not be overwritten.');}catch(e){if(e.code!=='ENOENT')throw e;}
  setupStage='git_ignore';
- try{await run('git',['-C','D:/Coldbrew/Resistor','check-ignore','--quiet','--','.runtime/licensing/gmail-oauth/credentials.json'],{windowsHide:true});}catch{deny('Secret destination must be excluded from Git before OAuth starts.');}
+ try{await run('git',['-C','D:/Coldbrew/Resistor','check-ignore','--quiet','--','.runtime/licensing/gmail-oauth/'+path.win32.basename(paths.file)],{windowsHide:true});}catch{deny('Secret destination must be excluded from Git before OAuth starts.');}
  setupStage='directory_create';
  try{if(!(await lstat(paths.directory)).isDirectory())deny('Private destination must be a directory.');}catch(e){if(e.code!=='ENOENT'||readOnly)throw e;await mkdir(paths.directory,{recursive:false,mode:0o700});}
  setupStage='directory_links';await assertNoLinks(paths.directory);
@@ -159,16 +161,16 @@ async function preparePrivateStorage(approvedHome,{readOnly=false}={}){
 }
 async function cli(){
  const args=process.argv.slice(2);
- if(!args.length||args[0]==='--help'){console.log('Operator-only setup: node scripts/license-gmail-connect.mjs connect --client-file ABSOLUTE_APPROVED_CLIENT_JSON --approved-private-dir D:/Coldbrew/Resistor/.runtime/licensing --approve-identity-scopes --publishing-status testing|production|unknown\nUse inspect instead of connect for read-only local checks, without OAuth, listener or credential writes. Requests only openid, email and gmail.send. Verifies creditlsh00726@gmail.com using a Google-signed ID token. Prints no tokens, sends no email and never overwrites credentials. A Testing refresh token is limited to 7 days. Run only after explicit approval of the client file and private destination.');return;}
+ if(!args.length||args[0]==='--help'){console.log('Operator-only setup: node scripts/license-gmail-connect.mjs connect --client-file ABSOLUTE_APPROVED_CLIENT_JSON --approved-private-dir D:/Coldbrew/Resistor/.runtime/licensing --approve-identity-scopes --publishing-status testing|production|unknown\nUse inspect instead of connect for read-only local checks, without OAuth, listener or credential writes. For an explicitly approved renewal, add --credential-suffix production-YYYYMMDD to create credentials-production-YYYYMMDD.json beside the original; existing files are never replaced. Requests only openid, email and gmail.send. Verifies creditlsh00726@gmail.com using a Google-signed ID token. Prints no tokens, sends no email and never overwrites credentials. A Testing refresh token is limited to 7 days. Run only after explicit approval of the client file and private destination.');return;}
  const readOnly=args[0]==='inspect';if(!['connect','inspect'].includes(args[0])||(!readOnly&&!args.includes('--approve-identity-scopes')))deny('Explicit connect command and identity-scope approval are required.');
- const options={};for(let i=1;i<args.length;i++){const key=args[i];if(key==='--approve-identity-scopes')continue;if(!['--client-file','--approved-private-dir','--publishing-status'].includes(key)||options[key]!==undefined||!args[i+1]||args[i+1].startsWith('--'))deny('Invalid setup arguments.');options[key]=args[++i];}
+ const options={};for(let i=1;i<args.length;i++){const key=args[i];if(key==='--approve-identity-scopes')continue;if(!['--client-file','--approved-private-dir','--publishing-status','--credential-suffix'].includes(key)||options[key]!==undefined||!args[i+1]||args[i+1].startsWith('--'))deny('Invalid setup arguments.');options[key]=args[++i];}
  setupStage='source_path';const file=options['--client-file'];if(!file||!path.isAbsolute(file))deny('An approved absolute OAuth client JSON path is required.');await assertNoLinks(file);
  const info=await lstat(file);if(!info.isFile()||info.size>16384)deny('Invalid OAuth client JSON file.');
  setupStage='source_read';
  let parsed;try{parsed=JSON.parse(await readFile(file,'utf8'));}catch{deny('Cannot read the approved OAuth client JSON.');}
  setupStage='client_validation';
  const client=parseGmailDesktopClient(parsed),publishingStatus=options['--publishing-status']??'unknown';if(!['testing','production','unknown'].includes(publishingStatus))deny('Invalid declared publishing status.');
- const paths=await preparePrivateStorage(options['--approved-private-dir'],{readOnly});
+ const paths=await preparePrivateStorage(options['--approved-private-dir'],{readOnly,credentialSuffix:options['--credential-suffix']});
  if(readOnly){console.log(JSON.stringify({ok:true,stage:'local_preflight',client_valid:true,path_valid:true,private_acl_verified:true,git_ignored:true,oauth_started:false,credentials_written:false}));return;}
  setupStage='session_create';const session=createGmailOAuthSession(client.client_id);setupStage='loopback_bind';const listener=await startGmailLoopback(session);
  console.log('Open '+listener.startUrl+' in your browser. Approve only the owner account and the displayed openid/email + Gmail send permissions. No email will be sent.');

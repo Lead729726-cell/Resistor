@@ -10,7 +10,7 @@ const same=(a,b)=>typeof a==='string'&&Buffer.byteLength(a)===Buffer.byteLength(
 const response=(status,data,origin)=>new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...(origin?{'Access-Control-Allow-Origin':origin,Vary:'Origin'}:{})}});
 const failure=(status,code,message,origin)=>response(status,{ok:false,error:{code,message}},origin);
 const allowedOrigin=(request,env)=>{const origin=request.headers.get('Origin');return !origin||(env.LICENSE_ALLOWED_ORIGINS??'').split(',').map(x=>x.trim()).filter(Boolean).includes(origin);};
-const routes=new Set(['/health','/v1/activate','/v1/refresh','/v1/deactivate','/admin/orders','/admin/inflearn/orders','/admin/refund','/admin/deliver','/admin/delivery','/admin/outbox','/admin/outbox/process','/admin/grants','/admin/grants/revoke','/webhooks/resend']);
+const routes=new Set(['/health','/v1/activate','/v1/refresh','/v1/deactivate','/admin/orders','/admin/inflearn/orders','/admin/refund','/admin/deliver','/admin/delivery','/admin/outbox','/admin/outbox/process','/admin/mail/smoke','/admin/grants','/admin/grants/revoke','/webhooks/resend']);
 
 // Only this Worker receives public traffic. Caller-supplied internal headers
 // are replaced; CF-Connecting-IP is set by Cloudflare at its trusted edge.
@@ -43,20 +43,21 @@ export class LicenseAuthority extends DurableObject {
    if(typeof env.LICENSE_MASTER_KEY!=='string'||!env.LICENSE_KEY_ID)throw Error('Authority secrets required');
    const sql=ctx.storage.sql;
    const database={exec:statement=>sql.exec(statement).toArray(),prepare:statement=>({get:(...args)=>sql.exec(statement,...args).toArray()[0],all:(...args)=>sql.exec(statement,...args).toArray(),run:(...args)=>{const cursor=sql.exec(statement,...args);cursor.toArray();return {changes:cursor.rowsWritten};}})};
-   this.service=createLicenseDomain({database,transaction:fn=>ctx.storage.transactionSync(fn),masterKey:Buffer.from(env.LICENSE_MASTER_KEY,'base64'),privateKey:env.LICENSE_SIGNING_PRIVATE_KEY,keyId:env.LICENSE_KEY_ID,mailer:mail.mailer,dailyMailAttemptLimit:mail.dailyAttemptLimit});
+   this.service=createLicenseDomain({database,transaction:fn=>ctx.storage.transactionSync(fn),masterKey:Buffer.from(env.LICENSE_MASTER_KEY,'base64'),privateKey:env.LICENSE_SIGNING_PRIVATE_KEY,keyId:env.LICENSE_KEY_ID,mailer:mail.mailer,smokeMailer:mail.smokeMailer,dailyMailAttemptLimit:mail.dailyAttemptLimit});
   }catch{this.initializationError=true;}
  }
  async processMailOutbox(){
   if(this.initializationError||!this.service)throw Error('Authority unavailable');
   return this.service.processOutbox({limit:5});
  }
+ currentMailReadiness(){const smoke=this.service.status().mail_smoke;return {...this.mailReadiness,provider_connection_verified:smoke.provider_accepted,provider_connection_verified_at:smoke.provider_accepted_at,verification_scope:smoke.provider_accepted?'operator_self_test_provider_acceptance':'not_tested'};}
  async fetch(request){
   const origin=request.headers.get('Origin'),url=new URL(request.url);
   if(!allowedOrigin(request,this.env))return failure(403,'ORIGIN_DENIED','허용되지 않은 브라우저 요청입니다.');
   if(this.initializationError||!this.service)return failure(503,'LICENSE_SERVER_UNAVAILABLE','인증 서버의 키 또는 영구 저장소 설정을 확인해야 합니다.',origin);
   const service=this.service;
   if(request.method==='GET'&&url.pathname==='/health'){
-   try{const result={...service.status(),storage_backend:'cloudflare-durable-object-sqlite',authority_id:AUTHORITY_ID,mail_readiness:this.mailReadiness};return response(result.database_ready?200:503,{ok:result.database_ready,result},origin);}
+   try{const result={...service.status(),storage_backend:'cloudflare-durable-object-sqlite',authority_id:AUTHORITY_ID,mail_readiness:this.currentMailReadiness()};return response(result.database_ready?200:503,{ok:result.database_ready,result},origin);}
    catch{return failure(503,'LICENSE_SERVER_UNAVAILABLE','영구 저장소 상태를 확인하지 못했습니다.',origin);}
   }
   if(request.method!=='POST')return failure(405,'METHOD_NOT_ALLOWED','POST required',origin);
@@ -82,7 +83,7 @@ export class LicenseAuthority extends DurableObject {
     if(p.course_id!==this.env.LICENSE_INFLEARN_COURSE_ID||p.verification_method!=='operator_review'||p.provider!=='inflearn'||p.edition!=='edu'||p.device_limit!==2)throw Object.assign(Error('운영자가 확인한 해당 강의의 Edu 기기 2대 주문만 입력할 수 있습니다.'),{code:'ORDER_UNVERIFIED'});
     return service.issue(p);
    };
-   const actions={'/v1/activate':()=>service.activate(p),'/v1/refresh':()=>service.refresh(p),'/v1/deactivate':()=>service.deactivate(p),'/admin/orders':()=>service.issue(p),'/admin/inflearn/orders':issueInflearn,'/admin/refund':()=>service.refund(p),'/admin/deliver':()=>service.deliver(p.delivery_id),'/admin/delivery':()=>service.operatorDelivery(p.delivery_id),'/admin/outbox':()=>({...service.outboxStatus(p),readiness:this.mailReadiness}),'/admin/outbox/process':()=>service.processOutbox(p),'/admin/grants':()=>service.operatorGrant(p),'/admin/grants/revoke':()=>service.revokeGrant(p)};
+   const actions={'/v1/activate':()=>service.activate(p),'/v1/refresh':()=>service.refresh(p),'/v1/deactivate':()=>service.deactivate(p),'/admin/orders':()=>service.issue(p),'/admin/inflearn/orders':issueInflearn,'/admin/refund':()=>service.refund(p),'/admin/deliver':()=>service.deliver(p.delivery_id),'/admin/delivery':()=>service.operatorDelivery(p.delivery_id),'/admin/outbox':()=>({...service.outboxStatus(p),readiness:this.currentMailReadiness()}),'/admin/outbox/process':()=>service.processOutbox(p),'/admin/mail/smoke':()=>service.mailSmoke(p),'/admin/grants':()=>service.operatorGrant(p),'/admin/grants/revoke':()=>service.revokeGrant(p)};
    if(!Object.hasOwn(actions,url.pathname)||url.search)return failure(404,'NOT_FOUND','경로가 없습니다.',origin);
    const result=await actions[url.pathname]();
    if(this.mailReadiness.sending_enabled&&['/admin/orders','/admin/inflearn/orders'].includes(url.pathname)&&(p.provider??'inflearn')==='inflearn')this.context.waitUntil(this.processMailOutbox());

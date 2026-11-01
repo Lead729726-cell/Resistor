@@ -10,7 +10,7 @@ export function createGmailMailer({clientId,clientSecret,refreshToken,from,sende
  if(!clientId||!clientSecret||!refreshToken||!from||!senderEmail)return undefined;
  if(!simpleAddress(from)||from!==senderEmail||![clientId,clientSecret,refreshToken].every(v=>typeof v==='string'&&v.length>0&&!/[\r\n\0]/.test(v)))throw Error('Authorized Gmail sender and OAuth credentials are required');
  const prepare=payload=>{
-  if(!simpleAddress(payload.email))throw safeFailure('terminal',true);
+  if(!simpleAddress(payload.email)||(payload.kind==='mail_smoke'&&(payload.email!==senderEmail||payload.serial!==undefined)))throw safeFailure('terminal',true);
   const {subject,text}=licenseMailContent(payload),content=Buffer.from(text.replace(/\r?\n/g,'\r\n')).toString('base64').match(/.{1,76}/g).join('\r\n');
   const mime=[`Date: ${new Date(payload.created_at??Date.now()).toUTCString()}`,`From: ${from}`,`To: ${payload.email}`,`Subject: ${encodedSubject(subject)}`,'MIME-Version: 1.0','Content-Type: text/plain; charset=UTF-8','Content-Transfer-Encoding: base64','',content,''].join('\r\n');
   return {schema_version:1,provider:'gmail',body:{raw:Buffer.from(mime).toString('base64url')}};
@@ -38,5 +38,5 @@ export function createGmailMailer({clientId,clientSecret,refreshToken,from,sende
    if(!response.ok)throw safeFailure('review');const value=await response.json();if(typeof value.id!=='string'||!value.id||value.id.length>200||/[\r\n\0]/.test(value.id))throw safeFailure('review');return {id:value.id};
   }catch{throw safeFailure('review');}
  };
- return Object.assign(send,{prepare,provider:'gmail',retrySafety:'no-provider-idempotency',identity:createHash('sha256').update('gmail-v1\0'+clientId+'\0'+clientSecret+'\0'+refreshToken+'\0'+from).digest('hex')});
+ return Object.assign(send,{prepare,provider:'gmail',senderEmail,retrySafety:'no-provider-idempotency',identity:createHash('sha256').update('gmail-v1\0'+clientId+'\0'+clientSecret+'\0'+refreshToken+'\0'+from).digest('hex')});
 }

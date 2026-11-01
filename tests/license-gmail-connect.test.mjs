@@ -82,6 +82,11 @@ test('loopback timeout and approved storage pin fail closed without writing priv
  assert.equal(approvedGmailStoragePaths(GMAIL_PRIVATE_HOME).file,'D:\\Coldbrew\\Resistor\\.runtime\\licensing\\gmail-oauth\\credentials.json');
  for(const dir of ['.runtime/licensing','D:/Coldbrew/Resistor/.runtime/licensing/../other','C:/Users/example/Downloads','D:/Coldbrew/Resistor/.runtime/licensing-other'])assert.throws(()=>approvedGmailStoragePaths(dir));
 });
+test('renewal suffix stays in the approved private folder and cannot overwrite the original target',()=>{
+ const original=approvedGmailStoragePaths(GMAIL_PRIVATE_HOME),renewed=approvedGmailStoragePaths(GMAIL_PRIVATE_HOME,{credentialSuffix:'production-20261101'});
+ assert.equal(renewed.directory,original.directory);assert.notEqual(renewed.file,original.file);assert.equal(path.win32.basename(renewed.file),'credentials-production-20261101.json');assert.equal(path.win32.basename(original.file),'credentials.json');
+ for(const credentialSuffix of ['',null,'../credentials','..\\credentials','original.json','C:\\outside','with space','UPPER','a'.repeat(49),'x\r\n'])assert.throws(()=>approvedGmailStoragePaths(GMAIL_PRIVATE_HOME,{credentialSuffix}));
+});
 
 test('loopback final close and timeout destroy unfinished browser connections',{timeout:10000},async t=>{
  for(const outcome of ['success','cancel','timeout'])await t.test(outcome,async t=>{

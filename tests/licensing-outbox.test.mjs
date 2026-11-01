@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {generateKeyPairSync,randomBytes,createHmac} from 'node:crypto';
+import {generateKeyPairSync,randomBytes,randomUUID,createHmac} from 'node:crypto';
 import {mkdtemp,rm,readFile} from 'node:fs/promises';
 import {DatabaseSync} from 'node:sqlite';
 import os from 'node:os';
@@ -13,9 +13,9 @@ import {verifyResendWebhook} from '../platform/licensing/mail-webhook.mjs';
 
 const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
 const transport=fn=>Object.assign(fn,{provider:'resend',identity:'test-transport-v1',idempotencyWindowMs:86400000,prepare:p=>({recipient:p.email,serial:p.serial})});
-async function fixture(t,{mailer,dailyMailAttemptLimit=80}={}){
+async function fixture(t,{mailer,smokeMailer,dailyMailAttemptLimit=80}={}){
  const dir=await mkdtemp(path.join(os.tmpdir(),'resistor-outbox-')),filename=path.join(dir,'license.sqlite'),keys=generateKeyPairSync('ed25519');let clock=Date.now();
- const options={filename,masterKey:randomBytes(32),privateKey:keys.privateKey.export({format:'pem',type:'pkcs8'}),now:()=>clock,mailer,dailyMailAttemptLimit};let service=createLicenseService(options);
+ const options={filename,masterKey:randomBytes(32),privateKey:keys.privateKey.export({format:'pem',type:'pkcs8'}),now:()=>clock,mailer,smokeMailer,dailyMailAttemptLimit};let service=createLicenseService(options);
  t.after(async()=>{service.close();await rm(dir,{recursive:true,force:true});});
  return {get service(){return service;},filename,now:()=>clock,advance:ms=>clock+=ms,restart(patch={}){service.close();service=createLicenseService({...options,...patch});},sql(fn){const db=new DatabaseSync(filename);try{return fn(db);}finally{db.close();}},issue(ref='order-one',patch={}){return service.issue({provider:'inflearn',purchase_ref:ref,edition:'edu',device_limit:2,email:'fixture@example.invalid',verified:true,evidence_sha256:'a'.repeat(64),...patch});}};
 }
@@ -72,6 +72,33 @@ test('Resend retry classifications respect idempotency conflicts without leaking
 
 const gmailOptions={clientId:'test-client',clientSecret:'test-secret',refreshToken:'test-refresh',from:'owner@example.invalid',senderEmail:'owner@example.invalid'};
 const tokenResponse=()=>new Response(JSON.stringify({access_token:'test-access',token_type:'Bearer',scope:'https://www.googleapis.com/auth/gmail.send'}),{status:200});
+test('owner-only smoke uses durable Gmail outbox while customer sending stays disabled, without licenses or orders',async t=>{
+ const wait=deferred();let sends=0,mime;
+ const configured=configureLicenseMail({LICENSE_MAIL_PROVIDER:'gmail',LICENSE_MAIL_SENDING_ENABLED:'false',LICENSE_MAIL_FROM:gmailOptions.from,GMAIL_SENDER_EMAIL:gmailOptions.senderEmail,GMAIL_CLIENT_ID:'test',GMAIL_CLIENT_SECRET:'test',GMAIL_REFRESH_TOKEN:'test'},{fetchImpl:async(url,options)=>{if(url.includes('oauth2.'))return tokenResponse();sends++;mime=Buffer.from(JSON.parse(options.body).raw,'base64url').toString('utf8');return wait.promise;}});
+ assert.equal(configured.mailer,undefined);assert.equal(configured.readiness.sending_enabled,false);assert.equal(configured.readiness.scheduled_sender_enabled,false);assert.equal(configured.smokeMailer.provider,'gmail');
+ const h=await fixture(t,{smokeMailer:configured.smokeMailer}),request={request_id:randomUUID()};
+ for(const invalid of [{},{request_id:'bad'},{...request,email:'other@example.invalid'},{...request,serial:'fabricated'},{...request,body:'arbitrary'}])await assert.rejects(()=>h.service.mailSmoke(invalid),{code:'DELIVERY_SMOKE_INVALID'});
+ assert.equal(sends,0);assert.equal(h.service.status().mail_smoke.provider_accepted,false);
+ const first=h.service.mailSmoke(request);assert.equal((await h.service.mailSmoke(request)).reason,'delivery_in_progress');
+ wait.resolve(new Response(JSON.stringify({id:'owner-smoke-provider-id'}),{status:200}));const result=await first;
+ assert.equal(sends,1);assert.equal(result.status,'accepted');assert.equal(result.kind,'mail_smoke');assert.equal(result.license_granted,false);assert.equal(result.license_revoked,null);assert.equal(result.delivered_to_inbox,false);assert.equal(result.recipient_server_delivered,false);
+ assert.match(mime,/To: owner@example.invalid/);const content=Buffer.from(mime.split('\r\n\r\n')[1].replace(/\r\n/g,''),'base64').toString('utf8');assert.match(content,/주문이나 라이선스를 생성하지 않았습니다/);assert.equal(content.includes('RS1-'),false);
+ h.sql(db=>{for(const table of ['orders','licenses','deliveries','operator_grants'])assert.equal(db.prepare('SELECT COUNT(*) AS n FROM '+table).get().n,0);assert.equal(db.prepare('SELECT COUNT(*) AS n FROM mail_smoke_deliveries').get().n,1);});
+ h.restart();assert.equal((await h.service.mailSmoke(request)).idempotent,true);assert.equal((await h.service.mailSmoke({request_id:request.request_id.toUpperCase()})).idempotent,true);assert.equal(sends,1);assert.equal((await h.service.processOutbox()).enabled,false);
+ const health=h.service.status();assert.equal(health.mail,'unavailable');assert.equal(health.mail_smoke.provider_accepted,true);assert.equal(health.mail_smoke.provider_accepted_at,h.now());assert.equal(health.mail_smoke.automatic_sending,false);assert.equal(JSON.stringify(health).includes('owner@example.invalid'),false);assert.equal(JSON.stringify(health).includes('owner-smoke-provider-id'),false);
+ const replacement=createGmailMailer({...gmailOptions,refreshToken:'rotated-synthetic'});h.restart({smokeMailer:replacement});assert.equal(h.service.status().mail_smoke.provider_accepted,false);await assert.rejects(()=>h.service.mailSmoke(request),{code:'DELIVERY_SMOKE_CONFLICT'});
+});
+test('smoke and customer sends share one durable daily attempt budget',async t=>{
+ let sends=0;const mailer=createGmailMailer({...gmailOptions,fetchImpl:async url=>url.includes('oauth2.')?tokenResponse():new Response(JSON.stringify({id:'budget-'+(++sends)}),{status:200})}),h=await fixture(t,{mailer,smokeMailer:mailer,dailyMailAttemptLimit:1});
+ assert.equal((await h.service.mailSmoke({request_id:randomUUID()})).status,'accepted');const order=h.issue();assert.equal((await h.service.deliver(order.delivery_id)).reason,'daily_attempt_limit');assert.equal(sends,1);
+ h.advance(86401001);h.restart();assert.equal((await h.service.deliver(order.delivery_id)).status,'accepted');assert.equal((await h.service.mailSmoke({request_id:randomUUID()})).reason,'daily_attempt_limit');assert.equal(sends,2);
+});
+test('ambiguous owner smoke never automatically resends and Gmail rejects a foreign smoke recipient',async t=>{
+ let sends=0;const mailer=createGmailMailer({...gmailOptions,fetchImpl:async url=>{if(url.includes('oauth2.'))return tokenResponse();sends++;throw Error('unacknowledged send');}}),h=await fixture(t,{smokeMailer:mailer}),request={request_id:randomUUID()};
+ assert.throws(()=>mailer.prepare({kind:'mail_smoke',email:'foreign@example.invalid'}));assert.throws(()=>mailer.prepare({kind:'mail_smoke',email:gmailOptions.senderEmail,serial:'RS1-FAKE'}));
+ assert.equal((await h.service.mailSmoke(request)).status,'review_required');h.advance(86400001);h.restart();assert.equal((await h.service.mailSmoke(request)).status,'review_required');assert.equal(sends,1);assert.equal((await h.service.processOutbox()).processed.length,0);assert.equal(h.service.status().mail_smoke.provider_accepted,false);
+ const unavailable=await fixture(t);await assert.rejects(()=>unavailable.service.mailSmoke({request_id:randomUUID()}),{code:'DELIVERY_SMOKE_UNAVAILABLE'});
+});
 test('Gmail MIME uses deterministic UTF-8 headers/body and rejects recipient/sender header injection',()=>{
  const m=createGmailMailer(gmailOptions),payload={email:'learner@example.invalid',serial:'RS1-TEST',edition:'edu',device_limit:2,created_at:1000000};assert.deepEqual(m.prepare(payload),m.prepare(payload));const prepared=m.prepare(payload),mime=Buffer.from(prepared.body.raw,'base64url').toString('utf8'),[headers,content]=mime.split('\r\n\r\n');assert.match(headers,/From: owner@example.invalid/);assert.match(headers,/To: learner@example.invalid/);assert.match(headers,/Date: Thu, 01 Jan 1970/);assert.match(headers,/Subject: =\?UTF-8\?B\?/);assert.ok(headers.split('\r\n').every(line=>line.length<79));assert.match(Buffer.from(content.replace(/\r\n/g,''),'base64').toString('utf8'),/RS1-TEST/);assert.match(Buffer.from(content.replace(/\r\n/g,''),'base64').toString('utf8'),/Edu 사용권만/);
  for(const email of ['bad@example.invalid\r\nBcc: other@example.invalid','a@example.invalid,b@example.invalid','Name <a@example.invalid>'])assert.throws(()=>m.prepare({...payload,email}));assert.throws(()=>createGmailMailer({...gmailOptions,from:'other@example.invalid'}));assert.throws(()=>createGmailMailer({...gmailOptions,from:'a@example.invalid\r\nBcc: other@example.invalid'}));

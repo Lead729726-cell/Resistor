@@ -4,7 +4,7 @@ import {courseAccessPolicy,orderAccess} from './access-policy.mjs';
 import {createDeliveryOutbox} from './outbox.mjs';
 const fail=(code,message)=>{throw licenseError(code,message);};
 const text=(v,max=160)=>typeof v==='string'&&v.length>0&&v.length<=max&&!/[\r\n\x00]/.test(v);
-export function createLicenseDomain({database:db,transaction,masterKey,privateKey,keyId='resistor-20261023',now=()=>Date.now(),mailer,dailyMailAttemptLimit=80}={}){
+export function createLicenseDomain({database:db,transaction,masterKey,privateKey,keyId='resistor-20261023',now=()=>Date.now(),mailer,smokeMailer,dailyMailAttemptLimit=80}={}){
  if(!db?.prepare||!db?.exec||typeof transaction!=='function')throw Error('Transactional durable database required');
  if(!Buffer.isBuffer(masterKey)||masterKey.length!==32)throw Error('License master key must be 32 bytes.');
  if(!text(keyId,80))throw Error('Stable signing key identifier required');
@@ -34,12 +34,28 @@ export function createLicenseDomain({database:db,transaction,masterKey,privateKe
  const databaseReady=()=>Object.entries(identity).every(([key,value])=>db.prepare('SELECT value FROM license_metadata WHERE key=?').get(key)?.value===value);
  const audit=(event,id)=>db.prepare('INSERT INTO audit(event,resource_id,created_at) VALUES(?,?,?)').run(event,id,now());
  const outbox=createDeliveryOutbox({db,transaction,encrypt,decrypt,audit,now,mailer,dailyAttemptLimit:dailyMailAttemptLimit});
+ const smokeOutbox=createDeliveryOutbox({db,transaction,encrypt,decrypt,audit,now,mailer:smokeMailer,dailyAttemptLimit:dailyMailAttemptLimit,kind:'mail_smoke'});
+ function mailSmokeStatus(){
+  const accepted=smokeMailer&&db.prepare('SELECT MAX(j.accepted_at) AS accepted_at FROM mail_smoke_deliveries d JOIN mail_smoke_jobs j ON j.delivery_id=d.id WHERE d.owner_identity=? AND d.status=? AND d.provider_id IS NOT NULL').get(smokeMailer.identity,'accepted')?.accepted_at;
+  return {configured:!!smokeMailer,provider:smokeMailer?.provider??null,scope:'operator_self_test_no_license',provider_accepted:!!accepted,provider_accepted_at:accepted??null,delivered_to_inbox:false,recipient_server_delivered:false,automatic_sending:false};
+ }
+ async function mailSmoke(input){
+  if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).length!==1||!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(input.request_id??''))fail('DELIVERY_SMOKE_INVALID','테스트에는 고유 UUID 요청 ID만 입력할 수 있습니다. 수신자와 내용은 서버에 고정되어 있습니다.');
+  if(smokeMailer?.provider!=='gmail'||!smokeMailer.senderEmail||!smokeMailer.identity)fail('DELIVERY_SMOKE_UNAVAILABLE','확인한 운영자 Gmail 발송 설정이 필요합니다.');
+  const requestId=input.request_id.toLowerCase();
+  const deliveryId=transaction(()=>{
+   const old=db.prepare('SELECT * FROM mail_smoke_deliveries WHERE request_id=?').get(requestId);
+   if(old){if(old.owner_identity!==smokeMailer.identity)fail('DELIVERY_SMOKE_CONFLICT','이 테스트 ID는 이전 발송 설정에 연결되어 있습니다. 새 테스트 ID가 필요합니다.');return old.id;}
+   const id=randomUUID();db.prepare('INSERT INTO mail_smoke_deliveries(id,request_id,owner_identity,payload,status,created_at) VALUES(?,?,?,?,?,?)').run(id,requestId,smokeMailer.identity,encrypt({kind:'mail_smoke',email:smokeMailer.senderEmail,request_id:requestId}),'pending',now());audit('mail_smoke_requested',id);return id;
+  });
+  return {...await smokeOutbox.deliver(deliveryId),request_id:requestId,scope:'operator_self_test_no_license'};
+ }
  const lookup=code=>{if(typeof code!=='string')return null;const normalized=code.trim().toUpperCase();if(!/^RS1-(?:[A-F0-9]{8}-){4}[A-F0-9]{8}$/.test(normalized))return null;return db.prepare('SELECT * FROM licenses WHERE code_hash=?').get(hash('code:'+normalized));};
  const grantFor=l=>db.prepare('SELECT * FROM operator_grants WHERE license_id=?').get(l.id);
  const validLicense=l=>{if(!l)fail('LICENSE_INVALID','시리얼을 확인하세요.');if(l.status!=='active')fail('LICENSE_REVOKED','회수되거나 환불 처리된 시리얼입니다. 구매 지원에 문의하세요.');const grant=grantFor(l);if(grant?.expires_at!==null&&grant?.expires_at!==undefined&&grant.expires_at<=now())fail('LICENSE_EXPIRED','운영자 테스트 사용권이 만료되었습니다.');};
  const credentials=(id,secret,deviceHash,allowInactive=false)=>{if(!text(id,80)||!text(secret,100)||!/^[a-f0-9]{64}$/.test(deviceHash??''))fail('LICENSE_INVALID','기기 인증 정보가 올바르지 않습니다.');const a=db.prepare('SELECT * FROM activations WHERE id=?').get(id);if(!a||(!a.active&&!allowInactive)||a.device_hash!==deviceHash||a.secret_hash!==hash('refresh:'+secret))fail('LICENSE_REVOKED','기기 인증이 해제되었습니다.');const l=db.prepare('SELECT * FROM licenses WHERE id=?').get(a.license_id);validLicense(l);return {a,l};};
  const lease=(l,a)=>{const grant=grantFor(l),issued=now();const payload={schema_version:1,iss:ISSUER,kid:keyId,type:'device-lease',license_id:l.id,activation_id:a.id,edition:l.edition,device_hash:a.device_hash,issued_at:issued,expires_at:Math.min(issued+7*86400000,grant?.expires_at??Infinity),...(grant?{purpose:grant.purpose}:{})};const body=Buffer.from(JSON.stringify(payload)).toString('base64url');return body+'.'+sign(null,Buffer.from(body),signingKey).toString('base64url');};
- const status=()=>({schema_version:1,service:'resistor-licensing',key_id:keyId,public_key_fingerprint:fingerprint,editions:['edu','indust'],course_access_policy:courseAccessPolicy,order_source:'verified_operator_or_payment_receipt',inflearn_webhook:'not_connected',mail:mailer?'configured':'unavailable',offline_lease_days:7,database_ready:databaseReady(),storage_schema_version:1});
+ const status=()=>({schema_version:1,service:'resistor-licensing',key_id:keyId,public_key_fingerprint:fingerprint,editions:['edu','indust'],course_access_policy:courseAccessPolicy,order_source:'verified_operator_or_payment_receipt',inflearn_webhook:'not_connected',mail:mailer?'configured':'unavailable',mail_smoke:mailSmokeStatus(),offline_lease_days:7,database_ready:databaseReady(),storage_schema_version:1});
  function issue({provider='inflearn',purchase_ref,edition='edu',email,evidence_sha256,verified=false,device_limit=2,product_id}){
   if(!['inflearn','direct','resistor_web'].includes(provider)||!text(purchase_ref)||!['edu','indust'].includes(edition)||!text(email,254)||!/^\S+@\S+\.\S+$/.test(email)||verified!==true||!/^[a-f0-9]{64}$/.test(evidence_sha256??'')||!Number.isInteger(device_limit)||device_limit<1||device_limit>2)fail('ORDER_UNVERIFIED','확인된 주문 번호·이메일·버전·증빙 해시가 필요합니다.');
   const entitlement=orderAccess({provider,edition,device_limit,product_id});
@@ -80,5 +96,5 @@ export function createLicenseDomain({database:db,transaction,masterKey,privateKe
  function rateLimit(scope,{limit=30,windowMs=60000}={}){const key=hash('rate:'+scope),clock=now();return transaction(()=>{db.prepare('DELETE FROM license_rate_limits WHERE window_start<?').run(clock-2*windowMs);const old=db.prepare('SELECT * FROM license_rate_limits WHERE scope=?').get(key);if(!old||clock-old.window_start>=windowMs){db.prepare('INSERT INTO license_rate_limits VALUES(?,?,?) ON CONFLICT(scope) DO UPDATE SET window_start=excluded.window_start,count=excluded.count').run(key,clock,1);return true;}if(old.count>=limit)return false;db.prepare('UPDATE license_rate_limits SET count=count+1 WHERE scope=?').run(key);return true;});}
  function refund({provider='inflearn',purchase_ref,reason='operator-confirmed-refund'}){if(!['inflearn','direct','resistor_web'].includes(provider)||!text(purchase_ref)||!text(reason,160))fail('INVALID_PARAMETER','주문 번호와 회수 이유가 필요합니다.');return transaction(()=>{db.prepare('INSERT INTO order_revocations VALUES(?,?,?,?) ON CONFLICT(provider,purchase_ref) DO NOTHING').run(provider,purchase_ref,hash('refund:'+reason),now());const order=db.prepare('SELECT * FROM orders WHERE provider=? AND purchase_ref=?').get(provider,purchase_ref);if(!order){audit('refund_before_issuance',hash(provider+':'+purchase_ref));return {revoked:false,blocked_future_issuance:true,license_id:null};}db.prepare('UPDATE orders SET status=? WHERE id=?').run('refunded',order.id);const l=db.prepare('SELECT * FROM licenses WHERE order_id=?').get(order.id);db.prepare('UPDATE licenses SET status=? WHERE id=?').run('revoked',l.id);db.prepare('UPDATE deliveries SET status=? WHERE license_id=? AND status!=?').run('canceled',l.id,'accepted');audit('refund',l.id);return {revoked:true,license_id:l.id,offline_revocation_max_days:7};});}
  function operatorDelivery(id){const r=db.prepare('SELECT * FROM deliveries WHERE id=?').get(id);if(!r)fail('DELIVERY_NOT_FOUND','발송 기록 없음');return {...decrypt(r.payload),status:r.status,delivery_id:id};}
- return {issue,activate,refresh,deactivate,refund,deliver:outbox.deliver,processOutbox:outbox.processDue,outboxStatus:outbox.summary,recordMailEvent:outbox.event,status,operatorDelivery,operatorGrant,revokeGrant,rateLimit,close:()=>db.close?.()};
+ return {issue,activate,refresh,deactivate,refund,deliver:outbox.deliver,processOutbox:outbox.processDue,outboxStatus:options=>({...outbox.summary(options),smoke:smokeOutbox.summary(options)}),recordMailEvent:outbox.event,status,operatorDelivery,operatorGrant,revokeGrant,mailSmoke,rateLimit,close:()=>db.close?.()};
 }
