@@ -9,6 +9,7 @@ import {pathToFileURL} from 'node:url';
 import {eduNativeTarget,eduNativePaths,eduWindowsBuilderConfig,assertEduNativeEvidence,assertEduDesktopEvidence} from '../scripts/edu-native-options.mjs';
 import {assertLicenseReleaseReady} from '../scripts/license-release-check.mjs';
 import {nativePackageCopyOptions,nativeArchiveCommand,signableMachOHeader} from '../scripts/native-package-options.mjs';
+import {desktopQaDiagnostics,redactDesktopQaText} from '../scripts/edu-native-diagnostics.mjs';
 
 test('native Edu paths keep product, CPU, updater names and Industry installation isolated',()=>{
  for(const [platform,arch,target]of [['win32','x64','windows-x64'],['darwin','arm64','macos-arm64'],['darwin','x64','macos-x64'],['linux','x64','linux-x64']]){
@@ -69,4 +70,15 @@ test('Mac signing keeps relocatable Python object files as resources and signs r
  }
  assert.equal(signableMachOHeader(Buffer.from('ordinary text resource')),false);
  assert.equal(signableMachOHeader(Buffer.from('cffaedfe','hex')),false);
+});
+
+test('failed desktop QA diagnostics preserve useful failure states without serials, tokens or RPC identifiers',()=>{
+ const serial='RS1-12345678-12345678-12345678-12345678-12345678',token='a'.repeat(44);
+ const value=desktopQaDiagnostics({licenseResponse:{ok:true,result:{edition:'edu',authorized:false,state:'LICENSE_STORAGE',message:'OS 암호화 저장소를 사용할 수 없습니다.',server_configured:true,license_id:'private-license-id',activation_id:'private-activation-id',refresh_secret:token}},storage:{selected_backend:'basic_text',encryption_available:true,private_key:token},alerts:['Secret: '+serial,'refresh token '+token],error:'Bearer '+token},[serial]);
+ assert.equal(value.license.state,'LICENSE_STORAGE');assert.equal(value.storage.selected_backend,'basic_text');assert.equal(value.storage.encryption_available,true);
+ const encoded=JSON.stringify(value);for(const secret of [serial,token,'private-license-id','private-activation-id','private_key','refresh_secret'])assert(!encoded.includes(secret));
+ assert.match(value.alerts[0],/REDACTED/);assert.equal(desktopQaDiagnostics().license.authorized,false);
+ assert.equal(desktopQaDiagnostics({storage:{selected_backend:'untrusted-secret'}}).storage.selected_backend,'unknown');
+ assert(!redactDesktopQaText('embedded '+serial).includes(serial));
+ assert(redactDesktopQaText('x'.repeat(4000)).length<=1000);
 });

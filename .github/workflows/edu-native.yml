@@ -90,6 +90,8 @@ jobs:
         if: runner.os == 'Linux'
         env:
           RESISTOR_EDU_QA_SERIAL: ${{ secrets[matrix.qa_secret] }}
+          RESISTOR_EDU_QA_GNOME_KEYRING: '1'
+          XDG_CURRENT_DESKTOP: GNOME
         shell: bash
         run: |
           dbus-run-session -- xvfb-run -a bash -c '

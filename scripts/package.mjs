@@ -40,7 +40,7 @@ await cp(await realpath(nativeRuntime),path.join(stage,'native-runtime'),{recurs
 await mkdir(path.join(stage,'scripts'),{recursive:true});for(const name of ['edition-workspace.mjs','runtime.mjs','local-http.mjs','worker.mjs','native-worker.mjs','native-engine-qa.mjs','wsl-worker.mjs','engine-settings.mjs','native-tools-setup.sh','physical-tools.mjs','physical-tools-lock.json','physical-tools-qa.mjs','wsl-tools-bootstrap.sh','docker-cli.mjs','desktop-diagnostics.mjs','cloud.mjs','cloud-backup.mjs','commercial-agent.mjs'])await cp(path.join('scripts',name),path.join(stage,'scripts',name));
 // QA source hashes bind to LF Git blobs, including on Windows CRLF worktrees.
 // Normalize only staged, unbundled provenance inputs before signing the app.
-for(const name of ['workers/eda/server.py','workers/eda/native_entry.py','scripts/native-worker.mjs','scripts/native-engine-qa.mjs']){
+for(const name of ['workers/eda/server.py','workers/eda/native_entry.py','workers/eda/spice_inputs.py','workers/eda/characterization.py','scripts/native-worker.mjs','scripts/native-engine-qa.mjs']){
  const file=path.join(stage,name);await writeFile(file,(await readFile(file,'utf8')).replace(/\r\n/g,'\n'));
 }
 await build({entryPoints:['scripts/education-service.mjs'],outfile:path.join(stage,'scripts/education-service.mjs'),bundle:true,platform:'node',target:'node24',format:'esm',legalComments:'linked',banner:{js:"import {createRequire as __educationCreateRequire} from 'node:module'; const require=__educationCreateRequire(import.meta.url);"}});

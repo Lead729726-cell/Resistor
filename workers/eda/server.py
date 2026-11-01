@@ -32,6 +32,7 @@ import xschem_bridge
 import experiments
 import templates
 import current_flow
+import spice_inputs
 import pdk_registry
 import configured_analysis
 import commercial_backend
@@ -575,6 +576,9 @@ def start_job(params,kind):
     put_run(run); POOL.submit(execute_job,run,p,copy.deepcopy(params),folder); return run
 
 def process(run,folder,cmd,name,manifest,timeout=120):
+    try:cmd,input_copies=spice_inputs.prepare(folder,cmd)
+    except spice_inputs.SpiceInputError as error:raise EDAError('SPICE_INPUT_PATH',str(error)) from error
+    if input_copies:manifest.setdefault('spice_input_copies',[]).append(input_copies)
     manifest['commands'].append({'argv':cmd,'cwd':str(folder),'timeout_s':timeout})
     if get_run(run['id'])['execution_status']=='canceled': raise EDAError('CANCELED','Job canceled.')
     with (folder/f'{name}.log').open('w') as f:

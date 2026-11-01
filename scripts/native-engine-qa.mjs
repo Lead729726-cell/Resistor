@@ -60,7 +60,7 @@ try{
     for(const method of ['verification.run_drc','verification.run_lvs','extraction.run_pex']){const result=await wait(await api(method,{project_id:inverter.id}));assert.equal(result.execution_status,'completed',result.message);assert.equal(result.analysis_result,'pass',result.message);check('actual native '+method,{run_id:result.id});}
     const post=await wait(await api('simulation.run',{project_id:inverter.id,analysis:'tran',duration_s:30e-9,step_s:20e-12,post_layout:true}));assert.equal(post.execution_status,'completed',post.message);assert.equal(post.analysis_result,'pass',post.message);check('actual native post-layout RC transient',{run_id:post.id});report.native_physical_tools_verified=true;
   }
-  report.source_sha256=Object.fromEntries(await Promise.all(['workers/eda/server.py','workers/eda/native_entry.py','scripts/native-worker.mjs','scripts/native-engine-qa.mjs'].map(async f=>[f,createHash('sha256').update(await readFile(path.join(resources,f))).digest('hex')])));
+  report.source_sha256=Object.fromEntries(await Promise.all(['workers/eda/server.py','workers/eda/native_entry.py','workers/eda/spice_inputs.py','workers/eda/characterization.py','scripts/native-worker.mjs','scripts/native-engine-qa.mjs'].map(async f=>[f,createHash('sha256').update(await readFile(path.join(resources,f))).digest('hex')])));
 }finally{
   if(started)await stopNativeWorker(workspace);
   await mkdir('docs/evidence/native-runtime',{recursive:true});await writeFile(`docs/evidence/native-runtime/${process.platform}-${process.arch}.json`,JSON.stringify(report,null,2)+'\n');

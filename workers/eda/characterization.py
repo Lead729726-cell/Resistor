@@ -73,9 +73,9 @@ def control(folder, circuit, c, seed=None, name='characterization'):
     rows = ['Resistor owned characterization controller', '.control', 'set noaskquit', 'set num_threads=1', 'unset klu']
     if seed is not None: rows.append(f'setseed {seed}')
     # AGAUSS is evaluated on source, so setseed must precede parsing models.
-    if re.search(r'\s', str(circuit)):
-        raise EDAError('UNSUPPORTED_PATH', 'Owned ngspice controller requires a worker path without whitespace.')
-    rows += [f'source {circuit}', 'set numdgt=17', 'set wr_singlescale', 'set wr_vecnames']
+    # The common execution boundary resolves this explicit file reference into
+    # an immutable ASCII-named run copy before ngspice reads its controller.
+    rows += [f'source "{Path(circuit).as_posix()}"', 'set numdgt=17', 'set wr_singlescale', 'set wr_vecnames']
     if c['mode'] == 'mismatch':
         rows += ['op', 'let sample_index=0', 'setscale sample_index', 'let supply_current=-i(VDD)', 'wrdata offset.dat v(OUT) v(INP) supply_current']
     else:

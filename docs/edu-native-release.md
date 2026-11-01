@@ -27,6 +27,8 @@ For local native computer-use QA, operate the actual packaged app in an isolated
 
 The manual GitHub workflow `.github/workflows/edu-native.yml` performs this flow on Windows, Apple Silicon, Intel Mac and Linux. Its four target-specific `RESISTOR_EDU_QA_SERIAL_*` secrets hold transient QA serials. It uploads build artifacts only and has no repository publication permission. Linux requires a graphical session and an OS keyring; the workflow provides a temporary D-Bus/keyring session without disabling Chromium's sandbox.
 
+The Linux CI session explicitly selects its unlocked GNOME Secret Service keyring. Desktop QA checks the actual `safeStorage` backend and encryption availability before submitting a serial; `basic_text` is rejected. Failed QA records only redacted license status, visible authentication alerts and the selected OS-storage backend. It never records input values, refresh secrets or signed leases.
+
 ## Artifacts and provenance
 
 Artifacts are in `release/edu-installers/`:
