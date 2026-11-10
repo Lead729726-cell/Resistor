@@ -7,7 +7,7 @@ export default function TaskChooser({groups,group,onGroup}:{groups:TaskGroup[];g
  useEffect(()=>{heading.current?.focus();},[group,page]);
  return <div className="task-chooser" data-testid="task-chooser">
   <div className="guided-progress"><span>{selected?'02 · 도구 선택':'01 · 작업 선택'}</span><span>{selected?selected.title:'작업대'}</span></div>
-  <h3 ref={heading} tabIndex={-1}>{selected?'어떤 작업을 할까요?':'지금 할 작업에 집중하세요'}</h3><p className="guided-description">{selected?.description||'필요한 도구를 연 뒤, 한 화면에서 한 단계씩 진행합니다.'}</p>
+  <h3 ref={heading} tabIndex={-1}>{selected?'도구 선택':'작업 선택'}</h3><p className="guided-description">{selected?.description||'필요한 도구를 연 뒤, 한 화면에서 한 단계씩 진행합니다.'}</p>
   <div className="task-choices">{selected?items.slice(page*4,page*4+4):groups.map(g=><button type="button" data-testid={'guided-category-'+g.id} key={g.id} onClick={()=>{setPage(0);onGroup(g.id);}}><strong>{g.title}</strong><span>{g.description}</span><i aria-hidden="true">→</i></button>)}</div>
   {selected&&<div className="guided-navigation"><button className="button" data-testid="guided-category-back" onClick={()=>onGroup(null)}>← 작업 선택</button>{items.length>4&&<><button className="button" disabled={!page} onClick={()=>setPage(n=>n-1)}>이전 도구</button><span>{page+1} / {Math.ceil(items.length/4)}</span><button className="button" disabled={(page+1)*4>=items.length} onClick={()=>setPage(n=>n+1)}>다음 도구 →</button></>}</div>}
  </div>;
