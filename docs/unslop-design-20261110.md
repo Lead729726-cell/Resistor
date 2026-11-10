@@ -36,6 +36,10 @@ Current validation and screenshots are in [the evidence folder](evidence/unslop-
 
 The public-site comparison preserved 133 page link sets, 56 media files and 9 protected manifests/scripts. Production Edu download metadata is newer than this Indust checkout; deployment must preserve the live inventory and replace only the two stylesheet bodies and corresponding existing manifest hashes. Never publish this checkout's complete static folder over newer production release data.
 
+Published to [resistor.kr](https://resistor.kr/) and [the existing Vercel host](https://resistor-downloads.vercel.app/) from source `975b91f`. The production overlay changed exactly 3 of 291 source files, preserving the other 288. Both hosts passed 38 post-promotion checks, including unchanged native download redirects, page contents and public catalog response. The protected candidate's anonymous HTTP checks were blocked by authentication; its source inventory and effective configuration were checked before promotion, and public HTTP checks completed afterward. No protection settings were changed.
+
+See [the deployment receipt](evidence/unslop-20261110/deployment.json) and [the final validation receipt](evidence/unslop-20261110/validation.json). The Indust app redesign is available in source and the local workbench preview; existing native installers were not replaced by this website deployment.
+
 ## Design workflow attribution
 
 Applied [unslop](https://github.com/heydamir/unslop/tree/main/skills/unslop) by **Damir Sokolovsky ([@heydamir](https://x.com/heydamir))**, licensed **CC BY 4.0**. This report adapts its audit and nine-pass design workflow. Existing Resistor source licensing is unchanged.
