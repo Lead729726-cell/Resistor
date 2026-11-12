@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "checked_at": "2026-11-12T08:10:11.045Z",
+  "scope": "read-only product information review; not effective policy or legal compliance certification",
+  "sources": [
+    {
+      "file": "scripts/site/product-legal-content.mjs",
+      "bytes": 29170,
+      "sha256": "f385a6a82da9194a0bd6c28cd2c5a661a0fbb9721985065440aa4a01be8f8602"
+    },
+    {
+      "file": "scripts/product-legal-site.mjs",
+      "bytes": 8082,
+      "sha256": "9c40ec82b29db367182e8e47af8be00a80c88d4f11b423e5b6cb02517b1aca8a"
+    },
+    {
+      "file": "tests/product-legal-site.test.mjs",
+      "bytes": 7261,
+      "sha256": "7da53500c1ecfc2191aa2072f9e1413f5f4771543d187e19762233741794c212"
+    },
+    {
+      "file": "docs/product-legal-review-20261112.md",
+      "bytes": 8024,
+      "sha256": "5d1e08502cf6f01c770fc72a70b6cf254bcb9a9f0d2de1f1cb52ce3823855b00"
+    }
+  ],
+  "tests": {
+    "command": "node --test tests/product-legal-site.test.mjs",
+    "passed": 5,
+    "failed": 0
+  },
+  "candidate": {
+    "path": ".runtime/course-site-unified-20261112/candidate",
+    "assets": [
+      {
+        "file": "terms/index.html",
+        "sha256": "94ea62f76ece6f625777c0e5caafff9046d961d9ccd2484d3d10e28aa4b99ba9",
+        "bytes": 16269,
+        "receipt_match": true
+      },
+      {
+        "file": "privacy/index.html",
+        "sha256": "66c2d7da45f35ab2d1df5457732c4af165949e0163fb6dda475d416d1fb4428a",
+        "bytes": 28608,
+        "receipt_match": true
+      }
+    ],
+    "public_diagnostic_present": false
+  },
+  "policy": {
+    "ready": false,
+    "effective_date": null,
+    "missing": [
+      "privacy-contact",
+      "retention",
+      "international",
+      "minors",
+      "policy-approval",
+      "effective-date",
+      "reviewed-at"
+    ]
+  },
+  "external_actions": {
+    "publication": false,
+    "buyer_data_access": false,
+    "consent_acceptance": false,
+    "mail_send": false
+  },
+  "source_verification": {
+    "actual_implementation_sources": "scripts/site/product-legal-content.mjs#legalImplementationSources",
+    "primary_sources": "scripts/site/product-legal-content.mjs#legalSourceReferences"
+  }
+}

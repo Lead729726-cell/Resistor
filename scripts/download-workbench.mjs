@@ -4,11 +4,12 @@ import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {prepareEduGuide} from './download-edu-guide.mjs';
 import {loadPdkCatalog} from './download-pdk-catalog.mjs';
+import {courseSiteHeader,prepareCourseDesign} from './course-site-design.mjs';
 import {loadEditionDownloads,editionDownloadCards,prepareEditionPages,systemDetectionPanel} from './download-editions.mjs';
 const repo='https://github.com/Lead729726-cell/Resistor';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const header=`<a class="wb-skip" href="#main-content">본문으로 건너뛰기</a><header class="wb-site-header"><div class="wb-site-bar"><a class="wb-site-brand" href="/"><img src="/register-symbol.svg" width="32" height="32" alt=""><span>Resistor<small>Precision Workbench</small></span></a><button class="wb-menu-button" type="button" data-wb-menu aria-controls="wb-navigation" aria-expanded="false">메뉴</button><nav class="wb-site-nav" id="wb-navigation" aria-label="사이트"><a data-wb-section="download" href="/#downloads">다운로드</a><a data-wb-section="tutorial" href="/tutorial/library/">튜토리얼</a><a data-wb-section="edu" href="/edu/">Edu 학습</a><a data-wb-section="resources" href="/#resources">자료실</a><a data-wb-section="editions" href="/editions/">Edu / Industry</a><a href="${repo}">GitHub</a><button type="button" data-theme>화면 테마</button></nav></div></header>`;
-export const workbenchHeader=header.replace('<a href="'+repo+'">GitHub</a>','<a href="/shop/">강의·구매</a><a href="'+repo+'">GitHub</a>');
+export const workbenchHeader=courseSiteHeader;
 export async function prepareWorkbenchSite(root=process.cwd()){
  const site=path.join(root,'platform/download-site'),downloads=JSON.parse(await readFile(path.join(site,'downloads.json'),'utf8')),learning=JSON.parse(await readFile(path.join(site,'learning-catalog.json'),'utf8'));
  const count=learning.counts.total,version=downloads.version;
@@ -74,6 +75,7 @@ export async function prepareWorkbenchSite(root=process.cwd()){
  const privatePatterns=['**/.env*','**/.git/**','**/.vercel/**','**/.runtime/**'];
  const publicPatterns=[...new Set([...ignore.split(/\r?\n/),...patterns,'!robots.txt','!sitemap.xml'].map(s=>s.trim()).filter(s=>s&&!privatePatterns.includes(s)))];
  await writeFile(ignoreFile,[...publicPatterns,...privatePatterns].join('\n')+'\n');
+ await prepareCourseDesign(root,site);
  console.log(JSON.stringify({website:'Precision Workbench',html_pages:files.length,tutorials:count,installers:downloads.files.length,release:displayVersion,dedicated_installers:editionManifest.editions.reduce((n,e)=>n+e.native_installer.files.length,0),existing_dedicated_installers_published:editionManifest.editions.every(e=>e.native_installer.status==='published'),new_edition_installers_published:false}));
 }
 async function preparePdkPage(root,site,head,footer){

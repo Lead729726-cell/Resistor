@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "date": "2026-11-12",
+  "scope": "Course website redesign; actual controlled browser interactions",
+  "local_urls": ["http://127.0.0.1:18956/", "http://127.0.0.1:18957/course/"],
+  "checks": {
+    "shared_divider_10k": {"voltage_V": 0.90, "current_uA": 90.0, "pass": true},
+    "shared_divider_20k": {"voltage_V": 1.20, "current_uA": 60.0, "pass": true},
+    "reset_to_10k": true,
+    "light_dark_toggle": true,
+    "theme_survives_reload": true,
+    "mobile_menu_open_and_navigation": true,
+    "curriculum_native_disclosure": true,
+    "existing_download_page_os_detection": "Windows 11 x64",
+    "two_depth_escape_after_fix": {
+      "first_escape": {"parent_open": true, "child_open": false, "focus": "더보기"},
+      "second_escape": {"parent_open": false, "child_open": false, "focus": "메뉴"},
+      "pass": true
+    },
+    "horizontal_overflow": [
+      {"viewport_px": 320, "document_scroll_width_px": 305, "route": "/shop/", "pass": true},
+      {"viewport_px": 390, "document_scroll_width_px": 375, "route": "/", "pass": true},
+      {"viewport_px": 390, "document_scroll_width_px": 375, "route": "/shop/", "pass": true},
+      {"viewport_px": 768, "document_scroll_width_px": 753, "route": "/", "pass": true}
+    ],
+    "homepage_images_loaded": true,
+    "viewport_override_reset": true
+  },
+  "tests": {"passed": 40, "failed": 0, "typecheck_exit_code": 0},
+  "route_check": {"home_targets": 23, "course_targets": 24, "broken_internal_targets": 0},
+  "not_tested": ["new desktop installer", "payment", "license email delivery", "EDA engine execution", "course recording"],
+  "production_verification": "See deployment receipts recorded separately after promotion"
+}

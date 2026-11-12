@@ -4,6 +4,7 @@ import {build} from 'esbuild';
 import {workbenchHeader} from './download-workbench.mjs';
 import {storeCatalog} from '../platform/commerce/catalog.mjs';
 import {purchaseAction} from '../platform/commerce/sales-policy.mjs';
+import {prepareCourseDesign} from './course-site-design.mjs';
 const root=process.cwd(),site=path.resolve(process.env.RESISTOR_SITE_OUTPUT||path.join(root,'platform/download-site'));
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const footer=`<footer class="course-footer"><p>Resistor Edu · 비전공자를 위한 전자회로 학습 · Industry 사용권은 포함되지 않습니다.</p><p>운영: 콜드브루 · 대표 이석형 · 사업자등록번호 114-19-75350 · 통신판매업 2026-경기양평-0293</p><p>(12524) 경기도 양평군 용문면 장대1길 165 · 문의 <a href="mailto:creditlsh00726@gmail.com">creditlsh00726@gmail.com</a> · 010-5039-9175 · 호스팅 Vercel</p><p><a href="/shop/#conditions">상품·거래 준비 상태</a> · <a href="/course/">실험 워크북</a> · <a href="https://github.com/Lead729726-cell/Resistor/blob/main/LICENSE">MIT 소스 라이선스</a></p></footer>`;
@@ -39,4 +40,5 @@ for(const source of ['/checkout','/checkout/','/checkout.html']){config.headers=
 await writeFile(configFile,JSON.stringify(config,null,2)+'\n');
 const ignoreFile=path.join(site,'.vercelignore');let ignore=await readFile(ignoreFile,'utf8');for(const entry of ['!shop.html','!checkout.html','!course-workbook.html','!shop','!shop/','!shop/**','!api','!api/','!api/**','!package.json'])if(!ignore.split(/\r?\n/).includes(entry))ignore+='\n'+entry;await writeFile(ignoreFile,ignore.trim()+'\n');
 const sitemapFile=path.join(site,'sitemap.xml');let sitemap=await readFile(sitemapFile,'utf8');for(const route of ['/shop/','/course/'])if(!sitemap.includes('https://resistor.kr'+route))sitemap=sitemap.replace('</urlset>','<url><loc>https://resistor.kr'+route+'</loc></url></urlset>');await writeFile(sitemapFile,sitemap);
+await prepareCourseDesign(root,site);
 console.log('Built Resistor Edu course workbook and gated shop. Installer manifests unchanged.');
