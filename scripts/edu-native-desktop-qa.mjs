@@ -9,6 +9,7 @@ import {stopNativeWorker} from './native-worker.mjs';
 import {runtimeConfig} from './runtime.mjs';
 import {createHash} from 'node:crypto';
 import {desktopQaDiagnostics,redactDesktopQaText} from './edu-native-diagnostics.mjs';
+import {inspectEduDesktopSession} from './edu-native-desktop-flow.mjs';
 
 const root=process.cwd(),version=JSON.parse(await readFile('package.json','utf8')).version,paths=eduNativePaths(root,version);
 const serial=process.env.RESISTOR_EDU_QA_SERIAL;
@@ -33,9 +34,7 @@ try{
  const initial=await window.evaluate(()=>window.mos.rpc('license.status',{}));assert.equal(initial.ok,true);assert.equal(initial.result.authorized,false);assert.equal(initial.result.edition,'edu');
  const blocked=await window.evaluate(()=>window.mos.rpc('project.list',{}));assert.equal(blocked.ok,false);assert.equal(blocked.error.code,'LICENSE_REQUIRED');report.license_required_before_activation=true;
  await window.getByLabel('구매 시 받은 시리얼 코드',{exact:true}).fill(serial);await window.getByRole('button',{name:'이 기기 인증',exact:true}).click();
- await window.getByRole('button',{name:/시리얼 · 인증됨/}).waitFor({timeout:30000});activated=true;
- const state=await window.evaluate(()=>window.mos.rpc('license.status',{}));assert.equal(state.ok,true);assert.equal(state.result.authorized,true);assert.equal(state.result.edition,'edu');report.activation_checked=true;
- await window.getByRole('button',{name:'Resistor Edu',exact:true}).waitFor({timeout:30000});assert.equal(await window.title(),'Resistor Edu');report.edition_title='Resistor Edu';report.window_loaded=true;
+ Object.assign(report,await inspectEduDesktopSession(window));activated=true;
  const doctor=await window.evaluate(()=>window.mos.rpc('toolchain.doctor',{}));assert.equal(doctor.ok,true,doctor.error?.message);assert.equal(doctor.result.runner,'native-'+process.platform);assert.equal(doctor.result.runtime_image,null);assert(doctor.result.tools.find(t=>t.name==='ngspice')?.available);report.engine_rpc_checked=true;
  await window.screenshot({path:path.join(directory,'activated-edu.png')});
 }catch(error){

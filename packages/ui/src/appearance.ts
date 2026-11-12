@@ -1,7 +1,10 @@
 import { useSyncExternalStore } from 'react';
 import presets from './appearance-presets.json';
+import eduPalette from './edu-appearance.json';
+import {educationMode,productEdition} from './product-edition';
 
-export const SKINS = presets.skins;
+export const SKINS = educationMode?{...presets.skins,graphite:eduPalette}:presets.skins;
+export const appearanceStorageKey=educationMode?'resistor.edu.appearance.v1':'register.appearance';
 export type Skin = keyof typeof SKINS;
 export type ColorMode = 'dark' | 'light' | 'system';
 type Appearance = { mode: ColorMode; skin: Skin; resolved: 'dark' | 'light' };
@@ -12,7 +15,8 @@ const resolved = (mode: ColorMode) => mode === 'system' ? media.matches ? 'dark'
 const read = (): Appearance => {
   let mode: ColorMode = 'system', skin: Skin = 'graphite';
   try {
-    const saved = JSON.parse(localStorage.getItem('register.appearance') || 'null');
+    // Read legacy appearance once as a fallback; never overwrite Industry's preference.
+    const saved = JSON.parse(localStorage.getItem(appearanceStorageKey) || (educationMode?localStorage.getItem('register.appearance'):null) || 'null');
     if (saved?.version === 1) {
       if (modes.includes(saved.mode)) mode = saved.mode;
       if (Object.hasOwn(SKINS, saved.skin)) skin = saved.skin;
@@ -25,8 +29,15 @@ const read = (): Appearance => {
 };
 let current = read();
 function apply() {
+  document.documentElement.dataset.edition = productEdition.edition;
   document.documentElement.dataset.theme = current.resolved;
   document.documentElement.dataset.skin = current.skin;
+  if(educationMode){
+    for(const token of Object.keys(eduPalette.dark) as (keyof typeof eduPalette.dark)[]){
+      if(current.skin==='graphite')document.documentElement.style.setProperty('--'+token,eduPalette[current.resolved][token]);
+      else document.documentElement.style.removeProperty('--'+token);
+    }
+  }
   document.documentElement.style.colorScheme = current.resolved;
   document.documentElement.style.backgroundColor = SKINS[current.skin][current.resolved].bg;
   const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
@@ -40,11 +51,11 @@ export function setAppearance(change: Partial<Pick<Appearance, 'mode' | 'skin'>>
   const mode = change.mode ?? current.mode, skin = change.skin ?? current.skin;
   if (!modes.includes(mode) || !Object.hasOwn(SKINS, skin)) return;
   publish({ mode, skin, resolved: resolved(mode) });
-  try { localStorage.setItem('register.appearance', JSON.stringify({ version: 1, mode, skin })); } catch { /* Continue without persistence. */ }
+  try { localStorage.setItem(appearanceStorageKey, JSON.stringify({ version: 1, mode, skin })); } catch { /* Continue without persistence. */ }
 }
 apply();
 media.addEventListener('change', () => { if (current.mode === 'system') publish({ ...current, resolved: resolved('system') }); });
-window.addEventListener('storage', event => { if (event.key === 'register.appearance' || event.key === null) publish(read()); });
+window.addEventListener('storage', event => { if (event.key === appearanceStorageKey || event.key === null) publish(read()); });
 export function useAppearance() {
   return useSyncExternalStore(listener => { listeners.add(listener); return () => { listeners.delete(listener); }; }, () => current);
 }

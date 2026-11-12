@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } f
 import { SKINS, setAppearance, useAppearance, type ColorMode, type Skin } from './appearance';
 import { RegisterMark } from './Brand';
 import './appearance.css';
+import {educationMode} from './product-edition';
+import EduDepthDialog from './EduDepthDialog';
 
 const modeOptions: { id: ColorMode; name: string; icon: string }[] = [{ id: 'light', name: '라이트', icon: 'M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0' }, { id: 'dark', name: '다크', icon: 'M20 14.8A8.5 8.5 0 0 1 9.2 4 8.5 8.5 0 1 0 20 14.8Z' }, { id: 'system', name: '시스템', icon: 'M3 4h18v13H3Zm5 17h8m-4-4v4' }];
 const skinIds = Object.keys(SKINS) as Skin[];
@@ -14,14 +16,27 @@ function arrowChoice<T extends string>(event: KeyboardEvent<HTMLDivElement>, cho
   else return;
   event.preventDefault(); choose(choices[index]); event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="radio"]')[index]?.focus();
 }
-export default function AppearanceControl() {
+type Props={open?:boolean;onOpenChange?:(open:boolean)=>void;onBack?:()=>void;hideTrigger?:boolean};
+export default function AppearanceControl({open:controlledOpen,onOpenChange,onBack,hideTrigger=false}:Props={}) {
   const appearance = useAppearance();
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false),[step,setStep]=useState(1);
+  const open=controlledOpen??internalOpen;
+  const setOpen=(value:boolean)=>{if(controlledOpen===undefined)setInternalOpen(value);onOpenChange?.(value);};
   const dialog = useRef<HTMLDialogElement>(null), trigger = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (open && dialog.current && !dialog.current.open) dialog.current.showModal();
     else if (!open && dialog.current?.open) dialog.current.close();
   }, [open]);
+  useEffect(()=>{if(open)setStep(1);},[open]);
+  if(educationMode)return <>
+    {!hideTrigger&&<button ref={trigger} type="button" className="appearance-trigger" data-testid="appearance-open" aria-haspopup="dialog" aria-expanded={open} onClick={()=>setOpen(true)}>화면 스타일</button>}
+    <EduDepthDialog open={open} title={step===1?'편안한 밝기를 고르세요':'내 작업대의 색을 고르세요'} subtitle="설정 · 화면 스타일" step={{current:step,total:2}} onClose={()=>setOpen(false)} onBack={step===2?()=>setStep(1):onBack} footer={<button className="button primary" onClick={()=>step===1?setStep(2):setOpen(false)}>{step===1?'다음 →':'설정 마치기'}</button>}>
+      <div data-testid="appearance-panel">
+      {step===1?<><p>변경한 화면을 바로 확인할 수 있어요. 시스템을 선택하면 기기의 밝기 설정을 따릅니다.</p><div className="appearance-mode-group" role="radiogroup" aria-label="색상 모드" onKeyDown={event=>arrowChoice(event,modeOptions.map(mode=>mode.id),appearance.mode,mode=>setAppearance({mode}))}>{modeOptions.map(mode=><button type="button" key={mode.id} role="radio" aria-checked={appearance.mode===mode.id} tabIndex={appearance.mode===mode.id?0:-1} data-testid={`appearance-mode-${mode.id}`} onClick={()=>setAppearance({mode:mode.id})}>{mode.name}</button>)}</div></>:<><p>기본 실험 노트는 홈페이지와 같은 디자인입니다. 기존 스킨도 사용할 수 있어요.</p><div className="edu-focused-options" role="radiogroup" aria-label="스킨" onKeyDown={event=>arrowChoice(event,skinIds,appearance.skin,skin=>setAppearance({skin}))}>{skinIds.map(id=><button className="edu-depth-choice" type="button" key={id} role="radio" aria-checked={appearance.skin===id} tabIndex={appearance.skin===id?0:-1} data-testid={`appearance-skin-${id}`} onClick={()=>setAppearance({skin:id})}><strong>{SKINS[id].name}</strong><small>{SKINS[id].description}</small></button>)}</div></>}
+      <p className="appearance-current" data-testid="appearance-current">{SKINS[appearance.skin].name} · {appearance.resolved==='dark'?'다크':'라이트'} · 이 기기의 Edu에 저장</p>
+      </div>
+    </EduDepthDialog>
+  </>;
   return <>
     <button ref={trigger} className="appearance-trigger" data-testid="appearance-open" aria-label="화면 스타일 · 테마와 스킨" aria-haspopup="dialog" aria-expanded={open} onClick={() => setOpen(true)} title="다크·라이트 모드와 스킨"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={modeOptions.find(mode => mode.id === appearance.mode)!.icon}/></svg><span>스타일</span><i/></button>
     <dialog className="appearance-dialog" data-testid="appearance-panel" ref={dialog} aria-labelledby="appearance-heading" onClose={() => { setOpen(false); trigger.current?.focus(); }} onClick={event => {

@@ -10,6 +10,48 @@ import {eduNativeTarget,eduNativePaths,eduWindowsBuilderConfig,assertEduNativeEv
 import {assertLicenseReleaseReady} from '../scripts/license-release-check.mjs';
 import {nativePackageCopyOptions,nativeArchiveCommand,signableMachOHeader} from '../scripts/native-package-options.mjs';
 import {desktopQaDiagnostics,redactDesktopQaText} from '../scripts/edu-native-diagnostics.mjs';
+import {inspectEduDesktopSession} from '../scripts/edu-native-desktop-flow.mjs';
+
+function desktopSessionFixture({authorized=true,edition='edu',title='Resistor Edu',failReturn=false}={}){
+ let screen='home';const actions=[];
+ const locator=(role,options,parent='page')=>{
+  const name=options.name instanceof RegExp?options.name.source:options.name;
+  assert.notEqual(name,'시리얼 · 인증됨','The Industry-only floating control must not gate Edu QA');
+  const key=parent+'/'+role+'/'+name;
+  return {
+   getByRole:(role,options)=>locator(role,options,key),
+   async waitFor({state='visible'}={}){
+    if(role==='button')assert.equal(name,'Resistor Edu');
+    else if(name==='Resistor Edu 시리얼 인증')assert.equal(screen,'management');
+    else if(name==='앱 설정')assert.equal(screen==='settings',state!=='hidden');
+    actions.push('observe '+key+' '+state);
+   },
+   async click(){
+    actions.push('click '+key);
+    if(name==='설정'){assert.equal(screen,'home');screen='settings';}
+    else if(name==='^시리얼·기기'){assert.equal(screen,'settings');screen='management';}
+    else if(name==='작업으로 돌아가기'){assert.equal(screen,'management');if(failReturn)throw Error('Management did not return');screen='settings';}
+    else if(name==='앱 설정 닫기'){assert.equal(screen,'settings');screen='home';}
+    else throw Error('Unexpected UI action: '+name);
+   }
+  };
+ };
+ return {actions,page:{getByRole:locator,title:async()=>title,evaluate:async()=>({ok:true,result:{authorized,edition}})},screen:()=>screen};
+}
+
+test('actual desktop QA follows Edu settings management and closes the depth before engine observation',async()=>{
+ const f=desktopSessionFixture();const evidence=await inspectEduDesktopSession(f.page);
+ assert.deepEqual(evidence,{activation_checked:true,edition_title:'Resistor Edu',window_loaded:true,management_ui_checked:true});
+ assert.equal(f.screen(),'home');assert.equal(f.actions.filter(a=>a.startsWith('click')).length,4);
+ assert.equal(f.actions.at(-1),'observe page/dialog/앱 설정 hidden');
+});
+
+test('desktop session UI observation never substitutes for real Edu authorization or a complete return path',async()=>{
+ for(const options of [{authorized:false},{edition:'indust'},{title:'Resistor Industry'}]){
+  const f=desktopSessionFixture(options);await assert.rejects(()=>inspectEduDesktopSession(f.page));assert.equal(f.actions.some(a=>a.startsWith('click')),false);
+ }
+ const incomplete=desktopSessionFixture({failReturn:true});await assert.rejects(()=>inspectEduDesktopSession(incomplete.page),/Management did not return/);assert.equal(incomplete.screen(),'management');
+});
 
 test('native Edu paths keep product, CPU, updater names and Industry installation isolated',()=>{
  for(const [platform,arch,target]of [['win32','x64','windows-x64'],['darwin','arm64','macos-arm64'],['darwin','x64','macos-x64'],['linux','x64','linux-x64']]){

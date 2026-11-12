@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { rpc, type CurrentFlow, type Device, type Doctor, type LayoutCommand, type Marker, type Project, type Run, type Scene, type SchematicCommand } from '@mos/contracts';
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { rpc, isLocalWorkbench, type CurrentFlow, type Device, type Doctor, type LayoutCommand, type Marker, type Project, type Run, type Scene, type SchematicCommand } from '@mos/contracts';
 import { LayoutViewer, DesignReviewPanel, type ViewerFocus, type ViewerDisplay, type ExtractedMapping } from '@mos/viewer';
 import Schematic from './SchematicEditor';
 import {makePlacedDevice} from './schematic-drawing';
@@ -29,7 +29,7 @@ import DigitalWorkbench, {UnitResults} from './DigitalWorkbench';
 import HierarchyTransfer, {copyHierarchy} from './HierarchyTransfer';
 import RuntimeDiagnostics from './RuntimeDiagnostics';
 import DesktopUpdates from './DesktopUpdates';
-import Brand from './Brand';
+import Brand, {RegisterMark} from './Brand';
 import AppearanceControl from './AppearanceControl';
 import CalculatorHub from './CalculatorHub';
 import { calculatorPaths } from '../../calculators/src';
@@ -49,6 +49,8 @@ import LearningDashboard from './LearningDashboard';
 import CoursePractice from './CoursePractice';
 import SpatialWorkbench from './SpatialWorkbench';
 import EduDepthDialog from './EduDepthDialog';
+import EduLegalGuide from './EduLegalGuide';
+import {eduLaunchGroups,eduLaunchActivities,eduSettingsTools,eduWorkspaceFlow,initialEduWorkspaceFlow,eduWorkspaceChoice,eduWorkspaceTarget,type EduWorkspaceAction} from './edu-workspace-flow';
 import './edu-modes.css';
 import {readEduRoute,eduHash,eduResumeKey,eduDesignResumeKey,readEduResume,initialEduDesignRoute,eduRouteLabel,type EduRoute,type EduResume} from './edu-navigation';
 import {linkedObservation} from '../../education/src/inverter';
@@ -113,35 +115,55 @@ function EduWorkspace({onViewer}:{onViewer:()=>void}){
   const [quizNavigation,setQuizNavigation]=useState(0);
   const [designOpened,setDesignOpened]=useState(route.mode==='design'),[quizOpened,setQuizOpened]=useState(route.mode==='quiz');
   const [quizPanel,setQuizPanel]=useState<'questions'|'puzzles'|'league'>(route.mode==='quiz'?route.panel:'questions');
-  const [launcher,setLauncher]=useState(false),[launchStep,setLaunchStep]=useState(1),[launchGroup,setLaunchGroup]=useState<'study'|'design'|'records'>('study');
-  const [launchActivity,setLaunchActivity]=useState('workbook');
-  const [settings,setSettings]=useState(false),[settingsStep,setSettingsStep]=useState(1),[settingsKind,setSettingsKind]=useState<'appearance'|'updates'>('appearance');
-  const settingsTools=useRef<HTMLDivElement>(null);
-  const navigate=(next:EduRoute)=>{routeRef.current=next;if(next.mode==='workbook')setWorkbookOpened(true);if(next.mode==='design'){setDesignOpened(true);setLastDesignRoute(next);}if(next.mode==='quiz'){setQuizOpened(true);setQuizPanel(next.panel);setQuizNavigation(n=>n+1);}const hash=eduHash(next);if(location.hash!==hash)history.pushState(null,'',hash);setRoute(next);};
-  useEffect(()=>{const sync=()=>{const next=readEduRoute(location.hash);routeRef.current=next;setRoute(next);if(next.mode==='workbook')setWorkbookOpened(true);if(next.mode==='design'){setDesignOpened(true);setLastDesignRoute(next);}if(next.mode==='quiz'){setQuizOpened(true);setQuizPanel(next.panel);}};window.addEventListener('popstate',sync);window.addEventListener('hashchange',sync);return()=>{window.removeEventListener('popstate',sync);window.removeEventListener('hashchange',sync);};},[]);
+  const [flow,flowAction]=useReducer(eduWorkspaceFlow,undefined,initialEduWorkspaceFlow);
+  const flowPage=useRef(flow.page),lastPanelPage=useRef(flow.page),panelOrigin=useRef<HTMLElement|null>(null);flowPage.current=flow.page;
+  const openPanel=(action:EduWorkspaceAction)=>{if(flowPage.current==='closed')panelOrigin.current=document.activeElement instanceof HTMLElement?document.activeElement:null;flowAction(action);};
+  const closePanel=()=>flowAction({type:'close'}),backPanel=()=>flowAction({type:'back'});
+  const openLauncher=()=>openPanel({type:'open-launcher'});
+  useEffect(()=>{const wasOpen=lastPanelPage.current!=='closed';lastPanelPage.current=flow.page;if(flow.page!=='closed'||!wasOpen)return;const frame=requestAnimationFrame(()=>{const target=panelOrigin.current;if(!document.querySelector('dialog[open]')&&target?.isConnected&&target.getClientRects().length)target.focus({preventScroll:true});});return()=>cancelAnimationFrame(frame);},[flow.page]);
+  useEffect(()=>{const returned=()=>{if(flowPage.current==='license')flowAction({type:'open-settings'});};window.addEventListener('resistor:license-closed',returned);return()=>window.removeEventListener('resistor:license-closed',returned);},[]);
+  useEffect(()=>{if(flow.page!=='license'||!isLocalWorkbench())return;const frame=requestAnimationFrame(()=>{if(flowPage.current==='license')window.dispatchEvent(new Event('resistor:license-open'));});return()=>cancelAnimationFrame(frame);},[flow.page]);
+  const navigate=(next:EduRoute)=>{closePanel();routeRef.current=next;if(next.mode==='workbook')setWorkbookOpened(true);if(next.mode==='design'){setDesignOpened(true);setLastDesignRoute(next);}if(next.mode==='quiz'){setQuizOpened(true);setQuizPanel(next.panel);setQuizNavigation(n=>n+1);}const hash=eduHash(next);if(location.hash!==hash)history.pushState(null,'',hash);setRoute(next);};
+  useEffect(()=>{const sync=()=>{flowAction({type:'close'});const next=readEduRoute(location.hash);routeRef.current=next;setRoute(next);if(next.mode==='workbook')setWorkbookOpened(true);if(next.mode==='design'){setDesignOpened(true);setLastDesignRoute(next);}if(next.mode==='quiz'){setQuizOpened(true);setQuizPanel(next.panel);}};window.addEventListener('popstate',sync);window.addEventListener('hashchange',sync);return()=>{window.removeEventListener('popstate',sync);window.removeEventListener('hashchange',sync);};},[]);
   const routeHash=eduHash(route);
-  useEffect(()=>{if(route.mode==='home')return;const next:EduResume={schema_version:1,edition:'edu',hash:routeHash,updated_at:new Date().toISOString()};setResume(next);try{localStorage.setItem(eduResumeKey,JSON.stringify(next));}catch{/* Navigation remains available when browser storage is full. */}},[routeHash]);
+  useEffect(()=>{if(route.mode==='home')return;const next:EduResume={schema_version:1,edition:'edu',hash:routeHash,updated_at:new Date().toISOString()};setResume(next);try{localStorage.setItem(eduResumeKey,JSON.stringify(next));}catch{/* Navigation remains available without browser storage. */}},[routeHash]);
   useEffect(()=>{if(!designOpened)return;const next:EduResume={schema_version:1,edition:'edu',hash:eduHash(lastDesignRoute),updated_at:new Date().toISOString()};writePreference(eduDesignResumeKey,JSON.stringify(next));},[lastDesignRoute,designOpened]);
-  const openLauncher=()=>{setLaunchStep(1);setLauncher(true);};
-  const launchOptions=launchGroup==='study'?[{id:'workbook',title:'첫 회로 워크북',description:'저항·전압·RC를 수식으로 확인합니다. 외부 엔진 없이 시작할 수 있습니다.'},{id:'questions',title:'퀴즈·자율학습',description:'저장된 문제를 하나씩 풀고 답안과 피드백을 보관합니다.'},{id:'puzzles',title:'회로 퍼즐',description:'소자를 꽂고 연결합니다. 파형은 연결된 실제 엔진으로 확인합니다.'}]:launchGroup==='design'?[{id:'resume-design',title:'마지막 설계 이어가기',description:eduRouteLabel(lastDesignRoute)},{id:'new-design',title:'1단계부터 실습 선택',description:'기존 기록은 유지하고 시작 화면에서 실습을 선택합니다.'}]:[{id:'projects',title:'내 학습 프로젝트',description:'프로젝트별 조건·실행 기록과 학생 설명을 다시 엽니다.'},{id:'league',title:'오늘의 리그',description:'공용 서버 연결 상태를 확인하고 오늘의 문제에 참여합니다.'}];
-  const launchChoice=launchOptions.find(option=>option.id===launchActivity)??launchOptions[0];
-  const launch=()=>{const id=launchChoice.id;setLauncher(false);navigate(id==='workbook'?{mode:'workbook'}:id==='projects'?{mode:'projects'}:id==='new-design'?{mode:'design',step:1}:id==='resume-design'?lastDesignRoute:{mode:'quiz',panel:id as 'questions'|'puzzles'|'league'});};
-  const openSettingsTool=(testId:string)=>{setSettings(false);requestAnimationFrame(()=>settingsTools.current?.querySelector<HTMLButtonElement>(`[data-testid="${testId}"]`)?.click());};
-  return <div className="edu-workspace edu-focused-workspace"><header className="edu-mode-header edu-focused-header" data-edu-mode-controls><button className="edu-home-brand" onClick={()=>navigate({mode:'home'})}>Resistor Edu</button><span className="edu-current-activity">{eduRouteLabel(route)}</span><div className="edu-header-actions"><button className="button" aria-haspopup="dialog" onClick={openLauncher}>학습 전환</button><button className="button" aria-haspopup="dialog" onClick={()=>{setSettingsStep(1);setSettings(true);}}>설정</button></div></header>
-    {route.mode==='home'&&<main className="edu-start edu-home-focus" data-testid="edu-home"><div className="edu-home-welcome"><p className="edu-start-eyebrow">YOUR CIRCUIT LEARNING SPACE</p><h1>한 번에 하나씩,<br/>직접 이해하는 회로.</h1><p>예측하고, 직접 바꾸고, 결과의 이유를 설명해 보세요.<br/>필요한 선택은 다음 화면에서 하나씩 안내합니다.</p><div className="edu-home-entry">{resume&&<div className="edu-home-last" aria-label="최근 학습 이어서 열기"><small>마지막으로 연 화면</small><strong>{eduRouteLabel(readEduRoute(resume.hash))}</strong><span>{new Date(resume.updated_at).toLocaleString()}</span></div>}<button className="button primary" onClick={()=>resume?navigate(readEduRoute(resume.hash)):openLauncher()}>{resume?'이어서 학습하기':'내 학습 시작하기'} →</button>{resume&&<button className="edu-home-secondary" onClick={openLauncher}>다른 학습 선택하기</button>}</div><small className="edu-home-boundary">학습 위치와 학생 기록은 검증 통과·과제 성적과 구분합니다.</small></div><SpatialWorkbench/></main>}
+  const launchOpen=flow.page.startsWith('launch-');
+  const launchStep=flow.page==='launch-goal'?1:flow.page==='launch-activity'?2:3;
+  const launchChoice=eduWorkspaceChoice(flow);
+  const launchDescription=launchChoice.id==='resume-design'?eduRouteLabel(lastDesignRoute):launchChoice.description;
+  const launch=()=>{const next=eduWorkspaceTarget(flow,lastDesignRoute);if(next)navigate(next);};
+  return <div className="edu-workspace edu-focused-workspace">
+    <header className="edu-mode-header edu-focused-header" data-edu-mode-controls>
+      <button className="edu-home-brand" aria-label="Resistor Edu" title="학습 홈으로" onClick={()=>navigate({mode:'home'})}><RegisterMark size={28}/><span>Resistor <small>Edu</small></span></button>
+      <span className="edu-current-activity">{route.mode==='home'?'내 학습 작업대':eduRouteLabel(route)}</span>
+      <div className="edu-header-actions">{route.mode!=='home'&&<button className="button" aria-haspopup="dialog" onClick={openLauncher}>학습 전환</button>}<button className="button" aria-haspopup="dialog" onClick={()=>openPanel({type:'open-settings'})}>설정</button></div>
+    </header>
+    {route.mode==='home'&&<main className="edu-start edu-home-focus edu-home-notebook" data-testid="edu-home">
+      <div className="edu-home-welcome"><p className="edu-start-eyebrow">내 회로 실험 노트</p><h1>직접 바꾸며,<br/>회로를 이해해요</h1><p>결과를 예상하고, 조건 하나를 바꿔 보세요.<br/>계산과 관찰을 내 설명으로 남깁니다.</p>
+        <div className="edu-home-entry">{resume&&<div className="edu-home-last" aria-label="최근 학습 이어서 열기"><small>마지막으로 연 화면</small><strong>{eduRouteLabel(readEduRoute(resume.hash))}</strong><span>{new Date(resume.updated_at).toLocaleString()}</span></div>}<button className="button primary" onClick={()=>resume?navigate(readEduRoute(resume.hash)):openLauncher()}>{resume?'이어서 학습하기':'내 학습 시작하기'} →</button>{resume&&<button className="edu-home-secondary" onClick={openLauncher}>다른 학습 선택하기</button>}</div>
+        <button className="edu-home-preview-link" aria-haspopup="dialog" onClick={()=>openPanel({type:'open-preview'})}>작업대 미리보기</button>
+      </div>
+      <aside className="edu-home-note" aria-label="실험을 남기는 순서"><span>실험 노트</span><ol><li><strong>예상해요</strong><p>어떤 결과가 나올지 적습니다.</p></li><li><strong>하나를 바꿔요</strong><p>같은 조건에서 계산하거나 해석합니다.</p></li><li><strong>이유를 남겨요</strong><p>관찰한 사실과 모르는 부분을 구분합니다.</p></li></ol><small>학습 기록과 실제 엔진 검증은 구분해 표시합니다.</small></aside>
+    </main>}
     <div className="edu-mode-workbook" hidden={route.mode!=='workbook'}>{workbookOpened&&<CoursePractice active={route.mode==='workbook'} onAppPractice={quiz=>navigate(quiz?{mode:'quiz',panel:'puzzles'}:{mode:'design',step:1})}/>}</div>
     {route.mode==='projects'&&<LearningDashboard onNew={()=>navigate({mode:'design',step:1})} onOpen={(lessonId,step)=>navigate({mode:'design',step,lessonId})}/>}
     <main className="edu-mode-quiz" hidden={route.mode!=='quiz'} aria-label="퀴즈·자율학습">{quizOpened&&<SelfStudy active={route.mode==='quiz'} initialPanel={quizPanel} navigationKey={quizNavigation} onPanelChange={panel=>navigate({mode:'quiz',panel})}/>}</main>
     <div className="edu-mode-design" hidden={route.mode!=='design'} aria-label="설계·시뮬레이션 학습">{designOpened&&<DesignWorkspace active={route.mode==='design'} guidedStep={route.mode==='design'?route.step:lastDesignRoute.step} requestedLessonId={lastDesignRoute.lessonId} onLessonId={id=>{setLastDesignRoute(previous=>previous.lessonId===id?previous:{...previous,lessonId:id});const current=routeRef.current;if(current.mode==='design'&&current.lessonId!==id){const next={...current,lessonId:id};routeRef.current=next;history.replaceState(null,'',eduHash(next));setRoute(next);}}} onGuidedStep={step=>navigate({mode:'design',step,...(lastDesignRoute.lessonId?{lessonId:lastDesignRoute.lessonId}:{})})} onViewer={onViewer} onStudyMode={()=>navigate({mode:'quiz',panel:'questions'})}/>}</div>
-    <EduDepthDialog open={launcher} title={launchStep===1?'오늘 무엇을 해볼까요?':launchStep===2?'어떤 활동으로 배울까요?':'이 활동으로 시작할까요?'} subtitle="Resistor Edu · 학습 선택" step={{current:launchStep,total:3}} onClose={()=>setLauncher(false)} onBack={launchStep>1?()=>setLaunchStep(step=>step-1):undefined} footer={<button className="button primary" onClick={()=>launchStep<3?setLaunchStep(step=>step+1):launch()}>{launchStep<3?'다음':'활동 열기'} →</button>}>
-      {launchStep===1&&<fieldset className="edu-focused-options"><legend>학습 목표</legend>{[{id:'study',title:'기초부터 익히기',description:'수식·퀴즈·회로 퍼즐로 개념을 익힙니다.'},{id:'design',title:'설계로 이해하기',description:'회로에서 레이아웃과 실제 해석까지 7단계로 진행합니다.'},{id:'records',title:'기록·리그 열기',description:'저장한 실습을 돌아보거나 오늘의 문제에 참여합니다.'}].map(option=><label key={option.id}><input type="radio" name="edu-launch-goal" checked={launchGroup===option.id} onChange={()=>{setLaunchGroup(option.id as typeof launchGroup);setLaunchActivity(option.id==='study'?'workbook':option.id==='design'?'resume-design':'projects');}}/><span><strong>{option.title}</strong><small>{option.description}</small></span></label>)}</fieldset>}
-      {launchStep===2&&<fieldset className="edu-focused-options"><legend>활동 선택</legend>{launchOptions.map(option=><label key={option.id}><input type="radio" name="edu-launch-activity" checked={launchChoice.id===option.id} onChange={()=>setLaunchActivity(option.id)}/><span><strong>{option.title}</strong><small>{option.description}</small></span></label>)}</fieldset>}
-      {launchStep===3&&<div className="edu-launch-summary"><h3>{launchChoice.title}</h3><p>{launchChoice.description}</p><p>화면을 열어도 새 해석·제출·유료 AI 호출은 실행하지 않습니다. 작성 중인 학습 기록은 각 활동에 유지됩니다.</p></div>}
+    <EduDepthDialog open={launchOpen} title={launchStep===1?'어떤 학습을 할까요?':launchStep===2?'활동 하나를 골라 주세요':'이 활동으로 시작할까요?'} subtitle="Resistor Edu · 학습 선택" step={{current:launchStep,total:3}} onClose={closePanel} onBack={launchStep>1?backPanel:undefined} footer={launchStep===3?<button className="button primary" onClick={launch}>활동 열기 →</button>:undefined}>
+      {launchStep===1&&<div className="edu-launch-choices" aria-label="학습 목표">{eduLaunchGroups.map(option=><button type="button" className="edu-depth-choice" key={option.id} aria-pressed={flow.group===option.id} onClick={()=>flowAction({type:'choose-group',group:option.id})}><b>{option.title}</b><small>{option.description}</small></button>)}</div>}
+      {launchStep===2&&<div className="edu-launch-choices" aria-label="활동 선택">{eduLaunchActivities[flow.group].map(option=><button type="button" className="edu-depth-choice" key={option.id} aria-pressed={launchChoice.id===option.id} onClick={()=>flowAction({type:'choose-activity',activity:option.id})}><b>{option.title}</b><small>{option.id==='resume-design'?eduRouteLabel(lastDesignRoute):option.description}</small></button>)}</div>}
+      {launchStep===3&&<div className="edu-launch-summary"><h3>{launchChoice.title}</h3><p>{launchDescription}</p><p className="edu-lesson-note">기존 기록과 작성 중인 내용은 유지됩니다. 해석·제출·유료 AI 호출은 이 화면에서 실행하지 않습니다.</p></div>}
     </EduDepthDialog>
-    <EduDepthDialog open={settings} title={settingsStep===1?'어떤 설정을 바꿀까요?':settingsKind==='appearance'?'내 화면 환경':'Resistor Edu 업데이트'} subtitle="앱 설정" step={{current:settingsStep,total:2}} onClose={()=>setSettings(false)} onBack={settingsStep>1?()=>setSettingsStep(1):undefined} footer={settingsStep===1?<button className="button primary" onClick={()=>setSettingsStep(2)}>다음 →</button>:<button className="button primary" onClick={()=>setSettings(false)}>설정 마치기</button>}>
-      {settingsStep===1?<fieldset className="edu-focused-options"><legend>설정 항목</legend><label><input type="radio" name="edu-settings-kind" checked={settingsKind==='appearance'} onChange={()=>setSettingsKind('appearance')}/><span><strong>화면 스타일</strong><small>라이트·다크·시스템 테마와 스킨을 선택합니다.</small></span></label><label><input type="radio" name="edu-settings-kind" checked={settingsKind==='updates'} onChange={()=>setSettingsKind('updates')}/><span><strong>버전·다운로드</strong><small>이 에디션의 실제 배포 상태와 파일을 확인합니다.</small></span></label></fieldset>:<div className="edu-settings-page">{settingsKind==='appearance'?<><p>익숙한 밝기와 스킨으로 학습 화면을 맞추세요. 변경은 이 기기에 저장됩니다.</p><button className="button primary" onClick={()=>openSettingsTool('appearance-open')}>화면 스타일 열기</button></>:<><p>Resistor Edu 전용 업데이트를 확인합니다. 다운로드 여부는 실제 공개된 파일에 따라 표시됩니다.</p><button className="button primary" onClick={()=>openSettingsTool('app-updates')}>업데이트·다운로드 열기</button></>}</div>}
+    <EduDepthDialog open={flow.page==='settings'} title="앱 설정" subtitle="지금 필요한 항목 하나를 선택하세요" onClose={closePanel}>
+      <div className="edu-settings-choices">{eduSettingsTools.filter(tool=>tool.id!=='license'||isLocalWorkbench()).map(tool=><button type="button" className="edu-depth-choice" key={tool.id} onClick={()=>flowAction({type:'open-tool',tool:tool.id})}><b>{tool.title}</b><small>{tool.description}</small></button>)}</div>
     </EduDepthDialog>
-    <div ref={settingsTools} className="edu-background-tools"><AppearanceControl/><DesktopUpdates inline/></div>
+    <EduDepthDialog open={flow.page==='preview'} title="작업대 미리보기" subtitle="화면 조작을 위한 모형입니다. 실제 설계·공정 해석이 아닙니다." onClose={closePanel} onBack={backPanel}>
+      <SpatialWorkbench active={flow.page==='preview'}/>
+    </EduDepthDialog>
+    <AppearanceControl open={flow.page==='appearance'} onOpenChange={open=>open?openPanel({type:'open-tool',tool:'appearance'}):closePanel()} onBack={backPanel} hideTrigger/>
+    <DesktopUpdates inline open={flow.page==='updates'} onOpenChange={open=>open?openPanel({type:'open-tool',tool:'updates'}):closePanel()} onBack={backPanel} hideTrigger/>
+    <EduLegalGuide open={flow.page==='legal'} onClose={closePanel} onBack={backPanel}/>
   </div>;
 }
 function DesignWorkspace({onViewer,active=true,onStudyMode,guidedStep,onGuidedStep,requestedLessonId,onLessonId}:{requestedLessonId?:string;onLessonId?:(id:string)=>void;onViewer:()=>void;active?:boolean;onStudyMode?:()=>void;guidedStep?:number;onGuidedStep?:(step:number)=>void}) {

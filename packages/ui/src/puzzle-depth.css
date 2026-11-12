@@ -1,0 +1,18 @@
+/* A puzzle keeps its board visible; secondary tasks open one retained page. */
+.puzzle-lab .puzzle-focused-columns{grid-template-columns:minmax(0,1fr);max-width:900px;margin:0 auto}
+.puzzle-lab .puzzle-current-summary{font-size:13px;line-height:1.7;color:var(--muted);margin:16px 0 8px}
+.puzzle-lab .puzzle-current-summary strong{color:var(--text);font-variant-numeric:tabular-nums}
+.puzzle-lab .puzzle-detail-navigation{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:16px 0}
+.puzzle-lab .puzzle-detail-navigation>.button{text-align:left;min-height:44px;white-space:normal}
+.puzzle-lab .puzzle-depth-screen[hidden]{display:none!important}
+.puzzle-lab .puzzle-depth-page{min-width:0;line-height:1.75}
+.puzzle-lab .puzzle-depth-page .puzzle-tutor{border:0;padding:0;background:transparent}
+.puzzle-lab .puzzle-depth-page .puzzle-chat{max-height:360px}
+.puzzle-lab .puzzle-depth-page .puzzle-readout{margin:0 0 20px}
+.puzzle-lab .puzzle-depth-page .puzzle-pin-editor{margin:0}
+.puzzle-lab .puzzle-depth-page .education-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.puzzle-lab .puzzle-depth-page .puzzle-explanation{margin-top:0}
+.puzzle-lab .puzzle-depth-page details>summary{cursor:pointer;min-height:44px;padding:10px 0}
+.puzzle-lab .puzzle-depth-page .puzzle-notice{font-size:12px;margin:0 0 16px}
+.puzzle-lab .puzzle-depth-page .inline-error{color:var(--red);overflow-wrap:anywhere}
+@media(max-width:600px){.puzzle-lab .puzzle-detail-navigation{grid-template-columns:minmax(0,1fr)}.puzzle-lab .puzzle-depth-page .puzzle-chat{max-height:300px}}
