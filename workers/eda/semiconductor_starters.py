@@ -13,6 +13,7 @@ import chip_references
 import physical_library
 import oscillator_projects
 import power_ivr
+import practical_analog
 
 S = None
 VERSION = 'register-semiconductor-starters-1'
@@ -74,6 +75,14 @@ PRESETS = {
         'testbench': {'analysis': 'tran', 'duration_s': 200e-9, 'step_s': 100e-12},
         'observe': ['계단 입력 뒤 OUT 상승과 측정 시정수 확인', '이상적 RC이며 반도체 공정 효과는 포함하지 않음']},
 }
+for key,row in practical_analog.CATALOG.items():
+    PRESETS[key]={'title':row['name'],'subtitle':row['scope'],'category':'실용 아날로그 블록',
+        'template_id':key,'parameters':copy.deepcopy(row['parameter_defaults']),
+        'physical_core':False,'layout':'schematic','features':row['targets'],
+        'observe':['바이어스·증폭기·스위치 하위 셀을 열고 실제 MOS 연결을 확인하세요.',
+            '전류·입력·출력 파형과 실행한 조건의 판정 근거를 함께 비교하세요.',
+            'R/C는 이상적이며 MOS 코너 변경이 수동소자 오차·배선 기생·잡음 검증을 대신하지 않습니다.'],
+        'testbench':practical_analog.settings(key)}
 PRESETS[power_ivr.ID]={'title':power_ivr.CATALOG[power_ivr.ID]['name'],
     'subtitle':power_ivr.CATALOG[power_ivr.ID]['scope'],'category':'전원·온칩 IVR',
     'template_id':power_ivr.ID,'parameters':copy.deepcopy(power_ivr.DEFAULTS),

@@ -9,6 +9,12 @@ from geometry import EDAError
 
 VERSION = 'literature-review-20261013-v1'
 DOCUMENT = Path(__file__).with_name('literature.json')
+PRACTICAL_REVIEW_VERSION = 'practical-analog-methods-20261112-v1'
+PRACTICAL_REFERENCES = {
+    'sensor_current_tia': ['ti-tia-stability-2009', 'sky130-core-mos-models', 'sky130-open-pdk-status'],
+    'adc_track_hold': ['berkeley-mos-sample-hold-2006', 'sky130-core-mos-models', 'sky130-open-pdk-status'],
+    'sensor_schmitt': ['ti-noninverting-hysteresis-2019', 'ti-schmitt-2025', 'sky130-core-mos-models', 'sky130-open-pdk-status'],
+}
 
 
 def sources():
@@ -16,6 +22,7 @@ def sources():
 
 
 def references(kind):
+    if kind in PRACTICAL_REFERENCES:return list(PRACTICAL_REFERENCES[kind])
     if kind=='soc_ivr_ldo':return ['ti-ldo-stability-2020','adi-ldo-architecture']
     if kind.startswith('sar12_') or kind=='sar_adc12':
         return ['vibe-tapeout-2026', 'clock-gating-2026']
@@ -38,7 +45,7 @@ def record(kind):
     document = sources()
     by_id = {p['id']: p for p in document['papers']}
     ids = references(kind)
-    return dict(schema_version=1, review_version=VERSION, reviewed_at='2026-10-31' if kind=='soc_ivr_ldo' else '2026-10-20' if kind.startswith('sar12_') or kind=='sar_adc12' else '2026-10-16' if kind.startswith('osc_') else document['reviewed_at'],
+    return dict(schema_version=1, review_version=PRACTICAL_REVIEW_VERSION if kind in PRACTICAL_REFERENCES else VERSION, reviewed_at='2026-11-12' if kind in PRACTICAL_REFERENCES else '2026-10-31' if kind=='soc_ivr_ldo' else '2026-10-20' if kind.startswith('sar12_') or kind=='sar_adc12' else '2026-10-16' if kind.startswith('osc_') else document['reviewed_at'],
                 reference_ids=ids, references=[copy.deepcopy(by_id[i]) for i in ids],
                 relationship='method-inspired review; existing owned circuits, not a reproduction of the cited chips',
                 paper_performance_reproduced=False,

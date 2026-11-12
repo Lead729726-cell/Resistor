@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "edition": "indust",
+  "measured_attempt": "attempt-2026-11-12T05-00-57-428Z-7fb2b213",
+  "simulation": {
+    "standard_runs": 28,
+    "standard_passed": 28,
+    "supplemental_runs": 1,
+    "supplemental_passed": 1
+  },
+  "unit_tests": {
+    "command": "npm run test:engine:unit",
+    "discovered": 240,
+    "passed": 239,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0,
+    "log_sha256": "c209fcc95e9ccfd4fd72857f244cb25ee2976f063fac4c0bf2969b38facb4354"
+  },
+  "build": {
+    "command": "npm run build",
+    "exit_code": 0,
+    "includes_typecheck": true,
+    "warnings": [
+      "Existing non-module appearance-init script notice",
+      "Existing main bundle size warning"
+    ]
+  },
+  "app_bridge": {
+    "schema_version": 1,
+    "edition": "indust",
+    "checked_at": "2026-11-12T05:03:42.693Z",
+    "scope": "HTTP app document and authenticated Vite-to-native API bridge; not graphical browser interaction",
+    "app_url": "http://127.0.0.1:5196/eda",
+    "projects": [
+      {
+        "template_id": "sensor_current_tia",
+        "project_id": "a4f455b2e1dd448b8894631f28bbb271",
+        "url": "http://127.0.0.1:5196/eda?project=a4f455b2e1dd448b8894631f28bbb271",
+        "preset_present": true,
+        "editable_cells": 4,
+        "run_count": 12
+      },
+      {
+        "template_id": "adc_track_hold",
+        "project_id": "ef80a3dbed8b49cfa9b545b9ae23cef2",
+        "url": "http://127.0.0.1:5196/eda?project=ef80a3dbed8b49cfa9b545b9ae23cef2",
+        "preset_present": true,
+        "editable_cells": 5,
+        "run_count": 9
+      },
+      {
+        "template_id": "sensor_schmitt",
+        "project_id": "fa56b21ce5b74c6db062413b0256f0b1",
+        "url": "http://127.0.0.1:5196/eda?project=fa56b21ce5b74c6db062413b0256f0b1",
+        "preset_present": true,
+        "editable_cells": 6,
+        "run_count": 8
+      }
+    ],
+    "graphical_browser_qa": "not_run: Local browser use is disabled in Work settings"
+  },
+  "post_measurement_changes": [
+    {
+      "file": "workers/eda/literature.json",
+      "scope": "One descriptive technology field corrected: Schmitt comparator uses SOC_COMPARATOR, not SOC_OTA. No circuit, model, testbench, measurement or PVT changes.",
+      "fields": [
+        {
+          "path": "/papers/17/technology",
+          "before": "TLV7041 reference example; implemented circuit instead uses owned SOC_OTA and CMOS buffers",
+          "after": "TLV7041 reference example; implemented signal path uses owned SOC_COMPARATOR with a five-MOS differential preamplifier and one CMOS output inverter"
+        }
+      ],
+      "measured_sha256": "b695d227c6a74af90a4f9a29cf8014d4002aea8d79957ae011bf5e6958f83829",
+      "current_sha256": "f55482bdddf2746a178f374b6d1864a576b86814c0f6b4a3beb93752cda377cd"
+    }
+  ],
+  "unchanged_electrical_source_files": [
+    "workers/eda/practical_analog.py",
+    "workers/eda/design_tools.py",
+    "workers/eda/native.py",
+    "workers/eda/server.py",
+    "workers/eda/current_flow.py",
+    "workers/eda/signal_metrics.py",
+    "workers/eda/analog_soc.py",
+    "workers/eda/chip_references.py",
+    "workers/eda/research.py",
+    "workers/eda/semiconductor_starters.py",
+    "scripts/practical-analog-lab.mjs"
+  ],
+  "physical_layout_verified": false,
+  "foundry_signoff": false,
+  "installer_published": false
+}

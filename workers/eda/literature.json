@@ -171,6 +171,71 @@
       "technology": "5V discrete comparator design; not our 1.8V CMOS circuit",
       "adopted": "Independently derive exponential RC period using measured switching levels; expose feedback loading and MOS delay assumptions.",
       "not_reproduced": "TLV3201 comparator, 1MHz specification, component values or published performance. Our resistor-feedback MOS circuit differs."
+    },
+    {
+      "id": "sky130-core-mos-models",
+      "title": "SKY130 Device Details: 1.8V NMOS and high-VT PMOS",
+      "authors": "SkyWater PDK Authors",
+      "date": "undated maintained documentation; accessed 2026-11-12",
+      "venue": "Official public PDK device documentation",
+      "doi": null,
+      "url": "https://skywater-pdk.readthedocs.io/en/main/rules/device-details.html",
+      "read_scope": "1.8V NMOS FET and 1.8V high-VT PMOS FET model-information sections",
+      "technology": "sky130_fd_pr__nfet_01v8 and sky130_fd_pr__pfet_01v8_hvt used by the owned CMOS library",
+      "adopted": "Identify actual model families and documented terminal-bias validity ranges; distinguish ideal R/C from process-qualified passives.",
+      "not_reproduced": "Model validation, reliability/ESD ratings, resistor/capacitor process characterization or manufacturing signoff."
+    },
+    {
+      "id": "sky130-open-pdk-status",
+      "title": "SKY130 Current Status: Experimental Preview",
+      "authors": "SkyWater PDK Authors",
+      "date": "undated maintained documentation; accessed 2026-11-12",
+      "venue": "Official public PDK release-scope documentation",
+      "doi": null,
+      "url": "https://skywater-pdk.readthedocs.io/en/main/status.html",
+      "read_scope": "Current Status section, experimental preview and test-chip/initial-verification limitations",
+      "technology": "Public SKY130 PDK release scope, distinct from a foundry-approved production flow",
+      "adopted": "Separate open-model circuit exploration from fabrication qualification.",
+      "not_reproduced": "Foundry approval, silicon validation or production suitability."
+    },
+    {
+      "id": "ti-tia-stability-2009",
+      "title": "Transimpedance Considerations for High-Speed Amplifiers (SBOA122)",
+      "authors": "Xavier Ramus; Texas Instruments",
+      "date": "2009-11",
+      "venue": "Official application report; circuit-method foundation",
+      "doi": null,
+      "url": "https://www.ti.com/lit/an/sboa122/sboa122.pdf",
+      "read_scope": "PDF pages 2-6: feedback impedance, finite loop gain, source capacitance, bandwidth and noise assumptions; accessed 2026-11-12",
+      "technology": "General op-amp TIA analysis; implemented amplifier is the owned two-stage SKY130 SOC_OTA",
+      "adopted": "Rf/Cf negative feedback, explicit current direction and input capacitance; separate measured settling from analytic bandwidth/noise budgets.",
+      "not_reproduced": "TI amplifier circuits or specifications, single-pole approximation as measured OTA stability, optical responsivity or noise performance."
+    },
+    {
+      "id": "berkeley-mos-sample-hold-2006",
+      "title": "EECS 240 Topic 18: MOS Sample and Hold",
+      "authors": "Ali M. Niknejad; Bernhard E. Boser; University of California, Berkeley",
+      "date": "2006",
+      "venue": "Author-hosted university analog-IC lecture",
+      "doi": null,
+      "url": "https://rfic.eecs.berkeley.edu/courses/ee240sp06/pdf/topic18.pdf",
+      "read_scope": "Slides 2-10 and 20-27: kT/C, complementary switching, acquisition, body effect and charge injection; accessed 2026-11-12",
+      "technology": "MOS sampling methods; lecture device sizes and voltage examples are not SKY130 values",
+      "adopted": "Complementary transmission gate, hold capacitor and separate acquisition, hold-error and charge-injection checks.",
+      "not_reproduced": "Bootstrapped switch, bottom-plate sampling, measured thermal noise, jitter, ADC resolution or lecture performance."
+    },
+    {
+      "id": "ti-noninverting-hysteresis-2019",
+      "title": "Non-Inverting Comparator with Hysteresis Circuit (SBOA313A)",
+      "authors": "Texas Instruments",
+      "date": "2019-08",
+      "venue": "Official Analog Engineer circuit note; method foundation",
+      "doi": null,
+      "url": "https://www.ti.com/lit/pdf/sboa313",
+      "read_scope": "PDF pages 1-3: two output-state resistor-network analysis and threshold dependencies; accessed 2026-11-12",
+      "technology": "TLV7041 reference example; implemented signal path uses owned SOC_COMPARATOR with a five-MOS differential preamplifier and one CMOS output inverter",
+      "adopted": "Derive thresholds by KCL using the actual feedback-node low/high voltages, then measure both input sweep directions.",
+      "not_reproduced": "TI comparator, open-drain pull-up network, six-transistor Schmitt core, threshold/current/delay specifications or vendor qualification."
     }
   ]
 }
