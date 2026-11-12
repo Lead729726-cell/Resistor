@@ -123,7 +123,7 @@ jobs:
         if: (runner.os == 'macOS' && inputs.mac_developer_id) || (runner.os == 'Windows' && inputs.windows_artifact_signing)
         run: node scripts/signing-preflight.mjs --require-trusted
       - name: Verify release authority, edition identity and mathematical core
-        run: node --test --test-isolation=none tests/native-signing.test.mjs tests/edu-native-release.test.mjs tests/licensing.test.mjs tests/product-editions.test.mjs
+        run: node --test --test-isolation=none tests/native-signing.test.mjs tests/edu-native-release.test.mjs tests/native-worker.test.mjs tests/licensing.test.mjs tests/product-editions.test.mjs
       - run: node --import tsx --test --test-isolation=none tests/formulas/*.test.ts tests/course-*.test.ts tests/education-inverter.test.ts
       - name: Locate Windows LZMA archive extractor
         if: runner.os == 'Windows'

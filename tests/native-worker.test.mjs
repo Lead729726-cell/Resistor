@@ -8,6 +8,7 @@ import {startWorker} from '../scripts/worker.mjs';
 import {runtimeConfig} from '../scripts/runtime.mjs';
 import {configureEngine} from '../scripts/engine-settings.mjs';
 import {wslDistributions} from '../scripts/wsl-worker.mjs';
+import {nativePreparationLimit,runPreparationPhase} from '../scripts/native-preparation.mjs';
 
 const folder=async()=>{const p=await mkdtemp(path.join(os.tmpdir(),'resistor-native-test-'));await mkdir(path.join(p,'.runtime'));return p;};
 const response=result=>({ok:true,status:200,json:async()=>({ok:true,result})});
@@ -44,4 +45,31 @@ test('Docker Desktop internal WSL distributions are excluded from user choices',
 });
 test('read-only source diagnosis probes KLayout without pip installation or Docker',async()=>{
   const workspace=await folder();await writeFile(path.join(workspace,'.runtime/engine.json'),JSON.stringify({python:'/operator/python'}));const commands=[];await assert.rejects(nativeEnvironment(workspace,{prepare:false,run:async(exe,args)=>{commands.push([exe,args]);throw Error('missing KLayout');}}),/KLayout/);assert.equal(commands.length,1);assert(!JSON.stringify(commands).includes('pip'));assert(!JSON.stringify(commands).includes('docker'));
+});
+
+test('only Intel Mac compiler preparation gets 20 minutes; probes and other platforms retain their budgets',()=>{
+  for(const [platform,arch,expected]of [['darwin','x64',1200000],['darwin','arm64',600000],['linux','x64',600000],['win32','x64',600000]]){
+    assert.equal(nativePreparationLimit('ngspice-compile',{platform,arch}),expected);
+    assert.equal(nativePreparationLimit('ngspice-probe',{platform,arch}),20000);
+    assert.equal(nativePreparationLimit('ngspice-configure',{platform,arch}),180000);
+    assert.equal(nativePreparationLimit('pdk-extract',{platform,arch}),120000);
+  }
+  assert.throws(()=>nativePreparationLimit('private-path-or-secret'),/Unknown native preparation phase/);
+});
+
+test('preparation reports real completion and elapsed time without logging command arguments or environment',async()=>{
+  const logs=[];let time=10,call;
+  const result=await runPreparationPhase('ngspice-compile','compiler',['private-argument'],{cwd:'private-path',env:{TOKEN:'private-token'},timeout:Infinity},{platform:'darwin',arch:'x64',now:()=>time,log:line=>logs.push(JSON.parse(line)),run:async(executable,args,options)=>{call={executable,args,options};time=110;return 'compiled';}});
+  assert.equal(result,'compiled');assert.equal(call.options.timeout,1200000);assert.equal(call.options.env.TOKEN,'private-token');
+  assert.deepEqual(logs.map(({status,elapsed_ms})=>({status,elapsed_ms})),[{status:'started',elapsed_ms:0},{status:'completed',elapsed_ms:100}]);
+  assert(!JSON.stringify(logs).includes('private-'));
+});
+
+test('failed preparation keeps its cause and phase but never emits completed or executes an unknown phase',async()=>{
+  const logs=[];let calls=0,time=1;const cause=Error('Local tool preparation timed out.');
+  const dependencies={now:()=>time,log:line=>logs.push(JSON.parse(line)),run:async()=>{calls++;time=600001;throw cause;}};
+  await assert.rejects(runPreparationPhase('ngspice-compile','make',[],{},dependencies),error=>error.cause===cause&&/ngspice-compile failed after 600000 ms/.test(error.message));
+  assert.deepEqual(logs.map(item=>item.status),['started','failed']);
+  await assert.rejects(runPreparationPhase('unknown','make',[],{},dependencies),/Unknown native preparation phase/);
+  assert.equal(calls,1);assert.equal(logs.length,2);
 });

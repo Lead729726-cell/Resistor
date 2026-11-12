@@ -3,7 +3,7 @@ import {readFile,writeFile,mkdir,cp,readdir} from 'node:fs/promises';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
-import {runNative} from './native-worker.mjs';
+import {runPreparationPhase} from './native-preparation.mjs';
 const hash=b=>createHash('sha256').update(b).digest('hex');
 export async function prepareNativePdk({workspace=process.cwd(),source=process.env.REGISTER_PUBLIC_PDK_SOURCE,archive=process.env.REGISTER_PUBLIC_PDK_ARCHIVE}={}){
   const out=path.join(workspace,'release/native-public-pdks');await mkdir(out,{recursive:true});
@@ -18,12 +18,12 @@ export async function prepareNativePdk({workspace=process.cwd(),source=process.e
     await writeFile(path.join(out,'provenance.json'),JSON.stringify({schema_version:1,source:'installed-public-SKY130A',open_pdks_commit:'d400e26845538beaeb7cc5fdb9bfc06c30ea27cb',upstream:'https://github.com/RTimothyEdwards/open_pdks',relocations:[{file:'sky130A/libs.tech/magic/sky130A.magicrc',original_sha256:hash(Buffer.from(original)),portable_sha256:hash(Buffer.from(portable)),change:'Remove OSIC-only optional keyboard source; retain model, technology and device generation rules.'}],private_pdk_included:false},null,2)+'\n');
   }else if(archive){
     const lock=JSON.parse(await readFile(new URL('./native-pdk-lock.json',import.meta.url),'utf8'));
-    const bytes=await readFile(archive);if(hash(bytes)!==lock.sha256)throw Error('Public native PDK archive checksum mismatch.');await runNative('tar',['-xf',path.resolve(archive),'-C',out],{timeout:120000});
+    const bytes=await readFile(archive);if(hash(bytes)!==lock.sha256)throw Error('Public native PDK archive checksum mismatch.');await runPreparationPhase('pdk-extract','tar',['-xf',path.resolve(archive),'-C',out]);
   }else{
     const lock=JSON.parse(await readFile(new URL('./native-pdk-lock.json',import.meta.url),'utf8')),cache=path.join(workspace,'.runtime/native-downloads');await mkdir(cache,{recursive:true});
     const file=path.join(cache,'sky130-native-v1.tar.gz');let bytes;try{bytes=await readFile(file);}catch(e){if(e.code!=='ENOENT')throw e;}
     if(!bytes||hash(bytes)!==lock.sha256){const response=await fetch(lock.url,{signal:AbortSignal.timeout(180000)});if(!response.ok)throw Error('Public native PDK archive unavailable: '+response.status);bytes=Buffer.from(await response.arrayBuffer());if(hash(bytes)!==lock.sha256)throw Error('Public native PDK archive checksum mismatch.');await writeFile(file,bytes);}
-    await runNative('tar',['-xf',file,'-C',out],{timeout:120000});
+    await runPreparationPhase('pdk-extract','tar',['-xf',file,'-C',out]);
   }
   // Validate this is the declared public resource tree, not a private process.
   const node=JSON.parse(await readFile(path.join(out,'sky130A/.config/nodeinfo.json'),'utf8'));if(node.node!=='sky130A'||node['foundry-name']!=='SkyWater')throw Error('Unexpected public PDK node metadata.');
