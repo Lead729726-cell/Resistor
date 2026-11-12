@@ -41,7 +41,11 @@ node scripts/product-legal-site.mjs
 - 현재 전체 계정 삭제·기간 만료 자동 파기와 아동 법정대리인 확인 흐름은 확인되지 않았다.
 
 전체 구현 경로는 `legalImplementationSources` 배열에 있다. 비밀키·운영 DB·구매자 기록은
-이번 문서 작업에서 읽거나 변경하지 않았다. 실제 메일·구매·AI 호출이나 정책 게시도 하지 않았다.
+이번 소스 검토에서 읽거나 변경하지 않았다. 실제 메일·구매·AI 호출이나 데이터 삭제도 하지 않았다.
+공개 배포는 별도 절차로 진행했고, 승인한 선택을 반영한 검토본 v2026-11-12.2의
+[공개 검사 74/74](evidence/legal/policy-v2-public-verification.json)가 남아 있다.
+이후 [네이티브 배포 검사 70/70](evidence/edu-native-release-20261112/public-verification.json)에서도
+두 정책 페이지의 동일 해시를 확인했다. 공개 상태가 시행일 확정이나 법률 검토 완료를 뜻하지 않는다.
 
 ## 승인한 기준과 남은 운영 확인
 
