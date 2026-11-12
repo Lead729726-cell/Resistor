@@ -58,8 +58,17 @@ export function validateEduSigningEvidence(receipt){
 /** A publication gate over real receipts, not a producer of runtime PASS results. */
 export function verifiedEduNativeFiles(release,receipts,authority,{allowDraft=false}={}){
  check(release&&/^edu-v\d+\.\d+\.\d+$/.test(release.tag_name),'Expected dedicated edu-v semantic release');
- check(release.html_url===`${repo}/releases/tag/${release.tag_name}`&&Array.isArray(release.assets),'Official Edu release identity missing');
- check(allowDraft||release.draft===false,'Draft native releases cannot replace public download links');
+ const draft=allowDraft===true&&release.draft===true;
+ check(draft||release.draft===false,'Draft native releases cannot replace public download links');
+ let assetTag=release.tag_name;
+ if(draft){
+  check(Number.isSafeInteger(release.id)&&release.id>0&&/^[a-f0-9]{40}$/.test(release.target_commitish),'Draft audit requires a release ID and exact target commit SHA');
+  if(release.html_url!==`${repo}/releases/tag/${release.tag_name}`){
+   const prefix=`${repo}/releases/tag/`,temporary=typeof release.html_url==='string'&&release.html_url.startsWith(prefix)?release.html_url.slice(prefix.length):'';
+   check(/^untagged-[a-f0-9]{20}$/.test(temporary),'Official temporary draft release identity missing');assetTag=temporary;
+  }
+ }
+ check(release.html_url===`${repo}/releases/tag/${assetTag}`&&Array.isArray(release.assets),'Official Edu release identity missing');
  check(release.prerelease===false,'Prerelease native releases cannot replace stable download links');
  check(authority&&/^https:\/\//.test(authority.server)&&/^[a-f0-9]{64}$/.test(authority.public_key_fingerprint)&&typeof authority.key_id==='string'&&!!authority.key_id&&validDate(authority.checked_at),'Live license authority verification missing');
  const version=release.tag_name.slice(5),files=[],provenance=[];
@@ -69,12 +78,16 @@ export function verifiedEduNativeFiles(release,receipts,authority,{allowDraft=fa
   const target=targets.find(t=>asset.name===`Resistor-Edu-${version}-${t}.`+(t.startsWith('windows')?'exe':t.startsWith('macos')?'zip':'tar.gz'));
   check(target,'Unexpected installer asset in dedicated Edu release');
   check(!files.some(f=>f.target===target),'Duplicate native installer target');
-  const checked=validateEditionAsset(asset,release.tag_name,target,'edu'),name=asset.name.replace(/\.(exe|zip|tar\.gz)$/,'.json');
+  check(asset.browser_download_url===`${repo}/releases/download/${assetTag}/${asset.name}`,'Installer URL does not belong to the verified release');
+  // Temporary GitHub draft URLs are authenticated audit locations only. Validate
+  // the same immutable file identity against the stable updater's strict rules.
+  const checked=validateEditionAsset(draft?{...asset,browser_download_url:`${repo}/releases/download/${release.tag_name}/${asset.name}`}:asset,release.tag_name,target,'edu'),name=asset.name.replace(/\.(exe|zip|tar\.gz)$/,'.json');
   const matches=release.assets.filter(a=>a.name===name);check(matches.length===1,'Native installer requires exactly one paired receipt');
   const meta=matches[0],bytes=receipts[name];
-  check(bytes&&meta.browser_download_url===`${repo}/releases/download/${release.tag_name}/${name}`&&Number.isSafeInteger(meta.size)&&meta.size<1048576&&bytes.length===meta.size&&meta.digest==='sha256:'+hash(bytes),'Receipt bytes/digest/URL mismatch');
+  check(bytes&&meta.browser_download_url===`${repo}/releases/download/${assetTag}/${name}`&&Number.isSafeInteger(meta.size)&&meta.size<1048576&&bytes.length===meta.size&&meta.digest==='sha256:'+hash(bytes),'Receipt bytes/digest/URL mismatch');
   const receipt=JSON.parse(Buffer.from(bytes).toString('utf8'));
   const update={edition:'edu',product_id:'resistor.edu',version,asset:checked};validateEditionReceipt(receipt,update);
+  if(draft)check(receipt.source_revision===release.target_commitish,'Draft target commit differs from packaged source');
   const qa=receipt.native_qa,engine=qa.engine,desktop=qa.desktop,license=receipt.license_authority,runtime=receipt.runtime;
   check(qa.product_id==='resistor.edu'&&qa.platform===platform[receipt.platform]&&qa.arch===receipt.arch,'Desktop QA must match installer OS/CPU');
   check(desktop?.activation_checked===true&&desktop.edition_title==='Resistor Edu'&&desktop.window_loaded===true&&desktop.license_required_before_activation===true&&desktop.engine_rpc_checked===true&&desktop.lease_released===true,'Actual licensed Edu desktop verification is incomplete');
@@ -92,11 +105,11 @@ export function verifiedEduNativeFiles(release,receipts,authority,{allowDraft=fa
   check(receipt.runtime_arch===receipt.arch&&receipt.requires_emulation===false,'This release requires native runtime CPU verification');
   check(receipt.manufacturing_signoff===false,'Native execution must not claim manufacturing signoff');
   validateEduSigningEvidence(receipt);const signing=receipt.signing;
-  files.push({target,name:asset.name,url:checked.url,receipt_url:meta.browser_download_url,product_id:'resistor.edu',version,release_tag:release.tag_name,bytes:checked.bytes,sha256:checked.sha256,receipt_sha256:hash(bytes),source_revision:receipt.source_revision,build_tools_revision:receipt.build_tools_revision,runtime_arch:receipt.runtime_arch,requires_emulation:false,qa_completed:true,minimum_os:target.startsWith('macos')?'15.0':target==='windows-x64'?'10.0':null});
+  files.push({target,name:asset.name,url:asset.browser_download_url,receipt_url:meta.browser_download_url,product_id:'resistor.edu',version,release_tag:release.tag_name,bytes:checked.bytes,sha256:checked.sha256,receipt_sha256:hash(bytes),source_revision:receipt.source_revision,build_tools_revision:receipt.build_tools_revision,runtime_arch:receipt.runtime_arch,requires_emulation:false,qa_completed:true,minimum_os:target.startsWith('macos')?'15.0':target==='windows-x64'?'10.0':null});
   provenance.push({target,source_revision:receipt.source_revision,build_tools_revision:receipt.build_tools_revision,runtime_manifest_sha256:runtime.manifest_sha256,engine_checked_at:engine.checked_at,license_authority:license,signing,native_physical_tools_verified:engine.native_physical_tools_verified===true,manufacturing_signoff:false});
  }
  check(new Set(files.map(f=>f.source_revision)).size===1,'New native targets must share the exact Edu source revision');
- return {version,tag:release.tag_name,source_revision:files[0].source_revision,files,provenance};
+ return {version,tag:release.tag_name,source_revision:files[0].source_revision,files,provenance,...(draft?{draft:true,publicly_downloadable:false,draft_release_id:release.id}:{})};
 }
 
 /** Bind receipt claims to the exact publicly committed source, including its authority. */
@@ -130,6 +143,7 @@ export function flattenVercelSourceTree(tree){
 export function mergeEduNativeManifest(previous,verified,definitions,now=new Date().toISOString()){
  validateEditionDownloads(previous,definitions);
  check(verified?.files?.length>0&&/^edu-v\d+\.\d+\.\d+$/.test(verified.tag),'Verified native files required');
+ check(verified.draft!==true,'Draft audit cannot replace public download links');
  const manifest=structuredClone(previous),edu=manifest.editions.find(e=>e.edition==='edu'),industry=JSON.stringify(manifest.editions.find(e=>e.edition==='indust'));
  for(const file of verified.files){const i=edu.native_installer.files.findIndex(f=>f.target===file.target);check(i>=0,'Unknown target in current download inventory');const old=edu.native_installer.files[i];check(compareVersions(file.version,old.version)>0||file.version===old.version&&file.sha256===old.sha256,'Refusing native installer downgrade or same-version replacement');edu.native_installer.files[i]=structuredClone(file);}
  edu.source={kind:'source-zip',revision:verified.source_revision,url:`${repo}/archive/${verified.source_revision}.zip`,product_edition_verified:'edu'};
@@ -138,7 +152,7 @@ export function mergeEduNativeManifest(previous,verified,definitions,now=new Dat
 }
 
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export function eduNativeSiteOverlay({manifest,config,home,eduPage,eduUpdates},verified,definitions){
+export function eduNativeSiteOverlay({manifest,config,home,eduPage,eduUpdates,learningAssets},verified,definitions){
  const updated=mergeEduNativeManifest(manifest,verified,definitions),nextConfig=structuredClone(config),edu=updated.editions.find(e=>e.edition==='edu');
  const replacements=[{source:'/download/edu/source',destination:edu.source.url,permanent:false},...verified.files.map(f=>({source:'/download/edu/'+f.target,destination:f.url,permanent:false}))];
  nextConfig.redirects=(nextConfig.redirects||[]).filter(r=>!replacements.some(n=>n.source===r.source));nextConfig.redirects.push(...replacements);
@@ -155,5 +169,24 @@ export function eduNativeSiteOverlay({manifest,config,home,eduPage,eduUpdates},v
  const guide=structuredClone(eduUpdates);guide.source_revision=edu.source.revision;guide.native_installer_rebuilt=true;guide.native_installer_rebuilt_scope='verified-native-targets:'+verified.files.map(f=>f.target).join(',');
  guide.published_native_installers={...guide.published_native_installers,versions:[...new Set(edu.native_installer.files.map(f=>f.version))],matches_guide_source:edu.native_installer.files.every(f=>f.source_revision===guide.feature_source_revision),installed_app_verification:edu.native_installer.files.every(f=>f.qa_completed===true),matches_latest_source:edu.native_installer.files.every(f=>f.source_revision===edu.source.revision)};
  guide.native_release={tag:verified.tag,source_revision:verified.source_revision,verified_targets:verified.files.map(f=>f.target),provenance:verified.provenance,website_executes_eda_engine:false};
- return new Map([['edition-downloads.json',JSON.stringify(updated,null,2)+'\n'],['vercel.json',JSON.stringify(nextConfig,null,2)+'\n'],['index.html',insert(home)],['download-edu.html',insert(page)],['edu-updates.json',JSON.stringify(guide,null,2)+'\n']]);
+ const overlay=new Map([['edition-downloads.json',JSON.stringify(updated,null,2)+'\n'],['vercel.json',JSON.stringify(nextConfig,null,2)+'\n'],['index.html',insert(home)],['download-edu.html',insert(page)],['edu-updates.json',JSON.stringify(guide,null,2)+'\n']]);
+ // Older isolated callers may omit this manifest; productionSource requires it.
+ // Preserve entry order, metadata and untouched historical hashes, including stale ones.
+ if(learningAssets!==undefined){
+  check(learningAssets&&Array.isArray(learningAssets.files),'Production learning manifest files required');
+  const next=structuredClone(learningAssets),seen=new Set();
+  for(const entry of next.files){
+   check(entry&&typeof entry.file==='string'&&!seen.has(entry.file),'Invalid or duplicate learning manifest entry');seen.add(entry.file);
+   if(overlay.has(entry.file)){const body=overlay.get(entry.file);entry.bytes=Buffer.byteLength(body);entry.sha256=hash(body);}
+  }
+  overlay.set('learning-assets.json',JSON.stringify(next,null,2)+'\n');
+ }
+ return overlay;
+}
+
+/** Keep the selected live deployment's function settings and environment. */
+export function eduNativeDeploymentPayload({projectId,baselineId,files,sourceRevision,tag}){
+ check(/^prj_[\w]+$/.test(projectId)&&/^dpl_[\w]+$/.test(baselineId),'Verified production identity required');
+ check(sha1(sourceRevision)&&/^edu-v\d+\.\d+\.\d+$/.test(tag)&&Array.isArray(files)&&files.length>0,'Verified native publication inputs required');
+ return {name:'resistor-downloads',project:projectId,deploymentId:baselineId,target:'production',files,meta:{edition:'edu',source_revision:sourceRevision,release_kind:'official-edu-native',native_release_tag:tag}};
 }

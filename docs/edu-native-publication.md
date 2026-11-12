@@ -66,10 +66,21 @@ prereleases, changed source, unavailable files or incomplete desktop/engine QA.
 
 Review `.runtime/edu-native-publication/edu-v0.32.0/review.json`. The overlay is
 limited to `edition-downloads.json`, `vercel.json`, `index.html`,
-`download-edu.html`, and `edu-updates.json`. Only verified Edu OS download routes
+`download-edu.html`, `edu-updates.json`, and `learning-assets.json`. Production
+preparation requires the current learning manifest and refreshes only byte counts
+and SHA-256 values for entries whose files are replaced by this native overlay.
+Entry order, provenance, unrelated fields and untouched historical entries stay
+unchanged; this does not silently repair unrelated stale hashes.
+Only verified Edu OS download routes
 and cards are replaced. Industry metadata and all unrelated production files
 are retained. `edu-updates.json` describes website guidance; it is not the
 desktop updater's GitHub release feed.
+
+The deployment request sets `deploymentId` to that exact current production ID
+and does not override `projectSettings`, build options or environment values.
+This uses Vercel's documented redeployment inheritance for the existing API
+function settings and environment. Environment values are never copied into
+local payloads or logs. See the [official deployment SDK contract](https://github.com/vercel/sdk/blob/main/docs/sdks/deployments/README.md#createdeployment).
 
 ```powershell
 node scripts/edu-native-deploy.mjs publish edu-v0.32.0
@@ -78,6 +89,8 @@ node scripts/edu-native-deploy.mjs status edu-v0.32.0
 
 Publication rechecks the authority, release, source and current production ID.
 If production advanced, prepare again rather than overwriting its newer files.
+For example, after a website redesign is promoted, native preparation must read
+that new deployment instead of reusing an earlier website candidate or baseline.
 An intent without a returned deployment receipt must be reconciled in Vercel
 by its saved release fingerprint before retrying; the tool never blindly
 creates a second deployment after an uncertain network result.

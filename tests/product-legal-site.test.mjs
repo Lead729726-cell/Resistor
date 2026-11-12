@@ -16,7 +16,8 @@ const sha=value=>createHash('sha256').update(value).digest('hex');
 
 test('unknown operator decisions cannot be rendered as a final effective policy',()=>{
  assert.equal(productLegalReadiness().ready,false);
- for(const id of ['privacy-contact','retention','international','minors','policy-approval','effective-date','reviewed-at'])assert(productLegalReadiness().missing.includes(id));
+ for(const id of ['retention','international','minors','policy-approval','effective-date','reviewed-at'])assert(productLegalReadiness().missing.includes(id));
+ assert.equal(productLegalReadiness().missing.includes('privacy-contact'),false);
  assert.throws(()=>renderProductLegalPages({mode:'final'}),/review is incomplete/);
  assert.throws(()=>renderProductLegalPages({mode:'unknown'}),/Legal mode/);
  const spoofed={...legalReview,status:'approved',effective_date:'2026-11-12',reviewed_at:'2026-11-12T00:00:00Z'};
@@ -29,6 +30,27 @@ test('unknown operator decisions cannot be rendered as a final effective policy'
   assert.doesNotMatch(html,/<details[^>]*(?:data-policy-toc|data-policy-review)[^>]*\bopen\b/);
   assert.doesNotMatch(html,/<input|<form|<textarea|onclick=|onload=/);
  }
+});
+
+test('approved contact and retention decisions remain distinct from unverified deletion operations',()=>{
+ assert.equal(legalReview.items.find(item=>item.id==='privacy-contact').status,'verified');
+ assert.equal(legalReview.items.find(item=>item.id==='retention').status,'policy_approved');
+ const pages=renderProductLegalPages(),privacy=pages['privacy/index.html'],terms=pages['terms/index.html'];
+ for(const html of [privacy,terms]){
+  assert.match(html,/개인정보 보호책임자[\s\S]*대표 이석형/);
+  assert.match(html,/creditlsh00726@gmail\.com/);
+  assert.match(html,/문의[\s\S]*해결 후 1년/);
+  assert.match(html,/수동[\s\S]*처리/);
+  assert.doesNotMatch(html,/겸임 지정은 운영자 확인이 필요|보호책임자 지정, 서버별/);
+  assert.doesNotMatch(html,/<h3>개인정보 보호책임자 지정<\/h3>/);
+ }
+ assert.match(privacy,/리그·커뮤니티 기록은 이용 중 보관/);
+ assert.match(privacy,/법정 기간 동안 별도 보존/);
+ assert.match(privacy,/자동 삭제가 구현되어 있지 않습니다/);
+ assert.match(privacy,/완료하지 않은 단계는 대기·추가 확인/);
+ assert.match(privacy,/국외 이전 세부사항 등 남은 확인 항목/);
+ assert.equal(productLegalReadiness().ready,false);
+ assert.throws(()=>renderProductLegalPages({mode:'final'}),/review is incomplete/);
 });
 
 test('product policies preserve actual Edu entitlement, planned sales and separate operator-mail privacy scope',async()=>{

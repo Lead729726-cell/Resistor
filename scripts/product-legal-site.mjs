@@ -28,7 +28,7 @@ export function renderProductLegalPages({mode='review'}={}){
  if(mode==='final'&&!readiness.ready)throw Error('Legal publication review is incomplete: '+readiness.missing.join(', '));
  const review=mode!=='final';
  const reviewNotice=review?`<aside class="academy-note" role="note" data-policy-status="review_required"><strong>운영 확인 중인 안내 · 시행일 미확정</strong><p>현재 기능과 데이터 흐름을 정리한 검토본입니다. 보관·파기 절차와 국외 이전 등 확인이 필요한 사항을 아래에 표시했습니다. 완결된 법률 검토나 새로운 동의 절차를 마쳤다는 뜻이 아니며 이 페이지에서 구매·개인정보 입력을 받지 않습니다.</p></aside>`:'';
- const pending=review?`<details id="review-status" class="academy-document-note" data-policy-review><summary>정책 확정 전에 확인할 사항</summary><div><p>다음 항목을 확인한 뒤 시행일과 확정 문구를 반영합니다. 이용자가 이 목록을 확인하는 것으로 운영자의 확인 의무를 대신하지 않습니다.</p>${legalReview.items.map(item=>`<article><h3>${escape(item.title)}</h3><p>${escape(item.detail)}</p></article>`).join('')}</div></details>`:'';
+ const pending=review?`<details id="review-status" class="academy-document-note" data-policy-review><summary>정책 확정 전에 확인할 사항</summary><div><p>다음 항목을 확인한 뒤 시행일과 확정 문구를 반영합니다. 이용자가 이 목록을 확인하는 것으로 운영자의 확인 의무를 대신하지 않습니다.</p>${legalReview.items.filter(item=>item.status!=='verified').map(item=>`<article><h3>${escape(item.title)}</h3><p>${escape(item.detail)}</p></article>`).join('')}</div></details>`:'';
  return Object.fromEntries(productLegalPages.map(page=>{
   const sections=page.kind==='terms'?termsSections:privacySections;
   const summary=`<details class="academy-document-note" data-policy-toc><summary>이 문서의 항목</summary><nav aria-label="문서의 항목" class="academy-actions">${sections.map(value=>link({label:value.title,href:'#'+value.id})).join('')}</nav></details>`;

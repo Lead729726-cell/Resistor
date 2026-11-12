@@ -1,49 +1,60 @@
 {
   "schema_version": 1,
   "edition": "edu",
-  "checked_at": "2026-11-12T08:10:11.045Z",
-  "scope": "read-only product information review; not effective policy or legal compliance certification",
+  "checked_at": "2026-11-12T08:31:02.939Z",
+  "scope": "approved operator choices with remaining operational verification; not final effective policy",
   "sources": [
     {
       "file": "scripts/site/product-legal-content.mjs",
-      "bytes": 29170,
-      "sha256": "f385a6a82da9194a0bd6c28cd2c5a661a0fbb9721985065440aa4a01be8f8602"
+      "bytes": 31255,
+      "sha256": "02598c4cb95cdda351fbd5c4567ee66794e95bfc22ff4295d9933d52082aaa8a"
     },
     {
       "file": "scripts/product-legal-site.mjs",
-      "bytes": 8082,
-      "sha256": "9c40ec82b29db367182e8e47af8be00a80c88d4f11b423e5b6cb02517b1aca8a"
+      "bytes": 8121,
+      "sha256": "5b6066573297f162b19d5ec73f048465281aabde246fd2d071f9e4c3ba79db08"
     },
     {
       "file": "tests/product-legal-site.test.mjs",
-      "bytes": 7261,
-      "sha256": "7da53500c1ecfc2191aa2072f9e1413f5f4771543d187e19762233741794c212"
+      "bytes": 8682,
+      "sha256": "c96d485132882d3b00f64864bbfa3aeff231d2d29fa2c2e13c12b0eb1cb30155"
     },
     {
       "file": "docs/product-legal-review-20261112.md",
-      "bytes": 8024,
-      "sha256": "5d1e08502cf6f01c770fc72a70b6cf254bcb9a9f0d2de1f1cb52ce3823855b00"
+      "bytes": 8901,
+      "sha256": "f2fac65c1d73ef53a2a745daf6a211b8eb8aee875c7f2c16f2b80206e81e6d89"
+    },
+    {
+      "file": "docs/privacy-manual-operations-20261112.md",
+      "bytes": 8932,
+      "sha256": "59c7ef4f8edeedd0eeb81d7492dde2a9e3bca1d8e9514a00beb52c4948da51c7"
     }
   ],
+  "approved_decisions": {
+    "confirmed_date": "2026-11-12",
+    "privacy_officer": "대표 이석형",
+    "contact": "creditlsh00726@gmail.com",
+    "inquiry_retention": "1 year after resolution",
+    "league_community_retention": "during use; verified deletion and withdrawal requests processed manually",
+    "statutory_records": "separate retention for applicable statutory periods"
+  },
   "tests": {
     "command": "node --test tests/product-legal-site.test.mjs",
-    "passed": 5,
+    "passed": 6,
     "failed": 0
   },
   "candidate": {
-    "path": ".runtime/course-site-unified-20261112/candidate",
+    "path": ".runtime/course-policy-approved-20261112",
     "assets": [
       {
         "file": "terms/index.html",
-        "sha256": "94ea62f76ece6f625777c0e5caafff9046d961d9ccd2484d3d10e28aa4b99ba9",
-        "bytes": 16269,
-        "receipt_match": true
+        "bytes": 16688,
+        "sha256": "19e20c971f5dec491650bda36aeebc14837f6046f24019f813bf1a2174699483"
       },
       {
         "file": "privacy/index.html",
-        "sha256": "66c2d7da45f35ab2d1df5457732c4af165949e0163fb6dda475d416d1fb4428a",
-        "bytes": 28608,
-        "receipt_match": true
+        "bytes": 29963,
+        "sha256": "0aa171b9235155573812b190697aedcdfd5b36f965d2e9c08c4c129d6276d0ae"
       }
     ],
     "public_diagnostic_present": false
@@ -52,7 +63,6 @@
     "ready": false,
     "effective_date": null,
     "missing": [
-      "privacy-contact",
       "retention",
       "international",
       "minors",
@@ -65,7 +75,12 @@
     "publication": false,
     "buyer_data_access": false,
     "consent_acceptance": false,
-    "mail_send": false
+    "mail_send": false,
+    "production_deletion": false
+  },
+  "manual_deletion_tool": {
+    "implemented": false,
+    "scope_document": "docs/privacy-manual-operations-20261112.md"
   },
   "source_verification": {
     "actual_implementation_sources": "scripts/site/product-legal-content.mjs#legalImplementationSources",

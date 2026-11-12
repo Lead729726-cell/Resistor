@@ -1,6 +1,6 @@
 // Verified product behavior and operator review items are deliberately separate.
 // Do not turn a missing operator decision or provider data-location check into a promise.
-export const productLegalVersion='2026-11-12.1';
+export const productLegalVersion='2026-11-12.2';
 export const legalOperator=Object.freeze({
  name:'콜드브루',representative:'이석형',business_number:'114-19-75350',mail_order_number:'2026-경기양평-0293',
  address:'(12524) 경기도 양평군 용문면 장대1길 165',email:'creditlsh00726@gmail.com',phone:'010-5039-9175',
@@ -23,8 +23,8 @@ export const legalSourceReferences=Object.freeze([
 export const legalReview=Object.freeze({
  status:'review_required',effective_date:null,reviewed_at:null,
  items:[
-  {id:'privacy-contact',status:'pending',title:'개인정보 보호책임자 지정',detail:'기존 공개 운영 연락처는 확인했습니다. 대표 이석형의 보호책임자 겸임 지정은 운영자 확인이 필요합니다.'},
-  {id:'retention',status:'pending',title:'보관 기간과 파기 실행 기준',detail:'일반 문의·시리얼 발송·해제 기기·리그·공동 설계의 기간과 요청 처리 절차를 확정해야 합니다. 현재 코드에는 전체 계정 삭제·기간 만료 자동 파기가 없습니다.'},
+  {id:'privacy-contact',status:'verified',title:'개인정보 보호책임자 지정',detail:'2026-11-12 운영자 확인: 대표 이석형을 개인정보 보호책임자로 지정하고 creditlsh00726@gmail.com을 담당 연락처로 사용합니다.'},
+  {id:'retention',status:'policy_approved',title:'승인한 보관 기준의 운영 실행 검증',detail:'일반 문의 해결 후 1년, 리그·커뮤니티 이용 중 보관 및 삭제·탈퇴 요청 수동 처리, 해당 법정 거래·분쟁 기록 별도 보존 기준을 운영자가 승인했습니다. 자동 파기 기능은 없으며, 서버별 수동 처리 도구·확인 절차의 실제 검증과 인증·발송·협업 기록의 세부 보관 기준은 남아 있습니다.'},
   {id:'international',status:'pending',title:'국외 이전 국가·수탁자·기간과 적용 근거',detail:'Cloudflare·Google·Vercel의 실제 계정·계약에 적용되는 처리 국가와 보관 조건을 확인해야 합니다. 미국 법인이라는 사실만으로 저장 국가를 미국으로 단정하지 않습니다.'},
   {id:'minors',status:'pending',title:'아동 개인정보 처리 범위',detail:'현재 생년월일 수집이나 법정대리인 동의·확인 절차는 없습니다. 만 14세 미만 이용자를 위한 온라인 기능의 제공 범위를 확정해야 합니다.'},
   {id:'policy-approval',status:'pending',title:'시행일·최종 운영 검토',detail:'운영자가 확정한 보관·문의·변경 절차와 실제 제공 상품을 대조한 뒤 시행일을 정합니다.'},
@@ -76,6 +76,7 @@ export const termsSections=[
  ],links:[{label:'공식 릴리스 기록',href:'https://github.com/Lead729726-cell/Resistor/releases'}]},
  {id:'contact',title:'9. 문의와 문서 변경',paragraphs:[
   `운영·사용권·개인정보 문의: ${legalOperator.name} / ${legalOperator.email} / ${legalOperator.phone}. 주소: ${legalOperator.address}.`,
+  `개인정보 보호책임자는 대표 ${legalOperator.representative}이며 담당 연락처는 ${legalOperator.email}입니다. 일반 문의는 해결 후 1년 보관하며, 법정 거래·분쟁 기록에 해당하면 별도 법정 보존 기준을 적용합니다. 리그·커뮤니티의 삭제·탈퇴 요청은 본인과 요청 범위 확인 후 수동으로 처리합니다. 자세한 범위와 현재 처리 한계는 개인정보 안내에서 확인하세요.`,
   '문서가 확정되면 시행일과 버전을 표시하고 변경 내용을 공개합니다. 새로운 개인정보 처리 목적이나 별도 동의가 필요한 사항을 단순한 안내 페이지 변경만으로 승인받은 것으로 간주하지 않습니다. 이용계약 관련 분쟁은 관계 법령에 따른 절차와 관할을 따릅니다.',
  ]},
 ];
@@ -83,7 +84,8 @@ export const termsSections=[
 export const privacySections=[
  {id:'scope',title:'1. 적용 범위와 운영 연락처',paragraphs:[
   `운영자는 ${legalOperator.name}(대표 ${legalOperator.representative})입니다. 이 문서는 Resistor Edu와 resistor.kr에서 실제 처리하는 정보, 사용자 기기에만 남는 기록, 선택한 외부 서비스로 전달되는 정보를 구분합니다. 문의는 ${legalOperator.email} 또는 ${legalOperator.phone}으로 접수합니다.`,
-  '현재 검토본이며 시행일은 미확정입니다. 개인정보 보호책임자 지정, 서버별 보관·삭제 절차, 실제 국외 이전 세부사항은 아래 확인 항목에 표시합니다. 공개된 운영자 Google 연동 안내는 별도 범위이며, 전체 제품 정책을 대신하지 않습니다.',
+  `개인정보 보호책임자: 대표 ${legalOperator.representative}. 담당 연락처: ${legalOperator.email}. 운영자가 2026-11-12 지정과 일반 문의·리그·커뮤니티·법정 기록의 보관 기준을 확인했습니다.`,
+  '현재 검토본이며 시행일은 미확정입니다. 보관 기준의 승인과 실제 삭제 도구·절차의 검증은 구분합니다. 서버별 처리 검증, 국외 이전 세부사항 등 남은 확인 항목을 아래에 표시합니다. 공개된 운영자 Google 연동 안내는 별도 범위이며, 전체 제품 정책을 대신하지 않습니다.',
  ],links:[{label:'운영자 Gmail 연동 안내',href:'/license-mail/privacy/'}]},
  {id:'local',title:'2. 기기에 저장되는 학습·설계 기록',paragraphs:[
   '워크북에는 예측·입력 조건·계산 결과·학생 설명·진행 상태가 포함될 수 있습니다. 워크북과 작성 중 임시 답안, 화면 설정은 현재 브라우저·앱 프로필의 localStorage 등을 사용합니다. 리그 기기 키와 임시 답안은 IndexedDB를 사용합니다.',
@@ -125,7 +127,9 @@ export const privacySections=[
  ],links:[{label:'국외 이전에 관한 법령',href:legalSourceReferences.find(item=>item.id==='transfer-law').url},{label:'Cloudflare 데이터 위치 설명',href:legalSourceReferences.find(item=>item.id==='cloudflare-location').url},{label:'Google 개인정보 안내',href:'https://policies.google.com/privacy?hl=ko'},{label:'Vercel 개인정보 안내',href:'https://vercel.com/legal/privacy-notice'}]},
  {id:'retention',title:'7. 보관 기간과 파기',paragraphs:[
   '사용자 기기의 워크북·초안·프로젝트·백업은 사용자가 해당 저장소·파일을 삭제할 때까지 남을 수 있습니다. 서버의 리그·시리얼·협업 DB에는 전체 데이터의 기간 만료 자동 삭제가 구현되어 있지 않습니다. 글 숨김·기기 인증 해제·사용권 회수는 삭제가 아니며, 실제 삭제 범위와 운영 절차를 확인해야 합니다.',
-  '운영자가 처리하는 일반 문의, 인증·발송 운영 기록, 리그·공동 설계 기록의 구체적인 보관 기간과 수동 파기 담당 절차는 확정 전입니다. 임의의 보관 기간이나 “즉시 모두 삭제” 약속을 넣지 않았습니다. 아래 법정 거래기록은 해당 기록을 실제 보유하고 적용 대상인 범위에서 구분해 보존해야 합니다.',
+  '일반 문의의 이메일·내용·첨부·처리 기록은 문의 해결 후 1년 보관합니다. 기간이 지난 일반 문의는 담당자가 법정 보존 대상 여부를 확인하여 수동 파기합니다. 실제 파기 전에는 처리 완료로 안내하지 않습니다. 계약·청약철회·공급·소비자 분쟁에 해당하는 기록은 일반 문의와 구분하여 아래 법정 기간 동안 별도 보존합니다.',
+  '리그·커뮤니티 기록은 이용 중 보관하며 삭제·탈퇴 요청을 받으면 본인 확인, 대상·영향 확인, 법정 보존 대상 분리를 거쳐 수동 처리합니다. 공개 글 숨김만 수행한 경우에는 삭제 완료로 안내하지 않습니다. 다른 이용자의 답글·신고, 백업, 법정 보존 기록 또는 운영자가 제어하지 않는 사본은 삭제 범위와 제한을 구분해 안내합니다.',
+  '개인정보 보호책임자가 요청·기한 도래 대상을 확인하고 적용 근거와 처리 결과를 관리합니다. 현재 모든 서버를 일괄 삭제하는 도구나 자동 파기 작업은 없습니다. 지원되지 않는 데이터 정리에는 별도 검증이 필요하며, 완료하지 않은 단계는 대기·추가 확인으로 안내합니다. 인증·시리얼 발송·공동 설계 운영 기록의 세부 기간과 백업 파기 절차는 추가 확인 항목입니다.',
  ],table:{headers:['해당하는 거래기록','법정 보존 기간','근거'],rows:[
   ['표시·광고','6개월','전자상거래법 시행령 제6조'],
   ['계약 또는 청약철회','5년','전자상거래법 시행령 제6조'],
@@ -134,7 +138,7 @@ export const privacySections=[
  ]},links:[{label:'거래기록 보존 범위 확인',href:legalSourceReferences.find(item=>item.id==='retention-law').url}]},
  {id:'rights',title:'8. 정보 확인·정정·삭제·처리정지 요청',paragraphs:[
   `운영자에게 보관된 정보의 확인·정정·삭제·처리정지나 동의 철회를 요청하려면 ${legalOperator.email}으로 대상 기능과 요청 범위를 알려 주세요. 기기에서만 보관하는 파일은 운영자가 원격으로 확인·삭제할 수 없으며, 별도 서버는 해당 서버 운영자에게 요청해야 합니다.`,
-  '요청 대상과 본인임을 확인하는 데 필요한 최소 정보만 확인합니다. 비밀번호·인증 코드·API 키·전체 시리얼은 보내지 마세요. 법정 보존 등으로 삭제·처리정지에 제한이 있으면 대상과 근거를 구분해 안내하는 절차를 마련해야 합니다. 현 버전에는 모든 저장소에서 한 번에 탈퇴·삭제하는 버튼이 없습니다.',
+  '요청 대상과 본인임을 확인하는 데 필요한 최소 정보만 확인합니다. 비밀번호·인증 코드·API 키·전체 시리얼은 보내지 마세요. 개인정보 보호책임자가 요청 범위, 본인 확인, 별도 보존할 근거를 검토한 뒤 수동 처리하고 결과를 안내합니다. 삭제·처리정지의 제한, 지원 도구 부족 또는 추가 확인이 있으면 해당 대상과 이유를 구분합니다. 현 버전에는 모든 저장소에서 한 번에 탈퇴·삭제하는 버튼이 없습니다.',
   '전자 파일·DB·메일·백업·수신자가 보관한 사본의 삭제는 범위가 다릅니다. Google 연결 해제만으로 이미 발송한 메일이나 라이선스 거래기록이 삭제되지는 않습니다. 리그 기기 키를 지우면 해당 등록을 다시 증명하기 어려울 수 있으므로 키 삭제 전 요청 방법을 문의해 주세요.',
  ],links:[{label:'개인정보 침해신고·상담',href:'https://privacy.kisa.or.kr/'},{label:'개인정보 분쟁조정',href:'https://www.kopico.go.kr/'}]},
  {id:'storage',title:'9. 브라우저 저장소·쿠키와 접속 정보',paragraphs:[

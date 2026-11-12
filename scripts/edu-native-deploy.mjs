@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {assertLicenseReleaseReady} from './license-release-check.mjs';
-import {verifiedEduNativeFiles,validateEduPublicationSource,eduNativeSiteOverlay,flattenVercelSourceTree} from './edu-native-publication.mjs';
+import {verifiedEduNativeFiles,validateEduPublicationSource,eduNativeSiteOverlay,eduNativeDeploymentPayload,flattenVercelSourceTree} from './edu-native-publication.mjs';
 
 const command=process.argv[2]??'prepare',tag=process.argv[3]??'edu-v0.32.0';
 if(!['baseline','prepare','publish','status'].includes(command)||!/^edu-v\d+\.\d+\.\d+$/.test(tag))throw Error('Use edu-native-deploy.mjs baseline|prepare|publish|status edu-vX.Y.Z');
@@ -63,7 +63,7 @@ async function productionSource(){
  const current=(await api('/v9/projects/'+projectId)).targets?.production;if(!current?.id)throw Error('Current production deployment missing');
  const previous=flattenVercelSourceTree(await api('/v6/deployments/'+current.id+'/files'));
  async function original(name){const record=previous.find(f=>f.file===name);if(!record)throw Error('Production source missing: '+name);const body=await api('/v8/deployments/'+current.id+'/files/'+record.sha);if(typeof body.data!=='string')throw Error('Original production source unavailable');const bytes=Buffer.from(body.data,'base64');if(digest(bytes,'sha1')!==record.sha)throw Error('Original production SHA-1 mismatch: '+name);return bytes.toString('utf8');}
- const baseline={manifest:JSON.parse(await original('edition-downloads.json')),config:JSON.parse(await original('vercel.json')),home:await original('index.html'),eduPage:await original('download-edu.html'),eduUpdates:JSON.parse(await original('edu-updates.json'))};
+ const baseline={manifest:JSON.parse(await original('edition-downloads.json')),config:JSON.parse(await original('vercel.json')),home:await original('index.html'),eduPage:await original('download-edu.html'),eduUpdates:JSON.parse(await original('edu-updates.json')),learningAssets:JSON.parse(await original('learning-assets.json'))};
  return {current,previous,baseline,original};
 }
 if(command==='baseline'){
@@ -82,7 +82,7 @@ if(command==='baseline'){
  const {current,previous,baseline}=await productionSource();
  const definitions=await json('apps/desktop/product-editions.json');
  const overlay=eduNativeSiteOverlay(baseline,audit.verified,definitions),files=[...previous.filter(f=>!overlay.has(f.file)),...[...overlay].map(([file,body])=>({file,data:Buffer.from(body).toString('base64'),encoding:'base64'}))];
- const payload={name:'resistor-downloads',project:projectId,target:'production',files,projectSettings:{framework:null,buildCommand:null,installCommand:null,outputDirectory:'.'},meta:{edition:'edu',source_revision:audit.verified.source_revision,release_kind:'official-edu-native',native_release_tag:tag}};
+ const payload=eduNativeDeploymentPayload({projectId,baselineId:current.id,files,sourceRevision:audit.verified.source_revision,tag});
  const protectedFiles=previous.filter(f=>['download-industry.html','updates.json','downloads.json'].includes(f.file));if(protectedFiles.length!==3)throw Error('Protected Industry/common feed source missing');
  const review={schema_version:1,edition:'edu',release_kind:'official-edu-native',tag,source_revision:audit.verified.source_revision,baseline_id:current.id,prepared_at:new Date().toISOString(),authority,github_latest:githubLatest,release:identity(release),verified:audit.verified,public_bytes_verified:true,source_sha256:audit.source_sha256,previous_files:previous.length,unchanged_files:previous.filter(f=>!overlay.has(f.file)).length,overlay:[...overlay].map(([file,body])=>({file,bytes:Buffer.byteLength(body),sha256:digest(body)})),protected_files:protectedFiles,industry_manifest_sha256:digest(JSON.stringify(baseline.manifest.editions.find(e=>e.edition==='indust'))),payload_sha256:digest(JSON.stringify(payload)),public_url:'https://resistor.kr/download/edu/'};
  await save('baseline-files.json',previous);await save('release-audit.json',audit);await save('payload.json',payload);await save('review.json',review);
@@ -91,7 +91,7 @@ if(command==='baseline'){
  const prior=await optionalReceipt();if(prior){console.log(JSON.stringify({...prior,reused:true,note:'No duplicate deployment. Use status.'}));process.exit(0);}
  try{await fs.access(path.join(stage,'publish-intent.json'));throw Error('Previous publication attempt has no receipt. Reconcile the saved fingerprint with Vercel before retrying.');}catch(error){if(error.code!=='ENOENT')throw error;}
  const payload=await json(path.join(stage,'payload.json')),review=await json(path.join(stage,'review.json'));
- if(review.tag!==tag||review.public_bytes_verified!==true||digest(JSON.stringify(payload))!==review.payload_sha256||payload.project!==projectId||payload.target!=='production')throw Error('Prepared native publication changed or incomplete');
+ if(review.tag!==tag||review.public_bytes_verified!==true||digest(JSON.stringify(payload))!==review.payload_sha256||payload.project!==projectId||payload.target!=='production'||payload.deploymentId!==review.baseline_id||'projectSettings'in payload||'env'in payload||'build'in payload)throw Error('Prepared native publication changed, incomplete or overrides the live configuration');
  const authority=await authorityReady(),release=await readRelease();if(JSON.stringify(identity(release))!==JSON.stringify(review.release))throw Error('GitHub release changed after public-byte verification; prepare again');
  if(JSON.stringify(await latestRelease())!==JSON.stringify(review.github_latest))throw Error('GitHub shared Latest changed after preparation; review the release state again');
  const audit=await verifyRelease(release,authority);if(JSON.stringify(audit.source_sha256)!==JSON.stringify(review.source_sha256)||JSON.stringify(audit.verified)!==JSON.stringify(review.verified))throw Error('Source or installer provenance changed since preparation');

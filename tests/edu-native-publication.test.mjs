@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash,generateKeyPairSync} from 'node:crypto';
-import {verifiedEduNativeFiles,validateEduSigningEvidence,validateEduPublicationSource,flattenVercelSourceTree,mergeEduNativeManifest,eduNativeSiteOverlay} from '../scripts/edu-native-publication.mjs';
+import {verifiedEduNativeFiles,validateEduSigningEvidence,validateEduPublicationSource,flattenVercelSourceTree,mergeEduNativeManifest,eduNativeSiteOverlay,eduNativeDeploymentPayload} from '../scripts/edu-native-publication.mjs';
 const definitions=JSON.parse(await readFile('apps/desktop/product-editions.json','utf8'));
 const previous=JSON.parse(await readFile('platform/download-site/edition-downloads.json','utf8'));
 const sha=b=>createHash('sha256').update(b).digest('hex');
@@ -67,7 +67,25 @@ test('trusted Mac publication requires exact Developer ID identity and final arc
 });
 test('public publication rejects draft, substituted tag, missing receipt and changed receipt bytes',()=>{
  for(const mutate of [f=>f.release.draft=true,f=>f.release.prerelease=true,f=>f.release.tag_name='indust-v0.32.0',f=>f.release.assets.pop(),f=>f.release.assets[0].browser_download_url='https://example.test/app.exe',f=>f.release.assets[1].digest='sha256:'+'0'.repeat(64),f=>f.receipts[Object.keys(f.receipts)[0]]=Buffer.from('{}')]){const f=fixture();mutate(f);assert.throws(()=>verifiedEduNativeFiles(f.release,f.receipts,authority));}
- const f=fixture();f.release.draft=true;assert.doesNotThrow(()=>verifiedEduNativeFiles(f.release,f.receipts,authority,{allowDraft:true}));
+ const f=fixture();Object.assign(f.release,{draft:true,id:1234,target_commitish:f.receipt.source_revision});assert.doesNotThrow(()=>verifiedEduNativeFiles(f.release,f.receipts,authority,{allowDraft:true}));
+});
+test('explicit private draft audit accepts GitHub temporary URLs only when every asset and receipt binds to its exact target',()=>{
+ const temporary='untagged-51de4a2d2cf3e86599a2';
+ function draftFixture(){const f=fixture();Object.assign(f.release,{id:1234,draft:true,target_commitish:f.receipt.source_revision,html_url:'https://github.com/Lead729726-cell/Resistor/releases/tag/'+temporary});for(const asset of f.release.assets)asset.browser_download_url=asset.browser_download_url.replace('/edu-v0.32.0/','/'+temporary+'/');return f;}
+ const f=draftFixture(),verified=verifiedEduNativeFiles(f.release,f.receipts,authority,{allowDraft:true});
+ assert.equal(verified.draft,true);assert.equal(verified.publicly_downloadable,false);assert.equal(verified.draft_release_id,1234);assert.equal(verified.source_revision,f.release.target_commitish);
+ assert.equal(verified.files[0].url,f.release.assets[0].browser_download_url);assert.equal(verified.files[0].receipt_url,f.release.assets[1].browser_download_url);
+ assert.throws(()=>verifiedEduNativeFiles(f.release,f.receipts,authority),/Draft/);assert.throws(()=>mergeEduNativeManifest(previous,verified,definitions),/Draft audit/);
+ for(const mutate of [
+  f=>delete f.release.id,f=>f.release.target_commitish='main',f=>f.release.target_commitish='b'.repeat(40),
+  f=>f.release.html_url=f.release.html_url.replace('github.com','github.com.attacker.test'),
+  f=>f.release.html_url=f.release.html_url.replace('Lead729726-cell/Resistor','other/Resistor'),
+  f=>f.release.html_url+='?redirect=other',
+  f=>f.release.assets[0].browser_download_url=f.release.assets[0].browser_download_url.replace(temporary,'untagged-'+'a'.repeat(20)),
+  f=>f.release.assets[1].browser_download_url=f.release.assets[1].browser_download_url.replace(temporary,'edu-v0.32.0'),
+  f=>f.release.assets[0].digest='sha256:'+'0'.repeat(64),f=>f.release.assets[1].digest='sha256:'+'0'.repeat(64),
+ ]){const bad=draftFixture();mutate(bad);assert.throws(()=>verifiedEduNativeFiles(bad.release,bad.receipts,authority,{allowDraft:true}));}
+ const published=draftFixture();published.release.draft=false;assert.throws(()=>verifiedEduNativeFiles(published.release,published.receipts,authority),/identity/);assert.throws(()=>verifiedEduNativeFiles(published.release,published.receipts,authority,{allowDraft:true}),/identity/);
 });
 test('public source verification rejects a different engine, edition, version or authority',()=>{
  const {publicKey}=generateKeyPairSync('ed25519'),key=publicKey.export({type:'spki',format:'pem'}),trusted={...authority,public_key_fingerprint:sha(publicKey.export({type:'spki',format:'der'}))};
@@ -107,4 +125,39 @@ test('native site overlay changes only Edu receipt targets and cannot rewrite ol
  const html=overlay.get('download-edu.html'),macBlock=html.match(/<article data-platform-target="macos-arm64">([\s\S]*?)<\/article>/)[1];assert.ok(macBlock.includes(old.native_installer.files.find(f=>f.target==='macos-arm64').source_revision));assert.ok(html.includes('소스')||html.includes('source'));
  assert.equal(JSON.parse(overlay.get('edu-updates.json')).published_native_installers.matches_latest_source,false);
  assert.ok(overlay.get('index.html').includes('다른 OS는 카드에 표시된 기존 검증 버전'));
+});
+
+test('native overlay refreshes only its learning hashes and preserves history, order and untouched stale entries',()=>{
+ const f=fixture(),verified=verifiedEduNativeFiles(f.release,f.receipts,authority);
+ const learningAssets={schema_version:1,generated_at:'historical timestamp',source_revision:'old guide source',files:[
+  {file:'index.html',bytes:1,sha256:'0'.repeat(64),kind:'guide',source_revision:'historical-home'},
+  {file:'learning/example.html',bytes:999,sha256:'1'.repeat(64),scope:'intentionally untouched historical entry'},
+  {file:'download-edu.html',bytes:2,sha256:'2'.repeat(64)},
+  {file:'edu-updates.json',bytes:3,sha256:'3'.repeat(64)},
+  {file:'download-industry.html',bytes:4,sha256:'4'.repeat(64)},
+ ]};
+ const baseline={manifest:previous,config:{redirects:[]},home:'<main>학습 안내</main>',eduPage:'<main><article data-platform-target="windows-x64">이전 파일</article></main>',eduUpdates:{published_native_installers:{}},learningAssets};
+ const original=structuredClone(baseline),overlay=eduNativeSiteOverlay(baseline,verified,definitions);
+ assert.equal(overlay.size,6);assert.deepEqual(baseline,original);
+ const updated=JSON.parse(overlay.get('learning-assets.json'));
+ assert.deepEqual(updated.files.map(entry=>entry.file),learningAssets.files.map(entry=>entry.file));
+ for(const file of ['index.html','download-edu.html','edu-updates.json']){
+  const body=overlay.get(file),entry=updated.files.find(value=>value.file===file);
+  assert.equal(entry.bytes,Buffer.byteLength(body));assert.equal(entry.sha256,sha(body));
+ }
+ assert.ok(Buffer.byteLength(overlay.get('index.html'))>overlay.get('index.html').length,'Korean UTF-8 byte length is not character count');
+ const restored=structuredClone(updated);
+ for(const entry of restored.files){const old=learningAssets.files.find(value=>value.file===entry.file);entry.bytes=old.bytes;entry.sha256=old.sha256;}
+ assert.deepEqual(restored,learningAssets);
+ assert.deepEqual(updated.files[1],learningAssets.files[1]);assert.deepEqual(updated.files[4],learningAssets.files[4]);
+ for(const invalid of [null,{}, {files:'not an array'}, {files:[{file:'index.html'},{file:'index.html'}]}, {files:[{}]}])assert.throws(()=>eduNativeSiteOverlay({...baseline,learningAssets:invalid},verified,definitions),/learning manifest/);
+});
+
+test('native deployment inherits its exact live base without overriding function settings or environment',()=>{
+ const files=[{file:'api/shop.mjs',sha:'c'.repeat(40),mode:33206},{file:'privacy/index.html',sha:'d'.repeat(40),mode:33206}],input={projectId:'prj_test',baselineId:'dpl_verified_live',files,sourceRevision:'a'.repeat(40),tag:'edu-v0.33.0'},before=structuredClone(input);
+ const payload=eduNativeDeploymentPayload(input);
+ assert.equal(payload.deploymentId,input.baselineId);assert.equal(payload.project,input.projectId);assert.equal(payload.target,'production');assert.deepEqual(payload.files,files);
+ assert.deepEqual(Object.keys(payload).sort(),['name','project','deploymentId','target','files','meta'].sort());
+ assert.equal(payload.meta.native_release_tag,input.tag);assert.equal(payload.meta.source_revision,input.sourceRevision);assert.deepEqual(input,before);
+ for(const change of [{baselineId:''},{baselineId:'other_live'},{projectId:'other_project'},{sourceRevision:'unknown'},{tag:'indust-v0.33.0'},{files:[]}])assert.throws(()=>eduNativeDeploymentPayload({...input,...change}),/Verified/);
 });
