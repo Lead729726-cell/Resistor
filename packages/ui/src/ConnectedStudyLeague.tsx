@@ -1,9 +1,11 @@
 import {useEffect,useState} from 'react';
 import StudyLeague from './StudyLeague';
 import {PUBLIC_LEAGUE_CONFIG,validateLeagueConfiguration,type LeagueConfiguration} from './league-connection';
+import {requireOnlineAccessFor} from '../../contracts/src/online-access';
 export default function ConnectedStudyLeague({active=true}:{active?:boolean}={}){
  const [config,setConfig]=useState<LeagueConfiguration|null>(null),[error,setError]=useState(''),[attempt,setAttempt]=useState(0),[manual,setManual]=useState(false);
  useEffect(()=>{if(manual)return;let active=true;const abort=new AbortController();setError('');void(async()=>{try{
+  await requireOnlineAccessFor('edu',{prompt:false});
   const res=await fetch(PUBLIC_LEAGUE_CONFIG,{credentials:'omit',cache:'no-store',signal:AbortSignal.any([abort.signal,AbortSignal.timeout(10000)])});
   if(!res.ok)throw Error('공용 리그 설정 서버 응답: '+res.status);
   const text=await res.text();if(text.length>16000)throw Error('리그 설정 크기가 잘못되었습니다.');const next=validateLeagueConfiguration(JSON.parse(text));

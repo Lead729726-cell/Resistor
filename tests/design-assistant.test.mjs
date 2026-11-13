@@ -1,10 +1,12 @@
+import {fixtureOnlineOptions} from './fixtures/online-access.mjs';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp,writeFile,mkdir,readFile,rm} from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import {assistantRpc,collectEvidence,validateReview,status,review,history} from '../scripts/design-assistant.mjs';
+import {assistantRpc,collectEvidence,validateReview,status,review as rawReview,history} from '../scripts/design-assistant.mjs';
 
+const review=(worker,params,options)=>rawReview(worker,params,{...fixtureOnlineOptions,...options});
 const id='a'.repeat(32),project={id,name:'test',revision:1,cell:'test',pdk_id:'sky130A',runs:[],testbench:{analysis:'tran'}};
 const graph={revision:1,devices:[{id:'r1',name:'R1',kind:'resistor',pins:{'+':'IN','-':'OUT'},parameters:{value:1000}}],nets:[{name:'IN',pins:[{device_id:'r1',pin:'+'}]}],issues:[],layout_binding:{status:'not-generated'},scope:'selected cell',limits:[]};
 const valid={summary:'실제 근거에 대한 검토입니다.',findings:[{severity:'warning',title:'해석 필요',explanation:'해석 이력이 없습니다.',evidence_ids:['issue:0'],suggested_check:'simulate'}],limitations:['AI 검토는 엔진 검증이 아닙니다.']};

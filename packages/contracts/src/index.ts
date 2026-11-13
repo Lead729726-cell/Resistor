@@ -1,3 +1,4 @@
+import {guardOnlineRpc} from './online-access';
 export type Decimal = string;
 export type DigitalKind = 'full_adder'|'adder4'|'cpu4'|'adder16'|'cpu16';
 export interface CpuInstruction {op:'LOAD'|'ADD'|'AND'|'XOR';value:number}
@@ -129,10 +130,11 @@ export function setRpcOverride(next:RpcOverride|undefined){override=next;}
 declare global { interface Window { mos?:{rpc:(method:string,params:Record<string,unknown>)=>Promise<{ok:boolean;result?:unknown;error?:{code:string;message:string;details?:unknown}}>;
 onMenuCommand?:(callback:(command:'save'|'undo'|'redo'|'new'|'open'|'shortcuts'|'updates')=>void)=>()=>void}; } }
 export async function rpc<T=unknown>(method:string,params:Record<string,unknown>={}):Promise<T>{
-  if(override) return await override(method,params) as T;
+  if(override){await guardOnlineRpc(method,params);return await override(method,params) as T;}
   return localRpc<T>(method,params);
 }
 export async function localRpc<T=unknown>(method:string,params:Record<string,unknown>={}):Promise<T>{
+  await guardOnlineRpc(method,params);
   let data;
   try { data=window.mos ? await window.mos.rpc(method,params) : await fetch('/api/rpc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method,params})}).then(async r=>{if(!r.ok)throw new WorkerError('TRANSPORT',`Worker HTTP ${r.status}`);return r.json();}); }
   catch(e){ if(e instanceof WorkerError)throw e;throw new WorkerError('WORKER_UNAVAILABLE',e instanceof Error?e.message:'EDA worker unavailable'); }

@@ -7,7 +7,7 @@ import {createHash} from 'node:crypto';
 import {macSigningPolicy,windowsSigningPolicy,signingPolicyIdentity} from '../scripts/signing-policy.mjs';
 import {assertMacSignature,verifyMacSignature,notarizeMacApp,macEntitlementArguments} from '../scripts/mac-signing.mjs';
 import {assertWindowsSignature,verifyWindowsSignature,windowsInstallerSigningConfig} from '../scripts/windows-signing.mjs';
-import {signingConfigurationStatus} from '../scripts/signing-preflight.mjs';
+import {signingConfigurationStatus,signingPreflight,trustedSigningLocallyReady} from '../scripts/signing-preflight.mjs';
 
 const certificate=Buffer.from('fixture certificate bytes; not a real certificate');
 const mac={mode:'developer-id',identity:createHash('sha1').update(certificate).digest('hex'),team_id:'ABCD123456',notary_profile:'fixture-profile'};
@@ -60,4 +60,42 @@ test('preflight exposes missing names and status only; hardened runtime retains 
  const entitlements=await readFile('apps/desktop/mac-entitlements.plist','utf8');assert(entitlements.includes('com.apple.security.cs.allow-jit'));for(const dangerous of ['disable-library-validation','allow-unsigned-executable-memory','get-task-allow','disable-executable-page-protection'])assert(!entitlements.includes(dangerous));
  assert.deepEqual(macEntitlementArguments('/App.app/Contents/Resources/app/native-runtime/python/bin/python3','/App.app','jit.plist'),[]);
  assert.deepEqual(macEntitlementArguments('/App.app/Contents/Frameworks/Helper.app','/App.app','jit.plist'),['--entitlements','jit.plist']);
+});
+
+const storeEnvironment={RESISTOR_WINDOWS_SIGNING:'store',RESISTOR_WINDOWS_PUBLISHER:'Private Fixture Publisher',RESISTOR_SIGNTOOL_PATH:path.resolve('fixture-sign-tool.exe'),RESISTOR_WINDOWS_CERT_SHA1:'A'.repeat(40)};
+const inventory=selected=>JSON.stringify({current_user_count:1,local_machine_count:2,selected_current_user_available:selected});
+test('trusted preflight requires the selected CurrentUser certificate and actual SignTool file, not other store counts',async()=>{
+ const run=async()=>inventory(false);
+ const otherStore=await signingPreflight({platform:'win32',env:storeEnvironment,run,fileExists:async()=>true});
+ assert.equal(otherStore.windows.usable_code_signing_certificate_count,3);assert.equal(trustedSigningLocallyReady(otherStore),false);
+ const noTool=await signingPreflight({platform:'win32',env:storeEnvironment,run:async()=>inventory(true),fileExists:async()=>false});
+ assert.equal(noTool.windows.selected_current_user_certificate_available,true);assert.equal(trustedSigningLocallyReady(noTool),false);
+ const ready=await signingPreflight({platform:'win32',env:storeEnvironment,run:async()=>inventory(true),fileExists:async()=>true});
+ assert.equal(trustedSigningLocallyReady(ready),true);assert.equal(ready.windows.provider_authorization_checked,false);assert.equal(ready.windows.certificate_trust_checked,false);assert.equal(ready.trusted_signing_completed,false);
+ for(const value of Object.values(storeEnvironment).slice(1))assert(!JSON.stringify(ready).includes(value));
+});
+
+test('unavailable or malformed certificate inspection cannot pass store preflight or disclose command failures',async()=>{
+ for(const run of [async()=>{throw Error('private failure details');},async()=>'{invalid}',async()=>JSON.stringify({current_user_count:-1,local_machine_count:0,selected_current_user_available:true})]){
+  const result=await signingPreflight({platform:'win32',env:storeEnvironment,run,fileExists:async()=>true});
+  assert.equal(result.windows.certificate_inventory,'unavailable');assert.equal(trustedSigningLocallyReady(result),false);assert(!JSON.stringify(result).includes('private failure'));
+ }
+});
+
+test('Azure preflight checks local Dlib but never mistakes local configuration for provider authorization',async()=>{
+ const env={RESISTOR_WINDOWS_SIGNING:'azure',RESISTOR_WINDOWS_PUBLISHER:'Fixture',RESISTOR_SIGNTOOL_PATH:path.resolve('signtool.exe'),RESISTOR_AZURE_SIGN_ENDPOINT:'https://krc.codesigning.azure.net',RESISTOR_AZURE_SIGN_DLIB:path.resolve('dlib.dll'),RESISTOR_AZURE_SIGN_ACCOUNT:'fixture-account',RESISTOR_AZURE_SIGN_PROFILE:'fixture-profile'};
+ const calls=[];const options={platform:'win32',env,run:async(file,args)=>{calls.push([file,args]);return JSON.stringify({current_user_count:0,local_machine_count:0,selected_current_user_available:false});}};
+ const missing=await signingPreflight({...options,fileExists:async file=>file!==env.RESISTOR_AZURE_SIGN_DLIB});assert.equal(trustedSigningLocallyReady(missing),false);
+ const ready=await signingPreflight({...options,fileExists:async()=>true});assert.equal(trustedSigningLocallyReady(ready),true);assert.equal(ready.windows.provider_authorization_checked,false);
+ assert(calls.every(([file])=>file==='powershell.exe'));assert(!calls.some(([,args])=>args.includes('sign')));
+});
+
+test('Mac preflight requires the selected Developer ID and notarytool instead of any unrelated identity',async()=>{
+ const env={RESISTOR_MAC_SIGNING:'developer-id',RESISTOR_MAC_IDENTITY:'A'.repeat(40),RESISTOR_APPLE_TEAM_ID:'ABCD123456',RESISTOR_NOTARY_PROFILE:'private-profile',RESISTOR_MAC_KEYCHAIN:path.resolve('private.keychain-db')};
+ const execute=(identity,tool=true)=>async(file,args)=>{if(file.endsWith('security')){assert.equal(args.at(-1),env.RESISTOR_MAC_KEYCHAIN);return `1) ${identity} "Developer ID Application: Private Publisher (ABCD123456)"`;}
+  assert.deepEqual(args,['--find','notarytool']);if(!tool)throw Error('missing tool');return '/private/developer/notarytool';};
+ const wrong=await signingPreflight({platform:'darwin',env,run:execute('B'.repeat(40)),fileExists:async()=>true});assert.equal(wrong.mac.developer_id_identity_count,1);assert.equal(trustedSigningLocallyReady(wrong),false);
+ const noTool=await signingPreflight({platform:'darwin',env,run:execute(env.RESISTOR_MAC_IDENTITY,false),fileExists:async()=>true});assert.equal(trustedSigningLocallyReady(noTool),false);
+ const ready=await signingPreflight({platform:'darwin',env,run:execute(env.RESISTOR_MAC_IDENTITY),fileExists:async()=>true});assert.equal(trustedSigningLocallyReady(ready),true);assert.equal(ready.mac.notary_profile_authorization_checked,false);assert.equal(ready.notarization_completed,false);
+ assert(!JSON.stringify(ready).includes('private'));assert.equal(trustedSigningLocallyReady(await signingPreflight({platform:'linux',env:{}})),false);
 });

@@ -64,7 +64,7 @@ function preparation(state,p,limits,provider){
  const block=upper_bound_usd===0?null:!provider.configured?'기존 AI 키 연결이 필요합니다.':limits.study_remaining_usd<upper_bound_usd||provider.remaining_usd<upper_bound_usd?'학습 또는 공통 비용 상한이 부족합니다. 문제 은행의 AI 비용 설정에서 직접 상한을 정하세요.':null;
  return {evidence,evidence_hash,content,judge,executor,upper_bound_usd,blocked_reason:block,new_provider_calls:Number(needJudge)+Number(needExecutor)};
 }
-export async function educationCoach(state,method,p,{save,limits,provider,source,fetcher}){
+export async function educationCoach(state,method,p,{save,limits,provider,source,fetcher,onlineOptions}){
  const records=state.edu_coach_records||{};
  const evidenceContext=e=>({schema_version:1,edition:'edu',project_id:e.actual_run?.project_id||null,data_revision:e.board_revision??state.revision,project_revision:e.actual_run?.project_revision||null,engine:{id:e.actual_run?.current?e.actual_run.engine?.id||null:'shared-calculator-and-study-grading',version:e.actual_run?.current?e.actual_run.engine?.version||null:null,policy_version:eduAiPolicy.version},process:{id:e.actual_run?.current?e.actual_run.process?.id||null:null,version:e.actual_run?.current?e.actual_run.process?.version||null:null,scope:'학습 근거 · 제조 검증 판정 아님'}});
  const present=r=>({...structuredClone(r),context:r.context||evidenceContext(r.evidence),policy:eduAiPolicy,engine_verification:false});
@@ -89,7 +89,7 @@ export async function educationCoach(state,method,p,{save,limits,provider,source
  if(prep.blocked_reason)throw Error(prep.blocked_reason);
  if(prep.new_provider_calls&&!p.approved)throw Error('이번 입력의 Luna 판단·Sol 활동 작성 전송과 최대 비용을 승인하세요.');
  let session=null;
- if(prep.new_provider_calls){session=await reserveStructuredSession(source,prep.upper_bound_usd,{approved:true,fetcher});state.reserved_usd=Math.round((state.reserved_usd+prep.upper_bound_usd)*1e6)/1e6;}
+ if(prep.new_provider_calls){session=await reserveStructuredSession(source,prep.upper_bound_usd,{approved:true,fetcher,...onlineOptions});state.reserved_usd=Math.round((state.reserved_usd+prep.upper_bound_usd)*1e6)/1e6;}
  state.edu_coach_records??={};state.edu_coach_cache??={};
  if(p.target.kind==='question'){const key=p.target.purpose+':'+p.target.question_id;if(!state.revealed.includes(key))state.revealed.push(key);}
  const record={schema_version:1,edition:'edu',id:p.command_id,version:1,target:structuredClone(p.target),purpose:prep.evidence.purpose,project_id:prep.evidence.actual_run?.project_id||null,data_revision:prep.evidence.board_revision??state.revision,source_study_revision:state.revision,policy_version:eduAiPolicy.version,evidence_hash:prep.evidence_hash,evidence:prep.evidence,status:'pending',created_at:stamp(),stages:[],judgment:null,activity:null,reflection:null,upper_bound_usd:prep.upper_bound_usd,reservation:session?.reservation||null,engine_verification:false};

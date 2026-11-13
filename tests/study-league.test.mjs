@@ -1,4 +1,5 @@
 import {test} from 'node:test';
+import {createOnlineAcknowledgment,ONLINE_ACCESS_POLICY_VERSION} from '../platform/licensing/online-access-policy.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,rm,readFile,mkdir,writeFile} from 'node:fs/promises';
 import os from 'node:os';
@@ -116,7 +117,11 @@ test('browser client uses a nonextractable signing key, synchronizes server time
  const d=f.enroll(),publicKey=await crypto.subtle.importKey('spki',Buffer.from(d.public_key,'base64url'),{name:'ECDSA',namedCurve:'P-256'},true,['verify']),privateKey=await crypto.subtle.importKey('pkcs8',d.privateKey.export({type:'pkcs8',format:'der'}),{name:'ECDSA',namedCurve:'P-256'},false,['sign']),draftKey=await crypto.subtle.generateKey({name:'AES-GCM',length:256},false,['encrypt','decrypt']);
  const identity={signing:{publicKey,privateKey},draftKey},keys=[];assert.equal(privateKey.extractable,false);
  const idb={transaction(){return {objectStore(){return {get(key){keys.push(key);const r={result:identity};queueMicrotask(()=>r.onsuccess());return r;}};}};}};
- const originalFetch=globalThis.fetch,originalIDB=globalThis.indexedDB,calls=[];globalThis.indexedDB={open(){const r={result:idb};queueMicrotask(()=>r.onsuccess());return r;}};
+ const originalFetch=globalThis.fetch,originalIDB=globalThis.indexedDB,originalStorage=globalThis.localStorage,calls=[];globalThis.indexedDB={open(){const r={result:idb};queueMicrotask(()=>r.onsuccess());return r;}};
+ // This protocol fixture represents an explicitly acknowledged user. The separate
+ // online-access tests assert zero sends and zero key creation without it.
+ const acknowledgment=createOnlineAcknowledgment({edition:'edu',policy_version:ONLINE_ACCESS_POLICY_VERSION,age_14_or_over:true});
+ globalThis.localStorage={getItem:key=>key==='resistor.edu.online-access.v1'?JSON.stringify(acknowledgment):null};
  try{
   const output=path.join(f.directory,'browser-client.mjs');await build({entryPoints:['packages/ui/src/league-device.ts'],bundle:true,platform:'node',format:'esm',outfile:output,logLevel:'silent'});const {leagueClient,leagueEndpoint}=await import(pathToFileURL(output).href);
   for(const bad of ['http://remote.example.org','https://user:pass@example.org','https://example.org?q=1','https://example.org/not-api'])assert.throws(()=>leagueEndpoint(bad));
@@ -126,7 +131,7 @@ test('browser client uses a nonextractable signing key, synchronizes server time
   const bad=leagueClient('https://other.example.org/api/league');globalThis.fetch=async()=>Response.json({ok:true,result:{edition:'indust',schema_version:1,server_time:Date.now()}});await assert.rejects(bad.call('league.info'),/Resistor Edu/);
   globalThis.fetch=async()=>new Response('x'.repeat(1000001));await assert.rejects(bad.call('league.info'),/크기/);
   let sent=0;globalThis.fetch=async()=>{sent++;throw Error('Network uncertain');};await assert.rejects(client.call('community.post',{body:'QA only',category:'tip'},true),/새로고침/);assert.equal(sent,1);
- }finally{globalThis.fetch=originalFetch;if(originalIDB===undefined)delete globalThis.indexedDB;else globalThis.indexedDB=originalIDB;}
+ }finally{globalThis.fetch=originalFetch;if(originalIDB===undefined)delete globalThis.indexedDB;else globalThis.indexedDB=originalIDB;if(originalStorage===undefined)delete globalThis.localStorage;else globalThis.localStorage=originalStorage;}
 }));
 test('tier settings are revision guarded, locked on start and shared packs rank only within each difficulty',()=>fixture(async f=>{
  const ds=[f.enroll(),f.enroll(),f.enroll()];

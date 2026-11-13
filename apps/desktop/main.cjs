@@ -16,13 +16,16 @@ let quitting=false,quitReady=false;
 configureAppIdentity(app,{userDataOverride:process.env.REGISTER_USER_DATA,edition:productEdition});
 async function boot(){
   const root=path.resolve(__dirname,'../..');
+  const {DesktopOnlineAccess}=await import(pathToFileURL(path.join(__dirname,'online-access.mjs')));
+  const onlineAccess=new DesktopOnlineAccess({directory:app.getPath('userData'),edition:productEdition.edition});
+  const assertOnlineAccess=()=>onlineAccess.assert();
   const {createDesktopLicense}=await import(pathToFileURL(path.join(__dirname,'licensing.mjs')));
-  const license=await createDesktopLicense({root,userData:app.getPath('userData'),edition:productEdition.edition,safeStorage,fetchImpl:(url,options)=>net.fetch(url,{...options,credentials:'omit',useSessionCookies:false,bypassCustomProtocolHandlers:true})});
-  await license.refresh().catch(()=>{});
-  const licenseRefresh=setInterval(()=>void license.refresh().catch(()=>{}),60*60*1000);licenseRefresh.unref();
+  const license=await createDesktopLicense({root,userData:app.getPath('userData'),edition:productEdition.edition,safeStorage,assertOnlineAccess,fetchImpl:(url,options)=>net.fetch(url,{...options,credentials:'omit',useSessionCookies:false,bypassCustomProtocolHandlers:true})});
+  await onlineAccess.runAutomatic(()=>license.refresh()).catch(()=>{});
+  const licenseRefresh=setInterval(()=>void onlineAccess.runAutomatic(()=>license.refresh()).catch(()=>{}),60*60*1000);licenseRefresh.unref();
   if(!updater){
     const {DesktopUpdater}=await import(pathToFileURL(path.join(__dirname,'updates.mjs')));
-    updater=new DesktopUpdater({edition:productEdition.edition,version:app.isPackaged?app.getVersion():require(path.join(root,'package.json')).version,userData:app.getPath('userData'),packaged:app.isPackaged,fetchImpl:makeUpdateFetch(net),install:async({file,update,folder})=>{
+    updater=new DesktopUpdater({edition:productEdition.edition,version:app.isPackaged?app.getVersion():require(path.join(root,'package.json')).version,userData:app.getPath('userData'),packaged:app.isPackaged,fetchImpl:async(...args)=>{await onlineAccess.assert();return makeUpdateFetch(net)(...args);},install:async({file,update,folder})=>{
       const choice=await dialog.showMessageBox(mainWindow,{type:'question',title:productEdition.name+' 업데이트',message:`${productEdition.name} ${update.version}를 설치할까요?`,detail:'입력 중인 설정과 브라우저 로컬 뷰어 파일을 먼저 저장하세요. 기존 설계 저장 폴더와 실행 중인 Docker 해석은 보존됩니다. Windows는 설치 안내를 열고, Mac·Linux는 사용자 앱 폴더에 설치한 뒤 다시 시작합니다.',buttons:['취소','설치'],defaultId:0,cancelId:0});
       if(choice.response!==1)return false;
       // Native interpreters and modules live in the installed app. Finish jobs
@@ -42,8 +45,8 @@ async function boot(){
       await ownedHub?.close();ownedHub=undefined;app.quit();return true;
     }});
     await updater.initialize();
-    const initial=setTimeout(()=>void updater.check({automatic:true}),10000);initial.unref();
-    const periodic=setInterval(()=>void updater.check({automatic:true}),6*60*60*1000);periodic.unref();
+    const initial=setTimeout(()=>void onlineAccess.runAutomatic(()=>updater.check({automatic:true})).catch(()=>{}),10000);initial.unref();
+    const periodic=setInterval(()=>void onlineAccess.runAutomatic(()=>updater.check({automatic:true})).catch(()=>{}),6*60*60*1000);periodic.unref();
   }
   const {prepareEditionWorkspace}=await import(pathToFileURL(path.join(root,'scripts/edition-workspace.mjs')));
   const workspace=await prepareEditionWorkspace({root,edition:productEdition,workspace:await prepareWorkspace({root,userData:app.getPath('userData'),executable:app.getPath('exe'),override:process.env.MOS_WORKSPACE,packaged:app.isPackaged,edition:productEdition.edition})});
@@ -74,12 +77,14 @@ async function boot(){
       if(payload.method==='desktop.product'){if(Object.keys(payload.params??{}).length)throw Error('Product context takes no parameters');return {ok:true,result:{...productEdition,workspace}};}
       if(payload.method==='desktop.study.tutorial'){if(Object.keys(payload.params??{}).length)throw Error('Tutorial takes no parameters');return {ok:true,result:await require('./edu-tutorial.cjs').openEduTutorial({rendererRoot,edition:productEdition.edition,openPath:file=>shell.openPath(file)})};}
       if(payload.method==='license.workspace'){if(Object.keys(payload.params??{}).length)throw Error('No custom backup path accepted');const error=await shell.openPath(workspace);if(error)throw Error(error);return {ok:true,result:{opened:true,edition:productEdition.edition}};}
+      if(typeof payload.method==='string'&&payload.method.startsWith('online.access.'))return {ok:true,result:await onlineAccess.rpc(payload.method,payload.params??{})};
       if(typeof payload.method==='string'&&payload.method.startsWith('license.'))return {ok:true,result:await license.rpc(payload.method,payload.params??{})};
       // Enforcement is in the trusted main process, before viewer/engine calls.
       // Update and read-only installation diagnostics remain accessible.
       if(!['desktop.diagnostics','desktop.update.status','desktop.update.check','desktop.update.download','desktop.update.install','desktop.update.website','desktop.update.notes'].includes(payload.method))await license.assertActive();
       if(payload.method==='desktop.learning.guide'){const id=payload.params?.lesson_id;if(Object.keys(payload.params||{}).length!==1||typeof id!=='string'||!/^[a-z0-9-]{1,80}$/.test(id))throw Error('Invalid lesson ID');await shell.openExternal('https://resistor-downloads.vercel.app/tutorial/learn/'+id+'/');return {ok:true,result:{opened:true,product_id:productEdition.id}};}
       if(typeof payload.method==='string'&&payload.method.startsWith('desktop.update.')){
+        if(['desktop.update.check','desktop.update.download'].includes(payload.method))await onlineAccess.assert();
         if(['desktop.update.website','desktop.update.notes'].includes(payload.method)){
           if(Object.keys(payload.params??{}).length)return {ok:false,error:{code:'UPDATE_ERROR',message:'업데이트 링크는 주소를 받지 않습니다.'}};
           const url=payload.method==='desktop.update.website'?'https://resistor-downloads.vercel.app/download/'+(productEdition.edition==='edu'?'edu':'industry')+'/':updater.status().update?.releaseUrl;
@@ -106,9 +111,9 @@ async function boot(){
         return {ok:true,result:await engineSettings(workspace)};
       }
       const runtime=typeof payload.method==='string'&&payload.method.startsWith('study.')&&payload.method!=='study.puzzle.simulate'?await runtimeConfig(workspace):await ensureRuntime();
-      if(typeof payload.method==='string'&&payload.method.startsWith('study.'))return await (await import(pathToFileURL(path.join(root,'scripts/self-study-service.mjs')))).studyRpc(runtime,payload.method,payload.params??{}, {edition:productEdition.edition});
+      if(typeof payload.method==='string'&&payload.method.startsWith('study.'))return await (await import(pathToFileURL(path.join(root,'scripts/self-study-service.mjs')))).studyRpc(runtime,payload.method,payload.params??{}, {edition:productEdition.edition,assertOnlineAccess});
       if(typeof payload.method==='string'&&payload.method.startsWith('learning.'))return await (await import(pathToFileURL(path.join(root,'scripts/education-service.mjs')))).educationRpc(runtime,payload.method,payload.params??{}, {edition:productEdition.edition});
-      if(typeof payload.method==='string'&&payload.method.startsWith('assistant.'))return await assistantRpc(runtime,payload.method,payload.params??{});
+      if(typeof payload.method==='string'&&payload.method.startsWith('assistant.'))return await assistantRpc(runtime,payload.method,payload.params??{},{edition:productEdition.edition,assertOnlineAccess});
       return await workerRpc(runtime,payload.method,payload.params??{});
     }catch(e){return {ok:false,error:{code:e.code||'WORKER_UNAVAILABLE',message:e.message}};}
   });

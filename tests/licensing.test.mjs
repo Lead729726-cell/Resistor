@@ -1,3 +1,4 @@
+import {fixtureOnlineAcknowledgment} from './fixtures/online-access.mjs';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {generateKeyPairSync,randomBytes,createHash} from 'node:crypto';
@@ -19,7 +20,7 @@ async function setup(fn,{mailer}={}){
  const serial=(edition='edu',id='test-order')=>service.operatorDelivery(order(edition,id).delivery_id).serial;
  const config={schema_version:1,required:true,server_url:'https://licensing.example.invalid',public_keys:{'resistor-20261023':publicKey},policy:{edu:{device_limit:2},indust:{device_limit:2}}};
  const fakeFetch=async(url,options)=>{const p=JSON.parse(options.body),method=new URL(url).pathname.split('/').at(-1);try{const result=service[method](p);return {status:200,json:async()=>({ok:true,result})};}catch(e){return {status:403,json:async()=>({ok:false,error:{code:e.code,message:e.message}})};}};
- const client=async(name,edition='edu',fetchImpl=fakeFetch)=>{const dir=path.join(directory,name);return new LicenseClient({directory:dir,edition,config,...await fileLicenseVault(dir),fetchImpl,now:()=>clock});};
+ const client=async(name,edition='edu',fetchImpl=fakeFetch)=>{const dir=path.join(directory,name);return new LicenseClient({directory:dir,edition,config,...await fileLicenseVault(dir),fetchImpl,now:()=>clock,assertOnlineAccess:async()=>fixtureOnlineAcknowledgment(clock)});};
  try{await fn({service,order,serial,client,config,publicKey,directory,advance:n=>clock+=n,now:()=>clock});}finally{service.close();await rm(directory,{recursive:true,force:true});}
 }
 test('verified order issuance is idempotent; wrong and unverified input is rejected',()=>setup(async({service,order})=>{assert.throws(()=>service.issue({verified:false}),{code:'ORDER_UNVERIFIED'});const a=order(),b=order();assert.equal(a.license_id,b.license_id);assert.equal(b.idempotent,true);assert.throws(()=>service.issue({provider:'inflearn',purchase_ref:'test-order',edition:'edu',email:'fixture@example.invalid',evidence_sha256:'b'.repeat(64),verified:true,device_limit:2}),{code:'ORDER_CONFLICT'});}));

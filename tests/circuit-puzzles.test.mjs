@@ -1,3 +1,4 @@
+import {fixtureOnlineOptions} from './fixtures/online-access.mjs';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp,mkdir,writeFile,readFile,rm} from 'node:fs/promises';
@@ -11,7 +12,7 @@ import {studyRpc} from '../scripts/self-study-service.mjs';
 async function setup(fn){const dir=await mkdtemp(path.join(os.tmpdir(),'resistor-puzzles-')),workspace=path.join(dir,'edu'),source=path.join(dir,'source');let invoke=async()=>{throw Error('fixture worker offline');};let calls=0,reply={observed_facts:'현재 배치는 비어 있습니다.',applied_model:'이상 저항 수식',reasoning:'닫힌 경로가 필요합니다.',next_experiment:'R1부터 연결하세요.',question:'어느 노드에 연결할까요?'};
  try{await mkdir(path.join(workspace,'.runtime/education/study'),{recursive:true});await mkdir(path.join(source,'.runtime/assistant'),{recursive:true});await writeFile(path.join(source,'.env.local'),'OPENAI_API_KEY=test-fixture-not-real');await writeFile(path.join(source,'.runtime/assistant/settings.json'),JSON.stringify({budget_usd:1}));await writeFile(path.join(workspace,'.runtime/education/study/provider.json'),JSON.stringify({schema_version:1,credential_workspace:source}));
  const fetcher=async(url,options)=>{calls++;assert.equal(url,'https://api.openai.com/v1/responses');const body=JSON.parse(options.body);assert.equal(body.store,false);assert.equal(body.text.format.strict,true);if(reply instanceof Error)throw reply;return {ok:true,text:async()=>JSON.stringify({status:'completed',output:[{content:[{type:'output_text',text:JSON.stringify(reply)}]}],usage:{total_tokens:180,input_tokens:120,output_tokens:60}})};};
- const raw=(method,p={},edition='edu')=>studyRpc({workspace},method,p,{edition,fetcher,invoke});const api=async(method,p={})=>{const r=await raw('study.'+method,p);assert.equal(r.ok,true,r.error?.message);return r.result;};await fn({workspace,api,raw,calls:()=>calls,setReply:r=>reply=r,setInvoke:r=>invoke=r});
+ const raw=(method,p={},edition='edu')=>studyRpc({workspace},method,p,{...fixtureOnlineOptions,edition,fetcher,invoke});const api=async(method,p={})=>{const r=await raw('study.'+method,p);assert.equal(r.ok,true,r.error?.message);return r.result;};await fn({workspace,api,raw,calls:()=>calls,setReply:r=>reply=r,setInvoke:r=>invoke=r});
  }finally{await rm(dir,{recursive:true,force:true});}
 }
 const create=(api,id='half-voltage')=>api('puzzle.create',{puzzle_id:id,purpose:'qa',command_id:randomUUID()});

@@ -2,6 +2,7 @@ import {readFile,writeFile,mkdir,rename,open,unlink} from 'node:fs/promises';
 import path from 'node:path';
 import {createHash,randomUUID} from 'node:crypto';
 import {z} from 'zod/v4';
+import {assertExternalAiAccess} from './online-ai-access.mjs';
 import {getProductEdition} from './edition-workspace.mjs';
 import {initialStudyQuestions,studyReferences,studyVersion,gradeObjective} from '../packages/education/src/self-study.ts';
 import {difficultyLevels,classifyDifficulty,recommendDifficulty} from '../packages/education/src/difficulty.ts';
@@ -29,7 +30,8 @@ function gradeFeedback(raw,q){
 export async function studyRpc(config,method,params={},options={}){
  try{return {ok:true,result:await execute(config,method,params,options)};}catch(e){return {ok:false,error:{code:e.code||'STUDY_ERROR',message:e instanceof z.ZodError?'학습 입력 형식·길이를 확인하세요.':e.message}};}
 }
-async function execute(config,method,params,{edition=getProductEdition({root}).edition,fetcher=fetch,invoke=workerRpc}={}){
+async function execute(config,method,params,{edition=getProductEdition({root}).edition,fetcher=fetch,invoke=workerRpc,assertOnlineAccess}={}){
+ const onlineOptions={edition,assertOnlineAccess};
  if(edition!=='edu')throw error('Resistor Edu에서만 사용하는 자율학습 기능입니다.');
  const schemas={...puzzleSchemas,...coachSchemas,
   'study.catalog':z.object({}).strict(),
@@ -60,8 +62,8 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
   const unavailable={configured:false,model:'gpt-6-luna',budget_usd:0,remaining_usd:0};
   let provider=unavailable;try{if(source)provider=await structuredStatus(source);}catch{provider={...unavailable,reason:'기존 키 또는 공통 예산 설정을 읽을 수 없습니다. 저장된 문제는 계속 사용할 수 있습니다.'};}
   const limits={...provider,study_budget_usd:state.budget_usd,study_reserved_usd:state.reserved_usd,study_remaining_usd:Math.max(0,state.budget_usd-state.reserved_usd),ai_policy:eduAiPolicy,automatic_calls:false,credential_mode:source?'existing-workspace-reference':'not_configured'};
-  if(method.startsWith('study.coach.'))return result(await educationCoach(state,method,p,{save,limits,source,provider,fetcher}));
-  if(method.startsWith('study.puzzle.'))return result(await interactiveStudy(state,method,p,{save,limits,source,provider,fetcher,context,config,invoke}));
+  if(method.startsWith('study.coach.'))return result(await educationCoach(state,method,p,{save,limits,source,provider,fetcher,onlineOptions}));
+  if(method.startsWith('study.puzzle.'))return result(await interactiveStudy(state,method,p,{save,limits,source,provider,fetcher,context,config,invoke,onlineOptions}));
   const get=()=>{const q=state.questions[p.question_id];if(!q)throw error('저장된 문제를 찾을 수 없습니다.');return q;};
   const assistanceKey=id=>(p.purpose||'practice')+':'+id;
   const helped=id=>state.revealed.includes(assistanceKey(id))||(p.purpose!=='qa'&&state.revealed.includes(id));
@@ -110,6 +112,7 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
   let receipt=null,aiError=null,cacheHit=method==='study.submit'&&!!state.grades[cacheKey];
   if(!grade){
    if(p.approved!==true)throw error('새 AI 문제를 만들려면 외부 전송·호출을 명시적으로 승인하세요. 저장된 기본 문제는 무료로 사용할 수 있습니다.');
+   await assertExternalAiAccess(onlineOptions);
    if(!source||!provider.configured)throw error('기존 OpenAI 키 참조가 연결되지 않았습니다. 로컬 study:link 설정을 확인하세요.');
    const estimate=structuredEstimate(system,content,schema,{model:roleModel});
    if(estimate>limits.study_remaining_usd||estimate>provider.remaining_usd)throw error('API 호출 상한이 부족합니다. 저장된 문제를 사용하거나 명시적으로 학습 비용 상한을 설정하세요.');
@@ -117,7 +120,7 @@ async function execute(config,method,params,{edition=getProductEdition({root}).e
    state.requests[p.command_id]={digest,status:'started',created_at:stamp(),upper_bound_usd:estimate};
    if(q){state.attempts.push({id:p.command_id,question_id:q.id,question_version:q.version,answer:p.answer,created_at:stamp(),assisted:helped(q.id),feedback:{status:'pending',score:null},purpose:p.purpose});}
    await save();
-   try{const response=await requestStructured(source,{system,content,schema,name,model:roleModel,reasoning_effort:'low',approved:true},{fetcher});receipt=response.receipt;
+   try{const response=await requestStructured(source,{system,content,schema,name,model:roleModel,reasoning_effort:'low',approved:true},{fetcher,...onlineOptions});receipt=response.receipt;
     if(q){grade=gradeFeedback(response.value,q);state.grades[cacheKey]={...grade,receipt};}
     else{const responseQuestions=generatedSchema.parse(response.value).questions;
      const template=Object.values(state.questions).find(x=>x.kind==='explanation'&&x.reference_id===p.reference_id);

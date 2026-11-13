@@ -1,9 +1,12 @@
+import {fixtureOnlineOptions} from './fixtures/online-access.mjs';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp,mkdir,writeFile,readFile,rm} from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
-import {requestStructured,structuredEstimate,structuredStatus,reserveStructuredSession} from '../scripts/structured-ai.mjs';
+import {requestStructured as rawRequestStructured,structuredEstimate,structuredStatus,reserveStructuredSession as rawReserveStructuredSession} from '../scripts/structured-ai.mjs';
+const requestStructured=(workspace,request,options)=>rawRequestStructured(workspace,request,{...fixtureOnlineOptions,...options});
+const reserveStructuredSession=(workspace,bound,options)=>rawReserveStructuredSession(workspace,bound,{...fixtureOnlineOptions,...options});
 test('structured server helper shares the existing budget, gates consent, fixes endpoint and never returns credential',async()=>{
  const workspace=await mkdtemp(path.join(os.tmpdir(),'resistor-structured-'));let calls=0;
  try{

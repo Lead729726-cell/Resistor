@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "edition": "edu",
+  "checked_at": "2026-11-13T00:18:14.087Z",
+  "scope": "read-only local prerequisites; not provider authorization or signing",
+  "preflight": {
+    "schema_version": 1,
+    "platform": "win32",
+    "mac": {
+      "enabled": false,
+      "configuration_valid": true,
+      "missing_names": [
+        "RESISTOR_MAC_IDENTITY",
+        "RESISTOR_APPLE_TEAM_ID",
+        "RESISTOR_NOTARY_PROFILE"
+      ],
+      "provider_authorization_checked": false
+    },
+    "windows": {
+      "enabled": false,
+      "configuration_valid": true,
+      "missing_names": [
+        "RESISTOR_WINDOWS_PUBLISHER",
+        "RESISTOR_SIGNTOOL_PATH",
+        "RESISTOR_AZURE_SIGN_ENDPOINT",
+        "RESISTOR_AZURE_SIGN_DLIB",
+        "RESISTOR_AZURE_SIGN_ACCOUNT",
+        "RESISTOR_AZURE_SIGN_PROFILE"
+      ],
+      "provider_authorization_checked": false,
+      "tools": {
+        "signtool_available": false
+      },
+      "certificate_trust_checked": false,
+      "private_key_access_checked": false,
+      "certificate_inventory": "available",
+      "current_user_code_signing_certificate_count": 0,
+      "local_machine_code_signing_certificate_count": 0,
+      "usable_code_signing_certificate_count": 0,
+      "selected_current_user_certificate_available": false,
+      "local_prerequisites_ready": false
+    },
+    "trusted_signing_completed": false,
+    "notarization_completed": false,
+    "note": "Reports names/counts only. Does not enroll, purchase, import credentials, submit a binary, or perform paid signing."
+  },
+  "github_repository_secret_names": [],
+  "github_repository_variable_names": [],
+  "repository": "Lead729726-cell/Resistor",
+  "configuration_values_recorded": false,
+  "provider_operations_performed": false,
+  "paid_operations_performed": false,
+  "signing_or_notarization_performed": false,
+  "local_targeted_tests": {
+    "passed": 33,
+    "failed": 0,
+    "provider_signature_responses": "fixtures only"
+  },
+  "source_sha256": {
+    "scripts/signing-preflight.mjs": "a36ffe030bd346c10ebaca8214c77e96e45939647fcddd6d102dd7f677d3f0e7",
+    "tests/native-signing.test.mjs": "3aebe53b87590a5ea1c3e261772a55e937f2d44784550b06c1bd5484748beae5"
+  }
+}

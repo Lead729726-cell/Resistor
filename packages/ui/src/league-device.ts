@@ -1,4 +1,5 @@
 import {readPreference} from './ui-preferences';
+import {requireOnlineAccessFor} from '../../contracts/src/online-access';
 import {canonical,type LeagueEnvelope} from '../../education/src/league-protocol';
 type Identity={signing:CryptoKeyPair;draftKey:CryptoKey};
 const enc=new TextEncoder();
@@ -22,6 +23,7 @@ export function defaultLeagueEndpoint(){return readPreference('resistor.edu.leag
 export function leagueClient(value:string,identityNamespace?:string){
  const endpoint=leagueEndpoint(value),storage=identityNamespace?'publisher:'+identityNamespace:endpoint;let offset=0,synced=false,queue=Promise.resolve();
  async function call<T=Record<string,unknown>>(method:string,params:Record<string,unknown>={},signed=false):Promise<T>{
+  await requireOnlineAccessFor('edu',{prompt:signed});
   let body:Record<string,unknown>={method,params};if(signed){if(!synced)await call('league.info');const key=await identity(storage,method==='league.enroll');if(!key)throw Error('이 기기를 먼저 등록하세요.');const pub=await crypto.subtle.exportKey('spki',key.signing.publicKey),device_id=hex(await crypto.subtle.digest('SHA-256',pub));
    const message:LeagueEnvelope={schema_version:1,device_id,method,params:method==='league.enroll'?{public_key:base64(pub)}:params,issued_at:Math.round(Date.now()+offset),nonce:crypto.randomUUID()};body={...message,signature:base64(await crypto.subtle.sign({name:'ECDSA',hash:'SHA-256'},key.signing.privateKey,enc.encode(canonical(message))))};
   }

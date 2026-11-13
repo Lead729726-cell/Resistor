@@ -1,6 +1,6 @@
 import {licenseError} from './token.mjs';
 
-export const publicLicenseRuntimeFiles=Object.freeze(['token.mjs','access-policy.mjs','public-config.json']);
+export const publicLicenseRuntimeFiles=Object.freeze(['token.mjs','access-policy.mjs','online-access-policy.mjs','public-config.json']);
 
 // Course fulfillment and the separate professional product share the license engine.
 // A caller may not expand an Inflearn course grant by changing the edition field.

@@ -1,5 +1,6 @@
 import {readFile} from 'node:fs/promises';
 import path from 'node:path';
+import {assertExternalAiAccess} from './online-ai-access.mjs';
 import {structuredModel} from '../packages/contracts/src/ai-models.ts';
 import {readProviderCredential,providerConfig,reserveProviderBudget,PRICING} from './design-assistant.mjs';
 
@@ -18,23 +19,25 @@ export function structuredEstimate(system,content,schema,{model=PRICING.model,ma
 }
 export async function requestStructured(workspace,request,options={}){
  const {system,content,schema}=request,estimate=structuredEstimate(system,content,schema,request);
- const session=await reserveStructuredSession(workspace,estimate,{approved:request.approved,fetcher:options.fetcher});return session.request(request);
+ const session=await reserveStructuredSession(workspace,estimate,{...options,approved:request.approved});return session.request(request);
 }
 
 // One approved learning activity can reserve both stages atomically in the shared ledger.
 // The credit exists only in this server closure; clients cannot submit reservation IDs.
-export async function reserveStructuredSession(workspace,upperBound,{approved,fetcher=fetch}={}){
+export async function reserveStructuredSession(workspace,upperBound,{approved,fetcher=fetch,...onlineOptions}={}){
  if(approved!==true)throw Error('이 요청의 외부 전송·API 호출 승인이 필요합니다.');
  if(!Number.isFinite(upperBound)||upperBound<=0||upperBound>1)throw Error('Invalid structured session reservation.');
+ await assertExternalAiAccess(onlineOptions);
  const status=await structuredStatus(workspace);if(!status.configured)throw Error('기존 OpenAI 키가 연결되지 않았습니다.');
  const reservation=await reserveProviderBudget(workspace,status.budget_usd,upperBound);let remaining=upperBound;
- return {reservation,request:async request=>{const estimate=structuredEstimate(request.system,request.content,request.schema,request);if(estimate>remaining+1e-9)throw Error('AI 세션의 승인된 비용 예약을 초과했습니다.');remaining=Math.round((remaining-estimate)*1e9)/1e9;return callStructured(workspace,request,{fetcher,reservation:{...reservation,stage_upper_bound_usd:estimate}});}};
+ return {reservation,request:async request=>{const estimate=structuredEstimate(request.system,request.content,request.schema,request);if(estimate>remaining+1e-9)throw Error('AI 세션의 승인된 비용 예약을 초과했습니다.');remaining=Math.round((remaining-estimate)*1e9)/1e9;return callStructured(workspace,request,{fetcher,onlineOptions,reservation:{...reservation,stage_upper_bound_usd:estimate}});}};
 }
 
-async function callStructured(workspace,{system,content,schema,name,approved,model=PRICING.model,max_output_tokens=4096,reasoning_effort,input_byte_bound},{fetcher,reservation}){
+async function callStructured(workspace,{system,content,schema,name,approved,model=PRICING.model,max_output_tokens=4096,reasoning_effort,input_byte_bound},{fetcher,reservation,onlineOptions}){
  if(approved!==true)throw Error('이 요청의 외부 전송·API 호출 승인이 필요합니다.');
  const status=await structuredStatus(workspace);if(!status.configured)throw Error('기존 OpenAI 키가 연결되지 않았습니다.');
  const estimate=structuredEstimate(system,content,schema,{model,max_output_tokens,input_byte_bound});
+ await assertExternalAiAccess(onlineOptions);
  const key=await readProviderCredential(workspace);
  try{
   const response=await fetcher('https://api.openai.com/v1/responses',{method:'POST',redirect:'error',signal:AbortSignal.timeout(45000),headers:{Authorization:'Bearer '+key,'Content-Type':'application/json'},body:JSON.stringify({model,store:false,...(reasoning_effort?{reasoning:{effort:reasoning_effort}}:{}),service_tier:'default',max_output_tokens,input:[{role:'system',content:system},{role:'user',content:JSON.stringify(content)}],text:{format:{type:'json_schema',name,strict:true,schema}}})});

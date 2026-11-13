@@ -1,3 +1,4 @@
+import {fixtureOnlineOptions} from './fixtures/online-access.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp,mkdir,writeFile,readFile,rm} from 'node:fs/promises';
@@ -12,7 +13,7 @@ async function fixture(fn){
  await mkdir(path.join(workspace,'.runtime/education/study'),{recursive:true});await mkdir(path.join(source,'.runtime/assistant'),{recursive:true});
  await writeFile(path.join(source,'.env.local'),'OPENAI_API_KEY=test-fixture-not-a-real-key');await writeFile(path.join(source,'.runtime/assistant/settings.json'),JSON.stringify({budget_usd:1}));await writeFile(path.join(workspace,'.runtime/education/study/provider.json'),JSON.stringify({credential_workspace:source}));
  const fetcher=async(url,options)=>{const body=JSON.parse(options.body);calls.push(body);const content=JSON.parse(body.input[1].content),role=body.text.format.name==='resistor_edu_judgment'?'judge':'executor';const value=override?override(role,content):role==='judge'?judgment(content.evidence.evidence_ids):activity(content.evidence.evidence_ids);if(value instanceof Error)throw value;return {ok:true,text:async()=>JSON.stringify({status:'completed',model:body.model,output:[{content:[{type:'output_text',text:JSON.stringify(value)}]}],usage:{total_tokens:100}})};};
- const raw=(method,params={},edition='edu')=>studyRpc({workspace},method,params,{edition,fetcher});const api=async(method,params={})=>{const r=await raw(method,params);assert.equal(r.ok,true,r.error?.message);return r.result;};
+ const raw=(method,params={},edition='edu')=>studyRpc({workspace},method,params,{...fixtureOnlineOptions,edition,fetcher});const api=async(method,params={})=>{const r=await raw(method,params);assert.equal(r.ok,true,r.error?.message);return r.result;};
  try{const bank=await api('study.catalog'),q=bank.questions.find(q=>q.kind==='numeric');const input={target:{kind:'question',question_id:q.id,question_version:q.version,purpose:'qa'},answer:'1 kΩ',question:'접두 단위를 어떻게 읽나요?',goal:'hint'};await fn({workspace,source,calls,api,raw,input,setReply:fn=>{override=fn;},enable:()=>api('study.settings',{budget_usd:1,expected_revision:bank.study_revision})});}finally{await rm(root,{recursive:true,force:true,maxRetries:4,retryDelay:100});}
 }
 const request=(input,preview)=>({...input,expected_evidence_hash:preview.evidence_hash,max_cost_usd:preview.upper_bound_usd,approved:true,command_id:randomUUID()});
