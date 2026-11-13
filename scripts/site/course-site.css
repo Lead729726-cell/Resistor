@@ -88,8 +88,8 @@ html[data-theme="dark"] body.academy-page {
   justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
-  min-height: 80px;
-  padding: 16px 32px;
+  min-height: 72px;
+  padding: 12px 32px;
   gap: 32px;
 }
 .wb-site-header .wb-site-brand {
@@ -247,7 +247,7 @@ body.academy-page {
   grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
   align-items: center;
   gap: 48px;
-  padding: 80px 0 64px;
+  padding: 56px 0;
 }
 .academy-page .academy-hero-copy { min-width: 0; }
 .academy-page .academy-kicker {
@@ -399,10 +399,11 @@ body.academy-page {
 .academy-page :is(.academy-curriculum,.academy-faq) details[open] > summary::after { content: "−"; }
 .academy-page :is(.academy-curriculum,.academy-faq) summary:hover { color: var(--academy-accent); }
 .academy-page .academy-module-number { min-width: 32px; flex: none; color: var(--academy-muted); font: 400 14px/1.5 var(--academy-mono); }
-.academy-page .academy-curriculum summary > span:nth-child(2) { flex: 1; min-width: 0; }
+.academy-page .academy-curriculum summary > strong { flex: 1; min-width: 0; }
 .academy-page .academy-curriculum summary > span:last-child:not(:nth-child(2)) { flex: none; color: var(--academy-muted); font: 400 13px/1.5 var(--academy-mono); }
 .academy-page .academy-curriculum summary strong { display: block; font-weight: 500; }
 .academy-page .academy-curriculum summary small { display: block; margin-top: 4px; color: var(--academy-muted); font-size: 13px; font-weight: 400; }
+.academy-page .academy-module-content > p { margin: 0 40px 12px 52px; color: var(--academy-muted); font-size: 14px; }
 .academy-page .academy-curriculum ol { margin: 0; padding: 0 40px 24px 76px; color: var(--academy-secondary); font-size: 15px; }
 .academy-page .academy-curriculum li { padding: 8px 0 8px 4px; }
 .academy-page .academy-curriculum li::marker { color: var(--academy-muted); font-family: var(--academy-mono); }
@@ -441,6 +442,12 @@ body.academy-page {
 .academy-page .academy-offer .store-product li + li { margin-top: 8px; }
 .academy-page .academy-offer .store-product p + p { margin-top: 12px; }
 .academy-page .academy-offer a.button { margin-top: 20px; }
+.academy-page .academy-offer-detail { margin-top: 16px; padding-top: 8px; border-top: 1px solid var(--academy-line); }
+.academy-page .academy-offer-detail summary { display: flex; justify-content: space-between; align-items: center; min-height: 44px; gap: 12px; color: var(--academy-secondary); font-size: 14px; list-style: none; cursor: pointer; }
+.academy-page .academy-offer-detail summary::-webkit-details-marker { display: none; }
+.academy-page .academy-offer-detail summary::after { content: "+"; font: 400 16px/1 var(--academy-mono); }
+.academy-page .academy-offer-detail[open] summary::after { content: "−"; }
+.academy-page .academy-offer-detail p { margin-top: 8px; color: var(--academy-secondary); font-size: 14px; }
 
 .academy-page .academy-footer { max-width: 1200px; margin: 0 auto; padding: 40px 32px 32px; border-top: 1px solid var(--academy-line); color: var(--academy-secondary); font-size: 14px; }
 .academy-page .academy-footer-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: 24px 48px; }
@@ -457,6 +464,16 @@ body.academy-page {
 .academy-page .academy-legal a { color: var(--academy-secondary); }
 .academy-page .academy-legal nav { display: flex; flex-wrap: wrap; gap: 0 24px; margin: 12px 0 0; }
 .academy-page .academy-legal nav a { display: inline-flex; align-items: center; min-height: 44px; }
+.academy-page .academy-footer .academy-legal { margin-top: 16px; padding-top: 8px; }
+.academy-page .academy-native-release { margin: 0 0 40px; padding: 12px 0; border-top: 1px solid var(--academy-line); }
+.academy-page .academy-native-release > summary { display: flex; align-items: center; justify-content: space-between; min-height: 44px; gap: 12px; color: var(--academy-secondary); font-size: 14px; list-style: none; cursor: pointer; }
+.academy-page .academy-native-release > summary::-webkit-details-marker { display: none; }
+.academy-page .academy-native-release > summary::after { content: "+"; font: 400 16px/1 var(--academy-mono); }
+.academy-page .academy-native-release[open] > summary::after { content: "−"; }
+.academy-page .academy-native-release > section { margin: 16px 0 0; padding: 0; border: 0; }
+.academy-page .academy-native-release h2 { margin: 0 0 12px; font-size: 20px; line-height: 1.5; }
+.academy-page .academy-native-release :is(p,a) { font-size: 14px; }
+.academy-page .academy-native-release p { margin-top: 12px; color: var(--academy-secondary); }
 
 @media (min-width: 1120px) {
   .academy-page .academy-hero h1 { font-size: 64px; }
@@ -521,6 +538,7 @@ body.academy-page {
   .academy-page .academy-price { font-size: 28px; }
   .academy-page .academy-curriculum summary { gap: 12px; font-size: 16px; }
   .academy-page .academy-curriculum ol { padding-left: 52px; padding-right: 8px; font-size: 14px; }
+  .academy-page .academy-module-content > p { margin-left: 44px; margin-right: 8px; font-size: 13px; }
   .academy-page .academy-faq summary { font-size: 16px; }
   .academy-page .academy-faq details > :not(summary) { margin-right: 8px; }
   .academy-page .academy-resources,

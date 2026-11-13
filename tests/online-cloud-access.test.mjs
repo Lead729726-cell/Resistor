@@ -4,7 +4,7 @@ import {runInNewContext} from 'node:vm';
 import {webcrypto} from 'node:crypto';
 import {build} from 'esbuild';
 
-const compiled=await build({stdin:{contents:`export {cloud} from './packages/cloud/src/index';export {rpc} from './packages/contracts/src/index';export {configureOnlineAccess,acknowledgeOnlineAccess,onlineAccessStorageKey,ONLINE_ACCESS_POLICY_VERSION} from './packages/contracts/src/online-access';`,resolveDir:process.cwd()},bundle:true,write:false,format:'cjs',platform:'node',define:{__RESISTOR_EDITION__:'"edu"','import.meta.env.DEV':'false'},logLevel:'silent'});
+const compiled=await build({stdin:{contents:`export {cloud} from './packages/cloud/src/index';export {rpc} from './packages/contracts/src/index';export {configureOnlineAccess,acknowledgeOnlineAccess,onlineAccessStorageKey,ONLINE_ACCESS_POLICY_VERSION,registerOnlineAccessPrompt} from './packages/contracts/src/online-access';`,resolveDir:process.cwd()},bundle:true,write:false,format:'cjs',platform:'node',define:{__RESISTOR_EDITION__:'"edu"','import.meta.env.DEV':'false'},logLevel:'silent'});
 function fixture(){
  const local=new Map([['register.cloud.url.edu','https://cloud.example.test']]),session=new Map([['register.cloud.session.edu','synthetic-session'],['register.cloud.room.edu','saved-room']]);
  const store=map=>({getItem:key=>map.get(key)??null,setItem:(key,value)=>map.set(key,value),removeItem:key=>map.delete(key)});
@@ -33,4 +33,14 @@ test('explicit acknowledgment resumes the preserved cloud session; subsequent gu
  await assert.rejects(cloud.downloadExport({format:'gds'}),{code:'ONLINE_AGE_CONFIRMATION_REQUIRED'});await assert.rejects(cloud.downloadArtifact({run_id:'fixture',key:'report'}),{code:'ONLINE_AGE_CONFIRMATION_REQUIRED'});
  cloud.updatePresence({selection:'private-selection'});assert.equal(socket.sends.length,1);assert.equal(socket.closed,true);assert.equal(f.calls.length,before);
  assert.equal(f.session.get('register.cloud.session.edu'),'synthetic-session');await cloud.leaveProject();
+});
+
+test('automatic cloud restore stays silent while a deliberate login waits and cancellation sends no credentials',async()=>{
+ const f=fixture();let prompts=0,finish;
+ const unregister=f.api.registerOnlineAccessPrompt(done=>{prompts++;finish=done;});
+ try{
+  await f.api.cloud.status();assert.equal(prompts,0);assert.equal(f.calls.length,0);assert.equal(f.sockets.length,0);
+  const login=f.api.cloud.signIn({email:'synthetic@example.test',password:'never-transmitted'}).catch(error=>error.code);await new Promise(setImmediate);assert.equal(prompts,1);assert.equal(f.calls.length,0);
+  finish(false);assert.equal(await login,'ONLINE_ACCESS_CANCELLED');assert.equal(f.calls.length,0);assert.equal(f.session.get('register.cloud.session.edu'),'synthetic-session');
+ }finally{unregister();}
 });

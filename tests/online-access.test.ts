@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {ONLINE_ACCESS_POLICY_VERSION as version,createOnlineAcknowledgment,validOnlineAcknowledgment,assertOnlineAccess} from '../platform/licensing/online-access-policy.mjs';
-import {createOnlineAccessClient,onlineAccessStorageKey,configureOnlineAccess,acknowledgeOnlineAccess} from '../packages/contracts/src/online-access';
+import {createOnlineAccessClient,onlineAccessStorageKey,configureOnlineAccess,acknowledgeOnlineAccess,registerOnlineAccessPrompt} from '../packages/contracts/src/online-access';
 import {localRpc,rpc,setRpcOverride} from '../packages/contracts/src/index';
 import {leagueClient} from '../packages/ui/src/league-device';
 
@@ -52,20 +52,53 @@ test('malformed host replies cannot authorize requests and Industry adds no rest
  await industry.require();assert.equal(calls,0);
 });
 
+test('confirmation cannot substitute for persisted host authority or replay a pending action after cancellation',async()=>{
+ let prompts=0,sends=0;
+ const client=createOnlineAccessClient({edition:'edu',storage:()=>memory(),now:()=>now,hostRpc:async()=>({edition:'edu',policy_version:version,required:true,acknowledged:false}),onRequired:async()=>{prompts++;return true;}});
+ await assert.rejects(client.require().then(()=>sends++),blocked);assert.equal(prompts,1);assert.equal(sends,0);
+ const silent=createOnlineAccessClient({edition:'edu',storage:()=>memory(),now:()=>now,onRequired:()=>{throw Error('Background must not prompt');}});
+ await assert.rejects(silent.require({prompt:false}),blocked);
+ const cancelled=createOnlineAccessClient({edition:'edu',storage:()=>memory(),now:()=>now,onRequired:async()=>false});
+ await assert.rejects(cancelled.require().then(()=>sends++),{code:'ONLINE_ACCESS_CANCELLED'});assert.equal(sends,0);
+});
+
+test('confirmation retains the initiating element captured before an asynchronous host status lookup disables it',async()=>{
+ const previous={document:globalThis.document,HTMLElement:globalThis.HTMLElement};class Element{};const origin=new Element(),body=new Element();let complete!:(value:unknown)=>void,seen:unknown;
+ Object.assign(globalThis,{HTMLElement:Element,document:{activeElement:origin,body}});
+ try{
+  const client=createOnlineAccessClient({edition:'edu',storage:()=>memory(),now:()=>now,hostRpc:()=>new Promise(resolve=>{complete=resolve;}),onRequired:captured=>{seen=captured;return false;}});
+  const waiting=client.require().catch(error=>error.code);
+  Object.assign(globalThis.document,{activeElement:body});
+  complete({edition:'edu',policy_version:version,required:true,acknowledged:false});
+  assert.equal(await waiting,'ONLINE_ACCESS_CANCELLED');assert.equal(seen,origin);
+ }finally{Object.assign(globalThis,previous);}
+});
+
 test('real RPC and league clients send no activation, approved AI payload or registration before explicit acknowledgment',async()=>{
  const prior={window:globalThis.window,localStorage:globalThis.localStorage,fetch:globalThis.fetch};const storage=memory();const sent:string[]=[];let leagueFetches=0,overrideCalls=0;
  try{
   Object.assign(globalThis,{localStorage:storage,window:{dispatchEvent(){},mos:{rpc:async(method:string)=>{sent.push(method);return {ok:true,result:{local:true}};}}},fetch:async()=>{leagueFetches++;return new Response(JSON.stringify({ok:true,result:{schema_version:1,edition:'edu',server_time:Date.now()}}));}});
   configureOnlineAccess({edition:'edu',host:'browser'});
-  for(const [method,params] of [['license.activate',{serial:'synthetic-never-sent'}],['license.refresh',{}],['assistant.review',{provider:'openai'}],['study.generate',{approved:true}],['study.submit',{approved:true}],['study.coach.run',{approved:true}]] as const)await assert.rejects(localRpc(method,params),blocked);
+  for(const [method,params] of [['license.activate',{serial:'synthetic-never-sent'}],['license.refresh',{}],['desktop.update.check',{}],['desktop.update.download',{}],['assistant.review',{provider:'openai'}],['study.generate',{approved:true}],['study.submit',{approved:true}],['study.coach.run',{approved:true}],['study.puzzle.tutor',{mode:'ai',approved:true}]] as const)await assert.rejects(localRpc(method,params),blocked);
   setRpcOverride(async()=>{overrideCalls++;return {};});await assert.rejects(rpc('study.generate',{approved:true}),blocked);setRpcOverride(undefined);
   const league=leagueClient('https://league.example.test/api/league');
   await assert.rejects(league.call('league.enroll',{},true),blocked);await assert.rejects(league.call('league.info'),blocked);
   assert.equal(sent.length,0);assert.equal(leagueFetches,0);assert.equal(overrideCalls,0);
   for(const method of ['license.status','license.deactivate','project.snapshot'])await localRpc(method);
-  await localRpc('study.generate',{approved:false});assert.deepEqual(sent,['license.status','license.deactivate','project.snapshot','study.generate']);
+  await localRpc('study.generate',{approved:false});await localRpc('study.puzzle.tutor',{mode:'coach',approved:false});assert.deepEqual(sent,['license.status','license.deactivate','project.snapshot','study.generate','study.puzzle.tutor']);
   await acknowledgeOnlineAccess(input);await localRpc('license.activate',{serial:'synthetic-allowed'});await league.call('league.info');
   assert.equal(sent.at(-1),'license.activate');assert.equal(leagueFetches,1);
   configureOnlineAccess({edition:'indust',host:'browser'});await localRpc('license.refresh');assert.equal(sent.at(-1),'license.refresh');
  }finally{setRpcOverride(undefined);configureOnlineAccess({edition:'indust',host:'browser'});Object.assign(globalThis,prior);}
+});
+
+test('signed league background polls never open the contextual prompt, whereas an explicit registration can cancel before key access',async()=>{
+ const previous={localStorage:globalThis.localStorage,fetch:globalThis.fetch};let prompts=0,sent=0,finish:((confirmed:boolean)=>void)|undefined;
+ Object.assign(globalThis,{localStorage:memory(),fetch:async()=>{sent++;throw Error('No request expected');}});configureOnlineAccess({edition:'edu',host:'browser'});
+ const unregister=registerOnlineAccessPrompt(done=>{prompts++;finish=done;});
+ try{
+  const league=leagueClient('https://league.example.test/api/league');
+  await assert.rejects(league.call('league.snapshot',{},true,{prompt:false}),blocked);await assert.rejects(league.call('league.board',{},true,{prompt:false}),blocked);assert.equal(prompts,0);assert.equal(sent,0);
+  const register=league.call('league.enroll',{},true).catch(error=>error.code);await new Promise(setImmediate);assert.equal(prompts,1);assert.equal(sent,0);finish!(false);assert.equal(await register,'ONLINE_ACCESS_CANCELLED');assert.equal(sent,0);
+ }finally{unregister();configureOnlineAccess({edition:'indust',host:'browser'});Object.assign(globalThis,previous);}
 });

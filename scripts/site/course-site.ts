@@ -41,7 +41,7 @@ if (more) {
   more.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {more.open=false;}));
 }
 
-// Mark the current destination without making the four primary destinations compete.
+// Mark the current destination; secondary reference links stay in disclosures.
 const route = location.pathname.replace(/\/$/, '') || '/';
 document.querySelectorAll<HTMLAnchorElement>('#wb-navigation > a').forEach(link => {
   const target = new URL(link.href).pathname.replace(/\/$/, '') || '/';

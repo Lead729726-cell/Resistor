@@ -22,8 +22,8 @@ export function leagueEndpoint(value:string){
 export function defaultLeagueEndpoint(){return readPreference('resistor.edu.league.endpoint')||((location.protocol==='http:'||location.protocol==='https:')?new URL('/api/league',location.origin).href:'http://127.0.0.1:18786/api/league');}
 export function leagueClient(value:string,identityNamespace?:string){
  const endpoint=leagueEndpoint(value),storage=identityNamespace?'publisher:'+identityNamespace:endpoint;let offset=0,synced=false,queue=Promise.resolve();
- async function call<T=Record<string,unknown>>(method:string,params:Record<string,unknown>={},signed=false):Promise<T>{
-  await requireOnlineAccessFor('edu',{prompt:signed});
+ async function call<T=Record<string,unknown>>(method:string,params:Record<string,unknown>={},signed=false,{prompt=signed}:{prompt?:boolean}={}):Promise<T>{
+  await requireOnlineAccessFor('edu',{prompt});
   let body:Record<string,unknown>={method,params};if(signed){if(!synced)await call('league.info');const key=await identity(storage,method==='league.enroll');if(!key)throw Error('이 기기를 먼저 등록하세요.');const pub=await crypto.subtle.exportKey('spki',key.signing.publicKey),device_id=hex(await crypto.subtle.digest('SHA-256',pub));
    const message:LeagueEnvelope={schema_version:1,device_id,method,params:method==='league.enroll'?{public_key:base64(pub)}:params,issued_at:Math.round(Date.now()+offset),nonce:crypto.randomUUID()};body={...message,signature:base64(await crypto.subtle.sign({name:'ECDSA',hash:'SHA-256'},key.signing.privateKey,enc.encode(canonical(message))))};
   }

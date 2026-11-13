@@ -4,6 +4,7 @@ import {readPreference,writePreference,removePreference} from './ui-preferences'
 import './study-league.css';
 import {difficultyLevels,type DifficultyLevel} from '../../education/src/difficulty';
 import EduDepthDialog from './EduDepthDialog';
+import {requireOnlineAccessFor} from '../../contracts/src/online-access';
 
 type Question={level:DifficultyLevel;difficulty:{label:string;reason:string};id:string;title:string;prompt:string;conditions:string[];unit:string;expected?:number;formula?:string;solution?:string};
 type Standing={rank:number;nickname:string;member_id:string;score:number;elapsed_ms:number;days:number;self:boolean;emoji:string};
@@ -36,17 +37,17 @@ export default function StudyLeague({initialEndpoint,identityNamespace,temporary
  useEffect(()=>{setQuestionPage(0);},[attempt?.id]);
  useEffect(()=>{if(!active||!questionOrigin.current||toolPage!=='closed')return;const frame=requestAnimationFrame(()=>{questionHeading.current?.focus({preventScroll:true});questionOrigin.current=false;});return()=>cancelAnimationFrame(frame);},[questionPage,toolPage,active]);
  async function refresh(){if(!client)return;const registered=await client.hasIdentity();let snapshot:{info:Info;me:Me|null;board:Board;feed:Feed};
-  try{snapshot=await client.call('league.snapshot',{period:currentPeriod.current,level:currentLevel.current},registered);}catch(e){if((e as {code?:string}).code!=='AUTH_REQUIRED')throw e;snapshot=await client.call('league.snapshot',{period:currentPeriod.current,level:currentLevel.current});}
+  try{snapshot=await client.call('league.snapshot',{period:currentPeriod.current,level:currentLevel.current},registered,{prompt:false});}catch(e){if((e as {code?:string}).code!=='AUTH_REQUIRED')throw e;snapshot=await client.call('league.snapshot',{period:currentPeriod.current,level:currentLevel.current});}
   if(!mounted.current||currentClient.current!==client)return;setInfo(snapshot.info);setMe(snapshot.me);if(snapshot.board.period===currentPeriod.current&&snapshot.board.level===currentLevel.current)setBoard(snapshot.board);setFeed(snapshot.feed);setTick(client.clock());
  }
  useEffect(()=>{mounted.current=true;setInfo(null);setMe(null);setBoard(null);setThread(null);void refresh().then(()=>setError('')).catch(e=>setError(e.message));const timer=setInterval(()=>{if(!document.hidden&&!working.current)void refresh().catch(e=>setError(e.message));},15000);return()=>{mounted.current=false;clearInterval(timer);};},[client]);
- useEffect(()=>{if(!client)return;void client.call<Board>('league.board',{period,level:boardLevel},!!me).then(b=>{if(currentClient.current===client&&currentPeriod.current===period&&currentLevel.current===b.level)setBoard(b);}).catch(e=>setError(e.message));},[period,boardLevel]);
+ useEffect(()=>{if(!client)return;void client.call<Board>('league.board',{period,level:boardLevel},!!me,{prompt:false}).then(b=>{if(currentClient.current===client&&currentPeriod.current===period&&currentLevel.current===b.level)setBoard(b);}).catch(e=>setError(e.message));},[period,boardLevel]);
  useEffect(()=>{const timer=setInterval(()=>setTick(client?.clock()||Date.now()),1000);return()=>clearInterval(timer);},[client]);
  // Expiry changes editability, not the learner's draft. Only a new attempt or
  // server-confirmed answers replace it; reopening an expired attempt can still read its local draft.
  useEffect(()=>{let active=true;setAnswers(attempt?.answers||{});if(attempt?.id&&!attempt.answers&&['started','expired'].includes(attempt.status)&&client)void client.loadDraft(attempt.id).then(v=>{if(active)setAnswers(v);}).catch(()=>setError('암호화된 임시 답안을 읽지 못했습니다. 등록 키를 자동 교체하지 않았습니다.'));return()=>{active=false;};},[attempt?.id,attempt?.answers,client]);
  useEffect(()=>{if(!client||!attempt||attempt.status!=='started'||!Object.keys(answers).length)return;const timer=setTimeout(()=>void client.saveDraft(attempt.id,answers).catch(()=>setError('임시 답안 저장 실패. 이 화면의 답안은 유지됩니다.')),350);return()=>clearTimeout(timer);},[answers,attempt?.id,client]);
- async function action(fn:()=>Promise<void>){if(working.current)return;working.current=true;setBusy(true);setError('');try{await fn();}catch(e){setError(e instanceof Error?e.message:String(e));}finally{working.current=false;setBusy(false);}}
+ async function action(fn:()=>Promise<void>){if(working.current)return;working.current=true;setBusy(true);setError('');try{await requireOnlineAccessFor('edu');if(!mounted.current)return;await fn();}catch(e){setError(e instanceof Error?e.message:String(e));}finally{working.current=false;setBusy(false);}}
  async function enroll(){if(!client)return;await client.call('league.info');await client.call('league.enroll',{},true);await refresh();setNotice('서버가 고정 닉네임을 배정했습니다. 이 등록 키에서는 이름을 바꿀 수 없습니다.');}
  async function submit(){if(!client||!attempt)return;await client.call('league.submit',{attempt_id:attempt.id,answers},true);await client.clearDraft(attempt.id);await refresh();setNotice('서버에서 채점·제출을 확정했습니다. 정답 해설은 오늘 리그가 끝난 뒤 열립니다.');}
  async function openThread(id:number,before?:number){if(!client)return;const t=await client.call<Thread>('community.thread',{post_id:id,...(before?{before}:{})},!!me);setThread(old=>before&&old?.root.id===id?{...t,replies:[...t.replies,...old.replies]}:t);}

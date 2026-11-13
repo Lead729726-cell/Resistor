@@ -1,5 +1,8 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import {getProductEdition} from '../apps/desktop/product-edition.cjs';
+import {appearanceBootstrap} from './appearance-bootstrap.mjs';
 const presets=JSON.parse(await readFile('packages/ui/src/appearance-presets.json','utf8'));
+const eduPalette=JSON.parse(await readFile('packages/ui/src/edu-appearance.json','utf8'));
 const modes=['dark','light'],skins=Object.keys(presets.skins);
 const declarations=values=>Object.entries(values).map(([key,value])=>{
   if(!/^#[a-f0-9]{6}$/i.test(value))throw new Error(`Invalid appearance token: ${key}`);
@@ -14,9 +17,5 @@ css+=':root{--border:var(--line);--input:var(--bg);--raised:var(--panel-raised);
 css+=':root[data-theme="light"]{--shadow:0 18px 60px #24364a20}\n';
 await writeFile('packages/ui/src/theme.css',css);
 await mkdir('public',{recursive:true});
-const panels = {}, backgrounds = {};
-for (const key of skins) { panels[key] = Object.fromEntries(modes.map(mode => [mode, presets.skins[key][mode].panel])); backgrounds[key] = Object.fromEntries(modes.map(mode => [mode, presets.skins[key][mode].bg])); }
-await writeFile('public/appearance-init.js', `/* Apply saved appearance before the first paint; no network or engine access. */
-(()=>{const modes=${JSON.stringify([...modes,'system'])},skins=${JSON.stringify(skins)},panels=${JSON.stringify(panels)},backgrounds=${JSON.stringify(backgrounds)};let p={mode:'system',skin:'graphite'};try{const saved=JSON.parse(localStorage.getItem('register.appearance')||'null');if(saved&&saved.version===1){if(modes.includes(saved.mode))p.mode=saved.mode;if(skins.includes(saved.skin))p.skin=saved.skin;}else{const old=JSON.parse(localStorage.getItem('mos.theme')||'null');if(modes.slice(0,2).includes(old))p.mode=old;}}catch{}const theme=p.mode==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):p.mode;document.documentElement.dataset.theme=theme;document.documentElement.dataset.skin=p.skin;document.documentElement.style.colorScheme=theme;document.documentElement.style.backgroundColor=backgrounds[p.skin][theme];const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=panels[p.skin][theme];})();
-`);
+await writeFile('public/appearance-init.js',appearanceBootstrap({edition:getProductEdition().edition,presets,eduPalette}));
 console.log('Appearance assets: 4 skins, dark/light and early saved-theme restore.');

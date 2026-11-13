@@ -7,7 +7,7 @@ import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import os from 'node:os';
 import {build} from 'esbuild';
-import {courseSiteHeader,renderAcademyHome,renderAcademyCourse,prepareCourseDesign} from '../scripts/course-site-design.mjs';
+import {courseSiteHeader,courseSiteFooter,renderAcademyHome,renderAcademyCourse,prepareCourseDesign} from '../scripts/course-site-design.mjs';
 import {coursePlan,courseModules,courseClinics} from '../scripts/site/course-site-content.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
@@ -46,13 +46,21 @@ test('the public outline keeps unique lesson identities, planned status and inte
   for(const lesson of coursePlan.lessons)assert.ok(html.includes(lesson.title),`Missing planned lesson ${lesson.id}`);
   assert.match(html,/핵심 12강 \+ 선택 클리닉 4강 · 제작 계획/);
   assert.match(html,/완성한 분량이 아닌 제작할 목차/);
+  const outline=html.match(/<div class="academy-curriculum">([\s\S]*?)<\/section>/)?.[1];assert.ok(outline);
+  assert.equal((outline.match(/<details>/g)||[]).length,7);
+  assert.doesNotMatch(outline,/<details[^>]*\bopen\b/);
+  for(const module of courseModules)assert.ok(outline.includes(module.description));
 });
 
-test('four primary destinations and native disclosures keep navigation and the no-JS fallback usable',()=>{
+test('three primary destinations retain secondary resources in native disclosures and a usable no-JS menu',()=>{
   const nav=courseSiteHeader.match(/<nav\b[^>]*id="wb-navigation"[^>]*>([\s\S]*?)<\/nav>/)?.[1];assert.ok(nav);
   const more=nav.match(/<details\b[^>]*class="academy-more"[^>]*>[\s\S]*?<\/details>/)?.[0];assert.ok(more);
-  assert.deepEqual(links(nav.replace(more,'')).map(link=>link.href),['/shop/','/course/','/download/edu/','/tutorial/library/']);
-  for(const href of ['/download/industry/','/editions/','/pdk-links.html','/research/'])assert.ok(links(more).some(link=>link.href===href));
+  assert.deepEqual(links(nav.replace(more,'')).map(link=>link.href),['/download/edu/','/shop/','/tutorial/library/']);
+  assert.deepEqual(links(more).map(link=>link.href),['/course/','/shortcuts/','/license-mail/','https://github.com/Lead729726-cell/Resistor']);
+  const resources=courseSiteFooter.match(/<details class="academy-legal academy-resource-links">[\s\S]*?<\/details>/)?.[0];assert.ok(resources);
+  for(const href of ['/download/industry/','/editions/','/pdk-links.html','/research/'])assert.ok(links(resources).some(link=>link.href===href));
+  assert.doesNotMatch(more,/<details[^>]*\bopen\b/);assert.doesNotMatch(resources,/<details[^>]*\bopen\b/);
+  assert.match(courseSiteHeader,/<noscript><style>[^<]*#wb-navigation\{display:flex!important\}[^<]*\[data-wb-menu\]\{display:none!important\}<\/style><\/noscript>/);
   assert.match(more,/<summary>더보기<\/summary>/);assert.match(courseSiteHeader,/aria-controls="wb-navigation" aria-expanded="false"/);
   const home=renderAcademyHome(),course=renderAcademyCourse(catalog);
   for(const html of [home,course]){
@@ -103,7 +111,7 @@ let runtimePromise;
 const runtime=()=>runtimePromise??=build({entryPoints:[path.join(root,'scripts/site/course-site.ts')],bundle:true,write:false,platform:'browser',format:'iife',target:'es2022',metafile:true});
 async function calculatorHarness({parentKeydown}={}){
   const slider=new Element('10'),reset=new Element(),r2Label=[new Element(),new Element()],voltage=new Element(),current=new Element(),explanation=new Element();
-  const summary=new Element(),more=new Element(),navigation=['/shop/','/course/','/download/edu/','/tutorial/library/'].map(href=>Object.assign(new Element(),{href:'https://resistor.kr'+href}));
+  const summary=new Element(),more=new Element(),navigation=['/download/edu/','/shop/','/tutorial/library/'].map(href=>Object.assign(new Element(),{href:'https://resistor.kr'+href}));
   const moreLink=new Element();more.contains=element=>element===more;more.querySelector=()=>summary;more.querySelectorAll=()=>[moreLink];
   const nodes=new Map([['[data-divider-r2-label]',r2Label],['[data-divider-voltage]',[voltage]],['[data-divider-current]',[current]],['[data-divider-explanation]',[explanation]],['#wb-navigation > a',navigation]]),events={},listeners=[];
   const document={querySelector:selector=>selector==='[data-divider-r2]'?slider:selector==='[data-divider-reset]'?reset:selector==='.academy-more'?more:null,querySelectorAll:selector=>nodes.get(selector)||[],addEventListener:(name,callback,options)=>{events[name]=callback;listeners.push({name,callback,capture:options===true||options?.capture===true});}};
@@ -127,7 +135,7 @@ test('actual bundled interaction reuses the shared calculator, converts kΩ/A co
   h.slider.value='1';h.slider.dispatch('input');assert.equal(h.voltage.textContent,'0.16');assert.equal(h.current.textContent,'163.6 µA');
   h.reset.dispatch('click');assert.equal(h.slider.value,'10');assert.equal(h.voltage.textContent,'0.90');assert.equal(h.current.textContent,'90.0 µA');
   assert.equal(h.networkCalls(),0);
-  assert.equal(h.navigation[2].getAttribute('aria-current'),'page');assert.ok(h.navigation.filter((_,i)=>i!==2).every(link=>!link.getAttribute('aria-current')));
+  assert.equal(h.navigation[0].getAttribute('aria-current'),'page');assert.ok(h.navigation.filter((_,i)=>i!==0).every(link=>!link.getAttribute('aria-current')));
   h.more.open=true;const firstEscape=h.dispatchKey('Escape');assert.equal(h.more.open,false);assert.equal(h.summary.focused,true);
   assert.equal(firstEscape.defaultPrevented,true);assert.equal(firstEscape.immediateStopped,true);assert.equal(parentOpen,true);assert.equal(parentCalls,0);
   const secondEscape=h.dispatchKey('Escape');assert.equal(secondEscape.defaultPrevented,false);assert.equal(secondEscape.immediateStopped,false);assert.equal(parentOpen,false);assert.equal(parentCalls,1);
@@ -165,13 +173,14 @@ test('overlay regeneration preserves native/API bytes and page bodies, refreshes
   const directory=await mkdtemp(path.join(os.tmpdir(),'resistor-course-site-'));
   const legacyHeader='<a class="wb-skip" href="#main-content">skip</a><header class="wb-site-header"><nav>old menu</nav></header>';
   const page=body=>'<html lang="ko"><head><title>Preserved page</title></head><body>'+legacyHeader+body+'</body></html>';
+  const nativeRelease='<section class="wb-section" data-edu-native-release><h2>Edu v0.33.0</h2><p>linux-x64 · macos-arm64 · macos-x64 · windows-x64</p><a href="/download/edu/">Verified native download</a><p>Source/CPU receipt scope preserved; not manufacturing signoff</p></section>';
   const bodies={
     'download-edu.html':'<main id="main-content" data-download-edition="edu"><a data-native-download href="/download/edu/windows-x64">Edu 0.32.0</a><code>verified-original-hash</code><p>Receipt/source and scope preserved</p></main>',
     'download-industry.html':'<main id="main-content" data-download-edition="indust"><a data-native-download href="/download/industry/macos-arm64">Industry 0.31.0</a></main>',
     'learning/example.html':'<main id="main-content" data-lesson="example"><h1>Original example</h1><p>not_run · actual source revision</p></main>'
   };
   const files={
-    'index.html':page('<main id="main-content">old homepage</main>'),'shop.html':page('<main id="main-content">old shop</main>'),
+    'index.html':page('<main id="main-content">old homepage'+nativeRelease+'</main>'),'shop.html':page('<main id="main-content">old shop</main>'),
     ...Object.fromEntries(Object.entries(bodies).map(([name,body])=>[name,page(body)])),
     'unrelated.html':'<html><body>page without workbench chrome</body></html>',
     'api/shop.mjs':'export const untouched = "no new payment routes";', 'api/operator.html':page('<main>do not process API directory</main>'),
@@ -191,6 +200,8 @@ test('overlay regeneration preserves native/API bytes and page bodies, refreshes
     await writeFile(path.join(directory,'learning-assets.json'),JSON.stringify(manifest));
     const before=await snapshot(directory),result=await prepareCourseDesign(root,directory),after=await snapshot(directory);
     assert.equal(result.edition,'edu');assert.equal(result.course_status,'planned');
+    assert.ok(after.get('index.html').toString().includes(nativeRelease),'Current verified native release identity must survive homepage replacement');
+    assert.match(after.get('index.html').toString(),/<details class="academy-native-release"><summary>[^<]+<\/summary><section/);
     const mutable=new Set(['index.html','shop.html','unrelated.html',...Object.keys(bodies),'learning-assets.json','.vercelignore']);
     for(const [file,bytes]of before)if(!mutable.has(file))assert.deepEqual(after.get(file),bytes,`Protected original changed: ${file}`);
     for(const [file,body]of Object.entries(bodies)){

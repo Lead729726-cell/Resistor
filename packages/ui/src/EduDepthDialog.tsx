@@ -16,12 +16,12 @@ export default function EduDepthDialog({open,title,subtitle,step,onClose,onBack,
  return <dialog ref={dialog} className="edu-depth-dialog" role="dialog" aria-modal="true" aria-labelledby={id+'-title'} aria-describedby={subtitle?id+'-subtitle':undefined}
   onCancel={event=>{if(event.target!==event.currentTarget)return;event.preventDefault();event.stopPropagation();(onBack??onClose)();}}
   onClose={event=>{if(open&&!event.currentTarget.open)onClose();}}>
-  <header className="edu-depth-heading"><div className="edu-depth-position"><span>Resistor Edu</span>{step&&<span aria-label={`전체 ${step.total}단계 중 ${step.current}단계`}>{step.current} / {step.total}</span>}</div>
+  <header className="edu-depth-heading"><div className="edu-depth-position"><span>Resistor Edu</span>{step&&<span aria-label={`화면 ${step.current} / ${step.total}`}>{step.current} / {step.total}</span>}</div>
    <div className="edu-depth-title"><h2 ref={heading} id={id+'-title'} tabIndex={-1}>{title}</h2><button type="button" className="edu-depth-close" aria-label={title+' 닫기'} onClick={onClose}>×</button></div>
    {subtitle&&<p id={id+'-subtitle'}>{subtitle}</p>}
    {step&&<div className="edu-depth-meter" aria-hidden="true"><i style={{width:Math.max(0,Math.min(100,step.current/Math.max(1,step.total)*100))+'%'}}/></div>}
   </header>
   <div className="edu-depth-body" ref={body}>{children}</div>
-  <footer className="edu-depth-footer">{onBack?<button type="button" className="button" onClick={onBack}>← 이전</button>:<span className="edu-depth-hint">선택한 내용은 뒤로 가도 유지됩니다.</span>}<div>{footer}</div></footer>
+  <footer className="edu-depth-footer">{onBack?<button type="button" className="button" aria-label="이전 화면으로 돌아가기" onClick={onBack}>← 뒤로</button>:<span className="edu-depth-hint">Esc로 닫기</span>}<div>{footer}</div></footer>
  </dialog>;
 }

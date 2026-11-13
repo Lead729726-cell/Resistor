@@ -50,7 +50,7 @@ import CoursePractice from './CoursePractice';
 import SpatialWorkbench from './SpatialWorkbench';
 import EduDepthDialog from './EduDepthDialog';
 import EduLegalGuide from './EduLegalGuide';
-import {eduLaunchGroups,eduLaunchActivities,eduSettingsTools,eduWorkspaceFlow,initialEduWorkspaceFlow,eduWorkspaceChoice,eduWorkspaceTarget,type EduWorkspaceAction} from './edu-workspace-flow';
+import {eduLaunchGroups,eduLaunchActivities,eduLearningTools,eduSettingsTools,eduWorkspaceFlow,initialEduWorkspaceFlow,eduWorkspaceChoice,eduWorkspaceTarget,eduWorkspaceToolTarget,type EduWorkspaceAction,type EduLearningTool} from './edu-workspace-flow';
 import './edu-modes.css';
 import {readEduRoute,eduHash,eduResumeKey,eduDesignResumeKey,readEduResume,initialEduDesignRoute,eduRouteLabel,type EduRoute,type EduResume} from './edu-navigation';
 import {linkedObservation} from '../../education/src/inverter';
@@ -129,34 +129,38 @@ function EduWorkspace({onViewer}:{onViewer:()=>void}){
   useEffect(()=>{if(route.mode==='home')return;const next:EduResume={schema_version:1,edition:'edu',hash:routeHash,updated_at:new Date().toISOString()};setResume(next);try{localStorage.setItem(eduResumeKey,JSON.stringify(next));}catch{/* Navigation remains available without browser storage. */}},[routeHash]);
   useEffect(()=>{if(!designOpened)return;const next:EduResume={schema_version:1,edition:'edu',hash:eduHash(lastDesignRoute),updated_at:new Date().toISOString()};writePreference(eduDesignResumeKey,JSON.stringify(next));},[lastDesignRoute,designOpened]);
   const launchOpen=flow.page.startsWith('launch-');
-  const launchStep=flow.page==='launch-goal'?1:flow.page==='launch-activity'?2:3;
+  const launchStep=flow.page==='launch-goal'?1:2;
   const launchChoice=eduWorkspaceChoice(flow);
-  const launchDescription=launchChoice.id==='resume-design'?eduRouteLabel(lastDesignRoute):launchChoice.description;
+  const launchGroup=eduLaunchGroups.find(group=>group.id===flow.group)!;
+  const designStarted=designOpened||!!lastDesignRoute.lessonId||lastDesignRoute.step>1;
+  const activityTitle=(id:string,title:string)=>id==='resume-design'&&!designStarted?'설계 시작하기':title;
   const launch=()=>{const next=eduWorkspaceTarget(flow,lastDesignRoute);if(next)navigate(next);};
+  const openLearningTool=(tool:EduLearningTool)=>{if(tool==='preview'){flowAction({type:'open-preview'});return;}const next=eduWorkspaceToolTarget(flow,tool);if(next)navigate(next);};
   return <div className="edu-workspace edu-focused-workspace">
     <header className="edu-mode-header edu-focused-header" data-edu-mode-controls>
-      <button className="edu-home-brand" aria-label="Resistor Edu" title="학습 홈으로" onClick={()=>navigate({mode:'home'})}><RegisterMark size={28}/><span>Resistor <small>Edu</small></span></button>
-      <span className="edu-current-activity">{route.mode==='home'?'내 학습 작업대':eduRouteLabel(route)}</span>
-      <div className="edu-header-actions">{route.mode!=='home'&&<button className="button" aria-haspopup="dialog" onClick={openLauncher}>학습 전환</button>}<button className="button" aria-haspopup="dialog" onClick={()=>openPanel({type:'open-settings'})}>설정</button></div>
+      <button className="edu-home-brand" aria-label="Resistor Edu 학습 홈" title="학습 홈으로" onClick={()=>navigate({mode:'home'})}><RegisterMark size={28}/><span>Resistor <small>Edu</small></span></button>
+      <div className="edu-current-location">{route.mode!=='home'&&<button className="edu-back-home" onClick={()=>navigate({mode:'home'})}>← 홈</button>}<span className="edu-current-activity">{route.mode==='home'?'학습 홈':eduRouteLabel(route)}</span></div>
+      <div className="edu-header-actions"><button className="button" aria-haspopup="dialog" onClick={()=>openPanel({type:'open-tools'})}>학습 도구</button><button className="button" aria-haspopup="dialog" onClick={()=>openPanel({type:'open-settings'})}>설정</button></div>
     </header>
-    {route.mode==='home'&&<main className="edu-start edu-home-focus edu-home-notebook" data-testid="edu-home">
-      <div className="edu-home-welcome"><p className="edu-start-eyebrow">내 회로 실험 노트</p><h1>직접 바꾸며,<br/>회로를 이해해요</h1><p>결과를 예상하고, 조건 하나를 바꿔 보세요.<br/>계산과 관찰을 내 설명으로 남깁니다.</p>
-        <div className="edu-home-entry">{resume&&<div className="edu-home-last" aria-label="최근 학습 이어서 열기"><small>마지막으로 연 화면</small><strong>{eduRouteLabel(readEduRoute(resume.hash))}</strong><span>{new Date(resume.updated_at).toLocaleString()}</span></div>}<button className="button primary" onClick={()=>resume?navigate(readEduRoute(resume.hash)):openLauncher()}>{resume?'이어서 학습하기':'내 학습 시작하기'} →</button>{resume&&<button className="edu-home-secondary" onClick={openLauncher}>다른 학습 선택하기</button>}</div>
-        <button className="edu-home-preview-link" aria-haspopup="dialog" onClick={()=>openPanel({type:'open-preview'})}>작업대 미리보기</button>
-      </div>
-      <aside className="edu-home-note" aria-label="실험을 남기는 순서"><span>실험 노트</span><ol><li><strong>예상해요</strong><p>어떤 결과가 나올지 적습니다.</p></li><li><strong>하나를 바꿔요</strong><p>같은 조건에서 계산하거나 해석합니다.</p></li><li><strong>이유를 남겨요</strong><p>관찰한 사실과 모르는 부분을 구분합니다.</p></li></ol><small>학습 기록과 실제 엔진 검증은 구분해 표시합니다.</small></aside>
+    {route.mode==='home'&&<main className="edu-start edu-home-focus edu-home-simple" data-testid="edu-home">
+      <div className="edu-home-welcome"><p className="edu-start-eyebrow">내 회로 실험 노트</p><h1>어떤 방식으로 공부할까요?</h1><p>기초를 익히거나, 직접 회로를 바꿔 보세요.</p></div>
+      <div className="edu-home-modes" aria-label="학습 방식">{eduLaunchGroups.map(group=><button type="button" key={group.id} aria-haspopup="dialog" onClick={()=>openPanel({type:'open-group',group:group.id})}><span><strong>{group.title}</strong><small>{group.description}</small></span><span aria-hidden="true">→</span></button>)}</div>
+      {resume&&<section className="edu-home-resume" aria-label="최근 학습"><div><small>마지막으로 연 화면</small><strong>{eduRouteLabel(readEduRoute(resume.hash))}</strong><time dateTime={resume.updated_at}>{new Date(resume.updated_at).toLocaleString()}</time></div><button className="button" onClick={()=>navigate(readEduRoute(resume.hash))}>이어서 열기 →</button></section>}
+      <p className="edu-home-boundary">조건을 바꾸고 결과를 비교한 뒤, 내 설명을 남깁니다.</p>
     </main>}
     <div className="edu-mode-workbook" hidden={route.mode!=='workbook'}>{workbookOpened&&<CoursePractice active={route.mode==='workbook'} onAppPractice={quiz=>navigate(quiz?{mode:'quiz',panel:'puzzles'}:{mode:'design',step:1})}/>}</div>
     {route.mode==='projects'&&<LearningDashboard onNew={()=>navigate({mode:'design',step:1})} onOpen={(lessonId,step)=>navigate({mode:'design',step,lessonId})}/>}
     <main className="edu-mode-quiz" hidden={route.mode!=='quiz'} aria-label="퀴즈·자율학습">{quizOpened&&<SelfStudy active={route.mode==='quiz'} initialPanel={quizPanel} navigationKey={quizNavigation} onPanelChange={panel=>navigate({mode:'quiz',panel})}/>}</main>
     <div className="edu-mode-design" hidden={route.mode!=='design'} aria-label="설계·시뮬레이션 학습">{designOpened&&<DesignWorkspace active={route.mode==='design'} guidedStep={route.mode==='design'?route.step:lastDesignRoute.step} requestedLessonId={lastDesignRoute.lessonId} onLessonId={id=>{setLastDesignRoute(previous=>previous.lessonId===id?previous:{...previous,lessonId:id});const current=routeRef.current;if(current.mode==='design'&&current.lessonId!==id){const next={...current,lessonId:id};routeRef.current=next;history.replaceState(null,'',eduHash(next));setRoute(next);}}} onGuidedStep={step=>navigate({mode:'design',step,...(lastDesignRoute.lessonId?{lessonId:lastDesignRoute.lessonId}:{})})} onViewer={onViewer} onStudyMode={()=>navigate({mode:'quiz',panel:'questions'})}/>}</div>
-    <EduDepthDialog open={launchOpen} title={launchStep===1?'어떤 학습을 할까요?':launchStep===2?'활동 하나를 골라 주세요':'이 활동으로 시작할까요?'} subtitle="Resistor Edu · 학습 선택" step={{current:launchStep,total:3}} onClose={closePanel} onBack={launchStep>1?backPanel:undefined} footer={launchStep===3?<button className="button primary" onClick={launch}>활동 열기 →</button>:undefined}>
-      {launchStep===1&&<div className="edu-launch-choices" aria-label="학습 목표">{eduLaunchGroups.map(option=><button type="button" className="edu-depth-choice" key={option.id} aria-pressed={flow.group===option.id} onClick={()=>flowAction({type:'choose-group',group:option.id})}><b>{option.title}</b><small>{option.description}</small></button>)}</div>}
-      {launchStep===2&&<div className="edu-launch-choices" aria-label="활동 선택">{eduLaunchActivities[flow.group].map(option=><button type="button" className="edu-depth-choice" key={option.id} aria-pressed={launchChoice.id===option.id} onClick={()=>flowAction({type:'choose-activity',activity:option.id})}><b>{option.title}</b><small>{option.id==='resume-design'?eduRouteLabel(lastDesignRoute):option.description}</small></button>)}</div>}
-      {launchStep===3&&<div className="edu-launch-summary"><h3>{launchChoice.title}</h3><p>{launchDescription}</p><p className="edu-lesson-note">기존 기록과 작성 중인 내용은 유지됩니다. 해석·제출·유료 AI 호출은 이 화면에서 실행하지 않습니다.</p></div>}
+    <EduDepthDialog open={launchOpen} title={launchStep===1?'학습 방식 선택':launchGroup.title} subtitle={launchStep===1?'기초 공부와 설계 실습 중 하나를 선택하세요':'활동 하나를 선택하고 열어 주세요'} step={{current:launchStep,total:2}} onClose={closePanel} onBack={backPanel} footer={launchStep===2?<button className="button primary" onClick={launch}>선택한 활동 열기 →</button>:undefined}>
+      {launchStep===1&&<div className="edu-launch-choices" aria-label="학습 방식">{eduLaunchGroups.map(option=><button type="button" className="edu-depth-choice" key={option.id} onClick={()=>flowAction({type:'choose-group',group:option.id})}><b>{option.title}</b><small>{option.description}</small></button>)}</div>}
+      {launchStep===2&&<fieldset className="edu-focused-options edu-launch-options"><legend>활동 선택</legend>{eduLaunchActivities[flow.group].map(option=><label key={option.id}><input type="radio" name="edu-launch-activity" checked={launchChoice.id===option.id} onChange={()=>flowAction({type:'choose-activity',activity:option.id})}/><span><strong>{activityTitle(option.id,option.title)}</strong><small>{option.id==='resume-design'?eduRouteLabel(lastDesignRoute):option.description}</small></span></label>)}</fieldset>}
     </EduDepthDialog>
-    <EduDepthDialog open={flow.page==='settings'} title="앱 설정" subtitle="지금 필요한 항목 하나를 선택하세요" onClose={closePanel}>
-      <div className="edu-settings-choices">{eduSettingsTools.filter(tool=>tool.id!=='license'||isLocalWorkbench()).map(tool=><button type="button" className="edu-depth-choice" key={tool.id} onClick={()=>flowAction({type:'open-tool',tool:tool.id})}><b>{tool.title}</b><small>{tool.description}</small></button>)}</div>
+    <EduDepthDialog open={flow.page==='tools'} title="학습 도구" subtitle="저장한 기록과 선택 기능을 엽니다" onClose={closePanel} onBack={backPanel}>
+      <div className="edu-tool-list"><button type="button" className="edu-depth-choice" onClick={openLauncher}><b>다른 학습 선택</b><small>현재 작업을 유지하고 퀴즈·공부 또는 설계로 이동합니다.</small></button>{eduLearningTools.map(tool=><button type="button" className="edu-depth-choice" key={tool.id} onClick={()=>openLearningTool(tool.id)}><b>{tool.title}</b><small>{tool.description}</small></button>)}</div>
+    </EduDepthDialog>
+    <EduDepthDialog open={flow.page==='settings'} title="앱 설정" subtitle="지금 필요한 항목 하나를 선택하세요" onClose={closePanel} onBack={backPanel}>
+      <div className="edu-tool-list">{eduSettingsTools.filter(tool=>tool.id!=='license'||isLocalWorkbench()).map(tool=><button type="button" className="edu-depth-choice" key={tool.id} onClick={()=>flowAction({type:'open-tool',tool:tool.id})}><b>{tool.title}</b><small>{tool.description}</small></button>)}</div>
     </EduDepthDialog>
     <EduDepthDialog open={flow.page==='preview'} title="작업대 미리보기" subtitle="화면 조작을 위한 모형입니다. 실제 설계·공정 해석이 아닙니다." onClose={closePanel} onBack={backPanel}>
       <SpatialWorkbench active={flow.page==='preview'}/>

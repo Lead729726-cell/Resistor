@@ -1,24 +1,26 @@
 import type {EduDesignRoute,EduRoute} from './edu-navigation';
 
-export type EduLaunchGroup='study'|'design'|'records';
-export type EduLaunchActivity='workbook'|'questions'|'puzzles'|'resume-design'|'new-design'|'projects'|'league';
+export type EduLaunchGroup='study'|'design';
+export type EduLaunchActivity='workbook'|'questions'|'puzzles'|'resume-design'|'new-design';
+export type EduLearningTool='projects'|'league'|'preview';
 export type EduSettingsTool='appearance'|'updates'|'legal'|'license';
-export type EduWorkspacePage='closed'|'launch-goal'|'launch-activity'|'launch-ready'|'settings'|'preview'|EduSettingsTool;
+export type EduWorkspacePage='closed'|'launch-goal'|'launch-activity'|'tools'|'settings'|'preview'|EduSettingsTool;
 export type EduWorkspaceFlow={
  page:EduWorkspacePage;
+ launchOrigin:'closed'|'tools';
  group:EduLaunchGroup;
  selections:Record<EduLaunchGroup,EduLaunchActivity>;
 };
 export type EduWorkspaceAction=
- |{type:'open-launcher'|'open-settings'|'open-preview'|'back'|'close'}
+ |{type:'open-launcher'|'open-tools'|'open-settings'|'open-preview'|'back'|'close'}
+ |{type:'open-group';group:EduLaunchGroup}
  |{type:'choose-group';group:EduLaunchGroup}
  |{type:'choose-activity';activity:EduLaunchActivity}
  |{type:'open-tool';tool:EduSettingsTool};
 
 export const eduLaunchGroups:ReadonlyArray<{id:EduLaunchGroup;title:string;description:string}>=[
- {id:'study',title:'기초부터 익히기',description:'수식·퀴즈·회로 퍼즐로 작은 실험을 시작합니다.'},
- {id:'design',title:'설계로 이해하기',description:'회로·레이아웃·실제 해석을 7단계로 살펴봅니다.'},
- {id:'records',title:'기록·리그 열기',description:'저장한 실습을 열거나 오늘의 문제에 참여합니다.'}
+ {id:'study',title:'퀴즈·공부',description:'워크북·퀴즈·회로 퍼즐로 기초를 익힙니다.'},
+ {id:'design',title:'설계·시뮬레이션',description:'회로를 바꾸고, 해석하고, 설명하는 7단계 실습입니다.'}
 ];
 export const eduLaunchActivities:Record<EduLaunchGroup,ReadonlyArray<{id:EduLaunchActivity;title:string;description:string}>>={
  study:[
@@ -29,12 +31,13 @@ export const eduLaunchActivities:Record<EduLaunchGroup,ReadonlyArray<{id:EduLaun
  design:[
   {id:'resume-design',title:'마지막 설계 이어가기',description:'마지막으로 열었던 설계 단계로 돌아갑니다.'},
   {id:'new-design',title:'1단계부터 실습 선택',description:'기존 기록을 유지한 채 실습 선택 화면을 엽니다.'}
- ],
- records:[
-  {id:'projects',title:'내 학습 프로젝트',description:'프로젝트별 조건·실행 기록·학생 설명을 다시 엽니다.'},
-  {id:'league',title:'오늘의 리그',description:'공용 서버의 연결 상태를 확인합니다. 참가는 다음 화면에서 선택합니다.'}
  ]
 };
+export const eduLearningTools:ReadonlyArray<{id:EduLearningTool;title:string;description:string}>=[
+ {id:'projects',title:'내 학습 프로젝트',description:'저장한 조건·실행 기록·내 설명을 다시 엽니다.'},
+ {id:'league',title:'오늘의 리그',description:'연결과 참가는 리그 화면에서 직접 선택합니다.'},
+ {id:'preview',title:'작업대 미리보기',description:'화면 조작 모형을 살펴봅니다. 실제 설계 해석은 아닙니다.'}
+];
 export const eduSettingsTools:ReadonlyArray<{id:EduSettingsTool;title:string;description:string}>=[
  {id:'appearance',title:'화면 스타일',description:'화면 밝기를 고르고 다음 페이지에서 스킨을 정합니다.'},
  {id:'updates',title:'버전·다운로드',description:'Resistor Edu의 현재 버전과 업데이트를 확인합니다.'},
@@ -43,13 +46,17 @@ export const eduSettingsTools:ReadonlyArray<{id:EduSettingsTool;title:string;des
 ];
 
 export function initialEduWorkspaceFlow():EduWorkspaceFlow{
- return {page:'closed',group:'study',selections:{study:'workbook',design:'resume-design',records:'projects'}};
+ return {page:'closed',launchOrigin:'closed',group:'study',selections:{study:'workbook',design:'resume-design'}};
 }
 export function eduWorkspaceFlow(state:EduWorkspaceFlow,action:EduWorkspaceAction):EduWorkspaceFlow{
  switch(action.type){
-  case 'open-launcher':return {...state,page:'launch-goal'};
+  case 'open-launcher':return {...state,page:'launch-goal',launchOrigin:state.page==='tools'?'tools':'closed'};
+  case 'open-group':
+   if(!eduLaunchGroups.some(group=>group.id===action.group))return state;
+   return {...state,page:'launch-activity',group:action.group,launchOrigin:'closed'};
+  case 'open-tools':return {...state,page:'tools'};
   case 'open-settings':return {...state,page:'settings'};
-  case 'open-preview':return {...state,page:'preview'};
+  case 'open-preview':return state.page==='tools'?{...state,page:'preview'}:state;
   case 'open-tool':return {...state,page:action.tool};
   case 'close':return {...state,page:'closed'};
   case 'choose-group':
@@ -57,8 +64,8 @@ export function eduWorkspaceFlow(state:EduWorkspaceFlow,action:EduWorkspaceActio
    return {...state,page:'launch-activity',group:action.group};
   case 'choose-activity':
    if(state.page!=='launch-activity'||!eduLaunchActivities[state.group].some(option=>option.id===action.activity))return state;
-   return {...state,page:'launch-ready',selections:{...state.selections,[state.group]:action.activity}};
-  case 'back':return {...state,page:state.page==='launch-ready'?'launch-activity':state.page==='launch-activity'?'launch-goal':['appearance','updates','legal','license'].includes(state.page)?'settings':'closed'};
+   return {...state,selections:{...state.selections,[state.group]:action.activity}};
+  case 'back':return {...state,page:state.page==='launch-activity'?'launch-goal':state.page==='launch-goal'?state.launchOrigin:state.page==='preview'?'tools':['appearance','updates','legal','license'].includes(state.page)?'settings':'closed'};
  }
 }
 export function eduWorkspaceChoice(state:EduWorkspaceFlow){
@@ -66,14 +73,17 @@ export function eduWorkspaceChoice(state:EduWorkspaceFlow){
 }
 /** Opening a destination is explicit and carries only a route, never an execution. */
 export function eduWorkspaceTarget(state:EduWorkspaceFlow,lastDesign:EduDesignRoute):EduRoute|null{
- if(state.page!=='launch-ready')return null;
+ if(state.page!=='launch-activity')return null;
  switch(eduWorkspaceChoice(state).id){
   case 'workbook':return {mode:'workbook'};
-  case 'projects':return {mode:'projects'};
   case 'new-design':return {mode:'design',step:1};
   case 'resume-design':return {...lastDesign};
   case 'questions':return {mode:'quiz',panel:'questions'};
   case 'puzzles':return {mode:'quiz',panel:'puzzles'};
-  case 'league':return {mode:'quiz',panel:'league'};
  }
+}
+/** Secondary destinations never register a learner or start an online league. */
+export function eduWorkspaceToolTarget(state:EduWorkspaceFlow,tool:EduLearningTool):EduRoute|null{
+ if(state.page!=='tools')return null;
+ return tool==='projects'?{mode:'projects'}:tool==='league'?{mode:'quiz',panel:'league'}:null;
 }

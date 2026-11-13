@@ -16,10 +16,11 @@ let state:CloudStatus={configured:false,mode:'local',url,authenticated:false,syn
 const preserved=new Map<string,{method:string;params:Record<string,unknown>;base_revision:number}>();
 let lastStatus=0;
 const pending=new Map<string,{method:string;params:Record<string,unknown>;base_revision:number}>();
+const deliberateCloudMethods=new Set(['cloud.auth.signUp','cloud.auth.signIn','cloud.create','cloud.promoteCandidate','cloud.invite','cloud.join','cloud.setRole']);
 function emit(kind:CloudEvent['kind']='status'){for(const l of listeners)l({kind});}
 function sync(next:Partial<CloudStatus['sync']>){state.sync={...state.sync,...next,pending:pending.size};emit();}
 async function request<T>(method:string,params:Record<string,unknown>={}):Promise<T>{
-  await requireOnlineAccess({prompt:false});
+  await requireOnlineAccess({prompt:deliberateCloudMethods.has(method)});
   try{const r=await fetch(`${url}/rpc`,{method:'POST',headers:{'Content-Type':'application/json',...(token?{Authorization:`Bearer ${token}`}:{})},body:JSON.stringify({method,params}),signal:AbortSignal.timeout(90000)});const data=await r.json();if(!data.ok)throw new WorkerError(data.error?.code||'CLOUD',data.error?.message||'Cloud request failed',data.error?.details);return data.result as T;}
   catch(e){if(e instanceof WorkerError)throw e;throw new WorkerError('CLOUD_OFFLINE',e instanceof Error?e.message:'Cloud unavailable');}
 }
@@ -73,16 +74,16 @@ export const cloud={
   async signIn(input:{email:string;password:string}){if(!bootstrap.available)throw new WorkerError('BROWSER_STORAGE_UNAVAILABLE','브라우저 저장소를 사용할 수 없어 공동 설계 로그인을 진행하지 않았습니다.');const auth=await request<{token:string;user:CloudStatus['user']}>('cloud.auth.signIn',input);token=auth.token;sessionStorage.setItem(editionStorageKey('register.cloud.session'),token);state.user=auth.user;state.authenticated=true;emit();return auth.user;},
   async signOut(){try{await request('cloud.auth.signOut');}finally{this.leaveProject();token='';sessionStorage.removeItem(editionStorageKey('register.cloud.session'));state.user=undefined;state.authenticated=false;emit();}},
   listProjects(){return request<{id:string;name:string;role:'owner'|'editor'|'viewer';revision:number;updated_at:number}[]>('cloud.projects');},
-  async publishProject({project_id}:{project_id:string}){const bundle=await localRpc<{bundle_base64:string}>('project.export_bundle',{project_id,inline:true});return activate(await request('cloud.create',{bundle_base64:bundle.bundle_base64}));},
+  async publishProject({project_id}:{project_id:string}){await requireOnlineAccess();const bundle=await localRpc<{bundle_base64:string}>('project.export_bundle',{project_id,inline:true});return activate(await request('cloud.create',{bundle_base64:bundle.bundle_base64}));},
   async createProject(input:{name:string;example:string}){return activate(await request('cloud.create',input));},
   async promoteCandidate(input:{experiment_id:string;project_id:string}){return activate(await request('cloud.promoteCandidate',{room_id:state.room?.id,...input}));},
-  async openProject(input:{id:string}){return activate(await request('cloud.open',input));},
+  async openProject(input:{id:string}){await requireOnlineAccess();return activate(await request('cloud.open',input));},
   createInvite(input:{role:'editor'|'viewer';expires_hours?:number}){return request<{token:string;url:string;expires_at:number}>('cloud.invite',{room_id:state.room?.id,...input});},
   async joinProject(input:{token:string}){return activate(await request('cloud.join',input));},
   members(){return request<{user_id:string;name:string;role:'owner'|'editor'|'viewer'}[]>('cloud.members',{room_id:state.room?.id});},
   setRole(input:{user_id:string;role:'editor'|'viewer'|'removed'}){return request('cloud.setRole',{room_id:state.room?.id,...input});},
   async leaveProject(){savedRoom=null;restore=undefined;sessionStorage.removeItem(editionStorageKey('register.cloud.room'));disconnect();setRpcOverride(undefined);pending.clear();state.room=undefined;state.presence=[];sync({state:'local',message:undefined,sequence:0});},
-  async resync(){if(!state.room)throw new WorkerError('NO_ROOM','공유 프로젝트를 먼저 여세요.');const result=await request<{room:NonNullable<CloudStatus['room']>;project:Project;presence:Presence[]}>('cloud.open',{id:state.room.id});state.room=result.room;state.presence=result.presence;for(const [id,operation] of pending)preserved.set(id,operation);pending.clear();sync({state:'synced',message:undefined,sequence:result.room.sequence});emit('project');return result.project;},
+  async resync(){await requireOnlineAccess();if(!state.room)throw new WorkerError('NO_ROOM','공유 프로젝트를 먼저 여세요.');const result=await request<{room:NonNullable<CloudStatus['room']>;project:Project;presence:Presence[]}>('cloud.open',{id:state.room.id});state.room=result.room;state.presence=result.presence;for(const [id,operation] of pending)preserved.set(id,operation);pending.clear();sync({state:'synced',message:undefined,sequence:result.room.sequence});emit('project');return result.project;},
   preservedCommands(){return [...preserved].map(([id,operation])=>({id,...structuredClone(operation)}));},
   updatePresence(input:typeof presenceInput){presenceInput={...presenceInput,...input};sendPresence();},
   subscribe(listener:(event:CloudEvent)=>void){listeners.add(listener);return ()=>{listeners.delete(listener);};},
