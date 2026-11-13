@@ -1,6 +1,12 @@
 // Verified product behavior and operator review items are deliberately separate.
 // Do not turn a missing operator decision or provider data-location check into a promise.
-export const productLegalVersion='2026-11-12.2';
+import {privacyTransferProviders,privacyTransferReadiness,privacyTransferRows} from './privacy-transfers.mjs';
+export const productLegalVersion='2026-11-13.1';
+export const productLegalReviewedDate='2026-11-13';
+export const privacyAgePolicy=Object.freeze({
+ minimum_age:14,scope:'personal-data-online-features',approved_on:'2026-11-13',approval:'owner-confirmed',
+ enforcement:{status:'not_verified',source_revision:null,release:null,evidence:[]},
+});
 export const legalOperator=Object.freeze({
  name:'콜드브루',representative:'이석형',business_number:'114-19-75350',mail_order_number:'2026-경기양평-0293',
  address:'(12524) 경기도 양평군 용문면 장대1길 165',email:'creditlsh00726@gmail.com',phone:'010-5039-9175',
@@ -10,13 +16,21 @@ export const legalSourceReferences=Object.freeze([
  {id:'guideline',title:'개인정보보호위원회 · 개인정보 처리방침 작성지침(2026.4.)',url:'https://pipc.go.kr/np/cop/bbs/selectBoardArticle.do?bbsId=BS217&mCode=D010030030&nttId=12018'},
  {id:'privacy-law',title:'개인정보 보호법 제30조 · 처리방침 공개',url:'https://www.law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1029334949'},
  {id:'privacy-officer',title:'개인정보 보호법 제31조 · 보호책임자 지정',url:'https://www.law.go.kr/LSW/lsLawLinkInfo.do?chrClsCd=010202&lsJoLnkSeq=900079330'},
+ {id:'children-law',title:'개인정보 보호법 제22조의2 · 아동의 개인정보 보호',url:'https://www.law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1020398523'},
  {id:'transfer-law',title:'개인정보 보호법 제28조의8 · 국외 이전',url:'https://www.law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1029334957'},
  {id:'retention-law',title:'전자상거래법 시행령 제6조 · 거래기록 보존',url:'https://www.law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&lspttninfSeq=63460'},
  {id:'cloudflare-location',title:'Cloudflare Durable Objects · 데이터 위치',url:'https://developers.cloudflare.com/durable-objects/reference/data-location/'},
  {id:'cloudflare-privacy',title:'Cloudflare 개인정보 안내',url:'https://www.cloudflare.com/privacypolicy/'},
+ {id:'cloudflare-dpa',title:'Cloudflare 데이터 처리 계약',url:'https://www.cloudflare.com/cloudflare-customer-dpa/'},
+ {id:'cloudflare-subprocessors',title:'Cloudflare 재수탁자 안내',url:'https://www.cloudflare.com/gdpr/subprocessors/'},
  {id:'google-privacy',title:'Google 개인정보처리방침',url:'https://policies.google.com/privacy?hl=ko'},
+ {id:'google-retention',title:'Google의 데이터 보관·삭제 안내',url:'https://policies.google.com/technologies/retention?hl=ko'},
  {id:'vercel-privacy',title:'Vercel 개인정보 안내',url:'https://vercel.com/legal/privacy-notice'},
+ {id:'vercel-dpa',title:'Vercel 데이터 처리 계약',url:'https://vercel.com/legal/dpa'},
+ {id:'vercel-subprocessors',title:'Vercel 재수탁자 안내',url:'https://vercel.com/legal/sub-processors'},
  {id:'openai-data',title:'OpenAI API · 데이터 처리 및 보관',url:'https://developers.openai.com/api/docs/guides/your-data'},
+ {id:'openai-dpa',title:'OpenAI API 데이터 처리 계약',url:'https://openai.com/policies/data-processing-addendum/'},
+ {id:'openai-subprocessors',title:'OpenAI API 재수탁자 안내',url:'https://openai.com/policies/sub-processor-list/'},
 ]);
 
 // A future final policy must have real review evidence for every item; no guessed dates.
@@ -25,16 +39,20 @@ export const legalReview=Object.freeze({
  items:[
   {id:'privacy-contact',status:'verified',title:'개인정보 보호책임자 지정',detail:'2026-11-12 운영자 확인: 대표 이석형을 개인정보 보호책임자로 지정하고 creditlsh00726@gmail.com을 담당 연락처로 사용합니다.'},
   {id:'retention',status:'policy_approved',title:'승인한 보관 기준의 운영 실행 검증',detail:'일반 문의 해결 후 1년, 리그·커뮤니티 이용 중 보관 및 삭제·탈퇴 요청 수동 처리, 해당 법정 거래·분쟁 기록 별도 보존 기준을 운영자가 승인했습니다. 자동 파기 기능은 없으며, 서버별 수동 처리 도구·확인 절차의 실제 검증과 인증·발송·협업 기록의 세부 보관 기준은 남아 있습니다.'},
-  {id:'international',status:'pending',title:'국외 이전 국가·수탁자·기간과 적용 근거',detail:'Cloudflare·Google·Vercel의 실제 계정·계약에 적용되는 처리 국가와 보관 조건을 확인해야 합니다. 미국 법인이라는 사실만으로 저장 국가를 미국으로 단정하지 않습니다.'},
-  {id:'minors',status:'pending',title:'아동 개인정보 처리 범위',detail:'현재 생년월일 수집이나 법정대리인 동의·확인 절차는 없습니다. 만 14세 미만 이용자를 위한 온라인 기능의 제공 범위를 확정해야 합니다.'},
+  {id:'international',status:'pending',title:'국외 이전 국가·수탁자·기간과 적용 근거',detail:'Cloudflare·소비자 Gmail·Vercel·연결한 OpenAI API를 각각 구분한 표를 추가했습니다. 공급자 공개 설명과 실제 계정 계약·처리 국가 증거는 다르며, 계정별 국가·재수탁·보유기간과 적용 근거가 확인되기 전에는 완료 처리하지 않습니다.'},
+  {id:'minors',status:'policy_approved',title:'만 14세 이상 온라인 이용 정책의 적용 확인',detail:'운영자는 2026-11-13 개인정보를 전송하는 온라인 기능을 만 14세 이상에게 제공하기로 승인했습니다. 공개 안내 열람·기기 내 계산까지 금지하는 정책은 아닙니다. 기존 0.33.0 배포본의 연령 제한이 이미 적용된 것으로 표시하지 않으며 새 제한의 구현·배포 확인은 별도입니다.'},
   {id:'policy-approval',status:'pending',title:'시행일·최종 운영 검토',detail:'운영자가 확정한 보관·문의·변경 절차와 실제 제공 상품을 대조한 뒤 시행일을 정합니다.'},
  ],
 });
-export function productLegalReadiness(review=legalReview){
+export function productLegalReadiness(review=legalReview,{providers=privacyTransferProviders,agePolicy=privacyAgePolicy}={}){
  const required=legalReview.items.map(item=>item.id);
  const missing=required.filter(id=>!review.items?.some(item=>item.id===id&&item.status==='verified'));
- if(!/^\d{4}-\d{2}-\d{2}$/.test(review.effective_date??''))missing.push('effective-date');
+ const effective=review.effective_date;
+ if(typeof effective!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(effective)||!Number.isFinite(Date.parse(effective+'T00:00:00Z'))||new Date(effective+'T00:00:00Z').toISOString().slice(0,10)!==effective)missing.push('effective-date');
  if(!review.reviewed_at||!Number.isFinite(Date.parse(review.reviewed_at)))missing.push('reviewed-at');
+ const transfers=privacyTransferReadiness(providers);
+ missing.push(...transfers.missing.map(id=>'transfer:'+id));
+ if(agePolicy?.minimum_age!==14||agePolicy.scope!=='personal-data-online-features'||agePolicy.approval!=='owner-confirmed'||agePolicy.enforcement?.status!=='verified'||!agePolicy.enforcement.release||!agePolicy.enforcement.source_revision||!agePolicy.enforcement.evidence?.length)missing.push('age-policy-enforcement');
  return {ready:review.status==='approved'&&missing.length===0,missing};
 }
 
@@ -42,6 +60,7 @@ export const termsSections=[
  {id:'operator',title:'1. 운영자와 적용 범위',paragraphs:[
   '이 문서는 콜드브루가 안내하는 Resistor Edu 공식 앱, resistor.kr의 공개 실습·도움말과 관련 지원의 이용 범위를 설명합니다. 인프런의 계정·결제·강의 제공에는 해당 플랫폼의 약관과 실제 구매 상품의 조건도 적용됩니다.',
   '현재 문서는 검토본입니다. 열람·다운로드·화면 이동만으로 새로운 약관 동의나 결제 승인을 받은 것으로 처리하지 않습니다. 기존 구매 조건을 소급해 바꾸거나 법령에 따른 이용자의 권리를 제한하지 않습니다.',
+  '개인정보를 전송하는 앱 인증·외부 AI·리그·커뮤니티·공동 설계 등 온라인 기능은 만 14세 이상을 제공 대상으로 정했습니다. 공개 안내 열람과 기기에만 남는 계산·학습은 구분합니다. 연령 제한을 적용하는 새 버전의 제공 여부와 현재 처리 범위는 개인정보 안내에서 확인하세요.',
  ]},
  {id:'product',title:'2. 제공하는 제품과 한계',paragraphs:[
   'Resistor Edu는 회로 계산, 회로도·레이아웃 실습, 연결한 엔진의 해석, 퀴즈·퍼즐, 학습 기록을 돕는 교육용 도구입니다. 사용 가능한 기능은 설치 버전, 운영체제, 엔진·모델 및 별도 서비스 연결 상태에 따라 달라집니다.',
@@ -121,10 +140,10 @@ export const privacySections=[
  ]},
  {id:'international',title:'6. 국외 이전과 현재 확인 범위',paragraphs:[
   '해외 서비스에 전송·처리위탁·보관되는 정보가 있을 수 있습니다. 개인정보 보호법 제28조의8은 적용 근거와 함께 이전 항목, 국가·시기·방법, 이전받는 자·연락처, 목적·보유기간, 거부 방법과 영향을 알리도록 규정하고 있습니다.',
-  '공식 라이선스 서버는 Cloudflare를 사용하지만 기존 Durable Object의 저장 국가가 이 저장소에 고정되어 있지 않습니다. Cloudflare 문서의 위치 힌트는 국가 보장을 의미하지 않습니다. Google과 Vercel도 글로벌 처리 체계를 안내하므로 미국 법인이라는 이유만으로 “미국에만 저장”한다고 표시하지 않습니다.',
-  '실제 계정·계약별 처리 국가, 수탁자·재위탁 범위, 보유기간 및 해당 기능의 이전 근거를 운영자가 확인해야 합니다. 이 검토본은 그 확인을 완료했거나 모든 국외 이전 동의를 이미 받았다고 표시하지 않습니다.',
+  '2026년 11월 13일 확인한 아래 표는 실제 전송 경로와 공급자 공개 설명을 구분합니다. 개인정보보호위원회 작성지침은 여러 국가로 이전되는 클라우드 서비스의 국가들을 기재하도록 안내합니다. “글로벌”이나 회사 주소만으로 계정의 처리 국가를 확정하지 않습니다.',
+  '국가·법적 근거·계약·보관기간의 “확인 중” 표시는 아직 그 사실을 입증하지 못했다는 뜻입니다. 공급자 문서를 연결하거나 이 표를 공개한 것만으로 국외 이전 요건을 충족하거나 모든 동의를 받은 것으로 처리하지 않습니다. 계약 이행에 필요한 위탁·보관 여부와 선택 기능의 별도 처리 근거를 각각 검토합니다.',
   '외부 AI를 사용하지 않거나 리그·공동 설계에 등록·게시하지 않으면 해당 선택 기능의 전송을 피할 수 있습니다. 공식 앱의 첫 인증·갱신은 라이선스 서버 연결이 필요하므로 그 전송을 거부하면 인증·갱신이 제한됩니다. 기기에만 남는 기록과 MIT 소스 사용 권리는 별개입니다. 이미 처리된 정보의 확인·삭제 요청은 운영 연락처로 문의할 수 있습니다.',
- ],links:[{label:'국외 이전에 관한 법령',href:legalSourceReferences.find(item=>item.id==='transfer-law').url},{label:'Cloudflare 데이터 위치 설명',href:legalSourceReferences.find(item=>item.id==='cloudflare-location').url},{label:'Google 개인정보 안내',href:'https://policies.google.com/privacy?hl=ko'},{label:'Vercel 개인정보 안내',href:'https://vercel.com/legal/privacy-notice'}]},
+ ],table:{headers:['수령인·업무·연락처','항목·목적·시기·방법','국가 확인 상태','보유·삭제 기준과 남은 확인','적용 근거 검토·거부 방법'],rows:privacyTransferRows()},links:[{label:'국외 이전에 관한 법령',href:legalSourceReferences.find(item=>item.id==='transfer-law').url},{label:'Cloudflare 데이터 위치 설명',href:legalSourceReferences.find(item=>item.id==='cloudflare-location').url},{label:'Google 개인정보 안내',href:'https://policies.google.com/privacy?hl=ko'},{label:'Vercel 데이터 처리 계약',href:'https://vercel.com/legal/dpa'}]},
  {id:'retention',title:'7. 보관 기간과 파기',paragraphs:[
   '사용자 기기의 워크북·초안·프로젝트·백업은 사용자가 해당 저장소·파일을 삭제할 때까지 남을 수 있습니다. 서버의 리그·시리얼·협업 DB에는 전체 데이터의 기간 만료 자동 삭제가 구현되어 있지 않습니다. 글 숨김·기기 인증 해제·사용권 회수는 삭제가 아니며, 실제 삭제 범위와 운영 절차를 확인해야 합니다.',
   '일반 문의의 이메일·내용·첨부·처리 기록은 문의 해결 후 1년 보관합니다. 기간이 지난 일반 문의는 담당자가 법정 보존 대상 여부를 확인하여 수동 파기합니다. 실제 파기 전에는 처리 완료로 안내하지 않습니다. 계약·청약철회·공급·소비자 분쟁에 해당하는 기록은 일반 문의와 구분하여 아래 법정 기간 동안 별도 보존합니다.',
@@ -150,8 +169,10 @@ export const privacySections=[
   '데스크톱 인증의 갱신 정보는 운영체제의 보안 저장 기능을 사용합니다. 리그는 기기 서명과 서버 검증을 사용하고 답안·문제 세트는 서버 키로 암호화합니다. 이 조치가 모든 파일·DB 항목의 암호화, 영구 익명성 또는 유출이 절대 발생하지 않음을 보장하지 않습니다.',
  ]},
  {id:'children',title:'11. 아동 정보와 정책 변경',paragraphs:[
-  '현재 앱에는 생년월일 수집이나 만 14세 미만 법정대리인 동의·확인 절차가 없습니다. 아동의 개인정보를 처리하는 온라인 기능의 제공 범위와 필요한 절차는 운영자 확인 항목입니다. 보호자가 아동의 정보가 전송되었다고 판단하면 운영 연락처로 알려 주세요.',
-  '이 문서는 버전과 작성일을 표시합니다. 실제 운영 정책과 필수 확인 사항을 확정한 뒤 시행일과 변경 이력을 공개해야 합니다. 안내 페이지를 읽거나 단순히 계속 사용한다는 이유만으로 새로운 처리 목적에 대한 동의를 받았다고 보지 않습니다.',
+  '운영자는 2026년 11월 13일 앱 인증·외부 AI·리그·커뮤니티·공동 설계처럼 개인정보를 전송하는 온라인 기능의 제공 대상을 만 14세 이상으로 정했습니다. 만 14세 미만은 해당 온라인 기능에 등록하거나 답안·게시물·개인정보를 전송하지 마세요. 공개 설명 열람과 기기에만 저장되는 계산·학습까지 금지하는 정책은 아닙니다. 웹페이지 열람 자체에도 전달에 필요한 통신정보 처리가 있다는 점은 별도입니다.',
+  '만 14세 미만 법정대리인 동의·확인 절차는 제공하지 않습니다. 위의 이용 대상 결정과 프로그램의 제한 적용은 구분하며 기존 0.33.0 배포본에서 연령 확인이 이미 시행된 것으로 안내하지 않습니다. 새 제한의 배포·검증이 끝나면 적용 버전과 확인 방법을 명시합니다. 연령 자기 확인은 신분증에 의한 본인 확인이나 법정대리인 동의 검증을 뜻하지 않습니다.',
+  `보호자가 아동의 정보 전송을 알게 되면 ${legalOperator.email}으로 대상 기능과 요청 범위를 알려 주세요. 추가 온라인 이용을 중지하고 정보주체·요청 권한과 처리 범위를 최소 정보로 확인해 안내합니다. 이 안내만으로 이미 전송된 모든 정보가 자동 삭제되지는 않습니다.`,
+  '시행일은 아직 미확정입니다. 실제 운영과 필수 확인 사항을 대조한 뒤 시행일, 이전 문서와 주요 변경 내용을 공개합니다. 권리에 중요한 영향을 미치는 변경은 변경 전 또는 즉시 비교 가능한 안내를 제공하고, 별도 동의가 필요한 변경은 해당 절차를 따로 마련합니다. 안내 열람·계속 사용만으로 새로운 개인정보 처리 동의를 받은 것으로 보지 않습니다.',
  ]},
 ];
 

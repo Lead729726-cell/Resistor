@@ -6,7 +6,8 @@ import os from 'node:os';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {prepareProductLegalSite,renderProductLegalPages,productLegalPages} from '../scripts/product-legal-site.mjs';
-import {productLegalReadiness,legalReview,legalOperator,termsSections,privacySections,legalImplementationSources} from '../scripts/site/product-legal-content.mjs';
+import {productLegalReadiness,legalReview,legalOperator,termsSections,privacySections,legalImplementationSources,privacyAgePolicy} from '../scripts/site/product-legal-content.mjs';
+import {privacyTransferProviders,privacyTransferReadiness} from '../scripts/site/privacy-transfers.mjs';
 import {courseAccessPolicy} from '../platform/licensing/access-policy.mjs';
 import {courseSiteHeader,courseSiteFooter} from '../scripts/course-site-design.mjs';
 import {applyCourseDocumentDesign} from '../scripts/site/course-document-design.mjs';
@@ -118,4 +119,71 @@ test('generation adds physical legal routes without modifying any existing deplo
 
 test('shared site regeneration does not change a freshly generated legal page or invalidate its receipt hash',()=>{
  for(const [file,html]of Object.entries(renderProductLegalPages()))assert.equal(applyCourseDocumentDesign(html,file,{header:courseSiteHeader,footer:courseSiteFooter}),html);
+});
+
+// Pure gate fixtures are synthetic completeness evidence, never provider/account verification.
+function completeTransferFixture(){
+ return structuredClone(privacyTransferProviders).map(provider=>({...provider,
+  countries:{...provider.countries,status:'verified',verified_countries:['대한민국'],evidence:['synthetic account scope for test only']},
+  ...Object.fromEntries(['retention','legal_basis','account'].map(field=>[field,{...provider[field],status:'verified',evidence:['synthetic review for test only']}])),
+ }));
+}
+test('provider readiness cannot use public company locations or global placeholders as account-country evidence',()=>{
+ const real=privacyTransferReadiness();assert.equal(real.ready,false);
+ for(const provider of privacyTransferProviders){
+  for(const field of ['countries','retention','legal_basis','account'])assert(real.missing.includes(`${provider.id}:${field}`));
+ }
+ assert.equal(privacyTransferReadiness([]).ready,false);
+ const fixture=completeTransferFixture();assert.equal(privacyTransferReadiness(fixture).ready,true);
+ for(const country of ['','미국 및 전세계','미국 및 전 세계','Global','unknown','확인 중']){
+  const altered=structuredClone(fixture);altered[0].countries.verified_countries=[country];
+  assert(privacyTransferReadiness(altered).missing.includes('cloudflare:countries'),country);
+ }
+ for(const field of ['countries','retention','legal_basis','account']){
+  const altered=structuredClone(fixture);altered[1][field].evidence=[];
+  assert(privacyTransferReadiness(altered).missing.includes(`google:${field}`),field);
+ }
+ const duplicate=[...fixture,fixture[0]];assert(privacyTransferReadiness(duplicate).missing.includes('cloudflare:provider'));
+ assert(privacyTransferReadiness([...fixture,{...fixture[0],id:'unreviewed-provider'}]).missing.includes('unexpected-provider'));
+ const noItems=structuredClone(fixture);noItems[2].items='';assert(privacyTransferReadiness(noItems).missing.includes('vercel:disclosure'));
+ const cloudflare=privacyTransferProviders.find(provider=>provider.id==='cloudflare');
+ assert.equal(cloudflare.account.configuration_evidence.jurisdiction,null);
+ assert.equal(cloudflare.account.configuration_evidence.actual_database_country_verified,false);
+ assert.equal(cloudflare.account.status,'pending');
+ const vercel=privacyTransferProviders.find(provider=>provider.id==='vercel');
+ assert.equal(vercel.account.configuration_evidence.project_http,200);
+ assert.deepEqual(vercel.account.configuration_evidence.regions,['iad1']);
+ assert.equal(vercel.account.configuration_evidence.retention_config_verified,false);
+ assert.equal(vercel.account.configuration_evidence.all_processing_countries_verified,false);
+ assert.equal(vercel.account.status,'pending');assert.equal(vercel.countries.status,'pending');
+});
+
+test('approved 14+ online policy is distinct from unreleased enforcement and does not create blanket consent',()=>{
+ assert.equal(privacyAgePolicy.minimum_age,14);assert.equal(privacyAgePolicy.approval,'owner-confirmed');
+ assert.equal(privacyAgePolicy.enforcement.status,'not_verified');
+ const html=renderProductLegalPages()['privacy/index.html'];
+ assert.match(html,/만 14세 이상으로 정했습니다/);
+ assert.match(html,/공개 설명 열람과 기기에만 저장되는 계산·학습까지 금지하는 정책은 아닙니다/);
+ assert.match(html,/기존 0\.33\.0 배포본에서 연령 확인이 이미 시행된 것으로 안내하지 않습니다/);
+ assert.match(html,/연령 자기 확인은 신분증에 의한 본인 확인이나 법정대리인 동의 검증을 뜻하지 않습니다/);
+ assert.doesNotMatch(html,/<input|<form|checked|동의한 것으로 간주합니다/);
+ const review={...legalReview,status:'approved',effective_date:'2026-11-20',reviewed_at:'2026-11-13T00:00:00Z',items:legalReview.items.map(item=>({...item,status:'verified'}))};
+ const defaultState=productLegalReadiness(review);assert.equal(defaultState.ready,false);
+ assert(defaultState.missing.includes('age-policy-enforcement'));assert(defaultState.missing.includes('transfer:cloudflare:countries'));
+ const providers=completeTransferFixture();assert.equal(productLegalReadiness(review,{providers}).ready,false);
+ const agePolicy={...privacyAgePolicy,enforcement:{status:'verified',source_revision:'synthetic-source',release:'test-only',evidence:['synthetic gate evidence']}};
+ assert.equal(productLegalReadiness(review,{providers,agePolicy}).ready,true);
+ assert(productLegalReadiness({...review,effective_date:'2026-02-30'},{providers,agePolicy}).missing.includes('effective-date'));
+});
+
+test('public transfer disclosure distinguishes recipient contacts, account checks, consumer Gmail and source limits',()=>{
+ const html=renderProductLegalPages()['privacy/index.html'];
+ for(const provider of privacyTransferProviders){assert(html.includes(provider.contact));assert(html.includes(provider.timing));assert(html.includes(provider.method));}
+ assert.match(html,/소비자 Gmail 계정을 사용합니다/);
+ assert.match(html,/Workspace DPA를 적용한 것으로 표시하지 않습니다/);
+ assert.match(html,/국가 제한\(jurisdiction\)을 지정하지 않았습니다/);
+ assert.match(html,/세계 각지의 사업자·재수탁자 시설에서도 처리될 수 있다고 설명합니다/);
+ assert.match(html,/지역별 저장 기능과 실제 모델 처리 지역은 같지 않을 수 있습니다/);
+ assert.match(html,/계정별 국가 확인 중/);
+ assert.doesNotMatch(html,/국외 이전 동의를 완료했습니다|미국에만 저장됩니다|한국에만 저장됩니다/);
 });
